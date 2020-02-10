@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class EntityDescription {
 
-    private PublicationType type;
+    private String type;
     private String mainTitle;
     private Map<String,String> alternativeTitles;
     private String language;
@@ -23,11 +23,11 @@ public class EntityDescription {
         setContributors(builder.contributors);
     }
 
-    public PublicationType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(PublicationType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -56,7 +56,7 @@ public class EntityDescription {
     }
 
     public static final class Builder {
-        private PublicationType type;
+        private String type;
         private String mainTitle;
         private PublicationDate date;
         private List<Contributor> contributors;
@@ -64,7 +64,7 @@ public class EntityDescription {
         public Builder() {
         }
 
-        public Builder withType(PublicationType type) {
+        public Builder withType(String type) {
             this.type = type;
             return this;
         }

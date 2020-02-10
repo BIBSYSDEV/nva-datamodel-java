@@ -9,7 +9,7 @@ public class Contributor {
     private String arpId;
     private String orcId;
     private String name;
-    private NameType nameType;
+    private String nameType;
     private List<URI> affiliation;
     private List<String> importedAffiliation;
     private Integer sequence;
@@ -51,11 +51,11 @@ public class Contributor {
         this.name = name;
     }
 
-    public NameType getNameType() {
+    public String getNameType() {
         return nameType;
     }
 
-    public void setNameType(NameType nameType) {
+    public void setNameType(String nameType) {
         this.nameType = nameType;
     }
 
@@ -79,7 +79,7 @@ public class Contributor {
         private String arpId;
         private String orcId;
         private String name;
-        private NameType nameType;
+        private String nameType;
         private List<String> affiliation;
         private Integer sequence;
 
@@ -101,7 +101,7 @@ public class Contributor {
             return this;
         }
 
-        public Builder withNameType(NameType nameType) {
+        public Builder withNameType(String nameType) {
             this.nameType = nameType;
             return this;
         }
