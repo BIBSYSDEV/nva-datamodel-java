@@ -12,6 +12,7 @@ public class Contributor {
     private String nameType;
     private List<URI> affiliation;
     private List<String> importedAffiliation;
+    private Role role;
     private Integer sequence;
 
     public Contributor() {
@@ -25,6 +26,7 @@ public class Contributor {
         setNameType(builder.nameType);
         setImportedAffiliation(builder.affiliation);
         setSequence(builder.sequence);
+        setRole(builder.role);
     }
 
     public String getArpId() {
@@ -75,6 +77,10 @@ public class Contributor {
         this.sequence = sequence;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public static final class Builder {
         private String arpId;
         private String orcId;
@@ -82,6 +88,7 @@ public class Contributor {
         private String nameType;
         private List<String> affiliation;
         private Integer sequence;
+        private Role role;
 
         public Builder() {
         }
@@ -113,6 +120,11 @@ public class Contributor {
 
         public Builder withSequence(Integer sequence) {
             this.sequence = sequence;
+            return this;
+        }
+
+        public Builder withRole(Role role) {
+            this.role = role;
             return this;
         }
 
