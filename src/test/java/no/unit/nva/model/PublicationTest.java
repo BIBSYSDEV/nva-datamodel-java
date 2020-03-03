@@ -98,7 +98,7 @@ public class PublicationTest {
                                         .withArpId("arp123")
                                         .withOrcId("orc123")
                                         .withName("Navnesen, Navn")
-                                        .withNameType(NameType.PERSONAL.getValue())
+                                        .withNameType(NameType.PERSONAL)
                                         .build()
                                 )
                                 .build()

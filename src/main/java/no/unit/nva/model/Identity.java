@@ -9,7 +9,7 @@ public class Identity {
 
     private URI id;
     private String name;
-    private String nameType;
+    private NameType nameType;
     private String orcId;
     private String arpId;
 
@@ -40,11 +40,11 @@ public class Identity {
         this.name = name;
     }
 
-    public String getNameType() {
+    public NameType getNameType() {
         return nameType;
     }
 
-    public void setNameType(String nameType) {
+    public void setNameType(NameType nameType) {
         this.nameType = nameType;
     }
 
@@ -68,7 +68,7 @@ public class Identity {
     public static final class Builder {
         private URI id;
         private String name;
-        private String nameType;
+        private NameType nameType;
         private String orcId;
         private String arpId;
 
@@ -85,7 +85,7 @@ public class Identity {
             return this;
         }
 
-        public Builder withNameType(String nameType) {
+        public Builder withNameType(NameType nameType) {
             this.nameType = nameType;
             return this;
         }
