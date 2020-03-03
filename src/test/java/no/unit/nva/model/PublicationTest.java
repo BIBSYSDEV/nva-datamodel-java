@@ -88,6 +88,7 @@ public class PublicationTest {
                         .withPublicationType(PublicationType.JOURNAL_ARTICLE.getValue())
                         .withContributors(Collections.singletonList(new Contributor.Builder()
                                 .withSequence(0)
+                                .withRole(Role.CREATOR)
                                 .withAffiliation(Collections.singletonList(new Organization.Builder()
                                         .withLabels(Collections.singletonMap("no", "Affiliasjonen"))
                                         .build()

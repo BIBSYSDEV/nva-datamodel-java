@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
+
 public enum PublicationStatus {
 
     NEW("New"),
@@ -13,6 +17,8 @@ public enum PublicationStatus {
     REJECTED("Rejected"),
     PUBLISHED("Published");
 
+    public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid PublicationStatus, expected one of: %s";
+    public static final String DELIMITER = ", ";
     private String value;
 
     PublicationStatus(String value) {
@@ -40,13 +46,8 @@ public enum PublicationStatus {
                 .filter(publicationStatus -> publicationStatus.getValue().equalsIgnoreCase(value))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("%s not a valid PublicationStatus, expected one of: %s",
-                                value,
-                                Arrays.stream(PublicationStatus.values())
-                                        .map(PublicationStatus::toString)
-                                        .collect(Collectors.joining(", ")))
-                        )
-                );
+                        format(ERROR_MESSAGE_TEMPLATE, value, stream(PublicationStatus.values())
+                                .map(PublicationStatus::toString).collect(joining(DELIMITER)))));
     }
 
 }

@@ -2,22 +2,18 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 
-public enum NameType {
+public enum Role {
+    CREATOR("Creator");
 
-    PERSONAL("Personal");
-
-    public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid NameType, expected one of: %s";
+    public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid Role, expected one of: %s";
     public static final String DELIMITER = ", ";
     private String value;
 
-    NameType(String value) {
+    Role(String value) {
         this.value = value;
     }
 
@@ -26,23 +22,18 @@ public enum NameType {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     /**
      * Lookup enum by value.
      *
      * @param value value
      * @return  enum
      */
-    public static NameType lookup(String value) {
-        return Arrays
-                .stream(values())
+    public static Role lookup(String value) {
+        return stream(values())
                 .filter(nameType -> nameType.getValue().equalsIgnoreCase(value))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        format(ERROR_MESSAGE_TEMPLATE, value, stream(NameType.values())
-                                .map(NameType::toString).collect(joining(DELIMITER)))));
+                        format(ERROR_MESSAGE_TEMPLATE, value, stream(Role.values())
+                                .map(Role::toString).collect(joining(DELIMITER)))));
     }
 }

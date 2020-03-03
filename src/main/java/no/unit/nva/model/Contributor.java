@@ -9,6 +9,7 @@ public class Contributor {
 
     private Identity identity;
     private List<Organization> affiliation;
+    private Role role;
     private Integer sequence;
 
     public Contributor() {
@@ -19,6 +20,7 @@ public class Contributor {
         setIdentity(builder.identity);
         setAffiliation(builder.affiliation);
         setSequence(builder.sequence);
+        setRole(builder.role);
     }
 
     public Identity getIdentity() {
@@ -45,11 +47,19 @@ public class Contributor {
         this.sequence = sequence;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public static final class Builder {
         private Identity identity;
         private List<Organization> affiliation;
         private Integer sequence;
+        private Role role;
 
         public Builder() {
         }
@@ -66,6 +76,11 @@ public class Contributor {
 
         public Builder withSequence(Integer sequence) {
             this.sequence = sequence;
+            return this;
+        }
+
+        public Builder withRole(Role role) {
+            this.role = role;
             return this;
         }
 
