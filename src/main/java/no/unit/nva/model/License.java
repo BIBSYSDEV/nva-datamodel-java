@@ -1,11 +1,15 @@
 package no.unit.nva.model;
 
-import java.net.URI;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.net.URI;
+import java.util.Map;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class License {
 
-    private String title;
     private String identifier;
+    private Map<String, String> labels;
     private URI link;
 
     public License() {
@@ -13,8 +17,8 @@ public class License {
     }
 
     private License(Builder builder) {
-        title = builder.title;
         setIdentifier(builder.identifier);
+        setLabels(builder.labels);
         setLink(builder.link);
     }
 
@@ -24,6 +28,15 @@ public class License {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+
+    public Map<String,String> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Map<String,String> labels) {
+        this.labels = labels;
     }
 
     public URI getLink() {
@@ -36,20 +49,20 @@ public class License {
 
 
     public static final class Builder {
-        private String title;
         private String identifier;
+        private Map<String,String> labels;
         private URI link;
 
         public Builder() {
         }
 
-        public Builder withTitle(String title) {
-            this.title = title;
+        public Builder withIdentifier(String identifier) {
+            this.identifier = identifier;
             return this;
         }
 
-        public Builder withIdentifier(String identifier) {
-            this.identifier = identifier;
+        public Builder withLabels(Map<String,String> labels) {
+            this.labels = labels;
             return this;
         }
 

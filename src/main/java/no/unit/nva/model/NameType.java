@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum NameType {
 
@@ -34,6 +35,13 @@ public enum NameType {
                 .stream(values())
                 .filter(nameType -> nameType.getValue().equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException(
+                                String.format("%s not a valid NameType, expected one of: %s",
+                                        value,
+                                        Arrays.stream(NameType.values())
+                                                .map(NameType::toString)
+                                                .collect(Collectors.joining(", ")))
+                        )
+                );
     }
 }

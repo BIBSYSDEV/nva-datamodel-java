@@ -1,17 +1,14 @@
 package no.unit.nva.model;
 
-import java.net.URI;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.List;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class Contributor {
 
-    private String identifier;
-    private String arpId;
-    private String orcId;
-    private String name;
-    private String nameType;
-    private List<URI> affiliation;
-    private List<String> importedAffiliation;
+    private Identity identity;
+    private List<Organization> affiliation;
     private Integer sequence;
 
     public Contributor() {
@@ -19,52 +16,25 @@ public class Contributor {
     }
 
     private Contributor(Builder builder) {
-        setArpId(builder.arpId);
-        setOrcId(builder.orcId);
-        setName(builder.name);
-        setNameType(builder.nameType);
-        setImportedAffiliation(builder.affiliation);
+        setIdentity(builder.identity);
+        setAffiliation(builder.affiliation);
         setSequence(builder.sequence);
     }
 
-    public String getArpId() {
-        return arpId;
+    public Identity getIdentity() {
+        return identity;
     }
 
-    public void setArpId(String arpId) {
-        this.arpId = arpId;
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
     }
 
-    public String getOrcId() {
-        return orcId;
+    public List<Organization> getAffiliation() {
+        return affiliation;
     }
 
-    public void setOrcId(String orcId) {
-        this.orcId = orcId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNameType() {
-        return nameType;
-    }
-
-    public void setNameType(String nameType) {
-        this.nameType = nameType;
-    }
-
-    public List<String> getImportedAffiliation() {
-        return importedAffiliation;
-    }
-
-    public void setImportedAffiliation(List<String> importedAffiliation) {
-        this.importedAffiliation = importedAffiliation;
+    public void setAffiliation(List<Organization> affiliation) {
+        this.affiliation = affiliation;
     }
 
     public Integer getSequence() {
@@ -75,38 +45,21 @@ public class Contributor {
         this.sequence = sequence;
     }
 
+
     public static final class Builder {
-        private String arpId;
-        private String orcId;
-        private String name;
-        private String nameType;
-        private List<String> affiliation;
+        private Identity identity;
+        private List<Organization> affiliation;
         private Integer sequence;
 
         public Builder() {
         }
 
-        public Builder withArpId(String arpId) {
-            this.arpId = arpId;
+        public Builder withIdentity(Identity identity) {
+            this.identity = identity;
             return this;
         }
 
-        public Builder withOrcId(String orcId) {
-            this.orcId = orcId;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withNameType(String nameType) {
-            this.nameType = nameType;
-            return this;
-        }
-
-        public Builder withAffiliation(List<String> affiliation) {
+        public Builder withAffiliation(List<Organization> affiliation) {
             this.affiliation = affiliation;
             return this;
         }

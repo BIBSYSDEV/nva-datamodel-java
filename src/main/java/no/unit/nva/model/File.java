@@ -1,14 +1,18 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.UUID;
 
 @SuppressWarnings("PMD.ShortClassName")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class File {
 
     private UUID identifier;
     private String name;
     private String mimeType;
     private Long size;
+    private License license;
 
     public File() {
 
@@ -19,6 +23,7 @@ public class File {
         setName(builder.name);
         setMimeType(builder.mimeType);
         setSize(builder.size);
+        setLicense(builder.license);
     }
 
     public UUID getIdentifier() {
@@ -53,11 +58,20 @@ public class File {
         this.size = size;
     }
 
+    public License getLicense() {
+        return license;
+    }
+
+    public void setLicense(License license) {
+        this.license = license;
+    }
+
     public static final class Builder {
         private UUID identifier;
         private String name;
         private String mimeType;
         private Long size;
+        private License license;
 
         public Builder() {
         }
@@ -79,6 +93,11 @@ public class File {
 
         public Builder withSize(Long size) {
             this.size = size;
+            return this;
+        }
+
+        public Builder withLicense(License license) {
+            this.license = license;
             return this;
         }
 

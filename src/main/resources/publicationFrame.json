@@ -1,0 +1,38 @@
+{
+  "@context": {
+    "@vocab": "https://example.org/cheeky#",
+    "type": "@type",
+    "id": "@id",
+    "graph": "@graph",
+    "value": "@value",
+    "language": "@language",
+    "hasIdentifier": "identifier",
+    "hasStatus": "publicationStatus",
+    "hasHandle": "handle",
+    "hasLink": "link",
+    "hasPublisher": "publisher",
+    "hasEntityDescription": "entityDescription",
+    "hasPublicationType": "publicationType",
+    "hasMainTitle": "mainTitle",
+    "hasAlternativeTitle": {
+      "@id": "alternativeTitles"
+    },
+    "hasLanguage": "language",
+    "hasDate": "publicationDate",
+    "hasYear": "year",
+    "hasMonth": "month",
+    "hasDay": "day",
+    "hasContributor": "contributors",
+    "hasArpId": "arpId",
+    "hasOrcid": "orcId",
+    "hasName": "name",
+    "hasNameType": "nameType",
+    "hasAffiliation": "affiliation",
+    "hasSequence": "sequence",
+    "hasLicense": "license",
+    "hasFileSet": "fileSet",
+    "hasMimeType": "mimeType",
+    "hasSize": "size"
+  },
+  "@type": "Publication"
+}

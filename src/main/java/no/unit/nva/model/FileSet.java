@@ -1,7 +1,10 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.List;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class FileSet {
 
     private List<File> files;

@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum PublicationType {
 
@@ -34,6 +35,13 @@ public enum PublicationType {
                 .stream(values())
                 .filter(publicationType -> publicationType.getValue().equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException(
+                                String.format("%s not a valid PublicationType, expected one of: %s",
+                                        value,
+                                        Arrays.stream(PublicationType.values())
+                                                .map(PublicationType::toString)
+                                                .collect(Collectors.joining(", ")))
+                        )
+                );
     }
 }

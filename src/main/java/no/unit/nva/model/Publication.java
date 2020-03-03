@@ -1,9 +1,13 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.net.URI;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class Publication {
 
     private Instant createdDate;
@@ -15,7 +19,7 @@ public class Publication {
     private Instant indexedDate;
     private UUID identifier;
     private URI link;
-    private Publisher publisher;
+    private Organization publisher;
     private EntityDescription entityDescription;
     private License license;
     private FileSet fileSet;
@@ -112,11 +116,11 @@ public class Publication {
         this.link = link;
     }
 
-    public Publisher getPublisher() {
+    public Organization getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(Publisher publisher) {
+    public void setPublisher(Organization publisher) {
         this.publisher = publisher;
     }
 
@@ -144,7 +148,6 @@ public class Publication {
         this.fileSet = fileSet;
     }
 
-
     public static final class Builder {
         private Instant createdDate;
         private PublicationStatus status;
@@ -155,7 +158,7 @@ public class Publication {
         private Instant indexedDate;
         private UUID identifier;
         private URI link;
-        private Publisher publisher;
+        private Organization publisher;
         private EntityDescription entityDescription;
         private License license;
         private FileSet fileSet;
@@ -208,7 +211,7 @@ public class Publication {
             return this;
         }
 
-        public Builder withPublisher(Publisher publisher) {
+        public Builder withPublisher(Organization publisher) {
             this.publisher = publisher;
             return this;
         }
