@@ -2,6 +2,8 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.util.Objects;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class PublicationDate {
 
@@ -41,6 +43,25 @@ public class PublicationDate {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PublicationDate that = (PublicationDate) o;
+        return Objects.equals(getYear(), that.getYear())
+                && Objects.equals(getMonth(), that.getMonth())
+                && Objects.equals(getDay(), that.getDay());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getYear(), getMonth(), getDay());
     }
 
     public static final class Builder {

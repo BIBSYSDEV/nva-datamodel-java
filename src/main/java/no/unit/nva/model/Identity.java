@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.net.URI;
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class Identity {
@@ -64,6 +65,26 @@ public class Identity {
         this.arpId = arpId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Identity identity = (Identity) o;
+        return Objects.equals(getId(), identity.getId())
+                && Objects.equals(getName(), identity.getName())
+                && getNameType() == identity.getNameType()
+                && Objects.equals(getOrcId(), identity.getOrcId())
+                && Objects.equals(getArpId(), identity.getArpId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getNameType(), getOrcId(), getArpId());
+    }
 
     public static final class Builder {
         private URI id;

@@ -113,6 +113,7 @@ public class PublicationTest {
         ContextUtil.injectContext(document, context);
         objectMapper.writeValue(System.out, document);
 
+        // Start test of Json-Ld framing
         Object input = JsonUtils.fromString(objectMapper.writeValueAsString(document));
         Object frame = JsonUtils.fromInputStream(new FileInputStream("src/main/resources/publicationFrame.json"));
         JsonLdOptions options = new JsonLdOptions();
@@ -120,10 +121,10 @@ public class PublicationTest {
         options.setPruneBlankNodeIdentifiers(true);
         Object framed = JsonLdProcessor.frame(input, frame, options);
         System.out.println(JsonUtils.toPrettyString(framed));
+        // End test of Json-Ld framing
 
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document), Publication.class);
-        Assertions.assertEquals(publication.getEntityDescription().getMainTitle(), publicationFromJson.getEntityDescription().getMainTitle());
-
+        Assertions.assertEquals(publication, publicationFromJson);
     }
 
 }

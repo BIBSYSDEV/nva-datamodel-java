@@ -2,10 +2,6 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.util.Arrays;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
@@ -38,11 +34,10 @@ public enum PublicationStatus {
      * Lookup enum by value.
      *
      * @param value value
-     * @return  enum
+     * @return enum
      */
     public static PublicationStatus lookup(String value) {
-        return Arrays
-                .stream(values())
+        return stream(values())
                 .filter(publicationStatus -> publicationStatus.getValue().equalsIgnoreCase(value))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(

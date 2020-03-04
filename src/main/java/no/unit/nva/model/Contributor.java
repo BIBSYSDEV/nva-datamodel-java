@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.util.List;
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class Contributor {
@@ -53,6 +54,26 @@ public class Contributor {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Contributor that = (Contributor) o;
+        return Objects.equals(getIdentity(), that.getIdentity())
+                && Objects.equals(getAffiliation(), that.getAffiliation())
+                && getRole() == that.getRole()
+                && Objects.equals(getSequence(), that.getSequence());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentity(), getAffiliation(), getRole(), getSequence());
     }
 
     public static final class Builder {

@@ -148,6 +148,37 @@ public class Publication {
         this.fileSet = fileSet;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Publication that = (Publication) o;
+        return Objects.equals(getCreatedDate(), that.getCreatedDate())
+                && getStatus() == that.getStatus()
+                && Objects.equals(getHandle(), that.getHandle())
+                && Objects.equals(getPublishedDate(), that.getPublishedDate())
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                && Objects.equals(getOwner(), that.getOwner())
+                && Objects.equals(getIndexedDate(), that.getIndexedDate())
+                && Objects.equals(getIdentifier(), that.getIdentifier())
+                && Objects.equals(getLink(), that.getLink())
+                && Objects.equals(getPublisher(), that.getPublisher())
+                && Objects.equals(getEntityDescription(), that.getEntityDescription())
+                && Objects.equals(getLicense(), that.getLicense())
+                && Objects.equals(getFileSet(), that.getFileSet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCreatedDate(), getStatus(), getHandle(), getPublishedDate(), getModifiedDate(),
+                getOwner(), getIndexedDate(), getIdentifier(), getLink(), getPublisher(), getEntityDescription(),
+                getLicense(), getFileSet());
+    }
+
     public static final class Builder {
         private Instant createdDate;
         private PublicationStatus status;

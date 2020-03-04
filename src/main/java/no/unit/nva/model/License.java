@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class License {
@@ -31,11 +32,11 @@ public class License {
     }
 
 
-    public Map<String,String> getLabels() {
+    public Map<String, String> getLabels() {
         return labels;
     }
 
-    public void setLabels(Map<String,String> labels) {
+    public void setLabels(Map<String, String> labels) {
         this.labels = labels;
     }
 
@@ -47,10 +48,28 @@ public class License {
         this.link = link;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        License license = (License) o;
+        return Objects.equals(getIdentifier(), license.getIdentifier())
+                && Objects.equals(getLabels(), license.getLabels())
+                && Objects.equals(getLink(), license.getLink());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getLabels(), getLink());
+    }
 
     public static final class Builder {
         private String identifier;
-        private Map<String,String> labels;
+        private Map<String, String> labels;
         private URI link;
 
         public Builder() {
@@ -61,7 +80,7 @@ public class License {
             return this;
         }
 
-        public Builder withLabels(Map<String,String> labels) {
+        public Builder withLabels(Map<String, String> labels) {
             this.labels = labels;
             return this;
         }

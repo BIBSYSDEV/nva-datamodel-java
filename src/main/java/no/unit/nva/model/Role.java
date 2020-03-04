@@ -26,7 +26,7 @@ public enum Role {
      * Lookup enum by value.
      *
      * @param value value
-     * @return  enum
+     * @return enum
      */
     public static Role lookup(String value) {
         return stream(values())

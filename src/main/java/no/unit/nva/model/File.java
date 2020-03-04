@@ -2,9 +2,9 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.util.Objects;
 import java.util.UUID;
 
-@SuppressWarnings("PMD.ShortClassName")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class File {
 
@@ -64,6 +64,27 @@ public class File {
 
     public void setLicense(License license) {
         this.license = license;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        File file = (File) o;
+        return Objects.equals(getIdentifier(), file.getIdentifier())
+                && Objects.equals(getName(), file.getName())
+                && Objects.equals(getMimeType(), file.getMimeType())
+                && Objects.equals(getSize(), file.getSize())
+                && Objects.equals(getLicense(), file.getLicense());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(), getLicense());
     }
 
     public static final class Builder {
