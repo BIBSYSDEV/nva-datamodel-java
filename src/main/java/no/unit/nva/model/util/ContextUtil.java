@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ContextUtil {
 
+    public static final String ERROR_MESSAGE = "JsonNode is not an object";
+    public static final String CONTEXT = "@context";
+
     /**
      * Inject a context json object into a json object.
      *
@@ -13,9 +16,9 @@ public class ContextUtil {
      */
     public static void injectContext(JsonNode jsonNode, JsonNode context) {
         if (jsonNode.isObject()) {
-            ((ObjectNode) jsonNode).set("@context", context);
+            ((ObjectNode) jsonNode).set(CONTEXT, context);
         } else {
-            throw new IllegalArgumentException("JsonNode is not an object");
+            throw new IllegalArgumentException(ERROR_MESSAGE);
         }
     }
 }
