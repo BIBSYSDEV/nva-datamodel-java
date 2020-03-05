@@ -1,11 +1,16 @@
 package no.unit.nva.model;
 
-import java.net.URI;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.net.URI;
+import java.util.Map;
+import java.util.Objects;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class License {
 
-    private String title;
     private String identifier;
+    private Map<String, String> labels;
     private URI link;
 
     public License() {
@@ -13,8 +18,8 @@ public class License {
     }
 
     private License(Builder builder) {
-        title = builder.title;
         setIdentifier(builder.identifier);
+        setLabels(builder.labels);
         setLink(builder.link);
     }
 
@@ -26,6 +31,15 @@ public class License {
         this.identifier = identifier;
     }
 
+
+    public Map<String, String> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Map<String, String> labels) {
+        this.labels = labels;
+    }
+
     public URI getLink() {
         return link;
     }
@@ -34,22 +48,40 @@ public class License {
         this.link = link;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        License license = (License) o;
+        return Objects.equals(getIdentifier(), license.getIdentifier())
+                && Objects.equals(getLabels(), license.getLabels())
+                && Objects.equals(getLink(), license.getLink());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getLabels(), getLink());
+    }
 
     public static final class Builder {
-        private String title;
         private String identifier;
+        private Map<String, String> labels;
         private URI link;
 
         public Builder() {
         }
 
-        public Builder withTitle(String title) {
-            this.title = title;
+        public Builder withIdentifier(String identifier) {
+            this.identifier = identifier;
             return this;
         }
 
-        public Builder withIdentifier(String identifier) {
-            this.identifier = identifier;
+        public Builder withLabels(Map<String, String> labels) {
+            this.labels = labels;
             return this;
         }
 

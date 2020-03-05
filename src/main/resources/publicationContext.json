@@ -1,0 +1,27 @@
+{
+  "@vocab": "https://nva.unit.no/publication#",
+  "xsd": "http://www.w3.org/2001/XMLSchema#",
+  "type": "@type",
+  "id": "@id",
+  "handle": {
+    "@type": "@id"
+  },
+  "alternativeTitles": {
+    "@container": "@language"
+  },
+  "createdDate": {
+    "@type": "xsd:dateTime"
+  },
+  "publishedDate": {
+    "@type": "xsd:dateTime"
+  },
+  "indexedDate": {
+    "@type": "xsd:dateTime"
+  },
+  "modifiedDate": {
+    "@type": "xsd:dateTime"
+  },
+  "link": {
+    "@type": "@id"
+  }
+}

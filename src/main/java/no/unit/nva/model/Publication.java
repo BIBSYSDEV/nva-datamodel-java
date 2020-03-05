@@ -1,9 +1,13 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.net.URI;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class Publication {
 
     private Instant createdDate;
@@ -15,7 +19,7 @@ public class Publication {
     private Instant indexedDate;
     private UUID identifier;
     private URI link;
-    private Publisher publisher;
+    private Organization publisher;
     private EntityDescription entityDescription;
     private License license;
     private FileSet fileSet;
@@ -112,11 +116,11 @@ public class Publication {
         this.link = link;
     }
 
-    public Publisher getPublisher() {
+    public Organization getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(Publisher publisher) {
+    public void setPublisher(Organization publisher) {
         this.publisher = publisher;
     }
 
@@ -144,6 +148,36 @@ public class Publication {
         this.fileSet = fileSet;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Publication that = (Publication) o;
+        return Objects.equals(getCreatedDate(), that.getCreatedDate())
+                && getStatus() == that.getStatus()
+                && Objects.equals(getHandle(), that.getHandle())
+                && Objects.equals(getPublishedDate(), that.getPublishedDate())
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                && Objects.equals(getOwner(), that.getOwner())
+                && Objects.equals(getIndexedDate(), that.getIndexedDate())
+                && Objects.equals(getIdentifier(), that.getIdentifier())
+                && Objects.equals(getLink(), that.getLink())
+                && Objects.equals(getPublisher(), that.getPublisher())
+                && Objects.equals(getEntityDescription(), that.getEntityDescription())
+                && Objects.equals(getLicense(), that.getLicense())
+                && Objects.equals(getFileSet(), that.getFileSet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCreatedDate(), getStatus(), getHandle(), getPublishedDate(), getModifiedDate(),
+                getOwner(), getIndexedDate(), getIdentifier(), getLink(), getPublisher(), getEntityDescription(),
+                getLicense(), getFileSet());
+    }
 
     public static final class Builder {
         private Instant createdDate;
@@ -155,7 +189,7 @@ public class Publication {
         private Instant indexedDate;
         private UUID identifier;
         private URI link;
-        private Publisher publisher;
+        private Organization publisher;
         private EntityDescription entityDescription;
         private License license;
         private FileSet fileSet;
@@ -208,7 +242,7 @@ public class Publication {
             return this;
         }
 
-        public Builder withPublisher(Publisher publisher) {
+        public Builder withPublisher(Organization publisher) {
             this.publisher = publisher;
             return this;
         }

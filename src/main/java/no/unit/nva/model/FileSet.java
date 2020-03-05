@@ -1,7 +1,11 @@
 package no.unit.nva.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.util.List;
+import java.util.Objects;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class FileSet {
 
     private List<File> files;
@@ -20,6 +24,23 @@ public class FileSet {
 
     public void setFiles(List<File> files) {
         this.files = files;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FileSet fileSet = (FileSet) o;
+        return Objects.equals(getFiles(), fileSet.getFiles());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFiles());
     }
 
     public static final class Builder {

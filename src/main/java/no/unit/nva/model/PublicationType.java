@@ -2,12 +2,16 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.util.Arrays;
+import static java.lang.String.format;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
 
 public enum PublicationType {
 
     JOURNAL_ARTICLE("JournalArticle");
 
+    public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid PublicationType, expected one of: %s";
+    public static final String DELIMITER = ", ";
     private String value;
 
     PublicationType(String value) {
@@ -27,13 +31,14 @@ public enum PublicationType {
      * Lookup enum by value.
      *
      * @param value value
-     * @return  enum
+     * @return enum
      */
     public static PublicationType lookup(String value) {
-        return Arrays
-                .stream(values())
+        return stream(values())
                 .filter(publicationType -> publicationType.getValue().equalsIgnoreCase(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException(
+                        format(ERROR_MESSAGE_TEMPLATE, value, stream(PublicationType.values())
+                                .map(PublicationType::toString).collect(joining(DELIMITER)))));
     }
 }
