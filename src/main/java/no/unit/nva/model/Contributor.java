@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Contributor {
 
     private Identity identity;
-    private List<Organization> affiliation;
+    private List<Organization> affiliations;
     private Role role;
     private Integer sequence;
 
@@ -19,7 +19,7 @@ public class Contributor {
 
     private Contributor(Builder builder) {
         setIdentity(builder.identity);
-        setAffiliation(builder.affiliation);
+        setAffiliations(builder.affiliations);
         setSequence(builder.sequence);
         setRole(builder.role);
     }
@@ -32,12 +32,12 @@ public class Contributor {
         this.identity = identity;
     }
 
-    public List<Organization> getAffiliation() {
-        return affiliation;
+    public List<Organization> getAffiliations() {
+        return affiliations;
     }
 
-    public void setAffiliation(List<Organization> affiliation) {
-        this.affiliation = affiliation;
+    public void setAffiliations(List<Organization> affiliations) {
+        this.affiliations = affiliations;
     }
 
     public Integer getSequence() {
@@ -66,19 +66,19 @@ public class Contributor {
         }
         Contributor that = (Contributor) o;
         return Objects.equals(getIdentity(), that.getIdentity())
-                && Objects.equals(getAffiliation(), that.getAffiliation())
+                && Objects.equals(getAffiliations(), that.getAffiliations())
                 && getRole() == that.getRole()
                 && Objects.equals(getSequence(), that.getSequence());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentity(), getAffiliation(), getRole(), getSequence());
+        return Objects.hash(getIdentity(), getAffiliations(), getRole(), getSequence());
     }
 
     public static final class Builder {
         private Identity identity;
-        private List<Organization> affiliation;
+        private List<Organization> affiliations;
         private Integer sequence;
         private Role role;
 
@@ -90,8 +90,8 @@ public class Contributor {
             return this;
         }
 
-        public Builder withAffiliation(List<Organization> affiliation) {
-            this.affiliation = affiliation;
+        public Builder withAffiliations(List<Organization> affiliation) {
+            this.affiliations = affiliation;
             return this;
         }
 

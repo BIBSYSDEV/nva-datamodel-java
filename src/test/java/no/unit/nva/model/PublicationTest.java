@@ -22,8 +22,14 @@ import java.util.UUID;
 
 public class PublicationTest {
 
+    public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContext.json";
+    public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
+    public static final String HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE = "https://nva.unit.no/publication#mainTitle";
     private ObjectMapper objectMapper;
 
+    /**
+     * Constructor for PublicationTest.
+     */
     public PublicationTest() {
         this.objectMapper = new ObjectMapper()
                 .registerModule(new JavaTimeModule())
@@ -35,96 +41,139 @@ public class PublicationTest {
     }
 
     @Test
-    void test() throws IOException {
+    void testPublicationObjectMapping() throws IOException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
         Instant now = Instant.now();
 
-        Publication publication = new Publication.Builder()
-                .withIdentifier(publicationIdentifier)
-                .withCreatedDate(now)
-                .withModifiedDate(now)
-                .withHandle(URI.create("http://example.org/handle/123"))
-                .withLink(URI.create("http://example.org/link"))
-                .withStatus(PublicationStatus.DRAFT)
-                .withPublisher(new Organization.Builder()
-                        .withId(URI.create("http://example.org/org/123"))
-                        .withLabels(Collections.singletonMap("no", "Eksempelforlaget"))
-                        .build()
-                )
-                .withFileSet(new FileSet.Builder()
-                        .withFiles(Collections.singletonList(new File.Builder()
-                                .withIdentifier(fileIdentifier)
-                                .withMimeType("application/pdf")
-                                .withSize(2L)
-                                .withName("new document(1)")
-                                .withLicense(new License.Builder()
-                                        .withIdentifier("NTNU-CC-BY-4.0")
-                                        .withLink(URI.create("http://example.org/license/123"))
-                                        .withLabels(Collections.singletonMap("no", "CC-BY 4.0"))
-                                        .build()
-                                )
-                                .build()
-                        ))
-                        .build()
-                )
-                .withLicense(new License.Builder()
-                        .withIdentifier("NTNU-CC-BY-4.0")
-                        .withLink(URI.create("http://example.org/license/123"))
-                        .withLabels(Collections.singletonMap("no", "CC-BY 4.0"))
-                        .build()
-                )
-                .withEntityDescription(new EntityDescription.Builder()
-                        .withMainTitle("Hovedtittelen")
-                        .withLanguage(URI.create("http://example.org/norsk"))
-                        .withAlternativeTitles(Collections.singletonMap("en", "English title"))
-                        .withDate(new PublicationDate.Builder()
-                                .withYear("2020")
-                                .withMonth("4")
-                                .withDay("7")
-                                .build()
-                        )
-                        .withPublicationType(PublicationType.JOURNAL_ARTICLE.getValue())
-                        .withContributors(Collections.singletonList(new Contributor.Builder()
-                                .withSequence(0)
-                                .withRole(Role.CREATOR)
-                                .withAffiliation(Collections.singletonList(new Organization.Builder()
-                                        .withLabels(Collections.singletonMap("no", "Affiliasjonen"))
-                                        .build()
-                                ))
-                                .withIdentity(new Identity.Builder()
-                                        .withId(URI.create("http://example.org/person/123"))
-                                        .withArpId("arp123")
-                                        .withOrcId("orc123")
-                                        .withName("Navnesen, Navn")
-                                        .withNameType(NameType.PERSONAL)
-                                        .build()
-                                )
-                                .build()
-                        ))
-                        .build()
-                )
-                .withOwner("eier@example.org")
-                .build();
+        Publication publication = getPublication(publicationIdentifier, fileIdentifier, now);
 
-        JsonNode document = objectMapper.readTree(objectMapper.writeValueAsString(publication));
-        JsonNode context = objectMapper.readTree(new FileInputStream("src/main/resources/publicationContext.json"));
-        ContextUtil.injectContext(document, context);
+        JsonNode document = toPublicationWithContext(publication);
         objectMapper.writeValue(System.out, document);
 
-        // Start test of Json-Ld framing
-        Object input = JsonUtils.fromString(objectMapper.writeValueAsString(document));
-        Object frame = JsonUtils.fromInputStream(new FileInputStream("src/main/resources/publicationFrame.json"));
+        Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
+                Publication.class);
+        Assertions.assertEquals(publication, publicationFromJson);
+    }
+
+    private JsonNode toPublicationWithContext(Publication publication) throws IOException {
+        JsonNode document = objectMapper.readTree(objectMapper.writeValueAsString(publication));
+        JsonNode context = objectMapper.readTree(new FileInputStream(PUBLICATION_CONTEXT_JSON));
+        ContextUtil.injectContext(document, context);
+        return document;
+    }
+
+    @Test
+    void testPublicationJsonLdFraming() throws IOException {
+
+        UUID publicationIdentifier = UUID.randomUUID();
+        UUID fileIdentifier = UUID.randomUUID();
+        Instant now = Instant.now();
+
+        Publication publication = getPublication(publicationIdentifier, fileIdentifier, now);
+
+        JsonNode publicationWithContext = toPublicationWithContext(publication);
+
+        Object framedPublication = produceFramedPublication(publicationWithContext);
+        objectMapper.writeValue(System.out, framedPublication);
+
+
+        Assertions.assertTrue(JsonUtils.toString(framedPublication).contains(HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE));
+    }
+
+    private Object produceFramedPublication(JsonNode publicationWithContext) throws IOException {
+        Object input = JsonUtils.fromString(objectMapper.writeValueAsString(publicationWithContext));
+        Object frame = JsonUtils.fromInputStream(new FileInputStream(PUBLICATION_FRAME_JSON));
         JsonLdOptions options = new JsonLdOptions();
         options.setOmitGraph(true);
         options.setPruneBlankNodeIdentifiers(true);
-        Object framed = JsonLdProcessor.frame(input, frame, options);
-        System.out.println(JsonUtils.toPrettyString(framed));
-        // End test of Json-Ld framing
+        return JsonLdProcessor.frame(input, frame, options);
+    }
 
-        Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document), Publication.class);
-        Assertions.assertEquals(publication, publicationFromJson);
+    private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now) {
+        return new Publication.Builder()
+                    .withIdentifier(publicationIdentifier)
+                    .withCreatedDate(now)
+                    .withModifiedDate(now)
+                    .withHandle(URI.create("http://example.org/handle/123"))
+                    .withLink(URI.create("http://example.org/link"))
+                    .withStatus(PublicationStatus.DRAFT)
+                    .withPublisher(getOrganization())
+                    .withFileSet(getFileSet(fileIdentifier))
+                    .withLicense(getLicense())
+                    .withEntityDescription(getEntityDescription())
+                    .withOwner("eier@example.org")
+                    .build();
+    }
+
+    private EntityDescription getEntityDescription() {
+        return new EntityDescription.Builder()
+                .withMainTitle("Hovedtittelen")
+                .withLanguage(URI.create("http://example.org/norsk"))
+                .withAlternativeTitles(Collections.singletonMap("en", "English title"))
+                .withDate(getPublicationDate())
+                .withPublicationType(PublicationType.JOURNAL_ARTICLE.getValue())
+                .withContributors(Collections.singletonList(getContributor()))
+                .build();
+    }
+
+    private Contributor getContributor() {
+        return new Contributor.Builder()
+                .withSequence(0)
+                .withRole(Role.CREATOR)
+                .withAffiliations(Collections.singletonList(getOrganization()))
+                .withIdentity(getIdentity())
+                .build();
+    }
+
+    private Identity getIdentity() {
+        return new Identity.Builder()
+                .withId(URI.create("http://example.org/person/123"))
+                .withArpId("arp123")
+                .withOrcId("orc123")
+                .withName("Navnesen, Navn")
+                .withNameType(NameType.PERSONAL)
+                .build();
+    }
+
+    private PublicationDate getPublicationDate() {
+        return new PublicationDate.Builder()
+                .withYear("2020")
+                .withMonth("4")
+                .withDay("7")
+                .build();
+    }
+
+    private License getLicense() {
+        return new License.Builder()
+                .withIdentifier("NTNU-CC-BY-4.0")
+                .withLink(URI.create("http://example.org/license/123"))
+                .withLabels(Collections.singletonMap("no", "CC-BY 4.0"))
+                .build();
+    }
+
+    private FileSet getFileSet(UUID fileIdentifier) {
+        return new FileSet.Builder()
+                .withFiles(Collections.singletonList(getFile(fileIdentifier)))
+                .build();
+    }
+
+    private File getFile(UUID fileIdentifier) {
+        return new File.Builder()
+                .withIdentifier(fileIdentifier)
+                .withMimeType("application/pdf")
+                .withSize(2L)
+                .withName("new document(1)")
+                .withLicense(getLicense())
+                .build();
+    }
+
+    private Organization getOrganization() {
+        return new Organization.Builder()
+                .withId(URI.create("http://example.org/org/123"))
+                .withLabels(Collections.singletonMap("no", "Eksempelforlaget"))
+                .build();
     }
 
 }
