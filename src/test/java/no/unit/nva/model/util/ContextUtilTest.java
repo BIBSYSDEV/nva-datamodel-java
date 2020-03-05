@@ -15,8 +15,7 @@ public class ContextUtilTest {
         ArrayNode arrayNode = objectMapper.createArrayNode();
         ObjectNode objectNode = objectMapper.createObjectNode();
 
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> ContextUtil.injectContext(arrayNode, objectNode),
+        Assertions.assertThrows(IllegalArgumentException.class, () -> ContextUtil.injectContext(arrayNode, objectNode),
                 ContextUtil.ERROR_MESSAGE);
 
     }

@@ -10,7 +10,7 @@ import java.util.Objects;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class EntityDescription {
 
-    private String publicationType;
+    private PublicationType publicationType;
     private String mainTitle;
     private Map<String, String> alternativeTitles;
     private URI language;
@@ -30,11 +30,11 @@ public class EntityDescription {
         setContributors(builder.contributors);
     }
 
-    public String getPublicationType() {
+    public PublicationType getPublicationType() {
         return publicationType;
     }
 
-    public void setPublicationType(String publicationType) {
+    public void setPublicationType(PublicationType publicationType) {
         this.publicationType = publicationType;
     }
 
@@ -102,7 +102,7 @@ public class EntityDescription {
     }
 
     public static final class Builder {
-        private String publicationType;
+        private PublicationType publicationType;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
         private URI language;
@@ -112,7 +112,7 @@ public class EntityDescription {
         public Builder() {
         }
 
-        public Builder withPublicationType(String type) {
+        public Builder withPublicationType(PublicationType type) {
             this.publicationType = type;
             return this;
         }

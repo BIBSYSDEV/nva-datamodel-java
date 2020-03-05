@@ -113,7 +113,7 @@ public class PublicationTest {
                 .withLanguage(URI.create("http://example.org/norsk"))
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
-                .withPublicationType(PublicationType.JOURNAL_ARTICLE.getValue())
+                .withPublicationType(PublicationType.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
                 .build();
     }
