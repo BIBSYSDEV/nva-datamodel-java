@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.net.URI;
@@ -16,6 +17,8 @@ public class EntityDescription {
     private URI language;
     private PublicationDate date;
     private List<Contributor> contributors;
+    @JsonSetter("abstract")
+    private String mainLanguageAbstract;
 
     public EntityDescription() {
 
@@ -28,6 +31,7 @@ public class EntityDescription {
         setLanguage(builder.language);
         setDate(builder.date);
         setContributors(builder.contributors);
+        setAbstract(builder.mainLanguageAbstract);
     }
 
     public PublicationType getPublicationType() {
@@ -92,7 +96,8 @@ public class EntityDescription {
                 && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
                 && Objects.equals(getLanguage(), that.getLanguage())
                 && Objects.equals(getDate(), that.getDate())
-                && Objects.equals(getContributors(), that.getContributors());
+                && Objects.equals(getContributors(), that.getContributors())
+                && Objects.equals(getAbstract(), that.getAbstract());
     }
 
     @Override
@@ -101,7 +106,16 @@ public class EntityDescription {
                 getContributors());
     }
 
+    public String getAbstract() {
+        return mainLanguageAbstract;
+    }
+
+    public void setAbstract(String mainLanguageAbstract) {
+        this.mainLanguageAbstract = mainLanguageAbstract;
+    }
+
     public static final class Builder {
+        public String mainLanguageAbstract;
         private PublicationType publicationType;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
@@ -139,6 +153,11 @@ public class EntityDescription {
 
         public Builder withContributors(List<Contributor> contributors) {
             this.contributors = contributors;
+            return this;
+        }
+
+        public Builder withAbstract(String mainLanguageAbstract) {
+            this.mainLanguageAbstract = mainLanguageAbstract;
             return this;
         }
 

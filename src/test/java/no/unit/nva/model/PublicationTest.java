@@ -50,7 +50,6 @@ public class PublicationTest {
         Publication publication = getPublication(publicationIdentifier, fileIdentifier, now);
 
         JsonNode document = toPublicationWithContext(publication);
-        objectMapper.writeValue(System.out, document);
 
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
                 Publication.class);
@@ -76,8 +75,6 @@ public class PublicationTest {
         JsonNode publicationWithContext = toPublicationWithContext(publication);
 
         Object framedPublication = produceFramedPublication(publicationWithContext);
-        objectMapper.writeValue(System.out, framedPublication);
-
 
         Assertions.assertTrue(JsonUtils.toString(framedPublication).contains(HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE));
     }
@@ -115,6 +112,7 @@ public class PublicationTest {
                 .withDate(getPublicationDate())
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
+                .withAbstract("En lang streng som beskriver innholdet i dokumentet metdataene omtaler.")
                 .build();
     }
 
