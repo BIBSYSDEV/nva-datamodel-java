@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.net.URI;
@@ -16,6 +17,7 @@ public class EntityDescription {
     private URI language;
     private PublicationDate date;
     private List<Contributor> contributors;
+    @JsonSetter("abstract")
     private String mainLanguageAbstract;
 
     public EntityDescription() {
