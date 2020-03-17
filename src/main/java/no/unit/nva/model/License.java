@@ -6,7 +6,7 @@ import java.net.URI;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class License {
 
     private String identifier;

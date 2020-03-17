@@ -5,21 +5,24 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Publication {
 
-    private Instant createdDate;
-    private PublicationStatus status;
-    private URI handle;
-    private Instant publishedDate;
-    private Instant modifiedDate;
-    private String owner;
-    private Instant indexedDate;
+    public static final String DYNAMODB_KEY_DELIMITER = "#";
+    
     private UUID identifier;
-    private URI link;
+    private PublicationStatus status;
+    private String owner;
     private Organization publisher;
+    private Instant createdDate;
+    private Instant modifiedDate;
+    private Instant publishedDate;
+    private Instant indexedDate;
+    private URI handle;
+    private URI link;
     private EntityDescription entityDescription;
     private License license;
     private FileSet fileSet;
@@ -42,6 +45,33 @@ public class Publication {
         setEntityDescription(builder.entityDescription);
         setLicense(builder.license);
         setFileSet(builder.fileSet);
+    }
+
+    /**
+     * Getter to create value used in DynamoDB indexing during serialization.
+     *
+     * @return publisherId
+     */
+    public String getPublisherId() {
+        Organization publisher = Optional.ofNullable(getPublisher()).orElseThrow(
+            () -> new IllegalStateException("Object publisher can not be null"));
+        return Optional.ofNullable(publisher.getId()).orElseThrow(
+            () -> new IllegalStateException("Property publisher.id can not be null")).toString();
+    }
+
+    /**
+     * Getter to create value used in DynamoDB indexing during serialization.
+     *
+     * @return publisherOwnerDate
+     */
+    public String getPublisherOwnerDate() {
+        return String.join(DYNAMODB_KEY_DELIMITER,
+                getPublisherId(),
+                Optional.ofNullable(getOwner()).orElseThrow(
+                    () -> new IllegalStateException("Property owner can not be null")),
+                Optional.ofNullable(getModifiedDate()).orElseThrow(
+                    () -> new IllegalStateException("Property modifiedDate can not be null")).toString()
+        );
     }
 
     public Instant getCreatedDate() {
