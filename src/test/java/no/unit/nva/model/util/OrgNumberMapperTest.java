@@ -14,13 +14,13 @@ public class OrgNumberMapperTest {
     public static final String INVALID_ORG_NUMBER = "123";
 
     @Test
-    public void testOrgNumberExistingInMapReturnsCristinId() {
+    public void orgNumberExistingInMapReturnsCristinId() {
         URI cristinId = OrgNumberMapper.toCristinId(VALID_ORG_NUMBER);
         Assertions.assertEquals(VALID_CRISTIN_ID, cristinId.toString());
     }
 
     @Test
-    public void testOrgNumberMissingInMapThrowsException() {
+    public void prgNumberMissingInMapThrowsException() {
         Assertions.assertThrows(IllegalStateException.class, () -> {
             OrgNumberMapper.toCristinId(INVALID_ORG_NUMBER);
         }, NO_MAPPING_ERROR_MESSAGE +  INVALID_ORG_NUMBER);

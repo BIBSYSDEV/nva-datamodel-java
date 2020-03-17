@@ -11,6 +11,8 @@ import java.util.UUID;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Publication {
 
+    public static final String DYNAMODB_KEY_DELIMITER = "#";
+    
     private UUID identifier;
     private PublicationStatus status;
     private String owner;
@@ -63,7 +65,7 @@ public class Publication {
      * @return publisherOwnerDate
      */
     public String getPublisherOwnerDate() {
-        return String.join("#",
+        return String.join(DYNAMODB_KEY_DELIMITER,
                 getPublisherId(),
                 Optional.ofNullable(getOwner()).orElseThrow(
                     () -> new IllegalStateException("Property owner can not be null")),
