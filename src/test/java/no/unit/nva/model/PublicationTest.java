@@ -113,6 +113,7 @@ public class PublicationTest {
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metdataene omtaler.")
+                .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
                 .build();
     }
 

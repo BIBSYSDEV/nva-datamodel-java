@@ -19,6 +19,7 @@ public class EntityDescription {
     private List<Contributor> contributors;
     @JsonSetter("abstract")
     private String mainLanguageAbstract;
+    private String description;
 
     public EntityDescription() {
 
@@ -32,6 +33,7 @@ public class EntityDescription {
         setDate(builder.date);
         setContributors(builder.contributors);
         setAbstract(builder.mainLanguageAbstract);
+        setDescription(builder.description);
     }
 
     public PublicationType getPublicationType() {
@@ -114,8 +116,17 @@ public class EntityDescription {
         this.mainLanguageAbstract = mainLanguageAbstract;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public static final class Builder {
         public String mainLanguageAbstract;
+        public String description;
         private PublicationType publicationType;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
@@ -158,6 +169,11 @@ public class EntityDescription {
 
         public Builder withAbstract(String mainLanguageAbstract) {
             this.mainLanguageAbstract = mainLanguageAbstract;
+            return this;
+        }
+
+        public Builder withDescription(String description) {
+            this.description = description;
             return this;
         }
 
