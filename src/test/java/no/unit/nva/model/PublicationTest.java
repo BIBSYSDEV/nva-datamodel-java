@@ -112,6 +112,7 @@ public class PublicationTest {
                 .withDate(getPublicationDate())
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
+                .withAbstract("En lang streng som beskriver innholdet i dokumentet metdataene omtaler.")
                 .build();
     }
 
