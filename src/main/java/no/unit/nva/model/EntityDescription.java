@@ -99,7 +99,8 @@ public class EntityDescription {
                 && Objects.equals(getLanguage(), that.getLanguage())
                 && Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getContributors(), that.getContributors())
-                && Objects.equals(getAbstract(), that.getAbstract());
+                && Objects.equals(getAbstract(), that.getAbstract())
+                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading());
     }
 
     @Override
@@ -125,8 +126,8 @@ public class EntityDescription {
     }
 
     public static final class Builder {
-        public String mainLanguageAbstract;
-        public String npiSubjectHeading;
+        private String mainLanguageAbstract;
+        private String npiSubjectHeading;
         private PublicationType publicationType;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
