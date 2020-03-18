@@ -19,6 +19,7 @@ public class EntityDescription {
     private List<Contributor> contributors;
     @JsonSetter("abstract")
     private String mainLanguageAbstract;
+    private String npiSubjectHeading;
 
     public EntityDescription() {
 
@@ -32,6 +33,7 @@ public class EntityDescription {
         setDate(builder.date);
         setContributors(builder.contributors);
         setAbstract(builder.mainLanguageAbstract);
+        setNpiSubjectHeading(builder.npiSubjectHeading);
     }
 
     public PublicationType getPublicationType() {
@@ -97,7 +99,8 @@ public class EntityDescription {
                 && Objects.equals(getLanguage(), that.getLanguage())
                 && Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getContributors(), that.getContributors())
-                && Objects.equals(getAbstract(), that.getAbstract());
+                && Objects.equals(getAbstract(), that.getAbstract())
+                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading());
     }
 
     @Override
@@ -114,8 +117,17 @@ public class EntityDescription {
         this.mainLanguageAbstract = mainLanguageAbstract;
     }
 
+    public String getNpiSubjectHeading() {
+        return npiSubjectHeading;
+    }
+
+    public void setNpiSubjectHeading(String npiSubjectHeading) {
+        this.npiSubjectHeading = npiSubjectHeading;
+    }
+
     public static final class Builder {
-        public String mainLanguageAbstract;
+        private String mainLanguageAbstract;
+        private String npiSubjectHeading;
         private PublicationType publicationType;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
@@ -158,6 +170,11 @@ public class EntityDescription {
 
         public Builder withAbstract(String mainLanguageAbstract) {
             this.mainLanguageAbstract = mainLanguageAbstract;
+            return this;
+        }
+
+        public Builder withNpiSubjectHeading(String npiSubjectHeading) {
+            this.npiSubjectHeading = npiSubjectHeading;
             return this;
         }
 
