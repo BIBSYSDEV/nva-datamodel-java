@@ -117,7 +117,33 @@ public class PublicationTest {
                 .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
+                .withJournalReference(getJournalReference())
+                .build();
+    }
+
+    private JournalReference getJournalReference() {
+        return new JournalReference.Builder()
+                .withPublishingContext(getPublishingContext())
+                .withDoi("123123/213123")
+                .withPublicationInstance(getPublicationInstance())
+                .build();
+    }
+
+    private PublicationInstance getPublicationInstance() {
+        return new PublicationInstance.Builder()
+                .withArticleNumber("1234456")
+                .withIssue("2")
+                .withVolume("24")
                 .withPages(getPages())
+                .build();
+    }
+
+    private PublicationContext getPublishingContext() {
+        return new PublicationContext.Builder()
+                .withLevel(Level.LEVEL_1)
+                .withName("Tim's lovely publishing house")
+                .withPeerReviewed(true)
+                .withOpenAccess(true)
                 .build();
     }
 
@@ -169,6 +195,9 @@ public class PublicationTest {
                 .withSize(2L)
                 .withName("new document(1)")
                 .withLicense(getLicense())
+                .withAdministrativeAgreement(true)
+                .withPublisherAuthority(true)
+                .withEmbargoDate(Instant.now())
                 .build();
     }
 

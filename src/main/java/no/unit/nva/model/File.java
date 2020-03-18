@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,6 +14,9 @@ public class File {
     private String mimeType;
     private Long size;
     private License license;
+    private boolean administrativeAgreement;
+    private boolean publisher;
+    private Instant embargoDate;
 
     public File() {
 
@@ -24,6 +28,9 @@ public class File {
         setMimeType(builder.mimeType);
         setSize(builder.size);
         setLicense(builder.license);
+        setAdministrativeAgreement(builder.administrativeAgreement);
+        setPublisher(builder.publisherAuthority);
+        setEmbargoDate(builder.embargoDate);
     }
 
     public UUID getIdentifier() {
@@ -66,28 +73,34 @@ public class File {
         this.license = license;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        File file = (File) o;
-        return Objects.equals(getIdentifier(), file.getIdentifier())
-                && Objects.equals(getName(), file.getName())
-                && Objects.equals(getMimeType(), file.getMimeType())
-                && Objects.equals(getSize(), file.getSize())
-                && Objects.equals(getLicense(), file.getLicense());
+    public boolean isAdministrativeAgreement() {
+        return administrativeAgreement;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(), getLicense());
+    public void setAdministrativeAgreement(boolean administrativeAgreement) {
+        this.administrativeAgreement = administrativeAgreement;
+    }
+
+    public boolean isPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(boolean publisher) {
+        this.publisher = publisher;
+    }
+
+    public Instant getEmbargoDate() {
+        return embargoDate;
+    }
+
+    public void setEmbargoDate(Instant embargoDate) {
+        this.embargoDate = embargoDate;
     }
 
     public static final class Builder {
+        public boolean administrativeAgreement;
+        public boolean publisherAuthority;
+        public Instant embargoDate;
         private UUID identifier;
         private String name;
         private String mimeType;
@@ -122,8 +135,48 @@ public class File {
             return this;
         }
 
+        public Builder withAdministrativeAgreement(boolean administrativeAgreement) {
+            this.administrativeAgreement = administrativeAgreement;
+            return this;
+        }
+
+        public Builder withPublisherAuthority(boolean publisherAuthority) {
+            this.publisherAuthority = publisherAuthority;
+            return this;
+        }
+
+        public Builder withEmbargoDate(Instant embargoDate) {
+            this.embargoDate = embargoDate;
+            return this;
+        }
+
         public File build() {
             return new File(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof File)) {
+            return false;
+        }
+        File file = (File) o;
+        return isAdministrativeAgreement() == file.isAdministrativeAgreement()
+                && isPublisher() == file.isPublisher()
+                && Objects.equals(getIdentifier(), file.getIdentifier())
+                && Objects.equals(getName(), file.getName())
+                && Objects.equals(getMimeType(), file.getMimeType())
+                && Objects.equals(getSize(), file.getSize())
+                && Objects.equals(getLicense(), file.getLicense())
+                && Objects.equals(getEmbargoDate(), file.getEmbargoDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(),
+                getLicense(), isAdministrativeAgreement(), isPublisher(), getEmbargoDate());
     }
 }

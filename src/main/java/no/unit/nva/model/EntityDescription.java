@@ -22,7 +22,7 @@ public class EntityDescription {
     private String npiSubjectHeading;
     private List<String> tags;
     private String description;
-    private Pages pages;
+    private JournalReference journalReference;
 
     public EntityDescription() {
 
@@ -39,7 +39,7 @@ public class EntityDescription {
         setNpiSubjectHeading(builder.npiSubjectHeading);
         setTags(builder.tags);
         setDescription(builder.description);
-        setPages(builder.pages);
+        setJournalReference(builder.journalReference);
     }
 
     public PublicationType getPublicationType() {
@@ -110,7 +110,7 @@ public class EntityDescription {
                 && Objects.equals(getAbstract(), that.getAbstract())
                 && Objects.equals(getTags(), that.getTags())
                 && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getPages(), that.getPages());
+                && Objects.equals(getJournalReference(), that.getJournalReference());
     }
 
     @Override
@@ -151,15 +151,16 @@ public class EntityDescription {
         this.description = description;
     }
 
-    public Pages getPages() {
-        return pages;
+    public JournalReference getJournalReference() {
+        return journalReference;
     }
 
-    public void setPages(Pages pages) {
-        this.pages = pages;
+    public void setJournalReference(JournalReference reference) {
+        this.journalReference = reference;
     }
 
     public static final class Builder {
+        public JournalReference journalReference;
         private String mainLanguageAbstract;
         private String description;
         private List<String> tags;
@@ -170,7 +171,6 @@ public class EntityDescription {
         private URI language;
         private PublicationDate date;
         private List<Contributor> contributors;
-        private Pages pages;
 
         public Builder() {
         }
@@ -225,8 +225,8 @@ public class EntityDescription {
             return this;
         }
 
-        public Builder withPages(Pages pages) {
-            this.pages = pages;
+        public Builder withJournalReference(JournalReference journalReference) {
+            this.journalReference = journalReference;
             return this;
         }
 
