@@ -114,6 +114,7 @@ public class PublicationTest {
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metdataene omtaler.")
+                .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .build();
     }
