@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -112,7 +113,9 @@ public class PublicationTest {
                 .withDate(getPublicationDate())
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
-                .withAbstract("En lang streng som beskriver innholdet i dokumentet metdataene omtaler.")
+                .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
+                .withNpiSubjectHeading("010")
+                .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
                 .build();
     }
