@@ -22,6 +22,7 @@ public class EntityDescription {
     private String npiSubjectHeading;
     private List<String> tags;
     private String description;
+    private Pages pages;
 
     public EntityDescription() {
 
@@ -38,6 +39,7 @@ public class EntityDescription {
         setNpiSubjectHeading(builder.npiSubjectHeading);
         setTags(builder.tags);
         setDescription(builder.description);
+        setPages(builder.pages);
     }
 
     public PublicationType getPublicationType() {
@@ -107,7 +109,8 @@ public class EntityDescription {
                 && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
                 && Objects.equals(getAbstract(), that.getAbstract())
                 && Objects.equals(getTags(), that.getTags())
-                && Objects.equals(getDescription(), that.getDescription());
+                && Objects.equals(getDescription(), that.getDescription())
+                && Objects.equals(getPages(), that.getPages());
     }
 
     @Override
@@ -148,6 +151,14 @@ public class EntityDescription {
         this.description = description;
     }
 
+    public Pages getPages() {
+        return pages;
+    }
+
+    public void setPages(Pages pages) {
+        this.pages = pages;
+    }
+
     public static final class Builder {
         private String mainLanguageAbstract;
         private String description;
@@ -159,6 +170,7 @@ public class EntityDescription {
         private URI language;
         private PublicationDate date;
         private List<Contributor> contributors;
+        private Pages pages;
 
         public Builder() {
         }
@@ -210,6 +222,11 @@ public class EntityDescription {
 
         public Builder withTags(List<String> tags) {
             this.tags = tags;
+            return this;
+        }
+
+        public Builder withPages(Pages pages) {
+            this.pages = pages;
             return this;
         }
 

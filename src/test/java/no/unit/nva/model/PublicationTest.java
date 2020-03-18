@@ -117,6 +117,7 @@ public class PublicationTest {
                 .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
+                .withPages(getPages())
                 .build();
     }
 
@@ -175,6 +176,13 @@ public class PublicationTest {
         return new Organization.Builder()
                 .withId(URI.create("http://example.org/org/123"))
                 .withLabels(Collections.singletonMap("no", "Eksempelforlaget"))
+                .build();
+    }
+
+    private Pages getPages() {
+        return new Pages.Builder()
+                .withBegins("1")
+                .withEnds("15")
                 .build();
     }
 
