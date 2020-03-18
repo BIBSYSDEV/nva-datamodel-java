@@ -20,6 +20,7 @@ public class EntityDescription {
     @JsonSetter("abstract")
     private String mainLanguageAbstract;
     private String npiSubjectHeading;
+    private List<String> tags;
 
     public EntityDescription() {
 
@@ -34,6 +35,7 @@ public class EntityDescription {
         setContributors(builder.contributors);
         setAbstract(builder.mainLanguageAbstract);
         setNpiSubjectHeading(builder.npiSubjectHeading);
+        setTags(builder.tags);
     }
 
     public PublicationType getPublicationType() {
@@ -100,7 +102,9 @@ public class EntityDescription {
                 && Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getContributors(), that.getContributors())
                 && Objects.equals(getAbstract(), that.getAbstract())
-                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading());
+                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
+                && Objects.equals(getAbstract(), that.getAbstract())
+                && Objects.equals(getTags(), that.getTags());
     }
 
     @Override
@@ -125,8 +129,17 @@ public class EntityDescription {
         this.npiSubjectHeading = npiSubjectHeading;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public static final class Builder {
         private String mainLanguageAbstract;
+        private List<String> tags;
         private String npiSubjectHeading;
         private PublicationType publicationType;
         private String mainTitle;
@@ -175,6 +188,11 @@ public class EntityDescription {
 
         public Builder withNpiSubjectHeading(String npiSubjectHeading) {
             this.npiSubjectHeading = npiSubjectHeading;
+            return this;
+        }
+
+        public Builder withTags(List<String> tags) {
+            this.tags = tags;
             return this;
         }
 

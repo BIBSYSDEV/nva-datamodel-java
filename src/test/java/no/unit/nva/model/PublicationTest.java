@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -114,6 +115,7 @@ public class PublicationTest {
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metdataene omtaler.")
                 .withNpiSubjectHeading("010")
+                .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .build();
     }
 
