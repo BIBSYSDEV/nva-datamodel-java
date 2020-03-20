@@ -15,7 +15,7 @@ public class File {
     private Long size;
     private License license;
     private boolean administrativeAgreement;
-    private boolean publisher;
+    private boolean publisherAuthority;
     private Instant embargoDate;
 
     public File() {
@@ -29,7 +29,7 @@ public class File {
         setSize(builder.size);
         setLicense(builder.license);
         setAdministrativeAgreement(builder.administrativeAgreement);
-        setPublisher(builder.publisherAuthority);
+        setPublisherAuthority(builder.publisherAuthority);
         setEmbargoDate(builder.embargoDate);
     }
 
@@ -81,12 +81,12 @@ public class File {
         this.administrativeAgreement = administrativeAgreement;
     }
 
-    public boolean isPublisher() {
-        return publisher;
+    public boolean isPublisherAuthority() {
+        return publisherAuthority;
     }
 
-    public void setPublisher(boolean publisher) {
-        this.publisher = publisher;
+    public void setPublisherAuthority(boolean publisherAuthority) {
+        this.publisherAuthority = publisherAuthority;
     }
 
     public Instant getEmbargoDate() {
@@ -165,7 +165,7 @@ public class File {
         }
         File file = (File) o;
         return isAdministrativeAgreement() == file.isAdministrativeAgreement()
-                && isPublisher() == file.isPublisher()
+                && isPublisherAuthority() == file.isPublisherAuthority()
                 && Objects.equals(getIdentifier(), file.getIdentifier())
                 && Objects.equals(getName(), file.getName())
                 && Objects.equals(getMimeType(), file.getMimeType())
@@ -177,6 +177,6 @@ public class File {
     @Override
     public int hashCode() {
         return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(),
-                getLicense(), isAdministrativeAgreement(), isPublisher(), getEmbargoDate());
+                getLicense(), isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate());
     }
 }
