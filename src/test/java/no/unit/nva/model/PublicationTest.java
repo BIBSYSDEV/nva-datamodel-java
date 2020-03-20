@@ -121,8 +121,8 @@ public class PublicationTest {
                 .build();
     }
 
-    private JournalReference getJournalReference() {
-        return new JournalReference.Builder()
+    private Reference getJournalReference() {
+        return new Reference.Builder()
                 .withPublishingContext(getPublishingContext())
                 .withDoi("123123/213123")
                 .withPublicationInstance(getPublicationInstance())

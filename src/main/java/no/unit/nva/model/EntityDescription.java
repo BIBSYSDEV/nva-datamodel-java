@@ -22,7 +22,7 @@ public class EntityDescription {
     private String npiSubjectHeading;
     private List<String> tags;
     private String description;
-    private JournalReference journalReference;
+    private Reference reference;
 
     public EntityDescription() {
 
@@ -39,7 +39,7 @@ public class EntityDescription {
         setNpiSubjectHeading(builder.npiSubjectHeading);
         setTags(builder.tags);
         setDescription(builder.description);
-        setJournalReference(builder.journalReference);
+        setReference(builder.reference);
     }
 
     public PublicationType getPublicationType() {
@@ -110,7 +110,7 @@ public class EntityDescription {
                 && Objects.equals(getAbstract(), that.getAbstract())
                 && Objects.equals(getTags(), that.getTags())
                 && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getJournalReference(), that.getJournalReference());
+                && Objects.equals(getReference(), that.getReference());
     }
 
     @Override
@@ -151,16 +151,16 @@ public class EntityDescription {
         this.description = description;
     }
 
-    public JournalReference getJournalReference() {
-        return journalReference;
+    public Reference getReference() {
+        return reference;
     }
 
-    public void setJournalReference(JournalReference reference) {
-        this.journalReference = reference;
+    public void setReference(Reference reference) {
+        this.reference = reference;
     }
 
     public static final class Builder {
-        public JournalReference journalReference;
+        private Reference reference;
         private String mainLanguageAbstract;
         private String description;
         private List<String> tags;
@@ -225,8 +225,8 @@ public class EntityDescription {
             return this;
         }
 
-        public Builder withJournalReference(JournalReference journalReference) {
-            this.journalReference = journalReference;
+        public Builder withJournalReference(Reference reference) {
+            this.reference = reference;
             return this;
         }
 

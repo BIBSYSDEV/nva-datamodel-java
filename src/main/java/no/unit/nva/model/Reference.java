@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalReference {
+public class Reference {
     private PublicationContext publicationContext;
     private String doi;
     private PublicationInstance publicationInstance;
 
-    public JournalReference() {
+    public Reference() {
 
     }
 
-    private JournalReference(Builder builder) {
+    private Reference(Builder builder) {
         setPublicationContext(builder.publicationContext);
         setDoi(builder.doi);
         setPublicationInstance(builder.publicationInstance);
@@ -45,7 +45,7 @@ public class JournalReference {
     }
 
     public static final class Builder {
-        public PublicationInstance publicationInstance;
+        private PublicationInstance publicationInstance;
         private PublicationContext publicationContext;
         private String doi;
 
@@ -64,8 +64,8 @@ public class JournalReference {
             return this;
         }
 
-        public JournalReference build() {
-            return new JournalReference(this);
+        public Reference build() {
+            return new Reference(this);
         }
     }
 
@@ -74,10 +74,10 @@ public class JournalReference {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof JournalReference)) {
+        if (!(o instanceof Reference)) {
             return false;
         }
-        JournalReference that = (JournalReference) o;
+        Reference that = (Reference) o;
         return Objects.equals(getPublicationContext(), that.getPublicationContext())
                 && Objects.equals(getDoi(), that.getDoi())
                 && Objects.equals(getPublicationInstance(), that.getPublicationInstance());
