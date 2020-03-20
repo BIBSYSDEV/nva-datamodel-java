@@ -58,8 +58,8 @@ public class PublicationContext {
     }
 
     public static class Builder {
-        public String name;
-        public Level level;
+        private String name;
+        private Level level;
         public boolean openAccess;
         public boolean peerReviewed;
 
