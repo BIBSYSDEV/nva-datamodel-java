@@ -97,6 +97,31 @@ public class File {
         this.embargoDate = embargoDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof File)) {
+            return false;
+        }
+        File file = (File) o;
+        return isAdministrativeAgreement() == file.isAdministrativeAgreement()
+                && isPublisherAuthority() == file.isPublisherAuthority()
+                && Objects.equals(getIdentifier(), file.getIdentifier())
+                && Objects.equals(getName(), file.getName())
+                && Objects.equals(getMimeType(), file.getMimeType())
+                && Objects.equals(getSize(), file.getSize())
+                && Objects.equals(getLicense(), file.getLicense())
+                && Objects.equals(getEmbargoDate(), file.getEmbargoDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(),
+                getLicense(), isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate());
+    }
+
     public static final class Builder {
         public boolean administrativeAgreement;
         public boolean publisherAuthority;
@@ -153,30 +178,5 @@ public class File {
         public File build() {
             return new File(this);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof File)) {
-            return false;
-        }
-        File file = (File) o;
-        return isAdministrativeAgreement() == file.isAdministrativeAgreement()
-                && isPublisherAuthority() == file.isPublisherAuthority()
-                && Objects.equals(getIdentifier(), file.getIdentifier())
-                && Objects.equals(getName(), file.getName())
-                && Objects.equals(getMimeType(), file.getMimeType())
-                && Objects.equals(getSize(), file.getSize())
-                && Objects.equals(getLicense(), file.getLicense())
-                && Objects.equals(getEmbargoDate(), file.getEmbargoDate());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(),
-                getLicense(), isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate());
     }
 }
