@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,6 +14,9 @@ public class File {
     private String mimeType;
     private Long size;
     private License license;
+    private boolean administrativeAgreement;
+    private boolean publisherAuthority;
+    private Instant embargoDate;
 
     public File() {
 
@@ -24,6 +28,9 @@ public class File {
         setMimeType(builder.mimeType);
         setSize(builder.size);
         setLicense(builder.license);
+        setAdministrativeAgreement(builder.administrativeAgreement);
+        setPublisherAuthority(builder.publisherAuthority);
+        setEmbargoDate(builder.embargoDate);
     }
 
     public UUID getIdentifier() {
@@ -66,28 +73,59 @@ public class File {
         this.license = license;
     }
 
+    public boolean isAdministrativeAgreement() {
+        return administrativeAgreement;
+    }
+
+    public void setAdministrativeAgreement(boolean administrativeAgreement) {
+        this.administrativeAgreement = administrativeAgreement;
+    }
+
+    public boolean isPublisherAuthority() {
+        return publisherAuthority;
+    }
+
+    public void setPublisherAuthority(boolean publisherAuthority) {
+        this.publisherAuthority = publisherAuthority;
+    }
+
+    public Instant getEmbargoDate() {
+        return embargoDate;
+    }
+
+    public void setEmbargoDate(Instant embargoDate) {
+        this.embargoDate = embargoDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof File)) {
             return false;
         }
         File file = (File) o;
-        return Objects.equals(getIdentifier(), file.getIdentifier())
+        return isAdministrativeAgreement() == file.isAdministrativeAgreement()
+                && isPublisherAuthority() == file.isPublisherAuthority()
+                && Objects.equals(getIdentifier(), file.getIdentifier())
                 && Objects.equals(getName(), file.getName())
                 && Objects.equals(getMimeType(), file.getMimeType())
                 && Objects.equals(getSize(), file.getSize())
-                && Objects.equals(getLicense(), file.getLicense());
+                && Objects.equals(getLicense(), file.getLicense())
+                && Objects.equals(getEmbargoDate(), file.getEmbargoDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(), getLicense());
+        return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(),
+                getLicense(), isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate());
     }
 
     public static final class Builder {
+        public boolean administrativeAgreement;
+        public boolean publisherAuthority;
+        public Instant embargoDate;
         private UUID identifier;
         private String name;
         private String mimeType;
@@ -119,6 +157,21 @@ public class File {
 
         public Builder withLicense(License license) {
             this.license = license;
+            return this;
+        }
+
+        public Builder withAdministrativeAgreement(boolean administrativeAgreement) {
+            this.administrativeAgreement = administrativeAgreement;
+            return this;
+        }
+
+        public Builder withPublisherAuthority(boolean publisherAuthority) {
+            this.publisherAuthority = publisherAuthority;
+            return this;
+        }
+
+        public Builder withEmbargoDate(Instant embargoDate) {
+            this.embargoDate = embargoDate;
             return this;
         }
 

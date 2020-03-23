@@ -22,6 +22,7 @@ public class EntityDescription {
     private String npiSubjectHeading;
     private List<String> tags;
     private String description;
+    private Reference reference;
 
     public EntityDescription() {
 
@@ -38,6 +39,7 @@ public class EntityDescription {
         setNpiSubjectHeading(builder.npiSubjectHeading);
         setTags(builder.tags);
         setDescription(builder.description);
+        setReference(builder.reference);
     }
 
     public PublicationType getPublicationType() {
@@ -107,7 +109,8 @@ public class EntityDescription {
                 && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
                 && Objects.equals(getAbstract(), that.getAbstract())
                 && Objects.equals(getTags(), that.getTags())
-                && Objects.equals(getDescription(), that.getDescription());
+                && Objects.equals(getDescription(), that.getDescription())
+                && Objects.equals(getReference(), that.getReference());
     }
 
     @Override
@@ -148,7 +151,16 @@ public class EntityDescription {
         this.description = description;
     }
 
+    public Reference getReference() {
+        return reference;
+    }
+
+    public void setReference(Reference reference) {
+        this.reference = reference;
+    }
+
     public static final class Builder {
+        private Reference reference;
         private String mainLanguageAbstract;
         private String description;
         private List<String> tags;
@@ -210,6 +222,11 @@ public class EntityDescription {
 
         public Builder withTags(List<String> tags) {
             this.tags = tags;
+            return this;
+        }
+
+        public Builder withJournalReference(Reference reference) {
+            this.reference = reference;
             return this;
         }
 

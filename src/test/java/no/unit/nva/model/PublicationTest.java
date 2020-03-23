@@ -117,6 +117,33 @@ public class PublicationTest {
                 .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
+                .withJournalReference(getJournalReference())
+                .build();
+    }
+
+    private Reference getJournalReference() {
+        return new Reference.Builder()
+                .withPublishingContext(getPublishingContext())
+                .withDoi("123123/213123")
+                .withPublicationInstance(getPublicationInstance())
+                .build();
+    }
+
+    private PublicationInstance getPublicationInstance() {
+        return new PublicationInstance.Builder()
+                .withArticleNumber("1234456")
+                .withIssue("2")
+                .withVolume("24")
+                .withPages(getPages())
+                .build();
+    }
+
+    private PublicationContext getPublishingContext() {
+        return new PublicationContext.Builder()
+                .withLevel(Level.LEVEL_1)
+                .withName("Tim's lovely publishing house")
+                .withPeerReviewed(true)
+                .withOpenAccess(true)
                 .build();
     }
 
@@ -168,6 +195,9 @@ public class PublicationTest {
                 .withSize(2L)
                 .withName("new document(1)")
                 .withLicense(getLicense())
+                .withAdministrativeAgreement(true)
+                .withPublisherAuthority(true)
+                .withEmbargoDate(Instant.now())
                 .build();
     }
 
@@ -175,6 +205,13 @@ public class PublicationTest {
         return new Organization.Builder()
                 .withId(URI.create("http://example.org/org/123"))
                 .withLabels(Collections.singletonMap("no", "Eksempelforlaget"))
+                .build();
+    }
+
+    private Pages getPages() {
+        return new Pages.Builder()
+                .withBegins("1")
+                .withEnds("15")
                 .build();
     }
 
