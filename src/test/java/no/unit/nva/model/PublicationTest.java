@@ -19,6 +19,7 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class PublicationTest {
@@ -91,18 +92,44 @@ public class PublicationTest {
 
     private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now) {
         return new Publication.Builder()
-                    .withIdentifier(publicationIdentifier)
-                    .withCreatedDate(now)
-                    .withModifiedDate(now)
-                    .withHandle(URI.create("http://example.org/handle/123"))
-                    .withLink(URI.create("http://example.org/link"))
-                    .withStatus(PublicationStatus.DRAFT)
-                    .withPublisher(getOrganization())
-                    .withFileSet(getFileSet(fileIdentifier))
-                    .withLicense(getLicense())
-                    .withEntityDescription(getEntityDescription())
-                    .withOwner("eier@example.org")
-                    .build();
+                .withIdentifier(publicationIdentifier)
+                .withCreatedDate(now)
+                .withModifiedDate(now)
+                .withHandle(URI.create("http://example.org/handle/123"))
+                .withLink(URI.create("http://example.org/link"))
+                .withStatus(PublicationStatus.DRAFT)
+                .withPublisher(getOrganization())
+                .withFileSet(getFileSet(fileIdentifier))
+                .withLicense(getLicense())
+                .withEntityDescription(getEntityDescription())
+                .withOwner("eier@example.org")
+                .withProject(getProject())
+                .build();
+    }
+
+    private Project getProject() {
+        return new Project.Builder()
+                .withId(URI.create("http://link.to.cristin.example.org/123"))
+                .withName("Det gode prosjektet")
+                .withApprovals(getApprovals())
+                .withGrants(getGrants())
+                .build();
+    }
+
+    private List<Grant> getGrants() {
+        return Collections.singletonList(new Grant.Builder()
+                .withId("123123")
+                .withSource("Norsk rødt felaget")
+                .build());
+    }
+
+    private List<Approval> getApprovals() {
+        return Collections.singletonList(new Approval.Builder()
+                .withApplicationCode("123123")
+                .withApprovedBy("REKER")
+                .withDate(Instant.now())
+                .withStatus("ACCEPTED")
+                .build());
     }
 
     private EntityDescription getEntityDescription() {

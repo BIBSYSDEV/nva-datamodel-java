@@ -9,10 +9,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@SuppressWarnings("PMD.ExcessivePublicCount")
 public class Publication {
 
-    public static final String DYNAMODB_KEY_DELIMITER = "#";
-    
+    private static final String DYNAMODB_KEY_DELIMITER = "#";
+
     private UUID identifier;
     private PublicationStatus status;
     private String owner;
@@ -26,25 +27,27 @@ public class Publication {
     private EntityDescription entityDescription;
     private License license;
     private FileSet fileSet;
+    private Project project;
 
     public Publication() {
 
     }
 
     private Publication(Builder builder) {
-        setCreatedDate(builder.createdDate);
-        setStatus(builder.status);
-        setHandle(builder.handle);
-        setPublishedDate(builder.publishedDate);
-        setModifiedDate(builder.modifiedDate);
-        setOwner(builder.owner);
-        setIndexedDate(builder.indexedDate);
         setIdentifier(builder.identifier);
-        setLink(builder.link);
+        setStatus(builder.status);
+        setOwner(builder.owner);
         setPublisher(builder.publisher);
+        setCreatedDate(builder.createdDate);
+        setModifiedDate(builder.modifiedDate);
+        setPublishedDate(builder.publishedDate);
+        setIndexedDate(builder.indexedDate);
+        setHandle(builder.handle);
+        setLink(builder.link);
         setEntityDescription(builder.entityDescription);
         setLicense(builder.license);
         setFileSet(builder.fileSet);
+        setProject(builder.project);
     }
 
     /**
@@ -178,117 +181,143 @@ public class Publication {
         this.fileSet = fileSet;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Publication)) {
             return false;
         }
         Publication that = (Publication) o;
-        return Objects.equals(getCreatedDate(), that.getCreatedDate())
+        return Objects.equals(getIdentifier(), that.getIdentifier())
                 && getStatus() == that.getStatus()
-                && Objects.equals(getHandle(), that.getHandle())
-                && Objects.equals(getPublishedDate(), that.getPublishedDate())
-                && Objects.equals(getModifiedDate(), that.getModifiedDate())
                 && Objects.equals(getOwner(), that.getOwner())
-                && Objects.equals(getIndexedDate(), that.getIndexedDate())
-                && Objects.equals(getIdentifier(), that.getIdentifier())
-                && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getPublisher(), that.getPublisher())
+                && Objects.equals(getCreatedDate(), that.getCreatedDate())
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                && Objects.equals(getPublishedDate(), that.getPublishedDate())
+                && Objects.equals(getIndexedDate(), that.getIndexedDate())
+                && Objects.equals(getHandle(), that.getHandle())
+                && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getEntityDescription(), that.getEntityDescription())
                 && Objects.equals(getLicense(), that.getLicense())
-                && Objects.equals(getFileSet(), that.getFileSet());
+                && Objects.equals(getFileSet(), that.getFileSet())
+                && Objects.equals(getProject(), that.getProject());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCreatedDate(), getStatus(), getHandle(), getPublishedDate(), getModifiedDate(),
-                getOwner(), getIndexedDate(), getIdentifier(), getLink(), getPublisher(), getEntityDescription(),
-                getLicense(), getFileSet());
+        return Objects.hash(getIdentifier(),
+                getStatus(),
+                getOwner(),
+                getPublisher(),
+                getCreatedDate(),
+                getModifiedDate(),
+                getPublishedDate(),
+                getIndexedDate(),
+                getHandle(),
+                getLink(),
+                getEntityDescription(),
+                getLicense(),
+                getFileSet(),
+                getProject());
     }
 
     public static final class Builder {
-        private Instant createdDate;
-        private PublicationStatus status;
-        private URI handle;
-        private Instant publishedDate;
-        private Instant modifiedDate;
-        private String owner;
-        private Instant indexedDate;
         private UUID identifier;
-        private URI link;
+        private PublicationStatus status;
+        private String owner;
         private Organization publisher;
+        private Instant createdDate;
+        private Instant modifiedDate;
+        private Instant publishedDate;
+        private Instant indexedDate;
+        private URI handle;
+        private URI link;
         private EntityDescription entityDescription;
         private License license;
         private FileSet fileSet;
+        private Project project;
 
         public Builder() {
         }
 
-        public Builder withCreatedDate(Instant createdDate) {
-            this.createdDate = createdDate;
+        public Builder withIdentifier(UUID val) {
+            identifier = val;
             return this;
         }
 
-        public Builder withStatus(PublicationStatus status) {
-            this.status = status;
+        public Builder withStatus(PublicationStatus val) {
+            status = val;
             return this;
         }
 
-        public Builder withHandle(URI handle) {
-            this.handle = handle;
+        public Builder withOwner(String val) {
+            owner = val;
             return this;
         }
 
-        public Builder withPublishedDate(Instant publishedDate) {
-            this.publishedDate = publishedDate;
+        public Builder withPublisher(Organization val) {
+            publisher = val;
             return this;
         }
 
-        public Builder withModifiedDate(Instant modifiedDate) {
-            this.modifiedDate = modifiedDate;
+        public Builder withCreatedDate(Instant val) {
+            createdDate = val;
             return this;
         }
 
-        public Builder withOwner(String owner) {
-            this.owner = owner;
+        public Builder withModifiedDate(Instant val) {
+            modifiedDate = val;
             return this;
         }
 
-        public Builder withIndexedDate(Instant indexedDate) {
-            this.indexedDate = indexedDate;
+        public Builder withPublishedDate(Instant val) {
+            publishedDate = val;
             return this;
         }
 
-        public Builder withIdentifier(UUID identifier) {
-            this.identifier = identifier;
+        public Builder withIndexedDate(Instant val) {
+            indexedDate = val;
             return this;
         }
 
-        public Builder withLink(URI link) {
-            this.link = link;
+        public Builder withHandle(URI val) {
+            handle = val;
             return this;
         }
 
-        public Builder withPublisher(Organization publisher) {
-            this.publisher = publisher;
+        public Builder withLink(URI val) {
+            link = val;
             return this;
         }
 
-        public Builder withEntityDescription(EntityDescription entityDescription) {
-            this.entityDescription = entityDescription;
+        public Builder withEntityDescription(EntityDescription val) {
+            entityDescription = val;
             return this;
         }
 
-        public Builder withLicense(License license) {
-            this.license = license;
+        public Builder withLicense(License val) {
+            license = val;
             return this;
         }
 
-        public Builder withFileSet(FileSet fileSet) {
-            this.fileSet = fileSet;
+        public Builder withFileSet(FileSet val) {
+            fileSet = val;
+            return this;
+        }
+
+        public Builder withProject(Project val) {
+            project = val;
             return this;
         }
 
