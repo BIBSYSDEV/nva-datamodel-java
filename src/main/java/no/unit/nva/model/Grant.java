@@ -52,7 +52,6 @@ public class Grant {
         return Objects.hash(getSource(), getId());
     }
 
-
     public static final class Builder {
         private String source;
         private String id;
@@ -60,13 +59,13 @@ public class Grant {
         public Builder() {
         }
 
-        public Builder withSource(String val) {
-            source = val;
+        public Builder withSource(String source) {
+            this.source = source;
             return this;
         }
 
-        public Builder withId(String val) {
-            id = val;
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 

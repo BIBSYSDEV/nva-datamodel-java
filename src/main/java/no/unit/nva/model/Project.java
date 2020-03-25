@@ -49,7 +49,6 @@ public class Project {
         return Objects.hash(getId(), getName());
     }
 
-
     public static final class Builder {
         private URI id;
         private String name;
@@ -57,13 +56,13 @@ public class Project {
         public Builder() {
         }
 
-        public Builder withId(URI val) {
-            id = val;
+        public Builder withId(URI id) {
+            this.id = id;
             return this;
         }
 
-        public Builder withName(String val) {
-            name = val;
+        public Builder withName(String name) {
+            this.name = name;
             return this;
         }
 

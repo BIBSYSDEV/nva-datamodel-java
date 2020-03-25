@@ -68,23 +68,23 @@ public class ResearchProject extends Project {
         public Builder() {
         }
 
-        public Builder withId(URI val) {
-            id = val;
+        public Builder withId(URI id) {
+            this.id = id;
             return this;
         }
 
-        public Builder withName(String val) {
-            name = val;
+        public Builder withName(String name) {
+            this.name = name;
             return this;
         }
 
-        public Builder withGrants(List<Grant> val) {
-            grants = val;
+        public Builder withGrants(List<Grant> grants) {
+            this.grants = grants;
             return this;
         }
 
-        public Builder withApprovals(List<Approval> val) {
-            approvals = val;
+        public Builder withApprovals(List<Approval> approvals) {
+            this.approvals = approvals;
             return this;
         }
 

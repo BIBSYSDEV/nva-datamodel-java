@@ -126,9 +126,9 @@ public class PublicationTest {
     private List<Approval> getApprovals() {
         return Collections.singletonList(new Approval.Builder()
                 .withApplicationCode("123123")
-                .withApprovedBy("REKER")
+                .withApprovedBy(ApprovalsBody.REK)
                 .withDate(Instant.now())
-                .withStatus("ACCEPTED")
+                .withApprovalStatus(ApprovalStatus.APPLIED)
                 .build());
     }
 

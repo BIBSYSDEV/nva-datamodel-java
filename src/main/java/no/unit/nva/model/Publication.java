@@ -12,7 +12,7 @@ import java.util.UUID;
 @SuppressWarnings("PMD.ExcessivePublicCount")
 public class Publication {
 
-    private static final String DYNAMODB_KEY_DELIMITER = "#";
+    public static final String DYNAMODB_KEY_DELIMITER = "#";
 
     private UUID identifier;
     private PublicationStatus status;
@@ -232,6 +232,7 @@ public class Publication {
                 getProject());
     }
 
+
     public static final class Builder {
         private UUID identifier;
         private PublicationStatus status;
@@ -251,73 +252,73 @@ public class Publication {
         public Builder() {
         }
 
-        public Builder withIdentifier(UUID val) {
-            identifier = val;
+        public Builder withIdentifier(UUID identifier) {
+            this.identifier = identifier;
             return this;
         }
 
-        public Builder withStatus(PublicationStatus val) {
-            status = val;
+        public Builder withStatus(PublicationStatus status) {
+            this.status = status;
             return this;
         }
 
-        public Builder withOwner(String val) {
-            owner = val;
+        public Builder withOwner(String owner) {
+            this.owner = owner;
             return this;
         }
 
-        public Builder withPublisher(Organization val) {
-            publisher = val;
+        public Builder withPublisher(Organization publisher) {
+            this.publisher = publisher;
             return this;
         }
 
-        public Builder withCreatedDate(Instant val) {
-            createdDate = val;
+        public Builder withCreatedDate(Instant createdDate) {
+            this.createdDate = createdDate;
             return this;
         }
 
-        public Builder withModifiedDate(Instant val) {
-            modifiedDate = val;
+        public Builder withModifiedDate(Instant modifiedDate) {
+            this.modifiedDate = modifiedDate;
             return this;
         }
 
-        public Builder withPublishedDate(Instant val) {
-            publishedDate = val;
+        public Builder withPublishedDate(Instant publishedDate) {
+            this.publishedDate = publishedDate;
             return this;
         }
 
-        public Builder withIndexedDate(Instant val) {
-            indexedDate = val;
+        public Builder withIndexedDate(Instant indexedDate) {
+            this.indexedDate = indexedDate;
             return this;
         }
 
-        public Builder withHandle(URI val) {
-            handle = val;
+        public Builder withHandle(URI handle) {
+            this.handle = handle;
             return this;
         }
 
-        public Builder withLink(URI val) {
-            link = val;
+        public Builder withLink(URI link) {
+            this.link = link;
             return this;
         }
 
-        public Builder withEntityDescription(EntityDescription val) {
-            entityDescription = val;
+        public Builder withEntityDescription(EntityDescription entityDescription) {
+            this.entityDescription = entityDescription;
             return this;
         }
 
-        public Builder withLicense(License val) {
-            license = val;
+        public Builder withLicense(License license) {
+            this.license = license;
             return this;
         }
 
-        public Builder withFileSet(FileSet val) {
-            fileSet = val;
+        public Builder withFileSet(FileSet fileSet) {
+            this.fileSet = fileSet;
             return this;
         }
 
-        public Builder withProject(ResearchProject val) {
-            project = val;
+        public Builder withProject(ResearchProject project) {
+            this.project = project;
             return this;
         }
 
