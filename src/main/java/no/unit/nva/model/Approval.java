@@ -8,8 +8,8 @@ import java.util.Objects;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Approval {
     private Instant date;
-    private String approvedBy;
-    private String approvalStatus;
+    private ApprovalsBody approvedBy;
+    private ApprovalStatus approvalStatus;
     private String applicationCode;
 
     public Approval() {
@@ -19,7 +19,7 @@ public class Approval {
     private Approval(Builder builder) {
         setDate(builder.date);
         setApprovedBy(builder.approvedBy);
-        setApprovalStatus(builder.status);
+        setApprovalStatus(builder.approvalStatus);
         setApplicationCode(builder.applicationCode);
     }
 
@@ -31,19 +31,19 @@ public class Approval {
         this.date = date;
     }
 
-    public String getApprovedBy() {
+    public ApprovalsBody getApprovedBy() {
         return approvedBy;
     }
 
-    public void setApprovedBy(String approvedBy) {
+    public void setApprovedBy(ApprovalsBody approvedBy) {
         this.approvedBy = approvedBy;
     }
 
-    public String getApprovalStatus() {
+    public ApprovalStatus getApprovalStatus() {
         return approvalStatus;
     }
 
-    public void setApprovalStatus(String approvalStatus) {
+    public void setApprovalStatus(ApprovalStatus approvalStatus) {
         this.approvalStatus = approvalStatus;
     }
 
@@ -75,33 +75,32 @@ public class Approval {
         return Objects.hash(getDate(), getApprovedBy(), getApprovalStatus(), getApplicationCode());
     }
 
-
     public static final class Builder {
         private Instant date;
-        private String approvedBy;
-        private String status;
+        private ApprovalsBody approvedBy;
+        private ApprovalStatus approvalStatus;
         private String applicationCode;
 
         public Builder() {
         }
 
-        public Builder withDate(Instant val) {
-            date = val;
+        public Builder withDate(Instant date) {
+            this.date = date;
             return this;
         }
 
-        public Builder withApprovedBy(String val) {
-            approvedBy = val;
+        public Builder withApprovedBy(ApprovalsBody approvedBy) {
+            this.approvedBy = approvedBy;
             return this;
         }
 
-        public Builder withStatus(String val) {
-            status = val;
+        public Builder withApprovalStatus(ApprovalStatus approvalStatus) {
+            this.approvalStatus = approvalStatus;
             return this;
         }
 
-        public Builder withApplicationCode(String val) {
-            applicationCode = val;
+        public Builder withApplicationCode(String applicationCode) {
+            this.applicationCode = applicationCode;
             return this;
         }
 
