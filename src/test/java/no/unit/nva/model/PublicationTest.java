@@ -107,8 +107,8 @@ public class PublicationTest {
                 .build();
     }
 
-    private Project getProject() {
-        return new Project.Builder()
+    private ResearchProject getProject() {
+        return new ResearchProject.Builder()
                 .withId(URI.create("http://link.to.cristin.example.org/123"))
                 .withName("Det gode prosjektet")
                 .withApprovals(getApprovals())

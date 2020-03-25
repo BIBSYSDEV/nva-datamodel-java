@@ -40,7 +40,7 @@ local.properties
 .target
 
 # Tern plugin
-.tern-project
+.tern-researchProject
 
 # TeXlipse plugin
 .texlipse
@@ -61,7 +61,7 @@ local.properties
 
 ### Eclipse Patch ###
 # Eclipse Core
-.project
+.researchProject
 
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
@@ -114,7 +114,7 @@ cmake-build-*/
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
 
-# File-based project format
+# File-based researchProject format
 *.iws
 
 # IntelliJ
@@ -272,7 +272,7 @@ gradle-app.setting
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
-# Cache of project
+# Cache of researchProject
 .gradletasknamecache
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898

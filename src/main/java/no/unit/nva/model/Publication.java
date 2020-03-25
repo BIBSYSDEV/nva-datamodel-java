@@ -27,7 +27,7 @@ public class Publication {
     private EntityDescription entityDescription;
     private License license;
     private FileSet fileSet;
-    private Project project;
+    private ResearchProject project;
 
     public Publication() {
 
@@ -181,11 +181,11 @@ public class Publication {
         this.fileSet = fileSet;
     }
 
-    public Project getProject() {
+    public ResearchProject getProject() {
         return project;
     }
 
-    public void setProject(Project project) {
+    public void setProject(ResearchProject project) {
         this.project = project;
     }
 
@@ -246,7 +246,7 @@ public class Publication {
         private EntityDescription entityDescription;
         private License license;
         private FileSet fileSet;
-        private Project project;
+        private ResearchProject project;
 
         public Builder() {
         }
@@ -316,7 +316,7 @@ public class Publication {
             return this;
         }
 
-        public Builder withProject(Project val) {
+        public Builder withProject(ResearchProject val) {
             project = val;
             return this;
         }
