@@ -24,6 +24,7 @@ public class EntityDescription {
     private List<String> tags;
     private String description;
     private Reference reference;
+    private URI metadataSource;
 
     public EntityDescription() {
 
@@ -42,6 +43,7 @@ public class EntityDescription {
         setTags(builder.tags);
         setDescription(builder.description);
         setReference(builder.reference);
+        setMetadataSource(builder.metadataSource);
     }
 
     public PublicationType getPublicationType() {
@@ -90,6 +92,14 @@ public class EntityDescription {
 
     public void setContributors(List<Contributor> contributors) {
         this.contributors = contributors;
+    }
+
+    public void setMetadataSource(URI metadataSource) {
+        this.metadataSource = metadataSource;
+    }
+
+    public URI getMetadataSource() {
+        return metadataSource;
     }
 
     public String getAbstract() {
@@ -192,6 +202,7 @@ public class EntityDescription {
         private URI language;
         private PublicationDate date;
         private List<Contributor> contributors;
+        private URI metadataSource;
 
         public Builder() {
         }
@@ -253,6 +264,11 @@ public class EntityDescription {
 
         public Builder withJournalReference(Reference reference) {
             this.reference = reference;
+            return this;
+        }
+
+        public Builder withMetadataSource(URI metadataSource) {
+            this.metadataSource = metadataSource;
             return this;
         }
 
