@@ -50,6 +50,19 @@
     "hasEmbargoDate": "embargoDate",
     "isPublisherAuthority": "publisherAuthority",
     "isAdministrativeAgreement": "administrativeAgreement",
+    "hasProject": "project",
+    "hasGrants": {
+      "@id": "grants",
+      "@container": "@set"
+    },
+    "hasApprovals": {
+      "@id": "approvals",
+      "@container": "@set"
+    },
+    "hasApprovalStatus": "approvalStatus",
+    "hasApprovedBy": "approvedBy",
+    "hasApplicationCode": "applicationCode",
+    "hasSource": "source",
     "hasMetadataSource": "metadataSource"
   },
   "@type": "Publication"
