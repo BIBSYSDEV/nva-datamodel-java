@@ -12,6 +12,7 @@ import java.util.Objects;
 public class EntityDescription {
 
     private PublicationType publicationType;
+    private PublicationSubtype publicationSubtype;
     private String mainTitle;
     private Map<String, String> alternativeTitles;
     private URI language;
@@ -30,6 +31,7 @@ public class EntityDescription {
 
     private EntityDescription(Builder builder) {
         setPublicationType(builder.publicationType);
+        setPublicationSubtype(builder.publicationSubtype);
         setMainTitle(builder.mainTitle);
         setAlternativeTitles(builder.alternativeTitles);
         setLanguage(builder.language);
@@ -90,35 +92,6 @@ public class EntityDescription {
         this.contributors = contributors;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        EntityDescription that = (EntityDescription) o;
-        return Objects.equals(getPublicationType(), that.getPublicationType())
-                && Objects.equals(getMainTitle(), that.getMainTitle())
-                && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
-                && Objects.equals(getLanguage(), that.getLanguage())
-                && Objects.equals(getDate(), that.getDate())
-                && Objects.equals(getContributors(), that.getContributors())
-                && Objects.equals(getAbstract(), that.getAbstract())
-                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
-                && Objects.equals(getAbstract(), that.getAbstract())
-                && Objects.equals(getTags(), that.getTags())
-                && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getReference(), that.getReference());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPublicationType(), getMainTitle(), getAlternativeTitles(), getLanguage(), getDate(),
-                getContributors());
-    }
-
     public String getAbstract() {
         return mainLanguageAbstract;
     }
@@ -159,6 +132,53 @@ public class EntityDescription {
         this.reference = reference;
     }
 
+    public PublicationSubtype getPublicationSubtype() {
+        return publicationSubtype;
+    }
+
+    public void setPublicationSubtype(PublicationSubtype publicationSubtype) {
+        this.publicationSubtype = publicationSubtype;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof EntityDescription)) {
+            return false;
+        }
+        EntityDescription that = (EntityDescription) o;
+        return getPublicationType() == that.getPublicationType()
+                && getPublicationSubtype() == that.getPublicationSubtype()
+                && Objects.equals(getMainTitle(), that.getMainTitle())
+                && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
+                && Objects.equals(getLanguage(), that.getLanguage())
+                && Objects.equals(getDate(), that.getDate())
+                && Objects.equals(getContributors(), that.getContributors())
+                && Objects.equals(getAbstract(), that.getAbstract())
+                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
+                && Objects.equals(getTags(), that.getTags())
+                && Objects.equals(getDescription(), that.getDescription())
+                && Objects.equals(getReference(), that.getReference());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPublicationType(),
+                getPublicationSubtype(),
+                getMainTitle(),
+                getAlternativeTitles(),
+                getLanguage(),
+                getDate(),
+                getContributors(),
+                getAbstract(),
+                getNpiSubjectHeading(),
+                getTags(),
+                getDescription(),
+                getReference());
+    }
+
     public static final class Builder {
         private Reference reference;
         private String mainLanguageAbstract;
@@ -166,6 +186,7 @@ public class EntityDescription {
         private List<String> tags;
         private String npiSubjectHeading;
         private PublicationType publicationType;
+        private PublicationSubtype publicationSubtype;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
         private URI language;
@@ -177,6 +198,11 @@ public class EntityDescription {
 
         public Builder withPublicationType(PublicationType type) {
             this.publicationType = type;
+            return this;
+        }
+
+        public Builder withPublicationSubtype(PublicationSubtype publicationSubtype) {
+            this.publicationSubtype = publicationSubtype;
             return this;
         }
 
