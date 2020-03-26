@@ -11,6 +11,7 @@ import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.util.ContextUtil;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
@@ -42,8 +43,9 @@ public class PublicationTest {
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
+    @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
-    void testPublicationObjectMapping() throws IOException {
+    void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -65,8 +67,9 @@ public class PublicationTest {
         return document;
     }
 
+    @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
-    void testPublicationJsonLdFraming() throws IOException {
+    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
