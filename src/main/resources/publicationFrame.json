@@ -49,7 +49,20 @@
     "hasDoi": "doi",
     "hasEmbargoDate": "embargoDate",
     "isPublisherAuthority": "publisherAuthority",
-    "isAdministrativeAgreement": "administrativeAgreement"
+    "isAdministrativeAgreement": "administrativeAgreement",
+    "hasProject": "project",
+    "hasGrants": {
+      "@id": "grants",
+      "@container": "@set"
+    },
+    "hasApprovals": {
+      "@id": "approvals",
+      "@container": "@set"
+    },
+    "hasApprovalStatus": "approvalStatus",
+    "hasApprovedBy": "approvedBy",
+    "hasApplicationCode": "applicationCode",
+    "hasSource": "source"
   },
   "@type": "Publication"
 }

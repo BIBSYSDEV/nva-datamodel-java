@@ -11,6 +11,7 @@ import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.util.ContextUtil;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
@@ -19,6 +20,7 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class PublicationTest {
@@ -41,8 +43,9 @@ public class PublicationTest {
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
+    @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
-    void testPublicationObjectMapping() throws IOException {
+    void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -64,8 +67,9 @@ public class PublicationTest {
         return document;
     }
 
+    @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
-    void testPublicationJsonLdFraming() throws IOException {
+    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -91,18 +95,44 @@ public class PublicationTest {
 
     private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now) {
         return new Publication.Builder()
-                    .withIdentifier(publicationIdentifier)
-                    .withCreatedDate(now)
-                    .withModifiedDate(now)
-                    .withHandle(URI.create("http://example.org/handle/123"))
-                    .withLink(URI.create("http://example.org/link"))
-                    .withStatus(PublicationStatus.DRAFT)
-                    .withPublisher(getOrganization())
-                    .withFileSet(getFileSet(fileIdentifier))
-                    .withLicense(getLicense())
-                    .withEntityDescription(getEntityDescription())
-                    .withOwner("eier@example.org")
-                    .build();
+                .withIdentifier(publicationIdentifier)
+                .withCreatedDate(now)
+                .withModifiedDate(now)
+                .withHandle(URI.create("http://example.org/handle/123"))
+                .withLink(URI.create("http://example.org/link"))
+                .withStatus(PublicationStatus.DRAFT)
+                .withPublisher(getOrganization())
+                .withFileSet(getFileSet(fileIdentifier))
+                .withLicense(getLicense())
+                .withEntityDescription(getEntityDescription())
+                .withOwner("eier@example.org")
+                .withProject(getProject())
+                .build();
+    }
+
+    private ResearchProject getProject() {
+        return new ResearchProject.Builder()
+                .withId(URI.create("http://link.to.cristin.example.org/123"))
+                .withName("Det gode prosjektet")
+                .withApprovals(getApprovals())
+                .withGrants(getGrants())
+                .build();
+    }
+
+    private List<Grant> getGrants() {
+        return Collections.singletonList(new Grant.Builder()
+                .withId("123123")
+                .withSource("Norsk rødt felaget")
+                .build());
+    }
+
+    private List<Approval> getApprovals() {
+        return Collections.singletonList(new Approval.Builder()
+                .withApplicationCode("123123")
+                .withApprovedBy(ApprovalsBody.REK)
+                .withDate(Instant.now())
+                .withApprovalStatus(ApprovalStatus.APPLIED)
+                .build());
     }
 
     private EntityDescription getEntityDescription() {
