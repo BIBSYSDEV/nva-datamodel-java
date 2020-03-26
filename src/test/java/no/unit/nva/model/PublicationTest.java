@@ -142,12 +142,13 @@ public class PublicationTest {
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
+                .withPublicationSubtype(PublicationSubtype.ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
-                .withJournalReference(getJournalReference())
+                .withReference(getJournalReference())
                 .withMetadataSource(URI.create("https://example.org/doi?doi=123/123"))
                 .build();
     }

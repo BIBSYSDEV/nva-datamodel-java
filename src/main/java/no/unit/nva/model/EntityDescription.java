@@ -12,6 +12,7 @@ import java.util.Objects;
 public class EntityDescription {
 
     private PublicationType publicationType;
+    private PublicationSubtype publicationSubtype;
     private String mainTitle;
     private Map<String, String> alternativeTitles;
     private URI language;
@@ -31,6 +32,7 @@ public class EntityDescription {
 
     private EntityDescription(Builder builder) {
         setPublicationType(builder.publicationType);
+        setPublicationSubtype(builder.publicationSubtype);
         setMainTitle(builder.mainTitle);
         setAlternativeTitles(builder.alternativeTitles);
         setLanguage(builder.language);
@@ -140,6 +142,14 @@ public class EntityDescription {
         this.reference = reference;
     }
 
+    public PublicationSubtype getPublicationSubtype() {
+        return publicationSubtype;
+    }
+
+    public void setPublicationSubtype(PublicationSubtype publicationSubtype) {
+        this.publicationSubtype = publicationSubtype;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -150,6 +160,7 @@ public class EntityDescription {
         }
         EntityDescription that = (EntityDescription) o;
         return getPublicationType() == that.getPublicationType()
+                && getPublicationSubtype() == that.getPublicationSubtype()
                 && Objects.equals(getMainTitle(), that.getMainTitle())
                 && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
                 && Objects.equals(getLanguage(), that.getLanguage())
@@ -166,6 +177,7 @@ public class EntityDescription {
     @Override
     public int hashCode() {
         return Objects.hash(getPublicationType(),
+                getPublicationSubtype(),
                 getMainTitle(),
                 getAlternativeTitles(),
                 getLanguage(),
@@ -180,24 +192,30 @@ public class EntityDescription {
     }
 
     public static final class Builder {
-        private Reference reference;
-        private String mainLanguageAbstract;
-        private String description;
-        private List<String> tags;
-        private String npiSubjectHeading;
         private PublicationType publicationType;
+        private PublicationSubtype publicationSubtype;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
         private URI language;
         private PublicationDate date;
         private List<Contributor> contributors;
+        private String mainLanguageAbstract;
+        private String npiSubjectHeading;
+        private List<String> tags;
+        private String description;
+        private Reference reference;
         private URI metadataSource;
 
         public Builder() {
         }
 
-        public Builder withPublicationType(PublicationType type) {
-            this.publicationType = type;
+        public Builder withPublicationType(PublicationType publicationType) {
+            this.publicationType = publicationType;
+            return this;
+        }
+
+        public Builder withPublicationSubtype(PublicationSubtype publicationSubtype) {
+            this.publicationSubtype = publicationSubtype;
             return this;
         }
 
@@ -231,11 +249,6 @@ public class EntityDescription {
             return this;
         }
 
-        public Builder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
         public Builder withNpiSubjectHeading(String npiSubjectHeading) {
             this.npiSubjectHeading = npiSubjectHeading;
             return this;
@@ -246,7 +259,12 @@ public class EntityDescription {
             return this;
         }
 
-        public Builder withJournalReference(Reference reference) {
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder withReference(Reference reference) {
             this.reference = reference;
             return this;
         }
