@@ -23,6 +23,7 @@ public class EntityDescription {
     private List<String> tags;
     private String description;
     private Reference reference;
+    private URI metadataSource;
 
     public EntityDescription() {
 
@@ -40,6 +41,7 @@ public class EntityDescription {
         setTags(builder.tags);
         setDescription(builder.description);
         setReference(builder.reference);
+        setMetadataSource(builder.metadataSource);
     }
 
     public PublicationType getPublicationType() {
@@ -90,33 +92,12 @@ public class EntityDescription {
         this.contributors = contributors;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        EntityDescription that = (EntityDescription) o;
-        return Objects.equals(getPublicationType(), that.getPublicationType())
-                && Objects.equals(getMainTitle(), that.getMainTitle())
-                && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
-                && Objects.equals(getLanguage(), that.getLanguage())
-                && Objects.equals(getDate(), that.getDate())
-                && Objects.equals(getContributors(), that.getContributors())
-                && Objects.equals(getAbstract(), that.getAbstract())
-                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
-                && Objects.equals(getAbstract(), that.getAbstract())
-                && Objects.equals(getTags(), that.getTags())
-                && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getReference(), that.getReference());
+    public void setMetadataSource(URI metadataSource) {
+        this.metadataSource = metadataSource;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPublicationType(), getMainTitle(), getAlternativeTitles(), getLanguage(), getDate(),
-                getContributors());
+    public URI getMetadataSource() {
+        return metadataSource;
     }
 
     public String getAbstract() {
@@ -159,6 +140,45 @@ public class EntityDescription {
         this.reference = reference;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof EntityDescription)) {
+            return false;
+        }
+        EntityDescription that = (EntityDescription) o;
+        return getPublicationType() == that.getPublicationType()
+                && Objects.equals(getMainTitle(), that.getMainTitle())
+                && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
+                && Objects.equals(getLanguage(), that.getLanguage())
+                && Objects.equals(getDate(), that.getDate())
+                && Objects.equals(getContributors(), that.getContributors())
+                && Objects.equals(getAbstract(), that.getAbstract())
+                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
+                && Objects.equals(getTags(), that.getTags())
+                && Objects.equals(getDescription(), that.getDescription())
+                && Objects.equals(getReference(), that.getReference())
+                && Objects.equals(getMetadataSource(), that.getMetadataSource());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPublicationType(),
+                getMainTitle(),
+                getAlternativeTitles(),
+                getLanguage(),
+                getDate(),
+                getContributors(),
+                getAbstract(),
+                getNpiSubjectHeading(),
+                getTags(),
+                getDescription(),
+                getReference(),
+                getMetadataSource());
+    }
+
     public static final class Builder {
         private Reference reference;
         private String mainLanguageAbstract;
@@ -171,6 +191,7 @@ public class EntityDescription {
         private URI language;
         private PublicationDate date;
         private List<Contributor> contributors;
+        private URI metadataSource;
 
         public Builder() {
         }
@@ -227,6 +248,11 @@ public class EntityDescription {
 
         public Builder withJournalReference(Reference reference) {
             this.reference = reference;
+            return this;
+        }
+
+        public Builder withMetadataSource(URI metadataSource) {
+            this.metadataSource = metadataSource;
             return this;
         }
 

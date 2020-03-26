@@ -148,6 +148,7 @@ public class PublicationTest {
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
                 .withJournalReference(getJournalReference())
+                .withMetadataSource(URI.create("https://example.org/doi?doi=123/123"))
                 .build();
     }
 
