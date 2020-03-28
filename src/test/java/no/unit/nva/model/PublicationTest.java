@@ -185,6 +185,7 @@ public class PublicationTest {
                 .withRole(Role.CREATOR)
                 .withAffiliations(Collections.singletonList(getOrganization()))
                 .withIdentity(getIdentity())
+                .withCorrespondingAuthor(true)
                 .build();
     }
 

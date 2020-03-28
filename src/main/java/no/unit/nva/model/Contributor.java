@@ -12,6 +12,7 @@ public class Contributor {
     private List<Organization> affiliations;
     private Role role;
     private Integer sequence;
+    private boolean correspondingAuthor;
 
     public Contributor() {
 
@@ -20,8 +21,9 @@ public class Contributor {
     private Contributor(Builder builder) {
         setIdentity(builder.identity);
         setAffiliations(builder.affiliations);
-        setSequence(builder.sequence);
         setRole(builder.role);
+        setSequence(builder.sequence);
+        setCorrespondingAuthor(builder.correspondingAuthor);
     }
 
     public Identity getIdentity() {
@@ -61,11 +63,12 @@ public class Contributor {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Contributor)) {
             return false;
         }
         Contributor that = (Contributor) o;
-        return Objects.equals(getIdentity(), that.getIdentity())
+        return isCorrespondingAuthor() == that.isCorrespondingAuthor()
+                && Objects.equals(getIdentity(), that.getIdentity())
                 && Objects.equals(getAffiliations(), that.getAffiliations())
                 && getRole() == that.getRole()
                 && Objects.equals(getSequence(), that.getSequence());
@@ -73,14 +76,27 @@ public class Contributor {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentity(), getAffiliations(), getRole(), getSequence());
+        return Objects.hash(getIdentity(),
+                getAffiliations(),
+                getRole(),
+                getSequence(),
+                isCorrespondingAuthor());
+    }
+
+    public boolean isCorrespondingAuthor() {
+        return correspondingAuthor;
+    }
+
+    public void setCorrespondingAuthor(boolean correspondingAuthor) {
+        this.correspondingAuthor = correspondingAuthor;
     }
 
     public static final class Builder {
         private Identity identity;
         private List<Organization> affiliations;
-        private Integer sequence;
         private Role role;
+        private Integer sequence;
+        private boolean correspondingAuthor;
 
         public Builder() {
         }
@@ -90,8 +106,13 @@ public class Contributor {
             return this;
         }
 
-        public Builder withAffiliations(List<Organization> affiliation) {
-            this.affiliations = affiliation;
+        public Builder withAffiliations(List<Organization> affiliations) {
+            this.affiliations = affiliations;
+            return this;
+        }
+
+        public Builder withRole(Role role) {
+            this.role = role;
             return this;
         }
 
@@ -100,8 +121,8 @@ public class Contributor {
             return this;
         }
 
-        public Builder withRole(Role role) {
-            this.role = role;
+        public Builder withCorrespondingAuthor(boolean correspondingAuthor) {
+            this.correspondingAuthor = correspondingAuthor;
             return this;
         }
 
