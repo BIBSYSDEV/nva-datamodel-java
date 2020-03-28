@@ -1,29 +1,39 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.exceptions.MalformedContributorException;
 
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Contributor {
 
+    public static final String CORRESPONDING_AUTHOR_EMAIL_MISSING =
+            "The Contributor is corresponding author, but no email for correspondence is set";
     private Identity identity;
     private List<Organization> affiliations;
     private Role role;
     private Integer sequence;
     private boolean correspondingAuthor;
+    private String email;
 
     public Contributor() {
 
     }
 
     private Contributor(Builder builder) {
+        if (builder.correspondingAuthor && (isNull(builder.email) || builder.email.isBlank())) {
+            throw new MalformedContributorException(CORRESPONDING_AUTHOR_EMAIL_MISSING);
+        }
         setIdentity(builder.identity);
         setAffiliations(builder.affiliations);
         setRole(builder.role);
         setSequence(builder.sequence);
         setCorrespondingAuthor(builder.correspondingAuthor);
+        setEmail(builder.email);
     }
 
     public Identity getIdentity() {
@@ -58,6 +68,22 @@ public class Contributor {
         this.role = role;
     }
 
+    public boolean isCorrespondingAuthor() {
+        return correspondingAuthor;
+    }
+
+    public void setCorrespondingAuthor(boolean correspondingAuthor) {
+        this.correspondingAuthor = correspondingAuthor;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -71,7 +97,8 @@ public class Contributor {
                 && Objects.equals(getIdentity(), that.getIdentity())
                 && Objects.equals(getAffiliations(), that.getAffiliations())
                 && getRole() == that.getRole()
-                && Objects.equals(getSequence(), that.getSequence());
+                && Objects.equals(getSequence(), that.getSequence())
+                && Objects.equals(getEmail(), that.getEmail());
     }
 
     @Override
@@ -80,15 +107,8 @@ public class Contributor {
                 getAffiliations(),
                 getRole(),
                 getSequence(),
-                isCorrespondingAuthor());
-    }
-
-    public boolean isCorrespondingAuthor() {
-        return correspondingAuthor;
-    }
-
-    public void setCorrespondingAuthor(boolean correspondingAuthor) {
-        this.correspondingAuthor = correspondingAuthor;
+                isCorrespondingAuthor(),
+                getEmail());
     }
 
     public static final class Builder {
@@ -97,6 +117,7 @@ public class Contributor {
         private Role role;
         private Integer sequence;
         private boolean correspondingAuthor;
+        private String email;
 
         public Builder() {
         }
@@ -123,6 +144,11 @@ public class Contributor {
 
         public Builder withCorrespondingAuthor(boolean correspondingAuthor) {
             this.correspondingAuthor = correspondingAuthor;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
             return this;
         }
 

@@ -28,6 +28,7 @@ public class PublicationTest {
     public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContext.json";
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final String HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE = "https://nva.unit.no/publication#mainTitle";
+    public static final String EXAMPLE_EMAIL = "nn@example.org";
     private ObjectMapper objectMapper;
 
     /**
@@ -186,6 +187,7 @@ public class PublicationTest {
                 .withAffiliations(Collections.singletonList(getOrganization()))
                 .withIdentity(getIdentity())
                 .withCorrespondingAuthor(true)
+                .withEmail(EXAMPLE_EMAIL)
                 .build();
     }
 
