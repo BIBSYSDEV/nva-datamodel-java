@@ -58,6 +58,14 @@ public class Contributor {
         this.role = role;
     }
 
+    public boolean isCorrespondingAuthor() {
+        return correspondingAuthor;
+    }
+
+    public void setCorrespondingAuthor(boolean correspondingAuthor) {
+        this.correspondingAuthor = correspondingAuthor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,14 +89,6 @@ public class Contributor {
                 getRole(),
                 getSequence(),
                 isCorrespondingAuthor());
-    }
-
-    public boolean isCorrespondingAuthor() {
-        return correspondingAuthor;
-    }
-
-    public void setCorrespondingAuthor(boolean correspondingAuthor) {
-        this.correspondingAuthor = correspondingAuthor;
     }
 
     public static final class Builder {
