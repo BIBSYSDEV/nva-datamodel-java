@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
+import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.ContextUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +47,7 @@ public class PublicationTest {
 
     @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
-    void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException {
+    void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -70,7 +71,8 @@ public class PublicationTest {
 
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
-    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
+    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
+            MalformedContributorException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -94,7 +96,8 @@ public class PublicationTest {
         return JsonLdProcessor.frame(input, frame, options);
     }
 
-    private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now) {
+    private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now)
+            throws MalformedContributorException {
         return new Publication.Builder()
                 .withIdentifier(publicationIdentifier)
                 .withCreatedDate(now)
@@ -136,7 +139,7 @@ public class PublicationTest {
                 .build());
     }
 
-    private EntityDescription getEntityDescription() {
+    private EntityDescription getEntityDescription() throws MalformedContributorException {
         return new EntityDescription.Builder()
                 .withMainTitle("Hovedtittelen")
                 .withLanguage(URI.create("http://example.org/norsk"))
@@ -180,7 +183,7 @@ public class PublicationTest {
                 .build();
     }
 
-    private Contributor getContributor() {
+    private Contributor getContributor() throws MalformedContributorException {
         return new Contributor.Builder()
                 .withSequence(0)
                 .withRole(Role.CREATOR)

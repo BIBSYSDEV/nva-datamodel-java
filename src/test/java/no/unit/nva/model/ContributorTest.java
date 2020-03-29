@@ -31,7 +31,7 @@ class ContributorTest {
 
     @DisplayName("Contributor builder constructs a valid object")
     @Test
-    void contributorBuilderReturnsValidContributorWhenInputIsValid() {
+    void contributorBuilderReturnsValidContributorWhenInputIsValid() throws MalformedContributorException {
         Identity identity = getIdentity();
         Organization organization = getOrganization();
         Contributor contributor = new Contributor.Builder()

@@ -19,10 +19,12 @@ public enum Level {
 
     /**
      * In cases where an integer is supplied, it must be checked that the level is correct.
+     *
      * @param integer The level value as integer
      * @return Level value
+     * @throws InvalidNpiLevelException In cases where the the input level is not a valid level
      */
-    public static Level getLevel(Integer integer) {
+    public static Level getLevel(Integer integer) throws InvalidNpiLevelException {
         return Arrays.stream(values())
                 .filter(levelInteger -> levelInteger.level.equals(integer)).findFirst()
                 .orElseThrow(() -> new InvalidNpiLevelException(

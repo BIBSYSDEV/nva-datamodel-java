@@ -24,8 +24,8 @@ public class Contributor {
 
     }
 
-    private Contributor(Builder builder) {
-        if (builder.correspondingAuthor && (isNull(builder.email) || builder.email.isBlank())) {
+    private Contributor(Builder builder) throws MalformedContributorException {
+        if (isCorrespondAuthorWithEmail(builder)) {
             throw new MalformedContributorException(CORRESPONDING_AUTHOR_EMAIL_MISSING);
         }
         setIdentity(builder.identity);
@@ -34,6 +34,10 @@ public class Contributor {
         setSequence(builder.sequence);
         setCorrespondingAuthor(builder.correspondingAuthor);
         setEmail(builder.email);
+    }
+
+    private boolean isCorrespondAuthorWithEmail(Builder builder) {
+        return builder.correspondingAuthor && (isNull(builder.email) || builder.email.isBlank());
     }
 
     public Identity getIdentity() {
@@ -152,7 +156,7 @@ public class Contributor {
             return this;
         }
 
-        public Contributor build() {
+        public Contributor build() throws MalformedContributorException {
             return new Contributor(this);
         }
     }
