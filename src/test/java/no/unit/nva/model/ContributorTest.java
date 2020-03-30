@@ -19,8 +19,13 @@ class ContributorTest {
 
     @DisplayName("Test the contributor default constructor exists")
     @Test
-    void contributorDefaultConstructorExists() {
-        new Contributor();
+    void contributorDefaultConstructorExists() throws MalformedContributorException {
+        new Contributor(getIdentity(),
+                Collections.singletonList(getOrganization()),
+                Role.CREATOR,
+                0,
+                true,
+                "jj@example.org");
     }
 
     @DisplayName("The Contributor inner builder exists")

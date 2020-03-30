@@ -1,5 +1,7 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 
@@ -20,72 +22,75 @@ public class Contributor {
     private boolean correspondingAuthor;
     private String email;
 
-    public Contributor() {
+    /**
+     * Constructor designed to ensure valid data in the object, since we can only have a corresponding author
+     * with an email.
+     *
+     * @param identity            The identity of the contributor
+     * @param affiliations        The affiliation of the contributor
+     * @param role                The role that the contributor played
+     * @param sequence            The order of the contributor in the contributors listing
+     * @param correspondingAuthor Whether the contributor was a corresponding author
+     * @param email               Contact email for contributor, required if the contributor was a corresponding author
+     * @throws MalformedContributorException If the contributor is corresponding author, but no email is present
+     */
+    @JsonCreator
+    public Contributor(@JsonProperty("identity") Identity identity,
+                       @JsonProperty("affiliations") List<Organization> affiliations,
+                       @JsonProperty("role") Role role,
+                       @JsonProperty("sequence") Integer sequence,
+                       @JsonProperty("correspondingAuthor") boolean correspondingAuthor,
+                       @JsonProperty("email") String email) throws MalformedContributorException {
+        if (isCorrespondAuthorWithoutEmail(correspondingAuthor, email)) {
+            throw new MalformedContributorException(CORRESPONDING_AUTHOR_EMAIL_MISSING);
+        }
 
+        this.identity = identity;
+        this.affiliations = affiliations;
+        this.role = role;
+        this.sequence = sequence;
+        this.correspondingAuthor = correspondingAuthor;
+        this.email = email;
     }
 
     private Contributor(Builder builder) throws MalformedContributorException {
-        if (isCorrespondAuthorWithEmail(builder)) {
-            throw new MalformedContributorException(CORRESPONDING_AUTHOR_EMAIL_MISSING);
-        }
-        setIdentity(builder.identity);
-        setAffiliations(builder.affiliations);
-        setRole(builder.role);
-        setSequence(builder.sequence);
-        setCorrespondingAuthor(builder.correspondingAuthor);
-        setEmail(builder.email);
+        this(
+                builder.identity,
+                builder.affiliations,
+                builder.role,
+                builder.sequence,
+                builder.correspondingAuthor,
+                builder.email
+        );
     }
 
-    private boolean isCorrespondAuthorWithEmail(Builder builder) {
-        return builder.correspondingAuthor && (isNull(builder.email) || builder.email.isBlank());
+
+    private boolean isCorrespondAuthorWithoutEmail(boolean correspondingAuthor, String email) {
+        return correspondingAuthor && (isNull(email) || email.isBlank());
     }
 
     public Identity getIdentity() {
         return identity;
     }
 
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
-
     public List<Organization> getAffiliations() {
         return affiliations;
-    }
-
-    public void setAffiliations(List<Organization> affiliations) {
-        this.affiliations = affiliations;
     }
 
     public Integer getSequence() {
         return sequence;
     }
 
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
-    }
-
     public Role getRole() {
         return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public boolean isCorrespondingAuthor() {
         return correspondingAuthor;
     }
 
-    public void setCorrespondingAuthor(boolean correspondingAuthor) {
-        this.correspondingAuthor = correspondingAuthor;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override
