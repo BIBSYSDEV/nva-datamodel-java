@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.exceptions.InvalidNpiLevelException;
 
 import java.util.Objects;
 
@@ -33,7 +34,7 @@ public class PublicationContext {
         return level;
     }
 
-    public void setLevelFromInteger(Integer level) {
+    public void setLevelFromInteger(Integer level) throws InvalidNpiLevelException {
         this.level = Level.getLevel(level);
     }
 
