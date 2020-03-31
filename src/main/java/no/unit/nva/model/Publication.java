@@ -25,7 +25,6 @@ public class Publication {
     private URI handle;
     private URI link;
     private EntityDescription entityDescription;
-    private License license;
     private FileSet fileSet;
     private ResearchProject project;
 
@@ -45,7 +44,6 @@ public class Publication {
         setHandle(builder.handle);
         setLink(builder.link);
         setEntityDescription(builder.entityDescription);
-        setLicense(builder.license);
         setFileSet(builder.fileSet);
         setProject(builder.project);
     }
@@ -165,14 +163,6 @@ public class Publication {
         this.entityDescription = entityDescription;
     }
 
-    public License getLicense() {
-        return license;
-    }
-
-    public void setLicense(License license) {
-        this.license = license;
-    }
-
     public FileSet getFileSet() {
         return fileSet;
     }
@@ -209,7 +199,6 @@ public class Publication {
                 && Objects.equals(getHandle(), that.getHandle())
                 && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                && Objects.equals(getLicense(), that.getLicense())
                 && Objects.equals(getFileSet(), that.getFileSet())
                 && Objects.equals(getProject(), that.getProject());
     }
@@ -227,7 +216,6 @@ public class Publication {
                 getHandle(),
                 getLink(),
                 getEntityDescription(),
-                getLicense(),
                 getFileSet(),
                 getProject());
     }
@@ -245,7 +233,6 @@ public class Publication {
         private URI handle;
         private URI link;
         private EntityDescription entityDescription;
-        private License license;
         private FileSet fileSet;
         private ResearchProject project;
 
@@ -304,11 +291,6 @@ public class Publication {
 
         public Builder withEntityDescription(EntityDescription entityDescription) {
             this.entityDescription = entityDescription;
-            return this;
-        }
-
-        public Builder withLicense(License license) {
-            this.license = license;
             return this;
         }
 

@@ -107,7 +107,6 @@ public class PublicationTest {
                 .withStatus(PublicationStatus.DRAFT)
                 .withPublisher(getOrganization())
                 .withFileSet(getFileSet(fileIdentifier))
-                .withLicense(getLicense())
                 .withEntityDescription(getEntityDescription())
                 .withOwner("eier@example.org")
                 .withProject(getProject())

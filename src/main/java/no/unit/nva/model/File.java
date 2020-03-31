@@ -1,14 +1,21 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.exceptions.MissingLicenseException;
 
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class File {
 
+    public static final String MISSING_LICENSE =
+            "The file is not annotated as an administrative agreement and should have a license";
     private UUID identifier;
     private String name;
     private String mimeType;
@@ -18,83 +25,88 @@ public class File {
     private boolean publisherAuthority;
     private Instant embargoDate;
 
-    public File() {
+    /**
+     * Constructor for File objects. A file object is valid if it has a license or is explicitly marked as
+     * being an administrative agreement.
+     *
+     * @param identifier              A UUID that identifies the file in storage
+     * @param name                    The original name of the file
+     * @param mimeType                The mimetype of the file
+     * @param size                    The size of the file
+     * @param license                 The license for the file, may be null if and only if the file is an
+     *                                administrative agreement
+     * @param administrativeAgreement True if the file is an administrative agreement
+     * @param publisherAuthority      True if the file owner has publisher authority
+     * @param embargoDate             The date after which the file may be published
+     */
+    @JsonCreator
+    public File(
+            @JsonProperty("identifier") UUID identifier,
+            @JsonProperty("name") String name,
+            @JsonProperty("mimeType") String mimeType,
+            @JsonProperty("size") Long size,
+            @JsonProperty("license") License license,
+            @JsonProperty("administrativeAgreement") boolean administrativeAgreement,
+            @JsonProperty("publisherAuthority") boolean publisherAuthority,
+            @JsonProperty("embargoDate") Instant embargoDate) {
 
+        if (!administrativeAgreement && isNull(license)) {
+            throw new MissingLicenseException(MISSING_LICENSE);
+        }
+
+        this.identifier = identifier;
+        this.name = name;
+        this.mimeType = mimeType;
+        this.size = size;
+        this.license = license;
+        this.administrativeAgreement = administrativeAgreement;
+        this.publisherAuthority = publisherAuthority;
+        this.embargoDate = embargoDate;
     }
 
     private File(Builder builder) {
-        setIdentifier(builder.identifier);
-        setName(builder.name);
-        setMimeType(builder.mimeType);
-        setSize(builder.size);
-        setLicense(builder.license);
-        setAdministrativeAgreement(builder.administrativeAgreement);
-        setPublisherAuthority(builder.publisherAuthority);
-        setEmbargoDate(builder.embargoDate);
+        this(
+                builder.identifier,
+                builder.name,
+                builder.mimeType,
+                builder.size,
+                builder.license,
+                builder.administrativeAgreement,
+                builder.publisherAuthority,
+                builder.embargoDate
+        );
     }
 
     public UUID getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(UUID identifier) {
-        this.identifier = identifier;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getMimeType() {
         return mimeType;
     }
 
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
-
     public Long getSize() {
         return size;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
     }
 
     public License getLicense() {
         return license;
     }
 
-    public void setLicense(License license) {
-        this.license = license;
-    }
-
     public boolean isAdministrativeAgreement() {
         return administrativeAgreement;
-    }
-
-    public void setAdministrativeAgreement(boolean administrativeAgreement) {
-        this.administrativeAgreement = administrativeAgreement;
     }
 
     public boolean isPublisherAuthority() {
         return publisherAuthority;
     }
 
-    public void setPublisherAuthority(boolean publisherAuthority) {
-        this.publisherAuthority = publisherAuthority;
-    }
-
     public Instant getEmbargoDate() {
         return embargoDate;
-    }
-
-    public void setEmbargoDate(Instant embargoDate) {
-        this.embargoDate = embargoDate;
     }
 
     @Override
