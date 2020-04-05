@@ -176,7 +176,7 @@ public class PublicationTest {
     private PublicationContext getPublishingContext() {
         return new PublicationContext.Builder()
                 .withLevel(Level.LEVEL_1)
-                .withName("Tim's lovely publishing house")
+                .withTitle("Tim's lovely publishing house")
                 .withPeerReviewed(true)
                 .withOpenAccess(true)
                 .build();

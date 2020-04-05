@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class PublicationContext {
-    private String name;
+    private String title;
     private Level level;
     private boolean openAccess;
     private boolean peerReviewed;
@@ -16,18 +16,18 @@ public class PublicationContext {
     }
 
     private PublicationContext(Builder builder) {
-        setName(builder.name);
+        setTitle(builder.title);
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Level getLevel() {
@@ -59,13 +59,13 @@ public class PublicationContext {
     }
 
     public static class Builder {
-        private String name;
+        private String title;
         private Level level;
         public boolean openAccess;
         public boolean peerReviewed;
 
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withTitle(String title) {
+            this.title = title;
             return this;
         }
 
@@ -100,12 +100,12 @@ public class PublicationContext {
         PublicationContext that = (PublicationContext) o;
         return isOpenAccess() == that.isOpenAccess()
                 && isPeerReviewed() == that.isPeerReviewed()
-                && Objects.equals(getName(), that.getName())
+                && Objects.equals(getTitle(), that.getTitle())
                 && getLevel() == that.getLevel();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getLevel(), isOpenAccess(), isPeerReviewed());
+        return Objects.hash(getTitle(), getLevel(), isOpenAccess(), isPeerReviewed());
     }
 }
