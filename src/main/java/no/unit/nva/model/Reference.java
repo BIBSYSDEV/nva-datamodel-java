@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 
 import java.util.Objects;
 

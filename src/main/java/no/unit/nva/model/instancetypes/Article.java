@@ -1,24 +1,26 @@
-package no.unit.nva.model;
+package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.pages.Range;
 
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class PublicationInstance {
+public class Article extends PublicationInstance {
     private String volume;
     private String issue;
     private String articleNumber;
-    private Pages pages;
 
-    public PublicationInstance() {
+    public Article() {
+        super();
     }
 
-    private PublicationInstance(Builder builder) {
+    private Article(Builder builder) {
+        super();
         setVolume(builder.volume);
         setIssue(builder.issue);
-        setPages(builder.pages);
         setArticleNumber(builder.articleNumber);
+        setPages(builder.pages);
     }
 
     public String getVolume() {
@@ -45,19 +47,14 @@ public class PublicationInstance {
         this.articleNumber = articleNumber;
     }
 
-    public Pages getPages() {
-        return pages;
-    }
-
-    public void setPages(Pages pages) {
-        this.pages = pages;
-    }
-
     public static final class Builder {
         private String volume;
         private String issue;
         private String articleNumber;
-        private Pages pages;
+        private Range pages;
+
+        public Builder() {
+        }
 
         public Builder withVolume(String volume) {
             this.volume = volume;
@@ -74,13 +71,13 @@ public class PublicationInstance {
             return this;
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(Range pages) {
             this.pages = pages;
             return this;
         }
 
-        public PublicationInstance build() {
-            return new PublicationInstance(this);
+        public Article build() {
+            return new Article(this);
         }
     }
 
@@ -89,14 +86,14 @@ public class PublicationInstance {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PublicationInstance)) {
+        if (!(o instanceof Article)) {
             return false;
         }
-        PublicationInstance that = (PublicationInstance) o;
-        return Objects.equals(getVolume(), that.getVolume())
-                && Objects.equals(getIssue(), that.getIssue())
-                && Objects.equals(getArticleNumber(), that.getArticleNumber())
-                && Objects.equals(getPages(), that.getPages());
+        Article article = (Article) o;
+        return Objects.equals(getVolume(), article.getVolume())
+                && Objects.equals(getIssue(), article.getIssue())
+                && Objects.equals(getArticleNumber(), article.getArticleNumber())
+                && Objects.equals(getPages(), article.getPages());
     }
 
     @Override
