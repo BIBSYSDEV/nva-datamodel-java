@@ -6,6 +6,8 @@ import no.unit.nva.model.validator.IssnValidator;
 
 import java.util.Objects;
 
+import static java.util.Objects.nonNull;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Journal extends PublicationContext {
     private String printIssn;
@@ -21,8 +23,12 @@ public class Journal extends PublicationContext {
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
-        setPrintIssn(builder.printIssn);
-        setOnlineIssn(builder.onlineIssn);
+        if (nonNull(builder.printIssn)) {
+            setPrintIssn(builder.printIssn);
+        }
+        if (nonNull(builder.onlineIssn)) {
+            setOnlineIssn(builder.onlineIssn);
+        }
     }
 
     public String getPrintIssn() {
