@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({@JsonSubTypes.Type(name = "Article", value = Article.class)})
+@JsonSubTypes({@JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class)})
 public class PublicationInstance {
     private Pages pages;
     private boolean peerReviewed;

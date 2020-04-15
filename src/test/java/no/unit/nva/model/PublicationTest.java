@@ -11,7 +11,7 @@ import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
-import no.unit.nva.model.instancetypes.Article;
+import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.ContextUtil;
@@ -150,7 +150,7 @@ public class PublicationTest {
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
-                .withPublicationSubtype(PublicationSubtype.ARTICLE)
+                .withPublicationSubtype(PublicationSubtype.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
@@ -170,7 +170,7 @@ public class PublicationTest {
     }
 
     private PublicationInstance getPublicationInstance() {
-        return new Article.Builder()
+        return new JournalArticle.Builder()
                 .withArticleNumber("1234456")
                 .withIssue("2")
                 .withVolume("24")

@@ -19,20 +19,21 @@ public class IssnValidator {
      * @return Boolean for the result of the validation
      */
     public static boolean validate(String issn) {
+
         if (issn.length() != ISSN_STANDARD_LENGTH) {
             return false;
         }
-        return testStructure(issn);
-    }
 
-    private static boolean testStructure(String issn) {
         String value = issn.toUpperCase(Locale.ENGLISH);
         char[] characters = value.toCharArray();
+
+        if (characters[ISSN_HYPHEN_POSITION] != HYPHEN) {
+            return false;
+        }
+
         List<Integer> integers = new ArrayList<>();
+
         for (int counter = 0; counter < characters.length - 1; counter++) {
-            if (counter == ISSN_HYPHEN_POSITION && characters[counter] != HYPHEN) {
-                return false;
-            }
             int number;
             if (counter != ISSN_HYPHEN_POSITION) {
                 try {
@@ -43,6 +44,7 @@ public class IssnValidator {
                 integers.add(number);
             }
         }
+
         return generateCheckbit(integers) == characters[characters.length - 1];
     }
 

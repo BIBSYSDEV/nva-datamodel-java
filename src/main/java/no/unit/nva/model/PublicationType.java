@@ -8,7 +8,7 @@ import static java.util.stream.Collectors.joining;
 
 public enum PublicationType {
 
-    JOURNAL_ARTICLE("Article");
+    JOURNAL_ARTICLE("JournalArticle");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid PublicationType, expected one of: %s";
     public static final String DELIMITER = ", ";

@@ -6,16 +6,16 @@ import no.unit.nva.model.pages.Range;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Article extends PublicationInstance {
+public class JournalArticle extends PublicationInstance {
     private String volume;
     private String issue;
     private String articleNumber;
 
-    public Article() {
+    public JournalArticle() {
         super();
     }
 
-    private Article(Builder builder) {
+    private JournalArticle(Builder builder) {
         super();
         setVolume(builder.volume);
         setIssue(builder.issue);
@@ -83,8 +83,8 @@ public class Article extends PublicationInstance {
             return this;
         }
 
-        public Article build() {
-            return new Article(this);
+        public JournalArticle build() {
+            return new JournalArticle(this);
         }
     }
 
@@ -93,15 +93,15 @@ public class Article extends PublicationInstance {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Article)) {
+        if (!(o instanceof JournalArticle)) {
             return false;
         }
-        Article article = (Article) o;
-        return Objects.equals(getVolume(), article.getVolume())
-                && Objects.equals(getIssue(), article.getIssue())
-                && Objects.equals(getArticleNumber(), article.getArticleNumber())
-                && Objects.equals(getPages(), article.getPages())
-                && isPeerReviewed() == article.isPeerReviewed();
+        JournalArticle journalArticle = (JournalArticle) o;
+        return Objects.equals(getVolume(), journalArticle.getVolume())
+                && Objects.equals(getIssue(), journalArticle.getIssue())
+                && Objects.equals(getArticleNumber(), journalArticle.getArticleNumber())
+                && Objects.equals(getPages(), journalArticle.getPages())
+                && isPeerReviewed() == journalArticle.isPeerReviewed();
     }
 
     @Override

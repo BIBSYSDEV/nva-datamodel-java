@@ -13,7 +13,7 @@ public class Journal extends PublicationContext {
     private String printIssn;
     private String onlineIssn;
 
-    /* default */ Journal() {
+    public Journal() {
         super();
     }
 

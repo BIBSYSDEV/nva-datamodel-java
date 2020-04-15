@@ -7,7 +7,7 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 
 public enum PublicationSubtype {
-    ARTICLE("Article"),
+    JOURNAL_ARTICLE("JournalArticle"),
     SHORT_COMMUNICATION("ShortCommunication"),
     EDITORIAL("Editorial"),
     LETTER("Letter"),
