@@ -35,6 +35,12 @@ public class Journal extends PublicationContext {
         return printIssn;
     }
 
+    /**
+     * Sets the print ISSN for a Journal object.
+     *
+     * @param printIssn a valid ISSN
+     * @throws InvalidIssnException Thrown if the ISSN is invalid
+     */
     public void setPrintIssn(String printIssn) throws InvalidIssnException {
         boolean isValid = IssnValidator.validate(printIssn);
         if (isValid) {
@@ -45,9 +51,15 @@ public class Journal extends PublicationContext {
     }
 
     public String getOnlineIssn() {
-            return onlineIssn;
+        return onlineIssn;
     }
 
+    /**
+     * Sets the online ISSN for a Journal object.
+     *
+     * @param onlineIssn a valid ISSN
+     * @throws InvalidIssnException Thrown if the ISSN is invalid
+     */
     public void setOnlineIssn(String onlineIssn) throws InvalidIssnException {
         boolean isValid = IssnValidator.validate(onlineIssn);
         if (isValid) {
