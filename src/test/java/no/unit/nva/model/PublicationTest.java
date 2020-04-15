@@ -175,6 +175,7 @@ public class PublicationTest {
                 .withIssue("2")
                 .withVolume("24")
                 .withPages(getPages())
+                .withPeerReviewed(true)
                 .build();
     }
 

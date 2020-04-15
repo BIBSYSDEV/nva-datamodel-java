@@ -8,6 +8,7 @@ import no.unit.nva.model.pages.Pages;
 @JsonSubTypes({@JsonSubTypes.Type(name = "Article", value = Article.class)})
 public class PublicationInstance {
     private Pages pages;
+    private boolean peerReviewed;
 
     /* default */ PublicationInstance() {
 
@@ -19,5 +20,13 @@ public class PublicationInstance {
 
     public void setPages(Pages pages) {
         this.pages = pages;
+    }
+
+    public void setPeerReviewed(boolean peerReviewed) {
+        this.peerReviewed = peerReviewed;
+    }
+
+    public boolean isPeerReviewed() {
+        return peerReviewed;
     }
 }

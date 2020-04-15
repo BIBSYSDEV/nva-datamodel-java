@@ -21,6 +21,7 @@ public class Article extends PublicationInstance {
         setIssue(builder.issue);
         setArticleNumber(builder.articleNumber);
         setPages(builder.pages);
+        setPeerReviewed(builder.peerReviewed);
     }
 
     public String getVolume() {
@@ -52,6 +53,7 @@ public class Article extends PublicationInstance {
         private String issue;
         private String articleNumber;
         private Range pages;
+        private boolean peerReviewed;
 
         public Builder() {
         }
@@ -76,6 +78,11 @@ public class Article extends PublicationInstance {
             return this;
         }
 
+        public Builder withPeerReviewed(boolean peerReviewed) {
+            this.peerReviewed = peerReviewed;
+            return this;
+        }
+
         public Article build() {
             return new Article(this);
         }
@@ -93,11 +100,12 @@ public class Article extends PublicationInstance {
         return Objects.equals(getVolume(), article.getVolume())
                 && Objects.equals(getIssue(), article.getIssue())
                 && Objects.equals(getArticleNumber(), article.getArticleNumber())
-                && Objects.equals(getPages(), article.getPages());
+                && Objects.equals(getPages(), article.getPages())
+                && isPeerReviewed() == article.isPeerReviewed();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages());
+        return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages(), isPeerReviewed());
     }
 }
