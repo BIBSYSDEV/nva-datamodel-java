@@ -1,24 +1,29 @@
-package no.unit.nva.model;
+package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.pages.Range;
+import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class PublicationInstance {
+public class JournalArticle extends PublicationInstance {
     private String volume;
     private String issue;
     private String articleNumber;
-    private Pages pages;
 
-    public PublicationInstance() {
+    @JacocoGenerated
+    public JournalArticle() {
+        super();
     }
 
-    private PublicationInstance(Builder builder) {
+    private JournalArticle(Builder builder) {
+        super();
         setVolume(builder.volume);
         setIssue(builder.issue);
-        setPages(builder.pages);
         setArticleNumber(builder.articleNumber);
+        setPages(builder.pages);
+        setPeerReviewed(builder.peerReviewed);
     }
 
     public String getVolume() {
@@ -45,19 +50,15 @@ public class PublicationInstance {
         this.articleNumber = articleNumber;
     }
 
-    public Pages getPages() {
-        return pages;
-    }
-
-    public void setPages(Pages pages) {
-        this.pages = pages;
-    }
-
     public static final class Builder {
         private String volume;
         private String issue;
         private String articleNumber;
-        private Pages pages;
+        private Range pages;
+        private boolean peerReviewed;
+
+        public Builder() {
+        }
 
         public Builder withVolume(String volume) {
             this.volume = volume;
@@ -74,33 +75,41 @@ public class PublicationInstance {
             return this;
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(Range pages) {
             this.pages = pages;
             return this;
         }
 
-        public PublicationInstance build() {
-            return new PublicationInstance(this);
+        public Builder withPeerReviewed(boolean peerReviewed) {
+            this.peerReviewed = peerReviewed;
+            return this;
+        }
+
+        public JournalArticle build() {
+            return new JournalArticle(this);
         }
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PublicationInstance)) {
+        if (!(o instanceof JournalArticle)) {
             return false;
         }
-        PublicationInstance that = (PublicationInstance) o;
-        return Objects.equals(getVolume(), that.getVolume())
-                && Objects.equals(getIssue(), that.getIssue())
-                && Objects.equals(getArticleNumber(), that.getArticleNumber())
-                && Objects.equals(getPages(), that.getPages());
+        JournalArticle journalArticle = (JournalArticle) o;
+        return Objects.equals(getVolume(), journalArticle.getVolume())
+                && Objects.equals(getIssue(), journalArticle.getIssue())
+                && Objects.equals(getArticleNumber(), journalArticle.getArticleNumber())
+                && Objects.equals(getPages(), journalArticle.getPages())
+                && isPeerReviewed() == journalArticle.isPeerReviewed();
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages());
+        return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages(), isPeerReviewed());
     }
 }

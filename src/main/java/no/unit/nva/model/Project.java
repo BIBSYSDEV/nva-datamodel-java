@@ -1,5 +1,7 @@
 package no.unit.nva.model;
 
+import nva.commons.utils.JacocoGenerated;
+
 import java.net.URI;
 import java.util.Objects;
 
@@ -8,11 +10,6 @@ public class Project {
     private String name;
 
     public Project() {
-    }
-
-    private Project(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
     }
 
     public URI getId() {
@@ -31,6 +28,7 @@ public class Project {
         this.name = name;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -44,30 +42,9 @@ public class Project {
                 && Objects.equals(getName(), project.getName());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName());
-    }
-
-    public static final class Builder {
-        private URI id;
-        private String name;
-
-        public Builder() {
-        }
-
-        public Builder withId(URI id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Project build() {
-            return new Project(this);
-        }
     }
 }

@@ -1,41 +1,30 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidNpiLevelException;
-
-import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({@JsonSubTypes.Type(name = "Journal", value = Journal.class)})
 public class PublicationContext {
-    private String name;
+    private String title;
     private Level level;
     private boolean openAccess;
     private boolean peerReviewed;
 
-    public PublicationContext() {
+    /* default */ PublicationContext() {
+
     }
 
-    private PublicationContext(Builder builder) {
-        setName(builder.name);
-        setLevel(builder.level);
-        setOpenAccess(builder.openAccess);
-        setPeerReviewed(builder.peerReviewed);
+    public String getTitle() {
+        return title;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Level getLevel() {
         return level;
-    }
-
-    public void setLevelFromInteger(Integer level) throws InvalidNpiLevelException {
-        this.level = Level.getLevel(level);
     }
 
     public void setLevel(Level level) {
@@ -56,56 +45,5 @@ public class PublicationContext {
 
     public void setPeerReviewed(boolean peerReviewed) {
         this.peerReviewed = peerReviewed;
-    }
-
-    public static class Builder {
-        private String name;
-        private Level level;
-        public boolean openAccess;
-        public boolean peerReviewed;
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withLevel(Level level) {
-            this.level = level;
-            return this;
-        }
-
-        public Builder withOpenAccess(boolean openAccess) {
-            this.openAccess = openAccess;
-            return this;
-        }
-
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
-            return this;
-        }
-
-        public PublicationContext build() {
-            return new PublicationContext(this);
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof PublicationContext)) {
-            return false;
-        }
-        PublicationContext that = (PublicationContext) o;
-        return isOpenAccess() == that.isOpenAccess()
-                && isPeerReviewed() == that.isPeerReviewed()
-                && Objects.equals(getName(), that.getName())
-                && getLevel() == that.getLevel();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getLevel(), isOpenAccess(), isPeerReviewed());
     }
 }

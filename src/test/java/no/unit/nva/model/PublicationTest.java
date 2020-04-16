@@ -9,7 +9,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
+import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
+import no.unit.nva.model.instancetypes.JournalArticle;
+import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.ContextUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -47,7 +51,8 @@ public class PublicationTest {
 
     @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
-    void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException {
+    void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException,
+            InvalidIssnException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -72,7 +77,7 @@ public class PublicationTest {
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
     void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
-            MalformedContributorException {
+            MalformedContributorException, InvalidIssnException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -97,7 +102,7 @@ public class PublicationTest {
     }
 
     private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now)
-            throws MalformedContributorException {
+            throws MalformedContributorException, InvalidIssnException {
         return new Publication.Builder()
                 .withIdentifier(publicationIdentifier)
                 .withCreatedDate(now)
@@ -138,14 +143,14 @@ public class PublicationTest {
                 .build());
     }
 
-    private EntityDescription getEntityDescription() throws MalformedContributorException {
+    private EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException {
         return new EntityDescription.Builder()
                 .withMainTitle("Hovedtittelen")
                 .withLanguage(URI.create("http://example.org/norsk"))
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
                 .withPublicationType(PublicationType.JOURNAL_ARTICLE)
-                .withPublicationSubtype(PublicationSubtype.ARTICLE)
+                .withPublicationSubtype(PublicationSubtype.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
@@ -156,7 +161,7 @@ public class PublicationTest {
                 .build();
     }
 
-    private Reference getJournalReference() {
+    private Reference getJournalReference() throws InvalidIssnException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContext())
                 .withDoi("123123/213123")
@@ -165,20 +170,23 @@ public class PublicationTest {
     }
 
     private PublicationInstance getPublicationInstance() {
-        return new PublicationInstance.Builder()
+        return new JournalArticle.Builder()
                 .withArticleNumber("1234456")
                 .withIssue("2")
                 .withVolume("24")
                 .withPages(getPages())
+                .withPeerReviewed(true)
                 .build();
     }
 
-    private PublicationContext getPublishingContext() {
-        return new PublicationContext.Builder()
+    private PublicationContext getPublishingContext() throws InvalidIssnException {
+        return new Journal.Builder()
                 .withLevel(Level.LEVEL_1)
-                .withName("Tim's lovely publishing house")
+                .withTitle("Tim's lovely publishing house")
                 .withPeerReviewed(true)
                 .withOpenAccess(true)
+                .withOnlineIssn("1111-1119")
+                .withPrintIssn("2222-2227")
                 .build();
     }
 
@@ -245,10 +253,10 @@ public class PublicationTest {
                 .build();
     }
 
-    private Pages getPages() {
-        return new Pages.Builder()
-                .withBegins("1")
-                .withEnds("15")
+    private Range getPages() {
+        return new Range.Builder()
+                .withBegin("1")
+                .withEnd("15")
                 .build();
     }
 
