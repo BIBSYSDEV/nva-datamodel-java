@@ -1,8 +1,11 @@
 package no.unit.nva.model.validator;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+
 
 public class IssnValidator {
 
@@ -10,6 +13,8 @@ public class IssnValidator {
     public static final int ISSN_HYPHEN_POSITION = 4;
     public static final char HYPHEN = '-';
     public static final int MATCH_TEN = 10;
+    public static final List<Character> CHARACTER_LIST =
+            List.of('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 
     /**
      * Validator for ISSNs, checks the structure and modulo 11 checkbit.
@@ -19,33 +24,42 @@ public class IssnValidator {
      * @return Boolean for the result of the validation
      */
     public static boolean validate(String issn) {
-
-        if (issn.length() != ISSN_STANDARD_LENGTH) {
-            return false;
-        }
-
         String value = issn.toUpperCase(Locale.ENGLISH);
-        char[] characters = value.toCharArray();
 
-        if (characters[ISSN_HYPHEN_POSITION] != HYPHEN) {
+        if (value.length() != ISSN_STANDARD_LENGTH) {
             return false;
         }
 
-        List<Integer> integers = new ArrayList<>();
+        List<Character> characters = new ArrayList<>(asCharacterList(value));
 
-        for (int counter = 0; counter < characters.length - 1; counter++) {
-            int number;
-            if (counter != ISSN_HYPHEN_POSITION) {
-                try {
-                    number = Integer.parseInt(String.valueOf(characters[counter]));
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-                integers.add(number);
-            }
+        if (hasIllegalHyphenation(characters)) {
+            return false;
         }
 
-        return generateCheckbit(integers) == characters[characters.length - 1];
+        characters.remove(ISSN_HYPHEN_POSITION);
+
+        int lastElement = characters.size() - 1;
+        char checkbit = characters.get(lastElement);
+        characters.remove(lastElement);
+
+        List<Integer> integers = characters.stream()
+                .filter(CHARACTER_LIST::contains)
+                .map(IssnValidator::asInteger)
+                .collect(Collectors.toList());
+
+        return integers.size() == characters.size() && validateCheckbit(integers, checkbit);
+    }
+
+    private static int asInteger(Character character) {
+        return Integer.parseInt(String.valueOf(character));
+    }
+
+    private static boolean hasIllegalHyphenation(List<Character> characters) {
+        return characters.get(ISSN_HYPHEN_POSITION) != HYPHEN;
+    }
+
+    private static boolean validateCheckbit(List<Integer> integers, char character) {
+        return generateCheckbit(integers) == character;
     }
 
     private static char generateCheckbit(List<Integer> integerList) {
@@ -62,5 +76,19 @@ public class IssnValidator {
         }
 
         return Character.forDigit(modulo, 10);
+    }
+
+    private static List<Character> asCharacterList(String string) {
+        return new AbstractList<>() {
+            @Override
+            public Character get(int i) {
+                return string.charAt(i);
+            }
+
+            @Override
+            public int size() {
+                return string.length();
+            }
+        };
     }
 }
