@@ -25,6 +25,7 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
     testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
     testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testImplementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: 'v0.1.5'
 
 }
 

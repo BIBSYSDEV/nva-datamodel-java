@@ -2,12 +2,12 @@ package no.unit.nva.model.pages;
 
 import java.util.Objects;
 
-public class Composite implements Pages {
+public class MonographPages implements Pages {
     private Range introduction;
     private String pages;
     private boolean illustrated;
 
-    private Composite(Builder builder) {
+    private MonographPages(Builder builder) {
         setIntroduction(builder.introduction);
         setPages(builder.pages);
         setIllustrated(builder.illustrated);
@@ -60,8 +60,8 @@ public class Composite implements Pages {
             return this;
         }
 
-        public Composite build() {
-            return new Composite(this);
+        public MonographPages build() {
+            return new MonographPages(this);
         }
     }
 
@@ -70,13 +70,13 @@ public class Composite implements Pages {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Composite)) {
+        if (!(o instanceof MonographPages)) {
             return false;
         }
-        Composite composite = (Composite) o;
-        return isIllustrated() == composite.isIllustrated()
-                && Objects.equals(getIntroduction(), composite.getIntroduction())
-                && Objects.equals(getPages(), composite.getPages());
+        MonographPages monographPages = (MonographPages) o;
+        return isIllustrated() == monographPages.isIllustrated()
+                && Objects.equals(getIntroduction(), monographPages.getIntroduction())
+                && Objects.equals(getPages(), monographPages.getPages());
     }
 
     @Override
