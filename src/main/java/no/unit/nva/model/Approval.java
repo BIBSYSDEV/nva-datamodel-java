@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -55,6 +56,7 @@ public class Approval {
         this.applicationCode = applicationCode;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -70,6 +72,7 @@ public class Approval {
                 && Objects.equals(getApplicationCode(), approval.getApplicationCode());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getDate(), getApprovedBy(), getApprovalStatus(), getApplicationCode());

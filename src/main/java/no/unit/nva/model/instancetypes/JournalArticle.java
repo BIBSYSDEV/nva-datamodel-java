@@ -2,6 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.Range;
+import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ public class JournalArticle extends PublicationInstance {
     private String issue;
     private String articleNumber;
 
+    @JacocoGenerated
     public JournalArticle() {
         super();
     }
@@ -88,6 +90,7 @@ public class JournalArticle extends PublicationInstance {
         }
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,6 +107,7 @@ public class JournalArticle extends PublicationInstance {
                 && isPeerReviewed() == journalArticle.isPeerReviewed();
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages(), isPeerReviewed());
