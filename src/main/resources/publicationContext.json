@@ -29,5 +29,17 @@
   },
   "labels": {
     "@container": "@language"
+  },
+  "language": {
+    "@type": "@id"
+  },
+  "year": {
+    "@type": "xsd:gYear"
+  },
+  "month": {
+    "@type": "xsd:gMonth"
+  },
+  "day": {
+    "@type": "xsd:gDay"
   }
 }

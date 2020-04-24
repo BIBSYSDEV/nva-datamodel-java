@@ -12,7 +12,6 @@ import java.util.Objects;
 public class EntityDescription {
 
     private PublicationType publicationType;
-    private PublicationSubtype publicationSubtype;
     private String mainTitle;
     private Map<String, String> alternativeTitles;
     private URI language;
@@ -32,7 +31,6 @@ public class EntityDescription {
 
     private EntityDescription(Builder builder) {
         setPublicationType(builder.publicationType);
-        setPublicationSubtype(builder.publicationSubtype);
         setMainTitle(builder.mainTitle);
         setAlternativeTitles(builder.alternativeTitles);
         setLanguage(builder.language);
@@ -142,14 +140,6 @@ public class EntityDescription {
         this.reference = reference;
     }
 
-    public PublicationSubtype getPublicationSubtype() {
-        return publicationSubtype;
-    }
-
-    public void setPublicationSubtype(PublicationSubtype publicationSubtype) {
-        this.publicationSubtype = publicationSubtype;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -160,7 +150,6 @@ public class EntityDescription {
         }
         EntityDescription that = (EntityDescription) o;
         return getPublicationType() == that.getPublicationType()
-                && getPublicationSubtype() == that.getPublicationSubtype()
                 && Objects.equals(getMainTitle(), that.getMainTitle())
                 && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
                 && Objects.equals(getLanguage(), that.getLanguage())
@@ -177,7 +166,6 @@ public class EntityDescription {
     @Override
     public int hashCode() {
         return Objects.hash(getPublicationType(),
-                getPublicationSubtype(),
                 getMainTitle(),
                 getAlternativeTitles(),
                 getLanguage(),
@@ -193,7 +181,6 @@ public class EntityDescription {
 
     public static final class Builder {
         private PublicationType publicationType;
-        private PublicationSubtype publicationSubtype;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
         private URI language;
@@ -211,11 +198,6 @@ public class EntityDescription {
 
         public Builder withPublicationType(PublicationType publicationType) {
             this.publicationType = publicationType;
-            return this;
-        }
-
-        public Builder withPublicationSubtype(PublicationSubtype publicationSubtype) {
-            this.publicationSubtype = publicationSubtype;
             return this;
         }
 
