@@ -34,7 +34,7 @@ public class PublicationTest {
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final String HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE = "https://nva.unit.no/publication#mainTitle";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     /**
      * Constructor for PublicationTest.
@@ -150,7 +150,6 @@ public class PublicationTest {
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
                 .withPublicationType(PublicationType.JOURNAL_CONTENT)
-                .withPublicationSubtype(PublicationSubtype.JOURNAL_ARTICLE)
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
