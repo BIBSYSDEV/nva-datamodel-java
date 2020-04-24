@@ -11,7 +11,6 @@ import java.util.Objects;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class EntityDescription {
 
-    private PublicationType publicationType;
     private String mainTitle;
     private Map<String, String> alternativeTitles;
     private URI language;
@@ -30,7 +29,6 @@ public class EntityDescription {
     }
 
     private EntityDescription(Builder builder) {
-        setPublicationType(builder.publicationType);
         setMainTitle(builder.mainTitle);
         setAlternativeTitles(builder.alternativeTitles);
         setLanguage(builder.language);
@@ -42,14 +40,6 @@ public class EntityDescription {
         setDescription(builder.description);
         setReference(builder.reference);
         setMetadataSource(builder.metadataSource);
-    }
-
-    public PublicationType getPublicationType() {
-        return publicationType;
-    }
-
-    public void setPublicationType(PublicationType publicationType) {
-        this.publicationType = publicationType;
     }
 
     public String getMainTitle() {
@@ -149,8 +139,7 @@ public class EntityDescription {
             return false;
         }
         EntityDescription that = (EntityDescription) o;
-        return getPublicationType() == that.getPublicationType()
-                && Objects.equals(getMainTitle(), that.getMainTitle())
+        return Objects.equals(getMainTitle(), that.getMainTitle())
                 && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
                 && Objects.equals(getLanguage(), that.getLanguage())
                 && Objects.equals(getDate(), that.getDate())
@@ -165,8 +154,7 @@ public class EntityDescription {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPublicationType(),
-                getMainTitle(),
+        return Objects.hash(getMainTitle(),
                 getAlternativeTitles(),
                 getLanguage(),
                 getDate(),
@@ -180,7 +168,6 @@ public class EntityDescription {
     }
 
     public static final class Builder {
-        private PublicationType publicationType;
         private String mainTitle;
         private Map<String, String> alternativeTitles;
         private URI language;
@@ -194,11 +181,6 @@ public class EntityDescription {
         private URI metadataSource;
 
         public Builder() {
-        }
-
-        public Builder withPublicationType(PublicationType publicationType) {
-            this.publicationType = publicationType;
-            return this;
         }
 
         public Builder withMainTitle(String mainTitle) {

@@ -149,7 +149,6 @@ public class PublicationTest {
                 .withLanguage(URI.create("http://example.org/norsk"))
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
-                .withPublicationType(PublicationType.JOURNAL_CONTENT)
                 .withContributors(Collections.singletonList(getContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
