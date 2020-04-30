@@ -34,6 +34,7 @@ public class PublicationTest {
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final String HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE = "https://nva.unit.no/publication#mainTitle";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
+    public static final URI SOME_URI = URI.create("https://123123/213123.com");
     private final ObjectMapper objectMapper;
 
     /**
@@ -162,7 +163,7 @@ public class PublicationTest {
     private Reference getJournalReference() throws InvalidIssnException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContext())
-                .withDoi("123123/213123")
+                .withDoi(SOME_URI)
                 .withPublicationInstance(getPublicationInstance())
                 .build();
     }
