@@ -2,13 +2,15 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import nva.commons.utils.JacocoGenerated;
 
+import java.net.URI;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Reference {
     private PublicationContext publicationContext;
-    private String doi;
+    private URI doi;
     private PublicationInstance publicationInstance;
 
     public Reference() {
@@ -29,11 +31,11 @@ public class Reference {
         this.publicationContext = publicationContext;
     }
 
-    public String getDoi() {
+    public URI getDoi() {
         return doi;
     }
 
-    public void setDoi(String doi) {
+    public void setDoi(URI doi) {
         this.doi = doi;
     }
 
@@ -48,14 +50,14 @@ public class Reference {
     public static final class Builder {
         private PublicationInstance publicationInstance;
         private PublicationContext publicationContext;
-        private String doi;
+        private URI doi;
 
         public Builder withPublishingContext(PublicationContext publicationContext) {
             this.publicationContext = publicationContext;
             return this;
         }
 
-        public Builder withDoi(String doi) {
+        public Builder withDoi(URI doi) {
             this.doi = doi;
             return this;
         }
@@ -71,6 +73,7 @@ public class Reference {
     }
 
     @Override
+    @JacocoGenerated
     public boolean equals(Object o) {
         if (this == o) {
             return true;
