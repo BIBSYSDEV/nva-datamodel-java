@@ -9,13 +9,15 @@ import java.util.Objects;
 import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal extends PublicationContext {
+public class Journal implements PublicationContext {
+    private String title;
+    private Level level;
+    private boolean openAccess;
+    private boolean peerReviewed;
     private String printIssn;
     private String onlineIssn;
 
-    public Journal() {
-        super();
-    }
+    public Journal() {}
 
     private Journal(Journal.Builder builder) throws InvalidIssnException {
         super();
@@ -67,6 +69,46 @@ public class Journal extends PublicationContext {
         } else {
             throw new InvalidIssnException(onlineIssn);
         }
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public Level getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    @Override
+    public boolean isOpenAccess() {
+        return openAccess;
+    }
+
+    @Override
+    public void setOpenAccess(boolean openAccess) {
+        this.openAccess = openAccess;
+    }
+
+    @Override
+    public boolean isPeerReviewed() {
+        return peerReviewed;
+    }
+
+    @Override
+    public void setPeerReviewed(boolean peerReviewed) {
+        this.peerReviewed = peerReviewed;
     }
 
     public static final class Builder {
