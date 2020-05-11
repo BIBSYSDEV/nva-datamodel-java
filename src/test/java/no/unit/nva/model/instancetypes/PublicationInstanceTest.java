@@ -24,7 +24,8 @@ class PublicationInstanceTest {
 
     @DisplayName("Publication instance can be serialized with Range object")
     @Test
-    void publicationInstanceReturnsSerializedJsonWhenValidRangeIsInput() throws JsonProcessingException, InvalidPageTypeException {
+    void publicationInstanceReturnsSerializedJsonWhenValidRangeIsInput() throws JsonProcessingException,
+            InvalidPageTypeException {
         PublicationInstance publicationInstance = new JournalArticle();
 
         Range range = new Range.Builder()
@@ -41,7 +42,7 @@ class PublicationInstanceTest {
 
     @DisplayName("Publication instance can ONLY be serialized with Range object")
     @Test
-    void journalArticleThrowsInvalidPageExceptionWhenValidMonographPagesIsInput() throws JsonProcessingException, InvalidPageTypeException {
+    void journalArticleThrowsInvalidPageExceptionWhenValidMonographPagesIsInput() {
         PublicationInstance publicationInstance = new JournalArticle();
 
         MonographPages monographPages = new MonographPages.Builder()

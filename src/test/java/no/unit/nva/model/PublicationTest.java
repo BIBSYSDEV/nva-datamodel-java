@@ -145,7 +145,8 @@ public class PublicationTest {
                 .build());
     }
 
-    private EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
+    private EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException,
+            InvalidPageTypeException {
         return new EntityDescription.Builder()
                 .withMainTitle("Hovedtittelen")
                 .withLanguage(URI.create("http://example.org/norsk"))

@@ -17,7 +17,8 @@ public class Journal implements PublicationContext {
     private String printIssn;
     private String onlineIssn;
 
-    public Journal() {}
+    public Journal() {
+    }
 
     private Journal(Journal.Builder builder) throws InvalidIssnException {
         super();
