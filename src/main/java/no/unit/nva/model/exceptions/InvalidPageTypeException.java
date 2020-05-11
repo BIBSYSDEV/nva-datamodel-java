@@ -8,8 +8,8 @@ public class InvalidPageTypeException extends Exception {
             "Class %s expects a Pages object of type %s, while an object of type %s was provided";
 
     /**
-     * This exception is thrown when a Pages object is used with a class that expects a specific Pages type. For example:
-     * JournalArticle is compatible with a Pages object of type Range.
+     * This exception is thrown when a Pages object is used with a class that expects a specific Pages type.
+     * For example, JournalArticle is compatible with a Pages object of type Range.
      *
      * @param publicationInstance The publication instance.
      * @param expectedPages The expected Pages type.
