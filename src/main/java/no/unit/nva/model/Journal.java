@@ -1,12 +1,11 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.isNull;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Objects;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.validator.IssnValidator;
-
-import java.util.Objects;
-
-import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Journal extends PublicationContext {
@@ -23,12 +22,8 @@ public class Journal extends PublicationContext {
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
-        if (nonNull(builder.printIssn)) {
-            setPrintIssn(builder.printIssn);
-        }
-        if (nonNull(builder.onlineIssn)) {
-            setOnlineIssn(builder.onlineIssn);
-        }
+        setPrintIssn(builder.printIssn);
+        setOnlineIssn(builder.onlineIssn);
     }
 
     public String getPrintIssn() {
@@ -41,7 +36,12 @@ public class Journal extends PublicationContext {
      * @param printIssn a valid ISSN
      * @throws InvalidIssnException Thrown if the ISSN is invalid
      */
+    @SuppressWarnings("PMD.NullAssignment")
     public void setPrintIssn(String printIssn) throws InvalidIssnException {
+        if (isNull(printIssn) || printIssn.isEmpty()) {
+            this.printIssn = null;
+            return;
+        }
         boolean isValid = IssnValidator.validate(printIssn);
         if (isValid) {
             this.printIssn = printIssn;
@@ -60,7 +60,12 @@ public class Journal extends PublicationContext {
      * @param onlineIssn a valid ISSN
      * @throws InvalidIssnException Thrown if the ISSN is invalid
      */
+    @SuppressWarnings("PMD.NullAssignment")
     public void setOnlineIssn(String onlineIssn) throws InvalidIssnException {
+        if (isNull(onlineIssn) || onlineIssn.isEmpty()) {
+            this.onlineIssn = null;
+            return;
+        }
         boolean isValid = IssnValidator.validate(onlineIssn);
         if (isValid) {
             this.onlineIssn = onlineIssn;
