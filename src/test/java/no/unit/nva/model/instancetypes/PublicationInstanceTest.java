@@ -40,7 +40,7 @@ class PublicationInstanceTest {
                 objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(publicationInstance));
     }
 
-    @DisplayName("Publication instance can ONLY be serialized with Range object")
+    @DisplayName("Publication instance cannot be serialized when pages is not a Range object")
     @Test
     void journalArticleThrowsInvalidPageExceptionWhenValidMonographPagesIsInput() {
         PublicationInstance publicationInstance = new JournalArticle();
