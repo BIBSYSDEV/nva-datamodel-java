@@ -1,9 +1,12 @@
 package no.unit.nva.model.validator;
 
+import static java.util.Objects.isNull;
+
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -24,6 +27,10 @@ public class IssnValidator {
      * @return Boolean for the result of the validation
      */
     public static boolean validate(String issn) {
+        if (isNull(issn)) {
+            return false;
+        }
+        
         String value = issn.toUpperCase(Locale.ENGLISH);
 
         if (value.length() != ISSN_STANDARD_LENGTH) {
