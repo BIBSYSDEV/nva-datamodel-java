@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.interfaces.WithFile;
 import no.unit.nva.interfaces.WithIdentifier;
@@ -176,6 +177,47 @@ public class Publication
     @Override
     public void setProject(ResearchProject project) {
         this.project = project;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Publication)) {
+            return false;
+        }
+        Publication that = (Publication) o;
+        return Objects.equals(getIdentifier(), that.getIdentifier())
+            && getStatus() == that.getStatus()
+            && Objects.equals(getOwner(), that.getOwner())
+            && Objects.equals(getPublisher(), that.getPublisher())
+            && Objects.equals(getCreatedDate(), that.getCreatedDate())
+            && Objects.equals(getModifiedDate(), that.getModifiedDate())
+            && Objects.equals(getPublishedDate(), that.getPublishedDate())
+            && Objects.equals(getIndexedDate(), that.getIndexedDate())
+            && Objects.equals(getHandle(), that.getHandle())
+            && Objects.equals(getLink(), that.getLink())
+            && Objects.equals(getEntityDescription(), that.getEntityDescription())
+            && Objects.equals(getFileSet(), that.getFileSet())
+            && Objects.equals(getProject(), that.getProject());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(),
+            getStatus(),
+            getOwner(),
+            getPublisher(),
+            getCreatedDate(),
+            getModifiedDate(),
+            getPublishedDate(),
+            getIndexedDate(),
+            getHandle(),
+            getLink(),
+            getEntityDescription(),
+            getFileSet(),
+            getProject());
     }
 
     public static final class Builder {
