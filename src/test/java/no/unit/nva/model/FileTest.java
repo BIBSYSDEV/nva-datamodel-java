@@ -41,11 +41,13 @@ class FileTest {
         });
     }
 
-    @DisplayName("A file that is not an administrative agreement with no license throws MissingLicenseException")
+    @DisplayName("A file validation that is not an administrative agreement with no license throws "
+        + "MissingLicenseException")
     @Test
-    void fileWithNoLicenseAndNotAdministrativeAgreementThrowsMissingLicenseException() {
+    void fileValidationWithNoLicenseAndNotAdministrativeAgreementThrowsMissingLicenseException() {
+        File file = new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, null, false, true, null);
         MissingLicenseException exception = assertThrows(MissingLicenseException.class, () -> {
-            new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, null, false, true, null);
+            file.validate();
         });
 
         assertEquals(File.MISSING_LICENSE, exception.getMessage());
