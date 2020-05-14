@@ -50,10 +50,6 @@ public class File {
             @JsonProperty("publisherAuthority") boolean publisherAuthority,
             @JsonProperty("embargoDate") Instant embargoDate) {
 
-        if (!administrativeAgreement && isNull(license)) {
-            throw new MissingLicenseException(MISSING_LICENSE);
-        }
-
         this.identifier = identifier;
         this.name = name;
         this.mimeType = mimeType;
@@ -62,6 +58,12 @@ public class File {
         this.administrativeAgreement = administrativeAgreement;
         this.publisherAuthority = publisherAuthority;
         this.embargoDate = embargoDate;
+    }
+
+    public void validate() {
+        if (!administrativeAgreement && isNull(license)) {
+            throw new MissingLicenseException(MISSING_LICENSE);
+        }
     }
 
     private File(Builder builder) {

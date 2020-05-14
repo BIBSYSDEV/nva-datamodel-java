@@ -1,5 +1,7 @@
 package no.unit.nva.model;
 
+import static no.unit.nva.model.util.PublicationGenerator.getPublication;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,6 +17,7 @@ import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.ContextUtil;
+import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +36,7 @@ public class PublicationTest {
     public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContext.json";
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final String HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE = "https://nva.unit.no/publication#mainTitle";
-    public static final String EXAMPLE_EMAIL = "nn@example.org";
-    public static final URI SOME_URI = URI.create("https://123123/213123.com");
+
     private final ObjectMapper objectMapper;
 
     /**
@@ -52,7 +54,7 @@ public class PublicationTest {
 
     @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
-    void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException,
+    public void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException,
             InvalidIssnException {
 
         UUID publicationIdentifier = UUID.randomUUID();
@@ -77,7 +79,7 @@ public class PublicationTest {
 
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
-    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
+    public void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
             MalformedContributorException, InvalidIssnException {
 
         UUID publicationIdentifier = UUID.randomUUID();
@@ -100,163 +102,6 @@ public class PublicationTest {
         options.setOmitGraph(true);
         options.setPruneBlankNodeIdentifiers(true);
         return JsonLdProcessor.frame(input, frame, options);
-    }
-
-    private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now)
-            throws MalformedContributorException, InvalidIssnException {
-        return new Publication.Builder()
-                .withIdentifier(publicationIdentifier)
-                .withCreatedDate(now)
-                .withModifiedDate(now)
-                .withHandle(URI.create("http://example.org/handle/123"))
-                .withLink(URI.create("http://example.org/link"))
-                .withStatus(PublicationStatus.DRAFT)
-                .withPublisher(getOrganization())
-                .withFileSet(getFileSet(fileIdentifier))
-                .withEntityDescription(getEntityDescription())
-                .withOwner("eier@example.org")
-                .withProject(getProject())
-                .build();
-    }
-
-    private ResearchProject getProject() {
-        return new ResearchProject.Builder()
-                .withId(URI.create("http://link.to.cristin.example.org/123"))
-                .withName("Det gode prosjektet")
-                .withApprovals(getApprovals())
-                .withGrants(getGrants())
-                .build();
-    }
-
-    private List<Grant> getGrants() {
-        return Collections.singletonList(new Grant.Builder()
-                .withId("123123")
-                .withSource("Norsk rødt felaget")
-                .build());
-    }
-
-    private List<Approval> getApprovals() {
-        return Collections.singletonList(new Approval.Builder()
-                .withApplicationCode("123123")
-                .withApprovedBy(ApprovalsBody.REK)
-                .withDate(Instant.now())
-                .withApprovalStatus(ApprovalStatus.APPLIED)
-                .build());
-    }
-
-    private EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException {
-        return new EntityDescription.Builder()
-                .withMainTitle("Hovedtittelen")
-                .withLanguage(URI.create("http://example.org/norsk"))
-                .withAlternativeTitles(Collections.singletonMap("en", "English title"))
-                .withDate(getPublicationDate())
-                .withContributors(Collections.singletonList(getContributor()))
-                .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
-                .withNpiSubjectHeading("010")
-                .withTags(Arrays.asList("dokumenter", "publikasjoner"))
-                .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
-                .withReference(getJournalReference())
-                .withMetadataSource(URI.create("https://example.org/doi?doi=123/123"))
-                .build();
-    }
-
-    private Reference getJournalReference() throws InvalidIssnException {
-        return new Reference.Builder()
-                .withPublishingContext(getPublishingContext())
-                .withDoi(SOME_URI)
-                .withPublicationInstance(getPublicationInstance())
-                .build();
-    }
-
-    private PublicationInstance getPublicationInstance() {
-        return new JournalArticle.Builder()
-                .withArticleNumber("1234456")
-                .withIssue("2")
-                .withVolume("24")
-                .withPages(getPages())
-                .withPeerReviewed(true)
-                .build();
-    }
-
-    private PublicationContext getPublishingContext() throws InvalidIssnException {
-        return new Journal.Builder()
-                .withLevel(Level.LEVEL_1)
-                .withTitle("Tim's lovely publishing house")
-                .withPeerReviewed(true)
-                .withOpenAccess(true)
-                .withOnlineIssn("1111-1119")
-                .withPrintIssn("2222-2227")
-                .build();
-    }
-
-    private Contributor getContributor() throws MalformedContributorException {
-        return new Contributor.Builder()
-                .withSequence(0)
-                .withRole(Role.CREATOR)
-                .withAffiliations(Collections.singletonList(getOrganization()))
-                .withIdentity(getIdentity())
-                .withCorrespondingAuthor(true)
-                .withEmail(EXAMPLE_EMAIL)
-                .build();
-    }
-
-    private Identity getIdentity() {
-        return new Identity.Builder()
-                .withId(URI.create("http://example.org/person/123"))
-                .withArpId("arp123")
-                .withOrcId("orc123")
-                .withName("Navnesen, Navn")
-                .withNameType(NameType.PERSONAL)
-                .build();
-    }
-
-    private PublicationDate getPublicationDate() {
-        return new PublicationDate.Builder()
-                .withYear("2020")
-                .withMonth("4")
-                .withDay("7")
-                .build();
-    }
-
-    private License getLicense() {
-        return new License.Builder()
-                .withIdentifier("NTNU-CC-BY-4.0")
-                .withLink(URI.create("http://example.org/license/123"))
-                .withLabels(Collections.singletonMap("no", "CC-BY 4.0"))
-                .build();
-    }
-
-    private FileSet getFileSet(UUID fileIdentifier) {
-        return new FileSet.Builder()
-                .withFiles(Collections.singletonList(getFile(fileIdentifier)))
-                .build();
-    }
-
-    private File getFile(UUID fileIdentifier) {
-        return new File.Builder()
-                .withIdentifier(fileIdentifier)
-                .withMimeType("application/pdf")
-                .withSize(2L)
-                .withName("new document(1)")
-                .withLicense(getLicense())
-                .withAdministrativeAgreement(true)
-                .withPublisherAuthority(true)
-                .withEmbargoDate(Instant.now())
-                .build();
-    }
-
-    private Organization getOrganization() {
-        return new Organization.Builder()
-                .withId(URI.create("http://example.org/org/123"))
-                .withLabels(Collections.singletonMap("no", "Eksempelforlaget"))
-                .build();
-    }
-
-    private Range getPages() {
-        return new Range.Builder()
-                .withBegin("1")
-                .withEnd("15")
-                .build();
     }
 
 }
