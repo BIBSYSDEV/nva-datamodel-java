@@ -5,16 +5,14 @@ import static nva.commons.utils.JsonUtils.objectMapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
-import nva.commons.utils.IoUtils;
 
-public class PublicationMapper {
+public final class PublicationMapper {
 
     public static final Path CONTEXT_PATH = Path.of("publicationContext.json");
 
@@ -29,7 +27,8 @@ public class PublicationMapper {
      * @param <REQUEST> request type
      * @return  complete updated publication
      */
-    public static <REQUEST extends WithIdentifier> Publication toExistingPublication(REQUEST request, WithInternal existing) {
+    public static <REQUEST extends WithIdentifier> Publication toExistingPublication(
+        REQUEST request, WithInternal existing) {
         Publication publication = toPublication(request);
         mapInternal(existing, publication);
         publication.setModifiedDate(Instant.now());
@@ -62,7 +61,7 @@ public class PublicationMapper {
     }
 
     /**
-     * Maps an publication to publication response.
+     * Maps a publication and context to publication response.
      *
      * @param publication   publication
      * @param context   jsonld context
@@ -74,13 +73,19 @@ public class PublicationMapper {
         return  response;
     }
 
+    /**
+     * Maps a publication to publication response with default context.
+     *
+     * @param publication   publication
+     * @return  publication response
+     */
     public static PublicationResponse toPublicationResponse(Publication publication) throws IOException {
         JsonNode context = objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
         return toPublicationResponse(publication, context);
 
     }
 
-    protected static <REQUEST extends WithIdentifier> Publication toPublication(REQUEST request) {
+    private static <REQUEST extends WithIdentifier> Publication toPublication(REQUEST request) {
         Publication publication = new Publication();
         publication.setIdentifier(request.getIdentifier());
         if (request instanceof WithMetadata) {

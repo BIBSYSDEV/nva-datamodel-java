@@ -26,21 +26,6 @@ public class PublicationMapperTest {
     public static final ObjectNode SOME_CONTEXT = objectMapper.createObjectNode();
 
     @Test
-    public void canMapCreatePublicationRequestToPublication()
-        throws InvalidIssnException, MalformedContributorException {
-
-        CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setIdentifier(UUID.randomUUID());
-        request.setEntityDescription(getEntityDescription());
-        request.setFileSet(getFileSet(UUID.randomUUID()));
-        request.setProject(getProject());
-
-        Publication publication = PublicationMapper.toPublication(request);
-
-        assertNotNull(publication);
-    }
-
-    @Test
     public void canMapCreatePublicationRequestToNewPublication()
         throws InvalidIssnException, MalformedContributorException {
 
@@ -48,6 +33,8 @@ public class PublicationMapperTest {
         request.setIdentifier(UUID.randomUUID());
         request.setEntityDescription(getEntityDescription());
         request.setProject(getProject());
+        request.setFileSet(getFileSet(UUID.randomUUID()));
+        request.setContext(SOME_CONTEXT);
 
         Publication publication = PublicationMapper
             .toNewPublication(request, SOME_OWNER, SOME_URI, SOME_URI, getOrganization());
@@ -58,13 +45,15 @@ public class PublicationMapperTest {
     }
 
     @Test
-    public void canMapCreatePublicationRequestToExistingPublication()
+    public void canMapUpdatePublicationRequestToExistingPublication()
         throws InvalidIssnException, MalformedContributorException {
 
-        CreatePublicationRequest request = new CreatePublicationRequest();
+        UpdatePublicationRequest request = new UpdatePublicationRequest();
         request.setIdentifier(UUID.randomUUID());
         request.setEntityDescription(getEntityDescription());
         request.setProject(getProject());
+        request.setFileSet(getFileSet(UUID.randomUUID()));
+        request.setContext(SOME_CONTEXT);
 
         Publication publication = PublicationMapper.toExistingPublication(request, getPublication());
 

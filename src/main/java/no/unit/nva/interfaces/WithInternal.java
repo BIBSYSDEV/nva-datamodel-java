@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.UUID;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.ResearchProject;
 
 public interface WithInternal {
 

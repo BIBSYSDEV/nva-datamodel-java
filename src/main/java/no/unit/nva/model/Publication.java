@@ -1,14 +1,12 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.net.URI;
 import java.time.Instant;
 import java.util.UUID;
 import no.unit.nva.interfaces.WithFile;
 import no.unit.nva.interfaces.WithIdentifier;
 import no.unit.nva.interfaces.WithIndex;
-import no.unit.nva.interfaces.WithInternal;
 import no.unit.nva.interfaces.WithMetadata;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
