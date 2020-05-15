@@ -46,7 +46,8 @@ public class PublicationTest {
 
     @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
-    public void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException,
+    public void publicationClassReturnsDeserializedJsonWhenValidJsonInput()
+        throws IOException, MalformedContributorException,
             InvalidIssnException, InvalidPageTypeException {
 
         UUID publicationIdentifier = UUID.randomUUID();
