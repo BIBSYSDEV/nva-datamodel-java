@@ -3,6 +3,7 @@ plugins {
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
+    id 'nebula.lint' version '16.8.0'
 }
 
 group 'no.unit.nva'
@@ -13,19 +14,28 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+configurations {
+    compileClasspath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+}
+
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
+
+gradleLint.rules = ['unused-dependency']
 
 dependencies {
     implementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: 'v0.1.6'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
+    testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jacksonVersion
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
     testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
-    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 }
 
 test {

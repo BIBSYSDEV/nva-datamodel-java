@@ -10,6 +10,7 @@ import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.PublicationInstance;
@@ -53,7 +54,7 @@ public class PublicationTest {
     @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
     void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException,
-            InvalidIssnException {
+            InvalidIssnException, InvalidPageTypeException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -78,7 +79,7 @@ public class PublicationTest {
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
     void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
-            MalformedContributorException, InvalidIssnException {
+            MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -103,7 +104,7 @@ public class PublicationTest {
     }
 
     private Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now)
-            throws MalformedContributorException, InvalidIssnException {
+            throws MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
         return new Publication.Builder()
                 .withIdentifier(publicationIdentifier)
                 .withCreatedDate(now)
@@ -144,7 +145,8 @@ public class PublicationTest {
                 .build());
     }
 
-    private EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException {
+    private EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException,
+            InvalidPageTypeException {
         return new EntityDescription.Builder()
                 .withMainTitle("Hovedtittelen")
                 .withLanguage(URI.create("http://example.org/norsk"))
@@ -160,7 +162,7 @@ public class PublicationTest {
                 .build();
     }
 
-    private Reference getJournalReference() throws InvalidIssnException {
+    private Reference getJournalReference() throws InvalidIssnException, InvalidPageTypeException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContext())
                 .withDoi(SOME_URI)
@@ -168,7 +170,7 @@ public class PublicationTest {
                 .build();
     }
 
-    private PublicationInstance getPublicationInstance() {
+    private PublicationInstance getPublicationInstance() throws InvalidPageTypeException {
         return new JournalArticle.Builder()
                 .withArticleNumber("1234456")
                 .withIssue("2")
