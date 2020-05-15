@@ -9,9 +9,9 @@ public class OrgNumberMapper {
     public static final Map<String,URI> orgNumberCristinIdMap;
     public static final String NO_MAPPING_ERROR_MESSAGE = "No mapping for orgNumber: ";
 
-    public static final String UNIT_ORG_NUMBER = "NO_919477822";
+    public static final String UNIT_ORG_NUMBER = "NO919477822";
     public static final URI UNIT_CRISTIN_ID = URI.create("https://api.cristin.no/v2/institutions/20202");
-    public static final String NORSK_REGNESENTRAL_ORG_NUMBER = "NO_914086434";
+    public static final String NORSK_REGNESENTRAL_ORG_NUMBER = "NO914086434";
     public static final URI NORSK_REGNESENTRAL_CRISTIN_ID = URI.create("https://api.cristin.no/v2/units/7467.0.0.0");
     public static final String FJELLHAUG_INTERNASJONALE_SKOLE_ORG_NUMBER = "952125001";
     public static final URI FJELLHAUG_INTERNASJONALE_SKOLE_CRISTIN_ID =
