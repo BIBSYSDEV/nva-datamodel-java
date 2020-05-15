@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
@@ -15,6 +16,7 @@ import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
+import nva.commons.utils.JacocoGenerated;
 
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithContext {
 
@@ -172,5 +174,38 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @Override
     public void setContext(JsonNode context) {
         this.context = context;
+    }
+
+    @Override
+    @JacocoGenerated
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PublicationResponse that = (PublicationResponse) o;
+        return Objects.equals(identifier, that.identifier)
+            && status == that.status
+            && Objects.equals(owner, that.owner)
+            && Objects.equals(publisher, that.publisher)
+            && Objects.equals(createdDate, that.createdDate)
+            && Objects.equals(modifiedDate, that.modifiedDate)
+            && Objects.equals(publishedDate, that.publishedDate)
+            && Objects.equals(indexedDate, that.indexedDate)
+            && Objects.equals(handle, that.handle)
+            && Objects.equals(link, that.link)
+            && Objects.equals(entityDescription, that.entityDescription)
+            && Objects.equals(fileSet, that.fileSet)
+            && Objects.equals(project, that.project)
+            && Objects.equals(context, that.context);
+    }
+
+    @Override
+    @JacocoGenerated
+    public int hashCode() {
+        return Objects.hash(identifier, status, owner, publisher, createdDate, modifiedDate, publishedDate, indexedDate,
+            handle, link, entityDescription, fileSet, project, context);
     }
 }
