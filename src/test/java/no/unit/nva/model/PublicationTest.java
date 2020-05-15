@@ -11,25 +11,17 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.UUID;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
-import no.unit.nva.model.instancetypes.JournalArticle;
-import no.unit.nva.model.instancetypes.PublicationInstance;
-import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.ContextUtil;
-import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 
 public class PublicationTest {
 
@@ -54,8 +46,8 @@ public class PublicationTest {
 
     @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
-    public void publicationClassReturnsDeserializedJsonWhenValidJsonInput()
-        throws IOException, MalformedContributorException, InvalidIssnException {
+    public void publicationClassReturnsDeserializedJsonWhenValidJsonInput() throws IOException, MalformedContributorException,
+            InvalidIssnException, InvalidPageTypeException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -80,7 +72,7 @@ public class PublicationTest {
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
     public void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
-            MalformedContributorException, InvalidIssnException {
+            MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
 
         UUID publicationIdentifier = UUID.randomUUID();
         UUID fileIdentifier = UUID.randomUUID();
@@ -103,5 +95,4 @@ public class PublicationTest {
         options.setPruneBlankNodeIdentifiers(true);
         return JsonLdProcessor.frame(input, frame, options);
     }
-
 }

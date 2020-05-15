@@ -2,31 +2,18 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({@JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class)})
-public class PublicationInstance {
-    private Pages pages;
-    private boolean peerReviewed;
+public interface PublicationInstance {
 
-    /* default */ PublicationInstance() {
+    Pages getPages();
 
-    }
+    void setPages(Pages pages) throws InvalidPageTypeException;
 
-    public Pages getPages() {
-        return pages;
-    }
+    void setPeerReviewed(boolean peerReviewed);
 
-    public void setPages(Pages pages) {
-        this.pages = pages;
-    }
-
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
-    }
-
-    public boolean isPeerReviewed() {
-        return peerReviewed;
-    }
+    boolean isPeerReviewed();
 }

@@ -5,45 +5,21 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({@JsonSubTypes.Type(name = "Journal", value = Journal.class)})
-public class PublicationContext {
-    private String title;
-    private Level level;
-    private boolean openAccess;
-    private boolean peerReviewed;
+public interface PublicationContext {
 
-    /* default */ PublicationContext() {
+    String getTitle();
 
-    }
+    void setTitle(String title);
 
-    public String getTitle() {
-        return title;
-    }
+    Level getLevel();
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    void setLevel(Level level);
 
-    public Level getLevel() {
-        return level;
-    }
+    boolean isOpenAccess();
 
-    public void setLevel(Level level) {
-        this.level = level;
-    }
+    void setOpenAccess(boolean openAccess);
 
-    public boolean isOpenAccess() {
-        return openAccess;
-    }
+    boolean isPeerReviewed();
 
-    public void setOpenAccess(boolean openAccess) {
-        this.openAccess = openAccess;
-    }
-
-    public boolean isPeerReviewed() {
-        return peerReviewed;
-    }
-
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
-    }
+    void setPeerReviewed(boolean peerReviewed);
 }

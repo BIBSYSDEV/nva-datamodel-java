@@ -1,23 +1,29 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.exceptions.InvalidPageTypeException;
+import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
+import static java.util.Objects.nonNull;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalArticle extends PublicationInstance {
+public class JournalArticle implements PublicationInstance {
     private String volume;
     private String issue;
     private String articleNumber;
+    private Pages pages;
+    private boolean peerReviewed;
 
     @JacocoGenerated
     public JournalArticle() {
         super();
     }
 
-    private JournalArticle(Builder builder) {
+    private JournalArticle(Builder builder) throws InvalidPageTypeException {
         super();
         setVolume(builder.volume);
         setIssue(builder.issue);
@@ -48,6 +54,29 @@ public class JournalArticle extends PublicationInstance {
 
     public void setArticleNumber(String articleNumber) {
         this.articleNumber = articleNumber;
+    }
+
+    @Override
+    public Pages getPages() {
+        return pages;
+    }
+
+    @Override
+    public void setPages(Pages pages) throws InvalidPageTypeException {
+        if (nonNull(pages) && !(pages instanceof Range)) {
+            throw new InvalidPageTypeException(JournalArticle.class, Range.class, pages.getClass());
+        }
+        this.pages = pages;
+    }
+
+    @Override
+    public void setPeerReviewed(boolean peerReviewed) {
+        this.peerReviewed = peerReviewed;
+    }
+
+    @Override
+    public boolean isPeerReviewed() {
+        return peerReviewed;
     }
 
     public static final class Builder {
@@ -85,7 +114,7 @@ public class JournalArticle extends PublicationInstance {
             return this;
         }
 
-        public JournalArticle build() {
+        public JournalArticle build() throws InvalidPageTypeException {
             return new JournalArticle(this);
         }
     }
@@ -99,12 +128,12 @@ public class JournalArticle extends PublicationInstance {
         if (!(o instanceof JournalArticle)) {
             return false;
         }
-        JournalArticle journalArticle = (JournalArticle) o;
-        return Objects.equals(getVolume(), journalArticle.getVolume())
-                && Objects.equals(getIssue(), journalArticle.getIssue())
-                && Objects.equals(getArticleNumber(), journalArticle.getArticleNumber())
-                && Objects.equals(getPages(), journalArticle.getPages())
-                && isPeerReviewed() == journalArticle.isPeerReviewed();
+        JournalArticle that = (JournalArticle) o;
+        return isPeerReviewed() == that.isPeerReviewed()
+                && Objects.equals(getVolume(), that.getVolume())
+                && Objects.equals(getIssue(), that.getIssue())
+                && Objects.equals(getArticleNumber(), that.getArticleNumber())
+                && Objects.equals(getPages(), that.getPages());
     }
 
     @JacocoGenerated

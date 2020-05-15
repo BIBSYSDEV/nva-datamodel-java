@@ -28,6 +28,7 @@ import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.Role;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.PublicationInstance;
@@ -43,12 +44,13 @@ public class PublicationGenerator {
 
     }
 
-    public static Publication getPublication() throws InvalidIssnException, MalformedContributorException {
+    public static Publication getPublication()
+        throws InvalidIssnException, MalformedContributorException, InvalidPageTypeException {
         return getPublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now());
     }
 
     public static Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now)
-        throws MalformedContributorException, InvalidIssnException {
+        throws MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
         return new Publication.Builder()
             .withIdentifier(publicationIdentifier)
             .withCreatedDate(now)
@@ -89,7 +91,8 @@ public class PublicationGenerator {
             .build());
     }
 
-    public static EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException {
+    public static EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException,
+                                                            InvalidPageTypeException {
         return new EntityDescription.Builder()
             .withMainTitle("Hovedtittelen")
             .withLanguage(URI.create("http://example.org/norsk"))
@@ -105,7 +108,7 @@ public class PublicationGenerator {
             .build();
     }
 
-    public static Reference getJournalReference() throws InvalidIssnException {
+    public static Reference getJournalReference() throws InvalidIssnException, InvalidPageTypeException {
         return new Reference.Builder()
             .withPublishingContext(getPublishingContext())
             .withDoi(SOME_URI)
@@ -113,7 +116,7 @@ public class PublicationGenerator {
             .build();
     }
 
-    public static PublicationInstance getPublicationInstance() {
+    public static PublicationInstance getPublicationInstance() throws InvalidPageTypeException {
         return new JournalArticle.Builder()
             .withArticleNumber("1234456")
             .withIssue("2")
