@@ -11,7 +11,7 @@ import static no.unit.nva.model.util.OrgNumberMapper.NO_MAPPING_ERROR_MESSAGE;
 public class OrgNumberMapperTest {
 
     public static final String VALID_CRISTIN_ID = "https://api.cristin.no/v2/institutions/20202";
-    public static final String VALID_ORG_NUMBER = "919477822";
+    public static final String VALID_ORG_NUMBER = "NO_919477822";
     public static final String INVALID_ORG_NUMBER = "123";
 
     @DisplayName("OrgNumberMapper.toCristinId with valid Org. number should return a valid Cristin ID")
