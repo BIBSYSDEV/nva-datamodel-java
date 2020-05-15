@@ -1,9 +1,9 @@
-package no.unit.nva.interfaces;
+package no.unit.nva;
 
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.ResearchProject;
 
-public interface WithMetadata {
+public interface WithMetadata extends PublicationBase {
 
     EntityDescription getEntityDescription();
 

@@ -1,8 +1,8 @@
-package no.unit.nva.interfaces;
+package no.unit.nva;
 
 import no.unit.nva.model.FileSet;
 
-public interface WithFile {
+public interface WithFile extends PublicationBase {
 
     FileSet getFileSet();
 

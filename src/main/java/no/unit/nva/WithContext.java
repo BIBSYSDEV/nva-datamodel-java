@@ -1,8 +1,8 @@
-package no.unit.nva.interfaces;
+package no.unit.nva;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public interface WithContext {
+public interface WithContext extends PublicationBase {
 
     JsonNode getContext();
 

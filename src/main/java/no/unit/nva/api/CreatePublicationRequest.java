@@ -1,30 +1,21 @@
-package no.unit.nva.interfaces;
+package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import java.util.UUID;
+import no.unit.nva.WithContext;
+import no.unit.nva.WithFile;
+import no.unit.nva.WithMetadata;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.ResearchProject;
 
-public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, WithFile, WithContext {
+public class CreatePublicationRequest implements WithMetadata, WithFile, WithContext {
 
-    private UUID identifier;
     private EntityDescription entityDescription;
     private ResearchProject project;
     private FileSet fileSet;
     @JsonProperty("@context")
     private JsonNode context;
-
-    @Override
-    public UUID getIdentifier() {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(UUID identifier) {
-        this.identifier = identifier;
-    }
 
     @Override
     public EntityDescription getEntityDescription() {

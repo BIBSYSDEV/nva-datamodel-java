@@ -33,6 +33,7 @@ import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
 
+@SuppressWarnings("missingjavadocmethod")
 public class PublicationGenerator {
 
     public static final String EXAMPLE_EMAIL = "nn@example.org";

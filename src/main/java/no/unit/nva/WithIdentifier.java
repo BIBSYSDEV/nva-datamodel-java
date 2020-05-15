@@ -1,8 +1,8 @@
-package no.unit.nva.interfaces;
+package no.unit.nva;
 
 import java.util.UUID;
 
-public interface WithIdentifier {
+public interface WithIdentifier extends PublicationBase {
 
     UUID getIdentifier();
 

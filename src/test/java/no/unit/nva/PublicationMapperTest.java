@@ -1,4 +1,4 @@
-package no.unit.nva.interfaces;
+package no.unit.nva;
 
 import static no.unit.nva.model.util.PublicationGenerator.getEntityDescription;
 import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
@@ -14,6 +14,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.net.URI;
 import java.util.UUID;
+import no.unit.nva.api.CreatePublicationRequest;
+import no.unit.nva.api.PublicationResponse;
+import no.unit.nva.api.UpdatePublicationRequest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
@@ -30,7 +33,6 @@ public class PublicationMapperTest {
         throws InvalidIssnException, MalformedContributorException {
 
         CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setIdentifier(UUID.randomUUID());
         request.setEntityDescription(getEntityDescription());
         request.setProject(getProject());
         request.setFileSet(getFileSet(UUID.randomUUID()));
@@ -67,7 +69,7 @@ public class PublicationMapperTest {
         Publication publication = getPublication();
 
         PublicationResponse response = PublicationMapper
-            .toPublicationResponse(publication, SOME_CONTEXT);
+            .toResponse(publication, SOME_CONTEXT, PublicationResponse.class);
 
         assertNotNull(response);
     }
@@ -78,7 +80,7 @@ public class PublicationMapperTest {
         Publication publication = getPublication();
 
         PublicationResponse response = PublicationMapper
-            .toPublicationResponse(publication);
+            .toResponse(publication, PublicationResponse.class);
 
         assertNotNull(response);
     }

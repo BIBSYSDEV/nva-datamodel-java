@@ -60,6 +60,9 @@ public class File {
         this.embargoDate = embargoDate;
     }
 
+    /**
+     * Validate the file.
+     */
     public void validate() {
         if (!administrativeAgreement && isNull(license)) {
             throw new MissingLicenseException(MISSING_LICENSE);

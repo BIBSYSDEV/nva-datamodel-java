@@ -17,7 +17,7 @@ def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
 
 dependencies {
-    implementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: 'b8396a7'
+    implementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: '0.3.3'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion

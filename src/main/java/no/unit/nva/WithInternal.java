@@ -1,4 +1,4 @@
-package no.unit.nva.interfaces;
+package no.unit.nva;
 
 import java.net.URI;
 import java.time.Instant;
@@ -6,7 +6,7 @@ import java.util.UUID;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.PublicationStatus;
 
-public interface WithInternal {
+public interface WithInternal extends PublicationBase {
 
     Instant getCreatedDate();
 

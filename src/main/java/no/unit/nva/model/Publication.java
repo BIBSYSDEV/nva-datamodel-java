@@ -5,10 +5,10 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
-import no.unit.nva.interfaces.WithFile;
-import no.unit.nva.interfaces.WithIdentifier;
-import no.unit.nva.interfaces.WithIndex;
-import no.unit.nva.interfaces.WithMetadata;
+import no.unit.nva.WithFile;
+import no.unit.nva.WithIdentifier;
+import no.unit.nva.WithIndex;
+import no.unit.nva.WithMetadata;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings("PMD.ExcessivePublicCount")

@@ -1,4 +1,4 @@
-package no.unit.nva.interfaces;
+package no.unit.nva;
 
 import static nva.commons.utils.IoUtils.inputStreamFromResources;
 import static nva.commons.utils.JsonUtils.objectMapper;
@@ -27,7 +27,7 @@ public final class PublicationMapper {
      * @param <REQUEST> request type
      * @return  complete updated publication
      */
-    public static <REQUEST extends WithIdentifier> Publication toExistingPublication(
+    public static <REQUEST extends PublicationBase> Publication toExistingPublication(
         REQUEST request, WithInternal existing) {
         Publication publication = toPublication(request);
         mapInternal(existing, publication);
@@ -46,7 +46,7 @@ public final class PublicationMapper {
      * @param <REQUEST> request type
      * @return  complete new publication
      */
-    public static <REQUEST extends WithIdentifier> Publication toNewPublication(
+    public static <REQUEST extends PublicationBase> Publication toNewPublication(
         REQUEST request, String owner, URI handle, URI link, Organization publisher) {
         Publication publication = toPublication(request);
         Instant now = Instant.now();
@@ -67,8 +67,9 @@ public final class PublicationMapper {
      * @param context   jsonld context
      * @return  publication response
      */
-    public static PublicationResponse toPublicationResponse(Publication publication, JsonNode context) {
-        PublicationResponse response = objectMapper.convertValue(publication, PublicationResponse.class);
+    public static <R extends WithContext> R toResponse(
+        Publication publication, JsonNode context, Class<R> responseType) {
+        R response = objectMapper.convertValue(publication, responseType);
         response.setContext(context);
         return  response;
     }
@@ -78,16 +79,19 @@ public final class PublicationMapper {
      *
      * @param publication   publication
      * @return  publication response
+     * @throws IOException  when error reading context
      */
-    public static PublicationResponse toPublicationResponse(Publication publication) throws IOException {
+    public static <R extends WithContext> R toResponse(
+        Publication publication, Class<R> responseType) throws IOException {
         JsonNode context = objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
-        return toPublicationResponse(publication, context);
-
+        return toResponse(publication, context, responseType);
     }
 
-    private static <REQUEST extends WithIdentifier> Publication toPublication(REQUEST request) {
+    private static <REQUEST extends PublicationBase> Publication toPublication(REQUEST request) {
         Publication publication = new Publication();
-        publication.setIdentifier(request.getIdentifier());
+        if (request instanceof WithIdentifier) {
+            mapIdentifier((WithIdentifier)request, publication);
+        }
         if (request instanceof WithMetadata) {
             mapMetadata((WithMetadata) request, publication);
         }
@@ -98,6 +102,10 @@ public final class PublicationMapper {
             mapInternal((WithInternal) request, publication);
         }
         return publication;
+    }
+
+    private static void mapIdentifier(WithIdentifier request, Publication publication) {
+        publication.setIdentifier(request.getIdentifier());
     }
 
     private static void mapMetadata(WithMetadata request, Publication publication) {
