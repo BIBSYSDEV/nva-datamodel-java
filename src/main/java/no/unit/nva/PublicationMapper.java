@@ -15,6 +15,7 @@ import no.unit.nva.model.PublicationStatus;
 public final class PublicationMapper {
 
     public static final Path CONTEXT_PATH = Path.of("publicationContext.json");
+    public static final String CONTEXT_ERROR_MESSAGE = "Error processing context: ";
 
     private PublicationMapper() {
     }
@@ -79,12 +80,15 @@ public final class PublicationMapper {
      *
      * @param publication   publication
      * @return  publication response
-     * @throws IOException  when error reading context
      */
     public static <R extends WithContext> R toResponse(
-        Publication publication, Class<R> responseType) throws IOException {
-        JsonNode context = objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
-        return toResponse(publication, context, responseType);
+        Publication publication, Class<R> responseType) {
+        try {
+            JsonNode context = objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
+            return toResponse(publication, context, responseType);
+        } catch (IOException e) {
+            throw new IllegalStateException(CONTEXT_ERROR_MESSAGE + CONTEXT_PATH.toString(), e);
+        }
     }
 
     private static <REQUEST extends PublicationBase> Publication toPublication(REQUEST request) {
