@@ -11,15 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
 import java.net.URI;
 import java.util.UUID;
 import no.unit.nva.api.CreatePublicationRequest;
 import no.unit.nva.api.PublicationResponse;
 import no.unit.nva.api.UpdatePublicationRequest;
 import no.unit.nva.model.Publication;
-import no.unit.nva.model.exceptions.InvalidIssnException;
-import no.unit.nva.model.exceptions.MalformedContributorException;
 import org.junit.jupiter.api.Test;
 
 public class PublicationMapperTest {
@@ -29,8 +26,7 @@ public class PublicationMapperTest {
     public static final ObjectNode SOME_CONTEXT = objectMapper.createObjectNode();
 
     @Test
-    public void canMapCreatePublicationRequestToNewPublication()
-        throws InvalidIssnException, MalformedContributorException {
+    public void canMapCreatePublicationRequestToNewPublication() throws Exception {
 
         CreatePublicationRequest request = new CreatePublicationRequest();
         request.setEntityDescription(getEntityDescription());
@@ -47,8 +43,7 @@ public class PublicationMapperTest {
     }
 
     @Test
-    public void canMapUpdatePublicationRequestToExistingPublication()
-        throws InvalidIssnException, MalformedContributorException {
+    public void canMapUpdatePublicationRequestToExistingPublication() throws Exception {
 
         UpdatePublicationRequest request = new UpdatePublicationRequest();
         request.setIdentifier(UUID.randomUUID());
@@ -64,8 +59,7 @@ public class PublicationMapperTest {
     }
 
     @Test
-    public void canMapPublicationAndContextToPublicationResponse()
-        throws InvalidIssnException, MalformedContributorException {
+    public void canMapPublicationAndContextToPublicationResponse() throws Exception {
         Publication publication = getPublication();
 
         PublicationResponse response = PublicationMapper
@@ -75,8 +69,7 @@ public class PublicationMapperTest {
     }
 
     @Test
-    public void canMapPublicationToPublicationResponse()
-        throws InvalidIssnException, MalformedContributorException, IOException {
+    public void canMapPublicationToPublicationResponse() throws Exception {
         Publication publication = getPublication();
 
         PublicationResponse response = PublicationMapper
