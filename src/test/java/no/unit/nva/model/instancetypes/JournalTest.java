@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import no.unit.nva.model.Journal;
+import no.unit.nva.model.contexttypes.Journal;
 import org.junit.jupiter.api.Test;
 
 public class JournalTest {

@@ -1,9 +1,11 @@
-package no.unit.nva.model;
+package no.unit.nva.model.contexttypes;
 
 import static java.util.Objects.isNull;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
+
+import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.validator.IssnValidator;
 

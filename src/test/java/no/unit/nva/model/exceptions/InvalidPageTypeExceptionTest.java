@@ -1,6 +1,5 @@
 package no.unit.nva.model.exceptions;
 
-import no.unit.nva.model.Journal;
 import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
