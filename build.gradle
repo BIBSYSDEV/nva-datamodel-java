@@ -26,7 +26,7 @@ def jacksonVersion = '2.10.2'
 gradleLint.rules = ['unused-dependency']
 
 dependencies {
-    implementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: '0.3.3'
+    implementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: 'v0.3.4'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
     testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
