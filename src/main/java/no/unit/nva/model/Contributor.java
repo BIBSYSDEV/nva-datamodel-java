@@ -1,14 +1,13 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.isNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.MalformedContributorException;
-
 import java.util.List;
 import java.util.Objects;
-
-import static java.util.Objects.isNull;
+import no.unit.nva.model.exceptions.MalformedContributorException;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Contributor {

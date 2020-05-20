@@ -1,10 +1,9 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.utils.JacocoGenerated;
-
 import java.time.Instant;
 import java.util.Objects;
+import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DoiRequest {
