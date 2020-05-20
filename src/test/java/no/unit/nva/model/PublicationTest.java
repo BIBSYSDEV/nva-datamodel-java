@@ -57,7 +57,7 @@ public class PublicationTest {
         Publication publication = getPublication(publicationIdentifier, fileIdentifier, now);
 
         JsonNode document = toPublicationWithContext(publication);
-
+        
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
                 Publication.class);
         Assertions.assertEquals(publication, publicationFromJson);
