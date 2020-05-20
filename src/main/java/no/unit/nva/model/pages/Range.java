@@ -1,7 +1,6 @@
 package no.unit.nva.model.pages;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")

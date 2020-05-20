@@ -1,14 +1,13 @@
 package no.unit.nva.model.instancetypes;
 
+import static java.util.Objects.nonNull;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Objects;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
-
-import java.util.Objects;
-
-import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class JournalArticle implements PublicationInstance {

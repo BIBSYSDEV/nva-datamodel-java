@@ -2,7 +2,6 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Map;

@@ -1,15 +1,14 @@
 package no.unit.nva.model;
 
-import no.unit.nva.model.exceptions.MalformedContributorException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.net.URI;
-import java.util.Collections;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.net.URI;
+import java.util.Collections;
+import no.unit.nva.model.exceptions.MalformedContributorException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class ContributorTest {
 
