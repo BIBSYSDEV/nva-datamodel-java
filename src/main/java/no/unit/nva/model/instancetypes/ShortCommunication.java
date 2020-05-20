@@ -11,25 +11,24 @@ import java.util.Objects;
 import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalArticle implements PublicationInstance {
+public class ShortCommunication implements PublicationInstance {
     private String volume;
     private String issue;
     private String articleNumber;
     private Pages pages;
-    private boolean peerReviewed;
+    private boolean peerReviewed = false;
 
     @JacocoGenerated
-    public JournalArticle() {
+    public ShortCommunication() {
         super();
     }
 
-    private JournalArticle(Builder builder) throws InvalidPageTypeException {
+    private ShortCommunication(Builder builder) throws InvalidPageTypeException {
         super();
         setVolume(builder.volume);
         setIssue(builder.issue);
         setArticleNumber(builder.articleNumber);
         setPages(builder.pages);
-        setPeerReviewed(builder.peerReviewed);
     }
 
     public String getVolume() {
@@ -64,13 +63,9 @@ public class JournalArticle implements PublicationInstance {
     @Override
     public void setPages(Pages pages) throws InvalidPageTypeException {
         if (nonNull(pages) && !(pages instanceof Range)) {
-            throw new InvalidPageTypeException(JournalArticle.class, Range.class, pages.getClass());
+            throw new InvalidPageTypeException(ShortCommunication.class, Range.class, pages.getClass());
         }
         this.pages = pages;
-    }
-
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
     }
 
     @Override
@@ -83,7 +78,6 @@ public class JournalArticle implements PublicationInstance {
         private String issue;
         private String articleNumber;
         private Range pages;
-        private boolean peerReviewed;
 
         public Builder() {
         }
@@ -108,13 +102,8 @@ public class JournalArticle implements PublicationInstance {
             return this;
         }
 
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
-            return this;
-        }
-
-        public JournalArticle build() throws InvalidPageTypeException {
-            return new JournalArticle(this);
+        public ShortCommunication build() throws InvalidPageTypeException {
+            return new ShortCommunication(this);
         }
     }
 
@@ -124,12 +113,11 @@ public class JournalArticle implements PublicationInstance {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof JournalArticle)) {
+        if (!(o instanceof ShortCommunication)) {
             return false;
         }
-        JournalArticle that = (JournalArticle) o;
-        return isPeerReviewed() == that.isPeerReviewed()
-                && Objects.equals(getVolume(), that.getVolume())
+        ShortCommunication that = (ShortCommunication) o;
+        return Objects.equals(getVolume(), that.getVolume())
                 && Objects.equals(getIssue(), that.getIssue())
                 && Objects.equals(getArticleNumber(), that.getArticleNumber())
                 && Objects.equals(getPages(), that.getPages());
@@ -138,6 +126,6 @@ public class JournalArticle implements PublicationInstance {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages(), isPeerReviewed());
+        return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages());
     }
 }
