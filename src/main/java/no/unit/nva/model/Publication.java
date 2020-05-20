@@ -23,6 +23,8 @@ public class Publication {
     private Instant publishedDate;
     private Instant indexedDate;
     private URI handle;
+    private URI doi;
+    private DoiRequest doiRequest;
     private URI link;
     private EntityDescription entityDescription;
     private FileSet fileSet;
@@ -42,6 +44,8 @@ public class Publication {
         setPublishedDate(builder.publishedDate);
         setIndexedDate(builder.indexedDate);
         setHandle(builder.handle);
+        setDoi(builder.doi);
+        setDoiRequest(builder.doiRequest);
         setLink(builder.link);
         setEntityDescription(builder.entityDescription);
         setFileSet(builder.fileSet);
@@ -97,6 +101,22 @@ public class Publication {
 
     public void setHandle(URI handle) {
         this.handle = handle;
+    }
+
+    public URI getDoi() {
+        return doi;
+    }
+
+    public void setDoi(URI doi) {
+        this.doi = doi;
+    }
+
+    public DoiRequest getDoiRequest() {
+        return doiRequest;
+    }
+
+    public void setDoiRequest(DoiRequest doiRequest) {
+        this.doiRequest = doiRequest;
     }
 
     public Instant getPublishedDate() {
@@ -197,6 +217,8 @@ public class Publication {
                 && Objects.equals(getPublishedDate(), that.getPublishedDate())
                 && Objects.equals(getIndexedDate(), that.getIndexedDate())
                 && Objects.equals(getHandle(), that.getHandle())
+                && Objects.equals(getDoi(), that.getDoi())
+                && Objects.equals(getDoiRequest(), that.getDoiRequest())
                 && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getEntityDescription(), that.getEntityDescription())
                 && Objects.equals(getFileSet(), that.getFileSet())
@@ -214,6 +236,8 @@ public class Publication {
                 getPublishedDate(),
                 getIndexedDate(),
                 getHandle(),
+                getDoi(),
+                getDoiRequest(),
                 getLink(),
                 getEntityDescription(),
                 getFileSet(),
@@ -231,6 +255,8 @@ public class Publication {
         private Instant publishedDate;
         private Instant indexedDate;
         private URI handle;
+        private URI doi;
+        private DoiRequest doiRequest;
         private URI link;
         private EntityDescription entityDescription;
         private FileSet fileSet;
@@ -281,6 +307,16 @@ public class Publication {
 
         public Builder withHandle(URI handle) {
             this.handle = handle;
+            return this;
+        }
+
+        public Builder withDoi(URI doi) {
+            this.doi = doi;
+            return this;
+        }
+
+        public Builder withDoiRequest(DoiRequest doiRequest) {
+            this.doiRequest = doiRequest;
             return this;
         }
 

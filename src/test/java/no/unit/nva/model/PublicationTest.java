@@ -117,6 +117,7 @@ public class PublicationTest {
                 .withEntityDescription(getEntityDescription())
                 .withOwner("eier@example.org")
                 .withProject(getProject())
+                .withDoiRequest(getDoiRequest())
                 .build();
     }
 
@@ -143,6 +144,13 @@ public class PublicationTest {
                 .withDate(Instant.now())
                 .withApprovalStatus(ApprovalStatus.APPLIED)
                 .build());
+    }
+
+    private DoiRequest getDoiRequest() {
+        return new DoiRequest.Builder()
+                .withStatus(DoiRequestStatus.REQUESTED)
+                .withDate(Instant.now())
+                .build();
     }
 
     private EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException,
