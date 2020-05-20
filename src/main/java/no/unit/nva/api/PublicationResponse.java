@@ -11,6 +11,7 @@ import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Organization;
@@ -18,6 +19,7 @@ import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import nva.commons.utils.JacocoGenerated;
 
+@SuppressWarnings("PMD.TooManyFields")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithContext {
 
     private UUID identifier;
@@ -33,6 +35,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private EntityDescription entityDescription;
     private FileSet fileSet;
     private ResearchProject project;
+    private URI doi;
+    private DoiRequest doiRequest;
     @JsonProperty("@context")
     private JsonNode context;
 
@@ -167,6 +171,26 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
+    public URI getDoi() {
+        return doi;
+    }
+
+    @Override
+    public void setDoi(URI doi) {
+        this.doi = doi;
+    }
+
+    @Override
+    public DoiRequest getDoiRequest() {
+        return doiRequest;
+    }
+
+    @Override
+    public void setDoiRequest(DoiRequest doiRequest) {
+        this.doiRequest = doiRequest;
+    }
+
+    @Override
     public JsonNode getContext() {
         return context;
     }
@@ -199,6 +223,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
             && Objects.equals(entityDescription, that.entityDescription)
             && Objects.equals(fileSet, that.fileSet)
             && Objects.equals(project, that.project)
+            && Objects.equals(doi, that.doi)
+            && Objects.equals(doiRequest, that.doiRequest)
             && Objects.equals(context, that.context);
     }
 
@@ -206,6 +232,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @JacocoGenerated
     public int hashCode() {
         return Objects.hash(identifier, status, owner, publisher, createdDate, modifiedDate, publishedDate, indexedDate,
-            handle, link, entityDescription, fileSet, project, context);
+            handle, link, entityDescription, fileSet, project, doi, doiRequest, context);
     }
 }

@@ -10,6 +10,8 @@ import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.Contributor;
+import no.unit.nva.model.DoiRequest;
+import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.File;
 import no.unit.nva.model.FileSet;
@@ -63,6 +65,7 @@ public class PublicationGenerator {
             .withEntityDescription(getEntityDescription())
             .withOwner("eier@example.org")
             .withProject(getProject())
+            .withDoiRequest(getDoiRequest())
             .build();
     }
 
@@ -89,6 +92,13 @@ public class PublicationGenerator {
             .withDate(Instant.now())
             .withApprovalStatus(ApprovalStatus.APPLIED)
             .build());
+    }
+
+    public static DoiRequest getDoiRequest() {
+        return new DoiRequest.Builder()
+            .withStatus(DoiRequestStatus.REQUESTED)
+            .withDate(Instant.now())
+            .build();
     }
 
     public static EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException,

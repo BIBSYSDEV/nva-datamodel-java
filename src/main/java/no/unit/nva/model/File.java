@@ -1,15 +1,14 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.isNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.MissingLicenseException;
-
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
-
-import static java.util.Objects.isNull;
+import no.unit.nva.model.exceptions.MissingLicenseException;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class File {

@@ -1,12 +1,11 @@
 package no.unit.nva.model.util;
 
+import static no.unit.nva.model.util.OrgNumberMapper.NO_MAPPING_ERROR_MESSAGE;
+
+import java.net.URI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.net.URI;
-
-import static no.unit.nva.model.util.OrgNumberMapper.NO_MAPPING_ERROR_MESSAGE;
 
 public class OrgNumberMapperTest {
 
