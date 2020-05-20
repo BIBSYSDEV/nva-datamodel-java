@@ -2,9 +2,7 @@ package no.unit.nva;
 
 import static java.util.Objects.isNull;
 
-import java.util.Objects;
 import java.util.Optional;
-import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.Organization;
 
 public interface WithIndex extends WithInternal {
