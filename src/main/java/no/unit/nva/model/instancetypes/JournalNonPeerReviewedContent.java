@@ -1,7 +1,5 @@
 package no.unit.nva.model.instancetypes;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 import org.slf4j.Logger;
@@ -15,20 +13,19 @@ public class JournalNonPeerReviewedContent extends JournalArticle implements Pub
     /**
      * This constructor ensures that the peerReviewed value is always false.
      *
-     * @param volume the volume of the PublicationInstance.
-     * @param issue the issue of the PublicationInstance.
+     * @param volume        the volume of the PublicationInstance.
+     * @param issue         the issue of the PublicationInstance.
      * @param articleNumber the article number of the PublicationInstance.
-     * @param pages the Pages of the PublicationInstance.
-     * @param peerReviewed the value is always ignored.
+     * @param pages         the Pages of the PublicationInstance.
+     * @param peerReviewed  the value is always ignored.
      * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
      */
-    @JsonCreator
     public JournalNonPeerReviewedContent(
-            @JsonProperty("volume") String volume,
-            @JsonProperty("issue") String issue,
-            @JsonProperty("articleNumber") String articleNumber,
-            @JsonProperty("pages") Pages pages,
-            @JsonProperty("peerReviewed") boolean peerReviewed
+            String volume,
+            String issue,
+            String articleNumber,
+            Pages pages,
+            boolean peerReviewed
     ) throws InvalidPageTypeException {
         super();
         setVolume(volume);

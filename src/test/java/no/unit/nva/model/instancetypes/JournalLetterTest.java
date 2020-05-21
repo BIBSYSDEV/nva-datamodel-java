@@ -4,26 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.IoUtils;
+import no.unit.nva.model.util.JournalNonPeerReviewedContentUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Path;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class JournalLetterTest {
-
-    public static final String JOURNAL_LETTER_WITH_PEER_REVIEW_TRUE_JSON = "journal_letter.json";
 
     @DisplayName("Journal letters to editor can be created from JSON")
     @Test
     void journalLetterReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
         ObjectMapper objectMapper = new ObjectMapper();
-        JournalLetter expected = generateJournalLetter("1", "3", "123", false, "2", "3");
+        JournalLetter expected = generateJournalLetter("1", "3", "123",
+                false, "2", "3");
         String json = objectMapper.writeValueAsString(expected);
         JournalLetter journalLetter = objectMapper.readValue(json, JournalLetter.class);
         assertEquals(expected, journalLetter);
@@ -31,11 +26,20 @@ class JournalLetterTest {
 
     @DisplayName("Journal letters cannot be peer reviewed")
     @Test
-    void journalLetterSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException {
+    void journalLetterSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
+            InvalidPageTypeException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = IoUtils.stringFromResources(Path.of(
-                JOURNAL_LETTER_WITH_PEER_REVIEW_TRUE_JSON));
-        assertFalse(objectMapper.readValue(json, JournalLetter.class).isPeerReviewed());
+        String type = "JournalLetter";
+        String volume = "1";
+        String issue = "3";
+        String articleNumber = "123";
+        String begin = "2";
+        String end = "3";
+        JournalLetter expected = generateJournalLetter(volume, issue, articleNumber, false, begin, end);
+
+        String json = JournalNonPeerReviewedContentUtil.generateJsonString(type,
+                volume, issue, articleNumber, begin, end, true);
+        assertEquals(expected, objectMapper.readValue(json, JournalLetter.class));
     }
 
     private JournalLetter generateJournalLetter(String volume,
