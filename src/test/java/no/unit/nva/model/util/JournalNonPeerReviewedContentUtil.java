@@ -9,18 +9,18 @@ public class JournalNonPeerReviewedContentUtil {
                                             String begin,
                                             String end,
                                             boolean peerReviewed) {
-        String template = "{\n" +
-                "  \"type\": \"%s\",\n" +
-                "  \"volume\": \"%s\",\n" +
-                "  \"issue\": \"%s\",\n" +
-                "  \"articleNumber\": \"%s\",\n" +
-                "  \"pages\": {\n" +
-                "    \"type\": \"Range\",\n" +
-                "    \"begin\": \"%s\",\n" +
-                "    \"end\": \"%s\"\n" +
-                "  },\n" +
-                "  \"peerReviewed\": %s\n" +
-                "}";
+        String template = "{\n"
+                + "  \"type\": \"%s\",\n"
+                + "  \"volume\": \"%s\",\n"
+                + "  \"issue\": \"%s\",\n"
+                + "  \"articleNumber\": \"%s\",\n"
+                + "  \"pages\": {\n"
+                + "    \"type\": \"Range\",\n"
+                + "    \"begin\": \"%s\",\n"
+                + "    \"end\": \"%s\"\n"
+                + "  },\n"
+                + "  \"peerReviewed\": %s\n"
+                + "}";
         return String.format(template, type, volume, issue, articleNumber, begin, end, peerReviewed);
     }
 }
