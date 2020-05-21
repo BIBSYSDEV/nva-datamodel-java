@@ -1,37 +1,47 @@
 package no.unit.nva.model.instancetypes;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalLetter extends JournalArticle {
+public class JournalLetter extends JournalArticle implements PublicationInstance {
 
-    public static final String NON_PEER_REVIEW_ERROR = "Letters to the editor cannot be peer reviewed";
+    private static final Logger logger = LoggerFactory.getLogger(JournalLetter.class);
+    public static final String SETTING_PEER_REVIEWED_FALSE =
+            "Setting peerReviewed to false as {} is assumed to not be peer-reviewed";
 
-    public JournalLetter() {
-    }
-
-    private JournalLetter(Builder builder) throws InvalidPageTypeException {
-        setVolume(builder.volume);
-        setIssue(builder.issue);
-        setArticleNumber(builder.articleNumber);
-        setPages(builder.pages);
-        setPeerReviewed(builder.peerReviewed);
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
-    }
-
-    @Override
-    @JsonSetter("peerReviewed")
-    public void setPeerReviewed(boolean peerReview) {
-        if (peerReview) {
-            throw new IllegalArgumentException(NON_PEER_REVIEW_ERROR);
+    /**
+     * This constructor ensures that the peerReviewed value is always false.
+     *
+     * @param volume the volume of the PublicationInstance.
+     * @param issue the issue of the PublicationInstance.
+     * @param articleNumber the article number of the PublicationInstance.
+     * @param pages the Pages of the PublicationInstance.
+     * @param peerReviewed the value is always ignored.
+     * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
+     */
+    @JsonCreator
+    public JournalLetter(
+            @JsonProperty("volume") String volume,
+            @JsonProperty("issue") String issue,
+            @JsonProperty("articleNumber") String articleNumber,
+            @JsonProperty("pages") Pages pages,
+            @JsonProperty("peerReviewed") boolean peerReviewed
+    ) throws InvalidPageTypeException {
+        super();
+        setVolume(volume);
+        setIssue(issue);
+        setArticleNumber(articleNumber);
+        setPages(pages);
+        if (peerReviewed) {
+            logger.warn(SETTING_PEER_REVIEWED_FALSE, JournalLetter.class.getSimpleName());
         }
+        setPeerReviewed(false);
     }
 
     public static final class Builder {
@@ -39,7 +49,6 @@ public class JournalLetter extends JournalArticle {
         private String issue;
         private String articleNumber;
         private Pages pages;
-        private boolean peerReviewed;
 
         public Builder() {
         }
@@ -64,13 +73,8 @@ public class JournalLetter extends JournalArticle {
             return this;
         }
 
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
-            return this;
-        }
-
         public JournalLetter build() throws InvalidPageTypeException {
-            return new JournalLetter(this);
+            return new JournalLetter(this.volume, this.issue, this.articleNumber, this.pages, false);
         }
     }
 }

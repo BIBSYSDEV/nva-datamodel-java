@@ -1,10 +1,8 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.IoUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -13,11 +11,12 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class JournalLetterTest {
 
-    public static final String JOURNAL_LETTER_JSON = "journal_letter.json";
+    public static final String JOURNAL_LETTER_WITH_PEER_REVIEW_TRUE_JSON = "journal_letter.json";
 
     @DisplayName("Journal letters to editor can be created from JSON")
     @Test
@@ -32,15 +31,11 @@ class JournalLetterTest {
 
     @DisplayName("Journal letters cannot be peer reviewed")
     @Test
-    void journalLetterThrowsJsonMappingExceptionWhenPeerReviewIsTrue() {
+    void journalLetterSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = IoUtils.stringFromResources(Path.of(
-                JOURNAL_LETTER_JSON));
-        Exception exception = assertThrows(JsonMappingException.class, () -> {
-            objectMapper.readValue(json, JournalLetter.class);
-        });
-
-        assertEquals(JournalLetter.NON_PEER_REVIEW_ERROR, exception.getMessage());
+                JOURNAL_LETTER_WITH_PEER_REVIEW_TRUE_JSON));
+        assertFalse(objectMapper.readValue(json, JournalLetter.class).isPeerReviewed());
     }
 
     private JournalLetter generateJournalLetter(String volume,
@@ -55,7 +50,6 @@ class JournalLetterTest {
                 .build();
 
         return new JournalLetter.Builder()
-                .withPeerReviewed(peerReview)
                 .withVolume(volume)
                 .withPages(pages)
                 .withIssue(issue)
