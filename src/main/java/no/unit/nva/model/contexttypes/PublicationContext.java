@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({@JsonSubTypes.Type(name = "Journal", value = Journal.class)})
+@JsonSubTypes({
+        @JsonSubTypes.Type(name = "Journal", value = Journal.class),
+        @JsonSubTypes.Type(name = "Book", value = Book.class)
+})
 public interface PublicationContext {
 
     String getTitle();
