@@ -1,9 +1,8 @@
 package no.unit.nva.model;
 
-import nva.commons.utils.JacocoGenerated;
-
 import java.net.URI;
 import java.util.Objects;
+import nva.commons.utils.JacocoGenerated;
 
 public class Project {
     private URI id;

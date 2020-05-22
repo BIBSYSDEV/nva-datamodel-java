@@ -1,8 +1,7 @@
 package no.unit.nva.model;
 
-import no.unit.nva.model.exceptions.InvalidNpiLevelException;
-
 import java.util.Arrays;
+import no.unit.nva.model.exceptions.InvalidNpiLevelException;
 
 public enum Level {
     LEVEL_2(2),

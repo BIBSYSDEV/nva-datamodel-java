@@ -1,15 +1,14 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.isNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.MissingLicenseException;
-
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
-
-import static java.util.Objects.isNull;
+import no.unit.nva.model.exceptions.MissingLicenseException;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class File {
@@ -50,10 +49,6 @@ public class File {
             @JsonProperty("publisherAuthority") boolean publisherAuthority,
             @JsonProperty("embargoDate") Instant embargoDate) {
 
-        if (!administrativeAgreement && isNull(license)) {
-            throw new MissingLicenseException(MISSING_LICENSE);
-        }
-
         this.identifier = identifier;
         this.name = name;
         this.mimeType = mimeType;
@@ -62,6 +57,15 @@ public class File {
         this.administrativeAgreement = administrativeAgreement;
         this.publisherAuthority = publisherAuthority;
         this.embargoDate = embargoDate;
+    }
+
+    /**
+     * Validate the file.
+     */
+    public void validate() {
+        if (!administrativeAgreement && isNull(license)) {
+            throw new MissingLicenseException(MISSING_LICENSE);
+        }
     }
 
     private File(Builder builder) {

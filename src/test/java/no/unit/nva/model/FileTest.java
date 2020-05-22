@@ -1,16 +1,15 @@
 package no.unit.nva.model;
 
-import no.unit.nva.model.exceptions.MissingLicenseException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.net.URI;
 import java.util.Collections;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import no.unit.nva.model.exceptions.MissingLicenseException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 
 class FileTest {
@@ -41,11 +40,13 @@ class FileTest {
         });
     }
 
-    @DisplayName("A file that is not an administrative agreement with no license throws MissingLicenseException")
+    @DisplayName("A file validation that is not an administrative agreement with no license throws "
+        + "MissingLicenseException")
     @Test
-    void fileWithNoLicenseAndNotAdministrativeAgreementThrowsMissingLicenseException() {
+    void fileValidationWithNoLicenseAndNotAdministrativeAgreementThrowsMissingLicenseException() {
+        File file = new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, null, false, true, null);
         MissingLicenseException exception = assertThrows(MissingLicenseException.class, () -> {
-            new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, null, false, true, null);
+            file.validate();
         });
 
         assertEquals(File.MISSING_LICENSE, exception.getMessage());
