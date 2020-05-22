@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.JournalNonPeerReviewedContentUtil;
+import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JournalLetterTest {
 
+    public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+
     @DisplayName("Journal letters to editor can be created from JSON")
     @Test
     void journalLetterReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JournalLetter expected = generateJournalLetter("1", "3", "123",
-                false, "2", "3");
+        JournalLetter expected = generateJournalLetter("1", "3", "123", "2", "3");
         String json = objectMapper.writeValueAsString(expected);
         JournalLetter journalLetter = objectMapper.readValue(json, JournalLetter.class);
         assertEquals(expected, journalLetter);
@@ -35,7 +36,7 @@ class JournalLetterTest {
         String articleNumber = "123";
         String begin = "2";
         String end = "3";
-        JournalLetter expected = generateJournalLetter(volume, issue, articleNumber, false, begin, end);
+        JournalLetter expected = generateJournalLetter(volume, issue, articleNumber, begin, end);
 
         String json = JournalNonPeerReviewedContentUtil.generateJsonString(type,
                 volume, issue, articleNumber, begin, end, true);
@@ -45,7 +46,6 @@ class JournalLetterTest {
     private JournalLetter generateJournalLetter(String volume,
                                                 String issue,
                                                 String articleNumber,
-                                                boolean peerReview,
                                                 String begin,
                                                 String end) throws InvalidPageTypeException {
         Range pages = new Range.Builder()
