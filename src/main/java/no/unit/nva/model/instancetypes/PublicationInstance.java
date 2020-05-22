@@ -6,7 +6,10 @@ import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({@JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class)})
+@JsonSubTypes({
+        @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
+        @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class)
+})
 public interface PublicationInstance {
 
     Pages getPages();
