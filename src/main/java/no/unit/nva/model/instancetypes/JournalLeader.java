@@ -7,8 +7,7 @@ import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalLetter extends JournalNonPeerReviewedContent {
-
+public class JournalLeader extends JournalNonPeerReviewedContent {
     /**
      * This constructor ensures that the peerReviewed value is always false.
      *
@@ -20,7 +19,7 @@ public class JournalLetter extends JournalNonPeerReviewedContent {
      * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
      */
     @JsonCreator
-    public JournalLetter(
+    public JournalLeader(
             @JsonProperty("volume") String volume,
             @JsonProperty("issue") String issue,
             @JsonProperty("articleNumber") String articleNumber,
@@ -28,39 +27,5 @@ public class JournalLetter extends JournalNonPeerReviewedContent {
             @JsonProperty("peerReviewed") boolean peerReviewed
     ) throws InvalidPageTypeException {
         super(volume, issue, articleNumber, pages, peerReviewed);
-    }
-
-    public static final class Builder {
-        private String volume;
-        private String issue;
-        private String articleNumber;
-        private Pages pages;
-
-        public Builder() {
-        }
-
-        public Builder withVolume(String volume) {
-            this.volume = volume;
-            return this;
-        }
-
-        public Builder withIssue(String issue) {
-            this.issue = issue;
-            return this;
-        }
-
-        public Builder withArticleNumber(String articleNumber) {
-            this.articleNumber = articleNumber;
-            return this;
-        }
-
-        public Builder withPages(Pages pages) {
-            this.pages = pages;
-            return this;
-        }
-
-        public JournalLetter build() throws InvalidPageTypeException {
-            return new JournalLetter(this.volume, this.issue, this.articleNumber, this.pages, false);
-        }
     }
 }

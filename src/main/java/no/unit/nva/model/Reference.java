@@ -1,10 +1,12 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.net.URI;
-import java.util.Objects;
+import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.utils.JacocoGenerated;
+
+import java.net.URI;
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Reference {
