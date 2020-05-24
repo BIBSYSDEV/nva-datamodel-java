@@ -24,7 +24,6 @@ public class Book implements PublicationContext {
     private List<String> isbns;
 
     public Book() {
-
     }
 
     private Book(Builder builder) {

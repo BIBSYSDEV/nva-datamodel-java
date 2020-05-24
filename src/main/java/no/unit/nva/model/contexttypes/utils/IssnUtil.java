@@ -5,7 +5,7 @@ import no.unit.nva.model.validator.IssnValidator;
 
 import static java.util.Objects.isNull;
 
-public class IssnUtil {
+public final class IssnUtil {
     /**
      * Returns a valid ISSN or null.
      *
