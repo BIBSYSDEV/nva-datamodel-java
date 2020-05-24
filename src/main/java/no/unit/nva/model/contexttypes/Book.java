@@ -13,7 +13,7 @@ import java.util.Objects;
 import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Book {
+public class Book implements PublicationContext {
 
     private String title;
     private Series series;
@@ -36,34 +36,42 @@ public class Book {
         setIsbns(builder.isbns);
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public void setTitle(String title) {
         this.title = title;
     }
 
+    @Override
     public Level getLevel() {
         return level;
     }
 
+    @Override
     public void setLevel(Level level) {
         this.level = level;
     }
 
+    @Override
     public boolean isOpenAccess() {
         return openAccess;
     }
 
+    @Override
     public void setOpenAccess(boolean openAccess) {
         this.openAccess = openAccess;
     }
 
+    @Override
     public boolean isPeerReviewed() {
         return peerReviewed;
     }
 
+    @Override
     public void setPeerReviewed(boolean peerReviewed) {
         this.peerReviewed = peerReviewed;
     }
