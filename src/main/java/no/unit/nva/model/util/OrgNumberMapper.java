@@ -13,7 +13,7 @@ public class OrgNumberMapper {
     public static final URI UNIT_CRISTIN_ID = URI.create("https://api.cristin.no/v2/institutions/20202");
     public static final String NORSK_REGNESENTRAL_ORG_NUMBER = "NO914086434";
     public static final URI NORSK_REGNESENTRAL_CRISTIN_ID = URI.create("https://api.cristin.no/v2/units/7467.0.0.0");
-    public static final String FJELLHAUG_INTERNASJONALE_SKOLE_ORG_NUMBER = "952125001";
+    public static final String FJELLHAUG_INTERNASJONALE_SKOLE_ORG_NUMBER = "NO952125001";
     public static final URI FJELLHAUG_INTERNASJONALE_SKOLE_CRISTIN_ID =
             URI.create("https://api.cristin.no/v2/units/258.0.0.0");
 
