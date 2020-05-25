@@ -1,6 +1,5 @@
 package no.unit.nva.model.contexttypes;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
@@ -20,8 +19,7 @@ public class Book implements PublicationContext {
     private Level level;
     private boolean openAccess;
     private boolean peerReviewed;
-    @JsonProperty("isbn")
-    private List<String> isbns;
+    private List<String> isbnList;
 
     public Book() {
     }
@@ -32,7 +30,7 @@ public class Book implements PublicationContext {
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
-        setIsbns(builder.isbns);
+        setIsbnList(builder.isbnList);
     }
 
     @Override
@@ -75,12 +73,12 @@ public class Book implements PublicationContext {
         this.peerReviewed = peerReviewed;
     }
 
-    public List<String> getIsbns() {
-        return isbns;
+    public List<String> getIsbnList() {
+        return isbnList;
     }
 
-    public void setIsbns(List<String> isbns) {
-        this.isbns = isbns;
+    public void setIsbnList(List<String> isbnList) {
+        this.isbnList = isbnList;
     }
 
     public Series getSeries() {
@@ -106,12 +104,12 @@ public class Book implements PublicationContext {
                 && Objects.equals(getTitle(), book.getTitle())
                 && Objects.equals(getSeries(), book.getSeries())
                 && getLevel() == book.getLevel()
-                && Objects.equals(getIsbns(), book.getIsbns());
+                && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getSeries(), getLevel(), isOpenAccess(), isPeerReviewed(), getIsbns());
+        return Objects.hash(getTitle(), getSeries(), getLevel(), isOpenAccess(), isPeerReviewed(), getIsbnList());
     }
 
     public static final class Builder {
@@ -120,7 +118,7 @@ public class Book implements PublicationContext {
         private Level level;
         private boolean openAccess;
         private boolean peerReviewed;
-        private List<String> isbns;
+        private List<String> isbnList;
 
         public Builder() {
         }
@@ -150,8 +148,8 @@ public class Book implements PublicationContext {
             return this;
         }
 
-        public Builder withIsbns(List<String> isbns) {
-            this.isbns = isbns;
+        public Builder withIsbnList(List<String> isbnList) {
+            this.isbnList = isbnList;
             return this;
         }
 
