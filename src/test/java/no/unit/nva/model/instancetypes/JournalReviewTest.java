@@ -27,7 +27,7 @@ class JournalReviewTest {
         assertEquals(expected, journalReview);
     }
 
-    @DisplayName("Journal short communication cannot be peer reviewed")
+    @DisplayName("Journal review cannot be peer reviewed")
     @Test
     void journalReviewSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageTypeException {
