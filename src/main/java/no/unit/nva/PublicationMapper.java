@@ -131,5 +131,7 @@ public final class PublicationMapper {
         publication.setPublishedDate(request.getPublishedDate());
         publication.setPublisher(request.getPublisher());
         publication.setStatus(request.getStatus());
+        publication.setDoi(request.getDoi());
+        publication.setDoiRequest(request.getDoiRequest());
     }
 }
