@@ -15,7 +15,7 @@ class JournalShortCommunicationTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
-    @DisplayName("Journal short communication to editor can be created from JSON")
+    @DisplayName("Journal short communication can be created from JSON")
     @Test
     void journalShortCommunicationReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
