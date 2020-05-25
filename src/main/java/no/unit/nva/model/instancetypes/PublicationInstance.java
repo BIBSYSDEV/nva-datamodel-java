@@ -8,7 +8,8 @@ import no.unit.nva.model.pages.Pages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
-        @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class)
+        @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class),
+        @JsonSubTypes.Type(name = "JournalShortCommunication", value = JournalShortCommunication.class)
 })
 public interface PublicationInstance {
 
