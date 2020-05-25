@@ -1,7 +1,5 @@
 package no.unit.nva.model;
 
-import static no.unit.nva.model.util.PublicationGenerator.getPublication;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,10 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.UUID;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
@@ -22,6 +16,13 @@ import no.unit.nva.model.util.ContextUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.UUID;
+
+import static no.unit.nva.model.util.PublicationGenerator.getPublication;
 
 public class PublicationTest {
 

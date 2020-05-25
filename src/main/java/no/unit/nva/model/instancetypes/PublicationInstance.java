@@ -8,13 +8,15 @@ import no.unit.nva.model.pages.Pages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
-        @JsonSubTypes.Type(name = "ShortCommunication", value = ShortCommunication.class)
+        @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class)
 })
 public interface PublicationInstance {
 
     Pages getPages();
 
     void setPages(Pages pages) throws InvalidPageTypeException;
+
+    void setPeerReviewed(boolean peerReviewed);
 
     boolean isPeerReviewed();
 }
