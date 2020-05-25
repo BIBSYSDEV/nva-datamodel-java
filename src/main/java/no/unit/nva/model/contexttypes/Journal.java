@@ -1,16 +1,15 @@
 package no.unit.nva.model.contexttypes;
 
-import static java.util.Objects.isNull;
-
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.Level;
+import no.unit.nva.model.contexttypes.utils.IssnUtil;
+import no.unit.nva.model.exceptions.InvalidIssnException;
+
 import java.util.Objects;
 
-import no.unit.nva.model.Level;
-import no.unit.nva.model.exceptions.InvalidIssnException;
-import no.unit.nva.model.validator.IssnValidator;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal implements PublicationContext {
+public class Journal implements PublicationContext, SerialPublication {
     private String title;
     private Level level;
     private boolean openAccess;
@@ -41,18 +40,10 @@ public class Journal implements PublicationContext {
      * @param printIssn a valid ISSN
      * @throws InvalidIssnException Thrown if the ISSN is invalid
      */
-    @SuppressWarnings("PMD.NullAssignment")
+    @JsonSetter
+    @Override
     public void setPrintIssn(String printIssn) throws InvalidIssnException {
-        if (isNull(printIssn) || printIssn.isEmpty()) {
-            this.printIssn = null;
-            return;
-        }
-        boolean isValid = IssnValidator.validate(printIssn);
-        if (isValid) {
-            this.printIssn = printIssn;
-        } else {
-            throw new InvalidIssnException(printIssn);
-        }
+        this.printIssn = IssnUtil.checkIssn(printIssn);
     }
 
     public String getOnlineIssn() {
@@ -65,18 +56,10 @@ public class Journal implements PublicationContext {
      * @param onlineIssn a valid ISSN
      * @throws InvalidIssnException Thrown if the ISSN is invalid
      */
-    @SuppressWarnings("PMD.NullAssignment")
+    @JsonSetter
+    @Override
     public void setOnlineIssn(String onlineIssn) throws InvalidIssnException {
-        if (isNull(onlineIssn) || onlineIssn.isEmpty()) {
-            this.onlineIssn = null;
-            return;
-        }
-        boolean isValid = IssnValidator.validate(onlineIssn);
-        if (isValid) {
-            this.onlineIssn = onlineIssn;
-        } else {
-            throw new InvalidIssnException(onlineIssn);
-        }
+        this.onlineIssn = IssnUtil.checkIssn(onlineIssn);
     }
 
     @Override
