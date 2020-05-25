@@ -68,6 +68,7 @@ public class JournalArticle implements PublicationInstance {
         this.pages = pages;
     }
 
+    @Override
     public void setPeerReviewed(boolean peerReviewed) {
         this.peerReviewed = peerReviewed;
     }
