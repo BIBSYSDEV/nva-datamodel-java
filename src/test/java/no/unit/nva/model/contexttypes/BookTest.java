@@ -34,7 +34,7 @@ class BookTest {
         Book book = objectMapper.readValue(json, Book.class);
         assertEquals(expectedTitle, book.getTitle());
         assertEquals(NullSeries.class, book.getSeries().getClass());
-        assertEquals(expectedIsbn, book.getIsbns().get(FIRST_ELEMENT));
+        assertEquals(expectedIsbn, book.getIsbnList().get(FIRST_ELEMENT));
         assertEquals(expectedLevel, book.getLevel());
         assertTrue(book.isOpenAccess());
         assertTrue(book.isPeerReviewed());
@@ -54,7 +54,7 @@ class BookTest {
                 .withOpenAccess(false)
                 .withPeerReviewed(false)
                 .withSeries(new SeriesImpl(expectedSeriesTitle, null))
-                .withIsbns(List.of(expectedIsbn))
+                .withIsbnList(List.of(expectedIsbn))
                 .build();
         String expectedJson = generateJsonFromTemplate(expectedType, expectedTitle, expectedSeriesTitle, expectedLevel,
                 false, false, expectedIsbn);
@@ -76,7 +76,7 @@ class BookTest {
                 .withLevel(level)
                 .withOpenAccess(openAccess)
                 .withPeerReviewed(peerReviewed)
-                .withIsbns(List.of(isbn))
+                .withIsbnList(List.of(isbn))
                 .build();
 
         return objectMapper.writeValueAsString(book);
