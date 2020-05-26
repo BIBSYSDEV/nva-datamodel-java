@@ -19,11 +19,9 @@ class ReportPolicyTest {
     @Test
     void reportPolicyReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        ReportPolicy expected =
-                generateReportPolicy("2", "3");
+        ReportPolicy expected = generateReportPolicy("2", "3");
         String json = objectMapper.writeValueAsString(expected);
-        ReportPolicy reportPolicy =
-                objectMapper.readValue(json, ReportPolicy.class);
+        ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);
         assertEquals(expected, reportPolicy);
     }
 
@@ -35,15 +33,13 @@ class ReportPolicyTest {
         String type = "ReportPolicy";
         String begin = "2";
         String end = "3";
-        ReportPolicy expected =
-                generateReportPolicy("2", "3");
+        ReportPolicy expected = generateReportPolicy("2", "3");
 
         String json = ReportContentUtil.generateJsonString(type, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, ReportPolicy.class));
     }
 
-    private ReportPolicy generateReportPolicy(String begin,
-                                               String end) throws InvalidPageTypeException {
+    private ReportPolicy generateReportPolicy(String begin, String end) throws InvalidPageTypeException {
         Range pages = new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)

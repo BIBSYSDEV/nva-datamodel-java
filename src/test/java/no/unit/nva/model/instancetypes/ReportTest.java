@@ -19,11 +19,9 @@ class ReportTest {
     @Test
     void reportReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        Report expected =
-                generateReport("2", "3");
+        Report expected = generateReport("2", "3");
         String json = objectMapper.writeValueAsString(expected);
-        Report report =
-                objectMapper.readValue(json, Report.class);
+        Report report = objectMapper.readValue(json, Report.class);
         assertEquals(expected, report);
     }
 

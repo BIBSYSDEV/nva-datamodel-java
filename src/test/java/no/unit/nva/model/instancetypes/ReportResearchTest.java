@@ -19,11 +19,9 @@ class ReportResearchTest {
     @Test
     void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        ReportResearch expected =
-                generateReportResearch("2", "3");
+        ReportResearch expected = generateReportResearch("2", "3");
         String json = objectMapper.writeValueAsString(expected);
-        ReportResearch reportResearch =
-                objectMapper.readValue(json, ReportResearch.class);
+        ReportResearch reportResearch = objectMapper.readValue(json, ReportResearch.class);
         assertEquals(expected, reportResearch);
     }
 
@@ -35,15 +33,13 @@ class ReportResearchTest {
         String type = "ReportResearch";
         String begin = "2";
         String end = "3";
-        ReportResearch expected =
-                generateReportResearch("2", "3");
+        ReportResearch expected = generateReportResearch("2", "3");
 
         String json = ReportContentUtil.generateJsonString(type, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, ReportResearch.class));
     }
 
-    private ReportResearch generateReportResearch(String begin,
-                                               String end) throws InvalidPageTypeException {
+    private ReportResearch generateReportResearch(String begin, String end) throws InvalidPageTypeException {
         Range pages = new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)
