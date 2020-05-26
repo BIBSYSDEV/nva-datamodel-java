@@ -1,21 +1,16 @@
 package no.unit.nva.model.contexttypes;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
-import no.unit.nva.model.NullSeries;
-import no.unit.nva.model.Series;
 
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.Objects.nonNull;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Book implements PublicationContext {
 
-    private String title;
-    private Series series;
+    private String seriesTitle;
+    private String seriesNumber;
     private Level level;
     private boolean openAccess;
     private boolean peerReviewed;
@@ -25,22 +20,12 @@ public class Book implements PublicationContext {
     }
 
     private Book(Builder builder) {
-        setTitle(builder.title);
-        setSeries(builder.series);
+        setSeriesTitle(builder.seriesTitle);
+        setSeriesNumber(builder.seriesNumber);
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
         setIsbnList(builder.isbnList);
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @Override
@@ -81,13 +66,20 @@ public class Book implements PublicationContext {
         this.isbnList = isbnList;
     }
 
-    public Series getSeries() {
-        return series;
+    public String getSeriesTitle() {
+        return seriesTitle;
     }
 
-    @JsonSetter
-    public void setSeries(Series series) {
-        this.series = nonNull(series) && nonNull(series.getTitle()) ? series : new NullSeries();
+    public void setSeriesTitle(String seriesTitle) {
+        this.seriesTitle = seriesTitle;
+    }
+
+    public String getSeriesNumber() {
+        return seriesNumber;
+    }
+
+    public void setSeriesNumber(String seriesNumber) {
+        this.seriesNumber = seriesNumber;
     }
 
     @Override
@@ -101,20 +93,22 @@ public class Book implements PublicationContext {
         Book book = (Book) o;
         return isOpenAccess() == book.isOpenAccess()
                 && isPeerReviewed() == book.isPeerReviewed()
-                && Objects.equals(getTitle(), book.getTitle())
-                && Objects.equals(getSeries(), book.getSeries())
+                && Objects.equals(getSeriesTitle(), book.getSeriesTitle())
+                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
                 && getLevel() == book.getLevel()
                 && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getSeries(), getLevel(), isOpenAccess(), isPeerReviewed(), getIsbnList());
+        return Objects.hash(getSeriesTitle(), getSeriesNumber(), getLevel(), isOpenAccess(), isPeerReviewed(),
+                getIsbnList());
     }
 
+
     public static final class Builder {
-        private String title;
-        private Series series;
+        private String seriesTitle;
+        private String seriesNumber;
         private Level level;
         private boolean openAccess;
         private boolean peerReviewed;
@@ -123,13 +117,13 @@ public class Book implements PublicationContext {
         public Builder() {
         }
 
-        public Builder withTitle(String title) {
-            this.title = title;
+        public Builder withSeriesTitle(String seriesTitle) {
+            this.seriesTitle = seriesTitle;
             return this;
         }
 
-        public Builder withSeries(Series series) {
-            this.series = series;
+        public Builder withSeriesNumber(String seriesNumber) {
+            this.seriesNumber = seriesNumber;
             return this;
         }
 
