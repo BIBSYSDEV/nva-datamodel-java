@@ -11,7 +11,11 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class),
         @JsonSubTypes.Type(name = "JournalLeader", value = JournalLeader.class),
         @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),
-        @JsonSubTypes.Type(name = "JournalShortCommunication", value = JournalShortCommunication.class)
+        @JsonSubTypes.Type(name = "JournalShortCommunication", value = JournalShortCommunication.class),
+        @JsonSubTypes.Type(name = "Report", value = Report.class),
+        @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
+        @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
+        @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class)
 })
 public interface PublicationInstance {
 
