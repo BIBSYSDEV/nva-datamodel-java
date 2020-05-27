@@ -33,7 +33,7 @@ class ReportResearchTest {
         String type = "ReportResearch";
         String begin = "2";
         String end = "3";
-        ReportResearch expected = generateReportResearch("2", "3");
+        ReportResearch expected = generateReportResearch(begin, end);
 
         String json = ReportContentUtil.generateJsonString(type, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, ReportResearch.class));

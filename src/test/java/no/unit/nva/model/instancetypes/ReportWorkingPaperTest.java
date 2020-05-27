@@ -19,7 +19,7 @@ class ReportWorkingPaperTest {
     @Test
     void reportWorkingPaperReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        ReportWorkingPaper expected = generateReportWorkingPaperPolicy("2", "3");
+        ReportWorkingPaper expected = generateReportWorkingPaper("2", "3");
         String json = objectMapper.writeValueAsString(expected);
         ReportWorkingPaper reportWorkingPaper = objectMapper.readValue(json, ReportWorkingPaper.class);
         assertEquals(expected, reportWorkingPaper);
@@ -27,19 +27,19 @@ class ReportWorkingPaperTest {
 
     @DisplayName("Report working paper cannot be peer reviewed")
     @Test
-    void reportPolicySetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
+    void reportWorkingPaperSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageTypeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportWorkingPaper";
         String begin = "2";
         String end = "3";
-        ReportWorkingPaper expected = generateReportWorkingPaperPolicy("2", "3");
+        ReportWorkingPaper expected = generateReportWorkingPaper(begin, end);
 
         String json = ReportContentUtil.generateJsonString(type, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, ReportWorkingPaper.class));
     }
 
-    private ReportWorkingPaper generateReportWorkingPaperPolicy(String begin, String end)
+    private ReportWorkingPaper generateReportWorkingPaper(String begin, String end)
             throws InvalidPageTypeException {
         Range pages = new Range.Builder()
                 .withBegin(begin)

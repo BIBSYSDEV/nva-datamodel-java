@@ -33,7 +33,7 @@ class ReportPolicyTest {
         String type = "ReportPolicy";
         String begin = "2";
         String end = "3";
-        ReportPolicy expected = generateReportPolicy("2", "3");
+        ReportPolicy expected = generateReportPolicy(begin, end);
 
         String json = ReportContentUtil.generateJsonString(type, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, ReportPolicy.class));
