@@ -11,6 +11,7 @@ public class Book implements PublicationContext {
 
     private String seriesTitle;
     private String seriesNumber;
+    private String publisher;
     private Level level;
     private boolean openAccess;
     private boolean peerReviewed;
@@ -22,6 +23,7 @@ public class Book implements PublicationContext {
     private Book(Builder builder) {
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
+        setPublisher(builder.publisher);
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
@@ -82,6 +84,14 @@ public class Book implements PublicationContext {
         this.seriesNumber = seriesNumber;
     }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -95,20 +105,28 @@ public class Book implements PublicationContext {
                 && isPeerReviewed() == book.isPeerReviewed()
                 && Objects.equals(getSeriesTitle(), book.getSeriesTitle())
                 && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
+                && Objects.equals(getPublisher(), book.getPublisher())
                 && getLevel() == book.getLevel()
                 && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSeriesTitle(), getSeriesNumber(), getLevel(), isOpenAccess(), isPeerReviewed(),
-                getIsbnList());
+        return Objects.hash(
+                getSeriesTitle(),
+                getSeriesNumber(),
+                getPublisher(),
+                getLevel(),
+                isOpenAccess(),
+                isPeerReviewed(),
+                getIsbnList()
+        );
     }
-
 
     public static final class Builder {
         private String seriesTitle;
         private String seriesNumber;
+        private String publisher;
         private Level level;
         private boolean openAccess;
         private boolean peerReviewed;
@@ -124,6 +142,11 @@ public class Book implements PublicationContext {
 
         public Builder withSeriesNumber(String seriesNumber) {
             this.seriesNumber = seriesNumber;
+            return this;
+        }
+
+        public Builder withPublisher(String publisher) {
+            this.publisher = publisher;
             return this;
         }
 

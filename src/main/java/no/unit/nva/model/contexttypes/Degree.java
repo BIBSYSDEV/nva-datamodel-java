@@ -16,16 +16,17 @@ public class Degree extends Book {
         super();
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
+        setPublisher(builder.publisher);
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
         setIsbnList(builder.isbnList);
     }
 
-
     public static final class Builder {
         private String seriesTitle;
         private String seriesNumber;
+        private String publisher;
         private Level level;
         private boolean openAccess;
         private boolean peerReviewed;
@@ -41,6 +42,11 @@ public class Degree extends Book {
 
         public Builder withSeriesNumber(String seriesNumber) {
             this.seriesNumber = seriesNumber;
+            return this;
+        }
+
+        public Builder withPublisher(String publisher) {
+            this.publisher = publisher;
             return this;
         }
 

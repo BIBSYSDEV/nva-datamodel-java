@@ -20,6 +20,7 @@ public class Report extends Book implements SerialPublication, PublicationContex
         super();
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
+        setPublisher(builder.publisher);
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
@@ -70,6 +71,7 @@ public class Report extends Book implements SerialPublication, PublicationContex
     public static final class Builder {
         private String seriesTitle;
         private String seriesNumber;
+        private String publisher;
         private Level level;
         private boolean openAccess;
         private boolean peerReviewed;
@@ -87,6 +89,11 @@ public class Report extends Book implements SerialPublication, PublicationContex
 
         public Builder withSeriesNumber(String seriesNumber) {
             this.seriesNumber = seriesNumber;
+            return this;
+        }
+
+        public Builder withPublisher(String publisher) {
+            this.publisher = publisher;
             return this;
         }
 

@@ -13,6 +13,7 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.ContextUtil;
+import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.UUID;
-
-import static no.unit.nva.model.util.PublicationGenerator.getPublication;
 
 public class PublicationTest {
 
@@ -51,11 +50,7 @@ public class PublicationTest {
         throws IOException, MalformedContributorException,
             InvalidIssnException, InvalidPageTypeException {
 
-        UUID publicationIdentifier = UUID.randomUUID();
-        UUID fileIdentifier = UUID.randomUUID();
-        Instant now = Instant.now();
-
-        Publication publication = getPublication(publicationIdentifier, fileIdentifier, now);
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         JsonNode document = toPublicationWithContext(publication);
 
@@ -76,11 +71,7 @@ public class PublicationTest {
     public void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
             MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
 
-        UUID publicationIdentifier = UUID.randomUUID();
-        UUID fileIdentifier = UUID.randomUUID();
-        Instant now = Instant.now();
-
-        Publication publication = getPublication(publicationIdentifier, fileIdentifier, now);
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         JsonNode publicationWithContext = toPublicationWithContext(publication);
 
