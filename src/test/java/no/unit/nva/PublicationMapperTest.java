@@ -79,7 +79,7 @@ public class PublicationMapperTest {
     }
 
     @Test
-    public void canMapPublicationToCreatePublicationRequest() throws Exception {
+    public void convertValueReturnsCreatePublicationRequestWhenInputIsValidPublication() throws Exception {
         Publication publication = getPublication();
 
         CreatePublicationRequest request = PublicationMapper
@@ -93,7 +93,7 @@ public class PublicationMapperTest {
     }
 
     @Test
-    public void canMapPublicationToUpdatePublicationRequest() throws Exception {
+    public void convertValueReturnsUpdatePublicationRequestWhenInputIsValidPublication() throws Exception {
         Publication publication = getPublication();
 
         UpdatePublicationRequest request = PublicationMapper
