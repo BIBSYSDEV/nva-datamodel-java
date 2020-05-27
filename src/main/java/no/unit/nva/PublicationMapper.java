@@ -62,13 +62,13 @@ public final class PublicationMapper {
     }
 
     /**
-     * Maps a publication and context to publication response.
+     * Maps a publication and context to specified type.
      *
      * @param publication   publication
      * @param context   jsonld context
      * @return  publication response
      */
-    public static <R extends WithContext> R toResponse(
+    public static <R extends WithContext> R convertValue(
         Publication publication, JsonNode context, Class<R> responseType) {
         R response = objectMapper.convertValue(publication, responseType);
         response.setContext(context);
@@ -76,16 +76,19 @@ public final class PublicationMapper {
     }
 
     /**
-     * Maps a publication to publication response with default context.
+     * Maps a publication to specified type with default context.
      *
      * @param publication   publication
      * @return  publication response
      */
-    public static <R extends WithContext> R toResponse(
+    public static <R extends WithContext> R convertValue(
         Publication publication, Class<R> responseType) {
+        return convertValue(publication, getContext(), responseType);
+    }
+
+    private static JsonNode getContext() {
         try {
-            JsonNode context = objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
-            return toResponse(publication, context, responseType);
+            return objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
         } catch (IOException e) {
             throw new IllegalStateException(CONTEXT_ERROR_MESSAGE + CONTEXT_PATH.toString(), e);
         }

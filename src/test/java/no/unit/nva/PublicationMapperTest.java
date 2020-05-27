@@ -63,7 +63,7 @@ public class PublicationMapperTest {
         Publication publication = getPublication();
 
         PublicationResponse response = PublicationMapper
-            .toResponse(publication, SOME_CONTEXT, PublicationResponse.class);
+            .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
 
         assertNotNull(response);
     }
@@ -73,9 +73,37 @@ public class PublicationMapperTest {
         Publication publication = getPublication();
 
         PublicationResponse response = PublicationMapper
-            .toResponse(publication, PublicationResponse.class);
+            .convertValue(publication, PublicationResponse.class);
 
         assertNotNull(response);
+    }
+
+    @Test
+    public void convertValueReturnsCreatePublicationRequestWhenInputIsValidPublication() throws Exception {
+        Publication publication = getPublication();
+
+        CreatePublicationRequest request = PublicationMapper
+            .convertValue(publication, CreatePublicationRequest.class);
+
+        assertNotNull(request);
+        assertNotNull(request.getContext());
+        assertEquals(publication.getFileSet(), request.getFileSet());
+        assertEquals(publication.getProject(), request.getProject());
+        assertEquals(publication.getEntityDescription(), request.getEntityDescription());
+    }
+
+    @Test
+    public void convertValueReturnsUpdatePublicationRequestWhenInputIsValidPublication() throws Exception {
+        Publication publication = getPublication();
+
+        UpdatePublicationRequest request = PublicationMapper
+            .convertValue(publication, UpdatePublicationRequest.class);
+
+        assertNotNull(request);
+        assertNotNull(request.getContext());
+        assertEquals(publication.getFileSet(), request.getFileSet());
+        assertEquals(publication.getProject(), request.getProject());
+        assertEquals(publication.getEntityDescription(), request.getEntityDescription());
     }
 
 }
