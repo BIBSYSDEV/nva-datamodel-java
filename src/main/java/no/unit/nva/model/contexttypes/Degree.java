@@ -2,6 +2,7 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Degree extends Book {
         super();
     }
 
-    private Degree(Builder builder) {
+    private Degree(Builder builder) throws InvalidIsbnException {
         super();
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
@@ -70,7 +71,7 @@ public class Degree extends Book {
             return this;
         }
 
-        public Degree build() {
+        public Degree build() throws InvalidIsbnException {
             return new Degree(this);
         }
     }

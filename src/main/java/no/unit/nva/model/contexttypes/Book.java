@@ -2,9 +2,13 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
+import org.apache.commons.validator.routines.ISBNValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Book implements PublicationContext {
@@ -16,11 +20,12 @@ public class Book implements PublicationContext {
     private boolean openAccess;
     private boolean peerReviewed;
     private List<String> isbnList;
+    public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
 
     public Book() {
     }
 
-    private Book(Builder builder) {
+    private Book(Builder builder) throws InvalidIsbnException {
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
         setPublisher(builder.publisher);
@@ -64,8 +69,24 @@ public class Book implements PublicationContext {
         return isbnList;
     }
 
-    public void setIsbnList(List<String> isbnList) {
-        this.isbnList = isbnList;
+    /**
+     * Adds the ISBN list to the object after checking that the ISBNs are valid and removing ISBN-punctuation.
+     *
+     * @param isbnList List of ISBN candidates.
+     * @throws InvalidIsbnException If one of the ISBNs is found to be invalid
+     */
+    public void setIsbnList(List<String> isbnList) throws InvalidIsbnException {
+        List<String> validIsbns = isbnList.stream()
+                .map(ISBN_VALIDATOR::validate)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        if (isbnList.size() != validIsbns.size()) {
+            List<String> errors = new ArrayList<>(isbnList);
+            errors.removeAll(validIsbns);
+            throw new InvalidIsbnException(errors);
+        }
+        this.isbnList = validIsbns;
     }
 
     public String getSeriesTitle() {
@@ -170,7 +191,7 @@ public class Book implements PublicationContext {
             return this;
         }
 
-        public Book build() {
+        public Book build() throws InvalidIsbnException {
             return new Book(this);
         }
     }

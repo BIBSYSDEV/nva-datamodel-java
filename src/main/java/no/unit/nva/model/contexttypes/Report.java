@@ -2,6 +2,7 @@ package no.unit.nva.model.contexttypes;
 
 import no.unit.nva.model.Level;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class Report extends Book implements SerialPublication, PublicationContex
         super();
     }
 
-    private Report(Builder builder) throws InvalidIssnException {
+    private Report(Builder builder) throws InvalidIssnException, InvalidIsbnException {
         super();
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
@@ -127,7 +128,7 @@ public class Report extends Book implements SerialPublication, PublicationContex
             return this;
         }
 
-        public Report build() throws InvalidIssnException {
+        public Report build() throws InvalidIssnException, InvalidIsbnException {
             return new Report(this);
         }
     }
