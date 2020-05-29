@@ -4,6 +4,7 @@ import no.unit.nva.model.Level;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import nva.commons.utils.JacocoGenerated;
 
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +49,7 @@ public class Report extends Book implements SerialPublication, PublicationContex
         this.onlineIssn = IssnUtil.checkIssn(onlineIssn);
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -64,6 +66,7 @@ public class Report extends Book implements SerialPublication, PublicationContex
                 && Objects.equals(getOnlineIssn(), report.getOnlineIssn());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getPrintIssn(), getOnlineIssn());
