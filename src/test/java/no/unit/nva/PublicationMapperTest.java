@@ -82,7 +82,7 @@ public class PublicationMapperTest {
 
     @Test
     public void convertValueReturnsCreatePublicationRequestWhenInputIsValidPublication() throws Exception {
-        Publication publication = getPublication();
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         CreatePublicationRequest request = PublicationMapper
             .convertValue(publication, CreatePublicationRequest.class);
@@ -96,7 +96,7 @@ public class PublicationMapperTest {
 
     @Test
     public void convertValueReturnsUpdatePublicationRequestWhenInputIsValidPublication() throws Exception {
-        Publication publication = getPublication();
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         UpdatePublicationRequest request = PublicationMapper
             .convertValue(publication, UpdatePublicationRequest.class);
@@ -107,5 +107,5 @@ public class PublicationMapperTest {
         assertEquals(publication.getProject(), request.getProject());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
     }
-
 }
+
