@@ -1,7 +1,17 @@
 package no.unit.nva;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import no.unit.nva.api.CreatePublicationRequest;
+import no.unit.nva.api.PublicationResponse;
+import no.unit.nva.api.UpdatePublicationRequest;
+import no.unit.nva.model.Publication;
+import no.unit.nva.model.util.PublicationGenerator;
+import org.junit.jupiter.api.Test;
+
+import java.net.URI;
+import java.util.UUID;
+
 import static no.unit.nva.model.util.PublicationGenerator.generateEntityDescriptionJournalArticle;
-import static no.unit.nva.model.util.PublicationGenerator.getEntityDescription;
 import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
 import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
 import static no.unit.nva.model.util.PublicationGenerator.getProject;
@@ -9,16 +19,6 @@ import static nva.commons.utils.JsonUtils.objectMapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.net.URI;
-import java.util.UUID;
-import no.unit.nva.api.CreatePublicationRequest;
-import no.unit.nva.api.PublicationResponse;
-import no.unit.nva.api.UpdatePublicationRequest;
-import no.unit.nva.model.Publication;
-import no.unit.nva.model.util.PublicationGenerator;
-import org.junit.jupiter.api.Test;
 
 public class PublicationMapperTest {
 
