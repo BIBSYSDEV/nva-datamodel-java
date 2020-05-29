@@ -3,12 +3,16 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import nva.commons.utils.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Book implements PublicationContext {
@@ -76,6 +80,10 @@ public class Book implements PublicationContext {
      * @throws InvalidIsbnException If one of the ISBNs is found to be invalid
      */
     public void setIsbnList(List<String> isbnList) throws InvalidIsbnException {
+        if (isNull(isbnList) || isbnList.isEmpty()) {
+            this.isbnList = Collections.emptyList();
+            return;
+        }
         List<String> validIsbns = isbnList.stream()
                 .map(ISBN_VALIDATOR::validate)
                 .filter(Objects::nonNull)
@@ -113,6 +121,7 @@ public class Book implements PublicationContext {
         this.publisher = publisher;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -131,6 +140,7 @@ public class Book implements PublicationContext {
                 && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(
