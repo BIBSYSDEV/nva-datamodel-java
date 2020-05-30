@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
@@ -146,6 +147,7 @@ public class Journal implements PublicationContext, SerialPublication {
         }
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -163,6 +165,7 @@ public class Journal implements PublicationContext, SerialPublication {
                 && Objects.equals(getOnlineIssn(), journal.getOnlineIssn());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getPrintIssn(), getOnlineIssn());
