@@ -9,7 +9,7 @@ import nva.commons.utils.JacocoGenerated;
 import java.util.List;
 import java.util.Objects;
 
-public class Report extends Book implements SerialPublication, PublicationContext {
+public class Report extends Book implements SerialPublication, BaseContext {
 
     private String printIssn;
     private String onlineIssn;

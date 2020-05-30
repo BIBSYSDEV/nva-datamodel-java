@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Book implements PublicationContext {
+public class Book implements BaseContext {
 
     private String seriesTitle;
     private String seriesNumber;
