@@ -1,6 +1,8 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.net.URI;
 import java.util.Objects;
 
@@ -64,6 +66,7 @@ public class Identity {
         this.arpId = arpId;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -80,6 +83,7 @@ public class Identity {
                 && Objects.equals(getArpId(), identity.getArpId());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getNameType(), getOrcId(), getArpId());

@@ -1,6 +1,8 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +27,7 @@ public class FileSet {
         this.files = files;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -37,6 +40,7 @@ public class FileSet {
         return Objects.equals(getFiles(), fileSet.getFiles());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getFiles());

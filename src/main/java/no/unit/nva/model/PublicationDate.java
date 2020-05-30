@@ -1,6 +1,8 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -44,6 +46,7 @@ public class PublicationDate {
         this.day = day;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -58,6 +61,7 @@ public class PublicationDate {
                 && Objects.equals(getDay(), that.getDay());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getYear(), getMonth(), getDay());

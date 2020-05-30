@@ -1,6 +1,8 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.net.URI;
 import java.util.Map;
 import java.util.Objects;
@@ -47,6 +49,7 @@ public class License {
         this.link = link;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -61,6 +64,7 @@ public class License {
                 && Objects.equals(getLink(), license.getLink());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getIdentifier(), getLabels(), getLink());

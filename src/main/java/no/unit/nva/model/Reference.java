@@ -73,8 +73,8 @@ public class Reference {
         }
     }
 
-    @Override
     @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -88,6 +88,7 @@ public class Reference {
                 && Objects.equals(getPublicationInstance(), that.getPublicationInstance());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getPublicationContext(), getDoi(), getPublicationInstance());
