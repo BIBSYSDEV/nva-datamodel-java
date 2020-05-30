@@ -7,13 +7,11 @@ import no.unit.nva.model.Level;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "Journal", value = Journal.class),
-        @JsonSubTypes.Type(name = "Book", value = Book.class)
+        @JsonSubTypes.Type(name = "Book", value = Book.class),
+        @JsonSubTypes.Type(name = "Report", value = Report.class),
+        @JsonSubTypes.Type(name = "Degree", value = Degree.class)
 })
 public interface PublicationContext {
-
-    String getTitle();
-
-    void setTitle(String title);
 
     Level getLevel();
 

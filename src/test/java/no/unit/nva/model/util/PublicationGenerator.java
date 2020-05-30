@@ -17,6 +17,7 @@ import no.unit.nva.model.File;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Grant;
 import no.unit.nva.model.Identity;
+import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.License;
@@ -29,6 +30,7 @@ import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.Role;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
@@ -46,13 +48,25 @@ public class PublicationGenerator {
 
     }
 
-    public static Publication getPublication()
+    public static Publication generateJournalArticlePublication()
         throws InvalidIssnException, MalformedContributorException, InvalidPageTypeException {
-        return getPublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now());
+        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
+                generateEntityDescriptionJournalArticle());
     }
 
-    public static Publication getPublication(UUID publicationIdentifier, UUID fileIdentifier, Instant now)
-        throws MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
+
+    public static Publication generateBookMonographPublication() throws MalformedContributorException,
+            InvalidIsbnException {
+        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
+                generateEntityDescriptionBookMonograph());
+    }
+
+
+
+    public static Publication generatePublication(UUID publicationIdentifier,
+                                                  UUID fileIdentifier,
+                                                  Instant now,
+                                                  EntityDescription entityDescription) {
         return new Publication.Builder()
             .withIdentifier(publicationIdentifier)
             .withCreatedDate(now)
@@ -62,7 +76,7 @@ public class PublicationGenerator {
             .withStatus(PublicationStatus.DRAFT)
             .withPublisher(getOrganization())
             .withFileSet(getFileSet(fileIdentifier))
-            .withEntityDescription(getEntityDescription())
+            .withEntityDescription(entityDescription)
             .withOwner("eier@example.org")
             .withProject(getProject())
             .withDoiRequest(getDoiRequest())
@@ -101,8 +115,19 @@ public class PublicationGenerator {
             .build();
     }
 
-    public static EntityDescription getEntityDescription() throws MalformedContributorException, InvalidIssnException,
-                                                            InvalidPageTypeException {
+    public static EntityDescription generateEntityDescriptionJournalArticle() throws InvalidIssnException,
+            InvalidPageTypeException, MalformedContributorException {
+        return getEntityDescription(getJournalReference());
+    }
+
+    private static EntityDescription generateEntityDescriptionBookMonograph() throws MalformedContributorException,
+            InvalidIsbnException {
+        return getEntityDescription(getBookMonographReference());
+    }
+
+
+
+    public static EntityDescription getEntityDescription(Reference reference) throws MalformedContributorException {
         return new EntityDescription.Builder()
             .withMainTitle("Hovedtittelen")
             .withLanguage(URI.create("http://example.org/norsk"))
@@ -113,20 +138,28 @@ public class PublicationGenerator {
             .withNpiSubjectHeading("010")
             .withTags(Arrays.asList("dokumenter", "publikasjoner"))
             .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
-            .withReference(getJournalReference())
+            .withReference(reference)
             .withMetadataSource(URI.create("https://example.org/doi?doi=123/123"))
             .build();
     }
 
     public static Reference getJournalReference() throws InvalidIssnException, InvalidPageTypeException {
         return new Reference.Builder()
-            .withPublishingContext(getPublishingContext())
+            .withPublishingContext(getPublishingContextJournal())
             .withDoi(SOME_URI)
-            .withPublicationInstance(getPublicationInstance())
+            .withPublicationInstance(getPublicationInstanceJournalArticle())
             .build();
     }
 
-    public static PublicationInstance getPublicationInstance() throws InvalidPageTypeException {
+    private static Reference getBookMonographReference() throws InvalidIsbnException {
+        return new Reference.Builder()
+                .withPublishingContext(getPublishingContextBook())
+                .withDoi(SOME_URI)
+                .withPublicationInstance(null)
+                .build();
+    }
+
+    public static PublicationInstance getPublicationInstanceJournalArticle() throws InvalidPageTypeException {
         return new JournalArticle.Builder()
             .withArticleNumber("1234456")
             .withIssue("2")
@@ -136,7 +169,19 @@ public class PublicationGenerator {
             .build();
     }
 
-    public static PublicationContext getPublishingContext() throws InvalidIssnException {
+    private static PublicationContext getPublishingContextBook() throws InvalidIsbnException {
+        return new Book.Builder()
+                .withIsbnList(List.of("9780201309515"))
+                .withLevel(Level.LEVEL_0)
+                .withOpenAccess(false)
+                .withPeerReviewed(true)
+                .withPublisher("My publisher dot com")
+                .withSeriesNumber("123")
+                .withSeriesTitle("Explorations in ego")
+                .build();
+    }
+
+    public static PublicationContext getPublishingContextJournal() throws InvalidIssnException {
         return new Journal.Builder()
             .withLevel(Level.LEVEL_1)
             .withTitle("Tim's lovely publishing house")

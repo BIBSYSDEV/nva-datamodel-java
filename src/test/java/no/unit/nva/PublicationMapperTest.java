@@ -1,23 +1,24 @@
 package no.unit.nva;
 
-import static no.unit.nva.model.util.PublicationGenerator.getEntityDescription;
-import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
-import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
-import static no.unit.nva.model.util.PublicationGenerator.getProject;
-import static no.unit.nva.model.util.PublicationGenerator.getPublication;
-import static nva.commons.utils.JsonUtils.objectMapper;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.net.URI;
-import java.util.UUID;
 import no.unit.nva.api.CreatePublicationRequest;
 import no.unit.nva.api.PublicationResponse;
 import no.unit.nva.api.UpdatePublicationRequest;
 import no.unit.nva.model.Publication;
+import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Test;
+
+import java.net.URI;
+import java.util.UUID;
+
+import static no.unit.nva.model.util.PublicationGenerator.generateEntityDescriptionJournalArticle;
+import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
+import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
+import static no.unit.nva.model.util.PublicationGenerator.getProject;
+import static nva.commons.utils.JsonUtils.objectMapper;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PublicationMapperTest {
 
@@ -29,7 +30,7 @@ public class PublicationMapperTest {
     public void canMapCreatePublicationRequestToNewPublication() throws Exception {
 
         CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setEntityDescription(getEntityDescription());
+        request.setEntityDescription(generateEntityDescriptionJournalArticle());
         request.setProject(getProject());
         request.setFileSet(getFileSet(UUID.randomUUID()));
         request.setContext(SOME_CONTEXT);
@@ -47,12 +48,13 @@ public class PublicationMapperTest {
 
         UpdatePublicationRequest request = new UpdatePublicationRequest();
         request.setIdentifier(UUID.randomUUID());
-        request.setEntityDescription(getEntityDescription());
+        request.setEntityDescription(generateEntityDescriptionJournalArticle());
         request.setProject(getProject());
         request.setFileSet(getFileSet(UUID.randomUUID()));
         request.setContext(SOME_CONTEXT);
 
-        Publication publication = PublicationMapper.toExistingPublication(request, getPublication());
+        Publication publication = PublicationMapper.toExistingPublication(request,
+                PublicationGenerator.generateJournalArticlePublication());
 
         assertNotNull(publication);
         assertNotEquals(publication.getCreatedDate(), publication.getModifiedDate());
@@ -60,7 +62,7 @@ public class PublicationMapperTest {
 
     @Test
     public void canMapPublicationAndContextToPublicationResponse() throws Exception {
-        Publication publication = getPublication();
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         PublicationResponse response = PublicationMapper
             .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
@@ -70,7 +72,7 @@ public class PublicationMapperTest {
 
     @Test
     public void canMapPublicationToPublicationResponse() throws Exception {
-        Publication publication = getPublication();
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         PublicationResponse response = PublicationMapper
             .convertValue(publication, PublicationResponse.class);
@@ -80,7 +82,7 @@ public class PublicationMapperTest {
 
     @Test
     public void convertValueReturnsCreatePublicationRequestWhenInputIsValidPublication() throws Exception {
-        Publication publication = getPublication();
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         CreatePublicationRequest request = PublicationMapper
             .convertValue(publication, CreatePublicationRequest.class);
@@ -94,7 +96,7 @@ public class PublicationMapperTest {
 
     @Test
     public void convertValueReturnsUpdatePublicationRequestWhenInputIsValidPublication() throws Exception {
-        Publication publication = getPublication();
+        Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
         UpdatePublicationRequest request = PublicationMapper
             .convertValue(publication, UpdatePublicationRequest.class);
@@ -105,5 +107,5 @@ public class PublicationMapperTest {
         assertEquals(publication.getProject(), request.getProject());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
     }
-
 }
+
