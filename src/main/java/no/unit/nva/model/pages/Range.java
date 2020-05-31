@@ -1,6 +1,8 @@
 package no.unit.nva.model.pages;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -55,6 +57,7 @@ public class Range implements Pages {
         }
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -68,6 +71,7 @@ public class Range implements Pages {
                 && Objects.equals(getEnd(), range.getEnd());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getBegin(), getEnd());

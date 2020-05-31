@@ -5,12 +5,18 @@ import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
+import no.unit.nva.model.instancetypes.JournalArticle;
+import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PublicationJournalArticleTest extends PublicationTest {
 
@@ -52,4 +58,20 @@ public class PublicationJournalArticleTest extends PublicationTest {
         Assertions.assertTrue(JsonUtils.toString(framedPublication).contains(HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE));
     }
 
+    @DisplayName("JournalArticle does not throw exception if pages is null")
+    @ParameterizedTest
+    @NullSource
+    void journalArticleReturnsJournalArticleObjectWhenPagesIsNull(Range pages) {
+        assertDoesNotThrow(
+            () -> {
+                new JournalArticle.Builder()
+                        .withArticleNumber("123")
+                        .withIssue("5")
+                        .withPages(pages)
+                        .withVolume("4")
+                        .withPeerReviewed(false)
+                        .build();
+            }
+        );
+    }
 }
