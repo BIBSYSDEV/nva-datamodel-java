@@ -34,7 +34,7 @@ public class BookMonograph implements PublicationInstance {
     @Override
     public void setPages(Pages pages) throws InvalidPageTypeException {
         if (nonNull(pages) && !(pages instanceof MonographPages)) {
-            throw new InvalidPageTypeException(BookMonograph.class, MonographPages.class, pages.getClass());
+            throw new InvalidPageTypeException(this.getClass(), MonographPages.class, pages.getClass());
         }
         this.pages = pages;
     }
