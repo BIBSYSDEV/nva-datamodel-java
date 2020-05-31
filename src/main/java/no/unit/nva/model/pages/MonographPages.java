@@ -1,11 +1,17 @@
 package no.unit.nva.model.pages;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.Objects;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class MonographPages implements Pages {
     private Range introduction;
     private String pages;
     private boolean illustrated;
+
+    public MonographPages() {
+    }
 
     private MonographPages(Builder builder) {
         setIntroduction(builder.introduction);
