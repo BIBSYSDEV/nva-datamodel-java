@@ -15,7 +15,6 @@ public class Reference {
     private PublicationInstance publicationInstance;
 
     public Reference() {
-
     }
 
     private Reference(Builder builder) {
