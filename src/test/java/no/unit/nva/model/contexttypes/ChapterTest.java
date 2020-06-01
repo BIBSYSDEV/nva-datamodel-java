@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -13,9 +14,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.net.URI;
 
 import static java.util.Objects.nonNull;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ChapterTest {
 
@@ -39,10 +41,10 @@ class ChapterTest {
     @ParameterizedTest
     @NullSource
     void objectMapperThrowsJsonMappingExceptionWhenInputIsNull(String input) {
-        JsonMappingException exception = assertThrows(JsonMappingException.class,
-            () -> objectMapper.readValue(generateChapterJson(input), Chapter.class));
-
-        assertTrue(exception.getMessage(). contains(String.format(Chapter.ERROR_TEMPLATE, input)));
+        Executable executable = () -> objectMapper.readValue(generateChapterJson(input), Chapter.class);
+        JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
+        String expectedMessage = String.format(Chapter.ERROR_TEMPLATE, input);
+        assertThat(exception.getMessage(), containsString(expectedMessage));
     }
 
     @DisplayName("Chapter: ObjectMapper throws JsonMappingException when linkingContext URI is invalid")
@@ -53,10 +55,10 @@ class ChapterTest {
             "someStuff"
     })
     void objectMapperThrowsJsonMappingExceptionWhenLinkingUriIsInvalid(String input) {
-        JsonMappingException exception = assertThrows(JsonMappingException.class,
-            () -> objectMapper.readValue(generateChapterJson(input), Chapter.class));
-
-        assertTrue(exception.getMessage(). contains(String.format(Chapter.ERROR_TEMPLATE, input)));
+        Executable executable = () -> objectMapper.readValue(generateChapterJson(input), Chapter.class);
+        JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
+        String expectedMessage = String.format(Chapter.ERROR_TEMPLATE, input);
+        assertThat(exception.getMessage(), containsString(expectedMessage));
     }
 
     @DisplayName("Book serializes expected json")
@@ -65,7 +67,8 @@ class ChapterTest {
         String expectedJson = generateChapterJson(TEST_URI);
         Chapter chapter = new Chapter();
         chapter.setLinkedContext(TEST_URI);
-        assertEquals(expectedJson, objectMapper.writeValueAsString(chapter));
+        String actualJson = objectMapper.writeValueAsString(chapter);
+        assertEquals(expectedJson, actualJson);
     }
 
     private String generateChapterJson(String uri) {
