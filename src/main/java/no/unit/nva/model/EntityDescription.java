@@ -2,6 +2,8 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -129,6 +131,7 @@ public class EntityDescription {
         this.reference = reference;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -151,6 +154,7 @@ public class EntityDescription {
                 && Objects.equals(getMetadataSource(), that.getMetadataSource());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getMainTitle(),

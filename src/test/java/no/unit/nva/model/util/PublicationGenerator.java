@@ -35,6 +35,10 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.JournalArticle;
+import no.unit.nva.model.instancetypes.JournalLeader;
+import no.unit.nva.model.instancetypes.JournalLetter;
+import no.unit.nva.model.instancetypes.JournalReview;
+import no.unit.nva.model.instancetypes.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
 
@@ -48,39 +52,65 @@ public class PublicationGenerator {
 
     }
 
-    public static Publication generateJournalArticlePublication()
-        throws InvalidIssnException, MalformedContributorException, InvalidPageTypeException {
-        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
-                generateEntityDescriptionJournalArticle());
+    public static Publication generatePublication(String type) throws InvalidIssnException,
+            InvalidPageTypeException, MalformedContributorException {
+        Reference reference;
+        switch (type) {
+            case "JournalLeader":
+                reference = getJournalLeaderReference();
+                break;
+            case "JournalLetter":
+                reference = getJournalLetterReference();
+                break;
+            case "JournalReview":
+                reference = getJournalReviewReference();
+                break;
+            case "JournalShortCommunication":
+                reference = getJournalShortCommunicationReference();
+                break;
+            case "JournalArticle":
+            default:
+                reference = getJournalArticleReference();
+                break;
+        }
+        return generatePublication(reference);
     }
 
-
-    public static Publication generateBookMonographPublication() throws MalformedContributorException,
-            InvalidIsbnException {
+    private static Publication generatePublication(Reference reference) throws MalformedContributorException {
         return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
-                generateEntityDescriptionBookMonograph());
+                generateEntityDescription(reference));
     }
-
-
 
     public static Publication generatePublication(UUID publicationIdentifier,
                                                   UUID fileIdentifier,
                                                   Instant now,
                                                   EntityDescription entityDescription) {
         return new Publication.Builder()
-            .withIdentifier(publicationIdentifier)
-            .withCreatedDate(now)
-            .withModifiedDate(now)
-            .withHandle(URI.create("http://example.org/handle/123"))
-            .withLink(URI.create("http://example.org/link"))
-            .withStatus(PublicationStatus.DRAFT)
-            .withPublisher(getOrganization())
-            .withFileSet(getFileSet(fileIdentifier))
-            .withEntityDescription(entityDescription)
-            .withOwner("eier@example.org")
-            .withProject(getProject())
-            .withDoiRequest(getDoiRequest())
-            .build();
+                .withIdentifier(publicationIdentifier)
+                .withCreatedDate(now)
+                .withModifiedDate(now)
+                .withHandle(URI.create("http://example.org/handle/123"))
+                .withLink(URI.create("http://example.org/link"))
+                .withStatus(PublicationStatus.DRAFT)
+                .withPublisher(getOrganization())
+                .withFileSet(getFileSet(fileIdentifier))
+                .withEntityDescription(entityDescription)
+                .withOwner("eier@example.org")
+                .withProject(getProject())
+                .withDoiRequest(getDoiRequest())
+                .build();
+    }
+
+    public static Publication generateJournalArticlePublication()
+        throws InvalidIssnException, MalformedContributorException, InvalidPageTypeException {
+        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
+                generateEntityDescriptionJournalArticle());
+    }
+
+    public static Publication generateBookMonographPublication() throws MalformedContributorException,
+            InvalidIsbnException {
+        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
+                generateEntityDescriptionBookMonograph());
     }
 
     public static ResearchProject getProject() {
@@ -117,15 +147,18 @@ public class PublicationGenerator {
 
     public static EntityDescription generateEntityDescriptionJournalArticle() throws InvalidIssnException,
             InvalidPageTypeException, MalformedContributorException {
-        return getEntityDescription(getJournalReference());
+        return getEntityDescription(getJournalArticleReference());
+    }
+
+    public static EntityDescription generateEntityDescription(Reference reference) throws
+            MalformedContributorException {
+        return getEntityDescription(reference);
     }
 
     private static EntityDescription generateEntityDescriptionBookMonograph() throws MalformedContributorException,
             InvalidIsbnException {
         return getEntityDescription(getBookMonographReference());
     }
-
-
 
     public static EntityDescription getEntityDescription(Reference reference) throws MalformedContributorException {
         return new EntityDescription.Builder()
@@ -143,12 +176,45 @@ public class PublicationGenerator {
             .build();
     }
 
-    public static Reference getJournalReference() throws InvalidIssnException, InvalidPageTypeException {
+    public static Reference getJournalArticleReference() throws InvalidIssnException, InvalidPageTypeException {
         return new Reference.Builder()
             .withPublishingContext(getPublishingContextJournal())
             .withDoi(SOME_URI)
             .withPublicationInstance(getPublicationInstanceJournalArticle())
             .build();
+    }
+
+    private static Reference getJournalLeaderReference() throws InvalidIssnException, InvalidPageTypeException {
+        return new Reference.Builder()
+                .withPublishingContext(getPublishingContextJournal())
+                .withDoi(SOME_URI)
+                .withPublicationInstance(getPublicationInstanceJournalLeader())
+                .build();
+    }
+
+    private static Reference getJournalLetterReference() throws InvalidPageTypeException, InvalidIssnException {
+        return new Reference.Builder()
+                .withPublishingContext(getPublishingContextJournal())
+                .withDoi(SOME_URI)
+                .withPublicationInstance(getPublicationInstanceJournalLetter())
+                .build();
+    }
+
+    private static Reference getJournalReviewReference() throws InvalidPageTypeException, InvalidIssnException {
+        return new Reference.Builder()
+                .withPublishingContext(getPublishingContextJournal())
+                .withDoi(SOME_URI)
+                .withPublicationInstance(getPublicationInstanceJournalReview())
+                .build();
+    }
+
+    private static Reference getJournalShortCommunicationReference() throws InvalidPageTypeException,
+            InvalidIssnException {
+        return new Reference.Builder()
+                .withPublishingContext(getPublishingContextJournal())
+                .withDoi(SOME_URI)
+                .withPublicationInstance(getPublicationInstanceJournalShortCommunication())
+                .build();
     }
 
     private static Reference getBookMonographReference() throws InvalidIsbnException {
@@ -167,6 +233,44 @@ public class PublicationGenerator {
             .withPages(getPages())
             .withPeerReviewed(true)
             .build();
+    }
+
+    private static PublicationInstance getPublicationInstanceJournalLeader() throws InvalidPageTypeException {
+        return new JournalLeader.Builder()
+            .withArticleNumber("213222")
+            .withIssue("5")
+            .withVolume("27")
+            .withPages(getPages())
+            .withPeerReviewed(false)
+            .build();
+    }
+
+    private static PublicationInstance getPublicationInstanceJournalLetter() throws InvalidPageTypeException {
+        return new JournalLetter.Builder()
+            .withArticleNumber("213222")
+            .withIssue("5")
+            .withVolume("27")
+            .withPages(getPages())
+            .build();
+    }
+
+    private static PublicationInstance getPublicationInstanceJournalReview() throws InvalidPageTypeException {
+        return new JournalReview.Builder()
+            .withArticleNumber("213222")
+            .withIssue("5")
+            .withVolume("27")
+            .withPages(getPages())
+            .build();
+    }
+
+    private static PublicationInstance getPublicationInstanceJournalShortCommunication() throws
+            InvalidPageTypeException {
+        return new JournalShortCommunication.Builder()
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .build();
     }
 
     private static PublicationContext getPublishingContextBook() throws InvalidIsbnException {
