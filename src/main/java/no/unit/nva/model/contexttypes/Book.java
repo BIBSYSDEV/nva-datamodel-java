@@ -1,46 +1,42 @@
 package no.unit.nva.model.contexttypes;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Level;
-import no.unit.nva.model.NullSeries;
-import no.unit.nva.model.Series;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
+import nva.commons.utils.JacocoGenerated;
+import org.apache.commons.validator.routines.ISBNValidator;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Book implements PublicationContext {
 
-    private String title;
-    private Series series;
+    private String seriesTitle;
+    private String seriesNumber;
+    private String publisher;
     private Level level;
     private boolean openAccess;
     private boolean peerReviewed;
     private List<String> isbnList;
+    public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
 
     public Book() {
     }
 
-    private Book(Builder builder) {
-        setTitle(builder.title);
-        setSeries(builder.series);
+    private Book(Builder builder) throws InvalidIsbnException {
+        setSeriesTitle(builder.seriesTitle);
+        setSeriesNumber(builder.seriesNumber);
+        setPublisher(builder.publisher);
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
         setIsbnList(builder.isbnList);
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @Override
@@ -77,19 +73,55 @@ public class Book implements PublicationContext {
         return isbnList;
     }
 
-    public void setIsbnList(List<String> isbnList) {
-        this.isbnList = isbnList;
+    /**
+     * Adds the ISBN list to the object after checking that the ISBNs are valid and removing ISBN-punctuation.
+     *
+     * @param isbnList List of ISBN candidates.
+     * @throws InvalidIsbnException If one of the ISBNs is found to be invalid
+     */
+    public void setIsbnList(List<String> isbnList) throws InvalidIsbnException {
+        if (isNull(isbnList) || isbnList.isEmpty()) {
+            this.isbnList = Collections.emptyList();
+            return;
+        }
+        List<String> validIsbns = isbnList.stream()
+                .map(ISBN_VALIDATOR::validate)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        if (isbnList.size() != validIsbns.size()) {
+            List<String> errors = new ArrayList<>(isbnList);
+            errors.removeAll(validIsbns);
+            throw new InvalidIsbnException(errors);
+        }
+        this.isbnList = validIsbns;
     }
 
-    public Series getSeries() {
-        return series;
+    public String getSeriesTitle() {
+        return seriesTitle;
     }
 
-    @JsonSetter
-    public void setSeries(Series series) {
-        this.series = nonNull(series) && nonNull(series.getTitle()) ? series : new NullSeries();
+    public void setSeriesTitle(String seriesTitle) {
+        this.seriesTitle = seriesTitle;
     }
 
+    public String getSeriesNumber() {
+        return seriesNumber;
+    }
+
+    public void setSeriesNumber(String seriesNumber) {
+        this.seriesNumber = seriesNumber;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -101,20 +133,31 @@ public class Book implements PublicationContext {
         Book book = (Book) o;
         return isOpenAccess() == book.isOpenAccess()
                 && isPeerReviewed() == book.isPeerReviewed()
-                && Objects.equals(getTitle(), book.getTitle())
-                && Objects.equals(getSeries(), book.getSeries())
+                && Objects.equals(getSeriesTitle(), book.getSeriesTitle())
+                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
+                && Objects.equals(getPublisher(), book.getPublisher())
                 && getLevel() == book.getLevel()
                 && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getSeries(), getLevel(), isOpenAccess(), isPeerReviewed(), getIsbnList());
+        return Objects.hash(
+                getSeriesTitle(),
+                getSeriesNumber(),
+                getPublisher(),
+                getLevel(),
+                isOpenAccess(),
+                isPeerReviewed(),
+                getIsbnList()
+        );
     }
 
     public static final class Builder {
-        private String title;
-        private Series series;
+        private String seriesTitle;
+        private String seriesNumber;
+        private String publisher;
         private Level level;
         private boolean openAccess;
         private boolean peerReviewed;
@@ -123,13 +166,18 @@ public class Book implements PublicationContext {
         public Builder() {
         }
 
-        public Builder withTitle(String title) {
-            this.title = title;
+        public Builder withSeriesTitle(String seriesTitle) {
+            this.seriesTitle = seriesTitle;
             return this;
         }
 
-        public Builder withSeries(Series series) {
-            this.series = series;
+        public Builder withSeriesNumber(String seriesNumber) {
+            this.seriesNumber = seriesNumber;
+            return this;
+        }
+
+        public Builder withPublisher(String publisher) {
+            this.publisher = publisher;
             return this;
         }
 
@@ -153,7 +201,7 @@ public class Book implements PublicationContext {
             return this;
         }
 
-        public Book build() {
+        public Book build() throws InvalidIsbnException {
             return new Book(this);
         }
     }
