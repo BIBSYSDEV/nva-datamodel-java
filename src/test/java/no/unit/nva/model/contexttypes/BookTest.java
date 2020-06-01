@@ -8,6 +8,7 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -17,8 +18,12 @@ import java.util.List;
 
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
 import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJson;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BookTest {
@@ -108,7 +113,8 @@ class BookTest {
                 null,
                 null
         );
-        assertEquals(expectedJson, objectMapper.writeValueAsString(book));
+        String actualJson = objectMapper.writeValueAsString(book);
+        assertEquals(expectedJson, actualJson);
     }
 
     @DisplayName("Book complains if ISBNs are invalid")
@@ -128,18 +134,20 @@ class BookTest {
 
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
-        Exception exception = assertThrows(InvalidIsbnException.class, () -> new Book.Builder()
-            .withSeriesTitle(seriesTitle)
-            .withSeriesNumber(seriesNumber)
-            .withPublisher(publisher)
-            .withLevel(Level.valueOf(level))
-            .withOpenAccess(Boolean.getBoolean(openAccess))
-            .withPeerReviewed(Boolean.getBoolean(peerReviewed))
-            .withIsbnList(invalidIsbnList)
-            .build());
+        Executable executable = () -> new Book.Builder()
+                .withSeriesTitle(seriesTitle)
+                .withSeriesNumber(seriesNumber)
+                .withPublisher(publisher)
+                .withLevel(Level.valueOf(level))
+                .withOpenAccess(Boolean.getBoolean(openAccess))
+                .withPeerReviewed(Boolean.getBoolean(peerReviewed))
+                .withIsbnList(invalidIsbnList)
+                .build();
 
+        Exception exception = assertThrows(InvalidIsbnException.class, executable);
         String expectedMessage = String.format(InvalidIsbnException.ERROR_TEMPLATE, "obviousNonsense");
-        assertEquals(expectedMessage, exception.getMessage());
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @DisplayName("Book: Null ISBNs are handled gracefully")
@@ -155,7 +163,9 @@ class BookTest {
                 .withIsbnList(null)
                 .build();
 
-        assertNotNull(book.getIsbnList());
+        List<String> resultIsbnList = book.getIsbnList();
+        assertThat(resultIsbnList, is(not(nullValue())));
+        assertThat(resultIsbnList, is(empty()));
     }
 
     @DisplayName("Book: Empty ISBNs are handled gracefully")
@@ -171,6 +181,8 @@ class BookTest {
                 .withIsbnList(Collections.emptyList())
                 .build();
 
-        assertNotNull(book.getIsbnList());
+        List<String> resultIsbnList = book.getIsbnList();
+        assertThat(resultIsbnList, is(not(nullValue())));
+        assertThat(resultIsbnList, is(empty()));
     }
 }
