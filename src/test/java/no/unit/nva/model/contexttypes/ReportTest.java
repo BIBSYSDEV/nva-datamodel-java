@@ -20,6 +20,7 @@ import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJso
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReportTest {
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
@@ -146,23 +147,21 @@ public class ReportTest {
                                                            String isbnList,
                                                            String onlineIssn,
                                                            String printIssn) {
-        List<String> convertedIsbnList = convertIsbnStringToList(isbnList);
-        ArrayList<String> expectedIsbnList = new ArrayList<>(convertedIsbnList);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
-        Level expectedLevel = Level.valueOf(level);
 
-        Exception exception = assertThrows(InvalidIsbnException.class, () -> new Report.Builder()
+        ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
+
+        Report.Builder reportBuilder = new Report.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
-                .withLevel(expectedLevel)
-                .withOpenAccess(expectedOpenAccess)
-                .withPeerReviewed(expectedPeerReviewed)
-                .withIsbnList(expectedIsbnList)
+                .withLevel(Level.valueOf(level))
+                .withOpenAccess(Boolean.getBoolean(openAccess))
+                .withPeerReviewed(Boolean.getBoolean(peerReviewed))
+                .withIsbnList(invalidIsbnList)
                 .withPrintIssn(printIssn)
-                .withOnlineIssn(onlineIssn)
-                .build());
+                .withOnlineIssn(onlineIssn);
+
+        Exception exception = assertThrows(InvalidIsbnException.class, reportBuilder::build);
 
         String expectedMessage = String.format(InvalidIsbnException.ERROR_TEMPLATE, "obviousNonsense");
         assertEquals(expectedMessage, exception.getMessage());
@@ -185,6 +184,7 @@ public class ReportTest {
                 .build();
 
         assertNotNull(report.getIsbnList());
+        assertTrue(report.getIsbnList().isEmpty());
     }
 
     @DisplayName("Report: Empty ISBNs are handled gracefully")
@@ -203,5 +203,6 @@ public class ReportTest {
                 .build();
 
         assertNotNull(report.getIsbnList());
+        assertTrue(report.getIsbnList().isEmpty());
     }
 }

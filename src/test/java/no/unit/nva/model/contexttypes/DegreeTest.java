@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJso
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DegreeTest {
 
@@ -125,21 +127,19 @@ class DegreeTest {
                                                          String openAccess,
                                                          String peerReviewed,
                                                          String isbnList) {
-        List<String> convertedIsbnList = convertIsbnStringToList(isbnList);
-        ArrayList<String> expectedIsbnList = new ArrayList<>(convertedIsbnList);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
-        Level expectedLevel = Level.valueOf(level);
 
-        Exception exception = assertThrows(InvalidIsbnException.class, () -> new Degree.Builder()
+        ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
+
+        Degree.Builder degreeBuilder = new Degree.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
-                .withLevel(expectedLevel)
-                .withOpenAccess(expectedOpenAccess)
-                .withPeerReviewed(expectedPeerReviewed)
-                .withIsbnList(expectedIsbnList)
-                .build());
+                .withLevel(Level.valueOf(level))
+                .withOpenAccess(Boolean.getBoolean(openAccess))
+                .withPeerReviewed(Boolean.getBoolean(peerReviewed))
+                .withIsbnList(invalidIsbnList);
+
+        Exception exception = assertThrows(InvalidIsbnException.class, degreeBuilder::build);
 
         String expectedMessage = String.format(InvalidIsbnException.ERROR_TEMPLATE, "obviousNonsense");
         assertEquals(expectedMessage, exception.getMessage());
@@ -159,6 +159,7 @@ class DegreeTest {
                 .build();
 
         assertNotNull(degree.getIsbnList());
+        assertTrue(degree.getIsbnList().isEmpty());
     }
 
     @DisplayName("Degree: Empty ISBNs are handled gracefully")
