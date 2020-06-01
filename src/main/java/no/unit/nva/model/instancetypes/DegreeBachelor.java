@@ -1,8 +1,10 @@
 package no.unit.nva.model.instancetypes;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DegreeBachelor extends BookMonograph {
     public DegreeBachelor() {
         super();
