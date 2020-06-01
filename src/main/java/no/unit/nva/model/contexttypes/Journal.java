@@ -10,7 +10,7 @@ import nva.commons.utils.JacocoGenerated;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal implements BaseContext, SerialPublication {
+public class Journal implements BasicContext, SerialPublication {
     private String title;
     private Level level;
     private boolean openAccess;

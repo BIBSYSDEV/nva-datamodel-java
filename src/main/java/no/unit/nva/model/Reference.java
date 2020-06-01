@@ -1,7 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.contexttypes.BaseContext;
+import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.utils.JacocoGenerated;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Reference {
-    private BaseContext publicationContext;
+    private BasicContext publicationContext;
     private URI doi;
     private PublicationInstance publicationInstance;
 
@@ -23,11 +23,11 @@ public class Reference {
         setPublicationInstance(builder.publicationInstance);
     }
 
-    public BaseContext getPublicationContext() {
+    public BasicContext getPublicationContext() {
         return publicationContext;
     }
 
-    public void setPublicationContext(BaseContext publicationContext) {
+    public void setPublicationContext(BasicContext publicationContext) {
         this.publicationContext = publicationContext;
     }
 
@@ -49,10 +49,10 @@ public class Reference {
 
     public static final class Builder {
         private PublicationInstance publicationInstance;
-        private BaseContext publicationContext;
+        private BasicContext publicationContext;
         private URI doi;
 
-        public Builder withPublishingContext(BaseContext publicationContext) {
+        public Builder withPublishingContext(BasicContext publicationContext) {
             this.publicationContext = publicationContext;
             return this;
         }

@@ -3,6 +3,9 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+/**
+ * PublicationContext provides a common root object for contexts of kind {@link LinkedContext} and {@link BasicContext}. .
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "Journal", value = Journal.class),

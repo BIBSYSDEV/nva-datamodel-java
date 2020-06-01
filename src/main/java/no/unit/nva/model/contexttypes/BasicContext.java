@@ -2,7 +2,10 @@ package no.unit.nva.model.contexttypes;
 
 import no.unit.nva.model.Level;
 
-public interface BaseContext extends PublicationContext {
+/**
+ * BasicContexts are contexts that are expressed in full in the data model.
+ */
+public interface BasicContext extends PublicationContext {
 
     Level getLevel();
 
