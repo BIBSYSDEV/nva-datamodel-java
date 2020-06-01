@@ -3,8 +3,9 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
+import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
-import no.unit.nva.model.util.ReportContentUtil;
+import no.unit.nva.model.util.ReportContentTestUtil;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class ReportPolicyTest {
         String end = "3";
         ReportPolicy expected = generateReportPolicy(begin, end);
 
-        String json = ReportContentUtil.generateJsonString(type, begin, end, true);
+        String json = ReportContentTestUtil.generateJsonString(type, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, ReportPolicy.class));
     }
 

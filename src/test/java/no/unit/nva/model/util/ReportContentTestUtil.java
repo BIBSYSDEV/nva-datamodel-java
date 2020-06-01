@@ -1,6 +1,6 @@
 package no.unit.nva.model.util;
 
-public class ReportContentUtil {
+public class ReportContentTestUtil {
 
     /**
      * Creates a JSON string that matches subclasses of ReportContent.
