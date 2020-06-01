@@ -1,21 +1,17 @@
 package no.unit.nva.model.instancetypes;
 
-import static java.util.Objects.nonNull;
-
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.Objects;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
 
+import java.util.Objects;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalArticle implements PublicationInstance {
+public class JournalArticle extends ChapterChapter implements PublicationInstance {
     private String volume;
     private String issue;
     private String articleNumber;
-    private Pages pages;
-    private boolean peerReviewed;
 
     @JacocoGenerated
     public JournalArticle() {
@@ -53,29 +49,6 @@ public class JournalArticle implements PublicationInstance {
 
     public void setArticleNumber(String articleNumber) {
         this.articleNumber = articleNumber;
-    }
-
-    @Override
-    public Pages getPages() {
-        return pages;
-    }
-
-    @Override
-    public void setPages(Pages pages) throws InvalidPageTypeException {
-        if (nonNull(pages) && !(pages instanceof Range)) {
-            throw new InvalidPageTypeException(JournalArticle.class, Range.class, pages.getClass());
-        }
-        this.pages = pages;
-    }
-
-    @Override
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return peerReviewed;
     }
 
     public static final class Builder {
