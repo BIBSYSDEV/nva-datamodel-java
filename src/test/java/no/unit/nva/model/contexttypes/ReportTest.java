@@ -8,6 +8,7 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -17,10 +18,13 @@ import java.util.List;
 
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
 import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJson;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReportTest {
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
@@ -127,7 +131,8 @@ public class ReportTest {
                 onlineIssn,
                 printIssn
         );
-        assertEquals(expectedJson, objectMapper.writeValueAsString(report));
+        String actualJson = objectMapper.writeValueAsString(report);
+        assertEquals(expectedJson, actualJson);
     }
 
     @DisplayName("report complains if ISBNs are invalid")
@@ -150,7 +155,7 @@ public class ReportTest {
 
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
-        Report.Builder reportBuilder = new Report.Builder()
+        Executable executable = () -> new Report.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
@@ -159,12 +164,13 @@ public class ReportTest {
                 .withPeerReviewed(Boolean.getBoolean(peerReviewed))
                 .withIsbnList(invalidIsbnList)
                 .withPrintIssn(printIssn)
-                .withOnlineIssn(onlineIssn);
+                .withOnlineIssn(onlineIssn)
+                .build();
 
-        Exception exception = assertThrows(InvalidIsbnException.class, reportBuilder::build);
-
+        Exception exception = assertThrows(InvalidIsbnException.class, executable);
         String expectedMessage = String.format(InvalidIsbnException.ERROR_TEMPLATE, "obviousNonsense");
-        assertEquals(expectedMessage, exception.getMessage());
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 
 
@@ -183,8 +189,9 @@ public class ReportTest {
                 .withPrintIssn(PRINT_ISSN)
                 .build();
 
-        assertNotNull(report.getIsbnList());
-        assertTrue(report.getIsbnList().isEmpty());
+        List<String> resultIsbnList = report.getIsbnList();
+        assertThat(resultIsbnList, is(not(nullValue())));
+        assertThat(resultIsbnList, is(empty()));
     }
 
     @DisplayName("Report: Empty ISBNs are handled gracefully")
@@ -202,7 +209,8 @@ public class ReportTest {
                 .withOnlineIssn(ONLINE_ISSN)
                 .build();
 
-        assertNotNull(report.getIsbnList());
-        assertTrue(report.getIsbnList().isEmpty());
+        List<String> resultIsbnList = report.getIsbnList();
+        assertThat(resultIsbnList, is(not(nullValue())));
+        assertThat(resultIsbnList, is(empty()));
     }
 }

@@ -8,20 +8,23 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
 import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJson;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DegreeTest {
 
@@ -110,7 +113,8 @@ class DegreeTest {
                 null,
                 null
         );
-        assertEquals(expectedJson, objectMapper.writeValueAsString(degree));
+        String actualJson = objectMapper.writeValueAsString(degree);
+        assertEquals(expectedJson, actualJson);
     }
 
     @DisplayName("Degree complains if ISBNs are invalid")
@@ -130,19 +134,20 @@ class DegreeTest {
 
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
-        Degree.Builder degreeBuilder = new Degree.Builder()
+        Executable executable = () -> new Degree.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
                 .withLevel(Level.valueOf(level))
                 .withOpenAccess(Boolean.getBoolean(openAccess))
                 .withPeerReviewed(Boolean.getBoolean(peerReviewed))
-                .withIsbnList(invalidIsbnList);
+                .withIsbnList(invalidIsbnList)
+                .build();
 
-        Exception exception = assertThrows(InvalidIsbnException.class, degreeBuilder::build);
-
+        Exception exception = assertThrows(InvalidIsbnException.class, executable);
         String expectedMessage = String.format(InvalidIsbnException.ERROR_TEMPLATE, "obviousNonsense");
-        assertEquals(expectedMessage, exception.getMessage());
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @DisplayName("Degree: Null ISBNs are handled gracefully")
@@ -158,8 +163,9 @@ class DegreeTest {
                 .withIsbnList(null)
                 .build();
 
-        assertNotNull(degree.getIsbnList());
-        assertTrue(degree.getIsbnList().isEmpty());
+        List<String> resultIsbnList = degree.getIsbnList();
+        assertThat(resultIsbnList, is(not(nullValue())));
+        assertThat(resultIsbnList, is(empty()));
     }
 
     @DisplayName("Degree: Empty ISBNs are handled gracefully")
@@ -175,6 +181,8 @@ class DegreeTest {
                 .withIsbnList(Collections.emptyList())
                 .build();
 
-        assertNotNull(degree.getIsbnList());
+        List<String> resultIsbnList = degree.getIsbnList();
+        assertThat(resultIsbnList, is(not(nullValue())));
+        assertThat(resultIsbnList, is(empty()));
     }
 }
