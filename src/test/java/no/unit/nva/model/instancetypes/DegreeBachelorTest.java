@@ -101,11 +101,11 @@ public class DegreeBachelorTest extends BookInstanceTest {
     @NullSource
     void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
-                () -> new DegreeBachelor.Builder()
-                        .withOpenAccess(false)
-                        .withPeerReviewed(false)
-                        .withPages(pages)
-                        .build()
+            () -> new DegreeBachelor.Builder()
+                    .withOpenAccess(false)
+                    .withPeerReviewed(false)
+                    .withPages(pages)
+                    .build()
         );
     }
 }
