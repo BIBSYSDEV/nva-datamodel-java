@@ -125,20 +125,17 @@ class BookTest {
                                                          String openAccess,
                                                          String peerReviewed,
                                                          String isbnList) {
-        List<String> convertedIsbnList = convertIsbnStringToList(isbnList);
-        ArrayList<String> expectedIsbnList = new ArrayList<>(convertedIsbnList);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
-        Level expectedLevel = Level.valueOf(level);
+
+        ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
         Exception exception = assertThrows(InvalidIsbnException.class, () -> new Book.Builder()
             .withSeriesTitle(seriesTitle)
             .withSeriesNumber(seriesNumber)
             .withPublisher(publisher)
-            .withLevel(expectedLevel)
-            .withOpenAccess(expectedOpenAccess)
-            .withPeerReviewed(expectedPeerReviewed)
-            .withIsbnList(expectedIsbnList)
+            .withLevel(Level.valueOf(level))
+            .withOpenAccess(Boolean.getBoolean(openAccess))
+            .withPeerReviewed(Boolean.getBoolean(peerReviewed))
+            .withIsbnList(invalidIsbnList)
             .build());
 
         String expectedMessage = String.format(InvalidIsbnException.ERROR_TEMPLATE, "obviousNonsense");
