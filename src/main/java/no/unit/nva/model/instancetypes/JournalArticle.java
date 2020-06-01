@@ -8,7 +8,7 @@ import nva.commons.utils.JacocoGenerated;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalArticle extends ChapterChapter implements PublicationInstance {
+public class JournalArticle extends ChapterArticle implements PublicationInstance {
     private String volume;
     private String issue;
     private String articleNumber;

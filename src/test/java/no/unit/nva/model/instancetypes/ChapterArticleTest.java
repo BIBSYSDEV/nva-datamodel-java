@@ -17,49 +17,49 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ChapterChapterTest {
+public class ChapterArticleTest {
 
     private static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-    public static final String CHAPTER_CHAPTER = "ChapterChapter";
+    public static final String CHAPTER_CHAPTER = "ChapterArticle";
 
-    @DisplayName("ChapterChapter exists")
+    @DisplayName("ChapterArticle exists")
     @Test
-    void chapterChapterExists() {
-        new ChapterChapter();
+    void chapterArticleExists() {
+        new ChapterArticle();
     }
 
-    @DisplayName("ChapterChapter: objectMapper can deserialize object")
+    @DisplayName("ChapterArticle: objectMapper can deserialize object")
     @Test
     void objectMapperReturnsChapterChapterWhenInputJsonIsWellFormed() throws JsonProcessingException {
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
         String json = generateWellFormedJson(expectedBegin, expectedEnd, true);
-        ChapterChapter chapterChapter = objectMapper.readValue(json, ChapterChapter.class);
-        assertEquals(expectedPages, chapterChapter.getPages());
-        assertTrue(chapterChapter.isPeerReviewed());
+        ChapterArticle chapterArticle = objectMapper.readValue(json, ChapterArticle.class);
+        assertEquals(expectedPages, chapterArticle.getPages());
+        assertTrue(chapterArticle.isPeerReviewed());
     }
 
-    @DisplayName("ChapterChapter: objectMapper can serialize valid input")
+    @DisplayName("ChapterArticle: objectMapper can serialize valid input")
     @Test
     void objectMapperReturnsValidJsonWhenInputIsValidChapterChapter() throws JsonProcessingException,
             InvalidPageTypeException {
         String expectedBegin = "222";
         String expectedEnd = "232";
-        ChapterChapter chapterChapter = new ChapterChapter.Builder()
+        ChapterArticle chapterArticle = new ChapterArticle.Builder()
                 .withPages(generatePages(expectedBegin, expectedEnd))
                 .withPeerReviewed(false)
                 .build();
         String expectedJson = generateWellFormedJson(expectedBegin, expectedEnd, false);
-        assertEquals(expectedJson, objectMapper.writeValueAsString(chapterChapter));
+        assertEquals(expectedJson, objectMapper.writeValueAsString(chapterArticle));
     }
 
-    @DisplayName("ChapterChapter does not throw InvalidPageTypeException if input is null")
+    @DisplayName("ChapterArticle does not throw InvalidPageTypeException if input is null")
     @ParameterizedTest
     @NullSource
-    void chapterChapterDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages input) {
+    void chapterArticleDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages input) {
         assertDoesNotThrow(() -> {
-            new ChapterChapter.Builder()
+            new ChapterArticle.Builder()
                     .withPeerReviewed(false)
                     .withPages(input)
                     .build();
@@ -68,7 +68,7 @@ public class ChapterChapterTest {
 
     @DisplayName("ChapterChapterThrows InvalidPageTypeException if page type is not Range")
     @Test
-    void chapterChapterThrowsInvalidPageTypeExceptionIfPageTypeIsNotRange() {
+    void chapterArticleThrowsInvalidPageTypeExceptionIfPageTypeIsNotRange() {
         Range intro = new Range.Builder().withBegin("i").withEnd("iv").build();
         Pages pages = new MonographPages.Builder()
                 .withPages("222")
@@ -76,12 +76,12 @@ public class ChapterChapterTest {
                 .withIntroduction(intro)
                 .build();
         InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, () ->
-            new ChapterChapter.Builder()
+            new ChapterArticle.Builder()
                 .withPages(pages)
                 .withPeerReviewed(true)
                 .build());
         String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
-                ChapterChapter.class.getTypeName(),
+                ChapterArticle.class.getTypeName(),
                 Range.class.getTypeName(),
                 pages.getClass().getTypeName());
         assertEquals(expectedMessage, exception.getMessage());

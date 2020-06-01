@@ -11,15 +11,15 @@ import java.util.Objects;
 import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ChapterChapter implements PublicationInstance {
+public class ChapterArticle implements PublicationInstance {
 
     private Pages pages;
     private boolean peerReviewed;
 
-    public ChapterChapter() {
+    public ChapterArticle() {
     }
 
-    private ChapterChapter(Builder builder) throws InvalidPageTypeException {
+    private ChapterArticle(Builder builder) throws InvalidPageTypeException {
         setPages(builder.pages);
         setPeerReviewed(builder.peerReviewed);
     }
@@ -53,10 +53,10 @@ public class ChapterChapter implements PublicationInstance {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ChapterChapter)) {
+        if (!(o instanceof ChapterArticle)) {
             return false;
         }
-        ChapterChapter that = (ChapterChapter) o;
+        ChapterArticle that = (ChapterArticle) o;
         return isPeerReviewed() == that.isPeerReviewed()
                 && Objects.equals(getPages(), that.getPages());
     }
@@ -85,8 +85,8 @@ public class ChapterChapter implements PublicationInstance {
             return this;
         }
 
-        public ChapterChapter build() throws InvalidPageTypeException {
-            return new ChapterChapter(this);
+        public ChapterArticle build() throws InvalidPageTypeException {
+            return new ChapterArticle(this);
         }
     }
 }
