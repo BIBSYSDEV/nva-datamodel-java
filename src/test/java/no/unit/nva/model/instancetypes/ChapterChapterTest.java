@@ -9,7 +9,10 @@ import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,6 +52,18 @@ public class ChapterChapterTest {
                 .build();
         String expectedJson = generateWellFormedJson(expectedBegin, expectedEnd, false);
         assertEquals(expectedJson, objectMapper.writeValueAsString(chapterChapter));
+    }
+
+    @DisplayName("ChapterChapter does not throw InvalidPageTypeException if input is null")
+    @ParameterizedTest
+    @NullSource
+    void chapterChapterDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages input) {
+        assertDoesNotThrow(() -> {
+            new ChapterChapter.Builder()
+                    .withPeerReviewed(false)
+                    .withPages(input)
+                    .build();
+        });
     }
 
     @DisplayName("ChapterChapterThrows InvalidPageTypeException if page type is not Range")
