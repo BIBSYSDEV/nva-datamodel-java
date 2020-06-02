@@ -5,25 +5,34 @@ public class ReportContentTestUtil {
     /**
      * Creates a JSON string that matches subclasses of ReportContent.
      *
-     * @param type          The type of subclass of Report.
-     * @param begin         The begin page number.
-     * @param end           The end page number.
-     * @param peerReviewed  The peer-review boolean. Can be set to true for testing purposes.
+     * @param type              The type of subclass of Report.
+     * @param pages             Pages.
+     * @param introductionBegin The introduction begin page number.
+     * @param introductionEnd   The introduction end page number.
+     * @param illustrated       Illustrated.
+     * @param peerReviewed      The peer-review boolean. Can be set to true for testing purposes.
      * @return A formated JSON string.
      */
     public static String generateJsonString(String type,
-                                            String begin,
-                                            String end,
+                                            String pages,
+                                            String introductionBegin,
+                                            String introductionEnd,
+                                            boolean illustrated,
                                             boolean peerReviewed) {
         String template = "{\n"
                 + "  \"type\": \"%s\",\n"
                 + "  \"pages\": {\n"
-                + "    \"type\": \"Range\",\n"
-                + "    \"begin\": \"%s\",\n"
-                + "    \"end\": \"%s\"\n"
+                + "    \"type\": \"MonographPages\",\n"
+                + "    \"pages\": \"%s\",\n"
+                + "    \"introduction\": {\n"
+                + "      \"type\": \"Range\",\n"
+                + "      \"begin\": \"%s\",\n"
+                + "      \"end\": \"%s\"\n"
+                + "    },\n"
+                + "    \"illustrated\": %s\n"
                 + "  },\n"
                 + "  \"peerReviewed\": %s\n"
                 + "}";
-        return String.format(template, type, begin, end, peerReviewed);
+        return String.format(template, type, pages, introductionBegin, introductionEnd, illustrated, peerReviewed);
     }
 }

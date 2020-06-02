@@ -3,6 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
+import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.ReportContentTestUtil;
 import nva.commons.utils.JsonUtils;
@@ -19,7 +20,7 @@ class ReportTest {
     @Test
     void reportReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        Report expected = generateReport("2", "3");
+        Report expected = generateReport("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
         Report report = objectMapper.readValue(json, Report.class);
         assertEquals(expected, report);
@@ -31,22 +32,32 @@ class ReportTest {
             InvalidPageTypeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "Report";
-        String begin = "2";
-        String end = "3";
-        Report expected = generateReport(begin, end);
+        String pages = "42";
+        String introductionBegin = "1";
+        String introductionEnd = "3";
+        boolean illustrated = false;
+        Report expected = generateReport(pages, introductionBegin, introductionEnd, illustrated);
 
-        String json = ReportContentTestUtil.generateJsonString(type, begin, end, true);
+        String json = ReportContentTestUtil.generateJsonString(type, pages, introductionBegin, introductionEnd,
+                illustrated, false);
         assertEquals(expected, objectMapper.readValue(json, Report.class));
     }
 
-    private Report generateReport(String begin, String end) throws InvalidPageTypeException {
-        Range pages = new Range.Builder()
-                .withBegin(begin)
-                .withEnd(end)
+    private Report generateReport(String pages, String introductionBegin, String introductionEnd,
+                                                          boolean illustrated) throws InvalidPageTypeException {
+        Range introductionRange = new Range.Builder()
+                .withBegin(introductionBegin)
+                .withEnd(introductionEnd)
+                .build();
+
+        MonographPages monographPages = new MonographPages.Builder()
+                .withPages(pages)
+                .withIntroduction(introductionRange)
+                .withIllustrated(illustrated)
                 .build();
 
         return new Report.Builder()
-                .withPages(pages)
+                .withPages(monographPages)
                 .build();
     }
 }

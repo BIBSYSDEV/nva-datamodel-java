@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes;
 
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
+import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
@@ -43,7 +44,7 @@ public abstract class ReportContent implements PublicationInstance {
 
     @Override
     public void setPages(Pages pages) throws InvalidPageTypeException {
-        if (nonNull(pages) && !(pages instanceof Range)) {
+        if (nonNull(pages) && !(pages instanceof MonographPages)) {
             throw new InvalidPageTypeException(ReportContent.class, Range.class, pages.getClass());
         }
         this.pages = pages;

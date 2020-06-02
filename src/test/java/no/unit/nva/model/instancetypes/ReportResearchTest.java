@@ -3,6 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
+import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.ReportContentTestUtil;
 import nva.commons.utils.JsonUtils;
@@ -19,7 +20,7 @@ class ReportResearchTest {
     @Test
     void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        ReportResearch expected = generateReportResearch("2", "3");
+        ReportResearch expected = generateReportResearch("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
         ReportResearch reportResearch = objectMapper.readValue(json, ReportResearch.class);
         assertEquals(expected, reportResearch);
@@ -31,22 +32,32 @@ class ReportResearchTest {
             InvalidPageTypeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportResearch";
-        String begin = "2";
-        String end = "3";
-        ReportResearch expected = generateReportResearch(begin, end);
+        String pages = "42";
+        String introductionBegin = "1";
+        String introductionEnd = "3";
+        boolean illustrated = false;
+        ReportResearch expected = generateReportResearch(pages, introductionBegin, introductionEnd, illustrated);
 
-        String json = ReportContentTestUtil.generateJsonString(type, begin, end, true);
+        String json = ReportContentTestUtil.generateJsonString(type, pages, introductionBegin, introductionEnd,
+                illustrated, false);
         assertEquals(expected, objectMapper.readValue(json, ReportResearch.class));
     }
 
-    private ReportResearch generateReportResearch(String begin, String end) throws InvalidPageTypeException {
-        Range pages = new Range.Builder()
-                .withBegin(begin)
-                .withEnd(end)
+    private ReportResearch generateReportResearch(String pages, String introductionBegin, String introductionEnd,
+                                              boolean illustrated) throws InvalidPageTypeException {
+        Range introductionRange = new Range.Builder()
+                .withBegin(introductionBegin)
+                .withEnd(introductionEnd)
+                .build();
+
+        MonographPages monographPages = new MonographPages.Builder()
+                .withPages(pages)
+                .withIntroduction(introductionRange)
+                .withIllustrated(illustrated)
                 .build();
 
         return new ReportResearch.Builder()
-                .withPages(pages)
+                .withPages(monographPages)
                 .build();
     }
 }

@@ -20,7 +20,7 @@ class ReportPolicyTest {
     @Test
     void reportPolicyReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageTypeException {
-        ReportPolicy expected = generateReportPolicy("2", "3");
+        ReportPolicy expected = generateReportPolicy("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
         ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);
         assertEquals(expected, reportPolicy);
@@ -32,22 +32,32 @@ class ReportPolicyTest {
             InvalidPageTypeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportPolicy";
-        String begin = "2";
-        String end = "3";
-        ReportPolicy expected = generateReportPolicy(begin, end);
+        String pages = "42";
+        String introductionBegin = "1";
+        String introductionEnd = "3";
+        boolean illustrated = false;
+        ReportPolicy expected = generateReportPolicy(pages, introductionBegin, introductionEnd, illustrated);
 
-        String json = ReportContentTestUtil.generateJsonString(type, begin, end, true);
+        String json = ReportContentTestUtil.generateJsonString(type, pages, introductionBegin, introductionEnd,
+                illustrated, false);
         assertEquals(expected, objectMapper.readValue(json, ReportPolicy.class));
     }
 
-    private ReportPolicy generateReportPolicy(String begin, String end) throws InvalidPageTypeException {
-        Range pages = new Range.Builder()
-                .withBegin(begin)
-                .withEnd(end)
+    private ReportPolicy generateReportPolicy(String pages, String introductionBegin, String introductionEnd,
+                                              boolean illustrated) throws InvalidPageTypeException {
+        Range introductionRange = new Range.Builder()
+                .withBegin(introductionBegin)
+                .withEnd(introductionEnd)
+                .build();
+
+        MonographPages monographPages = new MonographPages.Builder()
+                .withPages(pages)
+                .withIntroduction(introductionRange)
+                .withIllustrated(illustrated)
                 .build();
 
         return new ReportPolicy.Builder()
-                .withPages(pages)
+                .withPages(monographPages)
                 .build();
     }
 }

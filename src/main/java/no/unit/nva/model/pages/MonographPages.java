@@ -7,6 +7,9 @@ public class MonographPages implements Pages {
     private String pages;
     private boolean illustrated;
 
+    public MonographPages() {
+    }
+
     private MonographPages(Builder builder) {
         setIntroduction(builder.introduction);
         setPages(builder.pages);
