@@ -36,11 +36,13 @@ class ReportTest {
         String introductionBegin = "1";
         String introductionEnd = "3";
         boolean illustrated = false;
+        boolean peerReviewed = true;
         Report expected = generateReport(pages, introductionBegin, introductionEnd, illustrated);
 
         String json = ReportContentTestUtil.generateJsonString(type, pages, introductionBegin, introductionEnd,
-                illustrated, false);
-        assertEquals(expected, objectMapper.readValue(json, Report.class));
+                illustrated, peerReviewed);
+        Report report = objectMapper.readValue(json, Report.class);
+        assertEquals(expected, report);
     }
 
     private Report generateReport(String pages, String introductionBegin, String introductionEnd,
