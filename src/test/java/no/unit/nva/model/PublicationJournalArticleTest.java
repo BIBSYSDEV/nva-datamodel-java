@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.JournalArticle;
@@ -32,8 +33,8 @@ public class PublicationJournalArticleTest extends PublicationTest {
     @DisplayName("The Publication class object can (de-)serialize valid JSON input")
     @Test
     public void publicationClassReturnsDeserializedJsonWhenValidJsonInput()
-        throws IOException, MalformedContributorException,
-            InvalidIssnException, InvalidPageTypeException {
+            throws IOException, MalformedContributorException, InvalidIssnException, InvalidPageTypeException,
+            InvalidPageRangeException {
 
         Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
@@ -47,7 +48,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
     public void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
-            MalformedContributorException, InvalidIssnException, InvalidPageTypeException {
+            MalformedContributorException, InvalidIssnException, InvalidPageTypeException, InvalidPageRangeException {
 
         Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
