@@ -15,19 +15,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class BookMonographTest extends BookInstanceTest {
+public class DegreeMasterTest extends BookInstanceTest {
+    private static final String DEGREE_MASTER = "DegreeMaster";
 
-    public static final String BOOK_MONOGRAPH = "BookMonograph";
-
-    @DisplayName("BookMonograph exists")
+    @DisplayName("DegreeMaster exists")
     @Test
-    void bookMonographExists() {
-        new BookMonograph();
+    void degreeMasterExists() {
+        new DegreeMaster();
     }
 
-    @DisplayName("BookMonograph: ObjectMapper correctly deserializes object")
+    @DisplayName("DegreeMaster: ObjectMapper correctly deserializes object")
     @Test
-    void objectMapperReturnsBookMonographWhenInputIsValid() throws JsonProcessingException {
+    void objectMapperReturnsDegreeMasterWhenInputIsValid() throws JsonProcessingException {
 
         String expectedPages = "398";
         String expectedIntroductionBegin = "i";
@@ -37,20 +36,20 @@ class BookMonographTest extends BookInstanceTest {
                 true, expectedIntroductionBegin, expectedIntroductionEnd);
 
         String json = generateBookInstanceJson(
-                BOOK_MONOGRAPH,
+                DEGREE_MASTER,
                 expectedIntroductionBegin,
                 expectedIntroductionEnd,
                 expectedPages,
                 true,
                 false,
                 false);
-        BookMonograph bookMonograph = objectMapper.readValue(json, BookMonograph.class);
-        assertEquals(expectedPagesObject, bookMonograph.getPages());
-        assertFalse(bookMonograph.isOpenAccess());
-        assertFalse(bookMonograph.isPeerReviewed());
+        DegreeMaster degreeMaster = objectMapper.readValue(json, DegreeMaster.class);
+        assertEquals(expectedPagesObject, degreeMaster.getPages());
+        assertFalse(degreeMaster.isOpenAccess());
+        assertFalse(degreeMaster.isPeerReviewed());
     }
 
-    @DisplayName("BookMonograph: ObjectMapper serializes valid input correctly")
+    @DisplayName("DegreeMaster: ObjectMapper serializes valid input correctly")
     @Test
     void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException {
         String expectedIntroductionBegin = "i";
@@ -58,14 +57,14 @@ class BookMonographTest extends BookInstanceTest {
         String expectedPages = "398";
         Pages expectedPagesObject = generateMonographPages(expectedPages, false,
                 expectedIntroductionBegin, expectedIntroductionEnd);
-        BookMonograph bookMonograph = new BookMonograph.Builder()
+        DegreeMaster degreeMaster = new DegreeMaster.Builder()
                 .withOpenAccess(true)
                 .withPeerReviewed(true)
                 .withPages(expectedPagesObject)
                 .build();
-        String json = objectMapper.writeValueAsString(bookMonograph);
+        String json = objectMapper.writeValueAsString(degreeMaster);
         String expected = generateBookInstanceJson(
-                BOOK_MONOGRAPH,
+                DEGREE_MASTER,
                 expectedIntroductionBegin,
                 expectedIntroductionEnd,
                 expectedPages,
@@ -75,38 +74,38 @@ class BookMonographTest extends BookInstanceTest {
         assertEquals(expected, json);
     }
 
-    @DisplayName("BookMonograph throws InvalidPageTypeException if pages is not MonographPages")
+    @DisplayName("DegreeMaster throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsRange() {
+    void degreeMasterThrowsInvalidPageTypeExceptionWhenInputIsRange() {
         Range range = new Range.Builder()
                 .withBegin("1")
                 .withEnd("22")
                 .build();
         InvalidPageTypeException exception = assertThrows(
-            InvalidPageTypeException.class, () -> new BookMonograph.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(range)
-                .build()
+                InvalidPageTypeException.class, () -> new DegreeMaster.Builder()
+                        .withOpenAccess(false)
+                        .withPeerReviewed(false)
+                        .withPages(range)
+                        .build()
         );
 
         String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
-                BookMonograph.class.getTypeName(),
+                DegreeMaster.class.getTypeName(),
                 MonographPages.class.getTypeName(),
                 Range.class.getTypeName());
         assertEquals(expectedMessage, exception.getMessage());
     }
 
-    @DisplayName("BookMonograph does not throw InvalidPageTypeException when input is null")
+    @DisplayName("DegreeMaster does not throw InvalidPageTypeException when input is null")
     @ParameterizedTest
     @NullSource
-    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
+    void degreeMasterThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
-            () -> new BookMonograph.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(pages)
-                .build()
+            () -> new DegreeMaster.Builder()
+                    .withOpenAccess(false)
+                    .withPeerReviewed(false)
+                    .withPages(pages)
+                    .build()
         );
     }
 }
