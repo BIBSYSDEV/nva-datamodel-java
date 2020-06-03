@@ -2,6 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
@@ -30,7 +31,7 @@ class BookAnthologyTest {
 
     @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")
     @Test
-    void objectMapperReturnsBookAnthologyWhenInputIsValid() throws JsonProcessingException {
+    void objectMapperReturnsBookAnthologyWhenInputIsValid() throws JsonProcessingException, InvalidPageRangeException {
         String expectedIntroductionBegin = "i";
         String expectedIntroductionEnd = "xxviii";
         String expectedPages = "398";
@@ -58,7 +59,8 @@ class BookAnthologyTest {
 
     @DisplayName("BookAnthology: ObjectMapper serializes valid input correctly")
     @Test
-    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException {
+    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException,
+            InvalidPageRangeException {
         String expectedIntroductionBegin = "i";
         String expectedIntroductionEnd = "xxviii";
         String expectedPages = "398";
@@ -88,7 +90,7 @@ class BookAnthologyTest {
 
     @DisplayName("BookAnthology throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsRange() {
+    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsRange() throws InvalidPageRangeException {
         Range range = new Range.Builder()
                 .withBegin("1")
                 .withEnd("22")
