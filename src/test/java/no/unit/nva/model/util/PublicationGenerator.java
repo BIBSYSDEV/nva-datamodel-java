@@ -27,7 +27,7 @@ import no.unit.nva.model.License;
 import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
-import no.unit.nva.model.contexttypes.PublicationContext;
+import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
@@ -301,7 +301,7 @@ public class PublicationGenerator {
                 .build();
     }
 
-    private static PublicationContext getPublishingContextBook() throws InvalidIsbnException {
+    private static BasicContext getPublishingContextBook() throws InvalidIsbnException {
         return new Book.Builder()
                 .withIsbnList(List.of("9780201309515"))
                 .withLevel(Level.LEVEL_0)
@@ -313,7 +313,7 @@ public class PublicationGenerator {
                 .build();
     }
 
-    public static PublicationContext getPublishingContextJournal() throws InvalidIssnException {
+    public static BasicContext getPublishingContextJournal() throws InvalidIssnException {
         return new Journal.Builder()
                 .withLevel(Level.LEVEL_1)
                 .withTitle("Tim's lovely publishing house")
