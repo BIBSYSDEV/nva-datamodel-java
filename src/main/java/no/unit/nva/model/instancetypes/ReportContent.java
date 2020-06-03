@@ -13,8 +13,8 @@ import java.util.Objects;
 import static java.util.Objects.nonNull;
 
 public abstract class ReportContent implements PublicationInstance {
-    public static final String SETTING_PEER_REVIEWED_FALSE =
-            "Setting peerReviewed to false as {} is assumed to not be peer-reviewed";
+    public static final String PEER_REVIEWED_FALSE =
+            "peerReviewed is always false as {} is assumed to not be peer-reviewed";
     protected static final Logger logger = LoggerFactory.getLogger(ReportContent.class);
 
     private Pages pages;
@@ -31,10 +31,7 @@ public abstract class ReportContent implements PublicationInstance {
     public ReportContent(Pages pages, boolean peerReviewed) throws InvalidPageTypeException {
         super();
         setPages(pages);
-        if (peerReviewed) {
-            logger.warn(SETTING_PEER_REVIEWED_FALSE, ReportContent.class.getSimpleName());
-        }
-        setPeerReviewed(false);
+        setPeerReviewed(peerReviewed);
     }
 
     @Override
@@ -52,7 +49,9 @@ public abstract class ReportContent implements PublicationInstance {
 
     @Override
     public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
+        if (peerReviewed) {
+            logger.warn(PEER_REVIEWED_FALSE, ReportContent.class.getSimpleName());
+        }
     }
 
     @Override
