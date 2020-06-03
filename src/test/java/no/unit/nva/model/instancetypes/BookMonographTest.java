@@ -12,7 +12,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static java.util.Objects.nonNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -26,7 +25,6 @@ class BookMonographTest extends BookInstanceTest {
     public static final String THREE_HUNDRED_AND_NINETY_EIGHT = "398";
     public static final String ONE = "1";
     public static final String TWENTY_TWO = "22";
-    public static final String EMPTY_STRING = "";
 
     @DisplayName("BookMonograph exists")
     @Test
@@ -40,8 +38,6 @@ class BookMonographTest extends BookInstanceTest {
         String expectedIntroductionBegin = LATIN_NUMERAL_ONE;
         String expectedIntroductionEnd = LATIN_NUMERAL_TWENTY_EIGHT;
         String expectedPages = THREE_HUNDRED_AND_NINETY_EIGHT;
-        Range expectedIntroductionObject = getIntroduction(expectedIntroductionBegin, expectedIntroductionEnd);
-
 
         Pages expectedPagesObject = generateMonographPages(expectedPages,
                 true, expectedIntroductionBegin, expectedIntroductionEnd);
@@ -67,58 +63,24 @@ class BookMonographTest extends BookInstanceTest {
             ",,231,false,true,true",
             ",,123,true,false,false"
     })
-
     void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
                                                          boolean peerReviewed,
                                                          boolean openAccess) throws InvalidPageTypeException,
-            JsonProcessingException, InvalidPageRangeException {
-    @Test
-    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException {
-        String expectedIntroductionBegin = "i";
-        String expectedIntroductionEnd = "xxviii";
-        String expectedPages = "398";
-        Pages expectedPagesObject = generateMonographPages(expectedPages, false,
-                expectedIntroductionBegin, expectedIntroductionEnd);
-        BookMonograph bookMonograph = new BookMonograph.Builder()
-                .withOpenAccess(openAccess)
-                .withPeerReviewed(peerReviewed)
-                .withPages(getPages(begin, end, pages, illustrated))
-                .build();
-        String json = objectMapper.writeValueAsString(bookMonograph);
-        String expected = generateBookMonograph(begin,
+            InvalidPageRangeException, JsonProcessingException {
+
+        BookMonograph bookMonograph = generateBookMonograph(begin,
                 end,
                 pages,
                 illustrated,
                 peerReviewed,
                 openAccess);
-        String expected = generateBookInstanceJson(
-                BOOK_MONOGRAPH,
-                expectedIntroductionBegin,
-                expectedIntroductionEnd,
-                expectedPages,
-                false,
-                true,
-                true);
+        String json = objectMapper.writeValueAsString(bookMonograph);
+        String expected = generateBookInstanceJson(BOOK_MONOGRAPH,
+                begin, end, pages, illustrated, peerReviewed, openAccess);
         assertEquals(expected, json);
-    }
-
-    private Pages getPages(String begin, String end, String pages, boolean illustrated) throws
-            InvalidPageRangeException {
-        return new MonographPages.Builder()
-                    .withPages(pages)
-                    .withIllustrated(illustrated)
-                    .withIntroduction(getIntroduction(begin, end))
-                    .build();
-    }
-
-    private Range getIntroduction(String begin, String end) throws InvalidPageRangeException {
-        return new Range.Builder()
-                .withBegin(begin)
-                .withEnd(end)
-                .build();
     }
 
     @DisplayName("BookMonograph throws InvalidPageTypeException if pages is not MonographPages")
@@ -129,11 +91,11 @@ class BookMonographTest extends BookInstanceTest {
                 .withEnd(TWENTY_TWO)
                 .build();
         InvalidPageTypeException exception = assertThrows(
-            InvalidPageTypeException.class, () -> new BookMonograph.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(range)
-                .build()
+                InvalidPageTypeException.class, () -> new BookMonograph.Builder()
+                        .withOpenAccess(false)
+                        .withPeerReviewed(false)
+                        .withPages(range)
+                        .build()
         );
 
         String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
@@ -149,37 +111,33 @@ class BookMonographTest extends BookInstanceTest {
     void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
             () -> new BookMonograph.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(pages)
-                .build()
+                    .withOpenAccess(false)
+                    .withPeerReviewed(false)
+                    .withPages(pages)
+                    .build()
         );
     }
 
-    private String generateBookMonograph(String introductionBegin,
-                                         String introductionEnd,
-                                         String pages,
-                                         boolean illustrated,
-                                         boolean peerReviewed,
-                                         boolean openAccess) {
-        String introduction = EMPTY_STRING;
-        if (nonNull(introductionBegin) && nonNull(introductionEnd)) {
-            introduction = "    \"introduction\" : {\n"
-                    + "      \"type\" : \"Range\",\n"
-                    + "      \"begin\" : \"" + introductionBegin + "\",\n"
-                    + "      \"end\" : \"" + introductionEnd + "\"\n"
-                    + "    },\n";
-        }
-        return "{\n"
-                + "  \"type\" : \"BookMonograph\",\n"
-                + "  \"pages\" : {\n"
-                + "    \"type\" : \"MonographPages\",\n"
-                + introduction
-                + "    \"pages\" : \"" + pages + "\",\n"
-                + "    \"illustrated\" : " + illustrated + "\n"
-                + "  },\n"
-                + "  \"peerReviewed\" : " + peerReviewed + ",\n"
-                + "  \"openAccess\" : " + openAccess + "\n"
-                + "}";
+    private BookMonograph generateBookMonograph(String introductionBegin,
+                                                String introductionEnd,
+                                                String pages,
+                                                boolean illustrated,
+                                                boolean peerReviewed,
+                                                boolean openAccess) throws InvalidPageRangeException,
+            InvalidPageTypeException {
+        Range introduction = new Range.Builder()
+                .withBegin(introductionBegin)
+                .withEnd(introductionEnd)
+                .build();
+        Pages monographPages = new MonographPages.Builder()
+                .withIntroduction(introduction)
+                .withPages(pages)
+                .withIllustrated(illustrated)
+                .build();
+        return new BookMonograph.Builder()
+                .withPages(monographPages)
+                .withPeerReviewed(peerReviewed)
+                .withOpenAccess(openAccess)
+                .build();
     }
 }

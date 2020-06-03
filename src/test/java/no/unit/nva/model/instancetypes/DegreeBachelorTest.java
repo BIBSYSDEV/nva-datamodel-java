@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
@@ -26,7 +27,7 @@ public class DegreeBachelorTest extends BookInstanceTest {
 
     @DisplayName("DegreeBachelor: ObjectMapper correctly deserializes object")
     @Test
-    void objectMapperReturnsDegreeBachelorWhenInputIsValid() throws JsonProcessingException {
+    void objectMapperReturnsDegreeBachelorWhenInputIsValid() throws JsonProcessingException, InvalidPageRangeException {
 
         String expectedPages = "398";
         String expectedIntroductionBegin = "i";
@@ -51,7 +52,8 @@ public class DegreeBachelorTest extends BookInstanceTest {
 
     @DisplayName("DegreeBachelor: ObjectMapper serializes valid input correctly")
     @Test
-    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException {
+    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException,
+            InvalidPageRangeException {
         String expectedIntroductionBegin = "i";
         String expectedIntroductionEnd = "xxviii";
         String expectedPages = "398";
@@ -76,7 +78,7 @@ public class DegreeBachelorTest extends BookInstanceTest {
 
     @DisplayName("DegreeBachelor throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsRange() {
+    void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsRange() throws InvalidPageRangeException {
         Range range = new Range.Builder()
                 .withBegin("1")
                 .withEnd("22")
