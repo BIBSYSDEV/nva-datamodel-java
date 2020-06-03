@@ -32,6 +32,7 @@ import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.Role;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.JournalArticle;
@@ -48,8 +49,8 @@ public class PublicationGenerator {
 
     }
 
-    public static Publication generateJournalArticlePublication()
-        throws InvalidIssnException, MalformedContributorException, InvalidPageTypeException {
+    public static Publication generateJournalArticlePublication() throws InvalidIssnException,
+            MalformedContributorException, InvalidPageTypeException, InvalidPageRangeException {
         return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
                 generateEntityDescriptionJournalArticle());
     }
@@ -116,7 +117,7 @@ public class PublicationGenerator {
     }
 
     public static EntityDescription generateEntityDescriptionJournalArticle() throws InvalidIssnException,
-            InvalidPageTypeException, MalformedContributorException {
+            InvalidPageTypeException, MalformedContributorException, InvalidPageRangeException {
         return getEntityDescription(getJournalReference());
     }
 
@@ -143,7 +144,8 @@ public class PublicationGenerator {
             .build();
     }
 
-    public static Reference getJournalReference() throws InvalidIssnException, InvalidPageTypeException {
+    public static Reference getJournalReference() throws InvalidIssnException, InvalidPageTypeException,
+            InvalidPageRangeException {
         return new Reference.Builder()
             .withPublishingContext(getPublishingContextJournal())
             .withDoi(SOME_URI)
@@ -159,7 +161,8 @@ public class PublicationGenerator {
                 .build();
     }
 
-    public static PublicationInstance getPublicationInstanceJournalArticle() throws InvalidPageTypeException {
+    public static PublicationInstance getPublicationInstanceJournalArticle() throws InvalidPageTypeException,
+            InvalidPageRangeException {
         return new JournalArticle.Builder()
             .withArticleNumber("1234456")
             .withIssue("2")
@@ -255,7 +258,7 @@ public class PublicationGenerator {
             .build();
     }
 
-    public static Range getPages() {
+    public static Range getPages() throws InvalidPageRangeException {
         return new Range.Builder()
             .withBegin("1")
             .withEnd("15")

@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Path;
+
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
@@ -23,7 +25,7 @@ class PublicationInstanceTest {
     @DisplayName("Publication instance can be serialized with Range object")
     @Test
     void publicationInstanceReturnsSerializedJsonWhenValidRangeIsInput() throws JsonProcessingException,
-            InvalidPageTypeException {
+            InvalidPageTypeException, InvalidPageRangeException {
         PublicationInstance publicationInstance = new JournalArticle();
 
         Range range = new Range.Builder()
@@ -40,7 +42,7 @@ class PublicationInstanceTest {
 
     @DisplayName("Publication instance cannot be serialized when pages is not a Range object")
     @Test
-    void journalArticleThrowsInvalidPageExceptionWhenValidMonographPagesIsInput() {
+    void journalArticleThrowsInvalidPageExceptionWhenValidMonographPagesIsInput() throws InvalidPageRangeException {
         PublicationInstance publicationInstance = new JournalArticle();
 
         MonographPages monographPages = new MonographPages.Builder()
@@ -52,8 +54,6 @@ class PublicationInstanceTest {
                 .withPages("90")
                 .build();
 
-        assertThrows(InvalidPageTypeException.class, () -> {
-            publicationInstance.setPages(monographPages);
-        });
+        assertThrows(InvalidPageTypeException.class, () -> publicationInstance.setPages(monographPages));
     }
 }
