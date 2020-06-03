@@ -1,13 +1,11 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,16 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class BookAnthologyTest {
-    
-    ObjectMapper objectMapper = JsonUtils.objectMapper;
+class BookAnthologyTest extends BookInstanceTest {
+
+    public static final String BOOK_ANTHOLOGY = "BookAnthology";
 
     @DisplayName("BookAnthology exists")
     @Test
     void bookAnthologyExists() {
         new BookAnthology();
     }
-
 
     @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")
     @Test
@@ -45,7 +42,9 @@ class BookAnthologyTest {
                 .withIntroduction(expectedIntroductionObject)
                 .build();
 
-        String json = generateBookAnthology(expectedIntroductionBegin,
+        String json = generateBookInstanceJson(
+                BOOK_ANTHOLOGY,
+                expectedIntroductionBegin,
                 expectedIntroductionEnd,
                 expectedPages,
                 false,
@@ -79,7 +78,9 @@ class BookAnthologyTest {
                 .withPages(expectedPagesObject)
                 .build();
         String json = objectMapper.writeValueAsString(bookAnthology);
-        String expected = generateBookAnthology(expectedIntroductionBegin,
+        String expected = generateBookInstanceJson(
+                BOOK_ANTHOLOGY,
+                expectedIntroductionBegin,
                 expectedIntroductionEnd,
                 expectedPages,
                 true,
@@ -121,28 +122,5 @@ class BookAnthologyTest {
                 .withPages(pages)
                 .build()
         );
-    }
-
-    private String generateBookAnthology(String introductionBegin,
-                                         String introductionEnd,
-                                         String pages,
-                                         boolean illustrated,
-                                         boolean peerReviewed,
-                                         boolean openAccess) {
-        return "{\n"
-                + "  \"type\" : \"BookAnthology\",\n"
-                + "  \"pages\" : {\n"
-                + "    \"type\" : \"MonographPages\",\n"
-                + "    \"introduction\" : {\n"
-                + "      \"type\" : \"Range\",\n"
-                + "      \"begin\" : \"" + introductionBegin + "\",\n"
-                + "      \"end\" : \"" + introductionEnd + "\"\n"
-                + "    },\n"
-                + "    \"pages\" : \"" + pages + "\",\n"
-                + "    \"illustrated\" : " + illustrated + "\n"
-                + "  },\n"
-                + "  \"peerReviewed\" : " + peerReviewed + ",\n"
-                + "  \"openAccess\" : " + openAccess + "\n"
-                + "}";
     }
 }

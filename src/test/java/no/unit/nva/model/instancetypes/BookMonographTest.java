@@ -1,13 +1,11 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,15 +18,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class BookMonographTest {
+class BookMonographTest extends BookInstanceTest {
 
+    public static final String BOOK_MONOGRAPH = "BookMonograph";
     public static final String LATIN_NUMERAL_ONE = "i";
     public static final String LATIN_NUMERAL_TWENTY_EIGHT = "xxviii";
     public static final String THREE_HUNDRED_AND_NINETY_EIGHT = "398";
     public static final String ONE = "1";
     public static final String TWENTY_TWO = "22";
     public static final String EMPTY_STRING = "";
-    private final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @DisplayName("BookMonograph exists")
     @Test
@@ -43,16 +41,17 @@ class BookMonographTest {
         String expectedIntroductionEnd = LATIN_NUMERAL_TWENTY_EIGHT;
         String expectedPages = THREE_HUNDRED_AND_NINETY_EIGHT;
         Range expectedIntroductionObject = getIntroduction(expectedIntroductionBegin, expectedIntroductionEnd);
-        Pages expectedPagesObject = new MonographPages.Builder()
-                .withPages(expectedPages)
-                .withIllustrated(false)
-                .withIntroduction(expectedIntroductionObject)
-                .build();
 
-        String json = generateBookMonograph(expectedIntroductionBegin,
+
+        Pages expectedPagesObject = generateMonographPages(expectedPages,
+                true, expectedIntroductionBegin, expectedIntroductionEnd);
+
+        String json = generateBookInstanceJson(
+                BOOK_MONOGRAPH,
+                expectedIntroductionBegin,
                 expectedIntroductionEnd,
                 expectedPages,
-                false,
+                true,
                 false,
                 false);
         BookMonograph bookMonograph = objectMapper.readValue(json, BookMonograph.class);
@@ -76,6 +75,13 @@ class BookMonographTest {
                                                          boolean peerReviewed,
                                                          boolean openAccess) throws InvalidPageTypeException,
             JsonProcessingException, InvalidPageRangeException {
+    @Test
+    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException {
+        String expectedIntroductionBegin = "i";
+        String expectedIntroductionEnd = "xxviii";
+        String expectedPages = "398";
+        Pages expectedPagesObject = generateMonographPages(expectedPages, false,
+                expectedIntroductionBegin, expectedIntroductionEnd);
         BookMonograph bookMonograph = new BookMonograph.Builder()
                 .withOpenAccess(openAccess)
                 .withPeerReviewed(peerReviewed)
@@ -88,6 +94,14 @@ class BookMonographTest {
                 illustrated,
                 peerReviewed,
                 openAccess);
+        String expected = generateBookInstanceJson(
+                BOOK_MONOGRAPH,
+                expectedIntroductionBegin,
+                expectedIntroductionEnd,
+                expectedPages,
+                false,
+                true,
+                true);
         assertEquals(expected, json);
     }
 
