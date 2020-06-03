@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static java.util.Objects.nonNull;
 import static no.unit.nva.model.pages.Range.EMPTY_STRING_PLACEHOLDER;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,7 +40,7 @@ class RangeTest {
     @DisplayName("Range throws InvalidPageRangeException if begin value is empty or just whitespace")
     @ParameterizedTest
     @EmptySource
-    @ValueSource(strings = {"", " ", "\t", "\n", "\r\n"})
+    @ValueSource(strings = {"", " ", "   ", "\t", "\n", "\r\n"})
     void rangeThrowsInvalidPageRangeExceptionWhenBeginIsEmptyString(String begin) {
         String end = "ix";
         Executable executable = () -> new Range(begin, end);
@@ -51,7 +52,7 @@ class RangeTest {
     @DisplayName("Range throws InvalidPageRangeException if end value is empty or just whitespace")
     @ParameterizedTest
     @EmptySource
-    @ValueSource(strings = {"", " ", "\t", "\n", "\r\n"})
+    @ValueSource(strings = {"", " ", "   ", "\t", "\n", "\r\n"})
     void rangeThrowsInvalidPageRangeExceptionWhenEndtIsEmptyString(String end) {
         String begin = "i";
         Executable executable = () -> new Range(begin, end);
@@ -75,12 +76,46 @@ class RangeTest {
 
     @DisplayName("Range throws InvalidPageRangeException if only one of the inputs is null")
     @ParameterizedTest
-    @CsvSource({",x", "i,"})
+    @CsvSource(value = {
+            "null,x",
+            "i,null",
+            "null,'\t'",
+            "null,'\n'",
+            "null,'\r\n'",
+            "null,''",
+            "null, ' '",
+            "'\t',null",
+            "'\n',null",
+            "'\r\n',null",
+            "'',null",
+            "' ',null"
+        }, nullValues = "null")
     void rangeThrowsInvalidPageRangeExceptionWhenOnlyOneValueIsNull(String begin, String end) {
         Executable executable = () -> new Range(begin, end);
         InvalidPageRangeException exception = assertThrows(InvalidPageRangeException.class, executable);
-        String expectedMessage = String.format(InvalidPageRangeException.ERROR_TEMPLATE, begin, end);
+        String expectedMessage = String.format(InvalidPageRangeException.ERROR_TEMPLATE,
+                getDisplayValue(begin), getDisplayValue(end));
         assertEquals(expectedMessage, exception.getMessage());
     }
 
+    @DisplayName("Range preserves medial whitespace, stripping leading and trailing whitespace")
+    @ParameterizedTest
+    @CsvSource({"First page,Tenth page", " Page one,  Page ten", "Page one ,Page ten ", "  Page one  ,  Page ten  "})
+    void rangeReturnsBeginAndEndWithMediaWhitespaceWithoutLeadingAndTrailingWhitespace(String begin, String end)
+            throws InvalidPageRangeException {
+        Range range = new Range(begin, end);
+        String expectedBegin = begin.strip();
+        String expectedEnd = end.strip();
+        String actualBegin = range.getBegin();
+        String actualEnd = range.getEnd();
+        assertEquals(expectedBegin, actualBegin);
+        assertEquals(expectedEnd, actualEnd);
+    }
+
+    private String getDisplayValue(String input) {
+        if (nonNull(input) && (input.isEmpty() || input.matches("^[\\s\\t\\n\\r]+$"))) {
+            return EMPTY_STRING_PLACEHOLDER;
+        }
+        return input;
+    }
 }
