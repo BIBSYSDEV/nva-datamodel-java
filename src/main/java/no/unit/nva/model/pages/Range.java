@@ -26,7 +26,8 @@ public class Range implements Pages {
      *
      * @param begin The beginning of the range.
      * @param end   The end of the range
-     * @throws InvalidPageRangeException thrown if one of beginning or end is null.
+     * @throws InvalidPageRangeException thrown if begin is null and end is not, or vice versa,
+     *                                   or if either or both values are empty.
      */
     @JsonCreator
     public Range(@JsonProperty("begin") String begin, @JsonProperty("end") String end) throws
