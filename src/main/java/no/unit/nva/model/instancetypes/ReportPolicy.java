@@ -7,7 +7,7 @@ import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ReportPolicy extends Report {
+public class ReportPolicy extends ReportContent {
 
     /**
      * This constructor ensures that the peerReviewed value is always false.
