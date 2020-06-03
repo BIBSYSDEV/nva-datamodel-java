@@ -3,6 +3,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -17,7 +18,7 @@ class JournalLeaderTest {
     @DisplayName("JournalLeader can be created")
     @Test
     void journalLeaderReturnsValidJournalLeaderWhenInputDataIsValid() throws InvalidPageTypeException,
-            JsonProcessingException {
+            JsonProcessingException, InvalidPageRangeException {
         String type = "JournalLeader";
         String volume = "22";
         String issue = "5";
@@ -32,8 +33,7 @@ class JournalLeaderTest {
                 .withBegin(begin)
                 .withEnd(end)
                 .build();
-        boolean peerReviewed = true;
-        JournalLeader journalLeader = new JournalLeader(volume, issue, articleNumber, pages, peerReviewed);
+        JournalLeader journalLeader = new JournalLeader(volume, issue, articleNumber, pages, true);
         assertEquals(expected, journalLeader);
     }
 }
