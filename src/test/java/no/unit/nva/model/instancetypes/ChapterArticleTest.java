@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ChapterArticleTest {
 
     private static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-    public static final String CHAPTER_CHAPTER = "ChapterArticle";
+    public static final String CHAPTER_ARTICLE = "ChapterArticle";
 
     @DisplayName("ChapterArticle exists")
     @Test
@@ -30,7 +30,7 @@ public class ChapterArticleTest {
 
     @DisplayName("ChapterArticle: objectMapper can deserialize object")
     @Test
-    void objectMapperReturnsChapterChapterWhenInputJsonIsWellFormed() throws JsonProcessingException {
+    void objectMapperReturnsChapterArticleWhenInputJsonIsWellFormed() throws JsonProcessingException {
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
@@ -42,7 +42,7 @@ public class ChapterArticleTest {
 
     @DisplayName("ChapterArticle: objectMapper can serialize valid input")
     @Test
-    void objectMapperReturnsValidJsonWhenInputIsValidChapterChapter() throws JsonProcessingException,
+    void objectMapperReturnsValidJsonWhenInputIsValidChapterArticle() throws JsonProcessingException,
             InvalidPageTypeException {
         String expectedBegin = "222";
         String expectedEnd = "232";
@@ -66,7 +66,7 @@ public class ChapterArticleTest {
         });
     }
 
-    @DisplayName("ChapterChapterThrows InvalidPageTypeException if page type is not Range")
+    @DisplayName("ChapterArticleThrows InvalidPageTypeException if page type is not Range")
     @Test
     void chapterArticleThrowsInvalidPageTypeExceptionIfPageTypeIsNotRange() {
         Range intro = new Range.Builder().withBegin("i").withEnd("iv").build();
@@ -98,7 +98,7 @@ public class ChapterArticleTest {
                                           String end,
                                           boolean peerReviewed) {
         return "{\n"
-                + "  \"type\" : \"" + CHAPTER_CHAPTER + "\",\n"
+                + "  \"type\" : \"" + CHAPTER_ARTICLE + "\",\n"
                 + "  \"pages\" : {\n"
                 + "    \"type\" : \"Range\",\n"
                 + "    \"begin\" : \"" + begin + "\",\n"
