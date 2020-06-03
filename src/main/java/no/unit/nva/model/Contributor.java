@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
 import java.util.Objects;
 import no.unit.nva.model.exceptions.MalformedContributorException;
+import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Contributor {
@@ -92,6 +93,7 @@ public class Contributor {
         return email;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,6 +111,7 @@ public class Contributor {
                 && Objects.equals(getEmail(), that.getEmail());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getIdentity(),
