@@ -9,6 +9,7 @@ import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithIndex;
 import no.unit.nva.WithMetadata;
+import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings("PMD.ExcessivePublicCount")
@@ -203,6 +204,7 @@ public class Publication
         this.project = project;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -229,6 +231,7 @@ public class Publication
             && Objects.equals(getProject(), that.getProject());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getIdentifier(),
