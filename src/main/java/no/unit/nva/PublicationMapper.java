@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
+import no.unit.nva.model.DoiRequest;
+import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
@@ -33,7 +35,19 @@ public final class PublicationMapper {
         Publication publication = toPublication(request);
         mapInternal(existing, publication);
         publication.setModifiedDate(Instant.now());
+
+        mapDoiRequest(request, publication);
+
         return publication;
+    }
+
+    private static <REQUEST extends PublicationBase> void mapDoiRequest(REQUEST request, Publication publication) {
+        if (request instanceof WithFlags
+            && ((WithFlags) request).getDoiRequested() != null
+            && ((WithFlags) request).getDoiRequested()
+            && publication.getDoiRequest() == null) {
+            publication.setDoiRequest(createDoiRequest());
+        }
     }
 
     /**
@@ -58,7 +72,17 @@ public final class PublicationMapper {
         publication.setLink(link);
         publication.setPublisher(publisher);
         publication.setStatus(PublicationStatus.DRAFT);
+
+        mapDoiRequest(request,publication);
+
         return publication;
+    }
+
+    private static DoiRequest createDoiRequest() {
+        return new DoiRequest.Builder()
+            .withDate(Instant.now())
+            .withStatus(DoiRequestStatus.REQUESTED)
+            .build();
     }
 
     /**
