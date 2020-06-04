@@ -20,7 +20,7 @@ public abstract class ReportContent implements PublicationInstance {
     private Pages pages;
 
     /**
-     * Constructor for Report Content
+     * Constructor for Report Content.
      *
      * @param pages the Pages of the PublicationInstance.
      * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
