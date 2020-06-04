@@ -18,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DegreePhdTest extends BookInstanceTest {
     private static final String DEGREE_PHD = "DegreePhd";
-    public static final String ONE = "1";
-    public static final String TWENTY_TWO = "22";
 
     @DisplayName("DegreePhd exists")
     @Test
@@ -104,7 +102,7 @@ public class DegreePhdTest extends BookInstanceTest {
                 InvalidPageTypeException.class, () -> new DegreePhd.Builder()
                         .withOpenAccess(false)
                         .withPeerReviewed(false)
-                        .withPages(generateRange(ONE, TWENTY_TWO))
+                        .withPages(generateRange())
                         .build()
         );
 

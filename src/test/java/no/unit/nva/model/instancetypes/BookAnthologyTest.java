@@ -20,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class BookAnthologyTest extends BookInstanceTest {
 
     public static final String BOOK_ANTHOLOGY = "BookAnthology";
-    public static final String ONE = "1";
-    public static final String TWENTY_TWO = "22";
 
     @DisplayName("BookAnthology exists")
     @Test
@@ -107,7 +105,7 @@ class BookAnthologyTest extends BookInstanceTest {
         Executable executable = () -> new BookAnthology.Builder()
                 .withOpenAccess(false)
                 .withPeerReviewed(false)
-                .withPages(generateRange(ONE, TWENTY_TWO))
+                .withPages(generateRange())
                 .build();
         InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
 

@@ -19,8 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class BookMonographTest extends BookInstanceTest {
 
     public static final String BOOK_MONOGRAPH = "BookMonograph";
-    public static final String ONE = "1";
-    public static final String TWENTY_TWO = "22";
 
     @DisplayName("BookMonograph exists")
     @Test
@@ -97,7 +95,7 @@ class BookMonographTest extends BookInstanceTest {
                 InvalidPageTypeException.class, () -> new BookMonograph.Builder()
                         .withOpenAccess(false)
                         .withPeerReviewed(false)
-                        .withPages(generateRange(ONE, TWENTY_TWO))
+                        .withPages(generateRange())
                         .build()
         );
 

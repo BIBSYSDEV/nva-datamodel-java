@@ -13,6 +13,10 @@ import java.util.LinkedHashMap;
 import static java.util.Objects.nonNull;
 
 public class BookInstanceTest {
+
+    protected static final String BEGINNING_PAGE = "1";
+    protected static final String ENDING_PAGE = "22";
+
     protected final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     protected String generateBookInstanceJson(String type,
@@ -56,6 +60,10 @@ public class BookInstanceTest {
                 .withIllustrated(illustrated)
                 .withIntroduction(generateRange(introductionBegin, introductionEnd))
                 .build();
+    }
+
+    protected Range generateRange() throws InvalidPageRangeException {
+        return generateRange(BEGINNING_PAGE, ENDING_PAGE);
     }
 
     protected Range generateRange(String begin, String end) throws InvalidPageRangeException {
