@@ -97,7 +97,7 @@ public class DegreeBachelorTest extends BookInstanceTest {
 
     @DisplayName("DegreeBachelor throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsRange() {
+    void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
         Executable executable = () -> new DegreeBachelor.Builder()
                 .withOpenAccess(false)
                 .withPeerReviewed(false)

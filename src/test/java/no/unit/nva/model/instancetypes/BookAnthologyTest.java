@@ -101,7 +101,7 @@ class BookAnthologyTest extends BookInstanceTest {
 
     @DisplayName("BookAnthology throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsRange() {
+    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
         Executable executable = () -> new BookAnthology.Builder()
                 .withOpenAccess(false)
                 .withPeerReviewed(false)

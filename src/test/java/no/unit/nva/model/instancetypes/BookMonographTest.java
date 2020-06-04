@@ -91,7 +91,7 @@ class BookMonographTest extends BookInstanceTest {
 
     @DisplayName("BookMonograph throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsRange() {
+    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
         Executable executable = () -> new BookMonograph.Builder()
                 .withOpenAccess(false)
                 .withPeerReviewed(false)
