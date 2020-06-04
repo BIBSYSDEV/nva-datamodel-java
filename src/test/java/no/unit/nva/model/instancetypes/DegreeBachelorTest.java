@@ -9,15 +9,17 @@ import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DegreeBachelorTest extends BookInstanceTest {
     private static final String DEGREE_BACHELOR = "DegreeBachelor";
+    public static final String ONE = "1";
+    public static final String TWENTY_TWO = "22";
 
     @DisplayName("DegreeBachelor exists")
     @Test
@@ -26,69 +28,83 @@ public class DegreeBachelorTest extends BookInstanceTest {
     }
 
     @DisplayName("DegreeBachelor: ObjectMapper correctly deserializes object")
-    @Test
-    void objectMapperReturnsDegreeBachelorWhenInputIsValid() throws JsonProcessingException, InvalidPageRangeException {
-
-        String expectedPages = "398";
-        String expectedIntroductionBegin = "i";
-        String expectedIntroductionEnd = "xxviii";
-
-        Pages expectedPagesObject = generateMonographPages(expectedPages,
-                true, expectedIntroductionBegin, expectedIntroductionEnd);
-
+    @ParameterizedTest
+    @CsvSource({
+            "i,xxviii,398,true,true,true,",
+            ",,231,false,true,true",
+            ",,123,true,false,false"
+    })
+    void objectMapperReturnsDegreeBachelorWhenInputIsValidString(String begin,
+                                                                 String end,
+                                                                 String pages,
+                                                                 boolean illustrated,
+                                                                 boolean peerReviewed,
+                                                                 boolean openAccess
+    )
+            throws JsonProcessingException, InvalidPageRangeException, InvalidPageTypeException {
+        DegreeBachelor expected = generateDegreeBachelor(
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess
+        );
         String json = generateBookInstanceJson(
                 DEGREE_BACHELOR,
-                expectedIntroductionBegin,
-                expectedIntroductionEnd,
-                expectedPages,
-                true,
-                false,
-                false);
-        DegreeBachelor degreeBachelor = objectMapper.readValue(json, DegreeBachelor.class);
-        assertEquals(expectedPagesObject, degreeBachelor.getPages());
-        assertFalse(degreeBachelor.isOpenAccess());
-        assertFalse(degreeBachelor.isPeerReviewed());
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess);
+        DegreeBachelor actual = objectMapper.readValue(json, DegreeBachelor.class);
+        assertEquals(expected, actual);
     }
 
     @DisplayName("DegreeBachelor: ObjectMapper serializes valid input correctly")
-    @Test
-    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException,
-            InvalidPageRangeException {
-        String expectedIntroductionBegin = "i";
-        String expectedIntroductionEnd = "xxviii";
-        String expectedPages = "398";
-        Pages expectedPagesObject = generateMonographPages(expectedPages, false,
-                expectedIntroductionBegin, expectedIntroductionEnd);
-        DegreeBachelor degreeBachelor = new DegreeBachelor.Builder()
-                .withOpenAccess(true)
-                .withPeerReviewed(true)
-                .withPages(expectedPagesObject)
-                .build();
+    @ParameterizedTest
+    @CsvSource({
+            "i,xxviii,398,true,true,true,",
+            ",,231,false,true,true",
+            ",,123,true,false,false"
+    })
+    void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
+                                                         String end,
+                                                         String pages,
+                                                         boolean illustrated,
+                                                         boolean peerReviewed,
+                                                         boolean openAccess) throws InvalidPageTypeException,
+            JsonProcessingException, InvalidPageRangeException {
+        DegreeBachelor degreeBachelor = generateDegreeBachelor(
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess
+        );
         String json = objectMapper.writeValueAsString(degreeBachelor);
         String expected = generateBookInstanceJson(
                 DEGREE_BACHELOR,
-                expectedIntroductionBegin,
-                expectedIntroductionEnd,
-                expectedPages,
-                false,
-                true,
-                true);
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess);
         assertEquals(expected, json);
     }
 
     @DisplayName("DegreeBachelor throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsRange() throws InvalidPageRangeException {
-        Range range = new Range.Builder()
-                .withBegin("1")
-                .withEnd("22")
-                .build();
+    void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsRange() {
         InvalidPageTypeException exception = assertThrows(
-                InvalidPageTypeException.class, () -> new DegreeBachelor.Builder()
-                        .withOpenAccess(false)
-                        .withPeerReviewed(false)
-                        .withPages(range)
-                        .build()
+            InvalidPageTypeException.class, () -> new DegreeBachelor.Builder()
+                .withOpenAccess(false)
+                .withPeerReviewed(false)
+                .withPages(generateRange(ONE, TWENTY_TWO))
+                .build()
         );
 
         String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
@@ -104,10 +120,25 @@ public class DegreeBachelorTest extends BookInstanceTest {
     void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
             () -> new DegreeBachelor.Builder()
-                    .withOpenAccess(false)
-                    .withPeerReviewed(false)
-                    .withPages(pages)
-                    .build()
+                .withOpenAccess(false)
+                .withPeerReviewed(false)
+                .withPages(pages)
+                .build()
         );
+    }
+
+    private DegreeBachelor generateDegreeBachelor(String introductionBegin,
+                                                  String introductionEnd,
+                                                  String pages,
+                                                  boolean illustrated,
+                                                  boolean peerReviewed,
+                                                  boolean openAccess) throws InvalidPageRangeException,
+            InvalidPageTypeException {
+
+        return new DegreeBachelor.Builder()
+                .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))
+                .withPeerReviewed(peerReviewed)
+                .withOpenAccess(openAccess)
+                .build();
     }
 }

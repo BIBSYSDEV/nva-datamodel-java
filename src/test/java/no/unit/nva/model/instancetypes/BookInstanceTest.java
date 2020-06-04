@@ -58,7 +58,7 @@ public class BookInstanceTest {
                 .build();
     }
 
-    private Range generateRange(String begin, String end) throws InvalidPageRangeException {
+    protected Range generateRange(String begin, String end) throws InvalidPageRangeException {
         return new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)

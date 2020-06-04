@@ -8,17 +8,20 @@ import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BookAnthologyTest extends BookInstanceTest {
 
     public static final String BOOK_ANTHOLOGY = "BookAnthology";
+    public static final String ONE = "1";
+    public static final String TWENTY_TWO = "22";
 
     @DisplayName("BookAnthology exists")
     @Test
@@ -27,82 +30,86 @@ class BookAnthologyTest extends BookInstanceTest {
     }
 
     @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")
-    @Test
-    void objectMapperReturnsBookAnthologyWhenInputIsValid() throws JsonProcessingException, InvalidPageRangeException {
-        String expectedIntroductionBegin = "i";
-        String expectedIntroductionEnd = "xxviii";
-        String expectedPages = "398";
-        Range expectedIntroductionObject = new Range.Builder()
-                .withBegin(expectedIntroductionBegin)
-                .withEnd(expectedIntroductionEnd)
-                .build();
-        Pages expectedPagesObject = new MonographPages.Builder()
-                .withPages(expectedPages)
-                .withIllustrated(false)
-                .withIntroduction(expectedIntroductionObject)
-                .build();
+    @ParameterizedTest
+    @CsvSource({
+            "i,xxviii,398,true,true,true,",
+            ",,231,false,true,true",
+            ",,123,true,false,false"
+    })
+    void objectMapperReturnsBookAnthologyWhenInputIsValid(String begin,
+                                                          String end,
+                                                          String pages,
+                                                          boolean illustrated,
+                                                          boolean peerReviewed,
+                                                          boolean openAccess) throws JsonProcessingException,
+            InvalidPageRangeException, InvalidPageTypeException {
 
         String json = generateBookInstanceJson(
                 BOOK_ANTHOLOGY,
-                expectedIntroductionBegin,
-                expectedIntroductionEnd,
-                expectedPages,
-                false,
-                false,
-                false);
-        BookAnthology bookAnthology = objectMapper.readValue(json, BookAnthology.class);
-        assertEquals(expectedPagesObject, bookAnthology.getPages());
-        assertFalse(bookAnthology.isOpenAccess());
-        assertFalse(bookAnthology.isPeerReviewed());
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess);
+
+        BookAnthology expected = generateBookAnthology(
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess
+        );
+
+        BookAnthology actual = objectMapper.readValue(json, BookAnthology.class);
+        assertEquals(expected, actual);
     }
 
     @DisplayName("BookAnthology: ObjectMapper serializes valid input correctly")
-    @Test
-    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException,
-            InvalidPageRangeException {
-        String expectedIntroductionBegin = "i";
-        String expectedIntroductionEnd = "xxviii";
-        String expectedPages = "398";
-        Range expectedIntroductionObject = new Range.Builder()
-                .withBegin(expectedIntroductionBegin)
-                .withEnd(expectedIntroductionEnd)
-                .build();
-        Pages expectedPagesObject = new MonographPages.Builder()
-                .withPages(expectedPages)
-                .withIllustrated(true)
-                .withIntroduction(expectedIntroductionObject)
-                .build();
-        BookAnthology bookAnthology = new BookAnthology.Builder()
-                .withOpenAccess(true)
-                .withPeerReviewed(true)
-                .withPages(expectedPagesObject)
-                .build();
+    @ParameterizedTest
+    @CsvSource({
+            "i,xxviii,398,true,true,true,",
+            ",,231,false,true,true",
+            ",,123,true,false,false"
+    })
+    void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
+                                                         String end,
+                                                         String pages,
+                                                         boolean illustrated,
+                                                         boolean peerReviewed,
+                                                         boolean openAccess) throws InvalidPageTypeException,
+            JsonProcessingException, InvalidPageRangeException {
+
+        BookAnthology bookAnthology = generateBookAnthology(
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess
+        );
         String json = objectMapper.writeValueAsString(bookAnthology);
         String expected = generateBookInstanceJson(
                 BOOK_ANTHOLOGY,
-                expectedIntroductionBegin,
-                expectedIntroductionEnd,
-                expectedPages,
-                true,
-                true,
-                true);
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess);
         assertEquals(expected, json);
     }
 
     @DisplayName("BookAnthology throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsRange() throws InvalidPageRangeException {
-        Range range = new Range.Builder()
-                .withBegin("1")
-                .withEnd("22")
+    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsRange() {
+        Executable executable = () -> new BookAnthology.Builder()
+                .withOpenAccess(false)
+                .withPeerReviewed(false)
+                .withPages(generateRange(ONE, TWENTY_TWO))
                 .build();
-        InvalidPageTypeException exception = assertThrows(
-                InvalidPageTypeException.class, () -> new BookAnthology.Builder()
-                    .withOpenAccess(false)
-                    .withPeerReviewed(false)
-                    .withPages(range)
-                    .build()
-        );
+        InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
 
         String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
                 BookAnthology.class.getTypeName(),
@@ -122,5 +129,20 @@ class BookAnthologyTest extends BookInstanceTest {
                 .withPages(pages)
                 .build()
         );
+    }
+
+    private BookAnthology generateBookAnthology(String introductionBegin,
+                                                String introductionEnd,
+                                                String pages,
+                                                boolean illustrated,
+                                                boolean peerReviewed,
+                                                boolean openAccess) throws InvalidPageRangeException,
+            InvalidPageTypeException {
+
+        return new BookAnthology.Builder()
+                .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))
+                .withPeerReviewed(peerReviewed)
+                .withOpenAccess(openAccess)
+                .build();
     }
 }

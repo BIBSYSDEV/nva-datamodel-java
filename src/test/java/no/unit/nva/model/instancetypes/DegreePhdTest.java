@@ -9,15 +9,17 @@ import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DegreePhdTest extends BookInstanceTest {
     private static final String DEGREE_PHD = "DegreePhd";
+    public static final String ONE = "1";
+    public static final String TWENTY_TWO = "22";
 
     @DisplayName("DegreePhd exists")
     @Test
@@ -26,68 +28,83 @@ public class DegreePhdTest extends BookInstanceTest {
     }
 
     @DisplayName("DegreePhd: ObjectMapper correctly deserializes object")
-    @Test
-    void objectMapperReturnsDegreePhdWhenInputIsValid() throws JsonProcessingException, InvalidPageRangeException {
-
-        String expectedPages = "398";
-        String expectedIntroductionBegin = "i";
-        String expectedIntroductionEnd = "xxviii";
-
-        Pages expectedPagesObject = generateMonographPages(expectedPages,
-                true, expectedIntroductionBegin, expectedIntroductionEnd);
+    @ParameterizedTest
+    @CsvSource({
+            "i,xxviii,398,true,true,true,",
+            ",,231,false,true,true",
+            ",,123,true,false,false"
+    })
+    void objectMapperReturnsDegreePhdWhenInputIsValid(String begin,
+                                                      String end,
+                                                      String pages,
+                                                      boolean illustrated,
+                                                      boolean peerReviewed,
+                                                      boolean openAccess) throws JsonProcessingException,
+            InvalidPageRangeException, InvalidPageTypeException {
 
         String json = generateBookInstanceJson(
                 DEGREE_PHD,
-                expectedIntroductionBegin,
-                expectedIntroductionEnd,
-                expectedPages,
-                true,
-                false,
-                false);
-        DegreePhd degreePhd = objectMapper.readValue(json, DegreePhd.class);
-        assertEquals(expectedPagesObject, degreePhd.getPages());
-        assertFalse(degreePhd.isOpenAccess());
-        assertFalse(degreePhd.isPeerReviewed());
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess);
+        DegreePhd expected = generateDegreePhd(
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess
+        );
+        DegreePhd actual = objectMapper.readValue(json, DegreePhd.class);
+        assertEquals(expected, actual);
     }
 
     @DisplayName("DegreePhd: ObjectMapper serializes valid input correctly")
-    @Test
-    void objectMapperReturnsExpectedJsonWhenInputIsValid() throws InvalidPageTypeException, JsonProcessingException,
+    @ParameterizedTest
+    @CsvSource({
+            "i,xxviii,398,true,true,true,",
+            ",,231,false,true,true",
+            ",,123,true,false,false"
+    })
+    void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
+                                                         String end,
+                                                         String pages,
+                                                         boolean illustrated,
+                                                         boolean peerReviewed,
+                                                         boolean openAccess) throws InvalidPageTypeException,
+            JsonProcessingException,
             InvalidPageRangeException {
-        String expectedIntroductionBegin = "i";
-        String expectedIntroductionEnd = "xxviii";
-        String expectedPages = "398";
-        Pages expectedPagesObject = generateMonographPages(expectedPages, false,
-                expectedIntroductionBegin, expectedIntroductionEnd);
-        DegreePhd degreePhd = new DegreePhd.Builder()
-                .withOpenAccess(true)
-                .withPeerReviewed(true)
-                .withPages(expectedPagesObject)
-                .build();
+        DegreePhd degreePhd = generateDegreePhd(
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess
+        );
         String json = objectMapper.writeValueAsString(degreePhd);
         String expected = generateBookInstanceJson(
                 DEGREE_PHD,
-                expectedIntroductionBegin,
-                expectedIntroductionEnd,
-                expectedPages,
-                false,
-                true,
-                true);
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess);
         assertEquals(expected, json);
     }
 
     @DisplayName("DegreePhd throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void degreePhdThrowsInvalidPageTypeExceptionWhenInputIsRange() throws InvalidPageRangeException {
-        Range range = new Range.Builder()
-                .withBegin("1")
-                .withEnd("22")
-                .build();
+    void degreePhdThrowsInvalidPageTypeExceptionWhenInputIsRange() {
         InvalidPageTypeException exception = assertThrows(
                 InvalidPageTypeException.class, () -> new DegreePhd.Builder()
                         .withOpenAccess(false)
                         .withPeerReviewed(false)
-                        .withPages(range)
+                        .withPages(generateRange(ONE, TWENTY_TWO))
                         .build()
         );
 
@@ -109,5 +126,20 @@ public class DegreePhdTest extends BookInstanceTest {
                     .withPages(pages)
                     .build()
         );
+    }
+
+    private DegreePhd generateDegreePhd(String introductionBegin,
+                                                String introductionEnd,
+                                                String pages,
+                                                boolean illustrated,
+                                                boolean peerReviewed,
+                                                boolean openAccess) throws InvalidPageRangeException,
+            InvalidPageTypeException {
+
+        return new DegreePhd.Builder()
+                .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))
+                .withPeerReviewed(peerReviewed)
+                .withOpenAccess(openAccess)
+                .build();
     }
 }
