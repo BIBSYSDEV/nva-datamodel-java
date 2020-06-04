@@ -6,18 +6,14 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
-import no.unit.nva.model.instancetypes.JournalArticle;
-import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PublicationJournalArticleTest extends PublicationTest {
 
@@ -28,21 +24,6 @@ public class PublicationJournalArticleTest extends PublicationTest {
      */
     public PublicationJournalArticleTest() {
         super();
-    }
-
-    @DisplayName("The Publication class object can (de-)serialize valid JSON input")
-    @Test
-    public void publicationClassReturnsDeserializedJsonWhenValidJsonInput()
-            throws IOException, MalformedContributorException, InvalidIssnException, InvalidPageTypeException,
-            InvalidPageRangeException {
-
-        Publication publication = PublicationGenerator.generateJournalArticlePublication();
-
-        JsonNode document = toPublicationWithContext(publication);
-
-        Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
-                Publication.class);
-        Assertions.assertEquals(publication, publicationFromJson);
     }
 
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
@@ -59,20 +40,22 @@ public class PublicationJournalArticleTest extends PublicationTest {
         Assertions.assertTrue(JsonUtils.toString(framedPublication).contains(HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE));
     }
 
-    @DisplayName("JournalArticle does not throw exception if pages is null")
+    @DisplayName("Test publications can be serialized/deserialized")
     @ParameterizedTest
-    @NullSource
-    void journalArticleReturnsJournalArticleObjectWhenPagesIsNull(Range pages) {
-        assertDoesNotThrow(
-            () -> {
-                new JournalArticle.Builder()
-                        .withArticleNumber("123")
-                        .withIssue("5")
-                        .withPages(pages)
-                        .withVolume("4")
-                        .withPeerReviewed(false)
-                        .build();
-            }
-        );
+    @ValueSource(strings = {
+            "JournalArticle",
+            "JournalLeader",
+            "JournalLetter",
+            "JournalReview",
+            "JournalShortCommunication"
+        }
+    )
+    void publicationReturnsJsonWhenInputIsValid(String type) throws MalformedContributorException,
+            InvalidPageTypeException, InvalidIssnException, IOException, InvalidPageRangeException {
+        Publication publication = PublicationGenerator.generatePublication(type);
+        JsonNode document = toPublicationWithContext(publication);
+        Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
+                Publication.class);
+        Assertions.assertEquals(publication, publicationFromJson);
     }
 }
