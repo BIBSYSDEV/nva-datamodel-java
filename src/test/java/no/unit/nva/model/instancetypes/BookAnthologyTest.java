@@ -15,31 +15,41 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class BookMonographTest extends BookInstanceTest {
+class BookAnthologyTest extends BookInstanceTest {
 
-    public static final String BOOK_MONOGRAPH = "BookMonograph";
+    public static final String BOOK_ANTHOLOGY = "BookAnthology";
 
-    @DisplayName("BookMonograph exists")
+    @DisplayName("BookAnthology exists")
     @Test
-    void bookMonographExists() {
-        new BookMonograph();
+    void bookAnthologyExists() {
+        new BookAnthology();
     }
 
-    @DisplayName("BookMonograph: ObjectMapper correctly deserializes object")
+    @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")
     @ParameterizedTest
     @CsvSource({
             "i,xxviii,398,true,true,true,",
             ",,231,false,true,true",
             ",,123,true,false,false"
     })
-    void objectMapperReturnsBookMonographWhenInputIsValid(String begin,
+    void objectMapperReturnsBookAnthologyWhenInputIsValid(String begin,
                                                           String end,
                                                           String pages,
                                                           boolean illustrated,
                                                           boolean peerReviewed,
                                                           boolean openAccess) throws JsonProcessingException,
             InvalidPageRangeException, InvalidPageTypeException {
-        BookMonograph expected = generateBookMonograph(
+
+        String json = generateBookInstanceJson(
+                BOOK_ANTHOLOGY,
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess);
+
+        BookAnthology expected = generateBookAnthology(
                 begin,
                 end,
                 pages,
@@ -48,19 +58,11 @@ class BookMonographTest extends BookInstanceTest {
                 openAccess
         );
 
-        String json = generateBookInstanceJson(
-                BOOK_MONOGRAPH,
-                begin,
-                end,
-                pages,
-                illustrated,
-                peerReviewed,
-                openAccess);
-        BookMonograph actual = objectMapper.readValue(json, BookMonograph.class);
+        BookAnthology actual = objectMapper.readValue(json, BookAnthology.class);
         assertEquals(expected, actual);
     }
 
-    @DisplayName("BookMonograph: ObjectMapper serializes valid input correctly")
+    @DisplayName("BookAnthology: ObjectMapper serializes valid input correctly")
     @ParameterizedTest
     @CsvSource({
             "i,xxviii,398,true,true,true,",
@@ -73,47 +75,55 @@ class BookMonographTest extends BookInstanceTest {
                                                          boolean illustrated,
                                                          boolean peerReviewed,
                                                          boolean openAccess) throws InvalidPageTypeException,
-            InvalidPageRangeException, JsonProcessingException {
+            JsonProcessingException, InvalidPageRangeException {
 
-        BookMonograph bookMonograph = generateBookMonograph(begin,
+        BookAnthology bookAnthology = generateBookAnthology(
+                begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                openAccess
+        );
+        String json = objectMapper.writeValueAsString(bookAnthology);
+        String expected = generateBookInstanceJson(
+                BOOK_ANTHOLOGY,
+                begin,
                 end,
                 pages,
                 illustrated,
                 peerReviewed,
                 openAccess);
-        String json = objectMapper.writeValueAsString(bookMonograph);
-        String expected = generateBookInstanceJson(BOOK_MONOGRAPH,
-                begin, end, pages, illustrated, peerReviewed, openAccess);
         assertEquals(expected, json);
     }
 
-    @DisplayName("BookMonograph throws InvalidPageTypeException if pages is not MonographPages")
+    @DisplayName("BookAnthology throws InvalidPageTypeException if pages is not MonographPages")
     @Test
-    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
-        Executable executable = () -> new BookMonograph.Builder()
+    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
+        Executable executable = () -> new BookAnthology.Builder()
                 .withOpenAccess(false)
                 .withPeerReviewed(false)
                 .withPages(generateRange())
                 .build();
         InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
-        String expectedMessage = generateInvalidPageTypeExceptionMessage(BookMonograph.class);
+        String expectedMessage = generateInvalidPageTypeExceptionMessage(BookAnthology.class);
         assertEquals(expectedMessage, exception.getMessage());
     }
 
-    @DisplayName("BookMonograph does not throw InvalidPageTypeException when input is null")
+    @DisplayName("BookAnthology does not throw InvalidPageTypeException when input is null")
     @ParameterizedTest
     @NullSource
-    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
+    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
-            () -> new BookMonograph.Builder()
-                    .withOpenAccess(false)
-                    .withPeerReviewed(false)
-                    .withPages(pages)
-                    .build()
+            () -> new BookAnthology.Builder()
+                .withOpenAccess(false)
+                .withPeerReviewed(false)
+                .withPages(pages)
+                .build()
         );
     }
 
-    private BookMonograph generateBookMonograph(String introductionBegin,
+    private BookAnthology generateBookAnthology(String introductionBegin,
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
@@ -121,7 +131,7 @@ class BookMonographTest extends BookInstanceTest {
                                                 boolean openAccess) throws InvalidPageRangeException,
             InvalidPageTypeException {
 
-        return new BookMonograph.Builder()
+        return new BookAnthology.Builder()
                 .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))
                 .withPeerReviewed(peerReviewed)
                 .withOpenAccess(openAccess)
