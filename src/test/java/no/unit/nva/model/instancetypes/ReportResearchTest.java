@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReportResearchTest {
 
@@ -22,6 +23,7 @@ class ReportResearchTest {
             InvalidPageTypeException {
         ReportResearch expected = generateReportResearch("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
+        assertTrue(json.contains("peerReviewed"));
         ReportResearch reportResearch = objectMapper.readValue(json, ReportResearch.class);
         assertEquals(expected, reportResearch);
     }
