@@ -18,7 +18,6 @@ public abstract class ReportContent implements PublicationInstance {
     protected static final Logger logger = LoggerFactory.getLogger(ReportContent.class);
 
     private Pages pages;
-    private boolean peerReviewed;
 
     /**
      * This constructor ensures that the peerReviewed value is always false.
@@ -56,7 +55,7 @@ public abstract class ReportContent implements PublicationInstance {
 
     @Override
     public boolean isPeerReviewed() {
-        return peerReviewed;
+        return false;
     }
 
     @JacocoGenerated
