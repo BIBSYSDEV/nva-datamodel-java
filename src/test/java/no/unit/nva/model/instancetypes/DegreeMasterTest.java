@@ -8,6 +8,7 @@ import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
@@ -96,19 +97,13 @@ public class DegreeMasterTest extends BookInstanceTest {
     @DisplayName("DegreeMaster throws InvalidPageTypeException if pages is not MonographPages")
     @Test
     void degreeMasterThrowsInvalidPageTypeExceptionWhenInputIsRange() {
-
-        InvalidPageTypeException exception = assertThrows(
-                InvalidPageTypeException.class, () -> new DegreeMaster.Builder()
-                        .withOpenAccess(false)
-                        .withPeerReviewed(false)
-                        .withPages(generateRange())
-                        .build()
-        );
-
-        String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
-                DegreeMaster.class.getTypeName(),
-                MonographPages.class.getTypeName(),
-                Range.class.getTypeName());
+        Executable executable = () -> new DegreeMaster.Builder()
+                .withOpenAccess(false)
+                .withPeerReviewed(false)
+                .withPages(generateRange())
+                .build();
+        InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
+        String expectedMessage = generateInvalidPageTypeExceptionMessage(DegreeMaster.class);
         assertEquals(expectedMessage, exception.getMessage());
     }
 

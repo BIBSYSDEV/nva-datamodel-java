@@ -3,6 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
+import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -71,5 +72,12 @@ public class BookInstanceTest {
                 .withBegin(begin)
                 .withEnd(end)
                 .build();
+    }
+
+    protected String generateInvalidPageTypeExceptionMessage(Class<?> type) {
+        return String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
+                type.getTypeName(),
+                MonographPages.class.getTypeName(),
+                Range.class.getTypeName());
     }
 }

@@ -108,11 +108,7 @@ class BookAnthologyTest extends BookInstanceTest {
                 .withPages(generateRange())
                 .build();
         InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
-
-        String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
-                BookAnthology.class.getTypeName(),
-                MonographPages.class.getTypeName(),
-                Range.class.getTypeName());
+        String expectedMessage = generateInvalidPageTypeExceptionMessage(BookAnthology.class);
         assertEquals(expectedMessage, exception.getMessage());
     }
 
