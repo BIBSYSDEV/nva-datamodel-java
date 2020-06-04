@@ -10,18 +10,14 @@ import no.unit.nva.model.pages.Pages;
 public class ReportWorkingPaper extends ReportContent {
 
     /**
-     * This constructor ensures that the peerReviewed value is always false.
+     * Constructor for ReportWorkingPaper.
      *
-     * @param pages         the Pages of the PublicationInstance.
-     * @param peerReviewed  the value is always ignored.
+     * @param pages the Pages of the PublicationInstance.
      * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
      */
     @JsonCreator
-    public ReportWorkingPaper(
-            @JsonProperty("pages") Pages pages,
-            @JsonProperty("peerReviewed") boolean peerReviewed
-    ) throws InvalidPageTypeException {
-        super(pages, peerReviewed);
+    public ReportWorkingPaper(@JsonProperty("pages") Pages pages) throws InvalidPageTypeException {
+        super(pages);
     }
 
     public static final class Builder {
@@ -36,7 +32,7 @@ public class ReportWorkingPaper extends ReportContent {
         }
 
         public ReportWorkingPaper build() throws InvalidPageTypeException {
-            return new ReportWorkingPaper(this.pages, false);
+            return new ReportWorkingPaper(this.pages);
         }
     }
 }

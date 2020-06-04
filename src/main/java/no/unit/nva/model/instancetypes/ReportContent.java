@@ -20,17 +20,15 @@ public abstract class ReportContent implements PublicationInstance {
     private Pages pages;
 
     /**
-     * This constructor ensures that the peerReviewed value is always false.
+     * Constructor for Report Content
      *
-     * @param pages         the Pages of the PublicationInstance.
-     * @param peerReviewed  the value is always ignored.
+     * @param pages the Pages of the PublicationInstance.
      * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
      */
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
-    public ReportContent(Pages pages, boolean peerReviewed) throws InvalidPageTypeException {
+    public ReportContent(Pages pages) throws InvalidPageTypeException {
         super();
         setPages(pages);
-        setPeerReviewed(peerReviewed);
     }
 
     @Override
