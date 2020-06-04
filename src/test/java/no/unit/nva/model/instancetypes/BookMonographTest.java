@@ -103,7 +103,7 @@ class BookMonographTest extends BookInstanceTest {
     @DisplayName("BookMonograph does not throw InvalidPageTypeException when input is null")
     @ParameterizedTest
     @NullSource
-    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
+    void bookMonographDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
             () -> new BookMonograph.Builder()
                     .withOpenAccess(false)

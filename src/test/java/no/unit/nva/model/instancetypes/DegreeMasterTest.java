@@ -108,7 +108,7 @@ public class DegreeMasterTest extends BookInstanceTest {
     @DisplayName("DegreeMaster does not throw InvalidPageTypeException when input is null")
     @ParameterizedTest
     @NullSource
-    void degreeMasterThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
+    void degreeMasterDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
             () -> new DegreeMaster.Builder()
                 .withOpenAccess(false)

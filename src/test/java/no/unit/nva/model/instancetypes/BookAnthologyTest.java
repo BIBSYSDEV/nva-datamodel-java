@@ -113,7 +113,7 @@ class BookAnthologyTest extends BookInstanceTest {
     @DisplayName("BookAnthology does not throw InvalidPageTypeException when input is null")
     @ParameterizedTest
     @NullSource
-    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
+    void bookAnthologyDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
         assertDoesNotThrow(
             () -> new BookAnthology.Builder()
                 .withOpenAccess(false)
