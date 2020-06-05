@@ -1,11 +1,20 @@
 package no.unit.nva.model.pages;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class MonographPages implements Pages {
     private Range introduction;
     private String pages;
     private boolean illustrated;
+
+    public MonographPages() {
+    }
 
     private MonographPages(Builder builder) {
         setIntroduction(builder.introduction);
@@ -17,8 +26,18 @@ public class MonographPages implements Pages {
         return introduction;
     }
 
+    /**
+     * Because introductions are not obligatory, this constructor sets null to avoid an empty
+     * Range object in the serialized data.
+     * @param introduction a range object representing the extent of the introduction or null.
+     */
+    @SuppressWarnings("PMD.NullAssignment")
     public void setIntroduction(Range introduction) {
-        this.introduction = introduction;
+        if (isNull(introduction) || isNull(introduction.getBegin()) && isNull(introduction.getEnd())) {
+            this.introduction = null;
+        } else {
+            this.introduction = introduction;
+        }
     }
 
     public String getPages() {
@@ -65,6 +84,7 @@ public class MonographPages implements Pages {
         }
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -79,6 +99,7 @@ public class MonographPages implements Pages {
                 && Objects.equals(getPages(), monographPages.getPages());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getIntroduction(), getPages(), isIllustrated());

@@ -2,6 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
@@ -30,7 +31,8 @@ public class ChapterArticleTest {
 
     @DisplayName("ChapterArticle: objectMapper can deserialize object")
     @Test
-    void objectMapperReturnsChapterArticleWhenInputJsonIsWellFormed() throws JsonProcessingException {
+    void objectMapperReturnsChapterArticleWhenInputJsonIsWellFormed() throws JsonProcessingException,
+            InvalidPageRangeException {
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
@@ -43,7 +45,7 @@ public class ChapterArticleTest {
     @DisplayName("ChapterArticle: objectMapper can serialize valid input")
     @Test
     void objectMapperReturnsValidJsonWhenInputIsValidChapterArticle() throws JsonProcessingException,
-            InvalidPageTypeException {
+            InvalidPageTypeException, InvalidPageRangeException {
         String expectedBegin = "222";
         String expectedEnd = "232";
         ChapterArticle chapterArticle = new ChapterArticle.Builder()
@@ -68,7 +70,7 @@ public class ChapterArticleTest {
 
     @DisplayName("ChapterArticleThrows InvalidPageTypeException if page type is not Range")
     @Test
-    void chapterArticleThrowsInvalidPageTypeExceptionIfPageTypeIsNotRange() {
+    void chapterArticleThrowsInvalidPageTypeExceptionIfPageTypeIsNotRange() throws InvalidPageRangeException {
         Range intro = new Range.Builder().withBegin("i").withEnd("iv").build();
         Pages pages = new MonographPages.Builder()
                 .withPages("222")
@@ -87,7 +89,7 @@ public class ChapterArticleTest {
         assertEquals(expectedMessage, exception.getMessage());
     }
 
-    private Pages generatePages(String begin, String end) {
+    private Pages generatePages(String begin, String end) throws InvalidPageRangeException {
         return new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)
