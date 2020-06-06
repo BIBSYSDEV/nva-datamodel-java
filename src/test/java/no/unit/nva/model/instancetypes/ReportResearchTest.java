@@ -2,6 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
@@ -20,7 +21,7 @@ class ReportResearchTest {
     @DisplayName("Report research can be created from JSON")
     @Test
     void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageTypeException {
+            InvalidPageTypeException, InvalidPageRangeException {
         ReportResearch expected = generateReportResearch("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
         assertTrue(json.contains("peerReviewed"));
@@ -31,7 +32,7 @@ class ReportResearchTest {
     @DisplayName("Report research cannot be peer reviewed")
     @Test
     void reportResearchSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageTypeException {
+            InvalidPageTypeException, InvalidPageRangeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportResearch";
         String pages = "42";
@@ -48,7 +49,8 @@ class ReportResearchTest {
     }
 
     private ReportResearch generateReportResearch(String pages, String introductionBegin, String introductionEnd,
-                                              boolean illustrated) throws InvalidPageTypeException {
+                                              boolean illustrated) throws InvalidPageTypeException,
+            InvalidPageRangeException {
         Range introductionRange = new Range.Builder()
                 .withBegin(introductionBegin)
                 .withEnd(introductionEnd)
