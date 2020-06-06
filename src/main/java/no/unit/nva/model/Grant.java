@@ -1,6 +1,8 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -33,6 +35,7 @@ public class Grant {
         this.id = id;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,6 +49,7 @@ public class Grant {
                 && Objects.equals(getId(), grant.getId());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getSource(), getId());

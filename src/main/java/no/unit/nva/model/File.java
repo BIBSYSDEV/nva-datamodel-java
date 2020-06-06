@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.model.exceptions.MissingLicenseException;
+import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class File {
@@ -113,6 +114,7 @@ public class File {
         return embargoDate;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -132,6 +134,7 @@ public class File {
                 && Objects.equals(getEmbargoDate(), file.getEmbargoDate());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(),

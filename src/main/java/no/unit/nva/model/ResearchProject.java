@@ -1,6 +1,8 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +40,7 @@ public class ResearchProject extends Project {
         this.approvals = approvals;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -53,6 +56,7 @@ public class ResearchProject extends Project {
                 && Objects.equals(getApprovals(), researchProject.getApprovals());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getGrants(), getApprovals());

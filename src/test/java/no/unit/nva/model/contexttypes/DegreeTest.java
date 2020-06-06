@@ -18,20 +18,20 @@ import java.util.List;
 
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
 import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJson;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class BookTest {
+class DegreeTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-    public static final String BOOK = "Book";
+    public static final String DEGREE = "Degree";
 
-    @DisplayName("Book can deserialize a book")
+    @DisplayName("Degree can deserialize a degree")
     @ParameterizedTest
     @CsvSource({
             "A series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
@@ -39,7 +39,7 @@ class BookTest {
             "A series title,,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
             "Fulong of Oolong,12,T Publishing,LEVEL_0,false,false,\"9780201309515|9788131700075\""
     })
-    void objectMapperReturnsBookWhenInputIsValidJson(String seriesTitle,
+    void objectMapperReturnsDegreeWhenInputIsValidJson(String seriesTitle,
                                                      String seriesNumber,
                                                      String publisher,
                                                      String level,
@@ -51,7 +51,7 @@ class BookTest {
         boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
         List<String> expectedIsbn = convertIsbnStringToList(isbnList);
         String json = generatePublicationJson(
-                BOOK,
+                DEGREE,
                 seriesTitle,
                 seriesNumber,
                 publisher,
@@ -62,16 +62,16 @@ class BookTest {
                 null,
                 null
         );
-        Book book = objectMapper.readValue(json, Book.class);
-        assertEquals(seriesTitle, book.getSeriesTitle());
-        assertEquals(seriesNumber, book.getSeriesNumber());
-        assertEquals(expectedLevel, book.getLevel());
-        assertEquals(expectedIsbn, book.getIsbnList());
-        assertEquals(expectedOpenAccess, book.isOpenAccess());
-        assertEquals(expectedPeerReviewed, book.isPeerReviewed());
+        Degree degree = objectMapper.readValue(json, Degree.class);
+        assertEquals(seriesTitle, degree.getSeriesTitle());
+        assertEquals(seriesNumber, degree.getSeriesNumber());
+        assertEquals(expectedLevel, degree.getLevel());
+        assertEquals(expectedIsbn, degree.getIsbnList());
+        assertEquals(expectedOpenAccess, degree.isOpenAccess());
+        assertEquals(expectedPeerReviewed, degree.isPeerReviewed());
     }
 
-    @DisplayName("Book serializes expected json")
+    @DisplayName("Degree serializes expected json")
     @ParameterizedTest
     @CsvSource({
             "A series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
@@ -80,7 +80,7 @@ class BookTest {
             "Fulong of Oolong,12,T Publishing,LEVEL_0,false,false,\"9780201309515|9788131700075\"",
             "A Marxist analysis of marking systems,6903,ACO,LEVEL_1,true,false,"
     })
-    void objectMapperProducesProperlyFormattedJsonWhenInputIsBook(String seriesTitle,
+    void objectMapperProducesProperlyFormattedJsonWhenInputIsDegree(String seriesTitle,
                                                                   String seriesNumber,
                                                                   String publisher,
                                                                   String level,
@@ -92,7 +92,7 @@ class BookTest {
         boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
         boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
         Level expectedLevel = Level.valueOf(level);
-        Book book = new Book.Builder()
+        Degree degree = new Degree.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
@@ -102,7 +102,7 @@ class BookTest {
                 .withIsbnList(expectedIsbnList)
                 .build();
         String expectedJson = generatePublicationJson(
-                BOOK,
+                DEGREE,
                 seriesTitle,
                 seriesNumber,
                 publisher,
@@ -113,18 +113,18 @@ class BookTest {
                 null,
                 null
         );
-        String actualJson = objectMapper.writeValueAsString(book);
+        String actualJson = objectMapper.writeValueAsString(degree);
         assertEquals(expectedJson, actualJson);
     }
 
-    @DisplayName("Book complains if ISBNs are invalid")
+    @DisplayName("Degree complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
             "Series title,123,Full publisher details,LEVEL_2,true,true,\"obviousNonsense|9788131700075\"",
             "Series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|obviousNonsense\"",
             "Series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075|obviousNonsense\""
     })
-    void bookThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
+    void degreeThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                          String seriesNumber,
                                                          String publisher,
                                                          String level,
@@ -134,7 +134,7 @@ class BookTest {
 
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
-        Executable executable = () -> new Book.Builder()
+        Executable executable = () -> new Degree.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
@@ -150,10 +150,10 @@ class BookTest {
         assertEquals(expectedMessage, actualMessage);
     }
 
-    @DisplayName("Book: Null ISBNs are handled gracefully")
+    @DisplayName("Degree: Null ISBNs are handled gracefully")
     @Test
-    void bookReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException {
-        Book book = new Book.Builder()
+    void degreeReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException {
+        Degree degree = new Degree.Builder()
                 .withSeriesTitle(null)
                 .withSeriesNumber(null)
                 .withLevel(Level.LEVEL_0)
@@ -163,15 +163,15 @@ class BookTest {
                 .withIsbnList(null)
                 .build();
 
-        List<String> resultIsbnList = book.getIsbnList();
+        List<String> resultIsbnList = degree.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
     }
 
-    @DisplayName("Book: Empty ISBNs are handled gracefully")
+    @DisplayName("Degree: Empty ISBNs are handled gracefully")
     @Test
-    void bookReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException {
-        Book book = new Book.Builder()
+    void degreeReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException {
+        Degree degree = new Degree.Builder()
                 .withSeriesTitle(null)
                 .withSeriesNumber(null)
                 .withLevel(Level.LEVEL_0)
@@ -181,7 +181,7 @@ class BookTest {
                 .withIsbnList(Collections.emptyList())
                 .build();
 
-        List<String> resultIsbnList = book.getIsbnList();
+        List<String> resultIsbnList = degree.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
     }
