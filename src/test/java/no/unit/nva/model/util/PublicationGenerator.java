@@ -1,14 +1,5 @@
 package no.unit.nva.model.util;
 
-import java.net.URI;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
@@ -20,23 +11,22 @@ import no.unit.nva.model.File;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Grant;
 import no.unit.nva.model.Identity;
-import no.unit.nva.model.contexttypes.Book;
-import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.License;
 import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
-import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.Role;
+import no.unit.nva.model.contexttypes.BasicContext;
+import no.unit.nva.model.contexttypes.Book;
+import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.JournalLeader;
@@ -45,6 +35,15 @@ import no.unit.nva.model.instancetypes.JournalReview;
 import no.unit.nva.model.instancetypes.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
+
+import java.net.URI;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -81,7 +80,7 @@ public class PublicationGenerator {
     }
 
     public static Publication generatePublication(String type) throws InvalidIssnException,
-            InvalidPageTypeException, MalformedContributorException, InvalidPageRangeException {
+            MalformedContributorException, InvalidPageRangeException {
         Reference reference;
         switch (type) {
             case "JournalLeader":
@@ -130,7 +129,7 @@ public class PublicationGenerator {
     }
 
     public static Publication generateJournalArticlePublication() throws InvalidIssnException,
-            MalformedContributorException, InvalidPageTypeException, InvalidPageRangeException {
+            MalformedContributorException, InvalidPageRangeException {
         return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
                 generateEntityDescriptionJournalArticle());
     }
@@ -174,7 +173,7 @@ public class PublicationGenerator {
     }
 
     public static EntityDescription generateEntityDescriptionJournalArticle() throws InvalidIssnException,
-            InvalidPageTypeException, MalformedContributorException, InvalidPageRangeException {
+            MalformedContributorException, InvalidPageRangeException {
         return getEntityDescription(getJournalArticleReference());
     }
 
@@ -205,8 +204,7 @@ public class PublicationGenerator {
     }
 
 
-    public static Reference getJournalArticleReference() throws InvalidIssnException, InvalidPageTypeException,
-            InvalidPageRangeException {
+    public static Reference getJournalArticleReference() throws InvalidIssnException, InvalidPageRangeException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContextJournal())
                 .withDoi(SOME_URI)
@@ -214,8 +212,7 @@ public class PublicationGenerator {
                 .build();
     }
 
-    private static Reference getJournalLeaderReference() throws InvalidIssnException, InvalidPageTypeException,
-            InvalidPageRangeException {
+    private static Reference getJournalLeaderReference() throws InvalidIssnException, InvalidPageRangeException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContextJournal())
                 .withDoi(SOME_URI)
@@ -223,8 +220,7 @@ public class PublicationGenerator {
                 .build();
     }
 
-    private static Reference getJournalLetterReference() throws InvalidPageTypeException, InvalidIssnException,
-            InvalidPageRangeException {
+    private static Reference getJournalLetterReference() throws InvalidIssnException, InvalidPageRangeException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContextJournal())
                 .withDoi(SOME_URI)
@@ -232,8 +228,7 @@ public class PublicationGenerator {
                 .build();
     }
 
-    private static Reference getJournalReviewReference() throws InvalidPageTypeException, InvalidIssnException,
-            InvalidPageRangeException {
+    private static Reference getJournalReviewReference() throws InvalidIssnException, InvalidPageRangeException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContextJournal())
                 .withDoi(SOME_URI)
@@ -241,8 +236,8 @@ public class PublicationGenerator {
                 .build();
     }
 
-    private static Reference getJournalShortCommunicationReference() throws InvalidPageTypeException,
-            InvalidIssnException, InvalidPageRangeException {
+    private static Reference getJournalShortCommunicationReference() throws InvalidIssnException,
+            InvalidPageRangeException {
         return new Reference.Builder()
                 .withPublishingContext(getPublishingContextJournal())
                 .withDoi(SOME_URI)
@@ -258,8 +253,7 @@ public class PublicationGenerator {
                 .build();
     }
 
-    public static PublicationInstance getPublicationInstanceJournalArticle() throws InvalidPageTypeException,
-            InvalidPageRangeException {
+    public static PublicationInstance<Range> getPublicationInstanceJournalArticle() throws InvalidPageRangeException {
         return new JournalArticle.Builder()
                 .withArticleNumber("1234456")
                 .withIssue("2")
@@ -269,39 +263,36 @@ public class PublicationGenerator {
                 .build();
     }
 
-    private static PublicationInstance getPublicationInstanceJournalLeader() throws InvalidPageTypeException,
-            InvalidPageRangeException {
+    private static PublicationInstance<Range> getPublicationInstanceJournalLeader() throws InvalidPageRangeException {
         return new JournalLeader.Builder()
-            .withArticleNumber("213222")
-            .withIssue("5")
-            .withVolume("27")
-            .withPages(getPages())
-            .withPeerReviewed(false)
-            .build();
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .withPeerReviewed(false)
+                .build();
     }
 
-    private static PublicationInstance getPublicationInstanceJournalLetter() throws InvalidPageTypeException,
-            InvalidPageRangeException {
+    private static PublicationInstance<Range> getPublicationInstanceJournalLetter() throws InvalidPageRangeException {
         return new JournalLetter.Builder()
-            .withArticleNumber("213222")
-            .withIssue("5")
-            .withVolume("27")
-            .withPages(getPages())
-            .build();
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .build();
     }
 
-    private static PublicationInstance getPublicationInstanceJournalReview() throws InvalidPageTypeException,
-            InvalidPageRangeException {
+    private static PublicationInstance<Range> getPublicationInstanceJournalReview() throws InvalidPageRangeException {
         return new JournalReview.Builder()
-            .withArticleNumber("213222")
-            .withIssue("5")
-            .withVolume("27")
-            .withPages(getPages())
-            .build();
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .build();
     }
 
-    private static PublicationInstance getPublicationInstanceJournalShortCommunication() throws
-            InvalidPageTypeException, InvalidPageRangeException {
+    private static PublicationInstance<Range> getPublicationInstanceJournalShortCommunication() throws
+            InvalidPageRangeException {
         return new JournalShortCommunication.Builder()
                 .withArticleNumber("213222")
                 .withIssue("5")

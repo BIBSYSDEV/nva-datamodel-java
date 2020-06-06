@@ -3,10 +3,8 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
-import no.unit.nva.model.util.ReportContentTestUtil;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportWorkingPaperTest {
+class ReportWorkingPaperTest extends ReportTestBase {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @DisplayName("Report working paper can be created from JSON")
     @Test
     void reportWorkingPaperReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         ReportWorkingPaper expected = generateReportWorkingPaper("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
         assertTrue(json.contains("peerReviewed"));
@@ -32,7 +30,7 @@ class ReportWorkingPaperTest {
     @DisplayName("Report working paper cannot be peer reviewed")
     @Test
     void reportWorkingPaperSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportWorkingPaper";
         String pages = "42";
@@ -43,14 +41,14 @@ class ReportWorkingPaperTest {
         ReportWorkingPaper expected = generateReportWorkingPaper(pages, introductionBegin, introductionEnd,
                 illustrated);
 
-        String json = ReportContentTestUtil.generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
                 illustrated, peerReviewed);
         ReportWorkingPaper reportWorkingPaper = objectMapper.readValue(json, ReportWorkingPaper.class);
         assertEquals(expected, reportWorkingPaper);
     }
 
     private ReportWorkingPaper generateReportWorkingPaper(String pages, String introductionBegin,
-        String introductionEnd, boolean illustrated) throws InvalidPageTypeException, InvalidPageRangeException {
+        String introductionEnd, boolean illustrated) throws InvalidPageRangeException {
 
         Range introductionRange = new Range.Builder()
                 .withBegin(introductionBegin)

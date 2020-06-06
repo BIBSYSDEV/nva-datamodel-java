@@ -1,39 +1,32 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-import static java.util.Objects.nonNull;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ChapterArticle implements PublicationInstance {
+public class ChapterArticle implements PublicationInstance<Range> {
 
-    private Pages pages;
+    private Range pages;
     private boolean peerReviewed;
 
     public ChapterArticle() {
     }
 
-    private ChapterArticle(Builder builder) throws InvalidPageTypeException {
+    private ChapterArticle(Builder builder) {
         setPages(builder.pages);
         setPeerReviewed(builder.peerReviewed);
     }
 
     @Override
-    public Pages getPages() {
+    public Range getPages() {
         return pages;
     }
 
     @Override
-    public void setPages(Pages pages) throws InvalidPageTypeException {
-        if (nonNull(pages) && !(pages instanceof  Range)) {
-            throw new InvalidPageTypeException(this.getClass(), Range.class, pages.getClass());
-        }
+    public void setPages(Range pages) {
         this.pages = pages;
     }
 
@@ -69,13 +62,13 @@ public class ChapterArticle implements PublicationInstance {
 
 
     public static final class Builder {
-        private Pages pages;
+        private Range pages;
         private boolean peerReviewed;
 
         public Builder() {
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(Range pages) {
             this.pages = pages;
             return this;
         }
@@ -85,7 +78,7 @@ public class ChapterArticle implements PublicationInstance {
             return this;
         }
 
-        public ChapterArticle build() throws InvalidPageTypeException {
+        public ChapterArticle build() {
             return new ChapterArticle(this);
         }
     }

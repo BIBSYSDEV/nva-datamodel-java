@@ -2,18 +2,12 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BookAnthologyTest extends BookInstanceTest {
 
@@ -38,7 +32,7 @@ class BookAnthologyTest extends BookInstanceTest {
                                                           boolean illustrated,
                                                           boolean peerReviewed,
                                                           boolean openAccess) throws JsonProcessingException,
-            InvalidPageRangeException, InvalidPageTypeException {
+            InvalidPageRangeException {
 
         String json = generateBookInstanceJson(
                 BOOK_ANTHOLOGY,
@@ -74,8 +68,8 @@ class BookAnthologyTest extends BookInstanceTest {
                                                          String pages,
                                                          boolean illustrated,
                                                          boolean peerReviewed,
-                                                         boolean openAccess) throws InvalidPageTypeException,
-            JsonProcessingException, InvalidPageRangeException {
+                                                         boolean openAccess) throws JsonProcessingException,
+            InvalidPageRangeException {
 
         BookAnthology bookAnthology = generateBookAnthology(
                 begin,
@@ -97,39 +91,12 @@ class BookAnthologyTest extends BookInstanceTest {
         assertEquals(expected, json);
     }
 
-    @DisplayName("BookAnthology throws InvalidPageTypeException if pages is not MonographPages")
-    @Test
-    void bookAnthologyThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
-        Executable executable = () -> new BookAnthology.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(generateRange())
-                .build();
-        InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
-        String expectedMessage = generateInvalidPageTypeExceptionMessage(BookAnthology.class);
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    @DisplayName("BookAnthology does not throw InvalidPageTypeException when input is null")
-    @ParameterizedTest
-    @NullSource
-    void bookAnthologyDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
-        assertDoesNotThrow(
-            () -> new BookAnthology.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(pages)
-                .build()
-        );
-    }
-
     private BookAnthology generateBookAnthology(String introductionBegin,
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
                                                 boolean peerReviewed,
-                                                boolean openAccess) throws InvalidPageRangeException,
-            InvalidPageTypeException {
+                                                boolean openAccess) throws InvalidPageRangeException {
 
         return new BookAnthology.Builder()
                 .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))

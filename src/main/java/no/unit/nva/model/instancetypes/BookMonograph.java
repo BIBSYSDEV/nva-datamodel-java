@@ -1,41 +1,34 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
-import no.unit.nva.model.pages.Pages;
 import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-import static java.util.Objects.nonNull;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class BookMonograph implements PublicationInstance {
+public class BookMonograph implements PublicationInstance<MonographPages> {
 
-    private Pages pages;
+    private MonographPages pages;
     private boolean peerReviewed;
     private boolean openAccess;
 
     public BookMonograph() {
     }
 
-    private BookMonograph(Builder builder) throws InvalidPageTypeException {
+    private BookMonograph(Builder builder) {
         setPages(builder.pages);
         setPeerReviewed(builder.peerReviewed);
         setOpenAccess(builder.openAccess);
     }
 
     @Override
-    public Pages getPages() {
+    public MonographPages getPages() {
         return pages;
     }
 
     @Override
-    public void setPages(Pages pages) throws InvalidPageTypeException {
-        if (nonNull(pages) && !(pages instanceof MonographPages)) {
-            throw new InvalidPageTypeException(this.getClass(), MonographPages.class, pages.getClass());
-        }
+    public void setPages(MonographPages pages) {
         this.pages = pages;
     }
 
@@ -79,14 +72,14 @@ public class BookMonograph implements PublicationInstance {
     }
 
     public static final class Builder {
-        private Pages pages;
+        private MonographPages pages;
         private boolean peerReviewed;
         private boolean openAccess;
 
         public Builder() {
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(MonographPages pages) {
             this.pages = pages;
             return this;
         }
@@ -101,7 +94,7 @@ public class BookMonograph implements PublicationInstance {
             return this;
         }
 
-        public BookMonograph build() throws InvalidPageTypeException {
+        public BookMonograph build() {
             return new BookMonograph(this);
         }
     }

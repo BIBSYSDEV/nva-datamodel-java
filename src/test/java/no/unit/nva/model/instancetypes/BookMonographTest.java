@@ -2,18 +2,12 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BookMonographTest extends BookInstanceTest {
 
@@ -38,7 +32,7 @@ class BookMonographTest extends BookInstanceTest {
                                                           boolean illustrated,
                                                           boolean peerReviewed,
                                                           boolean openAccess) throws JsonProcessingException,
-            InvalidPageRangeException, InvalidPageTypeException {
+            InvalidPageRangeException {
         BookMonograph expected = generateBookMonograph(
                 begin,
                 end,
@@ -72,7 +66,7 @@ class BookMonographTest extends BookInstanceTest {
                                                          String pages,
                                                          boolean illustrated,
                                                          boolean peerReviewed,
-                                                         boolean openAccess) throws InvalidPageTypeException,
+                                                         boolean openAccess) throws
             InvalidPageRangeException, JsonProcessingException {
 
         BookMonograph bookMonograph = generateBookMonograph(begin,
@@ -87,39 +81,12 @@ class BookMonographTest extends BookInstanceTest {
         assertEquals(expected, json);
     }
 
-    @DisplayName("BookMonograph throws InvalidPageTypeException if pages is not MonographPages")
-    @Test
-    void bookMonographThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
-        Executable executable = () -> new BookMonograph.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(generateRange())
-                .build();
-        InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
-        String expectedMessage = generateInvalidPageTypeExceptionMessage(BookMonograph.class);
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    @DisplayName("BookMonograph does not throw InvalidPageTypeException when input is null")
-    @ParameterizedTest
-    @NullSource
-    void bookMonographDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
-        assertDoesNotThrow(
-            () -> new BookMonograph.Builder()
-                    .withOpenAccess(false)
-                    .withPeerReviewed(false)
-                    .withPages(pages)
-                    .build()
-        );
-    }
-
     private BookMonograph generateBookMonograph(String introductionBegin,
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
                                                 boolean peerReviewed,
-                                                boolean openAccess) throws InvalidPageRangeException,
-            InvalidPageTypeException {
+                                                boolean openAccess) throws InvalidPageRangeException {
 
         return new BookMonograph.Builder()
                 .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))

@@ -3,8 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
+import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ReportPolicy extends ReportContent {
@@ -13,25 +12,24 @@ public class ReportPolicy extends ReportContent {
      * Constructor for ReportPolicy.
      *
      * @param pages the Pages of the PublicationInstance.
-     * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
      */
     @JsonCreator
-    public ReportPolicy(@JsonProperty("pages") Pages pages) throws InvalidPageTypeException {
+    public ReportPolicy(@JsonProperty("pages") MonographPages pages) {
         super(pages);
     }
 
     public static final class Builder {
-        private Pages pages;
+        private MonographPages pages;
 
         public Builder() {
         }
 
-        public ReportPolicy.Builder withPages(Pages pages) {
+        public ReportPolicy.Builder withPages(MonographPages pages) {
             this.pages = pages;
             return this;
         }
 
-        public ReportPolicy build() throws InvalidPageTypeException {
+        public ReportPolicy build() {
             return new ReportPolicy(this.pages);
         }
     }

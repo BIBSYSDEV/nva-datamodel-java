@@ -4,8 +4,6 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.JournalNonPeerReviewedContentUtil;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +15,8 @@ class JournalLeaderTest {
 
     @DisplayName("JournalLeader can be created")
     @Test
-    void journalLeaderReturnsValidJournalLeaderWhenInputDataIsValid() throws InvalidPageTypeException,
-            JsonProcessingException, InvalidPageRangeException {
+    void journalLeaderReturnsValidJournalLeaderWhenInputDataIsValid() throws JsonProcessingException,
+            InvalidPageRangeException {
         String type = "JournalLeader";
         String volume = "22";
         String issue = "5";
@@ -29,7 +27,7 @@ class JournalLeaderTest {
                 articleNumber, begin, end, false);
         ObjectMapper objectMapper = new ObjectMapper();
         JournalLeader expected = objectMapper.readValue(json, JournalLeader.class);
-        Pages pages = new Range.Builder()
+        Range pages = new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)
                 .build();

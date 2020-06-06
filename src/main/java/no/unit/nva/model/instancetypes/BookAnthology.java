@@ -1,8 +1,7 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
+import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class BookAnthology extends BookMonograph {
@@ -10,7 +9,7 @@ public class BookAnthology extends BookMonograph {
         super();
     }
 
-    private BookAnthology(Builder builder) throws InvalidPageTypeException {
+    private BookAnthology(Builder builder) {
         super();
         setPages(builder.pages);
         setPeerReviewed(builder.peerReviewed);
@@ -18,14 +17,14 @@ public class BookAnthology extends BookMonograph {
     }
 
     public static final class Builder {
-        private Pages pages;
+        private MonographPages pages;
         private boolean peerReviewed;
         private boolean openAccess;
 
         public Builder() {
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(MonographPages pages) {
             this.pages = pages;
             return this;
         }
@@ -40,7 +39,7 @@ public class BookAnthology extends BookMonograph {
             return this;
         }
 
-        public BookAnthology build() throws InvalidPageTypeException {
+        public BookAnthology build() {
             return new BookAnthology(this);
         }
     }

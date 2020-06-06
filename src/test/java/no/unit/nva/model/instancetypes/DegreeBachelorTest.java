@@ -2,18 +2,15 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
+import no.unit.nva.model.pages.MonographPages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DegreeBachelorTest extends BookInstanceTest {
     private static final String DEGREE_BACHELOR = "DegreeBachelor";
@@ -38,7 +35,7 @@ public class DegreeBachelorTest extends BookInstanceTest {
                                                                  boolean peerReviewed,
                                                                  boolean openAccess
     )
-            throws JsonProcessingException, InvalidPageRangeException, InvalidPageTypeException {
+            throws JsonProcessingException, InvalidPageRangeException {
         DegreeBachelor expected = generateDegreeBachelor(
                 begin,
                 end,
@@ -71,7 +68,7 @@ public class DegreeBachelorTest extends BookInstanceTest {
                                                          String pages,
                                                          boolean illustrated,
                                                          boolean peerReviewed,
-                                                         boolean openAccess) throws InvalidPageTypeException,
+                                                         boolean openAccess) throws
             JsonProcessingException, InvalidPageRangeException {
         DegreeBachelor degreeBachelor = generateDegreeBachelor(
                 begin,
@@ -93,39 +90,12 @@ public class DegreeBachelorTest extends BookInstanceTest {
         assertEquals(expected, json);
     }
 
-    @DisplayName("DegreeBachelor throws InvalidPageTypeException if pages is not MonographPages")
-    @Test
-    void degreeBachelorThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
-        Executable executable = () -> new DegreeBachelor.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(generateRange())
-                .build();
-        InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
-        String expectedMessage = generateInvalidPageTypeExceptionMessage(DegreeBachelor.class);
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    @DisplayName("DegreeBachelor does not throw InvalidPageTypeException when input is null")
-    @ParameterizedTest
-    @NullSource
-    void degreeBachelorDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
-        assertDoesNotThrow(
-            () -> new DegreeBachelor.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(pages)
-                .build()
-        );
-    }
-
     private DegreeBachelor generateDegreeBachelor(String introductionBegin,
                                                   String introductionEnd,
                                                   String pages,
                                                   boolean illustrated,
                                                   boolean peerReviewed,
-                                                  boolean openAccess) throws InvalidPageRangeException,
-            InvalidPageTypeException {
+                                                  boolean openAccess) throws InvalidPageRangeException {
 
         return new DegreeBachelor.Builder()
                 .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))

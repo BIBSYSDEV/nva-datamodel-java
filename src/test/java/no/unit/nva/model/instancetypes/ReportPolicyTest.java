@@ -3,10 +3,8 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
-import no.unit.nva.model.util.ReportContentTestUtil;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportPolicyTest {
+class ReportPolicyTest extends ReportTestBase {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @DisplayName("Report policy can be created from JSON")
     @Test
     void reportPolicyReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         ReportPolicy expected = generateReportPolicy("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
         assertTrue(json.contains("peerReviewed"));
@@ -32,7 +30,7 @@ class ReportPolicyTest {
     @DisplayName("Report policy cannot be peer reviewed")
     @Test
     void reportPolicySetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportPolicy";
         String pages = "42";
@@ -42,15 +40,14 @@ class ReportPolicyTest {
         boolean peerReviewed = true;
         ReportPolicy expected = generateReportPolicy(pages, introductionBegin, introductionEnd, illustrated);
 
-        String json = ReportContentTestUtil.generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
                 illustrated, peerReviewed);
         ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);
         assertEquals(expected, reportPolicy);
     }
 
     private ReportPolicy generateReportPolicy(String pages, String introductionBegin, String introductionEnd,
-                                              boolean illustrated) throws InvalidPageTypeException,
-            InvalidPageRangeException {
+                                              boolean illustrated) throws InvalidPageRangeException {
         Range introductionRange = new Range.Builder()
                 .withBegin(introductionBegin)
                 .withEnd(introductionEnd)

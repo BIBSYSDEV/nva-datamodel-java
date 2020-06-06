@@ -1,14 +1,13 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalArticle extends ChapterArticle implements PublicationInstance {
+public class JournalArticle extends ChapterArticle implements PublicationInstance<Range> {
     private String volume;
     private String issue;
     private String articleNumber;
@@ -18,7 +17,7 @@ public class JournalArticle extends ChapterArticle implements PublicationInstanc
         super();
     }
 
-    private JournalArticle(Builder builder) throws InvalidPageTypeException {
+    private JournalArticle(Builder builder) {
         super();
         setVolume(builder.volume);
         setIssue(builder.issue);
@@ -86,7 +85,7 @@ public class JournalArticle extends ChapterArticle implements PublicationInstanc
             return this;
         }
 
-        public JournalArticle build() throws InvalidPageTypeException {
+        public JournalArticle build() {
             return new JournalArticle(this);
         }
     }
