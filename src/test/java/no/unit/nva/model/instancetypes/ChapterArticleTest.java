@@ -3,19 +3,13 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ChapterArticleTest {
@@ -45,7 +39,7 @@ public class ChapterArticleTest {
     @DisplayName("ChapterArticle: objectMapper can serialize valid input")
     @Test
     void objectMapperReturnsValidJsonWhenInputIsValidChapterArticle() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         String expectedBegin = "222";
         String expectedEnd = "232";
         ChapterArticle chapterArticle = new ChapterArticle.Builder()
@@ -56,40 +50,7 @@ public class ChapterArticleTest {
         assertEquals(expectedJson, objectMapper.writeValueAsString(chapterArticle));
     }
 
-    @DisplayName("ChapterArticle does not throw InvalidPageTypeException if input is null")
-    @ParameterizedTest
-    @NullSource
-    void chapterArticleDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages input) {
-        assertDoesNotThrow(() -> {
-            new ChapterArticle.Builder()
-                    .withPeerReviewed(false)
-                    .withPages(input)
-                    .build();
-        });
-    }
-
-    @DisplayName("ChapterArticleThrows InvalidPageTypeException if page type is not Range")
-    @Test
-    void chapterArticleThrowsInvalidPageTypeExceptionIfPageTypeIsNotRange() throws InvalidPageRangeException {
-        Range intro = new Range.Builder().withBegin("i").withEnd("iv").build();
-        Pages pages = new MonographPages.Builder()
-                .withPages("222")
-                .withIllustrated(false)
-                .withIntroduction(intro)
-                .build();
-        InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, () ->
-            new ChapterArticle.Builder()
-                .withPages(pages)
-                .withPeerReviewed(true)
-                .build());
-        String expectedMessage = String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
-                ChapterArticle.class.getTypeName(),
-                Range.class.getTypeName(),
-                pages.getClass().getTypeName());
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    private Pages generatePages(String begin, String end) throws InvalidPageRangeException {
+    private Range generatePages(String begin, String end) throws InvalidPageRangeException {
         return new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)

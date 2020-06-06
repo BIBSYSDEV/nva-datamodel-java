@@ -3,9 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.MonographPages;
-import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 
@@ -14,9 +12,6 @@ import java.util.LinkedHashMap;
 import static java.util.Objects.nonNull;
 
 public class BookInstanceTest {
-
-    protected static final String BEGINNING_PAGE = "1";
-    protected static final String ENDING_PAGE = "22";
 
     protected final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -52,7 +47,7 @@ public class BookInstanceTest {
         return objectMapper.writeValueAsString(bookInstance);
     }
 
-    protected Pages generateMonographPages(String pages,
+    protected MonographPages generateMonographPages(String pages,
                                            boolean illustrated,
                                            String introductionBegin,
                                            String introductionEnd) throws InvalidPageRangeException {
@@ -63,21 +58,10 @@ public class BookInstanceTest {
                 .build();
     }
 
-    protected Range generateRange() throws InvalidPageRangeException {
-        return generateRange(BEGINNING_PAGE, ENDING_PAGE);
-    }
-
     protected Range generateRange(String begin, String end) throws InvalidPageRangeException {
         return new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)
                 .build();
-    }
-
-    protected String generateInvalidPageTypeExceptionMessage(Class<?> type) {
-        return String.format(InvalidPageTypeException.INVALID_CLASS_MESSAGE,
-                type.getTypeName(),
-                MonographPages.class.getTypeName(),
-                Range.class.getTypeName());
     }
 }

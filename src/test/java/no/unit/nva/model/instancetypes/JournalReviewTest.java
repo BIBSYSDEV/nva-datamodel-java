@@ -3,7 +3,6 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.util.JournalNonPeerReviewedContentUtil;
 import nva.commons.utils.JsonUtils;
@@ -19,7 +18,7 @@ class JournalReviewTest {
     @DisplayName("Journal review can be created from JSON")
     @Test
     void journalReviewReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         JournalReview expected =
                 generateJournalReview("1", "3", "123", "2", "3");
         String json = objectMapper.writeValueAsString(expected);
@@ -31,7 +30,7 @@ class JournalReviewTest {
     @DisplayName("Journal review cannot be peer reviewed")
     @Test
     void journalReviewSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "JournalReview";
         String volume = "1";
@@ -51,7 +50,7 @@ class JournalReviewTest {
                                                 String issue,
                                                 String articleNumber,
                                                 String begin,
-                                                String end) throws InvalidPageTypeException, InvalidPageRangeException {
+                                                String end) throws InvalidPageRangeException {
         Range pages = new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)

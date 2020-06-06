@@ -1,6 +1,6 @@
-package no.unit.nva.model.util;
+package no.unit.nva.model.instancetypes;
 
-public class ReportContentTestUtil {
+public class ReportTestBase {
 
     /**
      * Creates a JSON string that matches subclasses of ReportContent.
@@ -13,7 +13,7 @@ public class ReportContentTestUtil {
      * @param peerReviewed      The peer-review boolean. Can be set to true for testing purposes.
      * @return A formated JSON string.
      */
-    public static String generateJsonString(String type,
+    public String generateJsonString(String type,
                                             String pages,
                                             String introductionBegin,
                                             String introductionEnd,

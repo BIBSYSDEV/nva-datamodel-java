@@ -3,8 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
+import no.unit.nva.model.pages.Range;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class JournalShortCommunication extends JournalNonPeerReviewedContent {
@@ -17,16 +16,15 @@ public class JournalShortCommunication extends JournalNonPeerReviewedContent {
      * @param articleNumber the article number of the PublicationInstance.
      * @param pages         the Pages of the PublicationInstance.
      * @param peerReviewed  the value is always ignored.
-     * @throws InvalidPageTypeException if the type of Pages is incompatible with the PublicationInstance type.
      */
     @JsonCreator
     public JournalShortCommunication(
             @JsonProperty("volume") String volume,
             @JsonProperty("issue") String issue,
             @JsonProperty("articleNumber") String articleNumber,
-            @JsonProperty("pages") Pages pages,
+            @JsonProperty("pages") Range pages,
             @JsonProperty("peerReviewed") boolean peerReviewed
-    ) throws InvalidPageTypeException {
+    ) {
         super(volume, issue, articleNumber, pages, peerReviewed);
     }
 
@@ -34,7 +32,7 @@ public class JournalShortCommunication extends JournalNonPeerReviewedContent {
         private String volume;
         private String issue;
         private String articleNumber;
-        private Pages pages;
+        private Range pages;
 
         public Builder() {
         }
@@ -54,12 +52,12 @@ public class JournalShortCommunication extends JournalNonPeerReviewedContent {
             return this;
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(Range pages) {
             this.pages = pages;
             return this;
         }
 
-        public JournalShortCommunication build() throws InvalidPageTypeException {
+        public JournalShortCommunication build() {
             return new JournalShortCommunication(this.volume, this.issue, this.articleNumber, this.pages, false);
         }
     }
