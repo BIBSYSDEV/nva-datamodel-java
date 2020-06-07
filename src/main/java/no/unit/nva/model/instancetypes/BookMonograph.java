@@ -16,10 +16,6 @@ public class BookMonograph extends Monograph {
         super(builder.pages, builder.peerReviewed);
     }
 
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
-    }
-
     public static final class Builder {
         private boolean peerReviewed;
         private MonographPages pages;
