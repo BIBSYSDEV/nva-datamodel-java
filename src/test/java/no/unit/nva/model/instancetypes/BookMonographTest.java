@@ -20,7 +20,8 @@ class BookMonographTest extends InstanceTest {
     }
 
     @DisplayName("BookMonograph: ObjectMapper correctly deserializes object")
-    @ParameterizedTest
+    @ParameterizedTest(name = "BookMonograph deserializes begin {0}, end {1}, pages {2}, illustrated {3}, "
+            + "peerReviewed {4}")
     @CsvSource({
             "i,xxviii,398,true,true",
             ",,231,false,true",
@@ -53,7 +54,8 @@ class BookMonographTest extends InstanceTest {
     }
 
     @DisplayName("BookMonograph: ObjectMapper serializes valid input correctly")
-    @ParameterizedTest
+    @ParameterizedTest(name = "BookMonograph serializes begin {0}, end {1}, pages {2}, illustrated {3}, "
+            + "peerReviewed {4}")
     @CsvSource({
             "i,xxviii,398,true,true",
             ",,231,false,true",
