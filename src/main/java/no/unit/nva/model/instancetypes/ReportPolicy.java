@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ReportPolicy extends ReportContent {
+public class ReportPolicy extends Report {
 
     /**
      * Constructor for ReportPolicy.
@@ -14,8 +14,16 @@ public class ReportPolicy extends ReportContent {
      * @param pages the Pages of the PublicationInstance.
      */
     @JsonCreator
-    public ReportPolicy(@JsonProperty("pages") MonographPages pages) {
-        super(pages);
+    public ReportPolicy(@JsonProperty("pages") MonographPages pages,
+                        @JsonProperty("peerReviewed") boolean peerReviewed) {
+        super(pages, false);
+        if (peerReviewed) {
+            logger.warn(PEER_REVIEWED_FALSE, this.getClass().getSimpleName());
+        }
+    }
+
+    private ReportPolicy(Builder builder) {
+        this(builder.pages, false);
     }
 
     public static final class Builder {
@@ -24,13 +32,13 @@ public class ReportPolicy extends ReportContent {
         public Builder() {
         }
 
-        public ReportPolicy.Builder withPages(MonographPages pages) {
+        public Builder withPages(MonographPages pages) {
             this.pages = pages;
             return this;
         }
 
         public ReportPolicy build() {
-            return new ReportPolicy(this.pages);
+            return new ReportPolicy(this);
         }
     }
 }

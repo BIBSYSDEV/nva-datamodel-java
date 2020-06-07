@@ -2,19 +2,24 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportWorkingPaperTest extends ReportTestBase {
+class ReportWorkingPaperTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+
+    @RegisterExtension
+    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
 
     @DisplayName("Report working paper can be created from JSON")
     @Test
@@ -41,10 +46,17 @@ class ReportWorkingPaperTest extends ReportTestBase {
         ReportWorkingPaper expected = generateReportWorkingPaper(pages, introductionBegin, introductionEnd,
                 illustrated);
 
-        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
                 illustrated, peerReviewed);
         ReportWorkingPaper reportWorkingPaper = objectMapper.readValue(json, ReportWorkingPaper.class);
         assertEquals(expected, reportWorkingPaper);
+    }
+
+    @Test
+    void reportLogsWarningWhenPeerReviewedIsTrue() {
+        new ReportWorkingPaper(null, true);
+        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", ReportWorkingPaper.class.getSimpleName());
+        logs.assertContains(expected);
     }
 
     private ReportWorkingPaper generateReportWorkingPaper(String pages, String introductionBegin,

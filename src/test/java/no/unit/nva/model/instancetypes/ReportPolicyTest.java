@@ -2,19 +2,24 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportPolicyTest extends ReportTestBase {
+class ReportPolicyTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+
+    @RegisterExtension
+    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
 
     @DisplayName("Report policy can be created from JSON")
     @Test
@@ -31,7 +36,6 @@ class ReportPolicyTest extends ReportTestBase {
     @Test
     void reportPolicySetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
-        ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportPolicy";
         String pages = "42";
         String introductionBegin = "1";
@@ -40,10 +44,17 @@ class ReportPolicyTest extends ReportTestBase {
         boolean peerReviewed = true;
         ReportPolicy expected = generateReportPolicy(pages, introductionBegin, introductionEnd, illustrated);
 
-        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
                 illustrated, peerReviewed);
         ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);
         assertEquals(expected, reportPolicy);
+    }
+
+    @Test
+    void reportLogsWarningWhenPeerReviewedIsTrue() {
+        new ReportPolicy(null, true);
+        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", ReportPolicy.class.getSimpleName());
+        logs.assertContains(expected);
     }
 
     private ReportPolicy generateReportPolicy(String pages, String introductionBegin, String introductionEnd,

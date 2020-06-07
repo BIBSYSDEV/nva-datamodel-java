@@ -1,20 +1,21 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportResearchTest extends ReportTestBase {
+class ReportResearchTest extends InstanceTest {
 
-    public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+    @RegisterExtension
+    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
 
     @DisplayName("Report research can be created from JSON")
     @Test
@@ -31,19 +32,24 @@ class ReportResearchTest extends ReportTestBase {
     @Test
     void reportResearchSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
-        ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportResearch";
         String pages = "42";
         String introductionBegin = "1";
         String introductionEnd = "3";
         boolean illustrated = false;
-        boolean peerReviewed = true;
+        boolean peerReviewed = false;
         ReportResearch expected = generateReportResearch(pages, introductionBegin, introductionEnd, illustrated);
-
-        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
                 illustrated, peerReviewed);
-        ReportResearch reportResearch = objectMapper.readValue(json, ReportResearch.class);
-        assertEquals(expected, reportResearch);
+        ReportResearch actual = objectMapper.readValue(json, ReportResearch.class);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void reportLogsWarningWhenPeerReviewedIsTrue() {
+        new ReportResearch(null, true);
+        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", ReportResearch.class.getSimpleName());
+        logs.assertContains(expected);
     }
 
     private ReportResearch generateReportResearch(String pages, String introductionBegin, String introductionEnd,

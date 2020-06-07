@@ -9,47 +9,45 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BookMonographTest extends BookInstanceTest {
+class BookMonographTest extends InstanceTest {
 
     public static final String BOOK_MONOGRAPH = "BookMonograph";
 
     @DisplayName("BookMonograph exists")
     @Test
     void bookMonographExists() {
-        new BookMonograph();
+        new BookMonograph(null, false);
     }
 
     @DisplayName("BookMonograph: ObjectMapper correctly deserializes object")
     @ParameterizedTest
     @CsvSource({
-            "i,xxviii,398,true,true,true,",
-            ",,231,false,true,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false"
     })
     void objectMapperReturnsBookMonographWhenInputIsValid(String begin,
                                                           String end,
                                                           String pages,
                                                           boolean illustrated,
-                                                          boolean peerReviewed,
-                                                          boolean openAccess) throws JsonProcessingException,
+                                                          boolean peerReviewed) throws JsonProcessingException,
             InvalidPageRangeException {
         BookMonograph expected = generateBookMonograph(
                 begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                openAccess
+                peerReviewed
         );
 
-        String json = generateBookInstanceJson(
+        String json = generateMonographJsonString(
                 BOOK_MONOGRAPH,
                 begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                openAccess);
+                peerReviewed
+        );
         BookMonograph actual = objectMapper.readValue(json, BookMonograph.class);
         assertEquals(expected, actual);
     }
@@ -57,27 +55,26 @@ class BookMonographTest extends BookInstanceTest {
     @DisplayName("BookMonograph: ObjectMapper serializes valid input correctly")
     @ParameterizedTest
     @CsvSource({
-            "i,xxviii,398,true,true,true,",
-            ",,231,false,true,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false"
     })
     void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
-                                                         boolean peerReviewed,
-                                                         boolean openAccess) throws
+                                                         boolean peerReviewed) throws
             InvalidPageRangeException, JsonProcessingException {
 
         BookMonograph bookMonograph = generateBookMonograph(begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                openAccess);
+                peerReviewed
+        );
         String json = objectMapper.writeValueAsString(bookMonograph);
-        String expected = generateBookInstanceJson(BOOK_MONOGRAPH,
-                begin, end, pages, illustrated, peerReviewed, openAccess);
+        String expected = generateMonographJsonString(BOOK_MONOGRAPH,
+                begin, end, pages, illustrated, peerReviewed);
         assertEquals(expected, json);
     }
 
@@ -85,13 +82,11 @@ class BookMonographTest extends BookInstanceTest {
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
-                                                boolean peerReviewed,
-                                                boolean openAccess) throws InvalidPageRangeException {
+                                                boolean peerReviewed) throws InvalidPageRangeException {
 
         return new BookMonograph.Builder()
-                .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))
+                .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
                 .withPeerReviewed(peerReviewed)
-                .withOpenAccess(openAccess)
                 .build();
     }
 }

@@ -13,6 +13,7 @@ public class ChapterArticle implements PublicationInstance<Range> {
     private boolean peerReviewed;
 
     public ChapterArticle() {
+        super();
     }
 
     private ChapterArticle(Builder builder) {
@@ -31,13 +32,12 @@ public class ChapterArticle implements PublicationInstance<Range> {
     }
 
     @Override
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
-    }
-
-    @Override
     public boolean isPeerReviewed() {
         return peerReviewed;
+    }
+
+    public void setPeerReviewed(boolean peerReviewed) {
+        this.peerReviewed = peerReviewed;
     }
 
     @JacocoGenerated
@@ -59,7 +59,6 @@ public class ChapterArticle implements PublicationInstance<Range> {
     public int hashCode() {
         return Objects.hash(getPages(), isPeerReviewed());
     }
-
 
     public static final class Builder {
         private Range pages;

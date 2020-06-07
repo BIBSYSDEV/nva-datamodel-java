@@ -1,25 +1,23 @@
 package no.unit.nva.model.instancetypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class BookAnthology extends BookMonograph {
-    public BookAnthology() {
-        super();
+    public BookAnthology(@JsonProperty("pages") MonographPages pages,
+                         @JsonProperty("peerReviewed") boolean peerReviewed) {
+        super(pages, peerReviewed);
     }
 
     private BookAnthology(Builder builder) {
-        super();
-        setPages(builder.pages);
-        setPeerReviewed(builder.peerReviewed);
-        setOpenAccess(builder.openAccess);
+        super(builder.pages, builder.peerReviewed);
     }
 
     public static final class Builder {
         private MonographPages pages;
         private boolean peerReviewed;
-        private boolean openAccess;
 
         public Builder() {
         }
@@ -31,11 +29,6 @@ public class BookAnthology extends BookMonograph {
 
         public Builder withPeerReviewed(boolean peerReviewed) {
             this.peerReviewed = peerReviewed;
-            return this;
-        }
-
-        public Builder withOpenAccess(boolean openAccess) {
-            this.openAccess = openAccess;
             return this;
         }
 

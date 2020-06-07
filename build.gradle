@@ -36,6 +36,8 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
     testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
+    testImplementation group: 'io.github.netmikey.logunit', name: 'logunit-core', version: '1.1.0'
+    testRuntimeOnly group: 'io.github.netmikey.logunit', name: 'logunit-log4j2', version: '1.1.0'
     testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 }
