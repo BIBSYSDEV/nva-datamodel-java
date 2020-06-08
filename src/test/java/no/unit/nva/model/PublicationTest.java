@@ -14,7 +14,7 @@ public class PublicationTest {
     public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContext.json";
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
 
-    protected final ObjectMapper objectMapper = nva.commons.utils.JsonUtils.objectMapper;
+    protected static final ObjectMapper objectMapper = nva.commons.utils.JsonUtils.objectMapper;
 
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {
         JsonNode document = objectMapper.readTree(objectMapper.writeValueAsString(publication));
