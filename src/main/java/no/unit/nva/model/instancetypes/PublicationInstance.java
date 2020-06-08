@@ -14,6 +14,8 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "BookMonograph", value = BookMonograph.class),
         @JsonSubTypes.Type(name = "BookAnthology", value = BookAnthology.class),
         @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),
+        @JsonSubTypes.Type(name = "DegreeMaster", value = DegreeMaster.class),
+        @JsonSubTypes.Type(name = "DegreePhd", value = DegreePhd.class),
         @JsonSubTypes.Type(name = "Report", value = Report.class),
         @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
         @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
