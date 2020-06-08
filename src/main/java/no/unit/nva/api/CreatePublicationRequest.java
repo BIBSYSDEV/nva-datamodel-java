@@ -1,5 +1,6 @@
 package no.unit.nva.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Objects;
@@ -9,15 +10,17 @@ import no.unit.nva.WithMetadata;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.ResearchProject;
+import no.unit.nva.WithFlags;
 import nva.commons.utils.JacocoGenerated;
 
-public class CreatePublicationRequest implements WithMetadata, WithFile, WithContext {
+public class CreatePublicationRequest implements WithMetadata, WithFile, WithContext, WithFlags {
 
     private EntityDescription entityDescription;
     private ResearchProject project;
     private FileSet fileSet;
     @JsonProperty("@context")
     private JsonNode context;
+    private Boolean doiRequested;
 
     @Override
     public EntityDescription getEntityDescription() {
@@ -60,6 +63,17 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
     }
 
     @Override
+    public Boolean getDoiRequested() {
+        return doiRequested;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setDoiRequest(Boolean doiRequested) {
+        this.doiRequested = doiRequested;
+    }
+
+    @Override
     @JacocoGenerated
     public boolean equals(Object o) {
         if (this == o) {
@@ -72,7 +86,8 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
         return Objects.equals(entityDescription, that.entityDescription)
             && Objects.equals(project, that.project)
             && Objects.equals(fileSet, that.fileSet)
-            && Objects.equals(context, that.context);
+            && Objects.equals(context, that.context)
+            && Objects.equals(doiRequested, that.doiRequested);
     }
 
     @Override
