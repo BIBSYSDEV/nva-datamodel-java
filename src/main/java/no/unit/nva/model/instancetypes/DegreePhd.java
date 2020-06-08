@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class DegreePhd extends Report {
+public class DegreePhd extends NonPeerReviewedMonograph {
 
     public DegreePhd(@JsonProperty("pages") MonographPages pages) {
         super(pages);

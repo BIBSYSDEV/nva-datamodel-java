@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ReportPolicy extends Report {
+public class ReportPolicy extends NonPeerReviewedMonograph {
 
     /**
      * Constructor for ReportPolicy.
