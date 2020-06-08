@@ -9,47 +9,45 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BookAnthologyTest extends BookInstanceTest {
+class BookAnthologyTest extends InstanceTest {
 
     public static final String BOOK_ANTHOLOGY = "BookAnthology";
 
     @DisplayName("BookAnthology exists")
     @Test
     void bookAnthologyExists() {
-        new BookAnthology();
+        new BookAnthology(null, false);
     }
 
     @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")
-    @ParameterizedTest
+    @ParameterizedTest(name = "BookAnthology deserialized with begin {0}, end {1}, pages {2}, illustrated {3}, "
+            + "peerReviewed {4}")
     @CsvSource({
-            "i,xxviii,398,true,true,true,",
-            ",,231,false,true,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false"
     })
     void objectMapperReturnsBookAnthologyWhenInputIsValid(String begin,
                                                           String end,
                                                           String pages,
                                                           boolean illustrated,
-                                                          boolean peerReviewed,
-                                                          boolean openAccess) throws JsonProcessingException,
+                                                          boolean peerReviewed) throws JsonProcessingException,
             InvalidPageRangeException {
 
-        String json = generateBookInstanceJson(
+        String json = generateMonographJsonString(
                 BOOK_ANTHOLOGY,
                 begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                openAccess);
+                peerReviewed);
 
         BookAnthology expected = generateBookAnthology(
                 begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                openAccess
+                peerReviewed
         );
 
         BookAnthology actual = objectMapper.readValue(json, BookAnthology.class);
@@ -57,18 +55,18 @@ class BookAnthologyTest extends BookInstanceTest {
     }
 
     @DisplayName("BookAnthology: ObjectMapper serializes valid input correctly")
-    @ParameterizedTest
+    @ParameterizedTest(name = "BookAnthology serialized with begin {0}, end {1}, pages {2}, illustrated {3}, "
+            + "peerReviewed {4}")
     @CsvSource({
-            "i,xxviii,398,true,true,true,",
-            ",,231,false,true,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false"
     })
     void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
-                                                         boolean peerReviewed,
-                                                         boolean openAccess) throws JsonProcessingException,
+                                                         boolean peerReviewed) throws JsonProcessingException,
             InvalidPageRangeException {
 
         BookAnthology bookAnthology = generateBookAnthology(
@@ -76,18 +74,16 @@ class BookAnthologyTest extends BookInstanceTest {
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                openAccess
+                peerReviewed
         );
         String json = objectMapper.writeValueAsString(bookAnthology);
-        String expected = generateBookInstanceJson(
+        String expected = generateMonographJsonString(
                 BOOK_ANTHOLOGY,
                 begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                openAccess);
+                peerReviewed);
         assertEquals(expected, json);
     }
 
@@ -95,13 +91,11 @@ class BookAnthologyTest extends BookInstanceTest {
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
-                                                boolean peerReviewed,
-                                                boolean openAccess) throws InvalidPageRangeException {
+                                                boolean peerReviewed) throws InvalidPageRangeException {
 
         return new BookAnthology.Builder()
-                .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))
+                .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
                 .withPeerReviewed(peerReviewed)
-                .withOpenAccess(openAccess)
                 .build();
     }
 }

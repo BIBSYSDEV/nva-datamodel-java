@@ -1,20 +1,20 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import java.rmi.UnexpectedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportResearchTest extends ReportTestBase {
-
-    public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+class ReportResearchTest extends InstanceTest {
 
     @DisplayName("Report research can be created from JSON")
     @Test
@@ -31,19 +31,30 @@ class ReportResearchTest extends ReportTestBase {
     @Test
     void reportResearchSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
-        ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportResearch";
         String pages = "42";
         String introductionBegin = "1";
         String introductionEnd = "3";
         boolean illustrated = false;
-        boolean peerReviewed = true;
+        boolean peerReviewed = false;
         ReportResearch expected = generateReportResearch(pages, introductionBegin, introductionEnd, illustrated);
-
-        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
                 illustrated, peerReviewed);
-        ReportResearch reportResearch = objectMapper.readValue(json, ReportResearch.class);
-        assertEquals(expected, reportResearch);
+        ReportResearch actual = objectMapper.readValue(json, ReportResearch.class);
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("ReportResearch: Attempting to set peer reviewed to true results in Unexpected exception")
+    @Test
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            ReportResearch reportResearch = new ReportResearch(null);
+            reportResearch.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(ReportResearch.PEER_REVIEWED_ERROR_TEMPLATE,
+                ReportResearch.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private ReportResearch generateReportResearch(String pages, String introductionBegin, String introductionEnd,

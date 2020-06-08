@@ -8,11 +8,15 @@ import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import java.rmi.UnexpectedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportPolicyTest extends ReportTestBase {
+class ReportPolicyTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -31,7 +35,6 @@ class ReportPolicyTest extends ReportTestBase {
     @Test
     void reportPolicySetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
-        ObjectMapper objectMapper = new ObjectMapper();
         String type = "ReportPolicy";
         String pages = "42";
         String introductionBegin = "1";
@@ -40,10 +43,23 @@ class ReportPolicyTest extends ReportTestBase {
         boolean peerReviewed = true;
         ReportPolicy expected = generateReportPolicy(pages, introductionBegin, introductionEnd, illustrated);
 
-        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
                 illustrated, peerReviewed);
         ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);
         assertEquals(expected, reportPolicy);
+    }
+
+    @DisplayName("ReportPolicy: Attempting to set peer reviewed to true results in Unexpected exception")
+    @Test
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            ReportPolicy reportPolicy = new ReportPolicy(null);
+            reportPolicy.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(ReportPolicy.PEER_REVIEWED_ERROR_TEMPLATE,
+                ReportPolicy.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private ReportPolicy generateReportPolicy(String pages, String introductionBegin, String introductionEnd,

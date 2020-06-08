@@ -1,21 +1,23 @@
 package no.unit.nva.model.instancetypes;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Report extends ReportContent {
+public class Report extends NonPeerReviewedMonograph {
 
     /**
-     * Constructor for Report.
+     * The constructor allows setting of pages and open access status, and sets peer-reviewed status to false.
      *
-     * @param pages the Pages of the PublicationInstance.
+     * @param pages A {@link MonographPages} object.
      */
-    @JsonCreator
     public Report(@JsonProperty("pages") MonographPages pages) {
         super(pages);
+    }
+
+    private Report(Builder builder) {
+        this(builder.pages);
     }
 
     public static final class Builder {
@@ -24,13 +26,13 @@ public class Report extends ReportContent {
         public Builder() {
         }
 
-        public Report.Builder withPages(MonographPages pages) {
+        public Builder withPages(MonographPages pages) {
             this.pages = pages;
             return this;
         }
 
         public Report build() {
-            return new Report(this.pages);
+            return new Report(this);
         }
     }
 

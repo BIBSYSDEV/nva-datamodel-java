@@ -25,7 +25,6 @@ public interface PublicationInstance<P extends Pages> {
 
     void setPages(P pages);
 
-    void setPeerReviewed(boolean peerReviewed);
-
     boolean isPeerReviewed();
+
 }
