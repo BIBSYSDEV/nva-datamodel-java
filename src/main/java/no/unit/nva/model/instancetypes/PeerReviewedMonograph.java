@@ -8,7 +8,7 @@ import java.util.Objects;
 public class PeerReviewedMonograph implements PublicationInstance<MonographPages> {
 
     private MonographPages pages;
-    protected boolean peerReviewed;
+    private boolean peerReviewed;
 
     protected PeerReviewedMonograph() {
     }
