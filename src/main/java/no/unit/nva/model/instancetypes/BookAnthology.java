@@ -6,6 +6,7 @@ import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class BookAnthology extends PeerReviewedMonograph {
+
     public BookAnthology(@JsonProperty("pages") MonographPages pages,
                          @JsonProperty("peerReviewed") boolean peerReviewed) {
         super(pages, peerReviewed);
