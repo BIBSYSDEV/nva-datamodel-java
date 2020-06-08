@@ -2,24 +2,23 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.function.Executable;
+
+import java.rmi.UnexpectedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReportPolicyTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-
-    @RegisterExtension
-    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
 
     @DisplayName("Report policy can be created from JSON")
     @Test
@@ -50,11 +49,17 @@ class ReportPolicyTest extends InstanceTest {
         assertEquals(expected, reportPolicy);
     }
 
+    @DisplayName("ReportPolicy: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void reportLogsWarningWhenPeerReviewedIsTrue() {
-        new ReportPolicy(null, true);
-        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", ReportPolicy.class.getSimpleName());
-        logs.assertContains(expected);
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            ReportPolicy reportPolicy = new ReportPolicy(null);
+            reportPolicy.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(ReportPolicy.PEER_REVIEWED_ERROR_TEMPLATE,
+                ReportPolicy.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private ReportPolicy generateReportPolicy(String pages, String introductionBegin, String introductionEnd,

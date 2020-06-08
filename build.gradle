@@ -22,7 +22,6 @@ configurations {
 
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
-def logUnitVersion = '1.1.0'
 
 gradleLint.rules = ['unused-dependency']
 
@@ -38,12 +37,6 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
     testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
-    testImplementation (group: 'io.github.netmikey.logunit', name: 'logunit-core', version: logUnitVersion) {
-        because('Used for unit testing log messages')
-    }
-    testRuntimeOnly (group: 'io.github.netmikey.logunit', name: 'logunit-log4j2', version: logUnitVersion) {
-        because('Used by logUnit to access log bindings log4j')
-    }
     testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 }

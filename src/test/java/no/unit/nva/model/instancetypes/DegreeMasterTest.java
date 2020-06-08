@@ -1,26 +1,25 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.rmi.UnexpectedException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DegreeMasterTest extends InstanceTest {
     private static final String DEGREE_MASTER = "DegreeMaster";
 
-    @RegisterExtension
-    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
-
     @DisplayName("DegreeMaster exists")
     @Test
     void degreeMasterExists() {
-        new DegreeMaster(null, false);
+        new DegreeMaster(null);
     }
 
     @DisplayName("DegreeMaster: ObjectMapper correctly deserializes object")
@@ -78,11 +77,16 @@ public class DegreeMasterTest extends InstanceTest {
         assertEquals(expected, json);
     }
 
+    @DisplayName("DegreePhd: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void reportLogsWarningWhenPeerReviewedIsTrue() {
-        new DegreeMaster(null, true);
-        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", DegreeMaster.class.getSimpleName());
-        logs.assertContains(expected);
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            DegreeMaster degreeMaster = new DegreeMaster(null);
+            degreeMaster.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(DegreeMaster.PEER_REVIEWED_ERROR_TEMPLATE, DegreeMaster.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private DegreeMaster generateDegreeMaster(String introductionBegin,

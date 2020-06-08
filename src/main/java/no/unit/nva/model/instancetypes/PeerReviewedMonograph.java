@@ -5,15 +5,15 @@ import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-public class Monograph implements PublicationInstance<MonographPages> {
+public class PeerReviewedMonograph implements PublicationInstance<MonographPages> {
 
     private MonographPages pages;
     protected boolean peerReviewed;
 
-    protected Monograph() {
+    protected PeerReviewedMonograph() {
     }
 
-    protected Monograph(MonographPages pages, boolean peerReviewed) {
+    protected PeerReviewedMonograph(MonographPages pages, boolean peerReviewed) {
         this.pages = pages;
         this.peerReviewed = peerReviewed;
     }
@@ -39,17 +39,17 @@ public class Monograph implements PublicationInstance<MonographPages> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Monograph)) {
+        if (!(o instanceof PeerReviewedMonograph)) {
             return false;
         }
-        Monograph monograph = (Monograph) o;
-        return peerReviewed == monograph.peerReviewed
-                && Objects.equals(getPages(), monograph.getPages());
+        PeerReviewedMonograph that = (PeerReviewedMonograph) o;
+        return isPeerReviewed() == that.isPeerReviewed()
+                && Objects.equals(getPages(), that.getPages());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getPages(), peerReviewed);
+        return Objects.hash(getPages(), isPeerReviewed());
     }
 }

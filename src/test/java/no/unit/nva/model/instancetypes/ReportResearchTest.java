@@ -1,21 +1,20 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.function.Executable;
+
+import java.rmi.UnexpectedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReportResearchTest extends InstanceTest {
-
-    @RegisterExtension
-    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
 
     @DisplayName("Report research can be created from JSON")
     @Test
@@ -45,11 +44,17 @@ class ReportResearchTest extends InstanceTest {
         assertEquals(expected, actual);
     }
 
+    @DisplayName("ReportResearch: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void reportLogsWarningWhenPeerReviewedIsTrue() {
-        new ReportResearch(null, true);
-        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", ReportResearch.class.getSimpleName());
-        logs.assertContains(expected);
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            ReportResearch reportResearch = new ReportResearch(null);
+            reportResearch.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(ReportResearch.PEER_REVIEWED_ERROR_TEMPLATE,
+                ReportResearch.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private ReportResearch generateReportResearch(String pages, String introductionBegin, String introductionEnd,

@@ -1,26 +1,26 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.netmikey.logunit.api.LogCapturer;
+import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.rmi.UnexpectedException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DegreePhdTest extends InstanceTest {
     private static final String DEGREE_PHD = "DegreePhd";
 
-    @RegisterExtension
-    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
-
     @DisplayName("DegreePhd exists")
     @Test
     void degreePhdExists() {
-        new DegreePhd(null, false);
+        new DegreePhd(null);
     }
 
     @DisplayName("DegreePhd: ObjectMapper correctly deserializes object")
@@ -81,11 +81,16 @@ public class DegreePhdTest extends InstanceTest {
         assertEquals(expected, json);
     }
 
+    @DisplayName("DegreePhd: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void reportLogsWarningWhenPeerReviewedIsTrue() {
-        new DegreePhd(null, true);
-        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", DegreePhd.class.getSimpleName());
-        logs.assertContains(expected);
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            DegreePhd degreePhd = new DegreePhd(null);
+            degreePhd.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(DegreePhd.PEER_REVIEWED_ERROR_TEMPLATE, DegreePhd.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private DegreePhd generateDegreePhd(String introductionBegin,

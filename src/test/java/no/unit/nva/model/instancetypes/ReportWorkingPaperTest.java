@@ -2,24 +2,23 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.function.Executable;
+
+import java.rmi.UnexpectedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReportWorkingPaperTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-
-    @RegisterExtension
-    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
 
     @DisplayName("Report working paper can be created from JSON")
     @Test
@@ -52,11 +51,17 @@ class ReportWorkingPaperTest extends InstanceTest {
         assertEquals(expected, reportWorkingPaper);
     }
 
+    @DisplayName("ReportWorkingPaper: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void reportLogsWarningWhenPeerReviewedIsTrue() {
-        new ReportWorkingPaper(null, true);
-        String expected = Report.PEER_REVIEWED_FALSE.replace("{}", ReportWorkingPaper.class.getSimpleName());
-        logs.assertContains(expected);
+    void reportWorkingPaperThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            ReportWorkingPaper reportWorkingPaper = new ReportWorkingPaper(null);
+            reportWorkingPaper.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(ReportWorkingPaper.PEER_REVIEWED_ERROR_TEMPLATE,
+                ReportWorkingPaper.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private ReportWorkingPaper generateReportWorkingPaper(String pages, String introductionBegin,

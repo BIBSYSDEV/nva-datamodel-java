@@ -1,26 +1,25 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.netmikey.logunit.api.LogCapturer;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.rmi.UnexpectedException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DegreeBachelorTest extends InstanceTest {
     private static final String DEGREE_BACHELOR = "DegreeBachelor";
 
-    @RegisterExtension
-    LogCapturer logs = LogCapturer.create().captureForType(NonPeerReviewedMonograph.class);
-
     @DisplayName("DegreeBachelor exists")
     @Test
     void degreeBachelorExists() {
-        new DegreeBachelor(null, false);
+        new DegreeBachelor(null);
     }
 
     @DisplayName("DegreeBachelor: ObjectMapper correctly deserializes object")
@@ -82,11 +81,17 @@ public class DegreeBachelorTest extends InstanceTest {
         assertEquals(expected, json);
     }
 
+    @DisplayName("DegreePhd: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void degreeBachelorLogsWarningWhenPeerReviewedIsTrue() {
-        new DegreeBachelor(null, true);
-        String expected = DegreeBachelor.PEER_REVIEWED_FALSE.replace("{}", DegreeBachelor.class.getSimpleName());
-        logs.assertContains(expected);
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            DegreeBachelor degreeBachelor = new DegreeBachelor(null);
+            degreeBachelor.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(DegreeBachelor.PEER_REVIEWED_ERROR_TEMPLATE,
+                DegreeBachelor.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private DegreeBachelor generateDegreeBachelor(String introductionBegin,

@@ -1,6 +1,5 @@
 package no.unit.nva.model.instancetypes;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
@@ -13,17 +12,12 @@ public class ReportPolicy extends Report {
      *
      * @param pages the Pages of the PublicationInstance.
      */
-    @JsonCreator
-    public ReportPolicy(@JsonProperty("pages") MonographPages pages,
-                        @JsonProperty("peerReviewed") boolean peerReviewed) {
-        super(pages, false);
-        if (peerReviewed) {
-            logger.warn(PEER_REVIEWED_FALSE, this.getClass().getSimpleName());
-        }
+    public ReportPolicy(@JsonProperty("pages") MonographPages pages) {
+        super(pages);
     }
 
     private ReportPolicy(Builder builder) {
-        this(builder.pages, false);
+        this(builder.pages);
     }
 
     public static final class Builder {

@@ -6,13 +6,13 @@ import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DegreeMaster extends Report {
-    public DegreeMaster(@JsonProperty("pages") MonographPages pages,
-                        @JsonProperty("peerReviewed") boolean peerReviewed) {
-        super(pages, peerReviewed);
+
+    public DegreeMaster(@JsonProperty("pages") MonographPages pages) {
+        super(pages);
     }
 
     private DegreeMaster(Builder builder) {
-        super(builder.pages, false);
+        super(builder.pages);
         setPages(builder.pages);
     }
 

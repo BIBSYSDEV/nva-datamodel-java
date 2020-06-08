@@ -1,6 +1,5 @@
 package no.unit.nva.model.instancetypes;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
@@ -13,14 +12,12 @@ public class Report extends NonPeerReviewedMonograph {
      *
      * @param pages A {@link MonographPages} object.
      */
-    @JsonCreator
-    public Report(@JsonProperty("pages") MonographPages pages,
-                  @JsonProperty("peerReviewed") boolean peerReviewed) {
-        super(pages, peerReviewed);
+    public Report(@JsonProperty("pages") MonographPages pages) {
+        super(pages);
     }
 
     private Report(Builder builder) {
-        this(builder.pages, false);
+        this(builder.pages);
     }
 
     public static final class Builder {
