@@ -8,23 +8,29 @@ import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import java.rmi.UnexpectedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ReportTest extends ReportTestBase {
+class ReportTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+    public static final String REPORT = "Report";
 
     @DisplayName("Report can be created from JSON")
     @Test
     void reportReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageRangeException {
-        Report expected = generateReport("42", "1", "3", false);
-        String json = objectMapper.writeValueAsString(expected);
-        assertTrue(json.contains("peerReviewed"));
-        Report report = objectMapper.readValue(json, Report.class);
-        assertEquals(expected, report);
+        String pages = "42";
+        String introductionBegin = "1";
+        String introductionEnd = "3";
+        Report expected = generateReport(pages, introductionBegin, introductionEnd, false);
+        String json = generateMonographJsonString(REPORT, introductionBegin, introductionEnd, pages, false);
+        Report actual = objectMapper.readValue(json, Report.class);
+        assertEquals(expected, actual);
     }
 
     @DisplayName("Report cannot be peer reviewed")
@@ -32,18 +38,26 @@ class ReportTest extends ReportTestBase {
     void reportSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String type = "Report";
         String pages = "42";
         String introductionBegin = "1";
         String introductionEnd = "3";
-        boolean illustrated = false;
-        boolean peerReviewed = true;
-        Report expected = generateReport(pages, introductionBegin, introductionEnd, illustrated);
-
-        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
-                illustrated, peerReviewed);
+        Report expected = generateReport(pages, introductionBegin, introductionEnd, false);
+        String json = generateMonographJsonString(REPORT, introductionBegin, introductionEnd, pages, false, true);
         Report report = objectMapper.readValue(json, Report.class);
         assertEquals(expected, report);
+    }
+
+    @DisplayName("Report: Attempting to set peer reviewed to true results in Unexpected exception")
+    @Test
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            Report report = new Report(null);
+            report.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(Report.PEER_REVIEWED_ERROR_TEMPLATE,
+                Report.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private Report generateReport(String pages, String introductionBegin, String introductionEnd,

@@ -1,87 +1,26 @@
 package no.unit.nva.model.instancetypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
-import nva.commons.utils.JacocoGenerated;
-
-import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class BookMonograph implements PublicationInstance<MonographPages> {
+public class BookMonograph extends PeerReviewedMonograph {
 
-    private MonographPages pages;
-    private boolean peerReviewed;
-    private boolean openAccess;
-
-    public BookMonograph() {
+    public BookMonograph(@JsonProperty("pages") MonographPages pages,
+                         @JsonProperty("peerReviewed") boolean peerReviewed) {
+        super(pages, peerReviewed);
     }
 
     private BookMonograph(Builder builder) {
-        setPages(builder.pages);
-        setPeerReviewed(builder.peerReviewed);
-        setOpenAccess(builder.openAccess);
-    }
-
-    @Override
-    public MonographPages getPages() {
-        return pages;
-    }
-
-    @Override
-    public void setPages(MonographPages pages) {
-        this.pages = pages;
-    }
-
-    @Override
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return peerReviewed;
-    }
-
-    public boolean isOpenAccess() {
-        return openAccess;
-    }
-
-    public void setOpenAccess(boolean openAccess) {
-        this.openAccess = openAccess;
-    }
-
-    @JacocoGenerated
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof BookMonograph)) {
-            return false;
-        }
-        BookMonograph that = (BookMonograph) o;
-        return isPeerReviewed() == that.isPeerReviewed()
-                && isOpenAccess() == that.isOpenAccess()
-                && Objects.equals(getPages(), that.getPages());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPages(), isPeerReviewed(), isOpenAccess());
+        super(builder.pages, builder.peerReviewed);
     }
 
     public static final class Builder {
-        private MonographPages pages;
         private boolean peerReviewed;
-        private boolean openAccess;
+        private MonographPages pages;
 
         public Builder() {
-        }
-
-        public Builder withPages(MonographPages pages) {
-            this.pages = pages;
-            return this;
         }
 
         public Builder withPeerReviewed(boolean peerReviewed) {
@@ -89,8 +28,8 @@ public class BookMonograph implements PublicationInstance<MonographPages> {
             return this;
         }
 
-        public Builder withOpenAccess(boolean openAccess) {
-            this.openAccess = openAccess;
+        public Builder withPages(MonographPages pages) {
+            this.pages = pages;
             return this;
         }
 

@@ -4,16 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.Range;
-import no.unit.nva.model.util.JournalNonPeerReviewedContentUtil;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class JournalLetterTest {
-
-    public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+class JournalLetterTest extends InstanceTest {
 
     @DisplayName("Journal letters to editor can be created from JSON")
     @Test
@@ -38,8 +35,7 @@ class JournalLetterTest {
         String end = "3";
         JournalLetter expected = generateJournalLetter(volume, issue, articleNumber, begin, end);
 
-        String json = JournalNonPeerReviewedContentUtil.generateJsonString(type,
-                volume, issue, articleNumber, begin, end, true);
+        String json = generateArticleJsonString(type, volume, issue, articleNumber, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, JournalLetter.class));
     }
 

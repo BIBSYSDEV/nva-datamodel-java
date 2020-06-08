@@ -8,11 +8,15 @@ import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import java.rmi.UnexpectedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportWorkingPaperTest extends ReportTestBase {
+class ReportWorkingPaperTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -41,10 +45,23 @@ class ReportWorkingPaperTest extends ReportTestBase {
         ReportWorkingPaper expected = generateReportWorkingPaper(pages, introductionBegin, introductionEnd,
                 illustrated);
 
-        String json = generateJsonString(type, pages, introductionBegin, introductionEnd,
+        String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
                 illustrated, peerReviewed);
         ReportWorkingPaper reportWorkingPaper = objectMapper.readValue(json, ReportWorkingPaper.class);
         assertEquals(expected, reportWorkingPaper);
+    }
+
+    @DisplayName("ReportWorkingPaper: Attempting to set peer reviewed to true results in Unexpected exception")
+    @Test
+    void reportWorkingPaperThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            ReportWorkingPaper reportWorkingPaper = new ReportWorkingPaper(null);
+            reportWorkingPaper.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(ReportWorkingPaper.PEER_REVIEWED_ERROR_TEMPLATE,
+                ReportWorkingPaper.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private ReportWorkingPaper generateReportWorkingPaper(String pages, String introductionBegin,
