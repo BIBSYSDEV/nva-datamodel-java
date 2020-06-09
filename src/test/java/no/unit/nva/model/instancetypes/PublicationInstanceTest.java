@@ -1,19 +1,16 @@
 package no.unit.nva.model.instancetypes;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.nio.file.Path;
-
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.IoUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.nio.file.Path;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PublicationInstanceTest {
     @DisplayName("Publication instance exists")
@@ -25,8 +22,8 @@ class PublicationInstanceTest {
     @DisplayName("Publication instance can be serialized with Range object")
     @Test
     void publicationInstanceReturnsSerializedJsonWhenValidRangeIsInput() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
-        PublicationInstance publicationInstance = new JournalArticle();
+            InvalidPageRangeException {
+        PublicationInstance<Range> publicationInstance = new JournalArticle();
 
         Range range = new Range.Builder()
                 .withBegin("1")
@@ -38,22 +35,5 @@ class PublicationInstanceTest {
         ObjectMapper objectMapper = new ObjectMapper();
         assertEquals(IoUtils.stringFromResources(Path.of("publication_instance_pages.json")),
                 objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(publicationInstance));
-    }
-
-    @DisplayName("Publication instance cannot be serialized when pages is not a Range object")
-    @Test
-    void journalArticleThrowsInvalidPageExceptionWhenValidMonographPagesIsInput() throws InvalidPageRangeException {
-        PublicationInstance publicationInstance = new JournalArticle();
-
-        MonographPages monographPages = new MonographPages.Builder()
-                .withIllustrated(true)
-                .withIntroduction(new Range.Builder()
-                        .withBegin("i")
-                        .withEnd("ix")
-                        .build())
-                .withPages("90")
-                .build();
-
-        assertThrows(InvalidPageTypeException.class, () -> publicationInstance.setPages(monographPages));
     }
 }

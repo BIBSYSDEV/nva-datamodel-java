@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -14,15 +13,20 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "JournalShortCommunication", value = JournalShortCommunication.class),
         @JsonSubTypes.Type(name = "BookMonograph", value = BookMonograph.class),
         @JsonSubTypes.Type(name = "BookAnthology", value = BookAnthology.class),
-        @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class)
+        @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),
+        @JsonSubTypes.Type(name = "DegreeMaster", value = DegreeMaster.class),
+        @JsonSubTypes.Type(name = "DegreePhd", value = DegreePhd.class),
+        @JsonSubTypes.Type(name = "Report", value = Report.class),
+        @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
+        @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
+        @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class)
 })
-public interface PublicationInstance {
+public interface PublicationInstance<P extends Pages> {
 
-    Pages getPages();
+    P getPages();
 
-    void setPages(Pages pages) throws InvalidPageTypeException;
-
-    void setPeerReviewed(boolean peerReviewed);
+    void setPages(P pages);
 
     boolean isPeerReviewed();
+
 }

@@ -1,31 +1,29 @@
 package no.unit.nva.model.instancetypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
+import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class BookAnthology extends BookMonograph {
-    public BookAnthology() {
-        super();
+public class BookAnthology extends PeerReviewedMonograph {
+
+    public BookAnthology(@JsonProperty("pages") MonographPages pages,
+                         @JsonProperty("peerReviewed") boolean peerReviewed) {
+        super(pages, peerReviewed);
     }
 
-    private BookAnthology(Builder builder) throws InvalidPageTypeException {
-        super();
-        setPages(builder.pages);
-        setPeerReviewed(builder.peerReviewed);
-        setOpenAccess(builder.openAccess);
+    private BookAnthology(Builder builder) {
+        super(builder.pages, builder.peerReviewed);
     }
 
     public static final class Builder {
-        private Pages pages;
+        private MonographPages pages;
         private boolean peerReviewed;
-        private boolean openAccess;
 
         public Builder() {
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(MonographPages pages) {
             this.pages = pages;
             return this;
         }
@@ -35,12 +33,7 @@ public class BookAnthology extends BookMonograph {
             return this;
         }
 
-        public Builder withOpenAccess(boolean openAccess) {
-            this.openAccess = openAccess;
-            return this;
-        }
-
-        public BookAnthology build() throws InvalidPageTypeException {
+        public BookAnthology build() {
             return new BookAnthology(this);
         }
     }

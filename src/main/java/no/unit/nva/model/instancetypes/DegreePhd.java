@@ -1,47 +1,33 @@
 package no.unit.nva.model.instancetypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
+import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class DegreePhd extends BookMonograph {
-    public DegreePhd() {
-        super();
+public class DegreePhd extends NonPeerReviewedMonograph {
+
+    public DegreePhd(@JsonProperty("pages") MonographPages pages) {
+        super(pages);
     }
 
-    private DegreePhd(Builder builder) throws InvalidPageTypeException {
-        super();
-        setPages(builder.pages);
-        setPeerReviewed(builder.peerReviewed);
-        setOpenAccess(builder.openAccess);
+    private DegreePhd(Builder builder) {
+        super(builder.pages);
     }
 
 
     public static final class Builder {
-        private Pages pages;
-        private boolean peerReviewed;
-        private boolean openAccess;
+        private MonographPages pages;
 
         public Builder() {
         }
 
-        public Builder withPages(Pages pages) {
+        public Builder withPages(MonographPages pages) {
             this.pages = pages;
             return this;
         }
 
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
-            return this;
-        }
-
-        public Builder withOpenAccess(boolean openAccess) {
-            this.openAccess = openAccess;
-            return this;
-        }
-
-        public DegreePhd build() throws InvalidPageTypeException {
+        public DegreePhd build() {
             return new DegreePhd(this);
         }
     }

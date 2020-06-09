@@ -3,23 +3,19 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
 import no.unit.nva.model.pages.Range;
-import no.unit.nva.model.util.JournalNonPeerReviewedContentUtil;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class JournalLetterTest {
-
-    public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
+class JournalLetterTest extends InstanceTest {
 
     @DisplayName("Journal letters to editor can be created from JSON")
     @Test
     void journalLetterReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         JournalLetter expected = generateJournalLetter("1", "3", "123", "2", "3");
         String json = objectMapper.writeValueAsString(expected);
         JournalLetter journalLetter = objectMapper.readValue(json, JournalLetter.class);
@@ -29,7 +25,7 @@ class JournalLetterTest {
     @DisplayName("Journal letters cannot be peer reviewed")
     @Test
     void journalLetterSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageTypeException, InvalidPageRangeException {
+            InvalidPageRangeException {
         ObjectMapper objectMapper = new ObjectMapper();
         String type = "JournalLetter";
         String volume = "1";
@@ -39,8 +35,7 @@ class JournalLetterTest {
         String end = "3";
         JournalLetter expected = generateJournalLetter(volume, issue, articleNumber, begin, end);
 
-        String json = JournalNonPeerReviewedContentUtil.generateJsonString(type,
-                volume, issue, articleNumber, begin, end, true);
+        String json = generateArticleJsonString(type, volume, issue, articleNumber, begin, end, true);
         assertEquals(expected, objectMapper.readValue(json, JournalLetter.class));
     }
 
@@ -48,7 +43,7 @@ class JournalLetterTest {
                                                 String issue,
                                                 String articleNumber,
                                                 String begin,
-                                                String end) throws InvalidPageTypeException, InvalidPageRangeException {
+                                                String end) throws InvalidPageRangeException {
         Range pages = new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)

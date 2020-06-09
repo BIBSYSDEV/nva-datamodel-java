@@ -2,58 +2,50 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.exceptions.InvalidPageTypeException;
-import no.unit.nva.model.pages.Pages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import java.rmi.UnexpectedException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DegreeMasterTest extends BookInstanceTest {
+public class DegreeMasterTest extends InstanceTest {
     private static final String DEGREE_MASTER = "DegreeMaster";
 
     @DisplayName("DegreeMaster exists")
     @Test
     void degreeMasterExists() {
-        new DegreeMaster();
+        new DegreeMaster(null);
     }
 
     @DisplayName("DegreeMaster: ObjectMapper correctly deserializes object")
     @ParameterizedTest
     @CsvSource({
-            "i,xxviii,398,true,true,true,",
-            ",,231,false,true,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true",
+            ",,231,false",
+            ",,123,true"
     })
     void objectMapperReturnsDegreeMasterWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
-                                                         boolean illustrated,
-                                                         boolean peerReviewed,
-                                                         boolean openAccess) throws JsonProcessingException,
-            InvalidPageRangeException, InvalidPageTypeException {
-        String json = generateBookInstanceJson(
+                                                         boolean illustrated) throws JsonProcessingException,
+            InvalidPageRangeException {
+        String json = generateMonographJsonString(
                 DEGREE_MASTER,
                 begin,
                 end,
                 pages,
-                illustrated,
-                peerReviewed,
-                openAccess);
+                illustrated);
         DegreeMaster actual = objectMapper.readValue(json, DegreeMaster.class);
         DegreeMaster expected = generateDegreeMaster(
                 begin,
                 end,
                 pages,
-                illustrated,
-                peerReviewed,
-                openAccess
+                illustrated
         );
         assertEquals(expected, actual);
     }
@@ -61,75 +53,49 @@ public class DegreeMasterTest extends BookInstanceTest {
     @DisplayName("DegreeMaster: ObjectMapper serializes valid input correctly")
     @ParameterizedTest
     @CsvSource({
-            "i,xxviii,398,true,true,true,",
-            ",,231,false,true,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true",
+            ",,231,false",
+            ",,123,true"
     })
     void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
-                                                         boolean illustrated,
-                                                         boolean peerReviewed,
-                                                         boolean openAccess) throws InvalidPageTypeException,
-            JsonProcessingException, InvalidPageRangeException {
+                                                         boolean illustrated) throws JsonProcessingException,
+            InvalidPageRangeException {
         DegreeMaster degreeMaster = generateDegreeMaster(
                 begin,
                 end,
                 pages,
-                illustrated,
-                peerReviewed,
-                openAccess
-        );
+                illustrated);
         String json = objectMapper.writeValueAsString(degreeMaster);
-        String expected = generateBookInstanceJson(
+        String expected = generateMonographJsonString(
                 DEGREE_MASTER,
                 begin,
                 end,
                 pages,
-                illustrated,
-                peerReviewed,
-                openAccess);
+                illustrated);
         assertEquals(expected, json);
     }
 
-    @DisplayName("DegreeMaster throws InvalidPageTypeException if pages is not MonographPages")
+    @DisplayName("DegreePhd: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void degreeMasterThrowsInvalidPageTypeExceptionWhenInputIsNotMonographPages() {
-        Executable executable = () -> new DegreeMaster.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(generateRange())
-                .build();
-        InvalidPageTypeException exception = assertThrows(InvalidPageTypeException.class, executable);
-        String expectedMessage = generateInvalidPageTypeExceptionMessage(DegreeMaster.class);
-        assertEquals(expectedMessage, exception.getMessage());
-    }
-
-    @DisplayName("DegreeMaster does not throw InvalidPageTypeException when input is null")
-    @ParameterizedTest
-    @NullSource
-    void degreeMasterDoesNotThrowInvalidPageTypeExceptionWhenInputIsNull(Pages pages) {
-        assertDoesNotThrow(
-            () -> new DegreeMaster.Builder()
-                .withOpenAccess(false)
-                .withPeerReviewed(false)
-                .withPages(pages)
-                .build()
-        );
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+        Executable executable = () -> {
+            DegreeMaster degreeMaster = new DegreeMaster(null);
+            degreeMaster.setPeerReviewed(true);
+        };
+        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
+        String expected = String.format(DegreeMaster.PEER_REVIEWED_ERROR_TEMPLATE, DegreeMaster.class.getSimpleName());
+        assertEquals(expected, exception.getMessage());
     }
 
     private DegreeMaster generateDegreeMaster(String introductionBegin,
                                               String introductionEnd,
                                               String pages,
-                                              boolean illustrated,
-                                              boolean peerReviewed,
-                                              boolean openAccess) throws InvalidPageRangeException,
-            InvalidPageTypeException {
+                                              boolean illustrated) throws InvalidPageRangeException {
 
         return new DegreeMaster.Builder()
-                .withPages(generateMonographPages(pages, illustrated, introductionBegin, introductionEnd))
-                .withPeerReviewed(peerReviewed)
-                .withOpenAccess(openAccess)
+                .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
                 .build();
     }
 }

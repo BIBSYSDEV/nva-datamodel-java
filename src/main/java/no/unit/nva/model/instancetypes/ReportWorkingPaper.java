@@ -5,15 +5,18 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class DegreeMaster extends NonPeerReviewedMonograph {
+public class ReportWorkingPaper extends NonPeerReviewedMonograph {
 
-    public DegreeMaster(@JsonProperty("pages") MonographPages pages) {
+    /**
+     * Constructor for ReportWorkingPaper.
+     * @param pages {@link MonographPages} object for page count
+     */
+    public ReportWorkingPaper(@JsonProperty("pages") MonographPages pages) {
         super(pages);
     }
 
-    private DegreeMaster(Builder builder) {
-        super(builder.pages);
-        setPages(builder.pages);
+    private ReportWorkingPaper(Builder builder) {
+        this(builder.pages);
     }
 
     public static final class Builder {
@@ -27,8 +30,8 @@ public class DegreeMaster extends NonPeerReviewedMonograph {
             return this;
         }
 
-        public DegreeMaster build() {
-            return new DegreeMaster(this);
+        public ReportWorkingPaper build() {
+            return new ReportWorkingPaper(this);
         }
     }
 }
