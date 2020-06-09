@@ -7,11 +7,6 @@ import no.unit.nva.model.pages.MonographPages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Report extends NonPeerReviewedMonograph {
 
-    /**
-     * The constructor allows setting of pages and open access status, and sets peer-reviewed status to false.
-     *
-     * @param pages A {@link MonographPages} object.
-     */
     public Report(@JsonProperty("pages") MonographPages pages) {
         super(pages);
     }
