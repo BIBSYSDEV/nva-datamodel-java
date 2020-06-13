@@ -1,5 +1,6 @@
 package no.unit.nva.model.util;
 
+import no.unit.nva.ModelTest;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
@@ -28,12 +29,14 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
+import no.unit.nva.model.instancetypes.BookAnthology;
 import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.JournalLeader;
 import no.unit.nva.model.instancetypes.JournalLetter;
 import no.unit.nva.model.instancetypes.JournalReview;
 import no.unit.nva.model.instancetypes.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 
 import java.net.URI;
@@ -49,7 +52,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @SuppressWarnings("missingjavadocmethod")
-public class PublicationGenerator {
+public class PublicationGenerator extends ModelTest {
 
     public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final URI SOME_URI = URI.create("https://123123/213123.com");
@@ -80,9 +83,12 @@ public class PublicationGenerator {
     }
 
     public static Publication generatePublication(String type) throws InvalidIssnException,
-            MalformedContributorException, InvalidPageRangeException {
+            MalformedContributorException, InvalidPageRangeException, InvalidIsbnException {
         Reference reference;
         switch (type) {
+            case "BookAnthology":
+                reference = getBookAnthologyReference();
+                break;
             case "JournalLeader":
                 reference = getJournalLeaderReference();
                 break;
@@ -125,6 +131,21 @@ public class PublicationGenerator {
                 .withOwner("eier@example.org")
                 .withProject(getProject())
                 .withDoiRequest(getDoiRequest())
+                .build();
+    }
+
+    private static PublicationInstance<MonographPages> getBookAnthologyInstance() throws InvalidPageRangeException {
+        return new BookAnthology.Builder()
+                .withPages(generateMonographPages("i", "xx", "221", true))
+                .withPeerReviewed(true)
+                .build();
+    }
+
+    private static Reference getBookAnthologyReference() throws InvalidIsbnException, InvalidPageRangeException {
+        return new Reference.Builder()
+                .withDoi(SOME_URI)
+                .withPublishingContext(getPublishingContextBook())
+                .withPublicationInstance(getBookAnthologyInstance())
                 .build();
     }
 

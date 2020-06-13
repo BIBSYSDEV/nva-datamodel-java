@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jsonldjava.utils.JsonUtils;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
@@ -50,7 +51,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
         }
     )
     void publicationReturnsJsonWhenInputIsValid(String type) throws MalformedContributorException,
-            InvalidIssnException, IOException, InvalidPageRangeException {
+            InvalidIssnException, IOException, InvalidPageRangeException, InvalidIsbnException {
         Publication publication = PublicationGenerator.generatePublication(type);
         JsonNode document = toPublicationWithContext(publication);
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
