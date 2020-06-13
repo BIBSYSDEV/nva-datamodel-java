@@ -40,7 +40,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
     }
 
     @DisplayName("Test publications can be serialized/deserialized")
-    @ParameterizedTest
+    @ParameterizedTest(name = "Test Publication context Journal with Instance type {0} can be (de-)serialized")
     @ValueSource(strings = {
             "JournalArticle",
             "JournalLeader",
