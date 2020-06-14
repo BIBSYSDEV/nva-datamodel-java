@@ -19,7 +19,8 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "Report", value = Report.class),
         @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
         @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
-        @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class)
+        @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class),
+        @JsonSubTypes.Type(name = "ChapterArticle", value = ChapterArticle.class),
 })
 public interface PublicationInstance<P extends Pages> {
 

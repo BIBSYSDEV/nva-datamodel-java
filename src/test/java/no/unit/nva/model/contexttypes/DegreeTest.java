@@ -3,6 +3,7 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.ModelTest;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import nva.commons.utils.JsonUtils;
@@ -17,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
-import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJson;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class DegreeTest {
+class DegreeTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String DEGREE = "Degree";
@@ -55,7 +55,7 @@ class DegreeTest {
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                expectedLevel,
+                level,
                 expectedOpenAccess,
                 expectedPeerReviewed,
                 expectedIsbn,
@@ -74,11 +74,11 @@ class DegreeTest {
     @DisplayName("Degree serializes expected json")
     @ParameterizedTest
     @CsvSource({
-            "A series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-            ",, Full publisher details, LEVEL_2, true, true, \"9780201309515|9788131700075\"",
-            "A series title,,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-            "Fulong of Oolong,12,T Publishing,LEVEL_0,false,false,\"9780201309515|9788131700075\"",
-            "A Marxist analysis of marking systems,6903,ACO,LEVEL_1,true,false,"
+            "A series title,123,Full publisher details,,true,true,\"9780201309515|9788131700075\"",
+            ",, Full publisher details,, true, true, \"9780201309515|9788131700075\"",
+            "A series title,,Full publisher details,,true,true,\"9780201309515|9788131700075\"",
+            "Fulong of Oolong,12,T Publishing,,false,false,\"9780201309515|9788131700075\"",
+            "A Marxist analysis of marking systems,6903,ACO,,true,false,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsDegree(String seriesTitle,
                                                                   String seriesNumber,
@@ -91,14 +91,10 @@ class DegreeTest {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
         boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
-        Level expectedLevel = Level.valueOf(level);
         Degree degree = new Degree.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
-                .withLevel(expectedLevel)
-                .withOpenAccess(expectedOpenAccess)
-                .withPeerReviewed(expectedPeerReviewed)
                 .withIsbnList(expectedIsbnList)
                 .build();
         String expectedJson = generatePublicationJson(
@@ -106,7 +102,7 @@ class DegreeTest {
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                expectedLevel,
+                level,
                 expectedOpenAccess,
                 expectedPeerReviewed,
                 expectedIsbnList,
@@ -120,16 +116,13 @@ class DegreeTest {
     @DisplayName("Degree complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
-            "Series title,123,Full publisher details,LEVEL_2,true,true,\"obviousNonsense|9788131700075\"",
-            "Series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|obviousNonsense\"",
-            "Series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075|obviousNonsense\""
+            "Series title,123,Full publisher details,\"obviousNonsense|9788131700075\"",
+            "Series title,123,Full publisher details,\"9780201309515|obviousNonsense\"",
+            "Series title,123,Full publisher details,\"9780201309515|9788131700075|obviousNonsense\""
     })
     void degreeThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                          String seriesNumber,
                                                          String publisher,
-                                                         String level,
-                                                         String openAccess,
-                                                         String peerReviewed,
                                                          String isbnList) {
 
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
@@ -138,9 +131,6 @@ class DegreeTest {
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
-                .withLevel(Level.valueOf(level))
-                .withOpenAccess(Boolean.getBoolean(openAccess))
-                .withPeerReviewed(Boolean.getBoolean(peerReviewed))
                 .withIsbnList(invalidIsbnList)
                 .build();
 
@@ -156,9 +146,6 @@ class DegreeTest {
         Degree degree = new Degree.Builder()
                 .withSeriesTitle(null)
                 .withSeriesNumber(null)
-                .withLevel(Level.LEVEL_0)
-                .withPeerReviewed(false)
-                .withOpenAccess(false)
                 .withPublisher(null)
                 .withIsbnList(null)
                 .build();
@@ -174,9 +161,6 @@ class DegreeTest {
         Degree degree = new Degree.Builder()
                 .withSeriesTitle(null)
                 .withSeriesNumber(null)
-                .withLevel(Level.LEVEL_0)
-                .withPeerReviewed(false)
-                .withOpenAccess(false)
                 .withPublisher(null)
                 .withIsbnList(Collections.emptyList())
                 .build();

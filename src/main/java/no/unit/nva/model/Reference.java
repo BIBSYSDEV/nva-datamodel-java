@@ -1,7 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.contexttypes.BasicContext;
+import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.utils.JacocoGenerated;
 
@@ -10,9 +10,9 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Reference {
-    private BasicContext publicationContext;
+    private PublicationContext publicationContext;
     private URI doi;
-    private PublicationInstance publicationInstance;
+    private PublicationInstance<?> publicationInstance;
 
     public Reference() {
     }
@@ -23,11 +23,11 @@ public class Reference {
         setPublicationInstance(builder.publicationInstance);
     }
 
-    public BasicContext getPublicationContext() {
+    public PublicationContext getPublicationContext() {
         return publicationContext;
     }
 
-    public void setPublicationContext(BasicContext publicationContext) {
+    public void setPublicationContext(PublicationContext publicationContext) {
         this.publicationContext = publicationContext;
     }
 
@@ -39,20 +39,20 @@ public class Reference {
         this.doi = doi;
     }
 
-    public PublicationInstance getPublicationInstance() {
+    public PublicationInstance<?> getPublicationInstance() {
         return publicationInstance;
     }
 
-    public void setPublicationInstance(PublicationInstance publicationInstance) {
+    public void setPublicationInstance(PublicationInstance<?> publicationInstance) {
         this.publicationInstance = publicationInstance;
     }
 
     public static final class Builder {
-        private PublicationInstance publicationInstance;
-        private BasicContext publicationContext;
+        private PublicationInstance<?> publicationInstance;
+        private PublicationContext publicationContext;
         private URI doi;
 
-        public Builder withPublishingContext(BasicContext publicationContext) {
+        public Builder withPublishingContext(PublicationContext publicationContext) {
             this.publicationContext = publicationContext;
             return this;
         }
@@ -62,7 +62,7 @@ public class Reference {
             return this;
         }
 
-        public Builder withPublicationInstance(PublicationInstance publicationInstance) {
+        public Builder withPublicationInstance(PublicationInstance<?> publicationInstance) {
             this.publicationInstance = publicationInstance;
             return this;
         }
