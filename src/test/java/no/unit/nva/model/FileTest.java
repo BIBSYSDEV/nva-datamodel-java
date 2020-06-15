@@ -1,18 +1,18 @@
 package no.unit.nva.model;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.net.URI;
-import java.util.Collections;
-import java.util.UUID;
+import no.unit.nva.ModelTest;
 import no.unit.nva.model.exceptions.MissingLicenseException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
 
-class FileTest {
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
+class FileTest extends ModelTest {
 
     public static final String FILE_NAME = "Some file name.txt";
     public static final String MIME_TYPE = "application/pdf";
@@ -21,15 +21,7 @@ class FileTest {
     @DisplayName("The constructor exists")
     @Test
     void fileConstructorExists() {
-        new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, getLicense(), false, true, null);
-    }
-
-    private License getLicense() {
-        return new License.Builder()
-                    .withIdentifier("NVA-TEST-LICENSE")
-                    .withLabels(Collections.singletonMap("en", "NVA-test-license"))
-                    .withLink(URI.create("https://example.org/nva-test-license"))
-                    .build();
+        new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, generateLicense(), false, true, null);
     }
 
     @DisplayName("A file that is an administrative agreement does not need a license")
