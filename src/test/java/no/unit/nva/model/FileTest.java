@@ -50,7 +50,7 @@ class FileTest {
         assertEquals(File.MISSING_LICENSE, exception.getMessage());
     }
 
-    @DisplayName("A file that is not an administrative agreement and has a license validates")
+    @DisplayName("A file validates when it is not an administrative agreement and it has a license")
     @Test
     void validateDoesNotThrowMissingLicenceExceptionWhenFileIsNotAdminstrativeAgreementAndDoesNotHaveLicense() {
         File file = new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, getLicense(), false, true, null);
@@ -59,7 +59,7 @@ class FileTest {
 
     @DisplayName("An administrative agreement can have a license")
     @Test
-    void validateDoesNotThrowMissingLicenseExceptionWhenFileIsAdministrativeAgreementAndHasLicense() {
+    void validateDoesNotThrowExceptionWhenFileIsAdministrativeAgreementAndHasLicense() {
         File file = new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, getLicense(), true, true, null);
         assertDoesNotThrow(file::validate);
     }
