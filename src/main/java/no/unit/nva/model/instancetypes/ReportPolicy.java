@@ -7,11 +7,6 @@ import no.unit.nva.model.pages.MonographPages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ReportPolicy extends NonPeerReviewedMonograph {
 
-    /**
-     * Constructor for ReportPolicy.
-     *
-     * @param pages the Pages of the PublicationInstance.
-     */
     public ReportPolicy(@JsonProperty("pages") MonographPages pages) {
         super(pages);
     }
