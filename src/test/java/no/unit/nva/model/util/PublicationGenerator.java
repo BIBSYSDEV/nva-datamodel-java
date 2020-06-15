@@ -52,7 +52,6 @@ import static java.util.Objects.isNull;
 @SuppressWarnings("missingjavadocmethod")
 public class PublicationGenerator extends ModelTest {
 
-    public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final URI SOME_URI = URI.create("https://123123/213123.com");
     public static final String SEPARATOR = "\\|";
     public static final String QUOTE = "\"";
@@ -193,7 +192,7 @@ public class PublicationGenerator extends ModelTest {
                 .withLanguage(URI.create("http://example.org/norsk"))
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
-                .withContributors(Collections.singletonList(getContributor()))
+                .withContributors(Collections.singletonList(generateContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
@@ -320,27 +319,6 @@ public class PublicationGenerator extends ModelTest {
                 .withOpenAccess(true)
                 .withOnlineIssn("1111-1119")
                 .withPrintIssn("2222-2227")
-                .build();
-    }
-
-    public static Contributor getContributor() throws MalformedContributorException {
-        return new Contributor.Builder()
-                .withSequence(0)
-                .withRole(Role.CREATOR)
-                .withAffiliations(Collections.singletonList(getOrganization()))
-                .withIdentity(getIdentity())
-                .withCorrespondingAuthor(true)
-                .withEmail(EXAMPLE_EMAIL)
-                .build();
-    }
-
-    public static Identity getIdentity() {
-        return new Identity.Builder()
-                .withId(URI.create("http://example.org/person/123"))
-                .withArpId("arp123")
-                .withOrcId("orc123")
-                .withName("Navnesen, Navn")
-                .withNameType(NameType.PERSONAL)
                 .build();
     }
 

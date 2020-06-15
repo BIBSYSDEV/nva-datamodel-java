@@ -3,18 +3,22 @@ package no.unit.nva;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
+import no.unit.nva.model.Contributor;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.File;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Grant;
+import no.unit.nva.model.Identity;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.License;
+import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
+import no.unit.nva.model.Role;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
@@ -55,7 +59,6 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static no.unit.nva.model.util.PublicationGenerator.getContributor;
 
 public class ModelTest {
     public static final String QUOTE = "\"";
@@ -63,8 +66,8 @@ public class ModelTest {
     public static final String COMMA_SPACE = ", ";
     public static final String COMMA = ",";
     public static final String KEY_VALUE_STRING_PAIR_TEMPLATE = "  \"%s\" : \"%s\"";
-    private static final String KEY_VALUE_BOOLEAN_PAIR_TEMPLATE = "  \"%s\" : %s";
-    private static final String KEY_VALUE_LIST_PAIR_TEMPLATE = "  \"%s\" : [ %s ]";
+    public static final String KEY_VALUE_BOOLEAN_PAIR_TEMPLATE = "  \"%s\" : %s";
+    public static final String KEY_VALUE_LIST_PAIR_TEMPLATE = "  \"%s\" : [ %s ]";
     public static final String NEWLINE = "\n";
     public static final String PROLOGUE = "{\n";
     public static final String EPILOGUE = "\n}";
@@ -76,9 +79,11 @@ public class ModelTest {
     public static final String OPEN_ACCESS = "openAccess";
     public static final String PEER_REVIEWED = "peerReviewed";
     public static final String ISBN_LIST = "isbnList";
-    private static final String ONLINE_ISSN = "onlineIssn";
-    private static final String PRINT_ISSN = "printIssn";
+    public static final String ONLINE_ISSN = "onlineIssn";
+    public static final String PRINT_ISSN = "printIssn";
     public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
+    public static final String EXAMPLE_EMAIL = "nn@example.org";
+
 
     protected static MonographPages generateMonographPages(String introductionBegin,
                                                     String introductionEnd,
@@ -303,13 +308,34 @@ public class ModelTest {
                 .withLanguage(URI.create("http://example.org/norsk"))
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(generatePublicationDate())
-                .withContributors(Collections.singletonList(getContributor()))
+                .withContributors(Collections.singletonList(generateContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
                 .withDescription("En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt")
                 .withReference(reference)
                 .withMetadataSource(URI.create("https://example.org/doi?doi=123/123"))
+                .build();
+    }
+
+    protected static Contributor generateContributor() throws MalformedContributorException {
+        return new Contributor.Builder()
+                .withSequence(0)
+                .withRole(Role.CREATOR)
+                .withAffiliations(Collections.singletonList(generateOrganization()))
+                .withIdentity(generateIdentity())
+                .withCorrespondingAuthor(true)
+                .withEmail(EXAMPLE_EMAIL)
+                .build();
+    }
+
+    protected static Identity generateIdentity() {
+        return new Identity.Builder()
+                .withId(URI.create("http://example.org/person/123"))
+                .withArpId("arp123")
+                .withOrcId("orc123")
+                .withName("Navnesen, Navn")
+                .withNameType(NameType.PERSONAL)
                 .build();
     }
 
