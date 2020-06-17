@@ -1,15 +1,16 @@
 package no.unit.nva.model;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import no.unit.nva.model.exceptions.MissingLicenseException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 import java.util.Collections;
 import java.util.UUID;
-import no.unit.nva.model.exceptions.MissingLicenseException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 class FileTest {
@@ -45,10 +46,21 @@ class FileTest {
     @Test
     void fileValidationWithNoLicenseAndNotAdministrativeAgreementThrowsMissingLicenseException() {
         File file = new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, null, false, true, null);
-        MissingLicenseException exception = assertThrows(MissingLicenseException.class, () -> {
-            file.validate();
-        });
-
+        MissingLicenseException exception = assertThrows(MissingLicenseException.class, file::validate);
         assertEquals(File.MISSING_LICENSE, exception.getMessage());
+    }
+
+    @DisplayName("A file validates when it is not an administrative agreement and it has a license")
+    @Test
+    void validateDoesNotThrowMissingLicenceExceptionWhenFileIsNotAdminstrativeAgreementAndDoesNotHaveLicense() {
+        File file = new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, getLicense(), false, true, null);
+        assertDoesNotThrow(file::validate);
+    }
+
+    @DisplayName("An administrative agreement can have a license")
+    @Test
+    void validateDoesNotThrowExceptionWhenFileIsAdministrativeAgreementAndHasLicense() {
+        File file = new File(UUID.randomUUID(), FILE_NAME, MIME_TYPE, FILE_SIZE, getLicense(), true, true, null);
+        assertDoesNotThrow(file::validate);
     }
 }
