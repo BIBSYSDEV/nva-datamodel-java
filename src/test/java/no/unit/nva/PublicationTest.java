@@ -1,6 +1,7 @@
 package no.unit.nva;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;

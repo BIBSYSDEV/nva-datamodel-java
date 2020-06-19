@@ -1,6 +1,6 @@
 package no.unit.nva.model.util;
 
-import no.unit.nva.ModelTest;
+import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;

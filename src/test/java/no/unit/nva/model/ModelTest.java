@@ -1,24 +1,5 @@
-package no.unit.nva;
+package no.unit.nva.model;
 
-import no.unit.nva.model.Approval;
-import no.unit.nva.model.ApprovalStatus;
-import no.unit.nva.model.ApprovalsBody;
-import no.unit.nva.model.Contributor;
-import no.unit.nva.model.DoiRequest;
-import no.unit.nva.model.DoiRequestStatus;
-import no.unit.nva.model.EntityDescription;
-import no.unit.nva.model.File;
-import no.unit.nva.model.FileSet;
-import no.unit.nva.model.Grant;
-import no.unit.nva.model.Identity;
-import no.unit.nva.model.Level;
-import no.unit.nva.model.License;
-import no.unit.nva.model.NameType;
-import no.unit.nva.model.Organization;
-import no.unit.nva.model.PublicationDate;
-import no.unit.nva.model.Reference;
-import no.unit.nva.model.ResearchProject;
-import no.unit.nva.model.Role;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;

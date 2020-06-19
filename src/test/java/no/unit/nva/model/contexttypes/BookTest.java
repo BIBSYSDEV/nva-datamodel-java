@@ -3,7 +3,7 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.ModelTest;
+import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import nva.commons.utils.JsonUtils;

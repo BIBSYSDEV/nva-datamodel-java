@@ -2,7 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.ModelTest;
+import no.unit.nva.model.ModelTest;
 import nva.commons.utils.JsonUtils;
 
 import java.util.LinkedHashMap;

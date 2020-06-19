@@ -1,6 +1,5 @@
 package no.unit.nva.model;
 
-import no.unit.nva.ModelTest;
 import no.unit.nva.model.exceptions.MissingLicenseException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
