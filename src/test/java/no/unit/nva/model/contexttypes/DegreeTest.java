@@ -4,7 +4,6 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.ModelTest;
-import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -34,30 +33,24 @@ class DegreeTest extends ModelTest {
     @DisplayName("Degree can deserialize a degree")
     @ParameterizedTest
     @CsvSource({
-            "A series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-            ",, Full publisher details, LEVEL_2, true, true, \"9780201309515|9788131700075\"",
-            "A series title,,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-            "Fulong of Oolong,12,T Publishing,LEVEL_0,false,false,\"9780201309515|9788131700075\""
+            "A series title,123,Full publisher details,\"9780201309515|9788131700075\"",
+            ",, Full publisher details,\"9780201309515|9788131700075\"",
+            "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
+            "Fulong of Oolong,12,T Publishing,\"9780201309515|9788131700075\""
     })
     void objectMapperReturnsDegreeWhenInputIsValidJson(String seriesTitle,
                                                      String seriesNumber,
                                                      String publisher,
-                                                     String level,
-                                                     String openAccess,
-                                                     String peerReviewed,
                                                      String isbnList) throws JsonProcessingException {
-        Level expectedLevel = Level.valueOf(level);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
         List<String> expectedIsbn = convertIsbnStringToList(isbnList);
         String json = generatePublicationJson(
                 DEGREE,
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                level,
-                expectedOpenAccess,
-                expectedPeerReviewed,
+                null,
+                false,
+                false,
                 expectedIsbn,
                 null,
                 null
@@ -65,32 +58,23 @@ class DegreeTest extends ModelTest {
         Degree degree = objectMapper.readValue(json, Degree.class);
         assertEquals(seriesTitle, degree.getSeriesTitle());
         assertEquals(seriesNumber, degree.getSeriesNumber());
-        assertEquals(expectedLevel, degree.getLevel());
         assertEquals(expectedIsbn, degree.getIsbnList());
-        assertEquals(expectedOpenAccess, degree.isOpenAccess());
-        assertEquals(expectedPeerReviewed, degree.isPeerReviewed());
     }
 
     @DisplayName("Degree serializes expected json")
     @ParameterizedTest
     @CsvSource({
-            "A series title,123,Full publisher details,,true,true,\"9780201309515|9788131700075\"",
-            ",, Full publisher details,, true, true, \"9780201309515|9788131700075\"",
-            "A series title,,Full publisher details,,true,true,\"9780201309515|9788131700075\"",
-            "Fulong of Oolong,12,T Publishing,,false,false,\"9780201309515|9788131700075\"",
-            "A Marxist analysis of marking systems,6903,ACO,,true,false,"
+            "A series title,123,Full publisher details,\"9780201309515\"",
+            ",, Full publisher details,\"9780201309515|9788131700075\"",
+            "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
+            "A Marxist analysis of marking systems,6903,ACO,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsDegree(String seriesTitle,
                                                                   String seriesNumber,
                                                                   String publisher,
-                                                                  String level,
-                                                                  String openAccess,
-                                                                  String peerReviewed,
                                                                   String isbnList) throws JsonProcessingException,
             InvalidIsbnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
         Degree degree = new Degree.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
@@ -102,9 +86,9 @@ class DegreeTest extends ModelTest {
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                level,
-                expectedOpenAccess,
-                expectedPeerReviewed,
+                null,
+                false,
+                false,
                 expectedIsbnList,
                 null,
                 null

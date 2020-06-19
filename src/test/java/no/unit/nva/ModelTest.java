@@ -46,6 +46,7 @@ import no.unit.nva.model.instancetypes.ReportPolicy;
 import no.unit.nva.model.instancetypes.ReportResearch;
 import no.unit.nva.model.instancetypes.ReportWorkingPaper;
 import no.unit.nva.model.pages.MonographPages;
+import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 
 import java.net.URI;
@@ -274,7 +275,7 @@ public class ModelTest {
     }
 
     private static Reference generateReference(PublicationContext publicationContext,
-                                               PublicationInstance<?> publicationInstance) {
+                                               PublicationInstance<? extends Pages> publicationInstance) {
         return new Reference.Builder()
                 .withDoi(URI.create("https://example.org/doi/12313/2313"))
                 .withPublicationInstance(publicationInstance)

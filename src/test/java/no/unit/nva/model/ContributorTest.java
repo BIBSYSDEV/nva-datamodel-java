@@ -1,5 +1,16 @@
 package no.unit.nva.model;
 
+import no.unit.nva.model.exceptions.MalformedContributorException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import java.net.URI;
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import no.unit.nva.ModelTest;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +26,6 @@ class ContributorTest extends ModelTest {
 
     public static final String EXAMPLE_EMAIL = "ks@exmaple.org";
     public static final int FIRST = 1;
-    public static final String EMPTY_STRING = "";
 
     @DisplayName("Test the contributor default constructor exists")
     @Test

@@ -15,6 +15,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 
+import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 public class PublicationJournalArticleTest extends PublicationTest {
 
     public static final String HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE = "https://nva.unit.no/publication#mainTitle";
@@ -56,6 +61,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
         JsonNode document = toPublicationWithContext(publication);
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
                 Publication.class);
-        Assertions.assertEquals(publication, publicationFromJson);
+        assertThat(publicationFromJson, doesNotHaveNullOrEmptyFields());
+        assertThat(publication, is(equalTo(publicationFromJson)));
     }
 }

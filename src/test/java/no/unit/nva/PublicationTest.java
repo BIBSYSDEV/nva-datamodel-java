@@ -13,7 +13,10 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class PublicationTest extends ModelTest {
 
@@ -106,6 +109,7 @@ public class PublicationTest extends ModelTest {
 
         String publication = objectMapper.writeValueAsString(actual);
         Publication roundTripped = objectMapper.readValue(publication, Publication.class);
-        assertNotNull(roundTripped);
+        assertThat(actual, doesNotHaveNullOrEmptyFields());
+        assertThat(roundTripped, is(equalTo(actual)));
     }
 }

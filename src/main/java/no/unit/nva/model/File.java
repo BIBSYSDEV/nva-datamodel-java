@@ -16,14 +16,14 @@ public class File {
 
     public static final String MISSING_LICENSE =
             "The file is not annotated as an administrative agreement and should have a license";
-    private UUID identifier;
-    private String name;
-    private String mimeType;
-    private Long size;
-    private License license;
-    private boolean administrativeAgreement;
-    private boolean publisherAuthority;
-    private Instant embargoDate;
+    private final UUID identifier;
+    private final String name;
+    private final String mimeType;
+    private final Long size;
+    private final License license;
+    private final boolean administrativeAgreement;
+    private final boolean publisherAuthority;
+    private final Instant embargoDate;
 
     /**
      * Constructor for File objects. A file object is valid if it has a license or is explicitly marked as

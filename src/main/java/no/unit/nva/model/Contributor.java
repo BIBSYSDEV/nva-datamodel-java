@@ -15,12 +15,12 @@ public class Contributor {
 
     public static final String CORRESPONDING_AUTHOR_EMAIL_MISSING =
             "The Contributor is corresponding author, but no email for correspondence is set";
-    private Identity identity;
-    private List<Organization> affiliations;
-    private Role role;
-    private Integer sequence;
-    private boolean correspondingAuthor;
-    private String email;
+    private final Identity identity;
+    private final List<Organization> affiliations;
+    private final Role role;
+    private final Integer sequence;
+    private final boolean correspondingAuthor;
+    private final String email;
 
     /**
      * Constructor designed to ensure valid data in the object, since we can only have a corresponding author
@@ -63,7 +63,6 @@ public class Contributor {
                 builder.email
         );
     }
-
 
     private boolean isCorrespondAuthorWithoutEmail(boolean correspondingAuthor, String email) {
         return correspondingAuthor && (isNull(email) || email.isBlank());

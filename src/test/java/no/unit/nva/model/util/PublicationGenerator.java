@@ -4,24 +4,20 @@ import no.unit.nva.ModelTest;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
-import no.unit.nva.model.Contributor;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.File;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Grant;
-import no.unit.nva.model.Identity;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.License;
-import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
-import no.unit.nva.model.Role;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Journal;
@@ -109,6 +105,9 @@ public class PublicationGenerator extends ModelTest {
                 .withOwner("eier@example.org")
                 .withProject(getProject())
                 .withDoiRequest(getDoiRequest())
+                .withPublishedDate(now)
+                .withDoi(URI.create("http://example.org/doi/1231/98765"))
+                .withIndexedDate(now)
                 .build();
     }
 

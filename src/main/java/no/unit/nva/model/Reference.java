@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.pages.Pages;
 import nva.commons.utils.JacocoGenerated;
 
 import java.net.URI;
@@ -12,7 +13,7 @@ import java.util.Objects;
 public class Reference {
     private PublicationContext publicationContext;
     private URI doi;
-    private PublicationInstance<?> publicationInstance;
+    private PublicationInstance<? extends Pages> publicationInstance;
 
     public Reference() {
     }
@@ -39,16 +40,16 @@ public class Reference {
         this.doi = doi;
     }
 
-    public PublicationInstance<?> getPublicationInstance() {
+    public PublicationInstance<? extends Pages> getPublicationInstance() {
         return publicationInstance;
     }
 
-    public void setPublicationInstance(PublicationInstance<?> publicationInstance) {
+    public void setPublicationInstance(PublicationInstance<? extends Pages> publicationInstance) {
         this.publicationInstance = publicationInstance;
     }
 
     public static final class Builder {
-        private PublicationInstance<?> publicationInstance;
+        private PublicationInstance<? extends Pages> publicationInstance;
         private PublicationContext publicationContext;
         private URI doi;
 
@@ -62,7 +63,7 @@ public class Reference {
             return this;
         }
 
-        public Builder withPublicationInstance(PublicationInstance<?> publicationInstance) {
+        public Builder withPublicationInstance(PublicationInstance<? extends Pages> publicationInstance) {
             this.publicationInstance = publicationInstance;
             return this;
         }
