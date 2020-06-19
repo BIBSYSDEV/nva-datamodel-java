@@ -18,6 +18,10 @@ public class Chapter implements LinkedContext {
     public Chapter() {
     }
 
+    private Chapter(Builder builder) {
+        linkedContext = builder.linkedContext;
+    }
+
     @Override
     public URI getLinkedContext() {
         return linkedContext;
@@ -49,5 +53,21 @@ public class Chapter implements LinkedContext {
     @Override
     public int hashCode() {
         return Objects.hash(getLinkedContext());
+    }
+
+    public static final class Builder {
+        private URI linkedContext;
+
+        public Builder() {
+        }
+
+        public Builder withLinkedContext(URI linkedContext) {
+            this.linkedContext = linkedContext;
+            return this;
+        }
+
+        public Chapter build() {
+            return new Chapter(this);
+        }
     }
 }

@@ -26,4 +26,38 @@ public class JournalLeader extends JournalNonPeerReviewedContent {
     ) {
         super(volume, issue, articleNumber, pages, peerReviewed);
     }
+
+    public static final class Builder {
+        private Range pages;
+        private String volume;
+        private String issue;
+        private String articleNumber;
+
+        public Builder() {
+        }
+
+        public Builder withPages(Range pages) {
+            this.pages = pages;
+            return this;
+        }
+
+        public Builder withVolume(String volume) {
+            this.volume = volume;
+            return this;
+        }
+
+        public Builder withIssue(String issue) {
+            this.issue = issue;
+            return this;
+        }
+
+        public Builder withArticleNumber(String articleNumber) {
+            this.articleNumber = articleNumber;
+            return this;
+        }
+
+        public JournalLeader build() {
+            return new JournalLeader(volume, issue, articleNumber, pages, false);
+        }
+    }
 }

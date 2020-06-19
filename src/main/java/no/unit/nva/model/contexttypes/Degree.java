@@ -1,7 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 
 import java.util.List;
@@ -18,9 +17,6 @@ public class Degree extends Book {
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
         setPublisher(builder.publisher);
-        setLevel(builder.level);
-        setOpenAccess(builder.openAccess);
-        setPeerReviewed(builder.peerReviewed);
         setIsbnList(builder.isbnList);
     }
 
@@ -28,9 +24,6 @@ public class Degree extends Book {
         private String seriesTitle;
         private String seriesNumber;
         private String publisher;
-        private Level level;
-        private boolean openAccess;
-        private boolean peerReviewed;
         private List<String> isbnList;
 
         public Builder() {
@@ -48,21 +41,6 @@ public class Degree extends Book {
 
         public Builder withPublisher(String publisher) {
             this.publisher = publisher;
-            return this;
-        }
-
-        public Builder withLevel(Level level) {
-            this.level = level;
-            return this;
-        }
-
-        public Builder withOpenAccess(boolean openAccess) {
-            this.openAccess = openAccess;
-            return this;
-        }
-
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
             return this;
         }
 

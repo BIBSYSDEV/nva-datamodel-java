@@ -2,16 +2,14 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.pages.MonographPages;
-import no.unit.nva.model.pages.Range;
+import no.unit.nva.model.ModelTest;
 import nva.commons.utils.JsonUtils;
 
 import java.util.LinkedHashMap;
 
 import static java.util.Objects.nonNull;
 
-public class InstanceTest {
+public class InstanceTest extends ModelTest {
 
     protected final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -109,23 +107,5 @@ public class InstanceTest {
             introduction.put("end", end);
         }
         return introduction;
-    }
-
-    protected MonographPages generateMonographPages(String introductionBegin,
-                                                    String introductionEnd,
-                                                    String pages,
-                                                    boolean illustrated) throws InvalidPageRangeException {
-        return new MonographPages.Builder()
-                .withPages(pages)
-                .withIllustrated(illustrated)
-                .withIntroduction(generateRange(introductionBegin, introductionEnd))
-                .build();
-    }
-
-    protected Range generateRange(String begin, String end) throws InvalidPageRangeException {
-        return new Range.Builder()
-                .withBegin(begin)
-                .withEnd(end)
-                .build();
     }
 }

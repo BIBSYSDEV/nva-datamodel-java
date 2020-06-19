@@ -8,11 +8,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.net.URI;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,11 +40,12 @@ class ChapterTest {
 
     @DisplayName("Chapter: ObjectMapper throws JsonMappingException when linkingContext URI is null")
     @ParameterizedTest
-    @NullSource
+    @NullAndEmptySource
     void objectMapperThrowsJsonMappingExceptionWhenInputIsNull(String input) {
+        String displayValue = isNull(input) || input.isEmpty() ? "null" : input;
         Executable executable = () -> objectMapper.readValue(generateChapterJson(input), Chapter.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
-        String expectedMessage = String.format(Chapter.ERROR_TEMPLATE, input);
+        String expectedMessage = String.format(Chapter.ERROR_TEMPLATE, displayValue);
         assertThat(exception.getMessage(), containsString(expectedMessage));
     }
 

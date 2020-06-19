@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jsonldjava.utils.JsonUtils;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
@@ -13,6 +14,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
+
+import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class PublicationJournalArticleTest extends PublicationTest {
 
@@ -40,7 +46,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
     }
 
     @DisplayName("Test publications can be serialized/deserialized")
-    @ParameterizedTest
+    @ParameterizedTest(name = "Test Publication context Journal with Instance type {0} can be (de-)serialized")
     @ValueSource(strings = {
             "JournalArticle",
             "JournalLeader",
@@ -50,11 +56,12 @@ public class PublicationJournalArticleTest extends PublicationTest {
         }
     )
     void publicationReturnsJsonWhenInputIsValid(String type) throws MalformedContributorException,
-            InvalidIssnException, IOException, InvalidPageRangeException {
+            InvalidIssnException, IOException, InvalidPageRangeException, InvalidIsbnException {
         Publication publication = PublicationGenerator.generatePublication(type);
         JsonNode document = toPublicationWithContext(publication);
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
                 Publication.class);
-        Assertions.assertEquals(publication, publicationFromJson);
+        assertThat(publicationFromJson, doesNotHaveNullOrEmptyFields());
+        assertThat(publication, is(equalTo(publicationFromJson)));
     }
 }

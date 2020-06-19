@@ -2,6 +2,7 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
@@ -17,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
-import static no.unit.nva.model.util.PublicationGenerator.generatePublicationJson;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ReportTest {
+public class ReportTest extends ModelTest {
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String REPORT = "Report";
     public static final String ONLINE_ISSN = "0363-6941";
@@ -63,7 +63,7 @@ public class ReportTest {
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                expectedLevel,
+                level,
                 expectedOpenAccess,
                 expectedPeerReviewed,
                 expectedIsbn,
@@ -124,7 +124,7 @@ public class ReportTest {
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                expectedLevel,
+                level,
                 expectedOpenAccess,
                 expectedPeerReviewed,
                 expectedIsbnList,

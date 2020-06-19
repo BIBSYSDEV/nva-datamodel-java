@@ -1,26 +1,23 @@
 package no.unit.nva.model.util;
 
+import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
-import no.unit.nva.model.Contributor;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.File;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Grant;
-import no.unit.nva.model.Identity;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.License;
-import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
-import no.unit.nva.model.Role;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Journal;
@@ -28,12 +25,14 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
+import no.unit.nva.model.instancetypes.BookAnthology;
 import no.unit.nva.model.instancetypes.JournalArticle;
 import no.unit.nva.model.instancetypes.JournalLeader;
 import no.unit.nva.model.instancetypes.JournalLetter;
 import no.unit.nva.model.instancetypes.JournalReview;
 import no.unit.nva.model.instancetypes.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 
 import java.net.URI;
@@ -43,46 +42,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 @SuppressWarnings("missingjavadocmethod")
-public class PublicationGenerator {
+public class PublicationGenerator extends ModelTest {
 
-    public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final URI SOME_URI = URI.create("https://123123/213123.com");
     public static final String SEPARATOR = "\\|";
     public static final String QUOTE = "\"";
     public static final String EMPTY_STRING = "";
-    public static final String COMMA_SPACE = ", ";
-    public static final String COMMA = ",";
-    public static final String KEY_VALUE_STRING_PAIR_TEMPLATE = "  \"%s\" : \"%s\"";
-    private static final String KEY_VALUE_BOOLEAN_PAIR_TEMPLATE = "  \"%s\" : %s";
-    private static final String KEY_VALUE_LIST_PAIR_TEMPLATE = "  \"%s\" : [ %s ]";
-    public static final String NEWLINE = "\n";
-    public static final String PROLOGUE = "{\n";
-    public static final String EPILOGUE = "\n}";
-    public static final String TYPE = "type";
-    public static final String SERIES_TITLE = "seriesTitle";
-    public static final String SERIES_NUMBER = "seriesNumber";
-    public static final String PUBLISHER = "publisher";
-    public static final String LEVEL = "level";
-    public static final String OPEN_ACCESS = "openAccess";
-    public static final String PEER_REVIEWED = "peerReviewed";
-    public static final String ISBN_LIST = "isbnList";
-    private static final String ONLINE_ISSN = "onlineIssn";
-    private static final String PRINT_ISSN = "printIssn";
-    public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
 
     private PublicationGenerator() {
     }
 
     public static Publication generatePublication(String type) throws InvalidIssnException,
-            MalformedContributorException, InvalidPageRangeException {
+            MalformedContributorException, InvalidPageRangeException, InvalidIsbnException {
         Reference reference;
         switch (type) {
+            case "BookAnthology":
+                reference = getBookAnthologyReference();
+                break;
             case "JournalLeader":
                 reference = getJournalLeaderReference();
                 break;
@@ -125,6 +105,24 @@ public class PublicationGenerator {
                 .withOwner("eier@example.org")
                 .withProject(getProject())
                 .withDoiRequest(getDoiRequest())
+                .withPublishedDate(now)
+                .withDoi(URI.create("http://example.org/doi/1231/98765"))
+                .withIndexedDate(now)
+                .build();
+    }
+
+    private static PublicationInstance<MonographPages> getBookAnthologyInstance() throws InvalidPageRangeException {
+        return new BookAnthology.Builder()
+                .withPages(generateMonographPages("i", "xx", "221", true))
+                .withPeerReviewed(true)
+                .build();
+    }
+
+    private static Reference getBookAnthologyReference() throws InvalidIsbnException, InvalidPageRangeException {
+        return new Reference.Builder()
+                .withDoi(SOME_URI)
+                .withPublishingContext(getPublishingContextBook())
+                .withPublicationInstance(getBookAnthologyInstance())
                 .build();
     }
 
@@ -193,7 +191,7 @@ public class PublicationGenerator {
                 .withLanguage(URI.create("http://example.org/norsk"))
                 .withAlternativeTitles(Collections.singletonMap("en", "English title"))
                 .withDate(getPublicationDate())
-                .withContributors(Collections.singletonList(getContributor()))
+                .withContributors(Collections.singletonList(generateContributor()))
                 .withAbstract("En lang streng som beskriver innholdet i dokumentet metadataene omtaler.")
                 .withNpiSubjectHeading("010")
                 .withTags(Arrays.asList("dokumenter", "publikasjoner"))
@@ -269,7 +267,6 @@ public class PublicationGenerator {
                 .withIssue("5")
                 .withVolume("27")
                 .withPages(getPages())
-                .withPeerReviewed(false)
                 .build();
     }
 
@@ -321,27 +318,6 @@ public class PublicationGenerator {
                 .withOpenAccess(true)
                 .withOnlineIssn("1111-1119")
                 .withPrintIssn("2222-2227")
-                .build();
-    }
-
-    public static Contributor getContributor() throws MalformedContributorException {
-        return new Contributor.Builder()
-                .withSequence(0)
-                .withRole(Role.CREATOR)
-                .withAffiliations(Collections.singletonList(getOrganization()))
-                .withIdentity(getIdentity())
-                .withCorrespondingAuthor(true)
-                .withEmail(EXAMPLE_EMAIL)
-                .build();
-    }
-
-    public static Identity getIdentity() {
-        return new Identity.Builder()
-                .withId(URI.create("http://example.org/person/123"))
-                .withArpId("arp123")
-                .withOrcId("orc123")
-                .withName("Navnesen, Navn")
-                .withNameType(NameType.PERSONAL)
                 .build();
     }
 
@@ -401,56 +377,5 @@ public class PublicationGenerator {
         String unquoted = isbnList.replaceAll(QUOTE, EMPTY_STRING);
         String[] split = unquoted.split(SEPARATOR);
         return new ArrayList<>(Arrays.asList(split));
-    }
-
-
-    public static String generatePublicationJson(String type,
-                                                 String seriesTitle,
-                                                 String seriesNumber,
-                                                 String publisher,
-                                                 Level level,
-                                                 boolean openAccess,
-                                                 boolean peerReviewed,
-                                                 List<String> isbnList,
-                                                 String onlineIssn,
-                                                 String printIssn) {
-
-        List<String> body = new ArrayList<>();
-        body.add(generateKeyValuePair(TYPE, type));
-        body.add(generateKeyValuePair(SERIES_TITLE, seriesTitle));
-        body.add(generateKeyValuePair(SERIES_NUMBER, seriesNumber));
-        body.add(generateKeyValuePair(PUBLISHER, publisher));
-        body.add(generateKeyValuePair(LEVEL, level.toString()));
-        body.add(generateKeyValuePair(OPEN_ACCESS, openAccess));
-        body.add(generateKeyValuePair(PEER_REVIEWED, peerReviewed));
-        body.add(generateKeyValueListPair(isbnList));
-        body.add(generateKeyValuePair(PRINT_ISSN, printIssn));
-        body.add(generateKeyValuePair(ONLINE_ISSN, onlineIssn));
-
-        body.removeIf(s -> s.equals(EMPTY_STRING));
-
-        return PROLOGUE
-                + String.join(COMMA + NEWLINE, body)
-                + EPILOGUE;
-    }
-
-    private static String generateKeyValuePair(String key, Object value) {
-        if (nonNull(value) && value instanceof String) {
-            return String.format(KEY_VALUE_STRING_PAIR_TEMPLATE, key, value);
-        }
-        if (nonNull(value) && value instanceof Boolean) {
-            return String.format(KEY_VALUE_BOOLEAN_PAIR_TEMPLATE, key, value);
-        }
-        return EMPTY_STRING;
-    }
-
-    private static String generateKeyValueListPair(List<String> value) {
-        if (nonNull(value) && !value.isEmpty()) {
-            String isbnListString = value.stream()
-                    .map(isbn -> QUOTE + isbn + QUOTE)
-                    .collect(Collectors.joining(COMMA_SPACE));
-            return String.format(KEY_VALUE_LIST_PAIR_TEMPLATE, ISBN_LIST, isbnListString);
-        }
-        return EMPTY_ISBN_LIST;
     }
 }
