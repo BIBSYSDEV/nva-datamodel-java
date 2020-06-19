@@ -1,4 +1,4 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.Range;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalLetter extends JournalNonPeerReviewedContent {
+public class JournalReview extends JournalNonPeerReviewedContent {
 
     /**
      * This constructor ensures that the peerReviewed value is always false.
@@ -18,7 +18,7 @@ public class JournalLetter extends JournalNonPeerReviewedContent {
      * @param peerReviewed  the value is always ignored.
      */
     @JsonCreator
-    public JournalLetter(
+    public JournalReview(
             @JsonProperty("volume") String volume,
             @JsonProperty("issue") String issue,
             @JsonProperty("articleNumber") String articleNumber,
@@ -57,8 +57,8 @@ public class JournalLetter extends JournalNonPeerReviewedContent {
             return this;
         }
 
-        public JournalLetter build() {
-            return new JournalLetter(this.volume, this.issue, this.articleNumber, this.pages, false);
+        public JournalReview build() {
+            return new JournalReview(this.volume, this.issue, this.articleNumber, this.pages, false);
         }
     }
 }

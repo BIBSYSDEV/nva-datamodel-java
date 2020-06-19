@@ -1,5 +1,6 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.journal;
 
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

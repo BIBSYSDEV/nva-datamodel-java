@@ -1,6 +1,7 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.chapter;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
 

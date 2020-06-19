@@ -1,4 +1,4 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.Range;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalLeader extends JournalNonPeerReviewedContent {
+public class JournalShortCommunication extends JournalNonPeerReviewedContent {
+
     /**
      * This constructor ensures that the peerReviewed value is always false.
      *
@@ -17,7 +18,7 @@ public class JournalLeader extends JournalNonPeerReviewedContent {
      * @param peerReviewed  the value is always ignored.
      */
     @JsonCreator
-    public JournalLeader(
+    public JournalShortCommunication(
             @JsonProperty("volume") String volume,
             @JsonProperty("issue") String issue,
             @JsonProperty("articleNumber") String articleNumber,
@@ -28,17 +29,12 @@ public class JournalLeader extends JournalNonPeerReviewedContent {
     }
 
     public static final class Builder {
-        private Range pages;
         private String volume;
         private String issue;
         private String articleNumber;
+        private Range pages;
 
         public Builder() {
-        }
-
-        public Builder withPages(Range pages) {
-            this.pages = pages;
-            return this;
         }
 
         public Builder withVolume(String volume) {
@@ -56,8 +52,13 @@ public class JournalLeader extends JournalNonPeerReviewedContent {
             return this;
         }
 
-        public JournalLeader build() {
-            return new JournalLeader(volume, issue, articleNumber, pages, false);
+        public Builder withPages(Range pages) {
+            this.pages = pages;
+            return this;
+        }
+
+        public JournalShortCommunication build() {
+            return new JournalShortCommunication(this.volume, this.issue, this.articleNumber, this.pages, false);
         }
     }
 }

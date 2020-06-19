@@ -1,19 +1,19 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.report;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.instancetypes.NonPeerReviewedMonograph;
 import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class DegreeMaster extends NonPeerReviewedMonograph {
+public class ReportPolicy extends NonPeerReviewedMonograph {
 
-    public DegreeMaster(@JsonProperty("pages") MonographPages pages) {
+    public ReportPolicy(@JsonProperty("pages") MonographPages pages) {
         super(pages);
     }
 
-    private DegreeMaster(Builder builder) {
-        super(builder.pages);
-        setPages(builder.pages);
+    private ReportPolicy(Builder builder) {
+        this(builder.pages);
     }
 
     public static final class Builder {
@@ -27,8 +27,8 @@ public class DegreeMaster extends NonPeerReviewedMonograph {
             return this;
         }
 
-        public DegreeMaster build() {
-            return new DegreeMaster(this);
+        public ReportPolicy build() {
+            return new ReportPolicy(this);
         }
     }
 }
