@@ -1,9 +1,9 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.report;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
+import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
@@ -17,57 +17,54 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReportWorkingPaperTest extends InstanceTest {
+class ReportPolicyTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
-    @DisplayName("Report working paper can be created from JSON")
+    @DisplayName("Report policy can be created from JSON")
     @Test
-    void reportWorkingPaperReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
+    void reportPolicyReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageRangeException {
-        ReportWorkingPaper expected = generateReportWorkingPaper("42", "1", "3", false);
+        ReportPolicy expected = generateReportPolicy("42", "1", "3", false);
         String json = objectMapper.writeValueAsString(expected);
         assertTrue(json.contains("peerReviewed"));
-        ReportWorkingPaper reportWorkingPaper = objectMapper.readValue(json, ReportWorkingPaper.class);
-        assertEquals(expected, reportWorkingPaper);
+        ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);
+        assertEquals(expected, reportPolicy);
     }
 
-    @DisplayName("Report working paper cannot be peer reviewed")
+    @DisplayName("Report policy cannot be peer reviewed")
     @Test
-    void reportWorkingPaperSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
+    void reportPolicySetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String type = "ReportWorkingPaper";
+        String type = "ReportPolicy";
         String pages = "42";
         String introductionBegin = "1";
         String introductionEnd = "3";
         boolean illustrated = false;
         boolean peerReviewed = true;
-        ReportWorkingPaper expected = generateReportWorkingPaper(pages, introductionBegin, introductionEnd,
-                illustrated);
+        ReportPolicy expected = generateReportPolicy(pages, introductionBegin, introductionEnd, illustrated);
 
         String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
                 illustrated, peerReviewed);
-        ReportWorkingPaper reportWorkingPaper = objectMapper.readValue(json, ReportWorkingPaper.class);
-        assertEquals(expected, reportWorkingPaper);
+        ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);
+        assertEquals(expected, reportPolicy);
     }
 
-    @DisplayName("ReportWorkingPaper: Attempting to set peer reviewed to true results in Unexpected exception")
+    @DisplayName("ReportPolicy: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
-    void reportWorkingPaperThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
         Executable executable = () -> {
-            ReportWorkingPaper reportWorkingPaper = new ReportWorkingPaper();
-            reportWorkingPaper.setPeerReviewed(true);
+            ReportPolicy reportPolicy = new ReportPolicy();
+            reportPolicy.setPeerReviewed(true);
         };
         UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
-        String expected = String.format(ReportWorkingPaper.PEER_REVIEWED_ERROR_TEMPLATE,
-                ReportWorkingPaper.class.getSimpleName());
+        String expected = String.format(ReportPolicy.PEER_REVIEWED_ERROR_TEMPLATE,
+                ReportPolicy.class.getSimpleName());
         assertEquals(expected, exception.getMessage());
     }
 
-    private ReportWorkingPaper generateReportWorkingPaper(String pages, String introductionBegin,
-        String introductionEnd, boolean illustrated) throws InvalidPageRangeException {
-
+    private ReportPolicy generateReportPolicy(String pages, String introductionBegin, String introductionEnd,
+                                              boolean illustrated) throws InvalidPageRangeException {
         Range introductionRange = new Range.Builder()
                 .withBegin(introductionBegin)
                 .withEnd(introductionEnd)
@@ -79,7 +76,7 @@ class ReportWorkingPaperTest extends InstanceTest {
                 .withIllustrated(illustrated)
                 .build();
 
-        return new ReportWorkingPaper.Builder()
+        return new ReportPolicy.Builder()
                 .withPages(monographPages)
                 .build();
     }

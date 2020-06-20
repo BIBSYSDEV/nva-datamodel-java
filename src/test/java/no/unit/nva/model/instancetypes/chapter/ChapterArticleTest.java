@@ -1,9 +1,8 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.chapter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;

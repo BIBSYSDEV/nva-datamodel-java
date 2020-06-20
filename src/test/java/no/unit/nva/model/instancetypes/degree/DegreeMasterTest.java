@@ -1,8 +1,8 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.degree;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
-import no.unit.nva.model.instancetypes.degree.DegreeMaster;
+import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
