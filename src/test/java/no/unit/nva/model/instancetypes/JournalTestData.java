@@ -12,7 +12,6 @@ public class JournalTestData {
     private final String begin;
     private final String end;
     private final Range pages;
-    private final boolean illustrated;
     private boolean peerReviewed;
 
     private static final Random RANDOM = new Random();
@@ -32,7 +31,6 @@ public class JournalTestData {
                 .withBegin(begin)
                 .withEnd(end)
                 .build();
-        illustrated = RANDOM.nextBoolean();
         peerReviewed = RANDOM.nextBoolean();
     }
 
@@ -63,10 +61,6 @@ public class JournalTestData {
 
     public Range getPages() {
         return pages;
-    }
-
-    public boolean isIllustrated() {
-        return illustrated;
     }
 
     public boolean isPeerReviewed() {

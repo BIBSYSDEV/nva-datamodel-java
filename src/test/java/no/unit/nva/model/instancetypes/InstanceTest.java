@@ -3,6 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
+import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import nva.commons.utils.JsonUtils;
 
 import java.util.LinkedHashMap;
@@ -42,19 +43,9 @@ public class InstanceTest extends ModelTest {
                 testData.getPages().getBegin(),
                 testData.getPages().getEnd(),
                 null,
-                testData.isIllustrated(),
+                false,
                 testData.isPeerReviewed()
         );
-    }
-
-    protected String generateArticleJsonString(String type,
-                                        String volume,
-                                        String issue,
-                                        String articleNumber,
-                                        String begin,
-                                        String end,
-                                        boolean peerReviewed) throws JsonProcessingException {
-        return generateJsonString(type, volume, issue, articleNumber, begin, end, null, false, peerReviewed);
     }
 
     protected String generateJsonString(String type,
@@ -97,14 +88,10 @@ public class InstanceTest extends ModelTest {
         return objectMapper.writeValueAsString(instance);
     }
 
-    protected String generateArticleWithPeerReview(String type) throws JsonProcessingException {
-        String volume = "1";
-        String issue = "3";
-        String articleNumber = "123";
-        String begin = "2";
-        String end = "3";
-        return generateArticleJsonString(type,
-                volume, issue, articleNumber, begin, end, true);
+    protected String generateArticleWithPeerReview(String type) throws JsonProcessingException,
+            InvalidPageRangeException {
+        JournalTestData testData = new JournalTestData(true);
+        return generateArticleJsonString(type, testData);
     }
 
     private LinkedHashMap<String, Object> getMonographPagesMap(String begin,

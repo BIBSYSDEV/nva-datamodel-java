@@ -1,9 +1,12 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
+import no.unit.nva.model.instancetypes.InstanceTest;
+import no.unit.nva.model.instancetypes.JournalTestData;
+import no.unit.nva.model.instancetypes.NonPeerReviewedPaper;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +36,8 @@ class JournalShortCommunicationTest extends InstanceTest {
 
     @DisplayName("Journal short communication cannot be peer reviewed")
     @Test
-    void journalShortCommunicationSetsPeerReviewedThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException {
+    void journalShortCommunicationSetsPeerReviewedThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException,
+            InvalidPageRangeException {
         String json = generateArticleWithPeerReview(JOURNAL_SHORT_COMMUNICATION);
         Executable executable = () -> objectMapper.readValue(json, JournalShortCommunication.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);

@@ -1,10 +1,12 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
+import no.unit.nva.model.instancetypes.InstanceTest;
+import no.unit.nva.model.instancetypes.JournalTestData;
+import no.unit.nva.model.instancetypes.NonPeerReviewed;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
-import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -31,7 +33,7 @@ class JournalLetterTest extends InstanceTest {
 
     @DisplayName("Journal letters cannot be peer reviewed")
     @Test
-    void journalLetterThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException {
+    void journalLetterThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException, InvalidPageRangeException {
         String json = generateArticleWithPeerReview(JOURNAL_LETTER);
         Executable executable = () -> objectMapper.readValue(json, JournalLetter.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
@@ -40,7 +42,7 @@ class JournalLetterTest extends InstanceTest {
         assertThat(exception.getMessage(), containsString(expected));
     }
 
-    private JournalLetter generateJournalLetter(JournalTestData testData) throws InvalidPageRangeException {
+    private JournalLetter generateJournalLetter(JournalTestData testData) {
 
         return new JournalLetter.Builder()
                 .withVolume(testData.getVolume())

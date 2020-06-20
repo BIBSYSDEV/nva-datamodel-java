@@ -1,9 +1,12 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.journal;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
+import no.unit.nva.model.instancetypes.InstanceTest;
+import no.unit.nva.model.instancetypes.JournalTestData;
+import no.unit.nva.model.instancetypes.NonPeerReviewed;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
