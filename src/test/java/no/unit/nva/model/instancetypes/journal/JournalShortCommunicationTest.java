@@ -7,7 +7,6 @@ import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.JournalTestData;
 import no.unit.nva.model.instancetypes.NonPeerReviewedPaper;
-import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
