@@ -1,59 +1,52 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class JournalLetterTest extends InstanceTest {
+
+    private static final String JOURNAL_LETTER = "JournalLetter";
 
     @DisplayName("Journal letters to editor can be created from JSON")
     @Test
     void journalLetterReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageRangeException {
-        JournalLetter expected = generateJournalLetter("1", "3", "123", "2", "3");
-        String json = objectMapper.writeValueAsString(expected);
+        JournalTestData testData = new JournalTestData(false);
+        JournalLetter expected = generateJournalLetter(testData);
+        String json = generateArticleJsonString(JOURNAL_LETTER, testData);
         JournalLetter journalLetter = objectMapper.readValue(json, JournalLetter.class);
         assertEquals(expected, journalLetter);
     }
 
     @DisplayName("Journal letters cannot be peer reviewed")
     @Test
-    void journalLetterSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageRangeException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String type = "JournalLetter";
-        String volume = "1";
-        String issue = "3";
-        String articleNumber = "123";
-        String begin = "2";
-        String end = "3";
-        JournalLetter expected = generateJournalLetter(volume, issue, articleNumber, begin, end);
-
-        String json = generateArticleJsonString(type, volume, issue, articleNumber, begin, end, true);
-        assertEquals(expected, objectMapper.readValue(json, JournalLetter.class));
+    void journalLetterThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException {
+        String json = generateArticleWithPeerReview(JOURNAL_LETTER);
+        Executable executable = () -> objectMapper.readValue(json, JournalLetter.class);
+        JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
+        String expected = String.format(NonPeerReviewed.PEER_REVIEWED_ERROR_TEMPLATE,
+                JournalLetter.class.getSimpleName());
+        assertThat(exception.getMessage(), containsString(expected));
     }
 
-    private JournalLetter generateJournalLetter(String volume,
-                                                String issue,
-                                                String articleNumber,
-                                                String begin,
-                                                String end) throws InvalidPageRangeException {
-        Range pages = new Range.Builder()
-                .withBegin(begin)
-                .withEnd(end)
-                .build();
+    private JournalLetter generateJournalLetter(JournalTestData testData) throws InvalidPageRangeException {
 
         return new JournalLetter.Builder()
-                .withVolume(volume)
-                .withPages(pages)
-                .withIssue(issue)
-                .withArticleNumber(articleNumber)
+                .withVolume(testData.getVolume())
+                .withPages(testData.getPages())
+                .withIssue(testData.getIssue())
+                .withArticleNumber(testData.getArticleNumber())
                 .build();
     }
 }

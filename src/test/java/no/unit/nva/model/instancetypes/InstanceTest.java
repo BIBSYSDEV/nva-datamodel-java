@@ -34,6 +34,19 @@ public class InstanceTest extends ModelTest {
 
     }
 
+    protected String generateArticleJsonString(String type, JournalTestData testData) throws JsonProcessingException {
+        return generateJsonString(type,
+                testData.getVolume(),
+                testData.getIssue(),
+                testData.getArticleNumber(),
+                testData.getPages().getBegin(),
+                testData.getPages().getEnd(),
+                null,
+                testData.isIllustrated(),
+                testData.isPeerReviewed()
+        );
+    }
+
     protected String generateArticleJsonString(String type,
                                         String volume,
                                         String issue,
@@ -82,6 +95,16 @@ public class InstanceTest extends ModelTest {
 
 
         return objectMapper.writeValueAsString(instance);
+    }
+
+    protected String generateArticleWithPeerReview(String type) throws JsonProcessingException {
+        String volume = "1";
+        String issue = "3";
+        String articleNumber = "123";
+        String begin = "2";
+        String end = "3";
+        return generateArticleJsonString(type,
+                volume, issue, articleNumber, begin, end, true);
     }
 
     private LinkedHashMap<String, Object> getMonographPagesMap(String begin,

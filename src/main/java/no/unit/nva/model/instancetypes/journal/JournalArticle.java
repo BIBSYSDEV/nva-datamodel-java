@@ -1,15 +1,16 @@
 package no.unit.nva.model.instancetypes.journal;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
-import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.instancetypes.PeerReviewedPaper;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalArticle extends ChapterArticle implements PublicationInstance<Range> {
+@JsonPropertyOrder({"type", "pages", "peerReviewed", "volume", "issue", "articleNumber"})
+public class JournalArticle extends PeerReviewedPaper {
     private String volume;
     private String issue;
     private String articleNumber;
@@ -101,17 +102,18 @@ public class JournalArticle extends ChapterArticle implements PublicationInstanc
         if (!(o instanceof JournalArticle)) {
             return false;
         }
+        if (!super.equals(o)) {
+            return false;
+        }
         JournalArticle that = (JournalArticle) o;
-        return isPeerReviewed() == that.isPeerReviewed()
-                && Objects.equals(getVolume(), that.getVolume())
+        return Objects.equals(getVolume(), that.getVolume())
                 && Objects.equals(getIssue(), that.getIssue())
-                && Objects.equals(getArticleNumber(), that.getArticleNumber())
-                && Objects.equals(getPages(), that.getPages());
+                && Objects.equals(getArticleNumber(), that.getArticleNumber());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getVolume(), getIssue(), getArticleNumber(), getPages(), isPeerReviewed());
+        return Objects.hash(super.hashCode(), getVolume(), getIssue(), getArticleNumber());
     }
 }

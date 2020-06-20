@@ -15,17 +15,15 @@ public class JournalShortCommunication extends JournalNonPeerReviewedContent {
      * @param issue         the issue of the PublicationInstance.
      * @param articleNumber the article number of the PublicationInstance.
      * @param pages         the Pages of the PublicationInstance.
-     * @param peerReviewed  the value is always ignored.
      */
     @JsonCreator
     public JournalShortCommunication(
             @JsonProperty("volume") String volume,
             @JsonProperty("issue") String issue,
             @JsonProperty("articleNumber") String articleNumber,
-            @JsonProperty("pages") Range pages,
-            @JsonProperty("peerReviewed") boolean peerReviewed
+            @JsonProperty("pages") Range pages
     ) {
-        super(volume, issue, articleNumber, pages, peerReviewed);
+        super(volume, issue, articleNumber, pages);
     }
 
     public static final class Builder {
@@ -58,7 +56,7 @@ public class JournalShortCommunication extends JournalNonPeerReviewedContent {
         }
 
         public JournalShortCommunication build() {
-            return new JournalShortCommunication(this.volume, this.issue, this.articleNumber, this.pages, false);
+            return new JournalShortCommunication(this.volume, this.issue, this.articleNumber, this.pages);
         }
     }
 }
