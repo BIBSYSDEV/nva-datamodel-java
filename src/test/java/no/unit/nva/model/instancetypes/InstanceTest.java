@@ -14,6 +14,16 @@ public class InstanceTest extends ModelTest {
 
     protected final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
+    protected String generateMonographJsonString(String type, MonographTestData testData) throws
+            JsonProcessingException {
+        String begin = testData.getPages().getIntroduction().getBegin();
+        String end = testData.getPages().getIntroduction().getEnd();
+        String pages = testData.getPages().getPages();
+        boolean illustrated = testData.getPages().isIllustrated();
+        return generateJsonString(type, null, null, null, begin, end,
+                pages, illustrated, testData.isPeerReviewed());
+    }
+
     protected String generateMonographJsonString(String type,
                                                  String introductionBegin,
                                                  String introductionEnd,
@@ -71,13 +81,6 @@ public class InstanceTest extends ModelTest {
                 instance.put("articleNumber", articleNumber);
                 instance.put("pages", getRangeMap(introductionBegin, introductionEnd));
                 instance.put("peerReviewed", peerReviewed);
-                break;
-            case "Report":
-            case "ReportPolicy":
-            case "ReportResearch":
-            case "ReportWorkingPaper":
-                instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));
-                instance.put("peerReviewed", false);
                 break;
             default:
                 instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));

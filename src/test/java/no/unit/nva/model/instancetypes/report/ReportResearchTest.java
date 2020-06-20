@@ -1,19 +1,19 @@
 package no.unit.nva.model.instancetypes.report;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
-import no.unit.nva.model.pages.MonographPages;
-import no.unit.nva.model.pages.Range;
+import no.unit.nva.model.instancetypes.MonographTestData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import java.rmi.UnexpectedException;
-
+import static no.unit.nva.model.instancetypes.NonPeerReviewed.PEER_REVIEWED_ERROR_TEMPLATE;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReportResearchTest extends InstanceTest {
 
@@ -21,9 +21,9 @@ class ReportResearchTest extends InstanceTest {
     @Test
     void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageRangeException {
-        ReportResearch expected = generateReportResearch("42", "1", "3", false);
-        String json = objectMapper.writeValueAsString(expected);
-        assertTrue(json.contains("peerReviewed"));
+        MonographTestData testData = new MonographTestData(false);
+        ReportResearch expected = generateReportResearch(testData);
+        String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), testData);
         ReportResearch reportResearch = objectMapper.readValue(json, ReportResearch.class);
         assertEquals(expected, reportResearch);
     }
@@ -32,47 +32,27 @@ class ReportResearchTest extends InstanceTest {
     @Test
     void reportResearchSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
-        String type = "ReportResearch";
-        String pages = "42";
-        String introductionBegin = "1";
-        String introductionEnd = "3";
-        boolean illustrated = false;
-        boolean peerReviewed = false;
-        ReportResearch expected = generateReportResearch(pages, introductionBegin, introductionEnd, illustrated);
-        String json = generateMonographJsonString(type, introductionBegin, introductionEnd, pages,
-                illustrated, peerReviewed);
+        MonographTestData testData = new MonographTestData(false);
+        ReportResearch expected = generateReportResearch(testData);
+        String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), testData);
         ReportResearch actual = objectMapper.readValue(json, ReportResearch.class);
         assertEquals(expected, actual);
     }
 
-    @DisplayName("ReportResearch: Attempting to set peer reviewed to true results in Unexpected exception")
+    @DisplayName("ReportResearch: Attempting to set peer reviewed to true results in JsonMappingException")
     @Test
-    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
-        Executable executable = () -> {
-            ReportResearch reportResearch = new ReportResearch();
-            reportResearch.setPeerReviewed(true);
-        };
-        UnexpectedException exception = assertThrows(UnexpectedException.class, executable);
-        String expected = String.format(ReportResearch.PEER_REVIEWED_ERROR_TEMPLATE,
-                ReportResearch.class.getSimpleName());
-        assertEquals(expected, exception.getMessage());
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() throws InvalidPageRangeException,
+            JsonProcessingException {
+        String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), new MonographTestData(true));
+        Executable executable = () -> objectMapper.readValue(json, ReportResearch.class);
+        JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
+        String expected = String.format(PEER_REVIEWED_ERROR_TEMPLATE, ReportResearch.class.getSimpleName());
+        assertThat(exception.getMessage(), containsString(expected));
     }
 
-    private ReportResearch generateReportResearch(String pages, String introductionBegin, String introductionEnd,
-                                                  boolean illustrated) throws InvalidPageRangeException {
-        Range introductionRange = new Range.Builder()
-                .withBegin(introductionBegin)
-                .withEnd(introductionEnd)
-                .build();
-
-        MonographPages monographPages = new MonographPages.Builder()
-                .withPages(pages)
-                .withIntroduction(introductionRange)
-                .withIllustrated(illustrated)
-                .build();
-
+    private ReportResearch generateReportResearch(MonographTestData testData) {
         return new ReportResearch.Builder()
-                .withPages(monographPages)
+                .withPages(testData.getPages())
                 .build();
     }
 }
