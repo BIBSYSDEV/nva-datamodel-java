@@ -52,7 +52,7 @@ class ReportTest extends InstanceTest {
     @Test
     void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
         Executable executable = () -> {
-            Report report = new Report(null);
+            Report report = new Report();
             report.setPeerReviewed(true);
         };
         UnexpectedException exception = assertThrows(UnexpectedException.class, executable);

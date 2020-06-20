@@ -56,7 +56,7 @@ class ReportWorkingPaperTest extends InstanceTest {
     @Test
     void reportWorkingPaperThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
         Executable executable = () -> {
-            ReportWorkingPaper reportWorkingPaper = new ReportWorkingPaper(null);
+            ReportWorkingPaper reportWorkingPaper = new ReportWorkingPaper();
             reportWorkingPaper.setPeerReviewed(true);
         };
         UnexpectedException exception = assertThrows(UnexpectedException.class, executable);

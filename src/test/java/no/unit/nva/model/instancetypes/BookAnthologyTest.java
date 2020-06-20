@@ -17,7 +17,7 @@ class BookAnthologyTest extends InstanceTest {
     @DisplayName("BookAnthology exists")
     @Test
     void bookAnthologyExists() {
-        new BookAnthology(null, false);
+        new BookAnthology();
     }
 
     @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")

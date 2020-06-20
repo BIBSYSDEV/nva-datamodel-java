@@ -20,7 +20,7 @@ public class DegreeBachelorTest extends InstanceTest {
     @DisplayName("DegreeBachelor exists")
     @Test
     void degreeBachelorExists() {
-        new DegreeBachelor(null);
+        new DegreeBachelor();
     }
 
     @DisplayName("DegreeBachelor: ObjectMapper correctly deserializes object")
@@ -86,7 +86,7 @@ public class DegreeBachelorTest extends InstanceTest {
     @Test
     void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
         Executable executable = () -> {
-            DegreeBachelor degreeBachelor = new DegreeBachelor(null);
+            DegreeBachelor degreeBachelor = new DegreeBachelor();
             degreeBachelor.setPeerReviewed(true);
         };
         UnexpectedException exception = assertThrows(UnexpectedException.class, executable);

@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.pages.MonographPages;
 import nva.commons.utils.JacocoGenerated;
 
@@ -7,7 +8,9 @@ import java.util.Objects;
 
 public class PeerReviewedMonograph implements PublicationInstance<MonographPages> {
 
+    @JsonProperty("pages")
     private MonographPages pages;
+    @JsonProperty("peerReviewed")
     private boolean peerReviewed;
 
     protected PeerReviewedMonograph() {

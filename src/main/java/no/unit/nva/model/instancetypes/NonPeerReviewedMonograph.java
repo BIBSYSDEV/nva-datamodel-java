@@ -1,14 +1,22 @@
 package no.unit.nva.model.instancetypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import no.unit.nva.model.pages.MonographPages;
 import nva.commons.utils.JacocoGenerated;
 
 import java.rmi.UnexpectedException;
 import java.util.Objects;
 
+@JsonPropertyOrder({"pages", "peerReviewed"})
 public class NonPeerReviewedMonograph implements PublicationInstance<MonographPages> {
     public static final String PEER_REVIEWED_ERROR_TEMPLATE = "%s is assumed not to be peer-reviewed";
+
+    @JsonProperty("pages")
     private MonographPages pages;
+
+    public NonPeerReviewedMonograph() {
+    }
 
     protected NonPeerReviewedMonograph(MonographPages pages) {
         this.pages = pages;

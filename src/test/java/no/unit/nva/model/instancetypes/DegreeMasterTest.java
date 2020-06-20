@@ -20,7 +20,7 @@ public class DegreeMasterTest extends InstanceTest {
     @DisplayName("DegreeMaster exists")
     @Test
     void degreeMasterExists() {
-        new DegreeMaster(null);
+        new DegreeMaster();
     }
 
     @DisplayName("DegreeMaster: ObjectMapper correctly deserializes object")
@@ -82,7 +82,7 @@ public class DegreeMasterTest extends InstanceTest {
     @Test
     void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
         Executable executable = () -> {
-            DegreeMaster degreeMaster = new DegreeMaster(null);
+            DegreeMaster degreeMaster = new DegreeMaster();
             degreeMaster.setPeerReviewed(true);
         };
         UnexpectedException exception = assertThrows(UnexpectedException.class, executable);

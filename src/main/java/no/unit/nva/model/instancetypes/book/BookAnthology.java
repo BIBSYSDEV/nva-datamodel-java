@@ -1,6 +1,5 @@
 package no.unit.nva.model.instancetypes.book;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.PeerReviewedMonograph;
 import no.unit.nva.model.pages.MonographPages;
@@ -8,9 +7,8 @@ import no.unit.nva.model.pages.MonographPages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class BookAnthology extends PeerReviewedMonograph {
 
-    public BookAnthology(@JsonProperty("pages") MonographPages pages,
-                         @JsonProperty("peerReviewed") boolean peerReviewed) {
-        super(pages, peerReviewed);
+    public BookAnthology() {
+        super();
     }
 
     private BookAnthology(Builder builder) {

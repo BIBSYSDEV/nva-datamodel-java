@@ -17,7 +17,7 @@ class BookMonographTest extends InstanceTest {
     @DisplayName("BookMonograph exists")
     @Test
     void bookMonographExists() {
-        new BookMonograph(null, false);
+        new BookMonograph();
     }
 
     @DisplayName("BookMonograph: ObjectMapper correctly deserializes object")
