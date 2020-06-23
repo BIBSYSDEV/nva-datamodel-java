@@ -14,7 +14,7 @@ public abstract class NonPeerReviewed<P extends Pages> implements PublicationIns
      * @param peerReviewed a boolean value.
      * @throws UnexpectedException thrown if the boolean equals true.
      */
-    public void setPeerReviewed(boolean peerReviewed) throws UnexpectedException {
+    public final void setPeerReviewed(boolean peerReviewed) throws UnexpectedException {
         if (peerReviewed) {
             throw new UnexpectedException(String.format(PEER_REVIEWED_ERROR_TEMPLATE, this.getClass().getSimpleName()));
         }

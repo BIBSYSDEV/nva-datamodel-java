@@ -9,7 +9,6 @@ import nva.commons.utils.JacocoGenerated;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonPropertyOrder({"type", "pages", "peerReviewed", "volume", "issue", "articleNumber"})
 public class JournalArticle extends PeerReviewedPaper {
     private String volume;
     private String issue;

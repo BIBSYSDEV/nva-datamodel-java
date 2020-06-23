@@ -7,7 +7,6 @@ import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-@JsonPropertyOrder({"pages", "peerReviewed"})
 public class NonPeerReviewedMonograph extends NonPeerReviewed<MonographPages>  {
 
     @JsonProperty("pages")
