@@ -6,19 +6,19 @@ import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-public class PeerReviewedPaper implements PublicationInstance<Range> {
+public class PeerReviewedPaper extends PeerReviewed<Range> {
 
     @JsonProperty("pages")
     private Range pages;
-    @JsonProperty("peerReviewed")
-    private boolean peerReviewed;
+
 
     public PeerReviewedPaper() {
+        super();
     }
 
     public PeerReviewedPaper(Range pages, boolean peerReviewed) {
+        super(peerReviewed);
         this.pages = pages;
-        this.peerReviewed = peerReviewed;
     }
 
     @Override
@@ -29,15 +29,6 @@ public class PeerReviewedPaper implements PublicationInstance<Range> {
     @Override
     public void setPages(Range pages) {
         this.pages = pages;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return peerReviewed;
-    }
-
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
     }
 
     @JacocoGenerated

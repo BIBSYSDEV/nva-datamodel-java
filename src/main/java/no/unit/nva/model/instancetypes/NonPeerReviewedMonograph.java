@@ -8,7 +8,7 @@ import nva.commons.utils.JacocoGenerated;
 import java.util.Objects;
 
 @JsonPropertyOrder({"pages", "peerReviewed"})
-public class NonPeerReviewedMonograph extends NonPeerReviewed implements PublicationInstance<MonographPages> {
+public class NonPeerReviewedMonograph extends NonPeerReviewed<MonographPages>  {
 
     @JsonProperty("pages")
     private MonographPages pages;
@@ -30,11 +30,6 @@ public class NonPeerReviewedMonograph extends NonPeerReviewed implements Publica
     @Override
     public void setPages(MonographPages pages) {
         this.pages = pages;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
     }
 
     @JacocoGenerated

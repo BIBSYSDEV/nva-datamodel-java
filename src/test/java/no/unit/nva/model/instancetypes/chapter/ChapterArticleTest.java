@@ -1,18 +1,22 @@
 package no.unit.nva.model.instancetypes.chapter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
+import nva.commons.utils.attempt.Failure;
+import nva.commons.utils.attempt.Try;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ChapterArticleTest {
+public class ChapterArticleTest implements JsonHandlingTest {
 
     private static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String CHAPTER_ARTICLE = "ChapterArticle";
@@ -38,17 +42,20 @@ public class ChapterArticleTest {
 
     @DisplayName("ChapterArticle: objectMapper can serialize valid input")
     @Test
-    void objectMapperReturnsValidJsonWhenInputIsValidChapterArticle() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void objectMapperReturnsValidJsonWhenInputIsValidChapterArticle() throws Exception {
         String expectedBegin = "222";
         String expectedEnd = "232";
         ChapterArticle chapterArticle = new ChapterArticle.Builder()
                 .withPages(generatePages(expectedBegin, expectedEnd))
                 .withPeerReviewed(false)
                 .build();
-        String expectedJson = generateWellFormedJson(expectedBegin, expectedEnd, false);
-        assertEquals(expectedJson, objectMapper.writeValueAsString(chapterArticle));
+        JsonNode expectedJson = Try.of(generateWellFormedJson(expectedBegin, expectedEnd, false))
+                .map(this::jsonStringToJsonNode).orElseThrow(Failure::getException);
+        JsonNode actualJson = objectMapper.convertValue(chapterArticle, JsonNode.class);
+
+        assertEquals(expectedJson, actualJson);
     }
+
 
     private Range generatePages(String begin, String end) throws InvalidPageRangeException {
         return new Range.Builder()
