@@ -1,7 +1,6 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import no.unit.nva.model.pages.MonographPages;
 import nva.commons.utils.JacocoGenerated;
 

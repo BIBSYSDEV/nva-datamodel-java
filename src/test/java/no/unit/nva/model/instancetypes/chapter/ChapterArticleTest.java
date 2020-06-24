@@ -5,21 +5,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
+import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
-import nva.commons.utils.attempt.Failure;
-import nva.commons.utils.attempt.Try;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ChapterArticleTest implements JsonHandlingTest {
+public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest {
 
     private static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-    public static final String CHAPTER_ARTICLE = "ChapterArticle";
 
     @DisplayName("ChapterArticle exists")
     @Test
@@ -34,7 +32,7 @@ public class ChapterArticleTest implements JsonHandlingTest {
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
-        String json = generateWellFormedJson(expectedBegin, expectedEnd, true);
+        String json = generateChapterArticleJsonString(expectedBegin, expectedEnd, true);
         ChapterArticle chapterArticle = objectMapper.readValue(json, ChapterArticle.class);
         assertEquals(expectedPages, chapterArticle.getPages());
         assertTrue(chapterArticle.isPeerReviewed());
@@ -49,10 +47,8 @@ public class ChapterArticleTest implements JsonHandlingTest {
                 .withPages(generatePages(expectedBegin, expectedEnd))
                 .withPeerReviewed(false)
                 .build();
-        JsonNode expectedJson = Try.of(generateWellFormedJson(expectedBegin, expectedEnd, false))
-                .map(this::jsonStringToJsonNode).orElseThrow(Failure::getException);
+        JsonNode expectedJson = generateChapterArticleJson(expectedBegin, expectedEnd, false);
         JsonNode actualJson = objectMapper.convertValue(chapterArticle, JsonNode.class);
-
         assertEquals(expectedJson, actualJson);
     }
 
@@ -62,19 +58,5 @@ public class ChapterArticleTest implements JsonHandlingTest {
                 .withBegin(begin)
                 .withEnd(end)
                 .build();
-    }
-
-    private String generateWellFormedJson(String begin,
-                                          String end,
-                                          boolean peerReviewed) {
-        return "{\n"
-                + "  \"type\" : \"" + CHAPTER_ARTICLE + "\",\n"
-                + "  \"pages\" : {\n"
-                + "    \"type\" : \"Range\",\n"
-                + "    \"begin\" : \"" + begin + "\",\n"
-                + "    \"end\" : \"" + end + "\"\n"
-                + "  },\n"
-                + "  \"peerReviewed\" : " + peerReviewed + "\n"
-                + "}";
     }
 }

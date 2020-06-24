@@ -1,6 +1,5 @@
 package no.unit.nva.model.instancetypes.journal;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.PeerReviewedPaper;
 import no.unit.nva.model.pages.Range;

@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
-import nva.commons.utils.attempt.Failure;
-import nva.commons.utils.attempt.Try;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -80,11 +78,9 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
                 illustrated,
                 peerReviewed
         );
-        JsonNode actualJson = objectMapper.convertValue(bookAnthology, JsonNode.class);
-        JsonNode expectedJson = Try
-                .of(generateMonographJsonString(BOOK_ANTHOLOGY, begin, end, pages, illustrated, peerReviewed))
-                .map(this::jsonStringToJsonNode).orElseThrow(Failure::getException);
-        assertEquals(expectedJson, actualJson);
+        JsonNode actual = objectMapper.convertValue(bookAnthology, JsonNode.class);
+        JsonNode expected = generateMonographJson(BOOK_ANTHOLOGY, begin, end, pages, illustrated, peerReviewed);
+        assertEquals(expected, actual);
     }
 
     private BookAnthology generateBookAnthology(String introductionBegin,

@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes.degree;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
@@ -69,15 +70,18 @@ public class DegreeMasterTest extends InstanceTest {
                 pages,
                 illustrated);
         String json = objectMapper.writeValueAsString(degreeMaster);
-        String expected = generateMonographJsonString(
+        JsonNode expected = generateMonographJson(
                 DEGREE_MASTER,
                 begin,
                 end,
                 pages,
-                illustrated);
-        assertEquals(expected, json);
+                illustrated,
+                false);
+        JsonNode actual = jsonStringToJsonNode(json);
+        assertEquals(expected, actual);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @DisplayName("DegreePhd: Attempting to set peer reviewed to true results in Unexpected exception")
     @Test
     void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() {
