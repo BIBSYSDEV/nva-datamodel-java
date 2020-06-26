@@ -1,8 +1,10 @@
 package no.unit.nva.model.instancetypes;
 
+import no.unit.nva.model.pages.Pages;
+
 import java.rmi.UnexpectedException;
 
-public class NonPeerReviewed {
+public abstract class NonPeerReviewed<P extends Pages> implements PublicationInstance<P> {
     public static final String PEER_REVIEWED_ERROR_TEMPLATE = "%s is assumed not to be peer-reviewed";
 
     /**
@@ -12,9 +14,14 @@ public class NonPeerReviewed {
      * @param peerReviewed a boolean value.
      * @throws UnexpectedException thrown if the boolean equals true.
      */
-    public void setPeerReviewed(boolean peerReviewed) throws UnexpectedException {
+    public final void setPeerReviewed(boolean peerReviewed) throws UnexpectedException {
         if (peerReviewed) {
             throw new UnexpectedException(String.format(PEER_REVIEWED_ERROR_TEMPLATE, this.getClass().getSimpleName()));
         }
+    }
+
+    @Override
+    public final boolean isPeerReviewed() {
+        return false;
     }
 }

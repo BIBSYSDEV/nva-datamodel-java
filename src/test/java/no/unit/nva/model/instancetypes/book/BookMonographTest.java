@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes.book;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
@@ -75,8 +76,8 @@ class BookMonographTest extends InstanceTest {
                 illustrated,
                 peerReviewed
         );
-        String json = objectMapper.writeValueAsString(bookMonograph);
-        String expected = generateMonographJsonString(BOOK_MONOGRAPH,
+        JsonNode json = jsonStringToJsonNode(objectMapper.writeValueAsString(bookMonograph));
+        JsonNode expected = generateMonographJson(BOOK_MONOGRAPH,
                 begin, end, pages, illustrated, peerReviewed);
         assertEquals(expected, json);
     }

@@ -2,7 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import no.unit.nva.model.pages.Range;
 
-public class NonPeerReviewedPaper extends NonPeerReviewed implements PublicationInstance<Range> {
+public class NonPeerReviewedPaper extends NonPeerReviewed<Range> {
     private Range pages;
 
     protected NonPeerReviewedPaper() {
@@ -22,10 +22,5 @@ public class NonPeerReviewedPaper extends NonPeerReviewed implements Publication
     @Override
     public void setPages(Range pages) {
         this.pages = pages;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
     }
 }

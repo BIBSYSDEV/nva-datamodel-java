@@ -6,19 +6,19 @@ import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-public class PeerReviewedMonograph implements PublicationInstance<MonographPages> {
+public class PeerReviewedMonograph extends PeerReviewed<MonographPages> {
 
     @JsonProperty("pages")
     private MonographPages pages;
-    @JsonProperty("peerReviewed")
-    private boolean peerReviewed;
+
 
     protected PeerReviewedMonograph() {
+        super();
     }
 
     protected PeerReviewedMonograph(MonographPages pages, boolean peerReviewed) {
+        super(peerReviewed);
         this.pages = pages;
-        this.peerReviewed = peerReviewed;
     }
 
     @Override
@@ -29,11 +29,6 @@ public class PeerReviewedMonograph implements PublicationInstance<MonographPages
     @Override
     public void setPages(MonographPages pages) {
         this.pages = pages;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return peerReviewed;
     }
 
     @JacocoGenerated

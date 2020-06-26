@@ -1,6 +1,8 @@
 package no.unit.nva.model.instancetypes.book;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BookAnthologyTest extends InstanceTest {
+class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
 
     public static final String BOOK_ANTHOLOGY = "BookAnthology";
 
@@ -67,8 +69,7 @@ class BookAnthologyTest extends InstanceTest {
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
-                                                         boolean peerReviewed) throws JsonProcessingException,
-            InvalidPageRangeException {
+                                                         boolean peerReviewed) throws Exception {
 
         BookAnthology bookAnthology = generateBookAnthology(
                 begin,
@@ -77,15 +78,9 @@ class BookAnthologyTest extends InstanceTest {
                 illustrated,
                 peerReviewed
         );
-        String json = objectMapper.writeValueAsString(bookAnthology);
-        String expected = generateMonographJsonString(
-                BOOK_ANTHOLOGY,
-                begin,
-                end,
-                pages,
-                illustrated,
-                peerReviewed);
-        assertEquals(expected, json);
+        JsonNode actual = objectMapper.convertValue(bookAnthology, JsonNode.class);
+        JsonNode expected = generateMonographJson(BOOK_ANTHOLOGY, begin, end, pages, illustrated, peerReviewed);
+        assertEquals(expected, actual);
     }
 
     private BookAnthology generateBookAnthology(String introductionBegin,

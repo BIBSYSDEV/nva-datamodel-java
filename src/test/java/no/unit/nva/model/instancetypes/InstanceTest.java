@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
@@ -12,6 +13,7 @@ import static java.util.Objects.nonNull;
 
 public class InstanceTest extends ModelTest {
 
+    public static final String CHAPTER_ARTICLE = "ChapterArticle";
     protected final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     protected String generateMonographJsonString(String type, MonographTestData testData) throws
@@ -45,6 +47,17 @@ public class InstanceTest extends ModelTest {
 
     }
 
+    protected JsonNode generateMonographJson(String type,
+                                             String introductionBegin,
+                                             String introductionEnd,
+                                             String pages,
+                                             boolean illustrated,
+                                             boolean peerReviewed) {
+        LinkedHashMap<String, Object> instance = generateMapRepresentation(type, null, null, null, introductionBegin,
+                introductionEnd, pages, illustrated, peerReviewed);
+        return objectMapper.valueToTree(instance);
+    }
+
     protected String generateArticleJsonString(String type, JournalTestData testData) throws JsonProcessingException {
         return generateJsonString(type,
                 testData.getVolume(),
@@ -67,6 +80,53 @@ public class InstanceTest extends ModelTest {
                                         String pages,
                                         boolean illustrated,
                                         boolean peerReviewed) throws JsonProcessingException {
+        LinkedHashMap<String, Object> instance = generateMapRepresentation(type,
+                volume,
+                issue,
+                articleNumber,
+                introductionBegin,
+                introductionEnd,
+                pages,
+                illustrated,
+                peerReviewed);
+        return objectMapper.writeValueAsString(instance);
+    }
+
+    protected String generateChapterArticleJsonString(String begin, String end, boolean peerReviewed) throws
+            JsonProcessingException {
+        return generateJsonString(CHAPTER_ARTICLE,
+                null,
+                null,
+                null,
+                begin,
+                end,
+                null,
+                false,
+                peerReviewed);
+    }
+
+    protected JsonNode generateChapterArticleJson(String begin, String end, boolean peerReviewed) {
+        LinkedHashMap<String, Object> instance = generateMapRepresentation(CHAPTER_ARTICLE,
+                null,
+                null,
+                null,
+                begin,
+                end,
+                null,
+                false,
+                peerReviewed);
+        return objectMapper.valueToTree(instance);
+    }
+
+    protected LinkedHashMap<String, Object> generateMapRepresentation(String type,
+                                                                      String volume,
+                                                                      String issue,
+                                                                      String articleNumber,
+                                                                      String introductionBegin,
+                                                                      String introductionEnd,
+                                                                      String pages,
+                                                                      boolean illustrated,
+                                                                      boolean peerReviewed) {
         LinkedHashMap<String, Object> instance = new LinkedHashMap<>();
         instance.put("type", type);
 
@@ -82,13 +142,15 @@ public class InstanceTest extends ModelTest {
                 instance.put("pages", getRangeMap(introductionBegin, introductionEnd));
                 instance.put("peerReviewed", peerReviewed);
                 break;
+            case "ChapterArticle":
+                instance.put("pages", getRangeMap(introductionBegin, introductionEnd));
+                instance.put("peerReviewed", peerReviewed);
+                break;
             default:
                 instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));
                 instance.put("peerReviewed", peerReviewed);
         }
-
-
-        return objectMapper.writeValueAsString(instance);
+        return instance;
     }
 
     protected String generateArticleWithPeerReview(String type) throws JsonProcessingException,
