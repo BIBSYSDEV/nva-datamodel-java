@@ -17,36 +17,36 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class ReportTest extends InstanceTest {
+class ReportBasicTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String REPORT = "Report";
 
-    @DisplayName("Report can be created from JSON")
+    @DisplayName("ReportBasic can be created from JSON")
     @Test
     void reportReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageRangeException {
         MonographTestData testData = new MonographTestData(false);
-        Report expected = generateReport(testData);
+        ReportBasic expected = generateReport(testData);
         String json = generateMonographJsonString(REPORT, testData);
-        Report actual = objectMapper.readValue(json, Report.class);
+        ReportBasic actual = objectMapper.readValue(json, ReportBasic.class);
         assertEquals(expected, actual);
     }
 
-    @DisplayName("Report: Attempting to set peer reviewed to true results in UnexpectedException")
+    @DisplayName("ReportBasic: Attempting to set peer reviewed to true results in UnexpectedException")
     @Test
     void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {
         MonographTestData testData = new MonographTestData(true);
         String json = generateMonographJsonString(REPORT, testData);
-        Executable executable = () -> objectMapper.readValue(json, Report.class);
+        Executable executable = () -> objectMapper.readValue(json, ReportBasic.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
-        String expected = String.format(PEER_REVIEWED_ERROR_TEMPLATE, Report.class.getSimpleName());
+        String expected = String.format(PEER_REVIEWED_ERROR_TEMPLATE, ReportBasic.class.getSimpleName());
         assertThat(exception.getMessage(), containsString(expected));
     }
 
-    private Report generateReport(MonographTestData testData) {
-        return new Report.Builder()
+    private ReportBasic generateReport(MonographTestData testData) {
+        return new ReportBasic.Builder()
                 .withPages(testData.getPages())
                 .build();
     }

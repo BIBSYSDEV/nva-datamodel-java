@@ -13,7 +13,7 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
-import no.unit.nva.model.instancetypes.report.Report;
+import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -31,7 +31,7 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),
         @JsonSubTypes.Type(name = "DegreeMaster", value = DegreeMaster.class),
         @JsonSubTypes.Type(name = "DegreePhd", value = DegreePhd.class),
-        @JsonSubTypes.Type(name = "Report", value = Report.class),
+        @JsonSubTypes.Type(name = "Report", value = ReportBasic.class),
         @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
         @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
         @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class),

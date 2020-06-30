@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ReportResearchTest extends InstanceTest {
 
-    @DisplayName("Report research can be created from JSON")
+    @DisplayName("ReportResearch can be created from JSON")
     @Test
     void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageRangeException {
@@ -28,7 +28,7 @@ class ReportResearchTest extends InstanceTest {
         assertEquals(expected, reportResearch);
     }
 
-    @DisplayName("Report research cannot be peer reviewed")
+    @DisplayName("ReportResearch cannot be peer reviewed")
     @Test
     void reportResearchSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
             InvalidPageRangeException {

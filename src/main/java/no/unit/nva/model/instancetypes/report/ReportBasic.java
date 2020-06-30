@@ -1,17 +1,19 @@
 package no.unit.nva.model.instancetypes.report;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import no.unit.nva.model.instancetypes.NonPeerReviewedMonograph;
 import no.unit.nva.model.pages.MonographPages;
 
+@JsonTypeName("Report")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Report extends NonPeerReviewedMonograph {
+public class ReportBasic extends NonPeerReviewedMonograph {
 
-    public Report() {
+    public ReportBasic() {
         super();
     }
 
-    private Report(Builder builder) {
+    private ReportBasic(Builder builder) {
         super(builder.pages);
     }
 
@@ -26,8 +28,8 @@ public class Report extends NonPeerReviewedMonograph {
             return this;
         }
 
-        public Report build() {
-            return new Report(this);
+        public ReportBasic build() {
+            return new ReportBasic(this);
         }
     }
 

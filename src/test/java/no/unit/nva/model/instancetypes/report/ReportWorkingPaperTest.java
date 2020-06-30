@@ -21,7 +21,7 @@ class ReportWorkingPaperTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
-    @DisplayName("Report working paper can be created from JSON")
+    @DisplayName("ReportBasic working paper can be created from JSON")
     @Test
     void reportWorkingPaperReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
             InvalidPageRangeException {
