@@ -1,33 +1,33 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import no.unit.nva.model.pages.MonographPages;
+import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-public class PeerReviewedMonograph extends PeerReviewed<MonographPages> {
+public class PeerReviewedPaper extends PeerReviewed<Range> {
 
     @JsonProperty("pages")
-    private MonographPages pages;
+    private Range pages;
 
 
-    protected PeerReviewedMonograph() {
+    public PeerReviewedPaper() {
         super();
     }
 
-    protected PeerReviewedMonograph(MonographPages pages, boolean peerReviewed) {
+    public PeerReviewedPaper(Range pages, boolean peerReviewed) {
         super(peerReviewed);
         this.pages = pages;
     }
 
     @Override
-    public MonographPages getPages() {
+    public Range getPages() {
         return pages;
     }
 
     @Override
-    public void setPages(MonographPages pages) {
+    public void setPages(Range pages) {
         this.pages = pages;
     }
 
@@ -37,10 +37,10 @@ public class PeerReviewedMonograph extends PeerReviewed<MonographPages> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PeerReviewedMonograph)) {
+        if (!(o instanceof PeerReviewedPaper)) {
             return false;
         }
-        PeerReviewedMonograph that = (PeerReviewedMonograph) o;
+        PeerReviewedPaper that = (PeerReviewedPaper) o;
         return isPeerReviewed() == that.isPeerReviewed()
                 && Objects.equals(getPages(), that.getPages());
     }

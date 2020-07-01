@@ -1,5 +1,7 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
@@ -11,24 +13,25 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
-import no.unit.nva.model.instancetypes.BookAnthology;
-import no.unit.nva.model.instancetypes.BookMonograph;
-import no.unit.nva.model.instancetypes.ChapterArticle;
-import no.unit.nva.model.instancetypes.DegreeBachelor;
-import no.unit.nva.model.instancetypes.DegreeMaster;
-import no.unit.nva.model.instancetypes.DegreePhd;
-import no.unit.nva.model.instancetypes.JournalArticle;
-import no.unit.nva.model.instancetypes.JournalLeader;
-import no.unit.nva.model.instancetypes.JournalLetter;
-import no.unit.nva.model.instancetypes.JournalReview;
-import no.unit.nva.model.instancetypes.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.book.BookAnthology;
+import no.unit.nva.model.instancetypes.book.BookMonograph;
+import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
+import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
+import no.unit.nva.model.instancetypes.degree.DegreeMaster;
+import no.unit.nva.model.instancetypes.degree.DegreePhd;
+import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import no.unit.nva.model.instancetypes.journal.JournalLeader;
+import no.unit.nva.model.instancetypes.journal.JournalLetter;
+import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.PublicationInstance;
-import no.unit.nva.model.instancetypes.ReportPolicy;
-import no.unit.nva.model.instancetypes.ReportResearch;
-import no.unit.nva.model.instancetypes.ReportWorkingPaper;
+import no.unit.nva.model.instancetypes.report.ReportPolicy;
+import no.unit.nva.model.instancetypes.report.ReportResearch;
+import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
+import nva.commons.utils.JsonUtils;
 
 import java.net.URI;
 import java.time.Instant;
@@ -42,7 +45,7 @@ import java.util.stream.Collectors;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
-public class ModelTest {
+public class ModelTest implements JsonHandlingTest {
     public static final String QUOTE = "\"";
     public static final String EMPTY_STRING = "";
     public static final String COMMA_SPACE = ", ";
@@ -66,6 +69,7 @@ public class ModelTest {
     public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
 
+    public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     protected static MonographPages generateMonographPages(String introductionBegin,
                                                     String introductionEnd,
