@@ -30,17 +30,6 @@ class JournalLetterTest extends InstanceTest {
         assertEquals(expected, journalLetter);
     }
 
-    @DisplayName("Journal letters cannot be peer reviewed")
-    @Test
-    void journalLetterThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException, InvalidPageRangeException {
-        String json = generateArticleWithPeerReview(JOURNAL_LETTER);
-        Executable executable = () -> objectMapper.readValue(json, JournalLetter.class);
-        JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
-        String expected = String.format(NonPeerReviewed.PEER_REVIEWED_ERROR_TEMPLATE,
-                JournalLetter.class.getSimpleName());
-        assertThat(exception.getMessage(), containsString(expected));
-    }
-
     private JournalLetter generateJournalLetter(JournalTestData testData) {
 
         return new JournalLetter.Builder()
