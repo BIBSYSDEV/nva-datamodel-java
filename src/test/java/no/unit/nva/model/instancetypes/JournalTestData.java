@@ -1,6 +1,5 @@
 package no.unit.nva.model.instancetypes;
 
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.Range;
 
 public class JournalTestData extends TestData {
@@ -12,16 +11,15 @@ public class JournalTestData extends TestData {
     /**
      * Generates a random test data set for a journal article.
      *
-     * @throws InvalidPageRangeException thrown if the article page range is not properly structured.
      */
-    public JournalTestData() throws InvalidPageRangeException {
+    public JournalTestData() {
         volume = random(1, 255);
         issue = random(1, 12);
         articleNumber = random(10000, 50000);
         pages = generateRange();
     }
 
-    public JournalTestData(boolean peerReviewed) throws InvalidPageRangeException {
+    public JournalTestData(boolean peerReviewed) {
         this();
         setPeerReviewed(peerReviewed);
     }

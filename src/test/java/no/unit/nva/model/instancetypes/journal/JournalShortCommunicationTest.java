@@ -3,7 +3,6 @@ package no.unit.nva.model.instancetypes.journal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.JournalTestData;
 import no.unit.nva.model.instancetypes.NonPeerReviewedPaper;
@@ -24,8 +23,7 @@ class JournalShortCommunicationTest extends InstanceTest {
 
     @DisplayName("Journal short communication can be created from JSON")
     @Test
-    void journalShortCommunicationReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void journalShortCommunicationReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
         JournalTestData testData = new JournalTestData(false);
         JournalShortCommunication expected = generateJournalShortCommunication(testData);
         String json = generateArticleJsonString(JOURNAL_SHORT_COMMUNICATION, testData);
@@ -35,8 +33,7 @@ class JournalShortCommunicationTest extends InstanceTest {
 
     @DisplayName("Journal short communication cannot be peer reviewed")
     @Test
-    void journalShortCommunicationSetsPeerReviewedThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void journalShortCommunicationSetsPeerReviewedThrowsExceptionWhenPeerReviewIsTrue() throws JsonProcessingException {
         String json = generateArticleWithPeerReview(JOURNAL_SHORT_COMMUNICATION);
         Executable executable = () -> objectMapper.readValue(json, JournalShortCommunication.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);

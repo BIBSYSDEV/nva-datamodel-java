@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.report;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.MonographTestData;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +18,7 @@ class ReportResearchTest extends InstanceTest {
 
     @DisplayName("ReportResearch can be created from JSON")
     @Test
-    void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
         MonographTestData testData = new MonographTestData(false);
         ReportResearch expected = generateReportResearch(testData);
         String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), testData);
@@ -30,8 +28,7 @@ class ReportResearchTest extends InstanceTest {
 
     @DisplayName("ReportResearch cannot be peer reviewed")
     @Test
-    void reportResearchSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void reportResearchSetsPeerReviewedToFalseWhenPeerReviewIsTrue() throws JsonProcessingException {
         MonographTestData testData = new MonographTestData(false);
         ReportResearch expected = generateReportResearch(testData);
         String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), testData);
@@ -41,8 +38,7 @@ class ReportResearchTest extends InstanceTest {
 
     @DisplayName("ReportResearch: Attempting to set peer reviewed to true results in JsonMappingException")
     @Test
-    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() throws InvalidPageRangeException,
-            JsonProcessingException {
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() throws JsonProcessingException {
         String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), new MonographTestData(true));
         Executable executable = () -> objectMapper.readValue(json, ReportResearch.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);

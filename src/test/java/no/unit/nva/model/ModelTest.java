@@ -11,8 +11,8 @@ import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
@@ -24,7 +24,6 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
-import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -74,7 +73,7 @@ public class ModelTest implements JsonHandlingTest {
     protected static MonographPages generateMonographPages(String introductionBegin,
                                                     String introductionEnd,
                                                     String pages,
-                                                    boolean illustrated) throws InvalidPageRangeException {
+                                                    boolean illustrated) {
         return new MonographPages.Builder()
                 .withPages(pages)
                 .withIllustrated(illustrated)
@@ -82,22 +81,22 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
     }
 
-    protected static MonographPages generateMonographPages() throws InvalidPageRangeException {
+    protected static MonographPages generateMonographPages() {
         return generateMonographPages("i", "ix", "321", true);
     }
 
-    protected static Range generateRange(String begin, String end) throws InvalidPageRangeException {
+    protected static Range generateRange(String begin, String end) {
         return new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)
                 .build();
     }
 
-    protected static Range generateRange() throws InvalidPageRangeException {
+    protected static Range generateRange() {
         return generateRange("1", "23");
     }
 
-    protected static Reference generateBookAnthology() throws InvalidIsbnException, InvalidPageRangeException {
+    protected static Reference generateBookAnthology() throws InvalidIsbnException {
         PublicationInstance<MonographPages> bookAnthology = new BookAnthology.Builder()
                 .withPages(generateMonographPages())
                 .withPeerReviewed(true)
@@ -106,7 +105,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateBookContext(), bookAnthology);
     }
 
-    protected static Reference generateBookMonograph() throws InvalidPageRangeException, InvalidIsbnException {
+    protected static Reference generateBookMonograph() throws InvalidIsbnException {
         PublicationInstance<MonographPages> bookMonograph = new BookMonograph.Builder()
                 .withPages(generateMonographPages())
                 .withPeerReviewed(true)
@@ -114,7 +113,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateBookContext(), bookMonograph);
     }
 
-    protected static Reference generateChapterArticle() throws InvalidPageRangeException {
+    protected static Reference generateChapterArticle() {
         PublicationInstance<Range> chapterArticle = new ChapterArticle.Builder()
                 .withPages(generateRange())
                 .withPeerReviewed(true)
@@ -122,28 +121,28 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateChapterContext(), chapterArticle);
     }
 
-    protected static Reference generateDegreeBachelor() throws InvalidPageRangeException, InvalidIsbnException {
+    protected static Reference generateDegreeBachelor() throws InvalidIsbnException {
         PublicationInstance<MonographPages> degreeBachelor = new DegreeBachelor.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateDegreeContext(), degreeBachelor);
     }
 
-    protected static Reference generateDegreeMaster() throws InvalidIsbnException, InvalidPageRangeException {
+    protected static Reference generateDegreeMaster() throws InvalidIsbnException {
         PublicationInstance<MonographPages> degreeMaster = new DegreeMaster.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateDegreeContext(), degreeMaster);
     }
 
-    protected static Reference generateDegreePhd() throws InvalidIsbnException, InvalidPageRangeException {
+    protected static Reference generateDegreePhd() throws InvalidIsbnException {
         PublicationInstance<MonographPages> degreePhd = new DegreePhd.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateDegreeContext(), degreePhd);
     }
 
-    protected static Reference generateJournalArticle() throws InvalidPageRangeException, InvalidIssnException {
+    protected static Reference generateJournalArticle() throws InvalidIssnException {
         PublicationInstance<Range> journalArticle = new JournalArticle.Builder()
                 .withArticleNumber("123321")
                 .withIssue("1")
@@ -154,7 +153,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalArticle);
     }
 
-    protected static Reference generateJournalLeader() throws InvalidPageRangeException, InvalidIssnException {
+    protected static Reference generateJournalLeader() throws InvalidIssnException {
         PublicationInstance<Range> journalLeader = new JournalLeader.Builder()
                 .withArticleNumber("8764")
                 .withIssue("22")
@@ -164,7 +163,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalLeader);
     }
 
-    protected static Reference generateJournalLetter() throws InvalidPageRangeException, InvalidIssnException {
+    protected static Reference generateJournalLetter() throws InvalidIssnException {
         PublicationInstance<Range> journalLetter = new JournalLetter.Builder()
                 .withArticleNumber("8764")
                 .withIssue("22")
@@ -174,7 +173,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalLetter);
     }
 
-    protected static Reference generateJournalReview() throws InvalidPageRangeException, InvalidIssnException {
+    protected static Reference generateJournalReview() throws InvalidIssnException {
         PublicationInstance<Range> journalReview = new JournalReview.Builder()
                 .withArticleNumber("75492")
                 .withIssue("27")
@@ -184,8 +183,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalReview);
     }
 
-    protected static Reference generateJournalShortCommunication() throws InvalidPageRangeException,
-            InvalidIssnException {
+    protected static Reference generateJournalShortCommunication() throws InvalidIssnException {
         PublicationInstance<Range> journalShortCommunication = new JournalShortCommunication.Builder()
                 .withArticleNumber("311")
                 .withIssue("1")
@@ -195,15 +193,14 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalShortCommunication);
     }
 
-    protected static Reference generateReportPolicy() throws InvalidIssnException, InvalidIsbnException,
-            InvalidPageRangeException {
+    protected static Reference generateReportPolicy() throws InvalidIssnException, InvalidIsbnException {
         PublicationInstance<MonographPages> reportPolicy = new ReportPolicy.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateReportContext(), reportPolicy);
     }
 
-    protected static Reference generateReportResearch() throws InvalidPageRangeException, InvalidIssnException,
+    protected static Reference generateReportResearch() throws InvalidIssnException,
             InvalidIsbnException {
         PublicationInstance<MonographPages> reportResearch = new ReportResearch.Builder()
                 .withPages(generateMonographPages())
@@ -211,7 +208,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateReportContext(), reportResearch);
     }
 
-    protected static Reference generateReportWorkingPaper() throws InvalidPageRangeException, InvalidIssnException,
+    protected static Reference generateReportWorkingPaper() throws InvalidIssnException,
             InvalidIsbnException {
         PublicationInstance<MonographPages> reportWorkingPaper = new ReportWorkingPaper.Builder()
                 .withPages(generateMonographPages())

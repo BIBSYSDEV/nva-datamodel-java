@@ -3,7 +3,6 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.model.ModelTest;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.IoUtils;
@@ -26,8 +25,7 @@ class PublicationInstanceTest extends ModelTest {
 
     @DisplayName("Publication instance can be serialized with Range object")
     @Test
-    void publicationInstanceReturnsSerializedJsonWhenValidRangeIsInput() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void publicationInstanceReturnsSerializedJsonWhenValidRangeIsInput() throws JsonProcessingException {
         Range range = new Range.Builder()
                 .withBegin("1")
                 .withEnd("15")

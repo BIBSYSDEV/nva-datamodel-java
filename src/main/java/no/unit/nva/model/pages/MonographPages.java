@@ -33,7 +33,7 @@ public class MonographPages implements Pages {
      */
     @SuppressWarnings("PMD.NullAssignment")
     public void setIntroduction(Range introduction) {
-        if (isNull(introduction) || isNull(introduction.getBegin()) && isNull(introduction.getEnd())) {
+        if (isNull(introduction) || isNull(introduction.getBegin())) {
             this.introduction = null;
         } else {
             this.introduction = introduction;
