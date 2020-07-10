@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.degree;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,9 +29,7 @@ public class DegreeBachelorTest extends InstanceTest {
     void objectMapperReturnsDegreeBachelorWhenInputIsValidString(String begin,
                                                                  String end,
                                                                  String pages,
-                                                                 boolean illustrated
-    )
-            throws JsonProcessingException, InvalidPageRangeException {
+                                                                 boolean illustrated) throws JsonProcessingException {
         DegreeBachelor expected = generateDegreeBachelor(
                 begin,
                 end,
@@ -60,8 +57,7 @@ public class DegreeBachelorTest extends InstanceTest {
     void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
-                                                         boolean illustrated) throws
-            JsonProcessingException, InvalidPageRangeException {
+                                                         boolean illustrated) throws JsonProcessingException {
         DegreeBachelor degreeBachelor = generateDegreeBachelor(
                 begin,
                 end,
@@ -83,7 +79,7 @@ public class DegreeBachelorTest extends InstanceTest {
     private DegreeBachelor generateDegreeBachelor(String introductionBegin,
                                                   String introductionEnd,
                                                   String pages,
-                                                  boolean illustrated) throws InvalidPageRangeException {
+                                                  boolean illustrated) {
 
         return new DegreeBachelor.Builder()
                 .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))

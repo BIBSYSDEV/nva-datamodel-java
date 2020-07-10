@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes.report;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.MonographTestData;
@@ -13,8 +14,7 @@ class ReportResearchTest extends InstanceTest {
 
     @DisplayName("ReportResearch can be created from JSON")
     @Test
-    void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
         MonographTestData testData = new MonographTestData(false);
         ReportResearch expected = generateReportResearch(testData);
         String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), testData);

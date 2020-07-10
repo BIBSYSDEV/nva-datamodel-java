@@ -2,7 +2,7 @@ package no.unit.nva.model.instancetypes.journal;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.JournalTestData;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +16,7 @@ class JournalLeaderTest extends InstanceTest {
 
     @DisplayName("JournalLeader can be created")
     @Test
-    void journalLeaderReturnsValidJournalLeaderWhenInputDataIsValid() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void journalLeaderReturnsValidJournalLeaderWhenInputDataIsValid() throws JsonProcessingException {
         JournalTestData testData = new JournalTestData(false);
         String json = generateArticleJsonString(JOURNAL_LEADER, testData);
         JournalLeader expected = objectMapper.readValue(json, JournalLeader.class);

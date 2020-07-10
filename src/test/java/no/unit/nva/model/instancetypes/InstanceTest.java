@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import nva.commons.utils.JsonUtils;
 
 import java.util.LinkedHashMap;
@@ -153,8 +152,7 @@ public class InstanceTest extends ModelTest {
         return instance;
     }
 
-    protected String generateArticleWithPeerReview(String type) throws JsonProcessingException,
-            InvalidPageRangeException {
+    protected String generateArticleWithPeerReview(String type) throws JsonProcessingException {
         JournalTestData testData = new JournalTestData(true);
         return generateArticleJsonString(type, testData);
     }

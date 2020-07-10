@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.JsonHandlingTest;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -27,8 +26,7 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
 
     @DisplayName("ChapterArticle: objectMapper can deserialize object")
     @Test
-    void objectMapperReturnsChapterArticleWhenInputJsonIsWellFormed() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void objectMapperReturnsChapterArticleWhenInputJsonIsWellFormed() throws JsonProcessingException {
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
@@ -40,7 +38,7 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
 
     @DisplayName("ChapterArticle: objectMapper can serialize valid input")
     @Test
-    void objectMapperReturnsValidJsonWhenInputIsValidChapterArticle() throws Exception {
+    void objectMapperReturnsValidJsonWhenInputIsValidChapterArticle() {
         String expectedBegin = "222";
         String expectedEnd = "232";
         ChapterArticle chapterArticle = new ChapterArticle.Builder()
@@ -53,7 +51,7 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
     }
 
 
-    private Range generatePages(String begin, String end) throws InvalidPageRangeException {
+    private Range generatePages(String begin, String end) {
         return new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)

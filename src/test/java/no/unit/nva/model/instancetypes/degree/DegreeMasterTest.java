@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.degree;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,8 +29,7 @@ public class DegreeMasterTest extends InstanceTest {
     void objectMapperReturnsDegreeMasterWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
-                                                         boolean illustrated) throws JsonProcessingException,
-            InvalidPageRangeException {
+                                                         boolean illustrated) throws JsonProcessingException {
         String json = generateMonographJsonString(
                 DEGREE_MASTER,
                 begin,
@@ -58,8 +56,7 @@ public class DegreeMasterTest extends InstanceTest {
     void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
-                                                         boolean illustrated) throws JsonProcessingException,
-            InvalidPageRangeException {
+                                                         boolean illustrated) throws JsonProcessingException {
         DegreeMaster degreeMaster = generateDegreeMaster(
                 begin,
                 end,
@@ -80,7 +77,7 @@ public class DegreeMasterTest extends InstanceTest {
     private DegreeMaster generateDegreeMaster(String introductionBegin,
                                               String introductionEnd,
                                               String pages,
-                                              boolean illustrated) throws InvalidPageRangeException {
+                                              boolean illustrated) {
 
         return new DegreeMaster.Builder()
                 .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))

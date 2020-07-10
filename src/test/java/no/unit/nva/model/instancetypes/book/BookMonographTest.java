@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.book;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +32,7 @@ class BookMonographTest extends InstanceTest {
                                                           String end,
                                                           String pages,
                                                           boolean illustrated,
-                                                          boolean peerReviewed) throws JsonProcessingException,
-            InvalidPageRangeException {
+                                                          boolean peerReviewed) throws JsonProcessingException {
         BookMonograph expected = generateBookMonograph(
                 begin,
                 end,
@@ -67,8 +65,7 @@ class BookMonographTest extends InstanceTest {
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
-                                                         boolean peerReviewed) throws
-            InvalidPageRangeException, JsonProcessingException {
+                                                         boolean peerReviewed) throws JsonProcessingException {
 
         BookMonograph bookMonograph = generateBookMonograph(begin,
                 end,
@@ -86,7 +83,7 @@ class BookMonographTest extends InstanceTest {
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
-                                                boolean peerReviewed) throws InvalidPageRangeException {
+                                                boolean peerReviewed) {
 
         return new BookMonograph.Builder()
                 .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))

@@ -1,6 +1,5 @@
 package no.unit.nva.model.instancetypes;
 
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.pages.Range;
 
 import java.util.Random;
@@ -37,7 +36,7 @@ public class TestData {
         this.peerReviewed = peerReviewed;
     }
 
-    protected Range generateRange() throws InvalidPageRangeException {
+    protected Range generateRange() {
         return new Range.Builder()
                 .withBegin(begin)
                 .withEnd(end)
