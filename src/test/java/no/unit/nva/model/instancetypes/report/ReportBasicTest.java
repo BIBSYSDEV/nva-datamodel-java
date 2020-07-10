@@ -3,7 +3,6 @@ package no.unit.nva.model.instancetypes.report;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.MonographTestData;
 import nva.commons.utils.JsonUtils;
@@ -24,8 +23,7 @@ class ReportBasicTest extends InstanceTest {
 
     @DisplayName("ReportBasic can be created from JSON")
     @Test
-    void reportReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void reportReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
         MonographTestData testData = new MonographTestData(false);
         ReportBasic expected = generateReport(testData);
         String json = generateMonographJsonString(REPORT, testData);
@@ -35,8 +33,7 @@ class ReportBasicTest extends InstanceTest {
 
     @DisplayName("ReportBasic: Attempting to set peer reviewed to true results in UnexpectedException")
     @Test
-    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void reportThrowsUnexpectedExceptionWhenPeerReviewedIsTrue() throws JsonProcessingException {
         MonographTestData testData = new MonographTestData(true);
         String json = generateMonographJsonString(REPORT, testData);
         Executable executable = () -> objectMapper.readValue(json, ReportBasic.class);

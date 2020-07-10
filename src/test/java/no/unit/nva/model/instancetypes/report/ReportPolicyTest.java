@@ -3,7 +3,6 @@ package no.unit.nva.model.instancetypes.report;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.MonographTestData;
 import nva.commons.utils.JsonUtils;
@@ -23,8 +22,7 @@ class ReportPolicyTest extends InstanceTest {
 
     @DisplayName("Report policy can be created from JSON")
     @Test
-    void reportPolicyReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException,
-            InvalidPageRangeException {
+    void reportPolicyReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
         MonographTestData testData = new MonographTestData(false);
         ReportPolicy expected = generateReportPolicy(testData);
         String json = generateMonographJsonString(ReportPolicy.class.getSimpleName(), testData);
@@ -34,7 +32,7 @@ class ReportPolicyTest extends InstanceTest {
 
     @DisplayName("ReportPolicy: Attempting to set peer reviewed to true results in JsonMappingException")
     @Test
-    void reportThrowsJsonMappingExceptionWhenPeerReviewedIsTrue() throws InvalidPageRangeException,
+    void reportThrowsJsonMappingExceptionWhenPeerReviewedIsTrue() throws
             JsonProcessingException {
         MonographTestData testData = new MonographTestData(true);
         String json = generateMonographJsonString(ReportPolicy.class.getSimpleName(), testData);

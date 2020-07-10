@@ -3,7 +3,6 @@ package no.unit.nva.model.instancetypes.book;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.JsonHandlingTest;
-import no.unit.nva.model.exceptions.InvalidPageRangeException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,8 +33,7 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
                                                           String end,
                                                           String pages,
                                                           boolean illustrated,
-                                                          boolean peerReviewed) throws JsonProcessingException,
-            InvalidPageRangeException {
+                                                          boolean peerReviewed) throws JsonProcessingException {
 
         String json = generateMonographJsonString(
                 BOOK_ANTHOLOGY,
@@ -69,7 +67,7 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
-                                                         boolean peerReviewed) throws Exception {
+                                                         boolean peerReviewed) {
 
         BookAnthology bookAnthology = generateBookAnthology(
                 begin,
@@ -87,7 +85,7 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
-                                                boolean peerReviewed) throws InvalidPageRangeException {
+                                                boolean peerReviewed) {
 
         return new BookAnthology.Builder()
                 .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
