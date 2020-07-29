@@ -1,6 +1,8 @@
 package no.unit.nva;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
@@ -112,5 +114,13 @@ public class PublicationTest extends ModelTest {
         Publication roundTripped = objectMapper.readValue(publication, Publication.class);
         assertThat(actual, doesNotHaveNullOrEmptyFields());
         assertThat(roundTripped, is(equalTo(actual)));
+
+        writePublicationToFile(instanceType, actual);
+    }
+
+    private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
+        String path = String.format("documentation/%s.json", instanceType);
+        File file = new File(path);
+        objectMapper.writeValue(file, publication);
     }
 }

@@ -1,0 +1,132 @@
+{
+  "type" : "Publication",
+  "identifier" : "e8bfe7a3-0aa6-40c9-8057-3ea6013b9414",
+  "status" : "Published",
+  "owner" : "me@example.org",
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "http://example.org/org/123",
+    "labels" : {
+      "no" : "Eksempelforlaget"
+    }
+  },
+  "createdDate" : "2020-07-29T10:23:42.478917Z",
+  "modifiedDate" : "2020-07-29T10:23:42.479040Z",
+  "publishedDate" : "2020-07-29T10:23:42.479054Z",
+  "indexedDate" : "2020-07-29T10:23:42.479032Z",
+  "handle" : "https://example.org/fakeHandle/13213",
+  "doi" : "https://example.org/yet/another/fake/doi/1231/12311",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "APPROVED",
+    "date" : "2020-07-29T10:23:42.478926Z"
+  },
+  "link" : "https://this.should.have.been.removed",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "Hovedtittelen",
+    "alternativeTitles" : {
+      "en" : "English title"
+    },
+    "language" : "http://example.org/norsk",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "2020",
+      "month" : "4",
+      "day" : "7"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "http://example.org/person/123",
+        "name" : "Navnesen, Navn",
+        "nameType" : "Personal",
+        "orcId" : "orc123",
+        "arpId" : "arp123"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "http://example.org/org/123",
+        "labels" : {
+          "no" : "Eksempelforlaget"
+        }
+      } ],
+      "role" : "Creator",
+      "sequence" : 0,
+      "correspondingAuthor" : true,
+      "email" : "nn@example.org"
+    } ],
+    "npiSubjectHeading" : "010",
+    "tags" : [ "dokumenter", "publikasjoner" ],
+    "description" : "En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Journal",
+        "title" : "The journal of mechanically separated meats",
+        "level" : "LEVEL_0",
+        "openAccess" : true,
+        "peerReviewed" : true,
+        "printIssn" : "2222-2227",
+        "onlineIssn" : "1111-1119"
+      },
+      "doi" : "https://example.org/doi/12313/2313",
+      "publicationInstance" : {
+        "type" : "JournalLetter",
+        "volume" : "9",
+        "issue" : "22",
+        "articleNumber" : "8764",
+        "pages" : {
+          "type" : "Range",
+          "begin" : "1",
+          "end" : "23"
+        },
+        "peerReviewed" : false
+      }
+    },
+    "metadataSource" : "https://example.org/doi?doi=123/123",
+    "abstract" : "En lang streng som beskriver innholdet i dokumentet metadataene omtaler."
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "7201ab55-bdf6-414a-8f03-433b61a7267c",
+      "name" : "new document(1)",
+      "mimeType" : "application/pdf",
+      "size" : 2,
+      "license" : {
+        "type" : "License",
+        "identifier" : "NTNU-CC-BY-4.0",
+        "labels" : {
+          "no" : "CC-BY 4.0"
+        },
+        "link" : "http://example.org/license/123"
+      },
+      "administrativeAgreement" : true,
+      "publisherAuthority" : true,
+      "embargoDate" : "2020-07-29T10:23:42.479002Z"
+    } ]
+  },
+  "project" : {
+    "type" : "ResearchProject",
+    "id" : "http://link.to.cristin.example.org/123",
+    "name" : "Det gode prosjektet",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "Norsk rødt felaget",
+      "id" : "123123"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-07-29T10:23:42.479048Z",
+      "approvedBy" : "REK",
+      "approvalStatus" : "APPLIED",
+      "applicationCode" : "123123"
+    } ]
+  },
+  "publisherId" : "http://example.org/org/123",
+  "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-07-29T10:23:42.479040Z",
+  "doiRequestStatusDate" : "APPROVED#2020-07-29T10:23:42.478926Z"
+}
