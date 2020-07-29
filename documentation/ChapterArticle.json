@@ -1,0 +1,124 @@
+{
+  "type" : "Publication",
+  "identifier" : "91ce2302-8e42-4d21-9430-8f02f3b1db55",
+  "status" : "Published",
+  "owner" : "me@example.org",
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "http://example.org/org/123",
+    "labels" : {
+      "no" : "Eksempelforlaget"
+    }
+  },
+  "createdDate" : "2020-07-29T10:23:42.409489Z",
+  "modifiedDate" : "2020-07-29T10:23:42.409628Z",
+  "publishedDate" : "2020-07-29T10:23:42.409650Z",
+  "indexedDate" : "2020-07-29T10:23:42.409614Z",
+  "handle" : "https://example.org/fakeHandle/13213",
+  "doi" : "https://example.org/yet/another/fake/doi/1231/12311",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "APPROVED",
+    "date" : "2020-07-29T10:23:42.409503Z"
+  },
+  "link" : "https://this.should.have.been.removed",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "Hovedtittelen",
+    "alternativeTitles" : {
+      "en" : "English title"
+    },
+    "language" : "http://example.org/norsk",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "2020",
+      "month" : "4",
+      "day" : "7"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "http://example.org/person/123",
+        "name" : "Navnesen, Navn",
+        "nameType" : "Personal",
+        "orcId" : "orc123",
+        "arpId" : "arp123"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "http://example.org/org/123",
+        "labels" : {
+          "no" : "Eksempelforlaget"
+        }
+      } ],
+      "role" : "Creator",
+      "sequence" : 0,
+      "correspondingAuthor" : true,
+      "email" : "nn@example.org"
+    } ],
+    "npiSubjectHeading" : "010",
+    "tags" : [ "dokumenter", "publikasjoner" ],
+    "description" : "En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Chapter",
+        "linkedContext" : "https://example.org/linkedContext"
+      },
+      "doi" : "https://example.org/doi/12313/2313",
+      "publicationInstance" : {
+        "type" : "ChapterArticle",
+        "peerReviewed" : true,
+        "pages" : {
+          "type" : "Range",
+          "begin" : "1",
+          "end" : "23"
+        }
+      }
+    },
+    "metadataSource" : "https://example.org/doi?doi=123/123",
+    "abstract" : "En lang streng som beskriver innholdet i dokumentet metadataene omtaler."
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "d5cd4fcf-3262-4971-8ccb-d1a80b45054b",
+      "name" : "new document(1)",
+      "mimeType" : "application/pdf",
+      "size" : 2,
+      "license" : {
+        "type" : "License",
+        "identifier" : "NTNU-CC-BY-4.0",
+        "labels" : {
+          "no" : "CC-BY 4.0"
+        },
+        "link" : "http://example.org/license/123"
+      },
+      "administrativeAgreement" : true,
+      "publisherAuthority" : true,
+      "embargoDate" : "2020-07-29T10:23:42.409577Z"
+    } ]
+  },
+  "project" : {
+    "type" : "ResearchProject",
+    "id" : "http://link.to.cristin.example.org/123",
+    "name" : "Det gode prosjektet",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "Norsk rødt felaget",
+      "id" : "123123"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-07-29T10:23:42.409643Z",
+      "approvedBy" : "REK",
+      "approvalStatus" : "APPLIED",
+      "applicationCode" : "123123"
+    } ]
+  },
+  "publisherId" : "http://example.org/org/123",
+  "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-07-29T10:23:42.409628Z",
+  "doiRequestStatusDate" : "APPROVED#2020-07-29T10:23:42.409503Z"
+}
