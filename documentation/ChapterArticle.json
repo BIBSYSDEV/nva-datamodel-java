@@ -1,6 +1,6 @@
 {
   "type" : "Publication",
-  "identifier" : "91ce2302-8e42-4d21-9430-8f02f3b1db55",
+  "identifier" : "9b214cf1-5708-4f7e-8535-4795fc55ccdb",
   "status" : "Published",
   "owner" : "me@example.org",
   "publisher" : {
@@ -10,16 +10,16 @@
       "no" : "Eksempelforlaget"
     }
   },
-  "createdDate" : "2020-07-29T10:23:42.409489Z",
-  "modifiedDate" : "2020-07-29T10:23:42.409628Z",
-  "publishedDate" : "2020-07-29T10:23:42.409650Z",
-  "indexedDate" : "2020-07-29T10:23:42.409614Z",
+  "createdDate" : "2020-07-30T11:09:27.405266Z",
+  "modifiedDate" : "2020-07-30T11:09:27.405429Z",
+  "publishedDate" : "2020-07-30T11:09:27.405452Z",
+  "indexedDate" : "2020-07-30T11:09:27.405415Z",
   "handle" : "https://example.org/fakeHandle/13213",
   "doi" : "https://example.org/yet/another/fake/doi/1231/12311",
   "doiRequest" : {
     "type" : "DoiRequest",
     "status" : "APPROVED",
-    "date" : "2020-07-29T10:23:42.409503Z"
+    "date" : "2020-07-30T11:09:27.405280Z"
   },
   "link" : "https://this.should.have.been.removed",
   "entityDescription" : {
@@ -84,7 +84,7 @@
     "type" : "FileSet",
     "files" : [ {
       "type" : "File",
-      "identifier" : "d5cd4fcf-3262-4971-8ccb-d1a80b45054b",
+      "identifier" : "521c4c30-ef07-46d2-a423-bf2734c20cfa",
       "name" : "new document(1)",
       "mimeType" : "application/pdf",
       "size" : 2,
@@ -98,7 +98,7 @@
       },
       "administrativeAgreement" : true,
       "publisherAuthority" : true,
-      "embargoDate" : "2020-07-29T10:23:42.409577Z"
+      "embargoDate" : "2020-07-30T11:09:27.405374Z"
     } ]
   },
   "project" : {
@@ -112,13 +112,13 @@
     } ],
     "approvals" : [ {
       "type" : "Approval",
-      "date" : "2020-07-29T10:23:42.409643Z",
+      "date" : "2020-07-30T11:09:27.405444Z",
       "approvedBy" : "REK",
       "approvalStatus" : "APPLIED",
       "applicationCode" : "123123"
     } ]
   },
   "publisherId" : "http://example.org/org/123",
-  "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-07-29T10:23:42.409628Z",
-  "doiRequestStatusDate" : "APPROVED#2020-07-29T10:23:42.409503Z"
+  "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-07-30T11:09:27.405429Z",
+  "doiRequestStatusDate" : "APPROVED#2020-07-30T11:09:27.405280Z"
 }

@@ -1,6 +1,7 @@
 package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URL;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import nva.commons.utils.JacocoGenerated;
@@ -23,6 +24,7 @@ public class Book implements BasicContext {
     private Level level;
     private boolean openAccess;
     private boolean peerReviewed;
+    private URL url;
     private List<String> isbnList;
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
 
@@ -36,6 +38,7 @@ public class Book implements BasicContext {
         setLevel(builder.level);
         setOpenAccess(builder.openAccess);
         setPeerReviewed(builder.peerReviewed);
+        setUrl(builder.url);
         setIsbnList(builder.isbnList);
     }
 
@@ -67,6 +70,16 @@ public class Book implements BasicContext {
     @Override
     public void setPeerReviewed(boolean peerReviewed) {
         this.peerReviewed = peerReviewed;
+    }
+
+    @Override
+    public URL getUrl() {
+        return url;
+    }
+
+    @Override
+    public void setUrl(URL url) {
+        this.url = url;
     }
 
     public List<String> getIsbnList() {
@@ -137,6 +150,7 @@ public class Book implements BasicContext {
                 && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
                 && Objects.equals(getPublisher(), book.getPublisher())
                 && getLevel() == book.getLevel()
+                && Objects.equals(getUrl(), book.getUrl())
                 && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
@@ -150,6 +164,7 @@ public class Book implements BasicContext {
                 getLevel(),
                 isOpenAccess(),
                 isPeerReviewed(),
+                getUrl(),
                 getIsbnList()
         );
     }
@@ -161,6 +176,7 @@ public class Book implements BasicContext {
         private Level level;
         private boolean openAccess;
         private boolean peerReviewed;
+        private URL url;
         private List<String> isbnList;
 
         public Builder() {
@@ -193,6 +209,11 @@ public class Book implements BasicContext {
 
         public Builder withPeerReviewed(boolean peerReviewed) {
             this.peerReviewed = peerReviewed;
+            return this;
+        }
+
+        public Builder withUrl(URL url) {
+            this.url = url;
             return this;
         }
 

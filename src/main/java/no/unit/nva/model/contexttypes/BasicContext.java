@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import java.net.URL;
 import no.unit.nva.model.Level;
 
 /**
@@ -18,4 +19,8 @@ public interface BasicContext extends PublicationContext {
     boolean isPeerReviewed();
 
     void setPeerReviewed(boolean peerReviewed);
+
+    URL getUrl();
+
+    void setUrl(URL url);
 }

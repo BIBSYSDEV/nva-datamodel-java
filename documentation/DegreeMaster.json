@@ -1,6 +1,6 @@
 {
   "type" : "Publication",
-  "identifier" : "12eb1bd5-58b5-4d1a-bafb-7f64f6c6d255",
+  "identifier" : "964d4b18-2320-4c67-9b85-102f2e3c121d",
   "status" : "Published",
   "owner" : "me@example.org",
   "publisher" : {
@@ -10,16 +10,16 @@
       "no" : "Eksempelforlaget"
     }
   },
-  "createdDate" : "2020-07-29T10:23:42.432295Z",
-  "modifiedDate" : "2020-07-29T10:23:42.432424Z",
-  "publishedDate" : "2020-07-29T10:23:42.432442Z",
-  "indexedDate" : "2020-07-29T10:23:42.432414Z",
+  "createdDate" : "2020-07-30T11:09:27.426476Z",
+  "modifiedDate" : "2020-07-30T11:09:27.426600Z",
+  "publishedDate" : "2020-07-30T11:09:27.426618Z",
+  "indexedDate" : "2020-07-30T11:09:27.426590Z",
   "handle" : "https://example.org/fakeHandle/13213",
   "doi" : "https://example.org/yet/another/fake/doi/1231/12311",
   "doiRequest" : {
     "type" : "DoiRequest",
     "status" : "APPROVED",
-    "date" : "2020-07-29T10:23:42.432307Z"
+    "date" : "2020-07-30T11:09:27.426488Z"
   },
   "link" : "https://this.should.have.been.removed",
   "entityDescription" : {
@@ -69,6 +69,7 @@
         "publisher" : "Some university publisher",
         "openAccess" : false,
         "peerReviewed" : false,
+        "url" : "http://example.org/degree/1",
         "isbnList" : [ "9780201309515" ]
       },
       "doi" : "https://example.org/doi/12313/2313",
@@ -94,7 +95,7 @@
     "type" : "FileSet",
     "files" : [ {
       "type" : "File",
-      "identifier" : "1618098d-bf69-4540-be50-bf12407c3eea",
+      "identifier" : "5ae6619a-71b7-40f6-b43e-4b44d608003e",
       "name" : "new document(1)",
       "mimeType" : "application/pdf",
       "size" : 2,
@@ -108,7 +109,7 @@
       },
       "administrativeAgreement" : true,
       "publisherAuthority" : true,
-      "embargoDate" : "2020-07-29T10:23:42.432399Z"
+      "embargoDate" : "2020-07-30T11:09:27.426576Z"
     } ]
   },
   "project" : {
@@ -122,13 +123,13 @@
     } ],
     "approvals" : [ {
       "type" : "Approval",
-      "date" : "2020-07-29T10:23:42.432435Z",
+      "date" : "2020-07-30T11:09:27.426612Z",
       "approvedBy" : "REK",
       "approvalStatus" : "APPLIED",
       "applicationCode" : "123123"
     } ]
   },
   "publisherId" : "http://example.org/org/123",
-  "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-07-29T10:23:42.432424Z",
-  "doiRequestStatusDate" : "APPROVED#2020-07-29T10:23:42.432307Z"
+  "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-07-30T11:09:27.426600Z",
+  "doiRequestStatusDate" : "APPROVED#2020-07-30T11:09:27.426488Z"
 }
