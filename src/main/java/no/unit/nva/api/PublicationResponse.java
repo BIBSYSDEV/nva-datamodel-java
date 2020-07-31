@@ -1,7 +1,6 @@
 package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
@@ -9,7 +8,6 @@ import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
-import no.unit.nva.WithFlags;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
