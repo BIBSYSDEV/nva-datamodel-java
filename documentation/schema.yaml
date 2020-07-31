@@ -1,0 +1,833 @@
+schema:
+  required:
+  - type
+  type: object
+  properties:
+    identifier:
+      type: string
+      format: uuid
+    status:
+      type: string
+      enum:
+      - New
+      - Draft
+      - Rejected
+      - Published
+    owner:
+      type: string
+    publisher:
+      $ref: '#/components/schemas/Organization'
+    createdDate:
+      type: string
+      format: date-time
+    modifiedDate:
+      type: string
+      format: date-time
+    publishedDate:
+      type: string
+      format: date-time
+    indexedDate:
+      type: string
+      format: date-time
+    handle:
+      type: string
+      format: uri
+    doi:
+      type: string
+      format: uri
+    doiRequest:
+      $ref: '#/components/schemas/DoiRequest'
+    link:
+      type: string
+      format: uri
+    entityDescription:
+      $ref: '#/components/schemas/EntityDescription'
+    fileSet:
+      $ref: '#/components/schemas/FileSet'
+    project:
+      $ref: '#/components/schemas/ResearchProject'
+    publisherId:
+      type: string
+    publisherOwnerDate:
+      type: string
+    doiRequestStatusDate:
+      type: string
+    type:
+      type: string
+  discriminator:
+    propertyName: type
+referencedSchemas:
+  Approval:
+    required:
+    - type
+    type: object
+    properties:
+      date:
+        type: string
+        format: date-time
+      approvedBy:
+        type: string
+        enum:
+        - REK
+        - NARA
+        - NMA
+        - DIRHEALTH
+      approvalStatus:
+        type: string
+        enum:
+        - NOTAPPLIED
+        - APPLIED
+        - APPROVED
+        - DECLINED
+        - REJECTION
+      applicationCode:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Book:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        seriesTitle:
+          type: string
+        seriesNumber:
+          type: string
+        publisher:
+          type: string
+        level:
+          type: string
+          enum:
+          - LEVEL_2
+          - LEVEL_1
+          - LEVEL_0
+          - NO_LEVEL
+        openAccess:
+          type: boolean
+        peerReviewed:
+          type: boolean
+        isbnList:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+  BookAnthology:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  BookMonograph:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  Chapter:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        linkedContext:
+          type: string
+          format: uri
+        type:
+          type: string
+  ChapterArticle:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  Contributor:
+    required:
+    - type
+    type: object
+    properties:
+      identity:
+        $ref: '#/components/schemas/Identity'
+      affiliations:
+        type: array
+        items:
+          $ref: '#/components/schemas/Organization'
+      role:
+        type: string
+        enum:
+        - Creator
+      sequence:
+        type: integer
+        format: int32
+      correspondingAuthor:
+        type: boolean
+      email:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Degree:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        seriesTitle:
+          type: string
+        seriesNumber:
+          type: string
+        publisher:
+          type: string
+        level:
+          type: string
+          enum:
+          - LEVEL_2
+          - LEVEL_1
+          - LEVEL_0
+          - NO_LEVEL
+        openAccess:
+          type: boolean
+        peerReviewed:
+          type: boolean
+        isbnList:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+  DegreeBachelor:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  DegreeMaster:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  DegreePhd:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  DoiRequest:
+    required:
+    - type
+    type: object
+    properties:
+      status:
+        type: string
+        enum:
+        - REQUESTED
+        - APPROVED
+        - REJECTED
+      date:
+        type: string
+        format: date-time
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  EntityDescription:
+    required:
+    - type
+    type: object
+    properties:
+      mainTitle:
+        type: string
+      alternativeTitles:
+        type: object
+        additionalProperties:
+          type: string
+      language:
+        type: string
+        format: uri
+      date:
+        $ref: '#/components/schemas/PublicationDate'
+      contributors:
+        type: array
+        items:
+          $ref: '#/components/schemas/Contributor'
+      npiSubjectHeading:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      description:
+        type: string
+      reference:
+        $ref: '#/components/schemas/Reference'
+      metadataSource:
+        type: string
+        format: uri
+      abstract:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  File:
+    required:
+    - type
+    type: object
+    properties:
+      identifier:
+        type: string
+        format: uuid
+      name:
+        type: string
+      mimeType:
+        type: string
+      size:
+        type: integer
+        format: int64
+      license:
+        $ref: '#/components/schemas/License'
+      administrativeAgreement:
+        type: boolean
+      publisherAuthority:
+        type: boolean
+      embargoDate:
+        type: string
+        format: date-time
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  FileSet:
+    required:
+    - type
+    type: object
+    properties:
+      files:
+        type: array
+        items:
+          $ref: '#/components/schemas/File'
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Grant:
+    required:
+    - type
+    type: object
+    properties:
+      source:
+        type: string
+      id:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Identity:
+    required:
+    - type
+    type: object
+    properties:
+      id:
+        type: string
+        format: uri
+      name:
+        type: string
+      nameType:
+        type: string
+        enum:
+        - Organizational
+        - Personal
+      orcId:
+        type: string
+      arpId:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Journal:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        title:
+          type: string
+        level:
+          type: string
+          enum:
+          - LEVEL_2
+          - LEVEL_1
+          - LEVEL_0
+          - NO_LEVEL
+        openAccess:
+          type: boolean
+        peerReviewed:
+          type: boolean
+        printIssn:
+          type: string
+        onlineIssn:
+          type: string
+        type:
+          type: string
+  JournalArticle:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  JournalLeader:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  JournalLetter:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  JournalReview:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  JournalShortCommunication:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  License:
+    required:
+    - type
+    type: object
+    properties:
+      identifier:
+        type: string
+      labels:
+        type: object
+        additionalProperties:
+          type: string
+      link:
+        type: string
+        format: uri
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  MonographPages:
+    required:
+    - type
+    type: object
+    properties:
+      introduction:
+        $ref: '#/components/schemas/Range'
+      pages:
+        type: string
+      illustrated:
+        type: boolean
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Organization:
+    required:
+    - type
+    type: object
+    properties:
+      id:
+        type: string
+        format: uri
+      labels:
+        type: object
+        additionalProperties:
+          type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Pages:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Publication:
+    required:
+    - type
+    type: object
+    properties:
+      identifier:
+        type: string
+        format: uuid
+      status:
+        type: string
+        enum:
+        - New
+        - Draft
+        - Rejected
+        - Published
+      owner:
+        type: string
+      publisher:
+        $ref: '#/components/schemas/Organization'
+      createdDate:
+        type: string
+        format: date-time
+      modifiedDate:
+        type: string
+        format: date-time
+      publishedDate:
+        type: string
+        format: date-time
+      indexedDate:
+        type: string
+        format: date-time
+      handle:
+        type: string
+        format: uri
+      doi:
+        type: string
+        format: uri
+      doiRequest:
+        $ref: '#/components/schemas/DoiRequest'
+      link:
+        type: string
+        format: uri
+      entityDescription:
+        $ref: '#/components/schemas/EntityDescription'
+      fileSet:
+        $ref: '#/components/schemas/FileSet'
+      project:
+        $ref: '#/components/schemas/ResearchProject'
+      publisherId:
+        type: string
+      publisherOwnerDate:
+        type: string
+      doiRequestStatusDate:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  PublicationContext:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  PublicationDate:
+    required:
+    - type
+    type: object
+    properties:
+      year:
+        type: string
+      month:
+        type: string
+      day:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  PublicationInstancePages:
+    required:
+    - type
+    type: object
+    properties:
+      pages:
+        $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Range:
+    required:
+    - type
+    type: object
+    properties:
+      begin:
+        type: string
+      end:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Reference:
+    required:
+    - type
+    type: object
+    properties:
+      publicationContext:
+        $ref: '#/components/schemas/PublicationContext'
+      doi:
+        type: string
+        format: uri
+      publicationInstance:
+        $ref: '#/components/schemas/PublicationInstancePages'
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Report:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        seriesTitle:
+          type: string
+        seriesNumber:
+          type: string
+        publisher:
+          type: string
+        level:
+          type: string
+          enum:
+          - LEVEL_2
+          - LEVEL_1
+          - LEVEL_0
+          - NO_LEVEL
+        openAccess:
+          type: boolean
+        peerReviewed:
+          type: boolean
+        isbnList:
+          type: array
+          items:
+            type: string
+        printIssn:
+          type: string
+        onlineIssn:
+          type: string
+  ReportBasic:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  ReportPolicy:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  ReportResearch:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  ReportWorkingPaper:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  ResearchProject:
+    required:
+    - type
+    type: object
+    properties:
+      id:
+        type: string
+        format: uri
+      name:
+        type: string
+      grants:
+        type: array
+        items:
+          $ref: '#/components/schemas/Grant'
+      approvals:
+        type: array
+        items:
+          $ref: '#/components/schemas/Approval'
+      type:
+        type: string
+    discriminator:
+      propertyName: type
