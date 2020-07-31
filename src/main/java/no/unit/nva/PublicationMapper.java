@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.Objects;
+import no.unit.nva.api.PublicationResponse;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.Organization;

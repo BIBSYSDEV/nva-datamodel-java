@@ -113,7 +113,7 @@ public class PublicationMapperTest {
     @Test
     public void createPublicationCreatesDoiRequestOnDoiRequested() {
         CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setDoiRequest(true);
+        request.setDoiRequested(true);
 
         Publication publication = PublicationMapper
             .toNewPublication(request, SOME_OWNER, SOME_URI, SOME_URI, getOrganization());
@@ -126,7 +126,7 @@ public class PublicationMapperTest {
     @Test
     public void updatePublicationCreatesDoiRequestOnDoiRequested() {
         CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setDoiRequest(true);
+        request.setDoiRequested(true);
 
         Publication publication = PublicationMapper
             .toExistingPublication(request, new Publication());
@@ -139,7 +139,7 @@ public class PublicationMapperTest {
     @Test
     public void createPublicationCreatesDoiRequestOnDoiNotRequested() {
         CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setDoiRequest(false);
+        request.setDoiRequested(false);
 
         Publication publication = PublicationMapper
             .toNewPublication(request, SOME_OWNER, SOME_URI, SOME_URI, getOrganization());
@@ -150,7 +150,7 @@ public class PublicationMapperTest {
     @Test
     public void updatePublicationCreatesDoiRequestOnDoiNotRequested() {
         CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setDoiRequest(false);
+        request.setDoiRequested(false);
 
         Publication publication = PublicationMapper
             .toExistingPublication(request, new Publication());

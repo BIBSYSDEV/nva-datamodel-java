@@ -14,6 +14,6 @@ public interface WithFlags {
      *
      * @param doiRequested  doiRequested
      */
-    void setDoiRequest(Boolean doiRequested);
+    void setDoiRequested(Boolean doiRequested);
 
 }
