@@ -69,7 +69,7 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
 
     @Override
     @JsonIgnore
-    public void setDoiRequest(Boolean doiRequested) {
+    public void setDoiRequested(Boolean doiRequested) {
         this.doiRequested = doiRequested;
     }
 

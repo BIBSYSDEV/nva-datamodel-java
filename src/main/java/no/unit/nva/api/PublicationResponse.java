@@ -37,6 +37,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private ResearchProject project;
     private URI doi;
     private DoiRequest doiRequest;
+    private Boolean doiRequested;
     @JsonProperty("@context")
     private JsonNode context;
 
@@ -188,6 +189,11 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @Override
     public void setDoiRequest(DoiRequest doiRequest) {
         this.doiRequest = doiRequest;
+        this.doiRequested = Objects.nonNull(doiRequest);
+    }
+
+    public Boolean getDoiRequested() {
+        return doiRequested;
     }
 
     @Override

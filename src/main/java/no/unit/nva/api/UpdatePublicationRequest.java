@@ -82,7 +82,7 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
 
     @Override
     @JsonIgnore
-    public void setDoiRequest(Boolean doiRequested) {
+    public void setDoiRequested(Boolean doiRequested) {
         this.doiRequested = doiRequested;
     }
 
