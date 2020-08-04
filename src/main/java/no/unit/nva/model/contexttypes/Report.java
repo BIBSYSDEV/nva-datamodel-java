@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import java.net.URL;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -29,6 +30,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
         setIsbnList(builder.isbnList);
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
+        setUrl(builder.url);
     }
 
     public String getPrintIssn() {
@@ -82,6 +84,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
         private List<String> isbnList;
         private String printIssn;
         private String onlineIssn;
+        private URL url;
 
         public Builder() {
         }
@@ -128,6 +131,11 @@ public class Report extends Book implements SerialPublication, BasicContext {
 
         public Builder withOnlineIssn(String onlineIssn) {
             this.onlineIssn = onlineIssn;
+            return this;
+        }
+
+        public Builder withUrl(URL url) {
+            this.url = url;
             return this;
         }
 

@@ -1,6 +1,8 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.MalformedURLException;
+import java.net.URL;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
@@ -96,7 +98,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateRange("1", "23");
     }
 
-    protected static Reference generateBookAnthology() throws InvalidIsbnException {
+    protected static Reference generateBookAnthology() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> bookAnthology = new BookAnthology.Builder()
                 .withPages(generateMonographPages())
                 .withPeerReviewed(true)
@@ -105,7 +107,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateBookContext(), bookAnthology);
     }
 
-    protected static Reference generateBookMonograph() throws InvalidIsbnException {
+    protected static Reference generateBookMonograph() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> bookMonograph = new BookMonograph.Builder()
                 .withPages(generateMonographPages())
                 .withPeerReviewed(true)
@@ -121,28 +123,28 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateChapterContext(), chapterArticle);
     }
 
-    protected static Reference generateDegreeBachelor() throws InvalidIsbnException {
+    protected static Reference generateDegreeBachelor() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> degreeBachelor = new DegreeBachelor.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateDegreeContext(), degreeBachelor);
     }
 
-    protected static Reference generateDegreeMaster() throws InvalidIsbnException {
+    protected static Reference generateDegreeMaster() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> degreeMaster = new DegreeMaster.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateDegreeContext(), degreeMaster);
     }
 
-    protected static Reference generateDegreePhd() throws InvalidIsbnException {
+    protected static Reference generateDegreePhd() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> degreePhd = new DegreePhd.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateDegreeContext(), degreePhd);
     }
 
-    protected static Reference generateJournalArticle() throws InvalidIssnException {
+    protected static Reference generateJournalArticle() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> journalArticle = new JournalArticle.Builder()
                 .withArticleNumber("123321")
                 .withIssue("1")
@@ -153,7 +155,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalArticle);
     }
 
-    protected static Reference generateJournalLeader() throws InvalidIssnException {
+    protected static Reference generateJournalLeader() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> journalLeader = new JournalLeader.Builder()
                 .withArticleNumber("8764")
                 .withIssue("22")
@@ -163,7 +165,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalLeader);
     }
 
-    protected static Reference generateJournalLetter() throws InvalidIssnException {
+    protected static Reference generateJournalLetter() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> journalLetter = new JournalLetter.Builder()
                 .withArticleNumber("8764")
                 .withIssue("22")
@@ -173,7 +175,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalLetter);
     }
 
-    protected static Reference generateJournalReview() throws InvalidIssnException {
+    protected static Reference generateJournalReview() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> journalReview = new JournalReview.Builder()
                 .withArticleNumber("75492")
                 .withIssue("27")
@@ -183,7 +185,7 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalReview);
     }
 
-    protected static Reference generateJournalShortCommunication() throws InvalidIssnException {
+    protected static Reference generateJournalShortCommunication() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> journalShortCommunication = new JournalShortCommunication.Builder()
                 .withArticleNumber("311")
                 .withIssue("1")
@@ -193,7 +195,8 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalShortCommunication);
     }
 
-    protected static Reference generateReportPolicy() throws InvalidIssnException, InvalidIsbnException {
+    protected static Reference generateReportPolicy()
+        throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> reportPolicy = new ReportPolicy.Builder()
                 .withPages(generateMonographPages())
                 .build();
@@ -201,7 +204,7 @@ public class ModelTest implements JsonHandlingTest {
     }
 
     protected static Reference generateReportResearch() throws InvalidIssnException,
-            InvalidIsbnException {
+                                                               InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> reportResearch = new ReportResearch.Builder()
                 .withPages(generateMonographPages())
                 .build();
@@ -209,14 +212,15 @@ public class ModelTest implements JsonHandlingTest {
     }
 
     protected static Reference generateReportWorkingPaper() throws InvalidIssnException,
-            InvalidIsbnException {
+                                                                   InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> reportWorkingPaper = new ReportWorkingPaper.Builder()
                 .withPages(generateMonographPages())
                 .build();
         return generateReference(generateReportContext(), reportWorkingPaper);
     }
 
-    private static PublicationContext generateReportContext() throws InvalidIssnException, InvalidIsbnException {
+    private static PublicationContext generateReportContext()
+        throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
         return new Report.Builder()
                 .withOnlineIssn("1111-1119")
                 .withPrintIssn("2222-2227")
@@ -227,10 +231,11 @@ public class ModelTest implements JsonHandlingTest {
                 .withPublisher("People's Socialist Republic of South Lakeland")
                 .withSeriesNumber("58100117")
                 .withSeriesTitle("Report of the people's agricultural commission on ovine husbandry")
+                .withUrl(new URL(("http://example.org/report/1")))
                 .build();
     }
 
-    private static PublicationContext generateJournalContext() throws InvalidIssnException {
+    private static PublicationContext generateJournalContext() throws InvalidIssnException, MalformedURLException {
         return new Journal.Builder()
                 .withLevel(Level.LEVEL_0)
                 .withOnlineIssn("1111-1119")
@@ -238,15 +243,17 @@ public class ModelTest implements JsonHandlingTest {
                 .withOpenAccess(true)
                 .withPeerReviewed(true)
                 .withTitle("The journal of mechanically separated meats")
+                .withUrl(new URL(("http://example.org/journal/1")))
                 .build();
     }
 
-    private static PublicationContext generateDegreeContext() throws InvalidIsbnException {
+    private static PublicationContext generateDegreeContext() throws InvalidIsbnException, MalformedURLException {
         return new Degree.Builder()
                 .withPublisher("Some university publisher")
                 .withSeriesNumber("8")
                 .withSeriesTitle("Degrees of this type series")
                 .withIsbnList(List.of("9780201309515"))
+                .withUrl(new URL(("http://example.org/degree/1")))
                 .build();
     }
 
@@ -265,7 +272,7 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
     }
 
-    private static Book generateBookContext() throws InvalidIsbnException {
+    private static Book generateBookContext() throws InvalidIsbnException, MalformedURLException {
         return new Book.Builder()
                     .withIsbnList(List.of("9780201309515"))
                     .withLevel(Level.LEVEL_0)
@@ -274,6 +281,7 @@ public class ModelTest implements JsonHandlingTest {
                     .withPublisher("Organic publishing AS")
                     .withSeriesNumber("1")
                     .withSeriesTitle("Bloop and how to grow 'em")
+                    .withUrl(new URL(("http://example.org/book/1")))
                     .build();
     }
 

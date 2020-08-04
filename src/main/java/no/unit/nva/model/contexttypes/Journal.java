@@ -2,6 +2,7 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URL;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIssnException;
@@ -17,6 +18,7 @@ public class Journal implements BasicContext, SerialPublication {
     private boolean peerReviewed;
     private String printIssn;
     private String onlineIssn;
+    private URL url;
 
     public Journal() {
     }
@@ -29,6 +31,7 @@ public class Journal implements BasicContext, SerialPublication {
         setPeerReviewed(builder.peerReviewed);
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
+        setUrl(builder.url);
     }
 
     public String getPrintIssn() {
@@ -101,6 +104,16 @@ public class Journal implements BasicContext, SerialPublication {
         this.peerReviewed = peerReviewed;
     }
 
+    @Override
+    public URL getUrl() {
+        return url;
+    }
+
+    @Override
+    public void setUrl(URL url) {
+        this.url = url;
+    }
+
     public static final class Builder {
         private String title;
         private Level level;
@@ -108,6 +121,7 @@ public class Journal implements BasicContext, SerialPublication {
         private boolean peerReviewed;
         private String printIssn;
         private String onlineIssn;
+        private URL url;
 
         public Builder() {
         }
@@ -142,6 +156,11 @@ public class Journal implements BasicContext, SerialPublication {
             return this;
         }
 
+        public Journal.Builder withUrl(URL url) {
+            this.url = url;
+            return this;
+        }
+
         public Journal build() throws InvalidIssnException {
             return new Journal(this);
         }
@@ -162,7 +181,8 @@ public class Journal implements BasicContext, SerialPublication {
                 && Objects.equals(isPeerReviewed(), journal.isPeerReviewed())
                 && Objects.equals(isOpenAccess(), journal.isOpenAccess())
                 && Objects.equals(getLevel(), journal.getLevel())
-                && Objects.equals(getOnlineIssn(), journal.getOnlineIssn());
+                && Objects.equals(getOnlineIssn(), journal.getOnlineIssn())
+                && Objects.equals(getUrl(), journal.getUrl());
     }
 
     @JacocoGenerated
