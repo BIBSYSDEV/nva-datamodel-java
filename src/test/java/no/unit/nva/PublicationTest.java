@@ -56,29 +56,6 @@ public class PublicationTest extends ModelTest {
         writePublicationToFile(instanceType, expected);
     }
 
-    private Publication generatePublication(String instanceType) throws Exception {
-        Reference reference = generateReference(instanceType);
-
-        Publication expected = new Publication.Builder()
-                .withCreatedDate(Instant.now())
-                .withDoi(URI.create("https://example.org/yet/another/fake/doi/1231/12311"))
-                .withDoiRequest(generateDoiRequest())
-                .withEntityDescription(generateEntityDescription(reference))
-                .withFileSet(generateFileSet())
-                .withHandle(URI.create("https://example.org/fakeHandle/13213"))
-                .withIdentifier(UUID.randomUUID())
-                .withIndexedDate(Instant.now())
-                .withLink(URI.create("https://this.should.have.been.removed"))
-                .withModifiedDate(Instant.now())
-                .withOwner("me@example.org")
-                .withProject(generateProject())
-                .withPublishedDate(Instant.now())
-                .withPublisher(generateOrganization())
-                .withStatus(PublicationStatus.PUBLISHED)
-                .build();
-        return expected;
-    }
-
     @DisplayName("copy returns a builder with all data of a publication")
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @CsvSource({
@@ -104,6 +81,28 @@ public class PublicationTest extends ModelTest {
         assertThat(copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));
 
+    }
+
+    private Publication generatePublication(String instanceType) throws Exception {
+        Reference reference = generateReference(instanceType);
+
+        return new Publication.Builder()
+                .withCreatedDate(Instant.now())
+                .withDoi(URI.create("https://example.org/yet/another/fake/doi/1231/12311"))
+                .withDoiRequest(generateDoiRequest())
+                .withEntityDescription(generateEntityDescription(reference))
+                .withFileSet(generateFileSet())
+                .withHandle(URI.create("https://example.org/fakeHandle/13213"))
+                .withIdentifier(UUID.randomUUID())
+                .withIndexedDate(Instant.now())
+                .withLink(URI.create("https://this.should.have.been.removed"))
+                .withModifiedDate(Instant.now())
+                .withOwner("me@example.org")
+                .withProject(generateProject())
+                .withPublishedDate(Instant.now())
+                .withPublisher(generateOrganization())
+                .withStatus(PublicationStatus.PUBLISHED)
+                .build();
     }
 
     private Reference generateReference(String instanceType) throws Exception {
