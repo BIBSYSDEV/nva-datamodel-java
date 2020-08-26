@@ -1,8 +1,6 @@
 package no.unit.nva;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.IOException;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
@@ -12,14 +10,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
 import java.util.UUID;
 
 import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 
 public class PublicationTest extends ModelTest {
 
@@ -44,6 +46,66 @@ public class PublicationTest extends ModelTest {
             "ReportWorkingPaper"
     })
     void publicationReturnsValidPublicationWhenInputIsValid(String instanceType) throws Exception {
+        Publication expected = generatePublication(instanceType);
+
+        String publication = objectMapper.writeValueAsString(expected);
+        Publication roundTripped = objectMapper.readValue(publication, Publication.class);
+        assertThat(expected, doesNotHaveNullOrEmptyFields());
+        assertThat(roundTripped, is(equalTo(expected)));
+
+        writePublicationToFile(instanceType, expected);
+    }
+
+    @DisplayName("copy returns a builder with all data of a publication")
+    @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
+    @CsvSource({
+            "BookAnthology",
+            "BookMonograph",
+            "ChapterArticle",
+            "DegreeBachelor",
+            "DegreeMaster",
+            "DegreePhd",
+            "JournalArticle",
+            "JournalLeader",
+            "JournalLetter",
+            "JournalReview",
+            "JournalShortCommunication",
+            "ReportPolicy",
+            "ReportResearch",
+            "ReportWorkingPaper"
+    })
+    void copyReturnsBuilderWithAllDataOfAPublication(String referenceInstanceType) throws Exception {
+        Publication publication = generatePublication(referenceInstanceType);
+        Publication copy = publication.copy().build();
+        assertThat(publication, doesNotHaveNullOrEmptyFields());
+        assertThat(copy, is(equalTo(publication)));
+        assertThat(copy, is(not(sameInstance(publication))));
+
+    }
+
+    private Publication generatePublication(String instanceType) throws Exception {
+        Reference reference = generateReference(instanceType);
+
+        return new Publication.Builder()
+                .withCreatedDate(Instant.now())
+                .withDoi(URI.create("https://example.org/yet/another/fake/doi/1231/12311"))
+                .withDoiRequest(generateDoiRequest())
+                .withEntityDescription(generateEntityDescription(reference))
+                .withFileSet(generateFileSet())
+                .withHandle(URI.create("https://example.org/fakeHandle/13213"))
+                .withIdentifier(UUID.randomUUID())
+                .withIndexedDate(Instant.now())
+                .withLink(URI.create("https://this.should.have.been.removed"))
+                .withModifiedDate(Instant.now())
+                .withOwner("me@example.org")
+                .withProject(generateProject())
+                .withPublishedDate(Instant.now())
+                .withPublisher(generateOrganization())
+                .withStatus(PublicationStatus.PUBLISHED)
+                .build();
+    }
+
+    private Reference generateReference(String instanceType) throws Exception {
         Reference reference;
         switch (instanceType) {
             case "BookAnthology":
@@ -91,32 +153,9 @@ public class PublicationTest extends ModelTest {
             default:
                 throw new Exception("Unknown instanceType");
         }
-
-        Publication actual = new Publication.Builder()
-                .withCreatedDate(Instant.now())
-                .withDoi(URI.create("https://example.org/yet/another/fake/doi/1231/12311"))
-                .withDoiRequest(generateDoiRequest())
-                .withEntityDescription(generateEntityDescription(reference))
-                .withFileSet(generateFileSet())
-                .withHandle(URI.create("https://example.org/fakeHandle/13213"))
-                .withIdentifier(UUID.randomUUID())
-                .withIndexedDate(Instant.now())
-                .withLink(URI.create("https://this.should.have.been.removed"))
-                .withModifiedDate(Instant.now())
-                .withOwner("me@example.org")
-                .withProject(generateProject())
-                .withPublishedDate(Instant.now())
-                .withPublisher(generateOrganization())
-                .withStatus(PublicationStatus.PUBLISHED)
-                .build();
-
-        String publication = objectMapper.writeValueAsString(actual);
-        Publication roundTripped = objectMapper.readValue(publication, Publication.class);
-        assertThat(actual, doesNotHaveNullOrEmptyFields());
-        assertThat(roundTripped, is(equalTo(actual)));
-
-        writePublicationToFile(instanceType, actual);
+        return reference;
     }
+
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
         String path = String.format("documentation/%s.json", instanceType);

@@ -1,20 +1,21 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.net.URI;
-import java.time.Instant;
-import java.util.Objects;
-import java.util.UUID;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithIndex;
 import no.unit.nva.WithMetadata;
 import nva.commons.utils.JacocoGenerated;
 
+import java.net.URI;
+import java.time.Instant;
+import java.util.Objects;
+import java.util.UUID;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings("PMD.ExcessivePublicCount")
 public class Publication
-    implements WithIdentifier, WithIndex, WithFile, WithMetadata {
+        implements WithIdentifier, WithIndex, WithFile, WithMetadata, WithCopy<Publication.Builder> {
 
     private UUID identifier;
     private PublicationStatus status;
@@ -204,6 +205,26 @@ public class Publication
         this.project = project;
     }
 
+    @Override
+    public Publication.Builder copy() {
+        return new Publication.Builder()
+                .withIdentifier(getIdentifier())
+                .withStatus(getStatus())
+                .withOwner(getOwner())
+                .withPublisher(getPublisher())
+                .withCreatedDate(getCreatedDate())
+                .withModifiedDate(getModifiedDate())
+                .withPublishedDate(getPublishedDate())
+                .withIndexedDate(getIndexedDate())
+                .withHandle(getHandle())
+                .withDoi(getDoi())
+                .withDoiRequest(getDoiRequest())
+                .withLink(getLink())
+                .withEntityDescription(getEntityDescription())
+                .withFileSet(getFileSet())
+                .withProject(getProject());
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -215,20 +236,20 @@ public class Publication
         }
         Publication that = (Publication) o;
         return Objects.equals(getIdentifier(), that.getIdentifier())
-            && getStatus() == that.getStatus()
-            && Objects.equals(getOwner(), that.getOwner())
-            && Objects.equals(getPublisher(), that.getPublisher())
-            && Objects.equals(getCreatedDate(), that.getCreatedDate())
-            && Objects.equals(getModifiedDate(), that.getModifiedDate())
-            && Objects.equals(getPublishedDate(), that.getPublishedDate())
-            && Objects.equals(getIndexedDate(), that.getIndexedDate())
-            && Objects.equals(getHandle(), that.getHandle())
-            && Objects.equals(getDoi(), that.getDoi())
-            && Objects.equals(getDoiRequest(), that.getDoiRequest())
-            && Objects.equals(getLink(), that.getLink())
-            && Objects.equals(getEntityDescription(), that.getEntityDescription())
-            && Objects.equals(getFileSet(), that.getFileSet())
-            && Objects.equals(getProject(), that.getProject());
+                && getStatus() == that.getStatus()
+                && Objects.equals(getOwner(), that.getOwner())
+                && Objects.equals(getPublisher(), that.getPublisher())
+                && Objects.equals(getCreatedDate(), that.getCreatedDate())
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                && Objects.equals(getPublishedDate(), that.getPublishedDate())
+                && Objects.equals(getIndexedDate(), that.getIndexedDate())
+                && Objects.equals(getHandle(), that.getHandle())
+                && Objects.equals(getDoi(), that.getDoi())
+                && Objects.equals(getDoiRequest(), that.getDoiRequest())
+                && Objects.equals(getLink(), that.getLink())
+                && Objects.equals(getEntityDescription(), that.getEntityDescription())
+                && Objects.equals(getFileSet(), that.getFileSet())
+                && Objects.equals(getProject(), that.getProject());
     }
 
     @JacocoGenerated
