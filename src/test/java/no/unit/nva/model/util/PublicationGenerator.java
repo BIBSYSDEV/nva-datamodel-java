@@ -1,6 +1,33 @@
 package no.unit.nva.model.util;
 
-import no.unit.nva.model.*;
+import static java.util.Objects.isNull;
+
+import java.net.URI;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import no.unit.nva.model.Approval;
+import no.unit.nva.model.ApprovalStatus;
+import no.unit.nva.model.ApprovalsBody;
+import no.unit.nva.model.DoiRequest;
+import no.unit.nva.model.DoiRequestMessage;
+import no.unit.nva.model.DoiRequestStatus;
+import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.File;
+import no.unit.nva.model.FileSet;
+import no.unit.nva.model.Grant;
+import no.unit.nva.model.Level;
+import no.unit.nva.model.License;
+import no.unit.nva.model.ModelTest;
+import no.unit.nva.model.Organization;
+import no.unit.nva.model.Publication;
+import no.unit.nva.model.PublicationDate;
+import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.Reference;
+import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Journal;
@@ -9,16 +36,14 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
-import no.unit.nva.model.instancetypes.journal.*;
+import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import no.unit.nva.model.instancetypes.journal.JournalLeader;
+import no.unit.nva.model.instancetypes.journal.JournalLetter;
+import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.Test;
-
-import java.net.URI;
-import java.time.Instant;
-import java.util.*;
-
-import static java.util.Objects.isNull;
 
 @SuppressWarnings("MissingJavadocMethod")
 public class PublicationGenerator extends ModelTest {
