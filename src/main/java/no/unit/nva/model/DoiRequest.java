@@ -1,24 +1,32 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.time.Instant;
-import java.util.Objects;
 import nva.commons.utils.JacocoGenerated;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import static java.util.Objects.isNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DoiRequest {
 
     private DoiRequestStatus status;
     private Instant date;
+    private List<DoiRequestMessage> messages;
 
+    @JacocoGenerated
     public DoiRequest() {
-
     }
 
-    private DoiRequest(DoiRequest.Builder builder) {
-        setDate(builder.date);
+    private DoiRequest(Builder builder) {
         setStatus(builder.status);
+        setDate(builder.date);
+        setMessages(builder.messages);
     }
+
 
     public Instant getDate() {
         return date;
@@ -36,41 +44,79 @@ public class DoiRequest {
         this.status = status;
     }
 
-    @JacocoGenerated
+    public List<DoiRequestMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<DoiRequestMessage> messages) {
+        this.messages = messages;
+    }
+
+
+    public DoiRequest.Builder copy() {
+        return new DoiRequest.Builder().withStatus(getStatus()).withDate(getDate()).withMessages(getMessages());
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof DoiRequest)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        DoiRequest doiRequest = (DoiRequest) o;
-        return Objects.equals(getDate(), doiRequest.getDate())
-                && Objects.equals(getStatus(), doiRequest.getStatus());
+        DoiRequest that = (DoiRequest) o;
+        return getStatus() == that.getStatus()
+                && Objects.equals(getDate(), that.getDate())
+                && Objects.equals(getMessages(), that.getMessages());
     }
 
-    @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getDate(), getStatus());
+        return Objects.hash(getStatus(), getDate(), getMessages());
     }
 
+    @SuppressWarnings("MissingJavadocMethod")
     public static final class Builder {
-        private Instant date;
         private DoiRequestStatus status;
+        private Instant date;
+        private List<DoiRequestMessage> messages;
 
         public Builder() {
         }
 
-        public DoiRequest.Builder withDate(Instant date) {
+        public Builder(DoiRequest copy) {
+            this.status = copy.getStatus();
+            this.date = copy.getDate();
+            this.messages = copy.getMessages();
+        }
+
+        public Builder withStatus(DoiRequestStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder withDate(Instant date) {
             this.date = date;
             return this;
         }
 
-        public DoiRequest.Builder withStatus(DoiRequestStatus status) {
-            this.status = status;
+        public Builder withMessages(List<DoiRequestMessage> messages) {
+            this.messages = messages;
             return this;
+        }
+
+        public Builder addMessage(DoiRequestMessage message) {
+            initializeMessagesIfEmpty();
+            this.messages.add(message);
+            return this;
+        }
+
+        private void initializeMessagesIfEmpty() {
+            if (isNull(this.messages)) {
+                this.messages = new ArrayList<>();
+            }
         }
 
         public DoiRequest build() {

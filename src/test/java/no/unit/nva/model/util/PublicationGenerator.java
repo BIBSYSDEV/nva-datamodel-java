@@ -1,23 +1,6 @@
 package no.unit.nva.model.util;
 
-import no.unit.nva.model.Approval;
-import no.unit.nva.model.ApprovalStatus;
-import no.unit.nva.model.ApprovalsBody;
-import no.unit.nva.model.DoiRequest;
-import no.unit.nva.model.DoiRequestStatus;
-import no.unit.nva.model.EntityDescription;
-import no.unit.nva.model.File;
-import no.unit.nva.model.FileSet;
-import no.unit.nva.model.Grant;
-import no.unit.nva.model.Level;
-import no.unit.nva.model.License;
-import no.unit.nva.model.ModelTest;
-import no.unit.nva.model.Organization;
-import no.unit.nva.model.Publication;
-import no.unit.nva.model.PublicationDate;
-import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.Reference;
-import no.unit.nva.model.ResearchProject;
+import no.unit.nva.model.*;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Journal;
@@ -26,26 +9,18 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
-import no.unit.nva.model.instancetypes.journal.JournalArticle;
-import no.unit.nva.model.instancetypes.journal.JournalLeader;
-import no.unit.nva.model.instancetypes.journal.JournalLetter;
-import no.unit.nva.model.instancetypes.journal.JournalReview;
-import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.journal.*;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 
-@SuppressWarnings("missingjavadocmethod")
+@SuppressWarnings("MissingJavadocMethod")
 public class PublicationGenerator extends ModelTest {
 
     public static final URI SOME_URI = URI.create("https://123123/213123.com");
@@ -56,6 +31,15 @@ public class PublicationGenerator extends ModelTest {
     private PublicationGenerator() {
     }
 
+    /**
+     * Generates publication.
+     *
+     * @param type publication type.
+     * @return a publication
+     * @throws InvalidIssnException          when Issn is invalid.
+     * @throws MalformedContributorException when contributor is malformed
+     * @throws InvalidIsbnException          with Isbn is invalid.
+     */
     public static Publication generatePublication(String type) throws InvalidIssnException,
             MalformedContributorException, InvalidIsbnException {
         Reference reference;
@@ -88,6 +72,15 @@ public class PublicationGenerator extends ModelTest {
                 generateEntityDescription(reference));
     }
 
+    /**
+     * Generates publication.
+     *
+     * @param publicationIdentifier the publication identifier
+     * @param fileIdentifier        the file identifier.
+     * @param now                   the current date and time.
+     * @param entityDescription     the entity description.
+     * @return a publication.
+     */
     public static Publication generatePublication(UUID publicationIdentifier,
                                                   UUID fileIdentifier,
                                                   Instant now,
@@ -164,9 +157,17 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static DoiRequest getDoiRequest() {
+        Instant now = Instant.now();
+        DoiRequestMessage message = new DoiRequestMessage.Builder()
+                .withTimestamp(now)
+                .withText("Some Text")
+                .withAuthor("SomeAuthor")
+                .build();
+
         return new DoiRequest.Builder()
                 .withStatus(DoiRequestStatus.REQUESTED)
-                .withDate(Instant.now())
+                .withDate(now)
+                .withMessages(Collections.singletonList(message))
                 .build();
     }
 
@@ -248,10 +249,6 @@ public class PublicationGenerator extends ModelTest {
                 .withDoi(SOME_URI)
                 .withPublicationInstance(null)
                 .build();
-    }
-
-    @Test
-    void name() {
     }
 
     public static PublicationInstance<Range> getPublicationInstanceJournalArticle() {
@@ -379,5 +376,9 @@ public class PublicationGenerator extends ModelTest {
         String unquoted = isbnList.replaceAll(QUOTE, EMPTY_STRING);
         String[] split = unquoted.split(SEPARATOR);
         return new ArrayList<>(Arrays.asList(split));
+    }
+
+    @Test
+    void name() {
     }
 }
