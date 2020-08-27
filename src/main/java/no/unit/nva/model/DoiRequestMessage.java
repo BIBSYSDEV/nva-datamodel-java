@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.utils.JacocoGenerated;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -47,6 +48,7 @@ public class DoiRequestMessage {
         this.timestamp = timestamp;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -56,11 +58,13 @@ public class DoiRequestMessage {
             return false;
         }
         DoiRequestMessage that = (DoiRequestMessage) o;
+
         return Objects.equals(getText(), that.getText())
                 && Objects.equals(getAuthor(), that.getAuthor())
                 && Objects.equals(getTimestamp(), that.getTimestamp());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getText(), getAuthor(), getTimestamp());

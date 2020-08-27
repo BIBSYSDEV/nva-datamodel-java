@@ -55,6 +55,7 @@ public class DoiRequest {
         return new DoiRequest.Builder().withStatus(getStatus()).withDate(getDate()).withMessages(getMessages());
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -64,15 +65,18 @@ public class DoiRequest {
             return false;
         }
         DoiRequest that = (DoiRequest) o;
+
         return getStatus() == that.getStatus()
                 && Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getMessages(), that.getMessages());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getStatus(), getDate(), getMessages());
     }
+
 
     @SuppressWarnings("MissingJavadocMethod")
     public static final class Builder {
