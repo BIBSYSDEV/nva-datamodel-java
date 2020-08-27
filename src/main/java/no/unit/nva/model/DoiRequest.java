@@ -27,7 +27,6 @@ public class DoiRequest {
         setMessages(builder.messages);
     }
 
-
     public Instant getDate() {
         return date;
     }
@@ -52,11 +51,9 @@ public class DoiRequest {
         this.messages = messages;
     }
 
-
     public DoiRequest.Builder copy() {
         return new DoiRequest.Builder().withStatus(getStatus()).withDate(getDate()).withMessages(getMessages());
     }
-
 
     @Override
     public boolean equals(Object o) {
