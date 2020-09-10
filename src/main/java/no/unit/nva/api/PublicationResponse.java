@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
@@ -37,7 +38,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private ResearchProject project;
     private URI doi;
     private DoiRequest doiRequest;
-    private Boolean doiRequested;
     @JsonProperty("@context")
     private JsonNode context;
 
@@ -181,20 +181,23 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.doi = doi;
     }
 
+
+    /**
+     * DoiRequest is present if a DOI Request has been either: requested, approved or rejected.
+     * @see no.unit.nva.model.DoiRequestStatus valid statuses
+     */
     @Override
-    public DoiRequest getDoiRequest() {
-        return doiRequest;
+    public Optional<DoiRequest> getDoiRequest() {
+        return Optional.ofNullable(doiRequest);
     }
+
 
     @Override
     public void setDoiRequest(DoiRequest doiRequest) {
         this.doiRequest = doiRequest;
-        this.doiRequested = Objects.nonNull(doiRequest);
     }
 
-    public Boolean getDoiRequested() {
-        return doiRequested;
-    }
+    public boolean hasDoiRequested() { return getDoiRequest().isPresent(); }
 
     @Override
     public JsonNode getContext() {

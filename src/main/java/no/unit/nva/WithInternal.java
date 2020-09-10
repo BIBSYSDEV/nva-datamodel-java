@@ -2,6 +2,7 @@ package no.unit.nva;
 
 import java.net.URI;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.Organization;
@@ -53,7 +54,7 @@ public interface WithInternal extends PublicationBase {
 
     void setDoi(URI doi);
 
-    DoiRequest getDoiRequest();
+    Optional<DoiRequest> getDoiRequest();
 
     void setDoiRequest(DoiRequest doiRequest);
 

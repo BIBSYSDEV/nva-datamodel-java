@@ -10,6 +10,7 @@ import nva.commons.utils.JacocoGenerated;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -96,7 +97,7 @@ public class Publication
     }
 
     @Override
-    public DoiRequest getDoiRequest() {
+    public Optional<DoiRequest> getDoiRequest() {
         return doiRequest;
     }
 
