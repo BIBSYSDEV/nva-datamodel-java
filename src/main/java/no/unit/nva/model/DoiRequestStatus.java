@@ -14,9 +14,7 @@ public enum DoiRequestStatus {
     }
 
     /**
-     * Transition a DoiRequestStatus change
-     * <p>
-     * It will return the new DoiRequestStatus if the transition is valid.
+     * Transition a DoiRequestStatus change. It will return the new DoiRequestStatus if the transition is valid.
      *
      * @param requestedStatusChange requested DOIRequestStatus to transform to.
      * @return New or existing DoiRequestStatus.
