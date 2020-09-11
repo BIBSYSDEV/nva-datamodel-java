@@ -105,6 +105,13 @@ public class Publication
         this.doiRequest = doiRequest;
     }
 
+    /**
+     * Update a publication with the requested status change.
+     * @param requestedStatusChange Requested status change.
+     * @throws IllegalArgumentException Invalid transition changes.
+     * @throws IllegalStateException No DoiRequest exists.
+     * @see DoiRequestStatus
+     */
     public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) {
         if (Objects.nonNull(doiRequest)) {
             var ourDoiRequest = getDoiRequest();
