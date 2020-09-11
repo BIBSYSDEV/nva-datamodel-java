@@ -105,6 +105,24 @@ public class Publication
         this.doiRequest = doiRequest;
     }
 
+    public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) throws IllegalStateException {
+        if (getDoiRequest() != null) {
+            var ourDoiRequest = getDoiRequest();
+            if (ourDoiRequest.getStatus().isValidStatusChange(requestedStatusChange)) {
+                setDoiRequest(ourDoiRequest.copy()
+                    .withStatus(ourDoiRequest.getStatus().transition(requestedStatusChange))
+                    .withDate(Instant.now())
+                    .build());
+            } else {
+                throw new IllegalArgumentException(
+                    String.format("You are not allowed to change from %s to %s", ourDoiRequest.getStatus(),
+                        requestedStatusChange));
+            }
+        } else {
+            throw new IllegalStateException("You must initiate creation of a DoiRequest before you can update it.");
+        }
+    }
+
     @Override
     public Instant getPublishedDate() {
         return publishedDate;
