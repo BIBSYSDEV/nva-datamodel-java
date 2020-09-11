@@ -105,8 +105,8 @@ public class Publication
         this.doiRequest = doiRequest;
     }
 
-    public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) throws IllegalStateException {
-        if (getDoiRequest() != null) {
+    public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) {
+        if (Objects.nonNull(doiRequest)) {
             var ourDoiRequest = getDoiRequest();
             if (ourDoiRequest.getStatus().isValidStatusChange(requestedStatusChange)) {
                 setDoiRequest(ourDoiRequest.copy()
