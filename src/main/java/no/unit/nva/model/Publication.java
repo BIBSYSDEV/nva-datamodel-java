@@ -118,8 +118,8 @@ public class Publication
             if (ourDoiRequest.getStatus().isValidStatusChange(requestedStatusChange)) {
                 setDoiRequest(ourDoiRequest.copy()
                     .withStatus(ourDoiRequest.getStatus().transition(requestedStatusChange))
-                    .withDate(Instant.now())
                     .build());
+                setModifiedDate(Instant.now());
             } else {
                 throw new IllegalArgumentException(
                     String.format("You are not allowed to change from %s to %s", ourDoiRequest.getStatus(),
