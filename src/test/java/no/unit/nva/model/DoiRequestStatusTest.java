@@ -1,6 +1,5 @@
 package no.unit.nva.model;
 
-import static no.unit.nva.model.DoiRequestStatus.ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -17,7 +16,6 @@ public class DoiRequestStatusTest {
     @CsvSource({
         "REQUESTED,APPROVED,APPROVED",
         "REQUESTED,REJECTED,REJECTED",
-
         "REJECTED,APPROVED,APPROVED",
     })
     @DisplayName("Should follow business rules for valid status changes on DoiRequestStatus")
@@ -28,13 +26,12 @@ public class DoiRequestStatusTest {
     }
 
     @ParameterizedTest
+    // ExistingState, RequestedChange
     @CsvSource({
         "REQUESTED,REQUESTED",
-
         "APPROVED,REQUESTED",
         "APPROVED,APPROVED",
         "APPROVED,REJECTED",
-
         "REJECTED,REJECTED",
         "REJECTED,REQUESTED"
     })
