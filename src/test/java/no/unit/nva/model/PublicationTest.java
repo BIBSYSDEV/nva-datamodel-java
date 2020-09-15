@@ -5,8 +5,10 @@ import static no.unit.nva.model.DoiRequestStatus.ERROR_MESSAGE_NOT_ALLOWED_TO_CH
 import static no.unit.nva.model.DoiRequestStatus.REJECTED;
 import static no.unit.nva.model.DoiRequestStatus.REQUESTED;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -45,14 +47,16 @@ public class PublicationTest {
     }
 
     @Test
-    public void updatingDoiRequestStatusForValidTransitionChangeReturnsUpdatedDoiRequestStatus()
+    public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
         throws InvalidIssnException, MalformedContributorException {
-        var publication = PublicationGenerator.generateJournalArticlePublication();
-        publication.updateDoiRequestStatus(REJECTED);
-        assertThat(publication.getDoiRequest().getStatus(), is(equalTo(REJECTED)));
+        var publication = generatePublicationWithRejectedDoiRequestStatus();
 
-        publication.updateDoiRequestStatus(APPROVED);
-        assertThat(publication.getDoiRequest().getStatus(), is(equalTo(APPROVED)));
+        var requestedChange = APPROVED;
+        // ensure we have different status before trying to update
+        assertThat(publication.getDoiRequest().getStatus(), not(equalTo(requestedChange)));
+
+        publication.updateDoiRequestStatus(requestedChange);
+        assertThat(publication.getDoiRequest().getStatus(), is(equalTo(requestedChange)));
     }
 
     @Test
