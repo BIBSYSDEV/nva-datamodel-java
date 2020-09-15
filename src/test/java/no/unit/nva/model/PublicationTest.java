@@ -51,12 +51,12 @@ public class PublicationTest {
         throws InvalidIssnException, MalformedContributorException {
         var publication = generatePublicationWithRejectedDoiRequestStatus();
 
-        var requestedChange = APPROVED;
+        var validRequestedChange = APPROVED;
         // ensure we have different status before trying to update
-        assertThat(publication.getDoiRequest().getStatus(), not(equalTo(requestedChange)));
+        assertThat(publication.getDoiRequest().getStatus(), not(equalTo(validRequestedChange)));
 
-        publication.updateDoiRequestStatus(requestedChange);
-        assertThat(publication.getDoiRequest().getStatus(), is(equalTo(requestedChange)));
+        publication.updateDoiRequestStatus(validRequestedChange);
+        assertThat(publication.getDoiRequest().getStatus(), is(equalTo(validRequestedChange)));
     }
 
     @Test
