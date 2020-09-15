@@ -29,6 +29,6 @@ public class DoiRequestStatusTest {
     void transitionExpectations(DoiRequestStatus existingState,
                                 DoiRequestStatus requestedChange,
                                 DoiRequestStatus expectedState) {
-        assertThat(existingState.transition(requestedChange), is(equalTo(expectedState)));
+        assertThat(existingState.changeStatus(requestedChange), is(equalTo(expectedState)));
     }
 }

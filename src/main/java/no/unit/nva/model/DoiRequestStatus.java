@@ -8,34 +8,38 @@ public enum DoiRequestStatus {
     REQUESTED,
     APPROVED,
     REJECTED;
+    protected static final Set<DoiRequestStatus> validStatusChangeForRecejted = Set.of(APPROVED);
+    protected static final Set<DoiRequestStatus> validStatusChangeForRequested = Set.of(APPROVED, REJECTED);
+    protected static final Set<DoiRequestStatus> validDefaultStatusChanges = emptySet();
+    public static final String ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S =
+        "Not allowed to change status from %s to %s";
 
     public boolean isValidStatusChange(DoiRequestStatus requestedStatusChange) {
         return getValidTransitions(this).contains(requestedStatusChange);
     }
 
     /**
-     * Transition a DoiRequestStatus change. It will return the new DoiRequestStatus if the transition is valid.
+     * Changes status for a DoiRequestStatus change. It will return the new DoiRequestStatus if the transition is valid.
      *
      * @param requestedStatusChange requested DOIRequestStatus to transform to.
-     * @return New or existing DoiRequestStatus.
-     * @see #isValidStatusChange(DoiRequestStatus) to check if a transition is allowed or not, and you need to know
-     *     before performing it.
+     * @return New DoiRequestStatus.
+     * @throws IllegalArgumentException requestedStatusChange is not valid to change into.
      */
-    public DoiRequestStatus transition(DoiRequestStatus requestedStatusChange) {
-        if (requestedStatusChange.getValidTransitions(this).contains(requestedStatusChange)) {
+    public DoiRequestStatus changeStatus(DoiRequestStatus requestedStatusChange) {
+        if (isValidStatusChange(this)) {
             return requestedStatusChange;
         }
-        return this;
+        throw new IllegalArgumentException(String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, this, requestedStatusChange));
     }
 
     private Set<DoiRequestStatus> getValidTransitions(DoiRequestStatus fromRequestStatus) {
         switch (fromRequestStatus) {
             case REQUESTED:
-                return Set.of(APPROVED, REJECTED);
+                return validStatusChangeForRequested;
             case REJECTED:
-                return Set.of(APPROVED);
+                return validStatusChangeForRecejted;
             default:
-                return emptySet();
+                return validDefaultStatusChanges;
         }
     }
 }
