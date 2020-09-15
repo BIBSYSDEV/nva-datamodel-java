@@ -84,8 +84,8 @@ public class PublicationTest {
 
     private Publication generatePublicationWithRejectedDoiRequestStatus()
         throws InvalidIssnException, MalformedContributorException {
-        var publication = PublicationGenerator.generateJournalArticlePublication();
-        var doiRequest = publication.getDoiRequest();
-        return publication.copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
+        var doiRequest = PublicationGenerator.generateJournalArticlePublication().getDoiRequest();
+        return PublicationGenerator.generateJournalArticlePublication()
+            .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
     }
 }

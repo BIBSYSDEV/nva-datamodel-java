@@ -8,7 +8,7 @@ public enum DoiRequestStatus {
     REQUESTED,
     APPROVED,
     REJECTED;
-    protected static final Set<DoiRequestStatus> validStatusChangeForRecejted = Set.of(APPROVED);
+    protected static final Set<DoiRequestStatus> validStatusChangeForRejected = Set.of(APPROVED);
     protected static final Set<DoiRequestStatus> validStatusChangeForRequested = Set.of(APPROVED, REJECTED);
     protected static final Set<DoiRequestStatus> validDefaultStatusChanges = emptySet();
     public static final String ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S =
@@ -29,8 +29,11 @@ public enum DoiRequestStatus {
         if (isValidStatusChange(requestedStatusChange)) {
             return requestedStatusChange;
         }
-        throw new IllegalArgumentException(
-            String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, this, requestedStatusChange));
+        throw new IllegalArgumentException(getErrorMessageForNotAllowedStatusChange(requestedStatusChange));
+    }
+
+    protected String getErrorMessageForNotAllowedStatusChange(DoiRequestStatus requestedStatusChange) {
+        return String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, this, requestedStatusChange);
     }
 
     private Set<DoiRequestStatus> getValidTransitions(DoiRequestStatus fromRequestStatus) {
@@ -38,7 +41,7 @@ public enum DoiRequestStatus {
             case REQUESTED:
                 return validStatusChangeForRequested;
             case REJECTED:
-                return validStatusChangeForRecejted;
+                return validStatusChangeForRejected;
             default:
                 return validDefaultStatusChanges;
         }

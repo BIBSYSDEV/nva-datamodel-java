@@ -43,9 +43,6 @@ public class DoiRequestStatusTest {
         var actualException = assertThrows(IllegalArgumentException.class,
             () -> existingState.changeStatus(requestedChange));
         assertThat(actualException.getMessage(), is(equalTo(
-                String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S,
-                    existingState,
-                    requestedChange))));
-
+            existingState.getErrorMessageForNotAllowedStatusChange(requestedChange))));
     }
 }

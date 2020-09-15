@@ -117,10 +117,9 @@ public class Publication
             throw new IllegalStateException(
                 ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST);
         }
-        var ourDoiRequest = getDoiRequest();
 
-        setDoiRequest(ourDoiRequest.copy()
-            .withStatus(ourDoiRequest.getStatus().changeStatus(requestedStatusChange))
+        setDoiRequest(getDoiRequest().copy()
+            .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
             .build());
         setModifiedDate(Instant.now());
     }
