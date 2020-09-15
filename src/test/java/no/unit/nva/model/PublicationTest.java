@@ -60,14 +60,11 @@ public class PublicationTest {
     }
 
     @Test
-    public void updatingDoiRequestStatusWithInvalidTransitionRequestThenThrowsIllegalArgumentException()
+    public void updatingDoiRequestWithInvalidRequestedStatusChangeThenThrowsIllegalArgumentException()
         throws InvalidIssnException, MalformedContributorException {
         var publication = generatePublicationWithRejectedDoiRequestStatus();
 
-        var actualException = assertThrows(IllegalArgumentException.class,
-            () -> publication.updateDoiRequestStatus(REQUESTED));
-        assertThat(actualException.getMessage(),
-            is(equalTo(String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, REJECTED, REQUESTED))));
+        assertThrows(IllegalArgumentException.class, () -> publication.updateDoiRequestStatus(REQUESTED));
     }
 
     @Test
