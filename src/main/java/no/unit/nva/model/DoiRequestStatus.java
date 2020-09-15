@@ -26,10 +26,11 @@ public enum DoiRequestStatus {
      * @throws IllegalArgumentException requestedStatusChange is not valid to change into.
      */
     public DoiRequestStatus changeStatus(DoiRequestStatus requestedStatusChange) {
-        if (isValidStatusChange(this)) {
+        if (isValidStatusChange(requestedStatusChange)) {
             return requestedStatusChange;
         }
-        throw new IllegalArgumentException(String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, this, requestedStatusChange));
+        throw new IllegalArgumentException(
+            String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, this, requestedStatusChange));
     }
 
     private Set<DoiRequestStatus> getValidTransitions(DoiRequestStatus fromRequestStatus) {
