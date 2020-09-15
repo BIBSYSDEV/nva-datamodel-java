@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import static no.unit.nva.model.DoiRequestStatus.APPROVED;
+import static no.unit.nva.model.DoiRequestStatus.ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S;
 import static no.unit.nva.model.DoiRequestStatus.REJECTED;
 import static no.unit.nva.model.DoiRequestStatus.REQUESTED;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -62,7 +63,7 @@ public class PublicationTest {
         var actualException = assertThrows(IllegalArgumentException.class,
             () -> publication.updateDoiRequestStatus(REQUESTED));
         assertThat(actualException.getMessage(),
-            is(equalTo(String.format("You are not allowed to change from %s to %s", REJECTED, REQUESTED))));
+            is(equalTo(String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, REJECTED, REQUESTED))));
     }
 
     @Test
@@ -73,7 +74,7 @@ public class PublicationTest {
         var actualException = assertThrows(IllegalStateException.class,
             () -> publication.updateDoiRequestStatus(REQUESTED));
         assertThat(actualException.getMessage(),
-            is(equalTo("You must initiate creation of a DoiRequest before you can update it.")));
+            is(equalTo(Publication.ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST)));
     }
 
     private Publication getPublicationWithoutDoiRequest() throws InvalidIssnException, MalformedContributorException {
