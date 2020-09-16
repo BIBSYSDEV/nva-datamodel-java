@@ -5,6 +5,7 @@ import static no.unit.nva.model.DoiRequestStatus.REJECTED;
 import static no.unit.nva.model.DoiRequestStatus.REQUESTED;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -52,13 +53,13 @@ public class PublicationTest {
             () -> publication.updateDoiRequestStatus(REQUESTED))
             .getMessage();
 
-        assertThat(actualMessage, containsString("not allowed"));
+        assertThat(actualMessage, containsStringIgnoringCase("not allowed"));
 
         String statusInRequest = REQUESTED.toString();
-        assertThat(actualMessage, containsString(statusInRequest));
+        assertThat(actualMessage, containsStringIgnoringCase(statusInRequest));
 
         String initialStatus = REJECTED.toString();
-        assertThat(actualMessage, containsString(initialStatus));
+        assertThat(actualMessage, containsStringIgnoringCase(initialStatus));
     }
 
     @Test
