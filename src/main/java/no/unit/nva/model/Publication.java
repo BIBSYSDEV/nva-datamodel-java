@@ -1,5 +1,8 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.hash;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
@@ -113,7 +116,7 @@ public class Publication
      * @see DoiRequestStatus
      */
     public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) {
-        if (Objects.isNull(doiRequest)) {
+        if (isNull(doiRequest)) {
             throw new IllegalStateException(
                 ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST);
         }
@@ -274,7 +277,7 @@ public class Publication
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentifier(),
+        return hash(getIdentifier(),
                 getStatus(),
                 getOwner(),
                 getPublisher(),
