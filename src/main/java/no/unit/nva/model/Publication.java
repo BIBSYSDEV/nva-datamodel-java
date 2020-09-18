@@ -1,22 +1,23 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
+import java.time.Instant;
+import java.util.Objects;
+import java.util.UUID;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithIndex;
 import no.unit.nva.WithMetadata;
 import nva.commons.utils.JacocoGenerated;
 
-import java.net.URI;
-import java.time.Instant;
-import java.util.Objects;
-import java.util.UUID;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings("PMD.ExcessivePublicCount")
 public class Publication
         implements WithIdentifier, WithIndex, WithFile, WithMetadata, WithCopy<Publication.Builder> {
 
+    public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
+        "You must initiate creation of a DoiRequest before you can update it.";
     private UUID identifier;
     private PublicationStatus status;
     private String owner;
@@ -34,7 +35,6 @@ public class Publication
     private ResearchProject project;
 
     public Publication() {
-
     }
 
     private Publication(Builder builder) {
@@ -103,6 +103,25 @@ public class Publication
     @Override
     public void setDoiRequest(DoiRequest doiRequest) {
         this.doiRequest = doiRequest;
+    }
+
+    /**
+     * Update a publication with the requested status change.
+     * @param requestedStatusChange Requested status change.
+     * @throws IllegalArgumentException Invalid status to change to.
+     * @throws IllegalStateException No DoiRequest exists.
+     * @see DoiRequestStatus
+     */
+    public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) {
+        if (Objects.isNull(doiRequest)) {
+            throw new IllegalStateException(
+                ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST);
+        }
+
+        setDoiRequest(getDoiRequest().copy()
+            .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
+            .build());
+        setModifiedDate(Instant.now());
     }
 
     @Override
