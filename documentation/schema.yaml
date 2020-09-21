@@ -113,6 +113,9 @@ referencedSchemas:
           type: boolean
         peerReviewed:
           type: boolean
+        url:
+          type: string
+          format: url
         isbnList:
           type: array
           items:
@@ -229,6 +232,9 @@ referencedSchemas:
           type: boolean
         peerReviewed:
           type: boolean
+        url:
+          type: string
+          format: url
         isbnList:
           type: array
           items:
@@ -289,6 +295,26 @@ referencedSchemas:
         - APPROVED
         - REJECTED
       date:
+        type: string
+        format: date-time
+      messages:
+        type: array
+        items:
+          $ref: '#/components/schemas/DoiRequestMessage'
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  DoiRequestMessage:
+    required:
+    - type
+    type: object
+    properties:
+      text:
+        type: string
+      author:
+        type: string
+      timestamp:
         type: string
         format: date-time
       type:
@@ -438,6 +464,9 @@ referencedSchemas:
           type: string
         onlineIssn:
           type: string
+        url:
+          type: string
+          format: url
         type:
           type: string
   JournalArticle:
@@ -685,10 +714,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
@@ -745,6 +774,9 @@ referencedSchemas:
           type: boolean
         peerReviewed:
           type: boolean
+        url:
+          type: string
+          format: url
         isbnList:
           type: array
           items:
