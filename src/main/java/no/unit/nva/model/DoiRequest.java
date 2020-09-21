@@ -1,14 +1,12 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.utils.JacocoGenerated;
-
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import static java.util.Objects.isNull;
+import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DoiRequest {
@@ -19,6 +17,7 @@ public class DoiRequest {
 
     @JacocoGenerated
     public DoiRequest() {
+        this.messages = Collections.emptyList();
     }
 
     private DoiRequest(Builder builder) {
@@ -85,6 +84,7 @@ public class DoiRequest {
         private List<DoiRequestMessage> messages;
 
         public Builder() {
+            messages = Collections.emptyList();
         }
 
         public Builder(DoiRequest copy) {
@@ -115,7 +115,7 @@ public class DoiRequest {
         }
 
         private void initializeMessagesIfEmpty() {
-            if (isNull(this.messages)) {
+            if (this.messages.isEmpty()) {
                 this.messages = new ArrayList<>();
             }
         }
