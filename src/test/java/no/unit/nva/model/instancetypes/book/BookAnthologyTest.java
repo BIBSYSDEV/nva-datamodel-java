@@ -26,7 +26,7 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
 
     @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")
     @ParameterizedTest(name = "BookAnthology deserialized with begin {0}, end {1}, pages {2}, illustrated {3}, "
-            + "peerReviewed {4}")
+            + "peerReviewed {4}, textbook {5}")
     @CsvSource({
             "i,xxviii,398,true,true,true",
             ",,231,false,true,true",
@@ -64,7 +64,7 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
 
     @DisplayName("BookAnthology: ObjectMapper serializes valid input correctly")
     @ParameterizedTest(name = "BookAnthology serialized with begin {0}, end {1}, pages {2}, illustrated {3}, "
-            + "peerReviewed {4}")
+            + "peerReviewed {4}, textbook {5}")
     @CsvSource({
             "i,xxviii,398,true,true,true",
             ",,231,false,true,true",
