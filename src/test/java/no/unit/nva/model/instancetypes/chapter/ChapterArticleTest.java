@@ -30,7 +30,7 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
-        String json = generateChapterArticleJsonString(expectedBegin, expectedEnd, true);
+        String json = generateChapterArticleJsonString(expectedBegin, expectedEnd, true, true);
         ChapterArticle chapterArticle = objectMapper.readValue(json, ChapterArticle.class);
         assertEquals(expectedPages, chapterArticle.getPages());
         assertTrue(chapterArticle.isPeerReviewed());
@@ -44,8 +44,9 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
         ChapterArticle chapterArticle = new ChapterArticle.Builder()
                 .withPages(generatePages(expectedBegin, expectedEnd))
                 .withPeerReviewed(false)
+                .withTextbookContent(false)
                 .build();
-        JsonNode expectedJson = generateChapterArticleJson(expectedBegin, expectedEnd, false);
+        JsonNode expectedJson = generateChapterArticleJson(expectedBegin, expectedEnd, false, false);
         JsonNode actualJson = objectMapper.convertValue(chapterArticle, JsonNode.class);
         assertEquals(expectedJson, actualJson);
     }

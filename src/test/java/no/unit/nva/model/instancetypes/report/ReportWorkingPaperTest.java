@@ -17,7 +17,7 @@ class ReportWorkingPaperTest extends InstanceTest {
     @DisplayName("ReportBasic working paper can be created from JSON")
     @Test
     void reportWorkingPaperReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
-        MonographTestData testData = new MonographTestData(false);
+        MonographTestData testData = new MonographTestData(false, false);
         String json = generateMonographJsonString(ReportWorkingPaper.class.getSimpleName(), testData);
         ReportWorkingPaper expected = generateReportWorkingPaper(testData);
         ReportWorkingPaper actual = objectMapper.readValue(json, ReportWorkingPaper.class);

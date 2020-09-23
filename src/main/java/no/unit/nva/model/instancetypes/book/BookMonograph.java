@@ -12,12 +12,13 @@ public class BookMonograph extends PeerReviewedMonograph {
     }
 
     private BookMonograph(Builder builder) {
-        super(builder.pages, builder.peerReviewed);
+        super(builder.pages, builder.peerReviewed, builder.textbookContent);
     }
 
     public static final class Builder {
         private boolean peerReviewed;
         private MonographPages pages;
+        private boolean textbookContent;
 
         public Builder() {
         }
@@ -29,6 +30,11 @@ public class BookMonograph extends PeerReviewedMonograph {
 
         public Builder withPages(MonographPages pages) {
             this.pages = pages;
+            return this;
+        }
+
+        public Builder withTextbookContent(boolean textbookContent) {
+            this.textbookContent = textbookContent;
             return this;
         }
 

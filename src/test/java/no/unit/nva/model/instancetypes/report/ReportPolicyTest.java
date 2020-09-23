@@ -17,7 +17,7 @@ class ReportPolicyTest extends InstanceTest {
     @DisplayName("Report policy can be created from JSON")
     @Test
     void reportPolicyReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
-        MonographTestData testData = new MonographTestData(false);
+        MonographTestData testData = new MonographTestData(false, false);
         ReportPolicy expected = generateReportPolicy(testData);
         String json = generateMonographJsonString(ReportPolicy.class.getSimpleName(), testData);
         ReportPolicy reportPolicy = objectMapper.readValue(json, ReportPolicy.class);

@@ -6,19 +6,20 @@ import nva.commons.utils.JacocoGenerated;
 
 import java.util.Objects;
 
-public class PeerReviewedMonograph extends PeerReviewed<MonographPages> {
+public class PeerReviewedMonograph extends PeerReviewed<MonographPages> implements TextbookContent {
 
     @JsonProperty("pages")
     private MonographPages pages;
-
+    private boolean textbookContent;
 
     protected PeerReviewedMonograph() {
         super();
     }
 
-    protected PeerReviewedMonograph(MonographPages pages, boolean peerReviewed) {
+    protected PeerReviewedMonograph(MonographPages pages, boolean peerReviewed, boolean textbookContent) {
         super(peerReviewed);
         this.pages = pages;
+        this.textbookContent = textbookContent;
     }
 
     @Override
@@ -31,6 +32,16 @@ public class PeerReviewedMonograph extends PeerReviewed<MonographPages> {
         this.pages = pages;
     }
 
+    @Override
+    public boolean isTextbookContent() {
+        return textbookContent;
+    }
+
+    @Override
+    public void setTextbookContent(boolean textbookContent) {
+        this.textbookContent = textbookContent;
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -41,13 +52,13 @@ public class PeerReviewedMonograph extends PeerReviewed<MonographPages> {
             return false;
         }
         PeerReviewedMonograph that = (PeerReviewedMonograph) o;
-        return isPeerReviewed() == that.isPeerReviewed()
+        return isTextbookContent() == that.isTextbookContent()
                 && Objects.equals(getPages(), that.getPages());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getPages(), isPeerReviewed());
+        return Objects.hash(getPages(), isTextbookContent());
     }
 }
