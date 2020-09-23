@@ -174,11 +174,6 @@ public class InstanceTest extends ModelTest {
         return instance;
     }
 
-    protected String generateArticleWithPeerReview(String type) throws JsonProcessingException {
-        JournalTestData testData = new JournalTestData(true);
-        return generateArticleJsonString(type, testData);
-    }
-
     private LinkedHashMap<String, Object> getMonographPagesMap(String begin,
                                                                String end,
                                                                String pages,
