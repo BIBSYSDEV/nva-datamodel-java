@@ -1,6 +1,6 @@
 {
   "type" : "Publication",
-  "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
   "status" : "Published",
   "owner" : "me@example.org",
   "publisher" : {
@@ -70,6 +70,7 @@
       "doi" : "https://example.org/doi/12313/2313",
       "publicationInstance" : {
         "type" : "ChapterArticle",
+        "textbookContent" : true,
         "peerReviewed" : true,
         "pages" : {
           "type" : "Range",
@@ -85,7 +86,7 @@
     "type" : "FileSet",
     "files" : [ {
       "type" : "File",
-      "identifier" : "d416613d-d05c-47dc-a41a-83194df056ff",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
       "name" : "new document(1)",
       "mimeType" : "application/pdf",
       "size" : 2,

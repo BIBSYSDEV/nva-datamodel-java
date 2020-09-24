@@ -1,6 +1,7 @@
 package no.unit.nva;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.File;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
@@ -29,6 +31,8 @@ public class PublicationTest extends ModelTest {
     public static final String TIMESTAMP_REGEX = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]+";
     public static final String SOME_TIMESTAMP = "2020-09-23T09:51:23.044996Z";
     public static final String DOCUMENTATION_PATH_TEMPLATE = "documentation/%s.json";
+    public static final UUID REPLACEMENT_IDENTIFIER_1 = UUID.fromString("c443030e-9d56-43d8-afd1-8c89105af555");
+    public static final UUID REPLACEMENT_IDENTIFIER_2 = UUID.fromString("5032710d-a326-43d3-a8fb-57a451873c78");
     ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @DisplayName("Test that each publication type can be round-tripped to and from JSON")
@@ -162,9 +166,23 @@ public class PublicationTest extends ModelTest {
 
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
+        publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
+        publication.getFileSet().getFiles().forEach(file -> publication.getFileSet()
+                .setFiles(List.of(copyWithNewIdentifier(file))));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
         var publicationJson = objectMapper.writeValueAsString(publication)
                 .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
         Files.write(Paths.get(path), publicationJson.getBytes());
+    }
+
+    private File copyWithNewIdentifier(File file) {
+        return new File(PublicationTest.REPLACEMENT_IDENTIFIER_2,
+                file.getName(),
+                file.getMimeType(),
+                file.getSize(),
+                file.getLicense(),
+                file.isAdministrativeAgreement(),
+                file.isPublisherAuthority(),
+                file.getEmbargoDate());
     }
 }

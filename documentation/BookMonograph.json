@@ -1,6 +1,6 @@
 {
   "type" : "Publication",
-  "identifier" : "66efa170-58c4-4041-a3f5-5a85499ac10a",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
   "status" : "Published",
   "owner" : "me@example.org",
   "publisher" : {
@@ -77,6 +77,7 @@
       "doi" : "https://example.org/doi/12313/2313",
       "publicationInstance" : {
         "type" : "BookMonograph",
+        "textbookContent" : true,
         "peerReviewed" : true,
         "pages" : {
           "type" : "MonographPages",
@@ -97,7 +98,7 @@
     "type" : "FileSet",
     "files" : [ {
       "type" : "File",
-      "identifier" : "2271db95-2750-4ff1-8001-e7486e40f586",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
       "name" : "new document(1)",
       "mimeType" : "application/pdf",
       "size" : 2,
