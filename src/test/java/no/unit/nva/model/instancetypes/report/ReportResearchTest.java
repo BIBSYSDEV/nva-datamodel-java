@@ -13,7 +13,7 @@ class ReportResearchTest extends InstanceTest {
     @DisplayName("ReportResearch can be created from JSON")
     @Test
     void reportResearchReturnsObjectWhenJsonInputIsCorrectlySerialized() throws JsonProcessingException {
-        MonographTestData testData = new MonographTestData(false);
+        MonographTestData testData = new MonographTestData(false, false);
         ReportResearch expected = generateReportResearch(testData);
         String json = generateMonographJsonString(ReportResearch.class.getSimpleName(), testData);
         ReportResearch reportResearch = objectMapper.readValue(json, ReportResearch.class);

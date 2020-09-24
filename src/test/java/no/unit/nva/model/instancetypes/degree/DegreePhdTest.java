@@ -37,8 +37,8 @@ public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
                 begin,
                 end,
                 pages,
-                illustrated
-        );
+                illustrated,
+                false);
         DegreePhd expected = generateDegreePhd(
                 begin,
                 end,
@@ -73,6 +73,7 @@ public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
                 end,
                 pages,
                 illustrated,
+                false,
                 false);
         assertEquals(expected, json);
     }

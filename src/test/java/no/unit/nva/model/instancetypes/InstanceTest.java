@@ -22,16 +22,17 @@ public class InstanceTest extends ModelTest {
         String pages = testData.getPages().getPages();
         boolean illustrated = testData.getPages().isIllustrated();
         return generateJsonString(type, null, null, null, begin, end,
-                pages, illustrated, testData.isPeerReviewed());
+                pages, illustrated, testData.isPeerReviewed(), testData.isTextbookContent());
     }
 
     protected String generateMonographJsonString(String type,
                                                  String introductionBegin,
                                                  String introductionEnd,
                                                  String pages,
-                                                 boolean illustrated) throws JsonProcessingException {
+                                                 boolean illustrated,
+                                                 boolean textbookContent) throws JsonProcessingException {
         return generateJsonString(type, null, null, null, introductionBegin,
-                introductionEnd, pages, illustrated, false);
+                introductionEnd, pages, illustrated, false, textbookContent);
 
     }
 
@@ -40,9 +41,10 @@ public class InstanceTest extends ModelTest {
                                                  String introductionEnd,
                                                  String pages,
                                                  boolean illustrated,
-                                                 boolean peerReviewed) throws JsonProcessingException {
+                                                 boolean peerReviewed,
+                                                 boolean textbookContent) throws JsonProcessingException {
         return generateJsonString(type, null, null, null, introductionBegin,
-                introductionEnd, pages, illustrated, peerReviewed);
+                introductionEnd, pages, illustrated, peerReviewed, textbookContent);
 
     }
 
@@ -51,9 +53,10 @@ public class InstanceTest extends ModelTest {
                                              String introductionEnd,
                                              String pages,
                                              boolean illustrated,
-                                             boolean peerReviewed) {
+                                             boolean peerReviewed,
+                                             boolean textbookContent) {
         LinkedHashMap<String, Object> instance = generateMapRepresentation(type, null, null, null, introductionBegin,
-                introductionEnd, pages, illustrated, peerReviewed);
+                introductionEnd, pages, illustrated, peerReviewed, textbookContent);
         return objectMapper.valueToTree(instance);
     }
 
@@ -66,7 +69,8 @@ public class InstanceTest extends ModelTest {
                 testData.getPages().getEnd(),
                 null,
                 false,
-                testData.isPeerReviewed()
+                testData.isPeerReviewed(),
+                false
         );
     }
 
@@ -78,7 +82,8 @@ public class InstanceTest extends ModelTest {
                                         String introductionEnd,
                                         String pages,
                                         boolean illustrated,
-                                        boolean peerReviewed) throws JsonProcessingException {
+                                        boolean peerReviewed,
+                                        boolean textbookContent) throws JsonProcessingException {
         LinkedHashMap<String, Object> instance = generateMapRepresentation(type,
                 volume,
                 issue,
@@ -87,11 +92,15 @@ public class InstanceTest extends ModelTest {
                 introductionEnd,
                 pages,
                 illustrated,
-                peerReviewed);
+                peerReviewed,
+                textbookContent);
         return objectMapper.writeValueAsString(instance);
     }
 
-    protected String generateChapterArticleJsonString(String begin, String end, boolean peerReviewed) throws
+    protected String generateChapterArticleJsonString(String begin,
+                                                      String end,
+                                                      boolean peerReviewed,
+                                                      boolean textbookContent) throws
             JsonProcessingException {
         return generateJsonString(CHAPTER_ARTICLE,
                 null,
@@ -101,10 +110,14 @@ public class InstanceTest extends ModelTest {
                 end,
                 null,
                 false,
-                peerReviewed);
+                peerReviewed,
+                textbookContent);
     }
 
-    protected JsonNode generateChapterArticleJson(String begin, String end, boolean peerReviewed) {
+    protected JsonNode generateChapterArticleJson(String begin,
+                                                  String end,
+                                                  boolean peerReviewed,
+                                                  boolean textbookContent) {
         LinkedHashMap<String, Object> instance = generateMapRepresentation(CHAPTER_ARTICLE,
                 null,
                 null,
@@ -113,7 +126,8 @@ public class InstanceTest extends ModelTest {
                 end,
                 null,
                 false,
-                peerReviewed);
+                peerReviewed,
+                textbookContent);
         return objectMapper.valueToTree(instance);
     }
 
@@ -125,7 +139,8 @@ public class InstanceTest extends ModelTest {
                                                                       String introductionEnd,
                                                                       String pages,
                                                                       boolean illustrated,
-                                                                      boolean peerReviewed) {
+                                                                      boolean peerReviewed,
+                                                                      boolean textbookContent) {
         LinkedHashMap<String, Object> instance = new LinkedHashMap<>();
         instance.put("type", type);
 
@@ -144,17 +159,19 @@ public class InstanceTest extends ModelTest {
             case "ChapterArticle":
                 instance.put("pages", getRangeMap(introductionBegin, introductionEnd));
                 instance.put("peerReviewed", peerReviewed);
+                instance.put("textbookContent", textbookContent);
+                break;
+            case "BookAnthology":
+            case "BookMonograph":
+                instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));
+                instance.put("peerReviewed", peerReviewed);
+                instance.put("textbookContent", textbookContent);
                 break;
             default:
                 instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));
                 instance.put("peerReviewed", peerReviewed);
         }
         return instance;
-    }
-
-    protected String generateArticleWithPeerReview(String type) throws JsonProcessingException {
-        JournalTestData testData = new JournalTestData(true);
-        return generateArticleJsonString(type, testData);
     }
 
     private LinkedHashMap<String, Object> getMonographPagesMap(String begin,

@@ -12,14 +12,20 @@ public class BookAnthology extends PeerReviewedMonograph {
     }
 
     private BookAnthology(Builder builder) {
-        super(builder.pages, builder.peerReviewed);
+        super(builder.pages, builder.peerReviewed, builder.textbookContent);
     }
 
     public static final class Builder {
-        private MonographPages pages;
         private boolean peerReviewed;
+        private MonographPages pages;
+        private boolean textbookContent;
 
         public Builder() {
+        }
+
+        public Builder withPeerReviewed(boolean peerReviewed) {
+            this.peerReviewed = peerReviewed;
+            return this;
         }
 
         public Builder withPages(MonographPages pages) {
@@ -27,8 +33,8 @@ public class BookAnthology extends PeerReviewedMonograph {
             return this;
         }
 
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
+        public Builder withTextbookContent(boolean textbookContent) {
+            this.textbookContent = textbookContent;
             return this;
         }
 

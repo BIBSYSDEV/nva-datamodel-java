@@ -10,6 +10,7 @@ public class TestData {
     private final String begin;
     private final String end;
     private boolean peerReviewed;
+    private boolean textbookContent;
 
     /**
      * Creates a random set of data for the Range that is present in each Pages subtype.
@@ -34,6 +35,14 @@ public class TestData {
 
     public void setPeerReviewed(boolean peerReviewed) {
         this.peerReviewed = peerReviewed;
+    }
+
+    public void setTextbookContent(boolean textbookContent) {
+        this.textbookContent = textbookContent;
+    }
+
+    public boolean isTextbookContent() {
+        return textbookContent;
     }
 
     protected Range generateRange() {

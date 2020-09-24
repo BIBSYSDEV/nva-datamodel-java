@@ -35,7 +35,8 @@ public class DegreeMasterTest extends InstanceTest {
                 begin,
                 end,
                 pages,
-                illustrated);
+                illustrated,
+                false);
         DegreeMaster actual = objectMapper.readValue(json, DegreeMaster.class);
         DegreeMaster expected = generateDegreeMaster(
                 begin,
@@ -69,6 +70,7 @@ public class DegreeMasterTest extends InstanceTest {
                 end,
                 pages,
                 illustrated,
+                false,
                 false);
         JsonNode actual = jsonStringToJsonNode(json);
         assertEquals(expected, actual);

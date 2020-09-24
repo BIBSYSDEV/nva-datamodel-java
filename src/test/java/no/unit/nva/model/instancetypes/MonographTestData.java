@@ -10,9 +10,15 @@ public class MonographTestData extends TestData {
         this.pages = generateMonographPages();
     }
 
-    public MonographTestData(boolean peerReviewed) {
+    /**
+     * Builds test data object for testing Monograph objects.
+     * @param peerReviewed if the object is peer-reviewed.
+     * @param textbookContent if the object is a textbook.
+     */
+    public MonographTestData(boolean peerReviewed, boolean textbookContent) {
         this();
         setPeerReviewed(peerReviewed);
+        setTextbookContent(textbookContent);
     }
 
     public MonographPages getPages() {
