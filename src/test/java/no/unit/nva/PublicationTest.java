@@ -10,9 +10,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -25,6 +26,9 @@ import static org.hamcrest.core.IsNot.not;
 
 public class PublicationTest extends ModelTest {
 
+    public static final String TIMESTAMP_REGEX = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]+";
+    public static final String SOME_TIMESTAMP = "2020-09-23T09:51:23.044996Z";
+    public static final String DOCUMENTATION_PATH_TEMPLATE = "documentation/%s.json";
     ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @DisplayName("Test that each publication type can be round-tripped to and from JSON")
@@ -158,8 +162,9 @@ public class PublicationTest extends ModelTest {
 
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
-        String path = String.format("documentation/%s.json", instanceType);
-        File file = new File(path);
-        objectMapper.writeValue(file, publication);
+        String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
+        var publicationJson = objectMapper.writeValueAsString(publication)
+                .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
+        Files.write(Paths.get(path), publicationJson.getBytes());
     }
 }
