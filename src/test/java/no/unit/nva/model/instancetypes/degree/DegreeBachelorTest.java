@@ -41,7 +41,8 @@ public class DegreeBachelorTest extends InstanceTest {
                 begin,
                 end,
                 pages,
-                illustrated
+                illustrated,
+                false
         );
         DegreeBachelor actual = objectMapper.readValue(json, DegreeBachelor.class);
         assertEquals(expected, actual);
@@ -71,6 +72,7 @@ public class DegreeBachelorTest extends InstanceTest {
                 end,
                 pages,
                 illustrated,
+                false,
                 false
         );
         assertEquals(expected, json);

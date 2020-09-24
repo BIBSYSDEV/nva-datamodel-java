@@ -102,6 +102,7 @@ public class ModelTest implements JsonHandlingTest {
         PublicationInstance<MonographPages> bookAnthology = new BookAnthology.Builder()
                 .withPages(generateMonographPages())
                 .withPeerReviewed(true)
+                .withTextbookContent(true)
                 .build();
 
         return generateReference(generateBookContext(), bookAnthology);
@@ -111,6 +112,7 @@ public class ModelTest implements JsonHandlingTest {
         PublicationInstance<MonographPages> bookMonograph = new BookMonograph.Builder()
                 .withPages(generateMonographPages())
                 .withPeerReviewed(true)
+                .withTextbookContent(true)
                 .build();
         return generateReference(generateBookContext(), bookMonograph);
     }
@@ -119,6 +121,7 @@ public class ModelTest implements JsonHandlingTest {
         PublicationInstance<Range> chapterArticle = new ChapterArticle.Builder()
                 .withPages(generateRange())
                 .withPeerReviewed(true)
+                .withTextbookContent(true)
                 .build();
         return generateReference(generateChapterContext(), chapterArticle);
     }
