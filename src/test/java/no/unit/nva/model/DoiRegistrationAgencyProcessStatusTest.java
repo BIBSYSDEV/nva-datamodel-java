@@ -32,6 +32,15 @@ class DoiRegistrationAgencyProcessStatusTest {
         "DRAFT,ARCHIVED,ARCHIVED",
         "FINDABLE,ARCHIVED,ARCHIVED",
         // TODO: Missing some known use cases around ARCHIVED. (Archived private meta data,  Archived public meta data)
+        /**
+         * norrs>Jeg trenger i alle fall å klargjøre noe om hva skjer ved arkivering og/eller sletting av DOI.
+         * ie sletting av doi som er draft, sletting av doi som er findable hos datacite.
+         *
+         * jeg> Har sett på skisse med Ru. OK.
+         *
+         * Ein publisert doi kan/skal ikkje kunne slettes, men den kan vedlikeholdes og til slutt så får den en
+         * gravstøtte. Vi annerkjenner at den har eksistert og presenterer litt metadata.
+         */
     })
     @DisplayName("Should follow business rules for valid status changes on DoiRequestStatus")
     void validStatusChanges(DoiRegistrationAgencyProcessStatus existingState,
