@@ -4,15 +4,14 @@ import static java.util.Collections.emptySet;
 
 import java.util.Set;
 
+/**
+ * NVA's DOI Registration Agency Process statuses.
+ */
 public enum DoiRegistrationAgencyProcessStatus {
     /**
      * Our registration with a Registration Agency (RA) has not started.
      */
     NOT_STARTED,
-    /**
-     * We have started syncing a DOI with the Registraiton Agency (RA) Datacite.
-     */
-    IN_PROGRESS_DATACITE,
     /**
      * The DOI is registered as a draft with the Registration Agency (RA).
      */
@@ -28,22 +27,25 @@ public enum DoiRegistrationAgencyProcessStatus {
     protected static final Set<DoiRegistrationAgencyProcessStatus> validStatusChangeForInProcessDatacite = Set.of(
         DRAFT, FINDABLE, ARCHIVED);
     protected static final Set<DoiRegistrationAgencyProcessStatus> validStatusChangesForNotStarted = Set.of(
-        IN_PROGRESS_DATACITE);
+        DRAFT, FINDABLE);
     protected static final Set<DoiRegistrationAgencyProcessStatus> validDefaultStatusChanges = emptySet();
     public static final String ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S =
         "Not allowed to change status from %s to %s";
     protected static final Set<DoiRegistrationAgencyProcessStatus> validStatusChangesForDraft = Set.of(
-        IN_PROGRESS_DATACITE);
+        ARCHIVED, FINDABLE);
     protected static final Set<DoiRegistrationAgencyProcessStatus> validStatusChangeForFindable = Set.of(
-        IN_PROGRESS_DATACITE);
-    protected static final Set<DoiRegistrationAgencyProcessStatus> validStatusChangesForArchived = Set.of(
-        IN_PROGRESS_DATACITE);
+        ARCHIVED);
+    protected static final Set<DoiRegistrationAgencyProcessStatus> validStatusChangesForArchived = emptySet();
 
 
     public boolean isValidStatusChange(DoiRegistrationAgencyProcessStatus requestedStatusChange) {
         return getValidTransitions(this).contains(requestedStatusChange);
     }
 
+    /**
+     * Translates our enum to expected datacite status name.
+     * @return translated enum name.
+     */
     public String toDataciteStatusName() {
         if (this.equals(ARCHIVED)) {
             return "REGISTERED";
@@ -66,7 +68,8 @@ public enum DoiRegistrationAgencyProcessStatus {
         throw new IllegalArgumentException(getErrorMessageForNotAllowedStatusChange(requestedStatusChange));
     }
 
-    protected String getErrorMessageForNotAllowedStatusChange(DoiRegistrationAgencyProcessStatus requestedStatusChange) {
+    protected String getErrorMessageForNotAllowedStatusChange(
+        DoiRegistrationAgencyProcessStatus requestedStatusChange) {
         return String.format(ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S, this, requestedStatusChange);
     }
 
@@ -75,8 +78,6 @@ public enum DoiRegistrationAgencyProcessStatus {
         switch (fromRequestStatus) {
             case NOT_STARTED:
                 return validStatusChangesForNotStarted;
-            case IN_PROGRESS_DATACITE:
-                return validStatusChangeForInProcessDatacite;
             case DRAFT:
                 return validStatusChangesForDraft;
             case FINDABLE:

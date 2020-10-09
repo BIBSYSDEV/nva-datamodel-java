@@ -3,7 +3,7 @@ package no.unit.nva.model;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,15 +12,26 @@ import org.junit.jupiter.params.provider.CsvSource;
 class DoiRegistrationAgencyProcessStatusTest {
 
     @ParameterizedTest
+    @CsvSource({
+        "DRAFT,DRAFT",
+        "FINDABLE,FINDABLE",
+        "ARCHIVED,REGISTERED"
+    })
+    @DisplayName("Convert registration agency process status ${0} to datacite status implementation name ${1}")
+    void registrationAgencyProcessStatusNameToDataciteStatusName(DoiRegistrationAgencyProcessStatus raProcessStatus,
+                                                                 String expectedDataciteStatusName) {
+        assertThat(raProcessStatus.toDataciteStatusName(), is(equalTo(expectedDataciteStatusName)));
+    }
+
+    @ParameterizedTest
     // ExistingState , RequestedChange, ExpectedState
     @CsvSource({
-        "NOT_STARTED,IN_PROGRESS_DATACITE,IN_PROGRESS_DATACITE",
-        "IN_PROGRESS_DATACITE,DRAFT,DRAFT",
-        "IN_PROGRESS_DATACITE,FINDABLE,FINDABLE",
-        "IN_PROGRESS_DATACITE,ARCHIVED,ARCHIVED",
-        "DRAFT,IN_PROGRESS_DATACITE,IN_PROGRESS_DATACITE",
-        "FINDABLE,IN_PROGRESS_DATACITE,IN_PROGRESS_DATACITE",
-        "ARCHIVED,IN_PROGRESS_DATACITE,IN_PROGRESS_DATACITE",
+        "NOT_STARTED,DRAFT,DRAFT",
+        "NOT_STARTED,FINDABLE,FINDABLE",
+        "DRAFT,FINDABLE,FINDABLE",
+        "DRAFT,ARCHIVED,ARCHIVED",
+        "FINDABLE,ARCHIVED,ARCHIVED",
+        // TODO: Missing some known use cases around ARCHIVED. (Archived private meta data,  Archived public meta data)
     })
     @DisplayName("Should follow business rules for valid status changes on DoiRequestStatus")
     void validStatusChanges(DoiRegistrationAgencyProcessStatus existingState,
@@ -33,18 +44,10 @@ class DoiRegistrationAgencyProcessStatusTest {
     // ExistingState, RequestedChange
     @CsvSource({
         "NOT_STARTED,NOT_STARTED",
-        "NOT_STARTED,DRAFT",
-        "NOT_STARTED,FINDABLE",
         "NOT_STARTED,ARCHIVED",
         "DRAFT,DRAFT",
-        "DRAFT,FINDABLE",
-        "DRAFT,ARCHIVED",
-        "FINDABLE,FINDABLE",
         "FINDABLE,DRAFT",
-        "FINDABLE,ARCHIVED",
         "ARCHIVED,ARCHIVED",
-        "ARCHIVED,DRAFT",
-        "ARCHIVED,FINDABLE"
     })
     void invalidStatusChanges(DoiRegistrationAgencyProcessStatus existingState,
                               DoiRegistrationAgencyProcessStatus requestedChange) {

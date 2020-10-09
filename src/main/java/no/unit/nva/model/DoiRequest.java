@@ -15,6 +15,7 @@ public class DoiRequest {
     private DoiRegistrationAgencyProcessStatus registrationAgencyProcessStatus;
     private Instant date;
     private List<DoiRequestMessage> messages;
+    private boolean inProgress;
 
     @JacocoGenerated
     public DoiRequest() {
@@ -24,6 +25,7 @@ public class DoiRequest {
     private DoiRequest(Builder builder) {
         setStatus(builder.status);
         setRegistrationAgencyProcessStatus(builder.registrationAgencyProcessStatus);
+        setInProgress(builder.inProgress);
         setDate(builder.date);
         setMessages(builder.messages);
     }
@@ -44,16 +46,33 @@ public class DoiRequest {
         return registrationAgencyProcessStatus;
     }
 
+    public boolean isInProgress() {
+        return inProgress;
+    }
+
     public void setRegistrationAgencyProcessStatus(DoiRegistrationAgencyProcessStatus assignProcessStatus) {
         this.registrationAgencyProcessStatus = assignProcessStatus;
+    }
+
+    public void setInProgress(boolean inProgress) {
+        this.inProgress = inProgress;
     }
 
     public void setStatus(DoiRequestStatus status) {
         this.status = status;
     }
 
+    /**
+     * Request to change DoiRequestStatus on this publication.
+     * @param requestedStatusChange requested status change
+     * @return updated status change.
+     */
     public DoiRequestStatus changeStatus(DoiRequestStatus requestedStatusChange) {
-        return status.changeStatus(requestedStatusChange);
+        var newStatus = status.changeStatus(requestedStatusChange);
+        if (!status.equals(newStatus)) {
+            setInProgress(true);
+        }
+        return newStatus;
     }
 
     public List<DoiRequestMessage> getMessages() {
@@ -80,8 +99,8 @@ public class DoiRequest {
         DoiRequest that = (DoiRequest) o;
 
         return getStatus() == that.getStatus()
-                && Objects.equals(getDate(), that.getDate())
-                && Objects.equals(getMessages(), that.getMessages());
+            && Objects.equals(getDate(), that.getDate())
+            && Objects.equals(getMessages(), that.getMessages());
     }
 
     @JacocoGenerated
@@ -90,11 +109,12 @@ public class DoiRequest {
         return Objects.hash(getStatus(), getDate(), getMessages());
     }
 
-
     @SuppressWarnings("MissingJavadocMethod")
     public static final class Builder {
+
         private DoiRequestStatus status;
         private DoiRegistrationAgencyProcessStatus registrationAgencyProcessStatus;
+        private boolean inProgress;
         private Instant date;
         private List<DoiRequestMessage> messages;
 
@@ -105,6 +125,7 @@ public class DoiRequest {
         public Builder(DoiRequest copy) {
             this.status = copy.getStatus();
             this.registrationAgencyProcessStatus = copy.getRegistrationAgencyProcessStatus();
+            this.inProgress = copy.isInProgress();
             this.date = copy.getDate();
             this.messages = copy.getMessages();
         }
@@ -114,8 +135,14 @@ public class DoiRequest {
             return this;
         }
 
-        public Builder withRegistrationAgencyProcessStatus(DoiRegistrationAgencyProcessStatus registrationAgencyProcessStatus) {
+        public Builder withRegistrationAgencyProcessStatus(
+            DoiRegistrationAgencyProcessStatus registrationAgencyProcessStatus) {
             this.registrationAgencyProcessStatus = registrationAgencyProcessStatus;
+            return this;
+        }
+
+        public Builder withInProgress(boolean inProgress) {
+            this.inProgress = inProgress;
             return this;
         }
 

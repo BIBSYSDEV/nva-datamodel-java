@@ -300,6 +300,13 @@ referencedSchemas:
         - REQUESTED
         - APPROVED
         - REJECTED
+      registrationAgencyProcessStatus:
+        type: string
+        enum:
+        - NOT_STARTED
+        - DRAFT
+        - FINDABLE
+        - ARCHIVED
       date:
         type: string
         format: date-time
@@ -307,6 +314,8 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/DoiRequestMessage'
+      inProgress:
+        type: boolean
       type:
         type: string
     discriminator:
@@ -720,10 +729,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:

@@ -40,6 +40,8 @@ class DoiRequestTest {
                 .build();
         DoiRequest doiRequest = new DoiRequest.Builder()
                 .withStatus(DoiRequestStatus.REQUESTED)
+                .withRegistrationAgencyProcessStatus(DoiRegistrationAgencyProcessStatus.NOT_STARTED)
+                .withInProgress(true)
                 .withDate(CREATION_TIME)
                 .withMessages(Collections.singletonList(message))
                 .build();
