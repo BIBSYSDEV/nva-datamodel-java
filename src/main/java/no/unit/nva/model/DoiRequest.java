@@ -12,6 +12,7 @@ import nva.commons.utils.JacocoGenerated;
 public class DoiRequest {
 
     private DoiRequestStatus status;
+    private DoiRegistrationAgencyProcessStatus registrationAgencyProcessStatus;
     private Instant date;
     private List<DoiRequestMessage> messages;
 
@@ -22,6 +23,7 @@ public class DoiRequest {
 
     private DoiRequest(Builder builder) {
         setStatus(builder.status);
+        setRegistrationAgencyProcessStatus(builder.registrationAgencyProcessStatus);
         setDate(builder.date);
         setMessages(builder.messages);
     }
@@ -38,8 +40,20 @@ public class DoiRequest {
         return status;
     }
 
+    public DoiRegistrationAgencyProcessStatus getRegistrationAgencyProcessStatus() {
+        return registrationAgencyProcessStatus;
+    }
+
+    public void setRegistrationAgencyProcessStatus(DoiRegistrationAgencyProcessStatus assignProcessStatus) {
+        this.registrationAgencyProcessStatus = assignProcessStatus;
+    }
+
     public void setStatus(DoiRequestStatus status) {
         this.status = status;
+    }
+
+    public DoiRequestStatus changeStatus(DoiRequestStatus requestedStatusChange) {
+        return status.changeStatus(requestedStatusChange);
     }
 
     public List<DoiRequestMessage> getMessages() {
@@ -80,6 +94,7 @@ public class DoiRequest {
     @SuppressWarnings("MissingJavadocMethod")
     public static final class Builder {
         private DoiRequestStatus status;
+        private DoiRegistrationAgencyProcessStatus registrationAgencyProcessStatus;
         private Instant date;
         private List<DoiRequestMessage> messages;
 
@@ -89,12 +104,18 @@ public class DoiRequest {
 
         public Builder(DoiRequest copy) {
             this.status = copy.getStatus();
+            this.registrationAgencyProcessStatus = copy.getRegistrationAgencyProcessStatus();
             this.date = copy.getDate();
             this.messages = copy.getMessages();
         }
 
         public Builder withStatus(DoiRequestStatus status) {
             this.status = status;
+            return this;
+        }
+
+        public Builder withRegistrationAgencyProcessStatus(DoiRegistrationAgencyProcessStatus registrationAgencyProcessStatus) {
+            this.registrationAgencyProcessStatus = registrationAgencyProcessStatus;
             return this;
         }
 

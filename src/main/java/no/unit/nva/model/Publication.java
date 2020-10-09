@@ -122,7 +122,7 @@ public class Publication
         }
 
         setDoiRequest(getDoiRequest().copy()
-            .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
+            .withStatus(getDoiRequest().changeStatus(requestedStatusChange))
             .build());
         setModifiedDate(Instant.now());
     }
