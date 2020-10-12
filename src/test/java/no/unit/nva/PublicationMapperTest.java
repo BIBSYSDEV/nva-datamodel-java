@@ -119,7 +119,7 @@ public class PublicationMapperTest {
             .toNewPublication(request, SOME_OWNER, SOME_URI, SOME_URI, getOrganization());
 
         assertNotNull(publication.getDoiRequest());
-        assertNotNull(publication.getDoiRequest().getDate());
+        assertNotNull(publication.getDoiRequest().getCreatedDate());
         assertEquals(publication.getDoiRequest().getStatus(), DoiRequestStatus.REQUESTED);
     }
 
@@ -132,7 +132,7 @@ public class PublicationMapperTest {
             .toExistingPublication(request, new Publication());
 
         assertNotNull(publication.getDoiRequest());
-        assertNotNull(publication.getDoiRequest().getDate());
+        assertNotNull(publication.getDoiRequest().getCreatedDate());
         assertEquals(publication.getDoiRequest().getStatus(), DoiRequestStatus.REQUESTED);
     }
 

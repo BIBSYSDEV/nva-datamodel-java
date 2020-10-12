@@ -34,19 +34,21 @@ public final class PublicationMapper {
         REQUEST request, WithInternal existing) {
         Publication publication = toPublication(request);
         mapInternal(existing, publication);
-        publication.setModifiedDate(Instant.now());
+        Instant now = Instant.now();
+        publication.setModifiedDate(now);
 
-        mapDoiRequest(request, publication);
+        mapDoiRequest(request, publication, now);
 
         return publication;
     }
 
-    private static <REQUEST extends PublicationBase> void mapDoiRequest(REQUEST request, Publication publication) {
+    private static <REQUEST extends PublicationBase> void mapDoiRequest(
+        REQUEST request, Publication publication, Instant now) {
         if (request instanceof WithFlags
             && ((WithFlags) request).getDoiRequested() != null
             && ((WithFlags) request).getDoiRequested()
             && publication.getDoiRequest() == null) {
-            publication.setDoiRequest(createDoiRequest());
+            publication.setDoiRequest(createDoiRequest(now));
         }
     }
 
@@ -73,14 +75,14 @@ public final class PublicationMapper {
         publication.setPublisher(publisher);
         publication.setStatus(PublicationStatus.DRAFT);
 
-        mapDoiRequest(request,publication);
+        mapDoiRequest(request,publication, now);
 
         return publication;
     }
 
-    private static DoiRequest createDoiRequest() {
+    private static DoiRequest createDoiRequest(Instant now) {
         return new DoiRequest.Builder()
-            .withDate(Instant.now())
+            .withCreatedDate(now)
             .withStatus(DoiRequestStatus.REQUESTED)
             .build();
     }
