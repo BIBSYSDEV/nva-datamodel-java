@@ -31,6 +31,7 @@ public class DoiRequestMessageTest {
                 .addMessage(message)
                 .withStatus(DoiRequestStatus.REQUESTED)
                 .withDate(someTimestamp)
+                .withModifiedDate(someTimestamp)
                 .build();
 
         assertThat(doiRequest.getMessages(), contains(message));

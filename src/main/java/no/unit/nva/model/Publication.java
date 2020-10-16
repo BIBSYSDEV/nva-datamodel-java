@@ -121,10 +121,13 @@ public class Publication
                 ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST);
         }
 
-        setDoiRequest(getDoiRequest().copy()
+        Instant now = Instant.now();
+        DoiRequest updatedDoiRequest = getDoiRequest().copy()
             .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
-            .build());
-        setModifiedDate(Instant.now());
+            .withModifiedDate(now)
+            .build();
+        setDoiRequest(updatedDoiRequest);
+        setModifiedDate(now);
     }
 
     @Override

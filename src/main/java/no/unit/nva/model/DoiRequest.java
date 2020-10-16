@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.io.BufferedReader;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,7 @@ public class DoiRequest {
 
     private DoiRequestStatus status;
     private Instant date;
+    private Instant modifiedDate;
     private List<DoiRequestMessage> messages;
 
     @JacocoGenerated
@@ -23,6 +25,7 @@ public class DoiRequest {
     private DoiRequest(Builder builder) {
         setStatus(builder.status);
         setDate(builder.date);
+        setModifiedDate(builder.modifiedDate);
         setMessages(builder.messages);
     }
 
@@ -32,6 +35,14 @@ public class DoiRequest {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Instant getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Instant modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     public DoiRequestStatus getStatus() {
@@ -51,7 +62,11 @@ public class DoiRequest {
     }
 
     public DoiRequest.Builder copy() {
-        return new DoiRequest.Builder().withStatus(getStatus()).withDate(getDate()).withMessages(getMessages());
+        return new DoiRequest.Builder()
+            .withStatus(getStatus())
+            .withDate(getDate())
+            .withModifiedDate(getModifiedDate())
+            .withMessages(getMessages());
     }
 
     @JacocoGenerated
@@ -67,6 +82,7 @@ public class DoiRequest {
 
         return getStatus() == that.getStatus()
                 && Objects.equals(getDate(), that.getDate())
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
                 && Objects.equals(getMessages(), that.getMessages());
     }
 
@@ -81,6 +97,7 @@ public class DoiRequest {
     public static final class Builder {
         private DoiRequestStatus status;
         private Instant date;
+        private Instant modifiedDate;
         private List<DoiRequestMessage> messages;
 
         public Builder() {
@@ -90,6 +107,7 @@ public class DoiRequest {
         public Builder(DoiRequest copy) {
             this.status = copy.getStatus();
             this.date = copy.getDate();
+            this.modifiedDate = copy.getModifiedDate();
             this.messages = copy.getMessages();
         }
 
@@ -100,6 +118,11 @@ public class DoiRequest {
 
         public Builder withDate(Instant date) {
             this.date = date;
+            return this;
+        }
+
+        public Builder withModifiedDate(Instant modifiedDate) {
+            this.modifiedDate = modifiedDate;
             return this;
         }
 

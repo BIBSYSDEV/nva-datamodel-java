@@ -41,6 +41,7 @@ class DoiRequestTest {
         DoiRequest doiRequest = new DoiRequest.Builder()
                 .withStatus(DoiRequestStatus.REQUESTED)
                 .withDate(CREATION_TIME)
+                .withModifiedDate(CREATION_TIME)
                 .withMessages(Collections.singletonList(message))
                 .build();
         return doiRequest;

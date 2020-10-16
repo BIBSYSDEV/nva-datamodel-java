@@ -192,6 +192,7 @@ public class PublicationGenerator extends ModelTest {
         return new DoiRequest.Builder()
                 .withStatus(DoiRequestStatus.REQUESTED)
                 .withDate(now)
+                .withModifiedDate(now)
                 .withMessages(Collections.singletonList(message))
                 .build();
     }

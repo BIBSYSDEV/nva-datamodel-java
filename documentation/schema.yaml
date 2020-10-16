@@ -303,6 +303,9 @@ referencedSchemas:
       date:
         type: string
         format: date-time
+      modifiedDate:
+        type: string
+        format: date-time
       messages:
         type: array
         items:
