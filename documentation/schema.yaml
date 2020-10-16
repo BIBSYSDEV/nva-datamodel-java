@@ -495,6 +495,26 @@ referencedSchemas:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+  JournalCorrigendum:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
   JournalLeader:
     required:
     - type

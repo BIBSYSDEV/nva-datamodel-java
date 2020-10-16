@@ -45,6 +45,7 @@ public class PublicationTest extends ModelTest {
             "DegreeMaster",
             "DegreePhd",
             "JournalArticle",
+            "JournalCorrigendum",
             "JournalLeader",
             "JournalLetter",
             "JournalReview",
@@ -136,6 +137,9 @@ public class PublicationTest extends ModelTest {
                 break;
             case "JournalArticle":
                 reference = generateJournalArticle();
+                break;
+            case "JournalCorrigendum":
+                reference = generateJournalCorrigendum();
                 break;
             case "JournalLeader":
                 reference = generateJournalLeader();

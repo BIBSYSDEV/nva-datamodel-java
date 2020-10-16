@@ -9,6 +9,7 @@ import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
@@ -22,6 +23,7 @@ import no.unit.nva.model.pages.Pages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
+        @JsonSubTypes.Type(name = "JournalCorrigendum", value = JournalCorrigendum.class),
         @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class),
         @JsonSubTypes.Type(name = "JournalLeader", value = JournalLeader.class),
         @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),

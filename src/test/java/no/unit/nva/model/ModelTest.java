@@ -22,6 +22,7 @@ import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
@@ -156,6 +157,16 @@ public class ModelTest implements JsonHandlingTest {
                 .withPeerReviewed(true)
                 .build();
         return generateReference(generateJournalContext(), journalArticle);
+    }
+
+    protected static Reference generateJournalCorrigendum() throws InvalidIssnException, MalformedURLException {
+        PublicationInstance<Range> journalCorrigendum = new JournalCorrigendum.Builder()
+                .withArticleNumber("42311")
+                .withIssue("5")
+                .withVolume("2")
+                .withPages(generateRange())
+                .build();
+        return generateReference(generateJournalContext(), journalCorrigendum);
     }
 
     protected static Reference generateJournalLeader() throws InvalidIssnException, MalformedURLException {
