@@ -26,6 +26,7 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.other.Other;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -69,6 +70,7 @@ public class ModelTest implements JsonHandlingTest {
     public static final String PRINT_ISSN = "printIssn";
     public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
+    public static final URI LINKED_CONTEXT_URI = URI.create("https://example.org/linkedContext");
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -198,6 +200,11 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalShortCommunication);
     }
 
+    protected static Reference generateOtherInstance() {
+        PublicationInstance<Range> other = new Other(generateRange());
+        return generateReference(generateOtherContext(), other);
+    }
+
     protected static Reference generateReportPolicy()
         throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> reportPolicy = new ReportPolicy.Builder()
@@ -250,6 +257,12 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
     }
 
+    private static PublicationContext generateOtherContext() {
+        return new no.unit.nva.model.contexttypes.Other.Builder()
+                .withLinkedContext(LINKED_CONTEXT_URI)
+                .build();
+    }
+
     private static PublicationContext generateDegreeContext() throws InvalidIsbnException, MalformedURLException {
         return new Degree.Builder()
                 .withPublisher("Some university publisher")
@@ -262,7 +275,7 @@ public class ModelTest implements JsonHandlingTest {
 
     private static LinkedContext generateChapterContext() {
         return new Chapter.Builder()
-                .withLinkedContext(URI.create("https://example.org/linkedContext"))
+                .withLinkedContext(LINKED_CONTEXT_URI)
                 .build();
     }
 

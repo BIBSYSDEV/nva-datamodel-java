@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(name = "Book", value = Book.class),
         @JsonSubTypes.Type(name = "Report", value = Report.class),
         @JsonSubTypes.Type(name = "Degree", value = Degree.class),
-        @JsonSubTypes.Type(name = "Chapter", value = Chapter.class)
+        @JsonSubTypes.Type(name = "Chapter", value = Chapter.class),
+        @JsonSubTypes.Type(name = "Other", value = Other.class)
 })
 public interface PublicationContext {
 }
