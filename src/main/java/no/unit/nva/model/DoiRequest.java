@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import nva.commons.utils.JacocoGenerated;
 public class DoiRequest {
 
     private DoiRequestStatus status;
+    @JsonAlias("date")
     private Instant createdDate;
     private List<DoiRequestMessage> messages;
 
