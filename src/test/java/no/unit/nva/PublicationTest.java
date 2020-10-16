@@ -75,6 +75,7 @@ public class PublicationTest extends ModelTest {
             "DegreeMaster",
             "DegreePhd",
             "JournalArticle",
+            "JournalCorrigendum",
             "JournalLeader",
             "JournalLetter",
             "JournalReview",
