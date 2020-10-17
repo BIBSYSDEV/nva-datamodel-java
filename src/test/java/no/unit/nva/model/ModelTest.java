@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.contexttypes.Book;
+import no.unit.nva.model.contexttypes.Cartograph;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Journal;
@@ -69,6 +70,7 @@ public class ModelTest implements JsonHandlingTest {
     public static final String PRINT_ISSN = "printIssn";
     public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
+    public static final URI LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -115,6 +117,12 @@ public class ModelTest implements JsonHandlingTest {
                 .withTextbookContent(true)
                 .build();
         return generateReference(generateBookContext(), bookMonograph);
+    }
+
+    protected static Reference generateCartographicMap() {
+        PublicationInstance<Range> chapterArticle = new ChapterArticle.Builder()
+                .build();
+        return generateReference(generateCartographicContext(), chapterArticle);
     }
 
     protected static Reference generateChapterArticle() {
@@ -262,7 +270,13 @@ public class ModelTest implements JsonHandlingTest {
 
     private static LinkedContext generateChapterContext() {
         return new Chapter.Builder()
-                .withLinkedContext(URI.create("https://example.org/linkedContext"))
+                .withLinkedContext(LINKED_CONTEXT)
+                .build();
+    }
+
+    private static LinkedContext generateCartographicContext() {
+        return new Cartograph.Builder()
+                .withLinkedContext(LINKED_CONTEXT)
                 .build();
     }
 

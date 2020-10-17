@@ -154,6 +154,21 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+  Cartograph:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        linkedContext:
+          type: string
+          format: uri
+        type:
+          type: string
   Chapter:
     required:
     - type
