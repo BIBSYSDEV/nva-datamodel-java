@@ -1,7 +1,7 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.io.BufferedReader;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +13,9 @@ import nva.commons.utils.JacocoGenerated;
 public class DoiRequest {
 
     private DoiRequestStatus status;
-    private Instant date;
     private Instant modifiedDate;
+    @JsonAlias("date")
+    private Instant createdDate;
     private List<DoiRequestMessage> messages;
 
     @JacocoGenerated
@@ -24,17 +25,17 @@ public class DoiRequest {
 
     private DoiRequest(Builder builder) {
         setStatus(builder.status);
-        setDate(builder.date);
         setModifiedDate(builder.modifiedDate);
+        setCreatedDate(builder.createdDate);
         setMessages(builder.messages);
     }
 
-    public Instant getDate() {
-        return date;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setDate(Instant date) {
-        this.date = date;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Instant getModifiedDate() {
@@ -61,11 +62,16 @@ public class DoiRequest {
         this.messages = messages;
     }
 
+    /**
+     * Create a copy of DoiRequest.
+     *
+     * @return  DoiRequest copy
+     */
     public DoiRequest.Builder copy() {
         return new DoiRequest.Builder()
             .withStatus(getStatus())
-            .withDate(getDate())
             .withModifiedDate(getModifiedDate())
+            .withCreatedDate(getCreatedDate())
             .withMessages(getMessages());
     }
 
@@ -81,23 +87,23 @@ public class DoiRequest {
         DoiRequest that = (DoiRequest) o;
 
         return getStatus() == that.getStatus()
-                && Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                && Objects.equals(getCreatedDate(), that.getCreatedDate())
                 && Objects.equals(getMessages(), that.getMessages());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getStatus(), getDate(), getMessages());
+        return Objects.hash(getStatus(), getCreatedDate(), getMessages());
     }
 
 
     @SuppressWarnings("MissingJavadocMethod")
     public static final class Builder {
         private DoiRequestStatus status;
-        private Instant date;
         private Instant modifiedDate;
+        private Instant createdDate;
         private List<DoiRequestMessage> messages;
 
         public Builder() {
@@ -106,8 +112,8 @@ public class DoiRequest {
 
         public Builder(DoiRequest copy) {
             this.status = copy.getStatus();
-            this.date = copy.getDate();
             this.modifiedDate = copy.getModifiedDate();
+            this.createdDate = copy.getCreatedDate();
             this.messages = copy.getMessages();
         }
 
@@ -116,8 +122,8 @@ public class DoiRequest {
             return this;
         }
 
-        public Builder withDate(Instant date) {
-            this.date = date;
+        public Builder withCreatedDate(Instant createdDate) {
+            this.createdDate = createdDate;
             return this;
         }
 

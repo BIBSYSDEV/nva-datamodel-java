@@ -288,10 +288,9 @@ public class ModelTest implements JsonHandlingTest {
                     .build();
     }
 
-    protected DoiRequest generateDoiRequest() {
-        Instant now = Instant.now();
+    protected DoiRequest generateDoiRequest(Instant now) {
         return new DoiRequest.Builder()
-                .withDate(now)
+                .withCreatedDate(now)
                 .withModifiedDate(now)
                 .withStatus(DoiRequestStatus.APPROVED)
                 .build();

@@ -122,7 +122,7 @@ public class PublicationGenerator extends ModelTest {
                 .withEntityDescription(entityDescription)
                 .withOwner("eier@example.org")
                 .withProject(getProject())
-                .withDoiRequest(getDoiRequest())
+                .withDoiRequest(getDoiRequest(now))
                 .withPublishedDate(now)
                 .withDoi(URI.create("http://example.org/doi/1231/98765"))
                 .withIndexedDate(now)
@@ -181,8 +181,7 @@ public class PublicationGenerator extends ModelTest {
                 .build());
     }
 
-    public static DoiRequest getDoiRequest() {
-        Instant now = Instant.now();
+    public static DoiRequest getDoiRequest(Instant now) {
         DoiRequestMessage message = new DoiRequestMessage.Builder()
                 .withTimestamp(now)
                 .withText("Some Text")
@@ -191,8 +190,8 @@ public class PublicationGenerator extends ModelTest {
 
         return new DoiRequest.Builder()
                 .withStatus(DoiRequestStatus.REQUESTED)
-                .withDate(now)
                 .withModifiedDate(now)
+                .withCreatedDate(now)
                 .withMessages(Collections.singletonList(message))
                 .build();
     }
