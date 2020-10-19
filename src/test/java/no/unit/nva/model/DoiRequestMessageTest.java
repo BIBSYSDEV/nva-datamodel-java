@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.Test;
 
-import java.beans.IntrospectionException;
 import java.lang.reflect.Field;
 import java.time.Instant;
 import java.util.Arrays;
@@ -30,7 +29,7 @@ public class DoiRequestMessageTest {
         DoiRequest doiRequest = new DoiRequest.Builder()
                 .addMessage(message)
                 .withStatus(DoiRequestStatus.REQUESTED)
-                .withDate(someTimestamp)
+                .withCreatedDate(someTimestamp)
                 .build();
 
         assertThat(doiRequest.getMessages(), contains(message));

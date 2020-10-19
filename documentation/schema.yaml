@@ -300,7 +300,7 @@ referencedSchemas:
         - REQUESTED
         - APPROVED
         - REJECTED
-      date:
+      createdDate:
         type: string
         format: date-time
       messages:
