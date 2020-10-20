@@ -13,6 +13,7 @@ import nva.commons.utils.JacocoGenerated;
 public class DoiRequest {
 
     private DoiRequestStatus status;
+    private Instant modifiedDate;
     @JsonAlias("date")
     private Instant createdDate;
     private List<DoiRequestMessage> messages;
@@ -24,6 +25,7 @@ public class DoiRequest {
 
     private DoiRequest(Builder builder) {
         setStatus(builder.status);
+        setModifiedDate(builder.modifiedDate);
         setCreatedDate(builder.createdDate);
         setMessages(builder.messages);
     }
@@ -34,6 +36,14 @@ public class DoiRequest {
 
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Instant getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Instant modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     public DoiRequestStatus getStatus() {
@@ -60,6 +70,7 @@ public class DoiRequest {
     public DoiRequest.Builder copy() {
         return new DoiRequest.Builder()
             .withStatus(getStatus())
+            .withModifiedDate(getModifiedDate())
             .withCreatedDate(getCreatedDate())
             .withMessages(getMessages());
     }
@@ -76,6 +87,7 @@ public class DoiRequest {
         DoiRequest that = (DoiRequest) o;
 
         return getStatus() == that.getStatus()
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
                 && Objects.equals(getCreatedDate(), that.getCreatedDate())
                 && Objects.equals(getMessages(), that.getMessages());
     }
@@ -90,6 +102,7 @@ public class DoiRequest {
     @SuppressWarnings("MissingJavadocMethod")
     public static final class Builder {
         private DoiRequestStatus status;
+        private Instant modifiedDate;
         private Instant createdDate;
         private List<DoiRequestMessage> messages;
 
@@ -99,6 +112,7 @@ public class DoiRequest {
 
         public Builder(DoiRequest copy) {
             this.status = copy.getStatus();
+            this.modifiedDate = copy.getModifiedDate();
             this.createdDate = copy.getCreatedDate();
             this.messages = copy.getMessages();
         }
@@ -110,6 +124,11 @@ public class DoiRequest {
 
         public Builder withCreatedDate(Instant createdDate) {
             this.createdDate = createdDate;
+            return this;
+        }
+
+        public Builder withModifiedDate(Instant modifiedDate) {
+            this.modifiedDate = modifiedDate;
             return this;
         }
 

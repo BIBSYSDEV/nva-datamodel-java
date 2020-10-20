@@ -190,6 +190,7 @@ public class PublicationGenerator extends ModelTest {
 
         return new DoiRequest.Builder()
                 .withStatus(DoiRequestStatus.REQUESTED)
+                .withModifiedDate(now)
                 .withCreatedDate(now)
                 .withMessages(Collections.singletonList(message))
                 .build();

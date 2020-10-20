@@ -29,6 +29,7 @@ public class DoiRequestMessageTest {
         DoiRequest doiRequest = new DoiRequest.Builder()
                 .addMessage(message)
                 .withStatus(DoiRequestStatus.REQUESTED)
+                .withModifiedDate(someTimestamp)
                 .withCreatedDate(someTimestamp)
                 .build();
 

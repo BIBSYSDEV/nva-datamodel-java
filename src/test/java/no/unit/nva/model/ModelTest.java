@@ -291,6 +291,7 @@ public class ModelTest implements JsonHandlingTest {
     protected DoiRequest generateDoiRequest(Instant now) {
         return new DoiRequest.Builder()
                 .withCreatedDate(now)
+                .withModifiedDate(now)
                 .withStatus(DoiRequestStatus.APPROVED)
                 .build();
     }

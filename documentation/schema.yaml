@@ -300,6 +300,9 @@ referencedSchemas:
         - REQUESTED
         - APPROVED
         - REJECTED
+      modifiedDate:
+        type: string
+        format: date-time
       createdDate:
         type: string
         format: date-time
