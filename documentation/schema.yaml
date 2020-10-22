@@ -300,7 +300,10 @@ referencedSchemas:
         - REQUESTED
         - APPROVED
         - REJECTED
-      date:
+      modifiedDate:
+        type: string
+        format: date-time
+      createdDate:
         type: string
         format: date-time
       messages:
@@ -366,6 +369,26 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  FeatureArticle:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
   File:
     required:
     - type
