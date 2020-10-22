@@ -4,6 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.Range;
 
+/**
+ * A Journal corrigendum is a correction to a previously published Journal article/content.
+ *
+ * <p>They have their own DOIs and are viewed as an independent publication.
+ *
+ * <p>Example: http://doi.org/10.1038/nature10098
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class JournalCorrigendum extends JournalNonPeerReviewedContent {
 
