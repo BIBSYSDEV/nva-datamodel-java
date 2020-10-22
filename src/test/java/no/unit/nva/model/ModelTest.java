@@ -22,7 +22,10 @@ import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
+import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
+import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
@@ -155,6 +158,23 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateDegreeContext(), degreePhd);
     }
 
+    protected static Reference generateOtherStudentWork() throws MalformedURLException, InvalidIsbnException {
+        PublicationInstance<MonographPages> otherStudentWork = new OtherStudentWork.Builder()
+                .withPages(generateMonographPages())
+                .build();
+        return generateReference(generateDegreeContext(), otherStudentWork);
+    }
+  
+    protected static Reference generateFeatureArticle() throws InvalidIssnException, MalformedURLException {
+        PublicationInstance<Range> featureArticle = new FeatureArticle.Builder()
+                .withArticleNumber("4321")
+                .withIssue("1")
+                .withVolume("27")
+                .withPages(generateRange())
+                .build();
+        return generateReference(generateJournalContext(), featureArticle);
+    }
+
     protected static Reference generateJournalArticle() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> journalArticle = new JournalArticle.Builder()
                 .withArticleNumber("123321")
@@ -164,6 +184,16 @@ public class ModelTest implements JsonHandlingTest {
                 .withPeerReviewed(true)
                 .build();
         return generateReference(generateJournalContext(), journalArticle);
+    }
+
+    protected static Reference generateJournalCorrigendum() throws InvalidIssnException, MalformedURLException {
+        PublicationInstance<Range> journalCorrigendum = new JournalCorrigendum.Builder()
+                .withArticleNumber("42311")
+                .withIssue("5")
+                .withVolume("2")
+                .withPages(generateRange())
+                .build();
+        return generateReference(generateJournalContext(), journalCorrigendum);
     }
 
     protected static Reference generateJournalLeader() throws InvalidIssnException, MalformedURLException {
@@ -302,9 +332,10 @@ public class ModelTest implements JsonHandlingTest {
                     .build();
     }
 
-    protected DoiRequest generateDoiRequest() {
+    protected DoiRequest generateDoiRequest(Instant now) {
         return new DoiRequest.Builder()
-                .withDate(Instant.now())
+                .withCreatedDate(now)
+                .withModifiedDate(now)
                 .withStatus(DoiRequestStatus.APPROVED)
                 .build();
     }
