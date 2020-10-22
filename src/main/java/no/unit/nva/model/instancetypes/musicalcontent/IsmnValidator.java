@@ -80,18 +80,31 @@ public class IsmnValidator {
     }
 
     private void validateCheckBit(String candidate, List<Integer> body, int checkBit) throws InvalidIsmnException {
-        List<Integer> testData = Stream.concat(PREFIX_INTS.stream(), body.stream()).collect(Collectors.toList());
+        List<Integer> dataForValidation = applyStandardPrefix(body);
 
-        int calculated = IntStream.range(0, testData.size())
-                .map(i -> isEven(i) ? EVEN_MULTIPLIER * testData.get(i) : ODD_MULTIPLIER * testData.get(i))
-                .reduce(Integer::sum)
-                .orElseThrow();
+        int calculatedCheckBit = calculateCheckBit(dataForValidation);
 
-        int calculatedCheckBit = calculateModuloTenDifference(calculated);
         if (calculatedCheckBit != checkBit) {
             throw new InvalidIsmnException(String.format(CHECKBIT_ERROR_MESSAGE_TEMPLATE,
                     checkBit, calculatedCheckBit, candidate));
         }
+    }
+
+    private int calculateCheckBit(List<Integer> dataForValidation) {
+        int calculated = IntStream.range(0, dataForValidation.size())
+                .map(index -> applyIsmnCheckBitMultiplication(dataForValidation, index))
+                .reduce(Integer::sum)
+                .orElseThrow();
+
+        return calculateModuloTenDifference(calculated);
+    }
+
+    private int applyIsmnCheckBitMultiplication(List<Integer> dataForValidation, int i) {
+        return isEven(i) ? EVEN_MULTIPLIER * dataForValidation.get(i) : ODD_MULTIPLIER * dataForValidation.get(i);
+    }
+
+    private List<Integer> applyStandardPrefix(List<Integer> body) {
+        return Stream.concat(PREFIX_INTS.stream(), body.stream()).collect(Collectors.toList());
     }
 
     private boolean isInvalidPrefix(List<Integer> prefix) {
