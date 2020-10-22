@@ -7,7 +7,7 @@ import no.unit.nva.model.pages.Range;
 /**
  * A Journal corrigendum is a correction to a previously published Journal article/content.
  *
- * <p>They have their own DOIs and are viewed as an independent publication.
+ * <p>They have their own DOIs and are viewed as independent publications.
  *
  * <p>Example: http://doi.org/10.1038/nature10098
  */
