@@ -21,6 +21,7 @@ import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
+import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
 import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
@@ -149,6 +150,13 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateDegreeContext(), degreePhd);
     }
 
+    protected static Reference generateOtherStudentWork() throws MalformedURLException, InvalidIsbnException {
+        PublicationInstance<MonographPages> otherStudentWork = new OtherStudentWork.Builder()
+                .withPages(generateMonographPages())
+                .build();
+        return generateReference(generateDegreeContext(), otherStudentWork);
+    }
+  
     protected static Reference generateFeatureArticle() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> featureArticle = new FeatureArticle.Builder()
                 .withArticleNumber("4321")

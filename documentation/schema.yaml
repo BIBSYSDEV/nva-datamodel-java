@@ -667,6 +667,20 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  OtherStudentWork:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
   Pages:
     required:
     - type
