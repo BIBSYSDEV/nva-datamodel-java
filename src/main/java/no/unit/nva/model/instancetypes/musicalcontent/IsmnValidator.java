@@ -1,6 +1,6 @@
 package no.unit.nva.model.instancetypes.musicalcontent;
 
-import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
+import static no.unit.nva.model.instancetypes.musicalcontent.MusicNotation.ISMN_13_PREFIX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
 
-import static no.unit.nva.model.instancetypes.musicalcontent.MusicNotation.ISMN_13_PREFIX;
-
-public class IsmnValidator {
+public final class IsmnValidator {
 
     public static final int ISMN_10_NUMERIC_LENGTH = 9;
     public static final int EVEN_MULTIPLIER = 1;
     public static final int ODD_MULTIPLIER = 3;
-
     public static final String CHECKBIT_ERROR_MESSAGE_TEMPLATE = "The checkbit %s should be %s in %s";
     public static final int ISMN_10_PREFIX_ASCII = 77;
     public static final int ISMN_10_PREFIX_AS_INT = 22;
@@ -27,7 +25,17 @@ public class IsmnValidator {
     public static final int CHECK_BIT_OFFSET = 1;
     public static final int UNSET = -1;
 
-    protected void validate(String candidate) throws InvalidIsmnException {
+    private IsmnValidator() {
+
+    }
+
+    /**
+     * Validates ISMN string.
+     *
+     * @param candidate ISMN string.
+     * @throws InvalidIsmnException when ISMN string is invalid.
+     */
+    public static void validate(String candidate) throws InvalidIsmnException {
         List<Integer> prefix = new ArrayList<>();
         List<Integer> body = new ArrayList<>();
 
@@ -37,8 +45,8 @@ public class IsmnValidator {
         validateCheckBit(candidate, body, checkBit);
     }
 
-    private int constructPrefixBodyAndCheckBit(String candidate, List<Integer> prefix, List<Integer> body) throws
-            InvalidIsmnException {
+    private static int constructPrefixBodyAndCheckBit(String candidate, List<Integer> prefix, List<Integer> body)
+        throws InvalidIsmnException {
         int checkBit = UNSET;
 
         for (int counter = 0; counter < candidate.length(); counter++) {
@@ -72,77 +80,78 @@ public class IsmnValidator {
         return checkBit;
     }
 
-    private void throwInvalidIsmnException(String candidate) throws InvalidIsmnException {
+    private static void throwInvalidIsmnException(String candidate) throws InvalidIsmnException {
         throw new InvalidIsmnException(String.format(INVALID_ISMN_TEMPLATE, candidate));
     }
 
-    private void validatePrefix(String candidate, List<Integer> prefix, List<Integer> body) throws
-            InvalidIsmnException {
+    private static void validatePrefix(String candidate, List<Integer> prefix, List<Integer> body)
+        throws InvalidIsmnException {
         if (isStructurallyInvalid(prefix, body)) {
             throwInvalidIsmnException(candidate);
         }
     }
 
-    private boolean isStructurallyInvalid(List<Integer> prefix, List<Integer> body) {
+    private static boolean isStructurallyInvalid(List<Integer> prefix, List<Integer> body) {
         return isInvalidPrefix(prefix) || body.size() + CHECK_BIT_OFFSET != ISMN_10_NUMERIC_LENGTH;
     }
 
-    private boolean isCheckBit(String candidate, int counter) {
+    private static boolean isCheckBit(String candidate, int counter) {
         return counter == candidate.length() - 1;
     }
 
-    private boolean isIsmn13Prefix(List<Integer> prefix, char current) {
+    private static boolean isIsmn13Prefix(List<Integer> prefix, char current) {
         return !prefix.contains(ISMN_10_PREFIX_AS_INT)
-                && prefix.size() < ISMN_13_PREFIX_SIZE && Character.isDigit(current);
+            && prefix.size() < ISMN_13_PREFIX_SIZE && Character.isDigit(current);
     }
 
-    private boolean isIsmn10Prefix(char current, int counter) {
+    private static boolean isIsmn10Prefix(char current, int counter) {
         return counter == 0 && (int) current == ISMN_10_PREFIX_ASCII;
     }
 
-    private void validateCheckBit(String candidate, List<Integer> body, int checkBit) throws InvalidIsmnException {
+    private static void validateCheckBit(String candidate, List<Integer> body, int checkBit)
+        throws InvalidIsmnException {
         List<Integer> dataForValidation = applyStandardPrefix(body);
 
         int calculatedCheckBit = calculateCheckBit(dataForValidation);
 
         if (calculatedCheckBit != checkBit) {
             throw new InvalidIsmnException(String.format(CHECKBIT_ERROR_MESSAGE_TEMPLATE,
-                    checkBit, calculatedCheckBit, candidate));
+                checkBit, calculatedCheckBit, candidate));
         }
     }
 
-    private int calculateCheckBit(List<Integer> dataForValidation) {
+    private static int calculateCheckBit(List<Integer> dataForValidation) {
         int calculated = IntStream.range(0, dataForValidation.size())
-                .map(index -> applyIsmnCheckBitMultiplication(dataForValidation, index))
-                .reduce(Integer::sum)
-                .orElseThrow();
+            .map(index -> applyIsmnCheckBitMultiplication(dataForValidation, index))
+            .reduce(Integer::sum)
+            .orElseThrow();
 
         return calculateModuloTenDifference(calculated);
     }
 
-    private int applyIsmnCheckBitMultiplication(List<Integer> dataForValidation, int i) {
+    private static int applyIsmnCheckBitMultiplication(List<Integer> dataForValidation, int i) {
         return isEven(i) ? EVEN_MULTIPLIER * dataForValidation.get(i) : ODD_MULTIPLIER * dataForValidation.get(i);
     }
 
-    private List<Integer> applyStandardPrefix(List<Integer> body) {
+    private static List<Integer> applyStandardPrefix(List<Integer> body) {
         return Stream.concat(PREFIX_INTS.stream(), body.stream()).collect(Collectors.toList());
     }
 
-    private boolean isInvalidPrefix(List<Integer> prefix) {
+    private static boolean isInvalidPrefix(List<Integer> prefix) {
         return !(prefix.size() == 1 && prefix.get(0) == ISMN_10_PREFIX_AS_INT)
-                && !(prefix.size() == 4 && toPrefixString(prefix).equals(ISMN_13_PREFIX));
+            && !(prefix.size() == 4 && toPrefixString(prefix).equals(ISMN_13_PREFIX));
     }
 
-    private String toPrefixString(List<Integer> prefix) {
+    private static String toPrefixString(List<Integer> prefix) {
         return prefix.stream().map(String::valueOf).collect(Collectors.joining());
     }
 
-    private int calculateModuloTenDifference(int sum) {
+    private static int calculateModuloTenDifference(int sum) {
         var modulo = sum % 10;
         return modulo != 0 ? 10 - modulo : 0;
     }
 
-    private boolean isEven(int counter) {
+    private static boolean isEven(int counter) {
         return counter % 2 == 0;
     }
 }
