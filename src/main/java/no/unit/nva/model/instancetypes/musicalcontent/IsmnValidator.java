@@ -37,7 +37,8 @@ public class IsmnValidator {
         validateCheckBit(candidate, body, checkBit);
     }
 
-    private int constructPrefixBodyAndCheckBit(String candidate, List<Integer> prefix, List<Integer> body) throws InvalidIsmnException {
+    private int constructPrefixBodyAndCheckBit(String candidate, List<Integer> prefix, List<Integer> body) throws
+            InvalidIsmnException {
         int checkBit = UNSET;
 
         for (int counter = 0; counter < candidate.length(); counter++) {
