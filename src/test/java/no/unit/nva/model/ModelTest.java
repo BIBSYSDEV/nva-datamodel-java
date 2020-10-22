@@ -9,6 +9,7 @@ import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.LinkedContext;
+import no.unit.nva.model.contexttypes.MusicalContent;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -26,6 +27,8 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
+import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -69,6 +72,7 @@ public class ModelTest implements JsonHandlingTest {
     public static final String PRINT_ISSN = "printIssn";
     public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
+    public static final URI LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -198,6 +202,14 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalShortCommunication);
     }
 
+    protected static Reference generateMusicNotation() throws InvalidIsmnException {
+        PublicationInstance<Range> musicNotation = new MusicNotation.Builder()
+                .withPages(generateRange())
+                .withIsmn("979-0-9016791-7-7")
+                .build();
+        return generateReference(generateMusicalContentContext(), musicNotation);
+    }
+
     protected static Reference generateReportPolicy()
         throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> reportPolicy = new ReportPolicy.Builder()
@@ -250,6 +262,12 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
     }
 
+    private static PublicationContext generateMusicalContentContext() {
+        return new MusicalContent.Builder()
+                .withLinkedContext(LINKED_CONTEXT)
+                .build();
+    }
+
     private static PublicationContext generateDegreeContext() throws InvalidIsbnException, MalformedURLException {
         return new Degree.Builder()
                 .withPublisher("Some university publisher")
@@ -262,7 +280,7 @@ public class ModelTest implements JsonHandlingTest {
 
     private static LinkedContext generateChapterContext() {
         return new Chapter.Builder()
-                .withLinkedContext(URI.create("https://example.org/linkedContext"))
+                .withLinkedContext(LINKED_CONTEXT)
                 .build();
     }
 
