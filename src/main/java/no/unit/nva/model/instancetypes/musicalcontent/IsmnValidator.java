@@ -24,6 +24,7 @@ public class IsmnValidator {
     public static final List<Integer> PREFIX_INTS = List.of(9, 7, 9, 0);
     public static final int ISMN_13_PREFIX_SIZE = 4;
     public static final String INVALID_ISMN_TEMPLATE = "The ISMN %s is invalid";
+    public static final int CHECK_BIT_OFFSET = 1;
 
     protected void validate(String candidate) throws InvalidIsmnException {
         List<Integer> prefix = new ArrayList<>();
@@ -62,7 +63,7 @@ public class IsmnValidator {
     }
 
     private boolean isStructurallyInvalid(List<Integer> prefix, List<Integer> body) {
-        return isInvalidPrefix(prefix) || body.size() + 1 != ISMN_10_NUMERIC_LENGTH;
+        return isInvalidPrefix(prefix) || body.size() + CHECK_BIT_OFFSET != ISMN_10_NUMERIC_LENGTH;
     }
 
     private boolean isCheckBit(String candidate, int counter) {
