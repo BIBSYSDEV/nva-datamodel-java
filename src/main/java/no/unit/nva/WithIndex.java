@@ -49,7 +49,7 @@ public interface WithIndex extends WithInternal {
         }
         String statusString = Optional.ofNullable(getDoiRequest().getStatus()).map(Enum::toString)
             .orElseThrow(() -> new IllegalStateException("Property doiRequest.status can not be null"));
-        String dateString = Optional.ofNullable(getDoiRequest().getDate()).map(Instant::toString)
+        String dateString = Optional.ofNullable(getDoiRequest().getCreatedDate()).map(Instant::toString)
             .orElseThrow(() -> new IllegalStateException("Property doiRequest.date can not be null"));
 
         return String.join(DYNAMODB_KEY_DELIMITER, statusString, dateString);

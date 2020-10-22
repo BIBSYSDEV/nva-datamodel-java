@@ -40,16 +40,20 @@ public class PublicationTest extends ModelTest {
     @CsvSource({
             "BookAnthology",
             "BookMonograph",
+            "CartographicMap",
             "ChapterArticle",
             "DegreeBachelor",
             "DegreeMaster",
             "DegreePhd",
+            "FeatureArticle",
             "JournalArticle",
+            "JournalCorrigendum",
             "JournalLeader",
             "JournalLetter",
             "JournalReview",
             "JournalShortCommunication",
             "MusicNotation",
+            "OtherStudentWork",
             "ReportPolicy",
             "ReportResearch",
             "ReportWorkingPaper"
@@ -70,16 +74,20 @@ public class PublicationTest extends ModelTest {
     @CsvSource({
             "BookAnthology",
             "BookMonograph",
+            "CartographicMap",
             "ChapterArticle",
             "DegreeBachelor",
             "DegreeMaster",
             "DegreePhd",
+            "FeatureArticle",
             "JournalArticle",
+            "JournalCorrigendum",
             "JournalLeader",
             "JournalLetter",
             "JournalReview",
             "JournalShortCommunication",
             "MusicNotation",
+            "OtherStudentWork",
             "ReportPolicy",
             "ReportResearch",
             "ReportWorkingPaper"
@@ -95,21 +103,22 @@ public class PublicationTest extends ModelTest {
 
     private Publication generatePublication(String instanceType) throws Exception {
         Reference reference = generateReference(instanceType);
+        Instant now = Instant.now();
 
         return new Publication.Builder()
-                .withCreatedDate(Instant.now())
+                .withCreatedDate(now)
                 .withDoi(URI.create("https://example.org/yet/another/fake/doi/1231/12311"))
-                .withDoiRequest(generateDoiRequest())
+                .withDoiRequest(generateDoiRequest(now))
                 .withEntityDescription(generateEntityDescription(reference))
                 .withFileSet(generateFileSet())
                 .withHandle(URI.create("https://example.org/fakeHandle/13213"))
                 .withIdentifier(UUID.randomUUID())
-                .withIndexedDate(Instant.now())
+                .withIndexedDate(now)
                 .withLink(URI.create("https://this.should.have.been.removed"))
-                .withModifiedDate(Instant.now())
+                .withModifiedDate(now)
                 .withOwner("me@example.org")
                 .withProject(generateProject())
-                .withPublishedDate(Instant.now())
+                .withPublishedDate(now)
                 .withPublisher(generateOrganization())
                 .withStatus(PublicationStatus.PUBLISHED)
                 .build();
@@ -124,6 +133,9 @@ public class PublicationTest extends ModelTest {
             case "BookMonograph":
                 reference = generateBookMonograph();
                 break;
+            case "CartographicMap":
+                reference = generateCartographicMap();
+                break;
             case "ChapterArticle":
                 reference = generateChapterArticle();
                 break;
@@ -136,8 +148,14 @@ public class PublicationTest extends ModelTest {
             case "DegreePhd":
                 reference = generateDegreePhd();
                 break;
+            case "FeatureArticle":
+                reference = generateFeatureArticle();
+                break;
             case "JournalArticle":
                 reference = generateJournalArticle();
+                break;
+            case "JournalCorrigendum":
+                reference = generateJournalCorrigendum();
                 break;
             case "JournalLeader":
                 reference = generateJournalLeader();
@@ -153,6 +171,9 @@ public class PublicationTest extends ModelTest {
                 break;
             case "MusicNotation":
                 reference = generateMusicNotation();
+                break;
+            case "OtherStudentWork":
+                reference = generateOtherStudentWork();
                 break;
             case "ReportPolicy":
                 reference = generateReportPolicy();

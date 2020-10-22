@@ -19,8 +19,7 @@
   "doiRequest" : {
     "type" : "DoiRequest",
     "status" : "APPROVED",
-    "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
-    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "date" : "2020-09-23T09:51:23.044996ZZ",
     "messages" : [ ]
   },
   "link" : "https://this.should.have.been.removed",
@@ -65,29 +64,14 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "Degree",
-        "seriesTitle" : "Degrees of this type series",
-        "seriesNumber" : "8",
-        "publisher" : "Some university publisher",
-        "openAccess" : false,
-        "peerReviewed" : false,
-        "url" : "http://example.org/degree/1",
-        "isbnList" : [ "9780201309515" ]
+        "type" : "Cartograph",
+        "linkedContext" : "https://example.org/linkedContext"
       },
       "doi" : "https://example.org/doi/12313/2313",
       "publicationInstance" : {
-        "type" : "DegreePhd",
-        "peerReviewed" : false,
-        "pages" : {
-          "type" : "MonographPages",
-          "introduction" : {
-            "type" : "Range",
-            "begin" : "i",
-            "end" : "ix"
-          },
-          "pages" : "321",
-          "illustrated" : true
-        }
+        "type" : "ChapterArticle",
+        "textbookContent" : false,
+        "peerReviewed" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",

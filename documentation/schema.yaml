@@ -154,6 +154,21 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+  Cartograph:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        linkedContext:
+          type: string
+          format: uri
+        type:
+          type: string
   Chapter:
     required:
     - type
@@ -300,7 +315,10 @@ referencedSchemas:
         - REQUESTED
         - APPROVED
         - REJECTED
-      date:
+      modifiedDate:
+        type: string
+        format: date-time
+      createdDate:
         type: string
         format: date-time
       messages:
@@ -366,6 +384,26 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  FeatureArticle:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
   File:
     required:
     - type
@@ -476,6 +514,26 @@ referencedSchemas:
         type:
           type: string
   JournalArticle:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  JournalCorrigendum:
     required:
     - type
     type: object
@@ -651,6 +709,20 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  OtherStudentWork:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
   Pages:
     required:
     - type
