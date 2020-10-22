@@ -40,6 +40,7 @@ public class PublicationTest extends ModelTest {
     @CsvSource({
             "BookAnthology",
             "BookMonograph",
+            "CartographicMap",
             "ChapterArticle",
             "DegreeBachelor",
             "DegreeMaster",
@@ -72,6 +73,7 @@ public class PublicationTest extends ModelTest {
     @CsvSource({
             "BookAnthology",
             "BookMonograph",
+            "CartographicMap",
             "ChapterArticle",
             "DegreeBachelor",
             "DegreeMaster",
@@ -128,6 +130,9 @@ public class PublicationTest extends ModelTest {
                 break;
             case "BookMonograph":
                 reference = generateBookMonograph();
+                break;
+            case "CartographicMap":
+                reference = generateCartographicMap();
                 break;
             case "ChapterArticle":
                 reference = generateChapterArticle();

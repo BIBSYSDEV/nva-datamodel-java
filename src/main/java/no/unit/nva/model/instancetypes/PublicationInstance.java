@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
+import no.unit.nva.model.instancetypes.cartographic.CartographicMap;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
@@ -42,6 +43,7 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class),
         @JsonSubTypes.Type(name = "ChapterArticle", value = ChapterArticle.class),
         @JsonSubTypes.Type(name = "OtherStudentWork", value = OtherStudentWork.class),
+        @JsonSubTypes.Type(name = "CartographicMap", value = CartographicMap.class),
 })
 public interface PublicationInstance<P extends Pages> {
 
