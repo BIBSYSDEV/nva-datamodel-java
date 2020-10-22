@@ -25,11 +25,20 @@ public class IsmnValidator {
     public static final int ISMN_13_PREFIX_SIZE = 4;
     public static final String INVALID_ISMN_TEMPLATE = "The ISMN %s is invalid";
     public static final int CHECK_BIT_OFFSET = 1;
+    public static final int UNSET = -1;
 
     protected void validate(String candidate) throws InvalidIsmnException {
         List<Integer> prefix = new ArrayList<>();
         List<Integer> body = new ArrayList<>();
-        int checkBit = -1;
+
+        int checkBit = constructPrefixBodyAndCheckBit(candidate, prefix, body);
+
+        validatePrefix(candidate, prefix, body);
+        validateCheckBit(candidate, body, checkBit);
+    }
+
+    private int constructPrefixBodyAndCheckBit(String candidate, List<Integer> prefix, List<Integer> body) throws InvalidIsmnException {
+        int checkBit = UNSET;
 
         for (int counter = 0; counter < candidate.length(); counter++) {
             char current = candidate.charAt(counter);
@@ -40,25 +49,36 @@ public class IsmnValidator {
 
             if (isIsmn10Prefix(current, counter)) {
                 prefix.add(Character.getNumericValue(current));
-            } else if (isIsmn13Prefix(prefix, current)) {
+                continue;
+            }
+
+            if (isIsmn13Prefix(prefix, current)) {
                 prefix.add(Character.getNumericValue(current));
-            } else if (isCheckBit(candidate, counter)) {
+                continue;
+            }
+
+            if (isCheckBit(candidate, counter)) {
                 checkBit = Character.getNumericValue(current);
-            } else if (Character.isDigit(current)) {
+                continue;
+            }
+
+            if (Character.isDigit(current)) {
                 body.add(Character.getNumericValue(current));
             } else {
-                throw new InvalidIsmnException(String.format(INVALID_ISMN_TEMPLATE, candidate));
+                throwInvalidIsmnException(candidate);
             }
         }
+        return checkBit;
+    }
 
-        validatePrefix(candidate, prefix, body);
-        validateCheckBit(candidate, body, checkBit);
+    private void throwInvalidIsmnException(String candidate) throws InvalidIsmnException {
+        throw new InvalidIsmnException(String.format(INVALID_ISMN_TEMPLATE, candidate));
     }
 
     private void validatePrefix(String candidate, List<Integer> prefix, List<Integer> body) throws
             InvalidIsmnException {
         if (isStructurallyInvalid(prefix, body)) {
-            throw new InvalidIsmnException(String.format(INVALID_ISMN_TEMPLATE, candidate));
+            throwInvalidIsmnException(candidate);
         }
     }
 
