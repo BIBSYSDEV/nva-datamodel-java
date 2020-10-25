@@ -5,13 +5,16 @@ import no.unit.nva.model.pages.Range;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static no.unit.nva.model.instancetypes.musicalcontent.IsmnValidator.CHECKBIT_ERROR_MESSAGE_TEMPLATE;
-import static no.unit.nva.model.instancetypes.musicalcontent.IsmnValidator.INVALID_ISMN_TEMPLATE;
+import static no.unit.nva.model.instancetypes.musicalcontent.Ismn.INVALID_ISMN_TEMPLATE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -51,7 +54,8 @@ class MusicNotationTest {
     void musicNotationThrowsExceptionWhenIsmn10IsBadlyFormatted(String candidate) {
         Executable executable = () -> new MusicNotation(RANGE, candidate);
         var exception = assertThrows(InvalidIsmnException.class, executable);
-        var expectedMessage = String.format(INVALID_ISMN_TEMPLATE, candidate);
+        var expectedMessage = String.format(INVALID_ISMN_TEMPLATE,
+                candidate);
         assertThat(exception.getMessage(), equalTo(expectedMessage));
     }
 
@@ -59,12 +63,13 @@ class MusicNotationTest {
     void musicNotationThrowsExceptionWhenIsmnHasInvalidCheckBit() {
         Executable executable = () -> new MusicNotation(RANGE, INVALID_CHECKBIT_ISMN);
         Exception exception = assertThrows(InvalidIsmnException.class, executable);
-        var expectedMessage = String.format(CHECKBIT_ERROR_MESSAGE_TEMPLATE, 2, 7, INVALID_CHECKBIT_ISMN);
+        var expectedMessage = String.format(INVALID_ISMN_TEMPLATE, INVALID_CHECKBIT_ISMN);
         assertThat(exception.getMessage(), containsString(expectedMessage));
     }
 
     @ParameterizedTest(name = "Music notation getIsmn reformats {0} correctly")
     @ValueSource(strings = {
+            "M-051-66073-5",
             "979-0-001-16094-0",
             "979-0-001-16093-3",
             "979-0-008-00281-6",
@@ -86,6 +91,23 @@ class MusicNotationTest {
     void musicNotationGetFormattedIsmnReturnsCorrectlyFormattedIsmn(String ismn) throws InvalidIsmnException {
         MusicNotation musicNotation = new MusicNotation(RANGE, ismn);
         assertThat(musicNotation.getFormattedIsmn(), equalTo(ismn));
+    }
+
+    @ParameterizedTest(name = "Null or empty value fails")
+    @EmptySource
+    @ValueSource(strings = {"", " ", "  ", "           ", "             "})
+    void musicNotationThrowsExceptionWhenIsmnIsEmpty(String candidate) {
+        Executable executable = () -> new MusicNotation(RANGE, candidate);
+        var exception = assertThrows(InvalidIsmnException.class, executable);
+        var expectedMessage = String.format(INVALID_ISMN_TEMPLATE,
+                candidate);
+        assertThat(exception.getMessage(), equalTo(expectedMessage));
+    }
+
+    @Test
+    void musicNotationReturnsEmptyIsmnWhenIsmnIsNull() throws InvalidIsmnException {
+        MusicNotation musicNotation = new MusicNotation(RANGE, null);
+        assertThat(musicNotation.getFormattedIsmn(), nullValue());
     }
 
     private static Range generateRange() {
