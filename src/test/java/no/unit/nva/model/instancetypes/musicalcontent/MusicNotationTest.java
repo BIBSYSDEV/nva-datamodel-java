@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static no.unit.nva.model.instancetypes.musicalcontent.Ismn.INVALID_ISMN_TEMPLATE;
@@ -69,7 +67,14 @@ class MusicNotationTest {
 
     @ParameterizedTest(name = "Music notation getIsmn reformats {0} correctly")
     @ValueSource(strings = {
+            "M-001-12050-0",
+            "M-004-16663-5",
+            "M-049-05851-3",
             "M-051-66073-5",
+            "M-2306-2632-3",
+            "M-706871-19-6",
+            "M-708010-34-0",
+            "M-9001001-2-2",
             "979-0-001-16094-0",
             "979-0-001-16093-3",
             "979-0-008-00281-6",
