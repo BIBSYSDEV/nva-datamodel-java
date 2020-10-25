@@ -55,13 +55,23 @@ public class Ismn {
      * @param ismn A string representation of an ISMN.
      * @throws InvalidIsmnException If the parsing or validation fails.
      */
-    protected Ismn(String ismn) throws InvalidIsmnException {
+    public Ismn(String ismn) throws InvalidIsmnException {
 
         if (isNull(ismn)) {
             return;
         }
 
         extractIsmnParts(ismn, ismn.toUpperCase(Locale.ENGLISH));
+    }
+
+    @JsonGetter
+    public String raw() {
+        return prefix.prefix + publisherId + itemId + checkBit;
+    }
+
+    @JsonGetter
+    public String formatted() {
+        return String.format(FORMATTED_ISMN_TEMPLATE, prefix.formattedPrefix, publisherId, itemId, checkBit);
     }
 
     private void extractIsmnParts(String ismn, String candidate) throws InvalidIsmnException {
@@ -152,16 +162,6 @@ public class Ismn {
                     : checksum + (ODD_MULTIPLIER * charAsInt);
         }
         return checksum;
-    }
-
-    @JsonGetter
-    public String raw() {
-        return prefix.prefix + publisherId + itemId + checkBit;
-    }
-
-    @JsonGetter
-    public String formatted() {
-        return String.format(FORMATTED_ISMN_TEMPLATE, prefix.formattedPrefix, publisherId, itemId, checkBit);
     }
 
     private boolean isItemPart(StringBuilder registrant, StringBuilder item) {
