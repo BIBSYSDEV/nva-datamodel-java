@@ -666,6 +666,33 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MusicNotation:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        ismn:
+          type: string
+        formattedIsmn:
+          type: string
+        type:
+          type: string
+  MusicalContent:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        linkedContext:
+          type: string
+          format: uri
   Organization:
     required:
     - type

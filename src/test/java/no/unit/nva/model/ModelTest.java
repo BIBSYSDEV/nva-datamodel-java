@@ -10,6 +10,7 @@ import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.LinkedContext;
+import no.unit.nva.model.contexttypes.MusicalContent;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -30,6 +31,8 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
+import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -164,7 +167,7 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
         return generateReference(generateDegreeContext(), otherStudentWork);
     }
-  
+
     protected static Reference generateFeatureArticle() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> featureArticle = new FeatureArticle.Builder()
                 .withArticleNumber("4321")
@@ -236,6 +239,14 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateJournalContext(), journalShortCommunication);
     }
 
+    protected static Reference generateMusicNotation() throws InvalidIsmnException {
+        PublicationInstance<Range> musicNotation = new MusicNotation.Builder()
+                .withPages(generateRange())
+                .withIsmn("979-0-9016791-7-7")
+                .build();
+        return generateReference(generateMusicalContentContext(), musicNotation);
+    }
+
     protected static Reference generateReportPolicy()
         throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> reportPolicy = new ReportPolicy.Builder()
@@ -285,6 +296,12 @@ public class ModelTest implements JsonHandlingTest {
                 .withPeerReviewed(true)
                 .withTitle("The journal of mechanically separated meats")
                 .withUrl(new URL(("http://example.org/journal/1")))
+                .build();
+    }
+
+    private static PublicationContext generateMusicalContentContext() {
+        return new MusicalContent.Builder()
+                .withLinkedContext(LINKED_CONTEXT)
                 .build();
     }
 

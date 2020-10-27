@@ -65,26 +65,19 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "Journal",
-        "title" : "The journal of mechanically separated meats",
-        "level" : "LEVEL_0",
-        "openAccess" : true,
-        "peerReviewed" : true,
-        "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119",
-        "url" : "http://example.org/journal/1"
+        "type" : "MusicalContent",
+        "linkedContext" : "https://example.org/linkedContext"
       },
       "doi" : "https://example.org/doi/12313/2313",
       "publicationInstance" : {
-        "type" : "FeatureArticle",
-        "volume" : "27",
-        "issue" : "1",
-        "articleNumber" : "4321",
+        "type" : "MusicNotation",
         "pages" : {
           "type" : "Range",
           "begin" : "1",
           "end" : "23"
         },
+        "ismn" : "9790901679177",
+        "formattedIsmn" : "979-0-9016791-7-7",
         "peerReviewed" : false
       }
     },

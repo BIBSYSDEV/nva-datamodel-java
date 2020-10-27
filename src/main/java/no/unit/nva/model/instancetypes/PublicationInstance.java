@@ -17,6 +17,7 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -44,6 +45,7 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "ChapterArticle", value = ChapterArticle.class),
         @JsonSubTypes.Type(name = "OtherStudentWork", value = OtherStudentWork.class),
         @JsonSubTypes.Type(name = "CartographicMap", value = CartographicMap.class),
+        @JsonSubTypes.Type(name = "MusicNotation", value = MusicNotation.class)
 })
 public interface PublicationInstance<P extends Pages> {
 
