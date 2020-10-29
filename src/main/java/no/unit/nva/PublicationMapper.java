@@ -32,7 +32,8 @@ public final class PublicationMapper {
         REQUEST request, WithInternal existing) {
         Publication publication = toPublication(request);
         mapInternal(existing, publication);
-        publication.setModifiedDate(Instant.now());
+        Instant now = Instant.now();
+        publication.setModifiedDate(now);
 
         return publication;
     }

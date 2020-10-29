@@ -5,10 +5,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.contexttypes.Book;
+import no.unit.nva.model.contexttypes.Cartograph;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.LinkedContext;
+import no.unit.nva.model.contexttypes.MusicalContent;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -21,11 +23,16 @@ import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
+import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
+import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
+import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
 import no.unit.nva.model.instancetypes.other.Other;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -70,7 +77,7 @@ public class ModelTest implements JsonHandlingTest {
     public static final String PRINT_ISSN = "printIssn";
     public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
-    public static final URI LINKED_CONTEXT_URI = URI.create("https://example.org/linkedContext");
+    public static final URI LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -119,6 +126,12 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateBookContext(), bookMonograph);
     }
 
+    protected static Reference generateCartographicMap() {
+        PublicationInstance<Range> chapterArticle = new ChapterArticle.Builder()
+                .build();
+        return generateReference(generateCartographicContext(), chapterArticle);
+    }
+
     protected static Reference generateChapterArticle() {
         PublicationInstance<Range> chapterArticle = new ChapterArticle.Builder()
                 .withPages(generateRange())
@@ -149,6 +162,23 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateDegreeContext(), degreePhd);
     }
 
+    protected static Reference generateOtherStudentWork() throws MalformedURLException, InvalidIsbnException {
+        PublicationInstance<MonographPages> otherStudentWork = new OtherStudentWork.Builder()
+                .withPages(generateMonographPages())
+                .build();
+        return generateReference(generateDegreeContext(), otherStudentWork);
+    }
+
+    protected static Reference generateFeatureArticle() throws InvalidIssnException, MalformedURLException {
+        PublicationInstance<Range> featureArticle = new FeatureArticle.Builder()
+                .withArticleNumber("4321")
+                .withIssue("1")
+                .withVolume("27")
+                .withPages(generateRange())
+                .build();
+        return generateReference(generateJournalContext(), featureArticle);
+    }
+
     protected static Reference generateJournalArticle() throws InvalidIssnException, MalformedURLException {
         PublicationInstance<Range> journalArticle = new JournalArticle.Builder()
                 .withArticleNumber("123321")
@@ -158,6 +188,16 @@ public class ModelTest implements JsonHandlingTest {
                 .withPeerReviewed(true)
                 .build();
         return generateReference(generateJournalContext(), journalArticle);
+    }
+
+    protected static Reference generateJournalCorrigendum() throws InvalidIssnException, MalformedURLException {
+        PublicationInstance<Range> journalCorrigendum = new JournalCorrigendum.Builder()
+                .withArticleNumber("42311")
+                .withIssue("5")
+                .withVolume("2")
+                .withPages(generateRange())
+                .build();
+        return generateReference(generateJournalContext(), journalCorrigendum);
     }
 
     protected static Reference generateJournalLeader() throws InvalidIssnException, MalformedURLException {
@@ -198,6 +238,14 @@ public class ModelTest implements JsonHandlingTest {
                 .withPages(generateRange())
                 .build();
         return generateReference(generateJournalContext(), journalShortCommunication);
+    }
+
+    protected static Reference generateMusicNotation() throws InvalidIsmnException {
+        PublicationInstance<Range> musicNotation = new MusicNotation.Builder()
+                .withPages(generateRange())
+                .withIsmn("979-0-9016791-7-7")
+                .build();
+        return generateReference(generateMusicalContentContext(), musicNotation);
     }
 
     protected static Reference generateOtherInstance() {
@@ -257,9 +305,15 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
     }
 
+    private static PublicationContext generateMusicalContentContext() {
+        return new MusicalContent.Builder()
+                .withLinkedContext(LINKED_CONTEXT)
+                .build();
+    }
+
     private static PublicationContext generateOtherContext() {
         return new no.unit.nva.model.contexttypes.Other.Builder()
-                .withLinkedContext(LINKED_CONTEXT_URI)
+                .withLinkedContext(LINKED_CONTEXT)
                 .build();
     }
 
@@ -275,7 +329,13 @@ public class ModelTest implements JsonHandlingTest {
 
     private static LinkedContext generateChapterContext() {
         return new Chapter.Builder()
-                .withLinkedContext(LINKED_CONTEXT_URI)
+                .withLinkedContext(LINKED_CONTEXT)
+                .build();
+    }
+
+    private static LinkedContext generateCartographicContext() {
+        return new Cartograph.Builder()
+                .withLinkedContext(LINKED_CONTEXT)
                 .build();
     }
 
@@ -301,9 +361,10 @@ public class ModelTest implements JsonHandlingTest {
                     .build();
     }
 
-    protected DoiRequest generateDoiRequest() {
+    protected DoiRequest generateDoiRequest(Instant now) {
         return new DoiRequest.Builder()
-                .withDate(Instant.now())
+                .withCreatedDate(now)
+                .withModifiedDate(now)
                 .withStatus(DoiRequestStatus.APPROVED)
                 .build();
     }

@@ -65,29 +65,27 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "Degree",
-        "seriesTitle" : "Degrees of this type series",
-        "seriesNumber" : "8",
-        "publisher" : "Some university publisher",
-        "openAccess" : false,
-        "peerReviewed" : false,
-        "url" : "http://example.org/degree/1",
-        "isbnList" : [ "9780201309515" ]
+        "type" : "Journal",
+        "title" : "The journal of mechanically separated meats",
+        "level" : "LEVEL_0",
+        "openAccess" : true,
+        "peerReviewed" : true,
+        "printIssn" : "2222-2227",
+        "onlineIssn" : "1111-1119",
+        "url" : "http://example.org/journal/1"
       },
       "doi" : "https://example.org/doi/12313/2313",
       "publicationInstance" : {
-        "type" : "DegreePhd",
-        "peerReviewed" : false,
+        "type" : "JournalCorrigendum",
+        "volume" : "2",
+        "issue" : "5",
+        "articleNumber" : "42311",
         "pages" : {
-          "type" : "MonographPages",
-          "introduction" : {
-            "type" : "Range",
-            "begin" : "i",
-            "end" : "ix"
-          },
-          "pages" : "321",
-          "illustrated" : true
-        }
+          "type" : "Range",
+          "begin" : "1",
+          "end" : "23"
+        },
+        "peerReviewed" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
