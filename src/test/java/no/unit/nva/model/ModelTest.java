@@ -1,8 +1,6 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.MalformedURLException;
-import java.net.URL;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Cartograph;
@@ -11,6 +9,7 @@ import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.LinkedContext;
 import no.unit.nva.model.contexttypes.MusicalContent;
+import no.unit.nva.model.contexttypes.OtherSerial;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -33,7 +32,7 @@ import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
 import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
-import no.unit.nva.model.instancetypes.other.Other;
+import no.unit.nva.model.instancetypes.other.OtherArticle;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -42,7 +41,9 @@ import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.utils.JsonUtils;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +79,9 @@ public class ModelTest implements JsonHandlingTest {
     public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final URI LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
+    public static final List<String> ISBN_SINGLETON_LIST = List.of("9780201309515");
+    public static final String ONLINE_ISSN_VALID = "1111-1119";
+    public static final String PRINT_ISSN_VALID = "2222-2227";
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -248,9 +252,11 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateMusicalContentContext(), musicNotation);
     }
 
-    protected static Reference generateOtherInstance() {
-        PublicationInstance<Range> other = new Other(generateRange());
-        return generateReference(generateOtherContext(), other);
+    protected static Reference generateOtherArticleInstance() throws MalformedURLException, InvalidIssnException {
+        PublicationInstance<Range> other = new OtherArticle.Builder()
+                .withPages(generateRange())
+                .build();
+        return generateReference(generateOtherSerialContext(), other);
     }
 
     protected static Reference generateReportPolicy()
@@ -280,12 +286,12 @@ public class ModelTest implements JsonHandlingTest {
     private static PublicationContext generateReportContext()
         throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
         return new Report.Builder()
-                .withOnlineIssn("1111-1119")
-                .withPrintIssn("2222-2227")
+                .withOnlineIssn(ONLINE_ISSN_VALID)
+                .withPrintIssn(PRINT_ISSN_VALID)
                 .withPeerReviewed(false)
                 .withOpenAccess(true)
                 .withLevel(Level.LEVEL_0)
-                .withIsbnList(List.of("9780201309515"))
+                .withIsbnList(ISBN_SINGLETON_LIST)
                 .withPublisher("People's Socialist Republic of South Lakeland")
                 .withSeriesNumber("58100117")
                 .withSeriesTitle("Report of the people's agricultural commission on ovine husbandry")
@@ -296,8 +302,8 @@ public class ModelTest implements JsonHandlingTest {
     private static PublicationContext generateJournalContext() throws InvalidIssnException, MalformedURLException {
         return new Journal.Builder()
                 .withLevel(Level.LEVEL_0)
-                .withOnlineIssn("1111-1119")
-                .withPrintIssn("2222-2227")
+                .withOnlineIssn(ONLINE_ISSN_VALID)
+                .withPrintIssn(PRINT_ISSN_VALID)
                 .withOpenAccess(true)
                 .withPeerReviewed(true)
                 .withTitle("The journal of mechanically separated meats")
@@ -311,9 +317,15 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
     }
 
-    private static PublicationContext generateOtherContext() {
-        return new no.unit.nva.model.contexttypes.Other.Builder()
-                .withLinkedContext(LINKED_CONTEXT)
+    private static PublicationContext generateOtherSerialContext() throws InvalidIssnException, MalformedURLException {
+        return new OtherSerial.Builder()
+                .withLevel(Level.LEVEL_0)
+                .withOnlineIssn(ONLINE_ISSN_VALID)
+                .withPrintIssn(PRINT_ISSN_VALID)
+                .withOpenAccess(false)
+                .withPeerReviewed(false)
+                .withTitle("Reactionary views on the benefits of child hunger")
+                .withUrl(new URL("https://example.org/ground_to_dust"))
                 .build();
     }
 
@@ -322,7 +334,7 @@ public class ModelTest implements JsonHandlingTest {
                 .withPublisher("Some university publisher")
                 .withSeriesNumber("8")
                 .withSeriesTitle("Degrees of this type series")
-                .withIsbnList(List.of("9780201309515"))
+                .withIsbnList(ISBN_SINGLETON_LIST)
                 .withUrl(new URL(("http://example.org/degree/1")))
                 .build();
     }
@@ -350,7 +362,7 @@ public class ModelTest implements JsonHandlingTest {
 
     private static Book generateBookContext() throws InvalidIsbnException, MalformedURLException {
         return new Book.Builder()
-                    .withIsbnList(List.of("9780201309515"))
+                    .withIsbnList(ISBN_SINGLETON_LIST)
                     .withLevel(Level.LEVEL_0)
                     .withOpenAccess(true)
                     .withPeerReviewed(false)

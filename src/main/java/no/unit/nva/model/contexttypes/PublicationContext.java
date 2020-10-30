@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(name = "MusicalContent", value = MusicalContent.class),
         @JsonSubTypes.Type(name = "Cartograph", value = Cartograph.class),
         @JsonSubTypes.Type(name = "Chapter", value = Chapter.class),
-        @JsonSubTypes.Type(name = "Other", value = Other.class)
+        @JsonSubTypes.Type(name = "OtherSerial", value = OtherSerial.class)
 })
 public interface PublicationContext {
 }

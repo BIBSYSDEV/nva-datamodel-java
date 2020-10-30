@@ -709,7 +709,7 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
-  Other:
+  OtherArticle:
     required:
     - type
     type: object
@@ -721,6 +721,38 @@ referencedSchemas:
       properties:
         pages:
           $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  OtherSerial:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        title:
+          type: string
+        level:
+          type: string
+          enum:
+          - LEVEL_2
+          - LEVEL_1
+          - LEVEL_0
+          - NO_LEVEL
+        openAccess:
+          type: boolean
+        peerReviewed:
+          type: boolean
+        printIssn:
+          type: string
+        onlineIssn:
+          type: string
+        url:
+          type: string
+          format: url
         type:
           type: string
   OtherStudentWork:
