@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.NonPeerReviewedMonograph;
 import no.unit.nva.model.pages.MonographPages;
+import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class OtherMonograph extends NonPeerReviewedMonograph {
 
+    @JacocoGenerated
     @JsonCreator
-    public OtherMonograph(MonographPages pages) {
-        super(pages);
+    public OtherMonograph() {
+        super();
     }
 
     private OtherMonograph(Builder builder) {

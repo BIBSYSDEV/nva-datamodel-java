@@ -19,6 +19,7 @@ import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
 import no.unit.nva.model.instancetypes.other.OtherArticle;
+import no.unit.nva.model.instancetypes.other.OtherMonograph;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -46,6 +47,7 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),
         @JsonSubTypes.Type(name = "JournalShortCommunication", value = JournalShortCommunication.class),
         @JsonSubTypes.Type(name = "OtherArticle", value = OtherArticle.class),
+        @JsonSubTypes.Type(name = "OtherMonograph", value = OtherMonograph.class),
         @JsonSubTypes.Type(name = "Report", value = ReportBasic.class),
         @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
         @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),

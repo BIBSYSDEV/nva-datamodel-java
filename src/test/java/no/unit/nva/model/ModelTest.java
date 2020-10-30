@@ -33,6 +33,7 @@ import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
 import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
 import no.unit.nva.model.instancetypes.other.OtherArticle;
+import no.unit.nva.model.instancetypes.other.OtherMonograph;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -259,6 +260,13 @@ public class ModelTest implements JsonHandlingTest {
         return generateReference(generateOtherSerialContext(), other);
     }
 
+    protected static Reference generateOtherMonographInstance() throws MalformedURLException, InvalidIsbnException {
+        PublicationInstance<MonographPages> other = new OtherMonograph.Builder()
+                .withPages(generateMonographPages())
+                .build();
+        return generateReference(generateOtherMonographContext(), other);
+    }
+
     protected static Reference generateReportPolicy()
         throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> reportPolicy = new ReportPolicy.Builder()
@@ -326,6 +334,20 @@ public class ModelTest implements JsonHandlingTest {
                 .withPeerReviewed(false)
                 .withTitle("Reactionary views on the benefits of child hunger")
                 .withUrl(new URL("https://example.org/ground_to_dust"))
+                .build();
+    }
+
+    private static PublicationContext generateOtherMonographContext() throws MalformedURLException,
+            InvalidIsbnException {
+        return  new no.unit.nva.model.contexttypes.OtherMonograph.Builder()
+                .withIsbnList(ISBN_SINGLETON_LIST)
+                .withUrl(new URL("https://this.example.org/link/1"))
+                .withSeriesTitle("Deeper studies in divine Ayn Rand conjectures")
+                .withSeriesNumber("2")
+                .withPublisher("Some random stuff off the Internet publishing Ltd.")
+                .withPeerReviewed(false)
+                .withOpenAccess(false)
+                .withLevel(Level.LEVEL_0)
                 .build();
     }
 

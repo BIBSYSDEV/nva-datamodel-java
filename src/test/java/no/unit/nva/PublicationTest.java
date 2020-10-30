@@ -55,6 +55,7 @@ public class PublicationTest extends ModelTest {
             "MusicNotation",
             "OtherStudentWork",
             "OtherArticle",
+            "OtherMonograph",
             "ReportPolicy",
             "ReportResearch",
             "ReportWorkingPaper"
@@ -90,6 +91,7 @@ public class PublicationTest extends ModelTest {
             "MusicNotation",
             "OtherStudentWork",
             "OtherArticle",
+            "OtherMonograph",
             "ReportPolicy",
             "ReportResearch",
             "ReportWorkingPaper"
@@ -179,6 +181,9 @@ public class PublicationTest extends ModelTest {
                 break;
             case "OtherArticle":
                 reference = generateOtherArticleInstance();
+                break;
+            case "OtherMonograph":
+                reference = generateOtherMonographInstance();
                 break;
             case "ReportPolicy":
                 reference = generateReportPolicy();
