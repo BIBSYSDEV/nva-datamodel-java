@@ -46,6 +46,8 @@ schema:
       $ref: '#/components/schemas/FileSet'
     project:
       $ref: '#/components/schemas/ResearchProject'
+    version:
+      type: string
     publisherId:
       type: string
     publisherOwnerDate:
@@ -780,6 +782,8 @@ referencedSchemas:
         $ref: '#/components/schemas/FileSet'
       project:
         $ref: '#/components/schemas/ResearchProject'
+      version:
+        type: string
       publisherId:
         type: string
       publisherOwnerDate:

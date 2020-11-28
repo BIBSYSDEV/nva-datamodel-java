@@ -37,6 +37,7 @@ dependencies {
     testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
     testImplementation group: 'com.github.BIBSYSDEV', name:'nva-testutils', version:'0.1.9'
     testImplementation group: 'io.swagger.core.v3', name: 'swagger-core', version: '2.1.4'
+    testImplementation group: 'org.javers', name: 'javers-core', version: '5.14.0'
     testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 }

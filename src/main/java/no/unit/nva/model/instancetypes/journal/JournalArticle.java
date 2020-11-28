@@ -8,7 +8,7 @@ import nva.commons.utils.JacocoGenerated;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalArticle extends PeerReviewedPaper {
+public class JournalArticle extends PeerReviewedPaper implements JournalContent {
     private String volume;
     private String issue;
     private String articleNumber;
@@ -27,26 +27,32 @@ public class JournalArticle extends PeerReviewedPaper {
         setPeerReviewed(builder.peerReviewed);
     }
 
+    @Override
     public String getVolume() {
         return volume;
     }
 
+    @Override
     public void setVolume(String volume) {
         this.volume = volume;
     }
 
+    @Override
     public String getIssue() {
         return issue;
     }
 
+    @Override
     public void setIssue(String issue) {
         this.issue = issue;
     }
 
+    @Override
     public String getArticleNumber() {
         return articleNumber;
     }
 
+    @Override
     public void setArticleNumber(String articleNumber) {
         this.articleNumber = articleNumber;
     }

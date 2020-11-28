@@ -1,0 +1,136 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "Published",
+  "owner" : "me@example.org",
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "http://example.org/org/123",
+    "labels" : {
+      "no" : "Eksempelforlaget"
+    }
+  },
+  "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+  "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "handle" : "https://example.org/fakeHandle/13213",
+  "doi" : "https://example.org/yet/another/fake/doi/1231/12311",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "APPROVED",
+    "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "messages" : [ ]
+  },
+  "link" : "https://this.should.have.been.removed",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "Hovedtittelen",
+    "alternativeTitles" : {
+      "en" : "English title"
+    },
+    "language" : "http://example.org/norsk",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "2020",
+      "month" : "4",
+      "day" : "7"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "http://example.org/person/123",
+        "name" : "Navnesen, Navn",
+        "nameType" : "Personal",
+        "orcId" : "orc123",
+        "arpId" : "arp123"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "http://example.org/org/123",
+        "labels" : {
+          "no" : "Eksempelforlaget"
+        }
+      } ],
+      "role" : "Creator",
+      "sequence" : 0,
+      "correspondingAuthor" : true,
+      "email" : "nn@example.org"
+    } ],
+    "npiSubjectHeading" : "010",
+    "tags" : [ "dokumenter", "publikasjoner" ],
+    "description" : "En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Journal",
+        "title" : "The journal of mechanically separated meats",
+        "level" : "LEVEL_0",
+        "openAccess" : true,
+        "peerReviewed" : true,
+        "printIssn" : "2222-2227",
+        "onlineIssn" : "1111-1119",
+        "url" : "http://example.org/journal/1"
+      },
+      "doi" : "https://example.org/doi/12313/2313",
+      "publicationInstance" : {
+        "type" : "JournalCorrigendum",
+        "volume" : "2",
+        "issue" : "5",
+        "articleNumber" : "42311",
+        "pages" : {
+          "type" : "Range",
+          "begin" : "1",
+          "end" : "23"
+        },
+        "peerReviewed" : false
+      }
+    },
+    "metadataSource" : "https://example.org/doi?doi=123/123",
+    "abstract" : "En lang streng som beskriver innholdet i dokumentet metadataene omtaler."
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+      "name" : "new document(1)",
+      "mimeType" : "application/pdf",
+      "size" : 2,
+      "license" : {
+        "type" : "License",
+        "identifier" : "NTNU-CC-BY-4.0",
+        "labels" : {
+          "no" : "CC-BY 4.0"
+        },
+        "link" : "http://example.org/license/123"
+      },
+      "administrativeAgreement" : true,
+      "publisherAuthority" : true,
+      "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "project" : {
+    "type" : "ResearchProject",
+    "id" : "http://link.to.cristin.example.org/123",
+    "name" : "Det gode prosjektet",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "Norsk rødt felaget",
+      "id" : "123123"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-09-23T09:51:23.044996ZZ",
+      "approvedBy" : "REK",
+      "approvalStatus" : "APPLIED",
+      "applicationCode" : "123123"
+    } ]
+  },
+  "version" : "2020-11-27",
+  "publisherId" : "http://example.org/org/123",
+  "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-09-23T09:51:23.044996ZZ",
+  "doiRequestStatusDate" : "APPROVED#2020-09-23T09:51:23.044996ZZ"
+}

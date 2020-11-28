@@ -21,6 +21,7 @@ public class Publication
 
     public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
         "You must initiate creation of a DoiRequest before you can update it.";
+    private static final String version = "2020-11-27";
     private UUID identifier;
     private PublicationStatus status;
     private String owner;
@@ -38,6 +39,10 @@ public class Publication
     private ResearchProject project;
 
     public Publication() {
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     private Publication(Builder builder) {
