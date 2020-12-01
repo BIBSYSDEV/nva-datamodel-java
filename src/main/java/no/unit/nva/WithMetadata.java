@@ -9,8 +9,10 @@ public interface WithMetadata extends PublicationBase {
 
     void setEntityDescription(EntityDescription entityDescription);
 
+    @Deprecated
     ResearchProject getProject();
 
+    @Deprecated
     void setProject(ResearchProject project);
 
 }

@@ -42,11 +42,13 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
         this.entityDescription = entityDescription;
     }
 
+    @Deprecated
     @Override
     public ResearchProject getProject() {
         return project;
     }
 
+    @Deprecated
     @Override
     public void setProject(ResearchProject project) {
         this.project = project;

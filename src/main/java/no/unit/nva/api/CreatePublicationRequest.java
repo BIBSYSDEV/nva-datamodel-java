@@ -30,11 +30,13 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
         this.entityDescription = entityDescription;
     }
 
+    @Deprecated
     @Override
     public ResearchProject getProject() {
         return project;
     }
 
+    @Deprecated
     @Override
     public void setProject(ResearchProject project) {
         this.project = project;

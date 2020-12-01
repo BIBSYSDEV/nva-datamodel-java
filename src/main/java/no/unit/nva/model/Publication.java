@@ -220,11 +220,13 @@ public class Publication
         this.fileSet = fileSet;
     }
 
+    @Deprecated
     @Override
     public ResearchProject getProject() {
         return project;
     }
 
+    @Deprecated
     @Override
     public void setProject(ResearchProject project) {
         this.project = project;

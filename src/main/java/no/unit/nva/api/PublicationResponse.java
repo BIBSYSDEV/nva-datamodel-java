@@ -151,11 +151,13 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.publisher = publisher;
     }
 
+    @Deprecated
     @Override
     public ResearchProject getProject() {
         return project;
     }
 
+    @Deprecated
     @Override
     public void setProject(ResearchProject project) {
         this.project = project;
