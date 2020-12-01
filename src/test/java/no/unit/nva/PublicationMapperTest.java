@@ -3,7 +3,7 @@ package no.unit.nva;
 import static no.unit.nva.model.util.PublicationGenerator.generateEntityDescriptionJournalArticle;
 import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
 import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
-import static no.unit.nva.model.util.PublicationGenerator.getProject;
+import static no.unit.nva.model.util.PublicationGenerator.getProjects;
 import static nva.commons.utils.JsonUtils.objectMapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -30,7 +30,7 @@ public class PublicationMapperTest {
 
         CreatePublicationRequest request = new CreatePublicationRequest();
         request.setEntityDescription(generateEntityDescriptionJournalArticle());
-        request.setProject(getProject());
+        request.setProjects(getProjects());
         request.setFileSet(getFileSet(UUID.randomUUID()));
         request.setContext(SOME_CONTEXT);
 
@@ -48,7 +48,7 @@ public class PublicationMapperTest {
         UpdatePublicationRequest request = new UpdatePublicationRequest();
         request.setIdentifier(UUID.randomUUID());
         request.setEntityDescription(generateEntityDescriptionJournalArticle());
-        request.setProject(getProject());
+        request.setProjects(getProjects());
         request.setFileSet(getFileSet(UUID.randomUUID()));
         request.setContext(SOME_CONTEXT);
 
@@ -89,7 +89,7 @@ public class PublicationMapperTest {
         assertNotNull(request);
         assertNotNull(request.getContext());
         assertEquals(publication.getFileSet(), request.getFileSet());
-        assertEquals(publication.getProject(), request.getProject());
+        assertEquals(publication.getProjects(), request.getProjects());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
     }
 
@@ -103,7 +103,7 @@ public class PublicationMapperTest {
         assertNotNull(request);
         assertNotNull(request.getContext());
         assertEquals(publication.getFileSet(), request.getFileSet());
-        assertEquals(publication.getProject(), request.getProject());
+        assertEquals(publication.getProjects(), request.getProjects());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
     }
 }

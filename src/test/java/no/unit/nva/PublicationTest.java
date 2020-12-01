@@ -25,6 +25,7 @@ import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationTest extends ModelTest {
 
@@ -101,6 +102,34 @@ public class PublicationTest extends ModelTest {
 
     }
 
+    @DisplayName("Test that each publication type can be round-tripped to and from JSON")
+    @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
+    @CsvSource({
+            "BookAnthology",
+            "BookMonograph",
+            "CartographicMap",
+            "ChapterArticle",
+            "DegreeBachelor",
+            "DegreeMaster",
+            "DegreePhd",
+            "FeatureArticle",
+            "JournalArticle",
+            "JournalCorrigendum",
+            "JournalLeader",
+            "JournalLetter",
+            "JournalReview",
+            "JournalShortCommunication",
+            "MusicNotation",
+            "OtherStudentWork",
+            "ReportPolicy",
+            "ReportResearch",
+            "ReportWorkingPaper"
+    })
+    void projectsAreSetAsListsWhenInputIsSingleProject(String instanceType) throws Exception {
+        Publication expected = generatePublication(instanceType);
+        assertTrue(expected.getProjects() instanceof List);
+    }
+
     private Publication generatePublication(String instanceType) throws Exception {
         Reference reference = generateReference(instanceType);
         Instant now = Instant.now();
@@ -117,7 +146,7 @@ public class PublicationTest extends ModelTest {
                 .withLink(URI.create("https://this.should.have.been.removed"))
                 .withModifiedDate(now)
                 .withOwner("me@example.org")
-                .withProject(generateProject())
+                .withProjects(generateProject())
                 .withPublishedDate(now)
                 .withPublisher(generateOrganization())
                 .withStatus(PublicationStatus.PUBLISHED)

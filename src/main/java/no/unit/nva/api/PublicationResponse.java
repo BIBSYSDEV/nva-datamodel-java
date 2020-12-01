@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.WithContext;
@@ -34,12 +35,12 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private URI link;
     private EntityDescription entityDescription;
     private FileSet fileSet;
-    private ResearchProject project;
     private URI doi;
     private DoiRequest doiRequest;
     private Boolean doiRequested;
     @JsonProperty("@context")
     private JsonNode context;
+    private List<ResearchProject> projects;
 
     @Override
     public FileSet getFileSet() {
@@ -151,16 +152,14 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.publisher = publisher;
     }
 
-    @Deprecated
     @Override
-    public ResearchProject getProject() {
-        return project;
+    public List<ResearchProject> getProjects() {
+        return projects;
     }
 
-    @Deprecated
     @Override
-    public void setProject(ResearchProject project) {
-        this.project = project;
+    public void setProjects(List<ResearchProject> projects) {
+        this.projects = projects;
     }
 
     @Override
@@ -208,38 +207,41 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.context = context;
     }
 
-    @Override
     @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof PublicationResponse)) {
             return false;
         }
         PublicationResponse that = (PublicationResponse) o;
-        return Objects.equals(identifier, that.identifier)
-            && status == that.status
-            && Objects.equals(owner, that.owner)
-            && Objects.equals(publisher, that.publisher)
-            && Objects.equals(createdDate, that.createdDate)
-            && Objects.equals(modifiedDate, that.modifiedDate)
-            && Objects.equals(publishedDate, that.publishedDate)
-            && Objects.equals(indexedDate, that.indexedDate)
-            && Objects.equals(handle, that.handle)
-            && Objects.equals(link, that.link)
-            && Objects.equals(entityDescription, that.entityDescription)
-            && Objects.equals(fileSet, that.fileSet)
-            && Objects.equals(project, that.project)
-            && Objects.equals(doi, that.doi)
-            && Objects.equals(doiRequest, that.doiRequest)
-            && Objects.equals(context, that.context);
+        return Objects.equals(getIdentifier(), that.getIdentifier())
+                && getStatus() == that.getStatus()
+                && Objects.equals(getOwner(), that.getOwner())
+                && Objects.equals(getPublisher(), that.getPublisher())
+                && Objects.equals(getCreatedDate(), that.getCreatedDate())
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                && Objects.equals(getPublishedDate(), that.getPublishedDate())
+                && Objects.equals(getIndexedDate(), that.getIndexedDate())
+                && Objects.equals(getHandle(), that.getHandle())
+                && Objects.equals(getLink(), that.getLink())
+                && Objects.equals(getEntityDescription(), that.getEntityDescription())
+                && Objects.equals(getFileSet(), that.getFileSet())
+                && Objects.equals(getDoi(), that.getDoi())
+                && Objects.equals(getDoiRequest(), that.getDoiRequest())
+                && Objects.equals(getDoiRequested(), that.getDoiRequested())
+                && Objects.equals(getContext(), that.getContext())
+                && Objects.equals(getProjects(), that.getProjects());
     }
 
-    @Override
     @JacocoGenerated
+    @Override
     public int hashCode() {
-        return Objects.hash(identifier, status, owner, publisher, createdDate, modifiedDate, publishedDate, indexedDate,
-            handle, link, entityDescription, fileSet, project, doi, doiRequest, context);
+        return Objects.hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(),
+                getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
+                getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), getDoiRequested(),
+                getContext(), getProjects());
     }
 }

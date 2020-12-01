@@ -3,16 +3,15 @@ package no.unit.nva;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.ResearchProject;
 
+import java.util.List;
+
 public interface WithMetadata extends PublicationBase {
 
     EntityDescription getEntityDescription();
 
     void setEntityDescription(EntityDescription entityDescription);
 
-    @Deprecated
-    ResearchProject getProject();
+    List<ResearchProject> getProjects();
 
-    @Deprecated
-    void setProject(ResearchProject project);
-
+    void setProjects(List<ResearchProject> projects);
 }

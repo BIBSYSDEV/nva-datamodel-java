@@ -120,7 +120,7 @@ public final class PublicationMapper {
 
     private static void mapMetadata(WithMetadata request, Publication publication) {
         publication.setEntityDescription(request.getEntityDescription());
-        publication.setProject(request.getProject());
+        publication.setProjects(request.getProjects());
     }
 
     private static void mapFile(WithFile request, Publication publication) {

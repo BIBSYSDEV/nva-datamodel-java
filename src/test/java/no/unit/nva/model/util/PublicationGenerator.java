@@ -121,7 +121,7 @@ public class PublicationGenerator extends ModelTest {
                 .withFileSet(getFileSet(fileIdentifier))
                 .withEntityDescription(entityDescription)
                 .withOwner("eier@example.org")
-                .withProject(getProject())
+                .withProjects(getProjects())
                 .withDoiRequest(getDoiRequest(now))
                 .withPublishedDate(now)
                 .withDoi(URI.create("http://example.org/doi/1231/98765"))
@@ -156,13 +156,13 @@ public class PublicationGenerator extends ModelTest {
                 generateEntityDescriptionBookMonograph());
     }
 
-    public static ResearchProject getProject() {
-        return new ResearchProject.Builder()
+    public static List<ResearchProject> getProjects() {
+        return List.of(new ResearchProject.Builder()
                 .withId(URI.create("http://link.to.cristin.example.org/123"))
                 .withName("Det gode prosjektet")
                 .withApprovals(getApprovals())
                 .withGrants(getGrants())
-                .build();
+                .build());
     }
 
     public static List<Grant> getGrants() {

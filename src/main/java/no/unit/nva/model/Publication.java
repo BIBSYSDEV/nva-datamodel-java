@@ -6,6 +6,7 @@ import static java.util.Objects.hash;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.WithFile;
@@ -15,7 +16,7 @@ import no.unit.nva.WithMetadata;
 import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@SuppressWarnings("PMD.ExcessivePublicCount")
+@SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields"})
 public class Publication
         implements WithIdentifier, WithIndex, WithFile, WithMetadata, WithCopy<Publication.Builder> {
 
@@ -35,7 +36,7 @@ public class Publication
     private URI link;
     private EntityDescription entityDescription;
     private FileSet fileSet;
-    private ResearchProject project;
+    private List<ResearchProject> projects;
 
     public Publication() {
     }
@@ -55,7 +56,7 @@ public class Publication
         setLink(builder.link);
         setEntityDescription(builder.entityDescription);
         setFileSet(builder.fileSet);
-        setProject(builder.project);
+        setProjects(builder.projects);
     }
 
     @Override
@@ -220,21 +221,19 @@ public class Publication
         this.fileSet = fileSet;
     }
 
-    @Deprecated
     @Override
-    public ResearchProject getProject() {
-        return project;
-    }
-
-    @Deprecated
-    @Override
-    public void setProject(ResearchProject project) {
-        this.project = project;
+    public List<ResearchProject> getProjects() {
+        return projects;
     }
 
     @Override
-    public Publication.Builder copy() {
-        return new Publication.Builder()
+    public void setProjects(List<ResearchProject> projects) {
+        this.projects = projects;
+    }
+
+    @Override
+    public Builder copy() {
+        return new Builder()
                 .withIdentifier(getIdentifier())
                 .withStatus(getStatus())
                 .withOwner(getOwner())
@@ -249,7 +248,7 @@ public class Publication
                 .withLink(getLink())
                 .withEntityDescription(getEntityDescription())
                 .withFileSet(getFileSet())
-                .withProject(getProject());
+                .withProjects(getProjects());
     }
 
     @JacocoGenerated
@@ -276,27 +275,15 @@ public class Publication
                 && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getEntityDescription(), that.getEntityDescription())
                 && Objects.equals(getFileSet(), that.getFileSet())
-                && Objects.equals(getProject(), that.getProject());
+                && Objects.equals(getProjects(), that.getProjects());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return hash(getIdentifier(),
-                getStatus(),
-                getOwner(),
-                getPublisher(),
-                getCreatedDate(),
-                getModifiedDate(),
-                getPublishedDate(),
-                getIndexedDate(),
-                getHandle(),
-                getDoi(),
-                getDoiRequest(),
-                getLink(),
-                getEntityDescription(),
-                getFileSet(),
-                getProject());
+        return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
+                getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
+                getEntityDescription(), getFileSet(), getProjects());
     }
 
     public static final class Builder {
@@ -314,7 +301,7 @@ public class Publication
         private URI link;
         private EntityDescription entityDescription;
         private FileSet fileSet;
-        private ResearchProject project;
+        private List<ResearchProject> projects;
 
         public Builder() {
         }
@@ -389,8 +376,8 @@ public class Publication
             return this;
         }
 
-        public Builder withProject(ResearchProject project) {
-            this.project = project;
+        public Builder withProjects(List<ResearchProject> projects) {
+            this.projects = projects;
             return this;
         }
 

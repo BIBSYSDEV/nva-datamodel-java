@@ -2,6 +2,8 @@ package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.WithContext;
@@ -21,6 +23,7 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
     private FileSet fileSet;
     @JsonProperty("@context")
     private JsonNode context;
+    private List<ResearchProject> projects;
 
     @Override
     public UUID getIdentifier() {
@@ -42,17 +45,17 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
         this.entityDescription = entityDescription;
     }
 
-    @Deprecated
     @Override
-    public ResearchProject getProject() {
-        return project;
+    public List<ResearchProject> getProjects() {
+        return projects;
     }
 
-    @Deprecated
     @Override
-    public void setProject(ResearchProject project) {
-        this.project = project;
+    public void setProjects(List<ResearchProject> projects) {
+        this.projects = projects;
     }
+
+
 
     @Override
     public FileSet getFileSet() {
