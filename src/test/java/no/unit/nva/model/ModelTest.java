@@ -33,6 +33,7 @@ import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
 import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
+import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -254,6 +255,14 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
         return generateReference(generateReportContext(), reportPolicy);
     }
+
+    protected Reference generateReportBasic() throws InvalidIssnException, InvalidIsbnException, MalformedURLException {
+        PublicationInstance<MonographPages> reportPolicy = new ReportBasic.Builder()
+                .withPages(generateMonographPages())
+                .build();
+        return generateReference(generateReportContext(), reportPolicy);
+    }
+
 
     protected static Reference generateReportResearch() throws InvalidIssnException,
                                                                InvalidIsbnException, MalformedURLException {

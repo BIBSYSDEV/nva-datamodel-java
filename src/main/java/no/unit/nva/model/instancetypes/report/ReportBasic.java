@@ -1,14 +1,14 @@
 package no.unit.nva.model.instancetypes.report;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import no.unit.nva.model.instancetypes.NonPeerReviewedMonograph;
 import no.unit.nva.model.pages.MonographPages;
+import nva.commons.utils.JacocoGenerated;
 
-@JsonTypeName("Report")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ReportBasic extends NonPeerReviewedMonograph {
 
+    @JacocoGenerated
     public ReportBasic() {
         super();
     }
