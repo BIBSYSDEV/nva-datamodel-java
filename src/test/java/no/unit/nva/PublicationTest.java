@@ -55,6 +55,7 @@ public class PublicationTest extends ModelTest {
             "JournalShortCommunication",
             "MusicNotation",
             "OtherStudentWork",
+            "ReportBasic",
             "ReportPolicy",
             "ReportResearch",
             "ReportWorkingPaper"
@@ -89,6 +90,7 @@ public class PublicationTest extends ModelTest {
             "JournalShortCommunication",
             "MusicNotation",
             "OtherStudentWork",
+            "ReportBasic",
             "ReportPolicy",
             "ReportResearch",
             "ReportWorkingPaper"
@@ -204,6 +206,9 @@ public class PublicationTest extends ModelTest {
             case "OtherStudentWork":
                 reference = generateOtherStudentWork();
                 break;
+            case "ReportBasic":
+                reference = generateReportBasic();
+                break;
             case "ReportPolicy":
                 reference = generateReportPolicy();
                 break;
@@ -218,7 +223,6 @@ public class PublicationTest extends ModelTest {
         }
         return reference;
     }
-
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
