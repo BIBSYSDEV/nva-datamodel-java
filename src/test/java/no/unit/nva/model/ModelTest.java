@@ -403,13 +403,13 @@ public class ModelTest implements JsonHandlingTest {
                 .build();
     }
 
-    protected static ResearchProject generateProject() {
-        return new ResearchProject.Builder()
+    protected static List<ResearchProject> generateProject() {
+        return List.of(new ResearchProject.Builder()
                 .withId(URI.create("http://link.to.cristin.example.org/123"))
                 .withName("Det gode prosjektet")
                 .withApprovals(generateApprovals())
                 .withGrants(generateGrants())
-                .build();
+                .build());
     }
 
     protected static List<Grant> generateGrants() {

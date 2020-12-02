@@ -105,7 +105,7 @@
       "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
     } ]
   },
-  "project" : {
+  "projects" : [ {
     "type" : "ResearchProject",
     "id" : "http://link.to.cristin.example.org/123",
     "name" : "Det gode prosjektet",
@@ -121,8 +121,8 @@
       "approvalStatus" : "APPLIED",
       "applicationCode" : "123123"
     } ]
-  },
-  "publisherId" : "http://example.org/org/123",
+  } ],
   "publisherOwnerDate" : "http://example.org/org/123#me@example.org#2020-09-23T09:51:23.044996ZZ",
-  "doiRequestStatusDate" : "APPROVED#2020-09-23T09:51:23.044996ZZ"
+  "doiRequestStatusDate" : "APPROVED#2020-09-23T09:51:23.044996ZZ",
+  "publisherId" : "http://example.org/org/123"
 }

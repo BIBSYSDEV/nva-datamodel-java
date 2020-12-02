@@ -2,6 +2,8 @@ package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
@@ -14,11 +16,11 @@ import nva.commons.utils.JacocoGenerated;
 public class CreatePublicationRequest implements WithMetadata, WithFile, WithContext {
 
     private EntityDescription entityDescription;
-    private ResearchProject project;
     private FileSet fileSet;
     @JsonProperty("@context")
     private JsonNode context;
     private Boolean doiRequested;
+    private List<ResearchProject> projects;
 
     @Override
     public EntityDescription getEntityDescription() {
@@ -31,13 +33,13 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
     }
 
     @Override
-    public ResearchProject getProject() {
-        return project;
+    public List<ResearchProject> getProjects() {
+        return projects;
     }
 
     @Override
-    public void setProject(ResearchProject project) {
-        this.project = project;
+    public void setProjects(List<ResearchProject> projects) {
+        this.projects = projects;
     }
 
     @Override
@@ -60,26 +62,26 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
         this.context = context;
     }
 
-    @Override
     @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof CreatePublicationRequest)) {
             return false;
         }
         CreatePublicationRequest that = (CreatePublicationRequest) o;
-        return Objects.equals(entityDescription, that.entityDescription)
-            && Objects.equals(project, that.project)
-            && Objects.equals(fileSet, that.fileSet)
-            && Objects.equals(context, that.context)
-            && Objects.equals(doiRequested, that.doiRequested);
+        return Objects.equals(getEntityDescription(), that.getEntityDescription())
+                && Objects.equals(getFileSet(), that.getFileSet())
+                && Objects.equals(getContext(), that.getContext())
+                && Objects.equals(doiRequested, that.doiRequested)
+                && Objects.equals(getProjects(), that.getProjects());
     }
 
-    @Override
     @JacocoGenerated
+    @Override
     public int hashCode() {
-        return Objects.hash(entityDescription, project, fileSet, context);
+        return Objects.hash(getEntityDescription(), getFileSet(), getContext(), doiRequested, getProjects());
     }
 }

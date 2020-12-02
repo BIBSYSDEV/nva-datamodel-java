@@ -44,13 +44,15 @@ schema:
       $ref: '#/components/schemas/EntityDescription'
     fileSet:
       $ref: '#/components/schemas/FileSet'
-    project:
-      $ref: '#/components/schemas/ResearchProject'
-    publisherId:
-      type: string
+    projects:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResearchProject'
     publisherOwnerDate:
       type: string
     doiRequestStatusDate:
+      type: string
+    publisherId:
       type: string
     type:
       type: string
@@ -778,13 +780,15 @@ referencedSchemas:
         $ref: '#/components/schemas/EntityDescription'
       fileSet:
         $ref: '#/components/schemas/FileSet'
-      project:
-        $ref: '#/components/schemas/ResearchProject'
-      publisherId:
-        type: string
+      projects:
+        type: array
+        items:
+          $ref: '#/components/schemas/ResearchProject'
       publisherOwnerDate:
         type: string
       doiRequestStatusDate:
+        type: string
+      publisherId:
         type: string
       type:
         type: string
@@ -819,10 +823,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
