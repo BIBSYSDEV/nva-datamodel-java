@@ -48,11 +48,11 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/ResearchProject'
+    publisherId:
+      type: string
     publisherOwnerDate:
       type: string
     doiRequestStatusDate:
-      type: string
-    publisherId:
       type: string
     type:
       type: string
@@ -553,6 +553,9 @@ referencedSchemas:
           type: string
         pages:
           $ref: '#/components/schemas/Range'
+        corrigendumFor:
+          type: string
+          format: uri
         type:
           type: string
   JournalLeader:
@@ -784,11 +787,11 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/ResearchProject'
+      publisherId:
+        type: string
       publisherOwnerDate:
         type: string
       doiRequestStatusDate:
-        type: string
-      publisherId:
         type: string
       type:
         type: string
