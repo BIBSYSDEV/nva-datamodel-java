@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ReportBasicTest extends InstanceTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-    public static final String REPORT = "Report";
+    public static final String REPORT = "ReportBasic";
 
     @DisplayName("ReportBasic can be created from JSON")
     @Test
