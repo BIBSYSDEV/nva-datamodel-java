@@ -3,6 +3,9 @@ package no.unit.nva.model.instancetypes.journal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.Range;
+import nva.commons.utils.JacocoGenerated;
+
+import java.net.URI;
 
 /**
  * A Journal corrigendum is a correction to a previously published Journal article/content.
@@ -13,6 +16,8 @@ import no.unit.nva.model.pages.Range;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class JournalCorrigendum extends JournalNonPeerReviewedContent {
+
+    private final URI corrigendumFor;
 
     /**
      * Creates an object that matches the Journal pattern, but throws an exception if peerReviewed is set to true.
@@ -25,12 +30,19 @@ public class JournalCorrigendum extends JournalNonPeerReviewedContent {
     public JournalCorrigendum(@JsonProperty("volume") String volume,
                               @JsonProperty("issue") String issue,
                               @JsonProperty("articleNumber") String articleNumber,
-                              @JsonProperty("pages") Range pages) {
+                              @JsonProperty("pages") Range pages,
+                              @JsonProperty("corrigendumFor") URI corrigendumFor) {
         super(volume, issue, articleNumber, pages);
+        this.corrigendumFor = corrigendumFor;
     }
 
     private JournalCorrigendum(Builder builder) {
-        this(builder.volume, builder.issue, builder.articleNumber, builder.pages);
+        this(builder.volume, builder.issue, builder.articleNumber, builder.pages, builder.corrigendumFor);
+    }
+
+    @JacocoGenerated
+    public URI getCorrigendumFor() {
+        return corrigendumFor;
     }
 
     public static final class Builder {
@@ -38,6 +50,7 @@ public class JournalCorrigendum extends JournalNonPeerReviewedContent {
         private String volume;
         private String issue;
         private String articleNumber;
+        private URI corrigendumFor;
 
         public Builder() {
         }
@@ -59,6 +72,11 @@ public class JournalCorrigendum extends JournalNonPeerReviewedContent {
 
         public Builder withArticleNumber(String articleNumber) {
             this.articleNumber = articleNumber;
+            return this;
+        }
+
+        public Builder withCorrigendumFor(URI corrigendumFor) {
+            this.corrigendumFor = corrigendumFor;
             return this;
         }
 

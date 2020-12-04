@@ -196,6 +196,7 @@ public class ModelTest implements JsonHandlingTest {
                 .withIssue("5")
                 .withVolume("2")
                 .withPages(generateRange())
+                .withCorrigendumFor(URI.create("https://example.org/article/42310"))
                 .build();
         return generateReference(generateJournalContext(), journalCorrigendum);
     }
