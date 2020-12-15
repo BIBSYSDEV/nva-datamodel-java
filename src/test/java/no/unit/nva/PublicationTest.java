@@ -6,8 +6,10 @@ import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
+import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.utils.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -20,11 +22,16 @@ import java.util.List;
 import java.util.UUID;
 
 import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
+import static no.unit.nva.model.PublicationStatus.DRAFT;
+import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
+import static no.unit.nva.model.PublicationStatus.NEW;
+import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationTest extends ModelTest {
@@ -34,6 +41,7 @@ public class PublicationTest extends ModelTest {
     public static final String DOCUMENTATION_PATH_TEMPLATE = "documentation/%s.json";
     public static final UUID REPLACEMENT_IDENTIFIER_1 = UUID.fromString("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final UUID REPLACEMENT_IDENTIFIER_2 = UUID.fromString("5032710d-a326-43d3-a8fb-57a451873c78");
+    public static final String JOURNAL_ARTICLE = "JournalArticle";
     ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @DisplayName("Test that each publication type can be round-tripped to and from JSON")
@@ -133,6 +141,30 @@ public class PublicationTest extends ModelTest {
         assertTrue(expected.getProjects() instanceof List);
     }
 
+    @Test
+    void updateStatusForValidTransitionIsOk() throws Exception {
+        Publication publication = generatePublication(JOURNAL_ARTICLE);
+        publication.setStatus(DRAFT);
+
+        publication.updateStatus(DRAFT_FOR_DELETION);
+
+        assertThat(publication.getStatus(), is(equalTo(DRAFT_FOR_DELETION)));
+    }
+
+    @Test
+    void updateStatusThrowsExceptionForInvalidStatusTransition() throws Exception {
+        Publication publication = generatePublication(JOURNAL_ARTICLE);
+        publication.setStatus(NEW);
+
+        InvalidPublicationStatusTransitionException exception =
+                assertThrows(InvalidPublicationStatusTransitionException.class,
+                    () -> publication.updateStatus(PUBLISHED));
+
+        String error = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
+                NEW, PUBLISHED);
+        assertThat(exception.getMessage(), is(equalTo(error)));
+    }
+
     private Publication generatePublication(String instanceType) throws Exception {
         Reference reference = generateReference(instanceType);
         Instant now = Instant.now();
@@ -152,7 +184,7 @@ public class PublicationTest extends ModelTest {
                 .withProjects(generateProject())
                 .withPublishedDate(now)
                 .withPublisher(generateOrganization())
-                .withStatus(PublicationStatus.PUBLISHED)
+                .withStatus(PUBLISHED)
                 .build();
     }
 

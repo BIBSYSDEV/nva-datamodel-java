@@ -7,18 +7,25 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithIndex;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.utils.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields"})
 public class Publication
         implements WithIdentifier, WithIndex, WithFile, WithMetadata, WithCopy<Publication.Builder> {
+
+    public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
+            PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
+            PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, PublicationStatus.DRAFT_FOR_DELETION)
+    );
 
     public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
         "You must initiate creation of a DoiRequest before you can update it.";
@@ -284,6 +291,27 @@ public class Publication
         return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
                 getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
                 getEntityDescription(), getFileSet(), getProjects());
+    }
+
+    /**
+     * Updates the status of the publication using rules for valid status transitions.
+     *
+     * @param nextStatus    the status to update to
+     * @throws InvalidPublicationStatusTransitionException  if the status transition is not allowed
+     */
+    public void updateStatus(PublicationStatus nextStatus) throws InvalidPublicationStatusTransitionException {
+        verifyStatusTransition(nextStatus);
+        setStatus(nextStatus);
+    }
+
+    private void verifyStatusTransition(PublicationStatus nextStatus)
+            throws InvalidPublicationStatusTransitionException {
+        final PublicationStatus currentStatus = getStatus();
+        validStatusTransitionsMap.get(currentStatus)
+                .stream()
+                .filter(status -> status.equals(nextStatus))
+                .findAny()
+                .orElseThrow(() -> new InvalidPublicationStatusTransitionException(currentStatus, nextStatus));
     }
 
     public static final class Builder {
