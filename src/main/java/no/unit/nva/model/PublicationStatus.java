@@ -8,10 +8,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PublicationStatus {
 
-    NEW("New"),
-    DRAFT("Draft"),
-    REJECTED("Rejected"),
-    PUBLISHED("Published");
+    NEW("NEW"),
+    DRAFT("DRAFT"),
+    REJECTED("REJECTED"),
+    PUBLISHED("PUBLISHED"),
+    DRAFT_FOR_DELETION("DRAFT_FOR_DELETION");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid PublicationStatus, expected one of: %s";
     public static final String DELIMITER = ", ";
