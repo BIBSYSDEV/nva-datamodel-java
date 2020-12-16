@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.io.IOException;
 import java.net.URI;
@@ -141,14 +142,14 @@ public class PublicationTest extends ModelTest {
         assertTrue(expected.getProjects() instanceof List);
     }
 
-    @Test
-    void updateStatusForValidTransitionIsOk() throws Exception {
+    @ParameterizedTest
+    @EnumSource(value= PublicationStatus.class, names = { "DRAFT_FOR_DELETION","PUBLISHED"  })
+    void updateStatusForDraftPublication(PublicationStatus target) throws Exception {
         Publication publication = generatePublication(JOURNAL_ARTICLE);
         publication.setStatus(DRAFT);
+        publication.updateStatus(target);
 
-        publication.updateStatus(DRAFT_FOR_DELETION);
-
-        assertThat(publication.getStatus(), is(equalTo(DRAFT_FOR_DELETION)));
+        assertThat(publication.getStatus(), is(equalTo(target)));
     }
 
     @Test
@@ -160,9 +161,9 @@ public class PublicationTest extends ModelTest {
                 assertThrows(InvalidPublicationStatusTransitionException.class,
                     () -> publication.updateStatus(PUBLISHED));
 
-        String error = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
+        String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
                 NEW, PUBLISHED);
-        assertThat(exception.getMessage(), is(equalTo(error)));
+        assertThat(exception.getMessage(), is(equalTo(expectedError)));
     }
 
     private Publication generatePublication(String instanceType) throws Exception {

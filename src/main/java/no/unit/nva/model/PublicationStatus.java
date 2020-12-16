@@ -10,7 +10,6 @@ public enum PublicationStatus {
 
     NEW("NEW"),
     DRAFT("DRAFT"),
-    REJECTED("REJECTED"),
     PUBLISHED("PUBLISHED"),
     DRAFT_FOR_DELETION("DRAFT_FOR_DELETION");
 

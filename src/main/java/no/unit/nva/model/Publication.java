@@ -307,11 +307,9 @@ public class Publication
     private void verifyStatusTransition(PublicationStatus nextStatus)
             throws InvalidPublicationStatusTransitionException {
         final PublicationStatus currentStatus = getStatus();
-        validStatusTransitionsMap.get(currentStatus)
-                .stream()
-                .filter(status -> status.equals(nextStatus))
-                .findAny()
-                .orElseThrow(() -> new InvalidPublicationStatusTransitionException(currentStatus, nextStatus));
+        if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
+            throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
+        }
     }
 
     public static final class Builder {
