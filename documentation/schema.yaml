@@ -9,10 +9,10 @@ schema:
     status:
       type: string
       enum:
-      - New
-      - Draft
-      - Rejected
-      - Published
+      - NEW
+      - DRAFT
+      - PUBLISHED
+      - DRAFT_FOR_DELETION
     owner:
       type: string
     publisher:
@@ -752,10 +752,10 @@ referencedSchemas:
       status:
         type: string
         enum:
-        - New
-        - Draft
-        - Rejected
-        - Published
+        - NEW
+        - DRAFT
+        - PUBLISHED
+        - DRAFT_FOR_DELETION
       owner:
         type: string
       publisher:

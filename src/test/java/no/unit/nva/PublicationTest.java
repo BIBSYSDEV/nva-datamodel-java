@@ -24,7 +24,6 @@ import java.util.UUID;
 
 import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
-import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -34,7 +33,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class PublicationTest extends ModelTest {
 
