@@ -77,6 +77,12 @@
       "doi" : "https://example.org/doi/12313/2313",
       "publicationInstance" : {
         "type" : "DegreeMaster",
+        "submittedDate" : {
+          "type" : "PublicationDate",
+          "year" : "2020",
+          "month" : "4",
+          "day" : "7"
+        },
         "peerReviewed" : false,
         "pages" : {
           "type" : "MonographPages",

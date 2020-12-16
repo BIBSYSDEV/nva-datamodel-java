@@ -144,6 +144,7 @@ public class ModelTest implements JsonHandlingTest {
     protected static Reference generateDegreeBachelor() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> degreeBachelor = new DegreeBachelor.Builder()
                 .withPages(generateMonographPages())
+                .withSubmittedDate(generatePublicationDate())
                 .build();
         return generateReference(generateDegreeContext(), degreeBachelor);
     }
@@ -151,6 +152,7 @@ public class ModelTest implements JsonHandlingTest {
     protected static Reference generateDegreeMaster() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> degreeMaster = new DegreeMaster.Builder()
                 .withPages(generateMonographPages())
+                .withSubmittedDate(generatePublicationDate())
                 .build();
         return generateReference(generateDegreeContext(), degreeMaster);
     }
@@ -158,6 +160,7 @@ public class ModelTest implements JsonHandlingTest {
     protected static Reference generateDegreePhd() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> degreePhd = new DegreePhd.Builder()
                 .withPages(generateMonographPages())
+                .withSubmittedDate(generatePublicationDate())
                 .build();
         return generateReference(generateDegreeContext(), degreePhd);
     }
@@ -165,6 +168,7 @@ public class ModelTest implements JsonHandlingTest {
     protected static Reference generateOtherStudentWork() throws MalformedURLException, InvalidIsbnException {
         PublicationInstance<MonographPages> otherStudentWork = new OtherStudentWork.Builder()
                 .withPages(generateMonographPages())
+                .withSubmittedDate(generatePublicationDate())
                 .build();
         return generateReference(generateDegreeContext(), otherStudentWork);
     }
