@@ -216,7 +216,11 @@ referencedSchemas:
       role:
         type: string
         enum:
+        - Advisor
         - Creator
+        - Editor
+        - Illustrator
+        - Other
       sequence:
         type: integer
         format: int32

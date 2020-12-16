@@ -23,9 +23,9 @@ import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullO
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationTest extends ModelTest {
 
@@ -130,7 +130,7 @@ public class PublicationTest extends ModelTest {
     })
     void projectsAreSetAsListsWhenInputIsSingleProject(String instanceType) throws Exception {
         Publication expected = generatePublication(instanceType);
-        assertTrue(expected.getProjects() instanceof List);
+        assertThat(expected.getProjects(), instanceOf(List.class));
     }
 
     private Publication generatePublication(String instanceType) throws Exception {

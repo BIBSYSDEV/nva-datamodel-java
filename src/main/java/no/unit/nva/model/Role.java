@@ -7,11 +7,15 @@ import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Role {
-    CREATOR("Creator");
+    ADVISOR("Advisor"),
+    CREATOR("Creator"),
+    EDITOR("Editor"),
+    ILLUSTRATOR("Illustrator"),
+    OTHER("Other");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid Role, expected one of: %s";
     public static final String DELIMITER = ", ";
-    private String value;
+    private final String value;
 
     Role(String value) {
         this.value = value;
