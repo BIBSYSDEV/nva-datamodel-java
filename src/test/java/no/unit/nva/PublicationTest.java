@@ -143,7 +143,7 @@ public class PublicationTest extends ModelTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value= PublicationStatus.class, names = { "DRAFT_FOR_DELETION","PUBLISHED"  })
+    @EnumSource(value = PublicationStatus.class, names = { "DRAFT_FOR_DELETION","PUBLISHED" })
     void updateStatusForDraftPublication(PublicationStatus target) throws Exception {
         Publication publication = generatePublication(JOURNAL_ARTICLE);
         publication.setStatus(DRAFT);
