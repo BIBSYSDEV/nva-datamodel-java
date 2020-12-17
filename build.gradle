@@ -71,3 +71,7 @@ tasks.withType(Checkstyle) {
         html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
     }
 }
+
+build {
+    dependsOn(test)
+}
