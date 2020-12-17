@@ -20,6 +20,12 @@ configurations {
     }
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
 
