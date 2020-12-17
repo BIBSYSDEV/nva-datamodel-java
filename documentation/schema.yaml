@@ -9,10 +9,10 @@ schema:
     status:
       type: string
       enum:
-      - New
-      - Draft
-      - Rejected
-      - Published
+      - NEW
+      - DRAFT
+      - PUBLISHED
+      - DRAFT_FOR_DELETION
     owner:
       type: string
     publisher:
@@ -216,7 +216,11 @@ referencedSchemas:
       role:
         type: string
         enum:
+        - Advisor
         - Creator
+        - Editor
+        - Illustrator
+        - Other
       sequence:
         type: integer
         format: int32
@@ -274,6 +278,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
@@ -288,6 +294,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
@@ -302,6 +310,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
@@ -724,6 +734,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
@@ -748,10 +760,10 @@ referencedSchemas:
       status:
         type: string
         enum:
-        - New
-        - Draft
-        - Rejected
-        - Published
+        - NEW
+        - DRAFT
+        - PUBLISHED
+        - DRAFT_FOR_DELETION
       owner:
         type: string
       publisher:
