@@ -48,6 +48,7 @@ test {
 }
 
 jacocoTestReport {
+    dependsOn(test)
     reports {
         xml.enabled true
     }
@@ -70,8 +71,4 @@ tasks.withType(Checkstyle) {
         html.enabled true
         html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
     }
-}
-
-build {
-    dependsOn(test)
 }
