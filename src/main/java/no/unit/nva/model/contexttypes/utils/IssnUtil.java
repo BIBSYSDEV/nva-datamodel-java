@@ -1,7 +1,7 @@
 package no.unit.nva.model.contexttypes.utils;
 
 import no.unit.nva.model.exceptions.InvalidIssnException;
-import no.unit.nva.model.validator.IssnValidator;
+import org.apache.commons.validator.routines.ISSNValidator;
 
 import static java.util.Objects.isNull;
 
@@ -17,8 +17,7 @@ public final class IssnUtil {
         if (isNull(issn) || issn.isEmpty()) {
             return null;
         }
-        boolean isValid = IssnValidator.validate(issn);
-        if (isValid) {
+        if (new ISSNValidator().isValid(issn)) {
             return issn;
         } else {
             throw new InvalidIssnException(issn);
