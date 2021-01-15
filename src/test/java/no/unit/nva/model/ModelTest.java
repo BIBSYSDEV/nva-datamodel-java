@@ -506,11 +506,10 @@ public class ModelTest implements JsonHandlingTest {
         jsonNode.put(PRINT_ISSN, printIssn);
         jsonNode.put(ONLINE_ISSN, onlineIssn);
 
-        String jsonString = attempt(() -> JsonUtils.objectMapper.writeValueAsString(jsonNode))
+        return attempt(() -> JsonUtils.objectMapper.writeValueAsString(jsonNode))
             .map(content -> JsonUtils.objectMapper.readValue(content, Map.class))
             .map(JsonUtils.objectMapper::writeValueAsString)
             .orElseThrow();
-        return jsonString;
     }
 
     private static JsonNode arrayNode(List<String> isbnList) {
