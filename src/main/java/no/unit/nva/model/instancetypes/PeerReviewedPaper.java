@@ -2,7 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.JacocoGenerated;
+import nva.commons.core.JacocoGenerated;
 
 import java.util.Objects;
 

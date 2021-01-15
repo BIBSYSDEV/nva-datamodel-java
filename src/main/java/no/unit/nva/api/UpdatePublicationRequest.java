@@ -13,7 +13,7 @@ import no.unit.nva.WithMetadata;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.ResearchProject;
-import nva.commons.utils.JacocoGenerated;
+import nva.commons.core.JacocoGenerated;
 
 public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, WithFile, WithContext {
 

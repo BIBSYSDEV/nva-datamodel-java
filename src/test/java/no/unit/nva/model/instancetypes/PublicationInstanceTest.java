@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.IoUtils;
+import nva.commons.core.ioutils.IoUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

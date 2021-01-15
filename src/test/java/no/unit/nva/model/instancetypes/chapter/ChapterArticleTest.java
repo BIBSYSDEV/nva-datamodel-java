@@ -7,7 +7,7 @@ import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.JsonUtils;
+import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import nva.commons.utils.JsonUtils;
+import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -58,9 +58,7 @@ public class DoiRequestMessageTest {
     }
 
     private void assertThatAllFieldsAreSerialized(JsonNode json, List<String> fieldNames) {
-        fieldNames.forEach(field -> {
-            assertThat(json.hasNonNull(field), is(equalTo(true)));
-        });
+        fieldNames.forEach(field -> assertThat(json.hasNonNull(field), is(equalTo(true))));
     }
 
 

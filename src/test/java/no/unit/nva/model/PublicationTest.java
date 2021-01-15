@@ -4,7 +4,6 @@ import static no.unit.nva.model.DoiRequestStatus.APPROVED;
 import static no.unit.nva.model.DoiRequestStatus.REJECTED;
 import static no.unit.nva.model.DoiRequestStatus.REQUESTED;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -29,7 +28,7 @@ public class PublicationTest {
     public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContext.json";
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
 
-    protected static final ObjectMapper objectMapper = nva.commons.utils.JsonUtils.objectMapper;
+    protected static final ObjectMapper objectMapper = nva.commons.core.JsonUtils.objectMapper;
 
     @Test
     public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
