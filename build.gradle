@@ -35,8 +35,8 @@ gradleLint.rules = ['unused-dependency']
 dependencies {
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
 
-    compileOnly group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: nvaCommonsVersion
-    testImplementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: nvaCommonsVersion
+    compileOnly group: 'com.github.BIBSYSDEV.nva-commons', name: 'core', version: nvaCommonsVersion
+    testImplementation group: 'com.github.BIBSYSDEV.nva-commons', name: 'core', version: nvaCommonsVersion
 
     compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
@@ -45,6 +45,9 @@ dependencies {
     testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
 
     testRuntimeOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: jacksonVersion
+
+    compileOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+    testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
 
     testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jacksonVersion
