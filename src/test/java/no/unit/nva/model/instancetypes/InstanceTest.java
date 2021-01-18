@@ -116,8 +116,7 @@ public class InstanceTest extends ModelTest {
 
     protected JsonNode generateChapterArticleJson(String begin,
                                                   String end,
-                                                  boolean peerReviewed,
-                                                  boolean textbookContent) {
+                                                  boolean peerReviewed) {
         LinkedHashMap<String, Object> instance = generateMapRepresentation(CHAPTER_ARTICLE,
                 null,
                 null,
@@ -127,7 +126,7 @@ public class InstanceTest extends ModelTest {
                 null,
                 false,
                 peerReviewed,
-                textbookContent);
+                false);
         return objectMapper.valueToTree(instance);
     }
 
@@ -159,7 +158,6 @@ public class InstanceTest extends ModelTest {
             case "ChapterArticle":
                 instance.put("pages", getRangeMap(introductionBegin, introductionEnd));
                 instance.put("peerReviewed", peerReviewed);
-                instance.put("textbookContent", textbookContent);
                 break;
             case "BookAnthology":
             case "BookMonograph":
