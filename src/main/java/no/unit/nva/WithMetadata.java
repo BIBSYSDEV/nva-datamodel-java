@@ -1,9 +1,8 @@
 package no.unit.nva;
 
+import java.util.List;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.ResearchProject;
-
-import java.util.List;
 
 public interface WithMetadata extends PublicationBase {
 

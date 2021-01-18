@@ -1,11 +1,11 @@
 package no.unit.nva;
 
-import java.util.UUID;
+import no.unit.nva.identifiers.SortableIdentifier;
 
 public interface WithIdentifier extends PublicationBase {
 
-    UUID getIdentifier();
+    SortableIdentifier getIdentifier();
 
-    void setIdentifier(UUID identifier);
+    void setIdentifier(SortableIdentifier identifier);
 
 }

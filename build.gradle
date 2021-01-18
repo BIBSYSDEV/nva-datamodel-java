@@ -28,7 +28,7 @@ java {
 
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
-def nvaCommonsVersion = '0.8.0'
+def nvaCommonsVersion = '16cab855ab8ea6bd1ee06ab1e4a8806383bb1a30'
 
 gradleLint.rules = ['unused-dependency']
 
@@ -37,6 +37,9 @@ dependencies {
 
     compileOnly group: 'com.github.BIBSYSDEV.nva-commons', name: 'core', version: nvaCommonsVersion
     testImplementation group: 'com.github.BIBSYSDEV.nva-commons', name: 'core', version: nvaCommonsVersion
+
+    compileOnly group: 'com.github.BIBSYSDEV.nva-commons', name: 'identifiers', version: nvaCommonsVersion
+    testImplementation group: 'com.github.BIBSYSDEV.nva-commons', name: 'identifiers', version: nvaCommonsVersion
 
     compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion

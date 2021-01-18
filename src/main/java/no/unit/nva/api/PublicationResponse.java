@@ -6,12 +6,12 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
@@ -23,7 +23,7 @@ import nva.commons.core.JacocoGenerated;
 @SuppressWarnings("PMD.TooManyFields")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithContext {
 
-    private UUID identifier;
+    private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
     private Organization publisher;
@@ -53,12 +53,12 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
-    public UUID getIdentifier() {
+    public SortableIdentifier getIdentifier() {
         return identifier;
     }
 
     @Override
-    public void setIdentifier(UUID identifier) {
+    public void setIdentifier(SortableIdentifier identifier) {
         this.identifier = identifier;
     }
 
