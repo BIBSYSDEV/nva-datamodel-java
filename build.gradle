@@ -28,7 +28,7 @@ java {
 
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
-def nvaCommonsVersion = '16cab855ab8ea6bd1ee06ab1e4a8806383bb1a30'
+def nvaCommonsVersion = '0.8.1'
 
 gradleLint.rules = ['unused-dependency']
 
