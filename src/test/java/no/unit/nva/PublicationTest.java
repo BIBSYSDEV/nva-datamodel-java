@@ -31,7 +31,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import provider.InstanceTypeProvider;
 
@@ -74,28 +73,7 @@ public class PublicationTest extends ModelTest {
 
     @DisplayName("Test that each publication type can be round-tripped to and from JSON")
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
-    @CsvSource({
-            "BookAnthology",
-            "BookMonograph",
-            "CartographicMap",
-            "ChapterArticle",
-            "DegreeBachelor",
-            "DegreeMaster",
-            "DegreePhd",
-            "FeatureArticle",
-            "JournalArticle",
-            "JournalCorrigendum",
-            "JournalLeader",
-            "JournalLetter",
-            "JournalReview",
-            "JournalShortCommunication",
-            "MusicNotation",
-            "OtherStudentWork",
-            "ReportBasic",
-            "ReportPolicy",
-            "ReportResearch",
-            "ReportWorkingPaper"
-    })
+    @ArgumentsSource(InstanceTypeProvider.class)
     void projectsAreSetAsListsWhenInputIsSingleProject(String instanceType) throws Exception {
         Publication expected = generatePublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));

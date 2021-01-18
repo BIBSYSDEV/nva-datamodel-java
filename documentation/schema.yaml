@@ -4,8 +4,7 @@ schema:
   type: object
   properties:
     identifier:
-      type: string
-      format: uuid
+      $ref: '#/components/schemas/SortableIdentifier'
     status:
       type: string
       enum:
@@ -775,8 +774,7 @@ referencedSchemas:
     type: object
     properties:
       identifier:
-        type: string
-        format: uuid
+        $ref: '#/components/schemas/SortableIdentifier'
       status:
         type: string
         enum:
@@ -1007,3 +1005,5 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  SortableIdentifier:
+    type: object
