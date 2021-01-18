@@ -31,6 +31,7 @@ import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
 import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
+import no.unit.nva.model.instancetypes.journal.JournalInterview;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
@@ -208,6 +209,17 @@ public class ModelTest implements JsonHandlingTest {
             .withCorrigendumFor(URI.create("https://example.org/article/42310"))
             .build();
         return generateReference(generateJournalContext(), journalCorrigendum);
+    }
+
+
+    protected Reference generateJournalInterview() throws InvalidIssnException, MalformedURLException {
+        PublicationInstance<Range> journalInterview = new JournalInterview.Builder()
+                .withArticleNumber("3126")
+                .withIssue("22")
+                .withVolume("200")
+                .withPages(generateRange())
+                .build();
+        return generateReference(generateJournalContext(), journalInterview);
     }
 
     protected static Reference generateJournalLeader() throws InvalidIssnException, MalformedURLException {

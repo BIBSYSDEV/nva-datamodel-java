@@ -5,7 +5,6 @@ import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Path;
 import java.time.Instant;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
@@ -13,7 +12,7 @@ import no.unit.nva.model.PublicationStatus;
 
 public final class PublicationMapper {
 
-    public static final Path CONTEXT_PATH = Path.of("publicationContext.json");
+    public static final String CONTEXT_PATH = "publicationContext.json";
     public static final String CONTEXT_ERROR_MESSAGE = "Error processing context: ";
 
     private PublicationMapper() {
@@ -92,7 +91,7 @@ public final class PublicationMapper {
         try {
             return objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
         } catch (IOException e) {
-            throw new IllegalStateException(CONTEXT_ERROR_MESSAGE + CONTEXT_PATH.toString(), e);
+            throw new IllegalStateException(CONTEXT_ERROR_MESSAGE + CONTEXT_PATH, e);
         }
     }
 

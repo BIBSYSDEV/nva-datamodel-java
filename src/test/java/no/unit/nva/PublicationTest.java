@@ -11,8 +11,10 @@ import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
+import provider.InstanceTypeProvider;
 
 import java.io.IOException;
 import java.net.URI;
@@ -45,30 +47,10 @@ public class PublicationTest extends ModelTest {
     public static final String JOURNAL_ARTICLE = "JournalArticle";
     ObjectMapper objectMapper = JsonUtils.objectMapper;
 
+
     @DisplayName("Test that each publication type can be round-tripped to and from JSON")
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
-    @CsvSource({
-            "BookAnthology",
-            "BookMonograph",
-            "CartographicMap",
-            "ChapterArticle",
-            "DegreeBachelor",
-            "DegreeMaster",
-            "DegreePhd",
-            "FeatureArticle",
-            "JournalArticle",
-            "JournalCorrigendum",
-            "JournalLeader",
-            "JournalLetter",
-            "JournalReview",
-            "JournalShortCommunication",
-            "MusicNotation",
-            "OtherStudentWork",
-            "ReportBasic",
-            "ReportPolicy",
-            "ReportResearch",
-            "ReportWorkingPaper"
-    })
+    @ArgumentsSource(InstanceTypeProvider.class)
     void publicationReturnsValidPublicationWhenInputIsValid(String instanceType) throws Exception {
         Publication expected = generatePublication(instanceType);
 
@@ -82,35 +64,13 @@ public class PublicationTest extends ModelTest {
 
     @DisplayName("copy returns a builder with all data of a publication")
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
-    @CsvSource({
-            "BookAnthology",
-            "BookMonograph",
-            "CartographicMap",
-            "ChapterArticle",
-            "DegreeBachelor",
-            "DegreeMaster",
-            "DegreePhd",
-            "FeatureArticle",
-            "JournalArticle",
-            "JournalCorrigendum",
-            "JournalLeader",
-            "JournalLetter",
-            "JournalReview",
-            "JournalShortCommunication",
-            "MusicNotation",
-            "OtherStudentWork",
-            "ReportBasic",
-            "ReportPolicy",
-            "ReportResearch",
-            "ReportWorkingPaper"
-    })
+    @ArgumentsSource(InstanceTypeProvider.class)
     void copyReturnsBuilderWithAllDataOfAPublication(String referenceInstanceType) throws Exception {
         Publication publication = generatePublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThat(publication, doesNotHaveNullOrEmptyFields());
         assertThat(copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));
-
     }
 
     @DisplayName("Test that each publication type can be round-tripped to and from JSON")
@@ -221,6 +181,9 @@ public class PublicationTest extends ModelTest {
                 break;
             case "JournalCorrigendum":
                 reference = generateJournalCorrigendum();
+                break;
+            case "JournalInterview":
+                reference = generateJournalInterview();
                 break;
             case "JournalLeader":
                 reference = generateJournalLeader();
