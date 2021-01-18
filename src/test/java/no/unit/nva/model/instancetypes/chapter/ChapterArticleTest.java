@@ -44,9 +44,8 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
         ChapterArticle chapterArticle = new ChapterArticle.Builder()
                 .withPages(generatePages(expectedBegin, expectedEnd))
                 .withPeerReviewed(false)
-                .withTextbookContent(false)
                 .build();
-        JsonNode expectedJson = generateChapterArticleJson(expectedBegin, expectedEnd, false, false);
+        JsonNode expectedJson = generateChapterArticleJson(expectedBegin, expectedEnd, false);
         JsonNode actualJson = objectMapper.convertValue(chapterArticle, JsonNode.class);
         assertEquals(expectedJson, actualJson);
     }

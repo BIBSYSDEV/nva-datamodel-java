@@ -195,8 +195,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        textbookContent:
-          type: boolean
         pages:
           $ref: '#/components/schemas/Range'
         type:
