@@ -1,19 +1,18 @@
 package no.unit.nva.model;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.hash;
-
+import static java.util.Objects.isNull;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithIndex;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
 
@@ -29,7 +28,7 @@ public class Publication
 
     public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
         "You must initiate creation of a DoiRequest before you can update it.";
-    private UUID identifier;
+    private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
     private Organization publisher;
@@ -179,12 +178,12 @@ public class Publication
     }
 
     @Override
-    public UUID getIdentifier() {
+    public SortableIdentifier getIdentifier() {
         return identifier;
     }
 
     @Override
-    public void setIdentifier(UUID identifier) {
+    public void setIdentifier(SortableIdentifier identifier) {
         this.identifier = identifier;
     }
 
@@ -313,7 +312,7 @@ public class Publication
     }
 
     public static final class Builder {
-        private UUID identifier;
+        private SortableIdentifier identifier;
         private PublicationStatus status;
         private String owner;
         private Organization publisher;
@@ -332,7 +331,7 @@ public class Publication
         public Builder() {
         }
 
-        public Builder withIdentifier(UUID identifier) {
+        public Builder withIdentifier(SortableIdentifier identifier) {
             this.identifier = identifier;
             return this;
         }

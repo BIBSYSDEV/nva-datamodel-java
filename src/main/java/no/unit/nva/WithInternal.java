@@ -2,7 +2,7 @@ package no.unit.nva;
 
 import java.net.URI;
 import java.time.Instant;
-import java.util.UUID;
+import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.PublicationStatus;
@@ -37,9 +37,9 @@ public interface WithInternal extends PublicationBase {
 
     void setIndexedDate(Instant indexedDate);
 
-    UUID getIdentifier();
+    SortableIdentifier getIdentifier();
 
-    void setIdentifier(UUID identifier);
+    void setIdentifier(SortableIdentifier identifier);
 
     URI getLink();
 
