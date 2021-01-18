@@ -2,6 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.instancetypes.cartographic.CartographicMap;
@@ -35,6 +36,7 @@ import no.unit.nva.model.pages.Pages;
         @JsonSubTypes.Type(name = "JournalLeader", value = JournalLeader.class),
         @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),
         @JsonSubTypes.Type(name = "JournalShortCommunication", value = JournalShortCommunication.class),
+        @JsonSubTypes.Type(name = "BookAbstracts", value = BookAbstracts.class),
         @JsonSubTypes.Type(name = "BookMonograph", value = BookMonograph.class),
         @JsonSubTypes.Type(name = "BookAnthology", value = BookAnthology.class),
         @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),

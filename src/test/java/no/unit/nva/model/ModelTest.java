@@ -21,6 +21,7 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
@@ -70,7 +71,6 @@ public class ModelTest implements JsonHandlingTest {
     public static final String ISBN_LIST = "isbnList";
     public static final String ONLINE_ISSN = "onlineIssn";
     public static final String PRINT_ISSN = "printIssn";
-    public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final URI LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
@@ -100,6 +100,13 @@ public class ModelTest implements JsonHandlingTest {
 
     protected static Range generateRange() {
         return generateRange("1", "23");
+    }
+
+    protected Reference generateBookAbstracts() throws MalformedURLException, InvalidIsbnException {
+        PublicationInstance<MonographPages> bookAbstracts = new BookAbstracts.Builder()
+                .withPages(generateMonographPages())
+                .build();
+        return generateReference(generateBookContext(), bookAbstracts);
     }
 
     protected static Reference generateBookAnthology() throws InvalidIsbnException, MalformedURLException {
