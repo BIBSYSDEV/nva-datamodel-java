@@ -18,7 +18,7 @@ import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
-import nva.commons.utils.JacocoGenerated;
+import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithContext {

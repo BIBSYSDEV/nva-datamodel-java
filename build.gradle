@@ -28,14 +28,27 @@ java {
 
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
+def nvaCommonsVersion = '0.8.0'
 
 gradleLint.rules = ['unused-dependency']
 
 dependencies {
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
-    implementation group: 'com.github.BIBSYSDEV', name: 'nva-commons', version: '0.5.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+
+    compileOnly group: 'com.github.BIBSYSDEV.nva-commons', name: 'core', version: nvaCommonsVersion
+    testImplementation group: 'com.github.BIBSYSDEV.nva-commons', name: 'core', version: nvaCommonsVersion
+
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+
+    testRuntimeOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: jacksonVersion
+
+    compileOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+    testImplementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+
     testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jacksonVersion
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion

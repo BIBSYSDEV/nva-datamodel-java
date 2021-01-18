@@ -2,13 +2,13 @@ package no.unit.nva.model.instancetypes.musicalcontent;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import no.unit.nva.model.instancetypes.musicalcontent.exception.InvalidIsmnException;
-import nva.commons.utils.SingletonCollector;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import nva.commons.core.SingletonCollector;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;

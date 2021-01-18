@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 import no.unit.nva.model.exceptions.MissingLicenseException;
-import nva.commons.utils.JacocoGenerated;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class File {

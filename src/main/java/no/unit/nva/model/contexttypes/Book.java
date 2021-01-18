@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URL;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
-import nva.commons.utils.JacocoGenerated;
+import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
 
 import java.util.ArrayList;

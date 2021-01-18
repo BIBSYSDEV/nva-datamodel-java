@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
-import nva.commons.utils.JsonUtils;
+import nva.commons.core.JsonUtils;
 
 import java.util.LinkedHashMap;
 

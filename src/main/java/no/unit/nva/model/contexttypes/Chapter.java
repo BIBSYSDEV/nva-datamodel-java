@@ -1,7 +1,7 @@
 package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.utils.JacocoGenerated;
+import nva.commons.core.JacocoGenerated;
 
 import java.net.MalformedURLException;
 import java.net.URI;

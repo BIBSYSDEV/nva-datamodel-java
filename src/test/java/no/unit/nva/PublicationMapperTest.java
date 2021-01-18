@@ -4,7 +4,7 @@ import static no.unit.nva.model.util.PublicationGenerator.generateEntityDescript
 import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
 import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
 import static no.unit.nva.model.util.PublicationGenerator.getProjects;
-import static nva.commons.utils.JsonUtils.objectMapper;
+import static nva.commons.core.JsonUtils.objectMapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

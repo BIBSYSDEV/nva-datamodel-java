@@ -1,8 +1,7 @@
 package no.unit.nva;
 
-import static nva.commons.utils.IoUtils.inputStreamFromResources;
-import static nva.commons.utils.JsonUtils.objectMapper;
-
+import static nva.commons.core.JsonUtils.objectMapper;
+import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.net.URI;
@@ -26,7 +25,7 @@ public final class PublicationMapper {
      * @param request   publication request
      * @param existing  existing publication to copy internal properties from
      * @param <REQUEST> request type
-     * @return  complete updated publication
+     * @return complete updated publication
      */
     public static <REQUEST extends PublicationBase> Publication toExistingPublication(
         REQUEST request, WithInternal existing) {
@@ -42,12 +41,12 @@ public final class PublicationMapper {
      * Maps a publication request to a new publication and sets internal properties for the first time.
      *
      * @param request   publication request
-     * @param owner owner
+     * @param owner     owner
      * @param handle    handle
-     * @param link  link
+     * @param link      link
      * @param publisher publisher
      * @param <REQUEST> request type
-     * @return  complete new publication
+     * @return complete new publication
      */
     public static <REQUEST extends PublicationBase> Publication toNewPublication(
         REQUEST request, String owner, URI handle, URI link, Organization publisher) {
@@ -67,22 +66,22 @@ public final class PublicationMapper {
     /**
      * Maps a publication and context to specified type.
      *
-     * @param publication   publication
-     * @param context   jsonld context
-     * @return  publication response
+     * @param publication publication
+     * @param context     jsonld context
+     * @return publication response
      */
     public static <R extends WithContext> R convertValue(
         Publication publication, JsonNode context, Class<R> responseType) {
         R response = objectMapper.convertValue(publication, responseType);
         response.setContext(context);
-        return  response;
+        return response;
     }
 
     /**
      * Maps a publication to specified type with default context.
      *
-     * @param publication   publication
-     * @return  publication response
+     * @param publication publication
+     * @return publication response
      */
     public static <R extends WithContext> R convertValue(
         Publication publication, Class<R> responseType) {
@@ -100,7 +99,7 @@ public final class PublicationMapper {
     private static <REQUEST extends PublicationBase> Publication toPublication(REQUEST request) {
         Publication publication = new Publication();
         if (request instanceof WithIdentifier) {
-            mapIdentifier((WithIdentifier)request, publication);
+            mapIdentifier((WithIdentifier) request, publication);
         }
         if (request instanceof WithMetadata) {
             mapMetadata((WithMetadata) request, publication);

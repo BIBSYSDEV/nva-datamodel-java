@@ -3,7 +3,7 @@ package no.unit.nva.model.instancetypes.journal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.instancetypes.NonPeerReviewedPaper;
 import no.unit.nva.model.pages.Range;
-import nva.commons.utils.JacocoGenerated;
+import nva.commons.core.JacocoGenerated;
 
 import java.util.Objects;
 
