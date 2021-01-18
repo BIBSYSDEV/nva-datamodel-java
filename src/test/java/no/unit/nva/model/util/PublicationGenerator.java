@@ -1,7 +1,5 @@
 package no.unit.nva.model.util;
 
-import static java.util.Objects.isNull;
-
 import java.net.URI;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -9,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
@@ -95,7 +94,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     private static Publication generatePublication(Reference reference) throws MalformedContributorException {
-        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
+        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
             generateEntityDescription(reference));
     }
 
@@ -108,7 +107,7 @@ public class PublicationGenerator extends ModelTest {
      * @param entityDescription     the entity description.
      * @return a publication.
      */
-    public static Publication generatePublication(UUID publicationIdentifier,
+    public static Publication generatePublication(SortableIdentifier publicationIdentifier,
                                                   UUID fileIdentifier,
                                                   Instant now,
                                                   EntityDescription entityDescription) {
@@ -148,13 +147,13 @@ public class PublicationGenerator extends ModelTest {
 
     public static Publication generateJournalArticlePublication() throws InvalidIssnException,
                                                                          MalformedContributorException {
-        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
+        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
             generateEntityDescriptionJournalArticle());
     }
 
     public static Publication generateBookMonographPublication() throws MalformedContributorException,
                                                                         InvalidIsbnException {
-        return generatePublication(UUID.randomUUID(), UUID.randomUUID(), Instant.now(),
+        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
             generateEntityDescriptionBookMonograph());
     }
 

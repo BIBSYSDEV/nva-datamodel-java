@@ -15,6 +15,7 @@ import java.util.UUID;
 import no.unit.nva.api.CreatePublicationRequest;
 import no.unit.nva.api.PublicationResponse;
 import no.unit.nva.api.UpdatePublicationRequest;
+import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ public class PublicationMapperTest {
     public void canMapUpdatePublicationRequestToExistingPublication() throws Exception {
 
         UpdatePublicationRequest request = new UpdatePublicationRequest();
-        request.setIdentifier(UUID.randomUUID());
+        request.setIdentifier(SortableIdentifier.next());
         request.setEntityDescription(generateEntityDescriptionJournalArticle());
         request.setProjects(getProjects());
         request.setFileSet(getFileSet(UUID.randomUUID()));

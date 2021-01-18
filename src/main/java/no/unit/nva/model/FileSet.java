@@ -1,10 +1,11 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.isNull;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class FileSet {
@@ -20,7 +21,7 @@ public class FileSet {
     }
 
     public List<File> getFiles() {
-        return files;
+        return isNull(files) ? Collections.emptyList() : files;
     }
 
     public void setFiles(List<File> files) {
@@ -47,6 +48,7 @@ public class FileSet {
     }
 
     public static final class Builder {
+
         private List<File> files;
 
         public Builder() {
