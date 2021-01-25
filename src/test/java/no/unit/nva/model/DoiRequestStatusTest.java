@@ -4,11 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class DoiRequestStatusTest {
 
@@ -22,9 +20,9 @@ public class DoiRequestStatusTest {
         "approved,APPROVED",
         "Approved,APPROVED",
     })
-    public void parseReturnsDoiRequestStatusIgnoringCase(String input, DoiRequestStatus expected){
+    public void parseReturnsDoiRequestStatusIgnoringCase(String input, DoiRequestStatus expected) {
         DoiRequestStatus actual = DoiRequestStatus.parse(input);
-        assertThat(actual,is(equalTo(expected)));
+        assertThat(actual, is(equalTo(expected)));
     }
 
     @ParameterizedTest
