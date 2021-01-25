@@ -1,25 +1,39 @@
 package no.unit.nva.model;
 
 import static java.util.Collections.emptySet;
-
+import java.util.Locale;
 import java.util.Set;
 
 public enum DoiRequestStatus {
     REQUESTED,
     APPROVED,
     REJECTED;
+    public static final String ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S =
+        "Not allowed to change status from %s to %s";
+    public static final Locale DEFAULT_LOCALE = Locale.getDefault();
+    public static final String INVALID_DOI_REQUEST_STATUS_ERROR = "Invalid DoiRequest status: ";
     protected static final Set<DoiRequestStatus> validStatusChangeForRejected = Set.of(APPROVED);
     protected static final Set<DoiRequestStatus> validStatusChangeForRequested = Set.of(APPROVED, REJECTED);
     protected static final Set<DoiRequestStatus> validDefaultStatusChanges = emptySet();
-    public static final String ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S =
-        "Not allowed to change status from %s to %s";
+
+    public static DoiRequestStatus parse(String doiRequestStatus) {
+        DoiRequestStatus[] values = DoiRequestStatus.values();
+        String upperCased = doiRequestStatus.toUpperCase(DEFAULT_LOCALE);
+        for (DoiRequestStatus status : values) {
+            if (status.name().toUpperCase(DEFAULT_LOCALE).equals(upperCased)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException(INVALID_DOI_REQUEST_STATUS_ERROR + doiRequestStatus);
+    }
 
     public boolean isValidStatusChange(DoiRequestStatus requestedStatusChange) {
         return getValidTransitions(this).contains(requestedStatusChange);
     }
 
     /**
-     * Changes status for a DoiRequestStatus change. It will return the new DoiRequestStatus if the transition is valid.
+     * Changes status for a DoiRequestStatus change. It will return the new DoiRequestStatus if the transition is
+     * valid.
      *
      * @param requestedStatusChange requested DOIRequestStatus to transform to.
      * @return New DoiRequestStatus.
