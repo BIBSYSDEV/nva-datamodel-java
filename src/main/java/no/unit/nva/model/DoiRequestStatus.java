@@ -1,7 +1,6 @@
 package no.unit.nva.model;
 
 import static java.util.Collections.emptySet;
-import java.util.Locale;
 import java.util.Set;
 
 public enum DoiRequestStatus {
@@ -10,7 +9,6 @@ public enum DoiRequestStatus {
     REJECTED;
     public static final String ERROR_MESSAGE_NOT_ALLOWED_TO_CHANGE_STATUS_FROM_S_TO_S =
         "Not allowed to change status from %s to %s";
-    public static final Locale DEFAULT_LOCALE = Locale.getDefault();
     public static final String INVALID_DOI_REQUEST_STATUS_ERROR = "Invalid DoiRequest status: ";
     protected static final Set<DoiRequestStatus> validStatusChangeForRejected = Set.of(APPROVED);
     protected static final Set<DoiRequestStatus> validStatusChangeForRequested = Set.of(APPROVED, REJECTED);
