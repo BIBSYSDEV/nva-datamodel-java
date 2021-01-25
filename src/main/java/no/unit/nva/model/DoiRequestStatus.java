@@ -18,9 +18,9 @@ public enum DoiRequestStatus {
 
     public static DoiRequestStatus parse(String doiRequestStatus) {
         DoiRequestStatus[] values = DoiRequestStatus.values();
-        String upperCased = doiRequestStatus.toUpperCase(DEFAULT_LOCALE);
+
         for (DoiRequestStatus status : values) {
-            if (status.name().toUpperCase(DEFAULT_LOCALE).equals(upperCased)) {
+            if (status.name().equalsIgnoreCase(doiRequestStatus)) {
                 return status;
             }
         }
