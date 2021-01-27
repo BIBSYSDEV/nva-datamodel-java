@@ -4,6 +4,7 @@ import static java.util.Collections.emptySet;
 import java.util.Set;
 
 public enum DoiRequestStatus {
+    DRAFTED,
     REQUESTED,
     APPROVED,
     REJECTED;
@@ -11,6 +12,7 @@ public enum DoiRequestStatus {
         "Not allowed to change status from %s to %s";
     public static final String INVALID_DOI_REQUEST_STATUS_ERROR = "Invalid DoiRequest status: ";
     protected static final Set<DoiRequestStatus> validStatusChangeForRejected = Set.of(APPROVED);
+    private static final Set<DoiRequestStatus> validStatusChangeForDrafted = Set.of(REQUESTED);
     protected static final Set<DoiRequestStatus> validStatusChangeForRequested = Set.of(APPROVED, REJECTED);
     protected static final Set<DoiRequestStatus> validDefaultStatusChanges = emptySet();
 
@@ -50,6 +52,8 @@ public enum DoiRequestStatus {
 
     private Set<DoiRequestStatus> getValidTransitions(DoiRequestStatus fromRequestStatus) {
         switch (fromRequestStatus) {
+            case DRAFTED:
+                return validStatusChangeForDrafted;
             case REQUESTED:
                 return validStatusChangeForRequested;
             case REJECTED:

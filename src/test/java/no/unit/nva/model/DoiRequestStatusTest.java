@@ -31,6 +31,7 @@ public class DoiRequestStatusTest {
         "REQUESTED,APPROVED,APPROVED",
         "REQUESTED,REJECTED,REJECTED",
         "REJECTED,APPROVED,APPROVED",
+        "DRAFTED,REQUESTED,REQUESTED"
     })
     @DisplayName("Should follow business rules for valid status changes on DoiRequestStatus")
     void validStatusChanges(DoiRequestStatus existingState,

@@ -355,6 +355,7 @@ referencedSchemas:
       status:
         type: string
         enum:
+        - DRAFTED
         - REQUESTED
         - APPROVED
         - REJECTED
