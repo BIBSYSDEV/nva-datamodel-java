@@ -4,7 +4,7 @@ import static java.util.Collections.emptySet;
 import java.util.Set;
 
 public enum DoiRequestStatus {
-    DRAFTED,
+    DRAFT,
     REQUESTED,
     APPROVED,
     REJECTED;
@@ -52,7 +52,7 @@ public enum DoiRequestStatus {
 
     private Set<DoiRequestStatus> getValidTransitions(DoiRequestStatus fromRequestStatus) {
         switch (fromRequestStatus) {
-            case DRAFTED:
+            case DRAFT:
                 return validStatusChangeForDrafted;
             case REQUESTED:
                 return validStatusChangeForRequested;
