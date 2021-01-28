@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
-import no.unit.nva.WithIndex;
+import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
@@ -19,7 +19,7 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields"})
 public class Publication
-        implements WithIdentifier, WithIndex, WithFile, WithMetadata, WithCopy<Publication.Builder> {
+        implements WithIdentifier, WithInternal, WithFile, WithMetadata, WithCopy<Publication.Builder> {
 
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
             PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
