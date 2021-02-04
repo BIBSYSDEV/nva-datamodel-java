@@ -47,12 +47,6 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/ResearchProject'
-    publisherId:
-      type: string
-    publisherOwnerDate:
-      type: string
-    doiRequestStatusDate:
-      type: string
     type:
       type: string
   discriminator:
@@ -849,12 +843,6 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/ResearchProject'
-      publisherId:
-        type: string
-      publisherOwnerDate:
-        type: string
-      doiRequestStatusDate:
-        type: string
       type:
         type: string
     discriminator:
