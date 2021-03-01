@@ -10,6 +10,7 @@ public class InstanceTypeProvider implements ArgumentsProvider {
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
+                Arguments.of("BookAbstracts"),
                 Arguments.of("BookAnthology"),
                 Arguments.of("BookMonograph"),
                 Arguments.of("CartographicMap"),

@@ -64,25 +64,19 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "Degree",
-        "seriesTitle" : "Degrees of this type series",
-        "seriesNumber" : "8",
-        "publisher" : "Some university publisher",
-        "openAccess" : false,
+        "type" : "Book",
+        "seriesTitle" : "Bloop and how to grow 'em",
+        "seriesNumber" : "1",
+        "publisher" : "Organic publishing AS",
+        "level" : "LEVEL_0",
+        "openAccess" : true,
         "peerReviewed" : false,
-        "url" : "http://example.org/degree/1",
+        "url" : "http://example.org/book/1",
         "isbnList" : [ "9780201309515" ]
       },
       "doi" : "https://example.org/doi/12313/2313",
       "publicationInstance" : {
-        "type" : "DegreeBachelor",
-        "submittedDate" : {
-          "type" : "PublicationDate",
-          "year" : "2020",
-          "month" : "4",
-          "day" : "7"
-        },
-        "peerReviewed" : false,
+        "type" : "BookAbstracts",
         "pages" : {
           "type" : "MonographPages",
           "introduction" : {
@@ -92,7 +86,8 @@
           },
           "pages" : "321",
           "illustrated" : true
-        }
+        },
+        "peerReviewed" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",

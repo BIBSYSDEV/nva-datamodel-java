@@ -21,6 +21,7 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
@@ -53,24 +54,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 import static nva.commons.core.attempt.Try.attempt;
 
 public class ModelTest implements JsonHandlingTest {
 
-    public static final String QUOTE = "\"";
     public static final String EMPTY_STRING = "";
-    public static final String COMMA_SPACE = ", ";
-    public static final String COMMA = ",";
-    public static final String KEY_VALUE_STRING_PAIR_TEMPLATE = "  \"%s\" : \"%s\"";
-    public static final String KEY_VALUE_BOOLEAN_PAIR_TEMPLATE = "  \"%s\" : %s";
-    public static final String KEY_VALUE_LIST_PAIR_TEMPLATE = "  \"%s\" : [ %s ]";
-    public static final String NEWLINE = "\n";
-    public static final String PROLOGUE = "{\n";
-    public static final String EPILOGUE = "\n}";
     public static final String TYPE = "type";
     public static final String SERIES_TITLE = "seriesTitle";
     public static final String SERIES_NUMBER = "seriesNumber";
@@ -81,7 +71,6 @@ public class ModelTest implements JsonHandlingTest {
     public static final String ISBN_LIST = "isbnList";
     public static final String ONLINE_ISSN = "onlineIssn";
     public static final String PRINT_ISSN = "printIssn";
-    public static final String EMPTY_ISBN_LIST = "  \"" + ISBN_LIST + "\" : [ ]";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final URI LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
@@ -113,6 +102,13 @@ public class ModelTest implements JsonHandlingTest {
         return generateRange("1", "23");
     }
 
+    protected Reference generateBookAbstracts() throws MalformedURLException, InvalidIsbnException {
+        PublicationInstance<MonographPages> bookAbstracts = new BookAbstracts.Builder()
+                .withPages(generateMonographPages())
+                .build();
+        return generateReference(generateBookContext(), bookAbstracts);
+    }
+
     protected static Reference generateBookAnthology() throws InvalidIsbnException, MalformedURLException {
         PublicationInstance<MonographPages> bookAnthology = new BookAnthology.Builder()
             .withPages(generateMonographPages())
@@ -142,7 +138,6 @@ public class ModelTest implements JsonHandlingTest {
         PublicationInstance<Range> chapterArticle = new ChapterArticle.Builder()
             .withPages(generateRange())
             .withPeerReviewed(true)
-            .withTextbookContent(true)
             .build();
         return generateReference(generateChapterContext(), chapterArticle);
     }

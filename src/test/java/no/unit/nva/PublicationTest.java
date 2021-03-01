@@ -129,6 +129,9 @@ public class PublicationTest extends ModelTest {
     private Reference generateReference(String instanceType) throws Exception {
         Reference reference;
         switch (instanceType) {
+            case "BookAbstracts":
+                reference = generateBookAbstracts();
+                break;
             case "BookAnthology":
                 reference = generateBookAnthology();
                 break;

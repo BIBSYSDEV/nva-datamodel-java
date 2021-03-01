@@ -11,7 +11,27 @@ public enum Role {
     CREATOR("Creator"),
     EDITOR("Editor"),
     ILLUSTRATOR("Illustrator"),
-    OTHER("Other");
+    OTHER("Other"),
+    CONTACT_PERSON("ContactPerson"),
+    DATA_COLLECTOR("DataCollector"),
+    DATA_CURATOR("DataCurator"),
+    DATA_MANAGER("DataManager"),
+    DISTRIBUTOR("Distributor"),
+    FUNDER("Funder"),
+    HOSTING_INSTITUTION("HostingInstitution"),
+    PRODUCER("Producer"),
+    PROJECT_LEADER("ProjectLeader"),
+    PROJECT_MANAGER("ProjectManager"),
+    PROJECT_MEMBER("ProjectMember"),
+    REGISTRATION_AGENCY("RegistrationAgency"),
+    REGISTRATION_AUTHORITY("RegistrationAuthority"),
+    RELATED_PERSON("RelatedPerson"),
+    RESEARCHER("Researcher"),
+    RESEARCH_GROUP("ResearchGroup"),
+    RIGHTS_HOLDER("RightsHolder"),
+    SPONSOR("Sponsor"),
+    SUPERVISOR("Supervisor"),
+    WORK_PACKAGE_LEADER("WorkPackageLeader");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid Role, expected one of: %s";
     public static final String DELIMITER = ", ";

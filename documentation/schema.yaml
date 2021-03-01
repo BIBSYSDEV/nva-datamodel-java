@@ -47,12 +47,6 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/ResearchProject'
-    publisherId:
-      type: string
-    publisherOwnerDate:
-      type: string
-    doiRequestStatusDate:
-      type: string
     type:
       type: string
   discriminator:
@@ -121,6 +115,20 @@ referencedSchemas:
           type: array
           items:
             type: string
+        type:
+          type: string
+  BookAbstracts:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
         type:
           type: string
   BookAnthology:
@@ -195,8 +203,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        textbookContent:
-          type: boolean
         pages:
           $ref: '#/components/schemas/Range'
         type:
@@ -220,6 +226,26 @@ referencedSchemas:
         - Editor
         - Illustrator
         - Other
+        - ContactPerson
+        - DataCollector
+        - DataCurator
+        - DataManager
+        - Distributor
+        - Funder
+        - HostingInstitution
+        - Producer
+        - ProjectLeader
+        - ProjectManager
+        - ProjectMember
+        - RegistrationAgency
+        - RegistrationAuthority
+        - RelatedPerson
+        - Researcher
+        - ResearchGroup
+        - RightsHolder
+        - Sponsor
+        - Supervisor
+        - WorkPackageLeader
       sequence:
         type: integer
         format: int32
@@ -817,12 +843,6 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/ResearchProject'
-      publisherId:
-        type: string
-      publisherOwnerDate:
-        type: string
-      doiRequestStatusDate:
-        type: string
       type:
         type: string
     discriminator:
@@ -856,10 +876,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
