@@ -3,6 +3,7 @@ package no.unit.nva.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
@@ -10,6 +11,7 @@ import no.unit.nva.WithFile;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
+import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import nva.commons.core.JacocoGenerated;
 
@@ -60,6 +62,16 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
     @Override
     public void setContext(JsonNode context) {
         this.context = context;
+    }
+
+    public void addReferenceDoi(URI doi) {
+        if (getEntityDescription() == null) {
+            setEntityDescription(new EntityDescription());
+        }
+        if (getEntityDescription().getReference() == null) {
+            getEntityDescription().setReference(new Reference());
+        }
+        getEntityDescription().getReference().setDoi(doi);
     }
 
     @JacocoGenerated
