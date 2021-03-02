@@ -6,8 +6,10 @@ plugins {
     id 'nebula.lint' version '16.8.0'
 }
 
+String versionNumber = '0.11.7'
+
 group 'no.unit.nva'
-version '1.0-SNAPSHOT'
+version versionNumber
 
 repositories {
     jcenter()
@@ -68,6 +70,9 @@ test {
     useJUnitPlatform()
     failFast = true
     finalizedBy(jacocoTestReport)
+    Map<String, String> envVariables = new HashMap<>()
+    envVariables.put("DATAMODEL_VERSION", versionNumber)
+    environment(envVariables)
 }
 
 jacocoTestReport {

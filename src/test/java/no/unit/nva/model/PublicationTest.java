@@ -21,6 +21,7 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.ContextUtil;
 import no.unit.nva.model.util.PublicationGenerator;
+import nva.commons.core.Environment;
 import org.junit.jupiter.api.Test;
 
 public class PublicationTest {
@@ -29,6 +30,7 @@ public class PublicationTest {
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
 
     protected static final ObjectMapper objectMapper = nva.commons.core.JsonUtils.objectMapper;
+    public static final String DATAMODEL_VERSION = "DATAMODEL_VERSION";
 
     @Test
     public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
@@ -70,6 +72,14 @@ public class PublicationTest {
             () -> publication.updateDoiRequestStatus(REQUESTED));
         assertThat(actualException.getMessage(),
             is(equalTo(Publication.ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST)));
+    }
+
+    @Test
+    public void getModelVersionReturnsModelVersionDefinedByGradle()
+        throws InvalidIssnException, MalformedContributorException {
+        String modelVersionDefinedInGradle = new Environment().readEnv(DATAMODEL_VERSION);
+        Publication samplePublication = getPublicationWithoutDoiRequest();
+        assertThat(samplePublication.getModelVersion(),is(equalTo(modelVersionDefinedInGradle)));
     }
 
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {

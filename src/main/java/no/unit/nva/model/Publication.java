@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
@@ -20,6 +21,8 @@ import nva.commons.core.JacocoGenerated;
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields"})
 public class Publication
         implements WithIdentifier, WithInternal, WithFile, WithMetadata, WithCopy<Publication.Builder> {
+
+    public static final String MODEL_VERSION= "0.11.7";
 
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
             PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
@@ -43,6 +46,7 @@ public class Publication
     private EntityDescription entityDescription;
     private FileSet fileSet;
     private List<ResearchProject> projects;
+
 
     public Publication() {
     }
@@ -235,6 +239,16 @@ public class Publication
     @Override
     public void setProjects(List<ResearchProject> projects) {
         this.projects = projects;
+    }
+
+    @JsonProperty("modelVersion")
+    public String getModelVersion(){
+        return MODEL_VERSION;
+    }
+
+    @JsonProperty("modelVersion")
+    public void setModelVersion(){
+        //
     }
 
     @Override
