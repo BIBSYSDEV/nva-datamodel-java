@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jsonldjava.core.JsonLdOptions;
@@ -30,7 +29,7 @@ public class PublicationTest {
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
 
     protected static final ObjectMapper objectMapper = nva.commons.core.JsonUtils.objectMapper;
-    public static final String DATAMODEL_VERSION = "DATAMODEL_VERSION";
+    private static final String DATAMODEL_VERSION_ENV_VAR = "DATAMODEL_VERSION";
 
     @Test
     public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
@@ -52,7 +51,7 @@ public class PublicationTest {
 
         var actualMessage = assertThrows(IllegalArgumentException.class,
             () -> publication.updateDoiRequestStatus(REQUESTED))
-            .getMessage();
+                                .getMessage();
 
         assertThat(actualMessage, containsStringIgnoringCase("not allowed"));
 
@@ -77,9 +76,9 @@ public class PublicationTest {
     @Test
     public void getModelVersionReturnsModelVersionDefinedByGradle()
         throws InvalidIssnException, MalformedContributorException {
-        String modelVersionDefinedInGradle = new Environment().readEnv(DATAMODEL_VERSION);
+        String modelVersionDefinedInGradle = new Environment().readEnv(DATAMODEL_VERSION_ENV_VAR);
         Publication samplePublication = getPublicationWithoutDoiRequest();
-        assertThat(samplePublication.getModelVersion(),is(equalTo(modelVersionDefinedInGradle)));
+        assertThat(samplePublication.getModelVersion(), is(equalTo(modelVersionDefinedInGradle)));
     }
 
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {
@@ -100,13 +99,13 @@ public class PublicationTest {
 
     private Publication getPublicationWithoutDoiRequest() throws InvalidIssnException, MalformedContributorException {
         return PublicationGenerator.generateJournalArticlePublication().copy()
-            .withDoiRequest(null).build();
+                   .withDoiRequest(null).build();
     }
 
     private Publication generatePublicationWithRejectedDoiRequestStatus()
         throws InvalidIssnException, MalformedContributorException {
         var doiRequest = PublicationGenerator.generateJournalArticlePublication().getDoiRequest();
         return PublicationGenerator.generateJournalArticlePublication()
-            .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
+                   .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
     }
 }

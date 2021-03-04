@@ -22,7 +22,7 @@ import nva.commons.core.JacocoGenerated;
 public class Publication
         implements WithIdentifier, WithInternal, WithFile, WithMetadata, WithCopy<Publication.Builder> {
 
-    public static final String MODEL_VERSION= "0.11.8";
+    private static final String MODEL_VERSION= "0.11.8";
 
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
             PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
@@ -248,7 +248,7 @@ public class Publication
 
     @JsonProperty("modelVersion")
     public void setModelVersion(){
-        //
+        //NO-OP;
     }
 
     @Override
