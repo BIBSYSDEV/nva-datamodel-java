@@ -16,6 +16,7 @@ import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
+import no.unit.nva.BuildConfig;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.ContextUtil;
@@ -29,7 +30,7 @@ public class PublicationTest {
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
 
     protected static final ObjectMapper objectMapper = nva.commons.core.JsonUtils.objectMapper;
-    private static final String DATAMODEL_VERSION_ENV_VAR = "DATAMODEL_VERSION";
+
 
     @Test
     public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
@@ -76,9 +77,8 @@ public class PublicationTest {
     @Test
     public void getModelVersionReturnsModelVersionDefinedByGradle()
         throws InvalidIssnException, MalformedContributorException {
-        String modelVersionDefinedInGradle = new Environment().readEnv(DATAMODEL_VERSION_ENV_VAR);
         Publication samplePublication = getPublicationWithoutDoiRequest();
-        assertThat(samplePublication.getModelVersion(), is(equalTo(modelVersionDefinedInGradle)));
+        assertThat(samplePublication.getModelVersion(), is(equalTo(BuildConfig.MODEL_VERSION)));
     }
 
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {
