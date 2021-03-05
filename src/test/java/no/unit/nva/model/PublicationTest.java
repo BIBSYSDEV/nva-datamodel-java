@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jsonldjava.core.JsonLdOptions;
@@ -17,10 +16,12 @@ import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
+import no.unit.nva.BuildConfig;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.ContextUtil;
 import no.unit.nva.model.util.PublicationGenerator;
+import nva.commons.core.Environment;
 import org.junit.jupiter.api.Test;
 
 public class PublicationTest {
@@ -29,6 +30,7 @@ public class PublicationTest {
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
 
     protected static final ObjectMapper objectMapper = nva.commons.core.JsonUtils.objectMapper;
+
 
     @Test
     public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
@@ -50,7 +52,7 @@ public class PublicationTest {
 
         var actualMessage = assertThrows(IllegalArgumentException.class,
             () -> publication.updateDoiRequestStatus(REQUESTED))
-            .getMessage();
+                                .getMessage();
 
         assertThat(actualMessage, containsStringIgnoringCase("not allowed"));
 
@@ -72,6 +74,13 @@ public class PublicationTest {
             is(equalTo(Publication.ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST)));
     }
 
+    @Test
+    public void getModelVersionReturnsModelVersionDefinedByGradle()
+        throws InvalidIssnException, MalformedContributorException {
+        Publication samplePublication = getPublicationWithoutDoiRequest();
+        assertThat(samplePublication.getModelVersion(), is(equalTo(BuildConfig.MODEL_VERSION)));
+    }
+
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {
         JsonNode document = objectMapper.readTree(objectMapper.writeValueAsString(publication));
         JsonNode context = objectMapper.readTree(new FileInputStream(PUBLICATION_CONTEXT_JSON));
@@ -90,13 +99,13 @@ public class PublicationTest {
 
     private Publication getPublicationWithoutDoiRequest() throws InvalidIssnException, MalformedContributorException {
         return PublicationGenerator.generateJournalArticlePublication().copy()
-            .withDoiRequest(null).build();
+                   .withDoiRequest(null).build();
     }
 
     private Publication generatePublicationWithRejectedDoiRequestStatus()
         throws InvalidIssnException, MalformedContributorException {
         var doiRequest = PublicationGenerator.generateJournalArticlePublication().getDoiRequest();
         return PublicationGenerator.generateJournalArticlePublication()
-            .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
+                   .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
     }
 }

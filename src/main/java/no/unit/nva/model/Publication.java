@@ -2,12 +2,14 @@ package no.unit.nva.model;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import no.unit.nva.BuildConfig;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
@@ -19,15 +21,15 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields"})
 public class Publication
-        implements WithIdentifier, WithInternal, WithFile, WithMetadata, WithCopy<Publication.Builder> {
+    implements WithIdentifier, WithInternal, WithFile, WithMetadata, WithCopy<Publication.Builder> {
 
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
-            PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
-            PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, PublicationStatus.DRAFT_FOR_DELETION)
+        PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
+        PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, PublicationStatus.DRAFT_FOR_DELETION)
     );
-
     public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
         "You must initiate creation of a DoiRequest before you can update it.";
+    private static final String MODEL_VERSION = BuildConfig.MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
@@ -96,48 +98,6 @@ public class Publication
     }
 
     @Override
-    public URI getDoi() {
-        return doi;
-    }
-
-    @Override
-    public void setDoi(URI doi) {
-        this.doi = doi;
-    }
-
-    @Override
-    public DoiRequest getDoiRequest() {
-        return doiRequest;
-    }
-
-    @Override
-    public void setDoiRequest(DoiRequest doiRequest) {
-        this.doiRequest = doiRequest;
-    }
-
-    /**
-     * Update a publication with the requested status change.
-     * @param requestedStatusChange Requested status change.
-     * @throws IllegalArgumentException Invalid status to change to.
-     * @throws IllegalStateException No DoiRequest exists.
-     * @see DoiRequestStatus
-     */
-    public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) {
-        if (isNull(doiRequest)) {
-            throw new IllegalStateException(
-                ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST);
-        }
-
-        Instant now = Instant.now();
-        DoiRequest updatedDoiRequest = getDoiRequest().copy()
-            .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
-            .withModifiedDate(now)
-            .build();
-        setDoiRequest(updatedDoiRequest);
-        setModifiedDate(now);
-    }
-
-    @Override
     public Instant getPublishedDate() {
         return publishedDate;
     }
@@ -178,16 +138,6 @@ public class Publication
     }
 
     @Override
-    public SortableIdentifier getIdentifier() {
-        return identifier;
-    }
-
-    @Override
-    public void setIdentifier(SortableIdentifier identifier) {
-        this.identifier = identifier;
-    }
-
-    @Override
     public URI getLink() {
         return link;
     }
@@ -208,6 +158,59 @@ public class Publication
     }
 
     @Override
+    public URI getDoi() {
+        return doi;
+    }
+
+    @Override
+    public void setDoi(URI doi) {
+        this.doi = doi;
+    }
+
+    @Override
+    public DoiRequest getDoiRequest() {
+        return doiRequest;
+    }
+
+    @Override
+    public void setDoiRequest(DoiRequest doiRequest) {
+        this.doiRequest = doiRequest;
+    }
+
+    /**
+     * Update a publication with the requested status change.
+     *
+     * @param requestedStatusChange Requested status change.
+     * @throws IllegalArgumentException Invalid status to change to.
+     * @throws IllegalStateException    No DoiRequest exists.
+     * @see DoiRequestStatus
+     */
+    public void updateDoiRequestStatus(DoiRequestStatus requestedStatusChange) {
+        if (isNull(doiRequest)) {
+            throw new IllegalStateException(
+                ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST);
+        }
+
+        Instant now = Instant.now();
+        DoiRequest updatedDoiRequest = getDoiRequest().copy()
+                                           .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
+                                           .withModifiedDate(now)
+                                           .build();
+        setDoiRequest(updatedDoiRequest);
+        setModifiedDate(now);
+    }
+
+    @Override
+    public SortableIdentifier getIdentifier() {
+        return identifier;
+    }
+
+    @Override
+    public void setIdentifier(SortableIdentifier identifier) {
+        this.identifier = identifier;
+    }
+
+    @Override
     public EntityDescription getEntityDescription() {
         return entityDescription;
     }
@@ -215,16 +218,6 @@ public class Publication
     @Override
     public void setEntityDescription(EntityDescription entityDescription) {
         this.entityDescription = entityDescription;
-    }
-
-    @Override
-    public FileSet getFileSet() {
-        return fileSet;
-    }
-
-    @Override
-    public void setFileSet(FileSet fileSet) {
-        this.fileSet = fileSet;
     }
 
     @Override
@@ -238,23 +231,51 @@ public class Publication
     }
 
     @Override
+    public FileSet getFileSet() {
+        return fileSet;
+    }
+
+    @Override
+    public void setFileSet(FileSet fileSet) {
+        this.fileSet = fileSet;
+    }
+
+    @JsonProperty("modelVersion")
+    public String getModelVersion() {
+        return MODEL_VERSION;
+    }
+
+    @JsonProperty("modelVersion")
+    public void setModelVersion() {
+        //NO-OP;
+    }
+
+    @Override
     public Builder copy() {
         return new Builder()
-                .withIdentifier(getIdentifier())
-                .withStatus(getStatus())
-                .withOwner(getOwner())
-                .withPublisher(getPublisher())
-                .withCreatedDate(getCreatedDate())
-                .withModifiedDate(getModifiedDate())
-                .withPublishedDate(getPublishedDate())
-                .withIndexedDate(getIndexedDate())
-                .withHandle(getHandle())
-                .withDoi(getDoi())
-                .withDoiRequest(getDoiRequest())
-                .withLink(getLink())
-                .withEntityDescription(getEntityDescription())
-                .withFileSet(getFileSet())
-                .withProjects(getProjects());
+                   .withIdentifier(getIdentifier())
+                   .withStatus(getStatus())
+                   .withOwner(getOwner())
+                   .withPublisher(getPublisher())
+                   .withCreatedDate(getCreatedDate())
+                   .withModifiedDate(getModifiedDate())
+                   .withPublishedDate(getPublishedDate())
+                   .withIndexedDate(getIndexedDate())
+                   .withHandle(getHandle())
+                   .withDoi(getDoi())
+                   .withDoiRequest(getDoiRequest())
+                   .withLink(getLink())
+                   .withEntityDescription(getEntityDescription())
+                   .withFileSet(getFileSet())
+                   .withProjects(getProjects());
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
+            getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
+            getEntityDescription(), getFileSet(), getProjects());
     }
 
     @JacocoGenerated
@@ -268,35 +289,27 @@ public class Publication
         }
         Publication that = (Publication) o;
         return Objects.equals(getIdentifier(), that.getIdentifier())
-                && getStatus() == that.getStatus()
-                && Objects.equals(getOwner(), that.getOwner())
-                && Objects.equals(getPublisher(), that.getPublisher())
-                && Objects.equals(getCreatedDate(), that.getCreatedDate())
-                && Objects.equals(getModifiedDate(), that.getModifiedDate())
-                && Objects.equals(getPublishedDate(), that.getPublishedDate())
-                && Objects.equals(getIndexedDate(), that.getIndexedDate())
-                && Objects.equals(getHandle(), that.getHandle())
-                && Objects.equals(getDoi(), that.getDoi())
-                && Objects.equals(getDoiRequest(), that.getDoiRequest())
-                && Objects.equals(getLink(), that.getLink())
-                && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                && Objects.equals(getFileSet(), that.getFileSet())
-                && Objects.equals(getProjects(), that.getProjects());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
-                getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
-                getEntityDescription(), getFileSet(), getProjects());
+               && getStatus() == that.getStatus()
+               && Objects.equals(getOwner(), that.getOwner())
+               && Objects.equals(getPublisher(), that.getPublisher())
+               && Objects.equals(getCreatedDate(), that.getCreatedDate())
+               && Objects.equals(getModifiedDate(), that.getModifiedDate())
+               && Objects.equals(getPublishedDate(), that.getPublishedDate())
+               && Objects.equals(getIndexedDate(), that.getIndexedDate())
+               && Objects.equals(getHandle(), that.getHandle())
+               && Objects.equals(getDoi(), that.getDoi())
+               && Objects.equals(getDoiRequest(), that.getDoiRequest())
+               && Objects.equals(getLink(), that.getLink())
+               && Objects.equals(getEntityDescription(), that.getEntityDescription())
+               && Objects.equals(getFileSet(), that.getFileSet())
+               && Objects.equals(getProjects(), that.getProjects());
     }
 
     /**
      * Updates the status of the publication using rules for valid status transitions.
      *
-     * @param nextStatus    the status to update to
-     * @throws InvalidPublicationStatusTransitionException  if the status transition is not allowed
+     * @param nextStatus the status to update to
+     * @throws InvalidPublicationStatusTransitionException if the status transition is not allowed
      */
     public void updateStatus(PublicationStatus nextStatus) throws InvalidPublicationStatusTransitionException {
         verifyStatusTransition(nextStatus);
@@ -304,7 +317,7 @@ public class Publication
     }
 
     private void verifyStatusTransition(PublicationStatus nextStatus)
-            throws InvalidPublicationStatusTransitionException {
+        throws InvalidPublicationStatusTransitionException {
         final PublicationStatus currentStatus = getStatus();
         if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
             throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
@@ -312,6 +325,7 @@ public class Publication
     }
 
     public static final class Builder {
+
         private SortableIdentifier identifier;
         private PublicationStatus status;
         private String owner;
