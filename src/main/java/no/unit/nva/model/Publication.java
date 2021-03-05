@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import no.unit.nva.BuildConfig;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
@@ -28,7 +29,7 @@ public class Publication
     );
     public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
         "You must initiate creation of a DoiRequest before you can update it.";
-    private static final String MODEL_VERSION = "0.11.8";
+    private static final String MODEL_VERSION = BuildConfig.MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
