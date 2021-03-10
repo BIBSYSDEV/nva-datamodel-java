@@ -11,6 +11,7 @@ plugins {
 
 apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
+apply plugin: 'maven-publish'
 
 String versionNumber = '0.11.8'
 
@@ -39,6 +40,11 @@ def jacksonVersion = '2.10.2'
 def nvaCommonsVersion = '0.8.1'
 
 gradleLint.rules = ['unused-dependency']
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
 dependencies {
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
@@ -115,14 +121,21 @@ buildConfig {
 }
 
 
-
-
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId = project.name
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
             pom {
-                name = 'NVA Datamodel '
+                name = project.name
                 description = 'Java implementation of NVA Datamodel'
                 url = 'https://github.com/BIBSYSDEV/nva-datamodel-java'
                 licenses {
