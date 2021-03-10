@@ -5,5 +5,5 @@ before_install:
   - sdk use java 11.0.10-open
 install:
   ./gradlew clean
-  ./gradle build publishToMavenLocal
+  ./gradlew build publishToMavenLocal
 
