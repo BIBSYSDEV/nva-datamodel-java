@@ -1,3 +1,4 @@
+#This file runs only when one asks a version or Git hash-version from Jitpack
 jdk:
   - openjdk11
 before_install:
@@ -5,5 +6,6 @@ before_install:
   - sdk use java 11.0.10-open
 install:
   - ./gradlew clean
+# Jitpack requires to copy the generated artifacts to ~/.m2 repo
   - ./gradlew build publishToMavenLocal
 

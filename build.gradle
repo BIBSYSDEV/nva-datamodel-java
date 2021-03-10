@@ -120,7 +120,6 @@ buildConfig {
     buildConfigField 'String', 'MODEL_VERSION', versionNumber
 }
 
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
