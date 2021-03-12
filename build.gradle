@@ -6,12 +6,14 @@ plugins {
     id 'nebula.lint' version '16.8.0'
     id 'de.fuerstenau.buildconfig' version '1.1.8'
     id 'idea'
+    id 'maven-publish'
 }
 
 apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
+apply plugin: 'maven-publish'
 
-String versionNumber = '0.11.8'
+String versionNumber = '0.11.9'
 
 group 'no.unit.nva'
 version versionNumber
@@ -38,6 +40,11 @@ def jacksonVersion = '2.10.2'
 def nvaCommonsVersion = '0.8.1'
 
 gradleLint.rules = ['unused-dependency']
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
 dependencies {
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
@@ -112,3 +119,41 @@ buildConfig {
     charset = 'UTF-8'
     buildConfigField 'String', 'MODEL_VERSION', versionNumber
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.name
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = project.name
+                description = 'Java implementation of NVA Datamodel'
+                url = 'https://github.com/BIBSYSDEV/nva-datamodel-java'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git@github.com:BIBSYSDEV/nva-datamodel-java.git'
+                    developerConnection = 'scm:git@github.com:BIBSYSDEV/nva-datamodel-java.git'
+                    url = 'https://github.com/BIBSYSDEV/nva-datamodel-java'
+                }
+            }
+        }
+    }
+}
+
+
+
+
