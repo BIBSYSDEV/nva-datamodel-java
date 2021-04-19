@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,7 +61,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
         JsonNode document = toPublicationWithContext(publication);
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
                 Publication.class);
-        assertThat(publicationFromJson, doesNotHaveNullOrEmptyFields());
+        assertThat(publicationFromJson, doesNotHaveEmptyValues());
         assertThat(publication, is(equalTo(publicationFromJson)));
     }
 }
