@@ -15,9 +15,9 @@ apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-String versionNumber = '0.11.10'
+String versionNumber = '0.11.11'
 
-group 'no.unit.nva'
+group 'com.github.bibsysdev'
 version versionNumber
 
 repositories {
@@ -124,6 +124,11 @@ buildConfig {
     packageName = project.group
     charset = 'UTF-8'
     buildConfigField 'String', 'MODEL_VERSION', versionNumber
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 publishing {
