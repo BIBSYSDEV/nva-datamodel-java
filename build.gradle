@@ -1,0 +1,200 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'pmd'
+    id 'nebula.lint' version '16.8.0'
+    id 'de.fuerstenau.buildconfig' version '1.1.8'
+    id 'idea'
+    id 'maven-publish'
+    id 'signing'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
+}
+
+apply plugin: 'de.fuerstenau.buildconfig'
+apply plugin: 'idea'
+apply plugin: 'maven-publish'
+
+String versionNumber = '0.11.11'
+
+group 'com.github.bibsysdev'
+version versionNumber
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+configurations {
+    compileClasspath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+def junitVersion = '5.6.2'
+def jacksonVersion = '2.10.2'
+def nvaCommonsVersion = '1.5.12'
+
+gradleLint.rules = ['unused-dependency']
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+dependencies {
+    implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
+
+    compileOnly group: 'com.github.bibsysdev', name: 'core', version: nvaCommonsVersion
+    testImplementation group: 'com.github.bibsysdev', name: 'core', version: nvaCommonsVersion
+
+    compileOnly group: 'com.github.bibsysdev', name: 'identifiers', version: nvaCommonsVersion
+    testImplementation group: 'com.github.bibsysdev', name: 'identifiers', version: nvaCommonsVersion
+
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+    testRuntimeOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+
+    compileOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: jacksonVersion
+    testRuntimeOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: jacksonVersion
+
+    compileOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+    testRuntimeOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+
+    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jacksonVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+    testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
+    testImplementation group: 'com.github.BIBSYSDEV', name: 'nva-testutils', version: '0.1.9'
+    testImplementation group: 'io.swagger.core.v3', name: 'swagger-core', version: '2.1.4'
+    testImplementation group: 'org.javers', name: 'javers-core', version: '6.0.1'
+    testImplementation group: 'com.github.bibsysdev', name: 'nva-testutils', version: '0.1.18'
+    testImplementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
+    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+
+}
+
+test {
+    useJUnitPlatform()
+    failFast = true
+    finalizedBy(jacocoTestReport)
+
+}
+
+jacocoTestReport {
+    dependsOn(test)
+    reports {
+        xml.enabled true
+    }
+}
+
+pmd {
+    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+    ruleSets = []
+    ignoreFailures = false
+}
+
+checkstyle {
+    configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
+    showViolations = true
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
+    }
+}
+
+buildConfig {
+    appName = project.name
+    version = project.version
+    clsName = 'BuildConfig'
+    packageName = project.group
+    charset = 'UTF-8'
+    buildConfigField 'String', 'MODEL_VERSION', versionNumber
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.name
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = project.name
+                description = 'The java version of the NVA datamodel'
+                url = 'https://github.com/BIBSYSDEV/nva-datamodel-java'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Mattias Håheim Johnsen'
+                        email = 'mattias.haheim.johnsen@unit.no'
+                        organization = 'UNIT'
+                        organizationUrl = 'https://www.unit.no/'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/BIBSYSDEV/nva-datamodel-java.git'
+                    developerConnection = 'scm:git:ssh://github.com/BIBSYSDEV/nva-datamodel-java.git'
+                    url = 'https://github.com/BIBSYSDEV/nva-datamodel-java/tree/main'
+                }
+            }
+        }
+    }
+}
+
+ signing {
+    if (isMainBranch()) {
+        useInMemoryPgpKeys(findProperty("signingKey"), findProperty("signingPassword"))
+        sign publishing.publications.mavenJava
+    }
+
+}
+
+def gitBranch() {
+    def branch = ""
+    def proc = "git rev-parse --abbrev-ref HEAD".execute()
+    proc.in.eachLine { line -> branch = line }
+    proc.err.eachLine { line -> println line }
+    proc.waitFor()
+    branch
+}
+
+boolean isMainBranch() {
+    def branch = gitBranch()
+    return ((branch == "master" || branch == "main"))
+}
+
+
+
+
+
