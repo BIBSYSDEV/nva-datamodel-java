@@ -12,11 +12,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.javafaker.Faker;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import no.unit.nva.identifiers.SortableIdentifier;
@@ -24,9 +23,12 @@ import no.unit.nva.model.File;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.Reference;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
+import no.unit.nva.model.util.PublicationGenerator;
 import nva.commons.core.JsonUtils;
+import org.javers.core.Javers;
+import org.javers.core.JaversBuilder;
+import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,10 +45,10 @@ public class PublicationTest extends ModelTest {
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final UUID REPLACEMENT_IDENTIFIER_2 = UUID.fromString("5032710d-a326-43d3-a8fb-57a451873c78");
     public static final String JOURNAL_ARTICLE = "JournalArticle";
+    public static final Faker FAKER = Faker.instance();
+    public static final Javers JAVERS = JaversBuilder.javers().build();
     ObjectMapper objectMapper = JsonUtils.objectMapper;
 
-
-    @DisplayName("Test that each publication type can be round-tripped to and from JSON")
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @ArgumentsSource(InstanceTypeProvider.class)
     void publicationReturnsValidPublicationWhenInputIsValid(String instanceType) throws Exception {
@@ -54,8 +56,9 @@ public class PublicationTest extends ModelTest {
 
         String publication = objectMapper.writeValueAsString(expected);
         Publication roundTripped = objectMapper.readValue(publication, Publication.class);
+        Diff diff = JAVERS.compare(expected, roundTripped);
         assertThat(expected, doesNotHaveNullOrEmptyFields());
-        assertThat(roundTripped, is(equalTo(expected)));
+        assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
     }
@@ -67,11 +70,11 @@ public class PublicationTest extends ModelTest {
         Publication publication = generatePublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThat(publication, doesNotHaveNullOrEmptyFields());
-        assertThat(copy, is(equalTo(publication)));
+        Diff diff = JAVERS.compare(publication, copy);
+        assertThat(diff.prettyPrint(), copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));
     }
 
-    @DisplayName("Test that each publication type can be round-tripped to and from JSON")
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @ArgumentsSource(InstanceTypeProvider.class)
     void projectsAreSetAsListsWhenInputIsSingleProject(String instanceType) throws Exception {
@@ -96,129 +99,35 @@ public class PublicationTest extends ModelTest {
 
         InvalidPublicationStatusTransitionException exception =
             assertThrows(InvalidPublicationStatusTransitionException.class,
-                () -> publication.updateStatus(PUBLISHED));
+                         () -> publication.updateStatus(PUBLISHED));
 
         String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
-            NEW, PUBLISHED);
+                                             NEW, PUBLISHED);
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
     }
 
     private Publication generatePublication(String instanceType) throws Exception {
-        Reference reference = generateReference(instanceType);
-        Instant now = Instant.now();
-
-        return new Publication.Builder()
-            .withCreatedDate(now)
-            .withDoi(URI.create("https://example.org/yet/another/fake/doi/1231/12311"))
-            .withDoiRequest(generateDoiRequest(now))
-            .withEntityDescription(generateEntityDescription(reference))
-            .withFileSet(generateFileSet())
-            .withHandle(URI.create("https://example.org/fakeHandle/13213"))
-            .withIdentifier(SortableIdentifier.next())
-            .withIndexedDate(now)
-            .withLink(URI.create("https://this.should.have.been.removed"))
-            .withModifiedDate(now)
-            .withOwner("me@example.org")
-            .withProjects(generateProject())
-            .withPublishedDate(now)
-            .withPublisher(generateOrganization())
-            .withStatus(PUBLISHED)
-            .build();
-    }
-
-    private Reference generateReference(String instanceType) throws Exception {
-        Reference reference;
-        switch (instanceType) {
-            case "BookAbstracts":
-                reference = generateBookAbstracts();
-                break;
-            case "BookAnthology":
-                reference = generateBookAnthology();
-                break;
-            case "BookMonograph":
-                reference = generateBookMonograph();
-                break;
-            case "CartographicMap":
-                reference = generateCartographicMap();
-                break;
-            case "ChapterArticle":
-                reference = generateChapterArticle();
-                break;
-            case "DegreeBachelor":
-                reference = generateDegreeBachelor();
-                break;
-            case "DegreeMaster":
-                reference = generateDegreeMaster();
-                break;
-            case "DegreePhd":
-                reference = generateDegreePhd();
-                break;
-            case "FeatureArticle":
-                reference = generateFeatureArticle();
-                break;
-            case "JournalArticle":
-                reference = generateJournalArticle();
-                break;
-            case "JournalCorrigendum":
-                reference = generateJournalCorrigendum();
-                break;
-            case "JournalInterview":
-                reference = generateJournalInterview();
-                break;
-            case "JournalLeader":
-                reference = generateJournalLeader();
-                break;
-            case "JournalLetter":
-                reference = generateJournalLetter();
-                break;
-            case "JournalReview":
-                reference = generateJournalReview();
-                break;
-            case "JournalShortCommunication":
-                reference = generateJournalShortCommunication();
-                break;
-            case "MusicNotation":
-                reference = generateMusicNotation();
-                break;
-            case "OtherStudentWork":
-                reference = generateOtherStudentWork();
-                break;
-            case "ReportBasic":
-                reference = generateReportBasic();
-                break;
-            case "ReportPolicy":
-                reference = generateReportPolicy();
-                break;
-            case "ReportResearch":
-                reference = generateReportResearch();
-                break;
-            case "ReportWorkingPaper":
-                reference = generateReportWorkingPaper();
-                break;
-            default:
-                throw new Exception("Unknown instanceType");
-        }
-        return reference;
+        return PublicationGenerator.generatePublication(instanceType);
     }
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
         publication.getFileSet().getFiles().forEach(file -> publication.getFileSet()
-            .setFiles(List.of(copyWithNewIdentifier(file))));
+                                                                .setFiles(List.of(copyWithNewIdentifier(file))));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
         var publicationJson = objectMapper.writeValueAsString(publication)
-            .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
+                                  .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
         Files.write(Paths.get(path), publicationJson.getBytes());
     }
 
     private File copyWithNewIdentifier(File file) {
         return new File(PublicationTest.REPLACEMENT_IDENTIFIER_2,
-            file.getName(),
-            file.getMimeType(),
-            file.getSize(),
-            file.getLicense(),
-            file.isAdministrativeAgreement(),
-            file.isPublisherAuthority(),
-            file.getEmbargoDate());
+                        file.getName(),
+                        file.getMimeType(),
+                        file.getSize(),
+                        file.getLicense(),
+                        file.isAdministrativeAgreement(),
+                        file.isPublisherAuthority(),
+                        file.getEmbargoDate());
     }
 }

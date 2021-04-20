@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import no.unit.nva.BuildConfig;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
@@ -19,7 +20,7 @@ import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields"})
+@SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields", "PMD.GodClass"})
 public class Publication
     implements WithIdentifier, WithInternal, WithFile, WithMetadata, WithCopy<Publication.Builder> {
 
@@ -45,6 +46,7 @@ public class Publication
     private EntityDescription entityDescription;
     private FileSet fileSet;
     private List<ResearchProject> projects;
+    private Set<AdditionalIdentifier> additionalIdentifiers;
 
     public Publication() {
     }
@@ -65,6 +67,15 @@ public class Publication
         setEntityDescription(builder.entityDescription);
         setFileSet(builder.fileSet);
         setProjects(builder.projects);
+        setAdditionalIdentifiers(builder.additionalIdentifiers);
+    }
+
+    public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
+        return additionalIdentifiers;
+    }
+
+    public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
+        this.additionalIdentifiers = additionalIdentifiers;
     }
 
     @Override
@@ -267,15 +278,27 @@ public class Publication
                    .withLink(getLink())
                    .withEntityDescription(getEntityDescription())
                    .withFileSet(getFileSet())
-                   .withProjects(getProjects());
+                   .withProjects(getProjects())
+                   .withAdditionalIdentifiers(getAdditionalIdentifiers());
+    }
+
+    /**
+     * Updates the status of the publication using rules for valid status transitions.
+     *
+     * @param nextStatus the status to update to
+     * @throws InvalidPublicationStatusTransitionException if the status transition is not allowed
+     */
+    public void updateStatus(PublicationStatus nextStatus) throws InvalidPublicationStatusTransitionException {
+        verifyStatusTransition(nextStatus);
+        setStatus(nextStatus);
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
         return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
-            getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
-            getEntityDescription(), getFileSet(), getProjects());
+                    getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
+                    getEntityDescription(), getFileSet(), getProjects(), getAdditionalIdentifiers());
     }
 
     @JacocoGenerated
@@ -288,32 +311,23 @@ public class Publication
             return false;
         }
         Publication that = (Publication) o;
-        return Objects.equals(getIdentifier(), that.getIdentifier())
-               && getStatus() == that.getStatus()
-               && Objects.equals(getOwner(), that.getOwner())
-               && Objects.equals(getPublisher(), that.getPublisher())
-               && Objects.equals(getCreatedDate(), that.getCreatedDate())
-               && Objects.equals(getModifiedDate(), that.getModifiedDate())
-               && Objects.equals(getPublishedDate(), that.getPublishedDate())
-               && Objects.equals(getIndexedDate(), that.getIndexedDate())
+        boolean firstHalf = Objects.equals(getIdentifier(), that.getIdentifier())
+                            && getStatus() == that.getStatus()
+                            && Objects.equals(getOwner(), that.getOwner())
+                            && Objects.equals(getPublisher(), that.getPublisher())
+                            && Objects.equals(getCreatedDate(), that.getCreatedDate())
+                            && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                            && Objects.equals(getPublishedDate(), that.getPublishedDate());
+        boolean secondHalf = Objects.equals(getIndexedDate(), that.getIndexedDate())
                && Objects.equals(getHandle(), that.getHandle())
                && Objects.equals(getDoi(), that.getDoi())
                && Objects.equals(getDoiRequest(), that.getDoiRequest())
                && Objects.equals(getLink(), that.getLink())
                && Objects.equals(getEntityDescription(), that.getEntityDescription())
                && Objects.equals(getFileSet(), that.getFileSet())
-               && Objects.equals(getProjects(), that.getProjects());
-    }
-
-    /**
-     * Updates the status of the publication using rules for valid status transitions.
-     *
-     * @param nextStatus the status to update to
-     * @throws InvalidPublicationStatusTransitionException if the status transition is not allowed
-     */
-    public void updateStatus(PublicationStatus nextStatus) throws InvalidPublicationStatusTransitionException {
-        verifyStatusTransition(nextStatus);
-        setStatus(nextStatus);
+               && Objects.equals(getProjects(), that.getProjects())
+               && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers());
+        return firstHalf && secondHalf;
     }
 
     private void verifyStatusTransition(PublicationStatus nextStatus)
@@ -341,6 +355,7 @@ public class Publication
         private EntityDescription entityDescription;
         private FileSet fileSet;
         private List<ResearchProject> projects;
+        private Set<AdditionalIdentifier> additionalIdentifiers;
 
         public Builder() {
         }
@@ -417,6 +432,11 @@ public class Publication
 
         public Builder withProjects(List<ResearchProject> projects) {
             this.projects = projects;
+            return this;
+        }
+
+        public Builder withAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
+            this.additionalIdentifiers = additionalIdentifiers;
             return this;
         }
 
