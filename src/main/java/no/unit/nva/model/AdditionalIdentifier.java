@@ -10,16 +10,16 @@ public class AdditionalIdentifier {
 
     @JsonProperty("source")
     private String source;
-    @JsonProperty("identifier")
-    private String identifier;
+    @JsonProperty("value")
+    private String value;
 
     @JacocoGenerated
     public AdditionalIdentifier() {
 
     }
 
-    public AdditionalIdentifier(String source, String identifier) {
-        this.identifier = identifier;
+    public AdditionalIdentifier(String source, String value) {
+        this.value = value;
         this.source = source;
     }
 
@@ -34,24 +34,25 @@ public class AdditionalIdentifier {
     }
 
     @JacocoGenerated
-    public String getIdentifier() {
-        return identifier;
+    public String getValue() {
+        return value;
     }
 
     @JacocoGenerated
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getSource(), getIdentifier());
+        return Objects.hash(getSource(), getValue());
     }
 
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
+
         if (this == o) {
             return true;
         }
@@ -59,7 +60,7 @@ public class AdditionalIdentifier {
             return false;
         }
         AdditionalIdentifier that = (AdditionalIdentifier) o;
-        return Objects.equals(getSource(), that.getSource())
-               && Objects.equals(getIdentifier(), that.getIdentifier());
+        return Objects.equals(getSource(), that.getSource()) && Objects.equals(getValue(),
+                                                                               that.getValue());
     }
 }
