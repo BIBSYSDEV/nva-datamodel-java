@@ -7,15 +7,17 @@ plugins {
     id 'de.fuerstenau.buildconfig' version '1.1.8'
     id 'idea'
     id 'maven-publish'
+    id 'signing'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
 }
 
 apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-String versionNumber = '0.11.10'
+String versionNumber = '0.11.11'
 
-group 'no.unit.nva'
+group 'com.github.bibsysdev'
 version versionNumber
 
 repositories {
@@ -124,6 +126,11 @@ buildConfig {
     buildConfigField 'String', 'MODEL_VERSION', versionNumber
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -139,7 +146,7 @@ publishing {
             }
             pom {
                 name = project.name
-                description = 'Java implementation of NVA Datamodel'
+                description = 'The java version of the NVA datamodel'
                 url = 'https://github.com/BIBSYSDEV/nva-datamodel-java'
                 licenses {
                     license {
@@ -147,16 +154,46 @@ publishing {
                         url = 'http://www.opensource.org/licenses/mit-license.php'
                     }
                 }
-
+                developers {
+                    developer {
+                        name = 'Mattias Håheim Johnsen'
+                        email = 'mattias.haheim.johnsen@unit.no'
+                        organization = 'UNIT'
+                        organizationUrl = 'https://www.unit.no/'
+                    }
+                }
                 scm {
-                    connection = 'scm:git@github.com:BIBSYSDEV/nva-datamodel-java.git'
-                    developerConnection = 'scm:git@github.com:BIBSYSDEV/nva-datamodel-java.git'
-                    url = 'https://github.com/BIBSYSDEV/nva-datamodel-java'
+                    connection = 'scm:git:git://github.com/BIBSYSDEV/nva-datamodel-java.git'
+                    developerConnection = 'scm:git:ssh://github.com/BIBSYSDEV/nva-datamodel-java.git'
+                    url = 'https://github.com/BIBSYSDEV/nva-datamodel-java/tree/main'
                 }
             }
         }
     }
 }
+
+ signing {
+    if (isMainBranch()) {
+        useInMemoryPgpKeys(findProperty("signingKey"), findProperty("signingPassword"))
+        sign publishing.publications.mavenJava
+    }
+
+}
+
+def gitBranch() {
+    def branch = ""
+    def proc = "git rev-parse --abbrev-ref HEAD".execute()
+    proc.in.eachLine { line -> branch = line }
+    proc.err.eachLine { line -> println line }
+    proc.waitFor()
+    branch
+}
+
+boolean isMainBranch() {
+    def branch = gitBranch()
+    return ((branch == "master" || branch == "main"))
+}
+
 
 
 

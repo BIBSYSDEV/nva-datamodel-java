@@ -22,7 +22,7 @@ import com.github.jsonldjava.utils.JsonUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Set;
-import no.unit.nva.BuildConfig;
+import com.github.bibsysdev.BuildConfig;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.ContextUtil;
