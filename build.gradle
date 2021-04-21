@@ -8,7 +8,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'signing'
-    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
 apply plugin: 'de.fuerstenau.buildconfig'
@@ -42,15 +42,6 @@ def jacksonVersion = '2.10.2'
 def nvaCommonsVersion = '1.5.12'
 
 gradleLint.rules = ['unused-dependency']
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            stagingProfileId = "5ba11e4895739"
-        }
-    }
-}
-
 
 dependencies {
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
@@ -135,6 +126,16 @@ java {
     withSourcesJar()
 }
 
+nexusPublishing {
+    repositories {
+        sonatype {
+            username = findProperty("sonatypeUsername")
+            password = findProperty("sonatypePassword")
+            stagingProfileId = "5ba11e4895739"
+        }
+    }
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -176,14 +177,6 @@ publishing {
     }
 }
 
- signing {
-    if (isMainBranch()) {
-        useInMemoryPgpKeys(findProperty("signingKey"), findProperty("signingPassword"))
-        sign publishing.publications.mavenJava
-    }
-
-}
-
 def gitBranch() {
     def branch = ""
     def proc = "git rev-parse --abbrev-ref HEAD".execute()
@@ -198,7 +191,13 @@ boolean isMainBranch() {
     return ((branch == "master" || branch == "main"))
 }
 
+signing {
+    if (isMainBranch()) {
+        def signingKey = findProperty("signingKey")
+        def signingPassword = findProperty("signingPassword")
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications.mavenJava
+    }
 
-
-
+}
 
