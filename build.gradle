@@ -15,7 +15,7 @@ apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-String versionNumber = '0.11.11'
+String versionNumber = '0.11.12'
 
 group 'com.github.bibsysdev'
 version versionNumber
@@ -129,8 +129,8 @@ java {
 nexusPublishing {
     repositories {
         sonatype {
-            username = findProperty("sonatypeUsername")
-            password = findProperty("sonatypePassword")
+//            username = findProperty("sonatypeUsername")
+//            password = findProperty("sonatypePassword")
             stagingProfileId = "5ba11e4895739"
         }
     }
@@ -192,12 +192,13 @@ boolean isMainBranch() {
 }
 
 signing {
-    if (isMainBranch()) {
+//    if (isMainBranch()) {
         def signingKey = findProperty("signingKey")
         def signingPassword = findProperty("signingPassword")
         useInMemoryPgpKeys(signingKey, signingPassword)
         sign publishing.publications.mavenJava
-    }
+//    }
 
 }
+
 
