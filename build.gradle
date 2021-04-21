@@ -192,12 +192,12 @@ boolean isMainBranch() {
 }
 
 signing {
-//    if (isMainBranch()) {
+    if (isMainBranch()) {
         def signingKey = findProperty("signingKey")
         def signingPassword = findProperty("signingPassword")
         useInMemoryPgpKeys(signingKey, signingPassword)
         sign publishing.publications.mavenJava
-//    }
+    }
 
 }
 
