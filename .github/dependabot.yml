@@ -1,0 +1,24 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  schedule:
+    interval: daily
+    timezone: Europe/Oslo
+  open-pull-requests-limit: 20
+  ignore:
+  - dependency-name: io.github.gradle-nexus.publish-plugin
+    versions:
+    - 1.1.0
+  - dependency-name: io.swagger.core.v3:swagger-core
+    versions:
+    - 2.1.7
+    - 2.1.8
+  - dependency-name: nebula.lint
+    versions:
+    - 16.17.0
+    - 16.17.1
+    - 16.18.0
+    - 16.19.0
+    - 16.20.0
+    - 16.22.0
