@@ -1,19 +1,18 @@
 package no.unit.nva.model.contexttypes;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URL;
-import no.unit.nva.model.Level;
-import no.unit.nva.model.exceptions.InvalidIsbnException;
-import nva.commons.core.JacocoGenerated;
-import org.apache.commons.validator.routines.ISBNValidator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static java.util.Objects.isNull;
+import no.unit.nva.model.Level;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
+import nva.commons.core.JacocoGenerated;
+import org.apache.commons.validator.routines.ISBNValidator;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Book implements BasicContext {
@@ -83,7 +82,7 @@ public class Book implements BasicContext {
     }
 
     public List<String> getIsbnList() {
-        return isbnList;
+        return nonNull(isbnList) ? isbnList : Collections.emptyList();
     }
 
     /**
@@ -98,9 +97,9 @@ public class Book implements BasicContext {
             return;
         }
         List<String> validIsbns = isbnList.stream()
-                .map(ISBN_VALIDATOR::validate)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                                      .map(ISBN_VALIDATOR::validate)
+                                      .filter(Objects::nonNull)
+                                      .collect(Collectors.toList());
 
         if (isbnList.size() != validIsbns.size()) {
             List<String> errors = new ArrayList<>(isbnList);
@@ -145,31 +144,32 @@ public class Book implements BasicContext {
         }
         Book book = (Book) o;
         return isOpenAccess() == book.isOpenAccess()
-                && isPeerReviewed() == book.isPeerReviewed()
-                && Objects.equals(getSeriesTitle(), book.getSeriesTitle())
-                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
-                && Objects.equals(getPublisher(), book.getPublisher())
-                && getLevel() == book.getLevel()
-                && Objects.equals(getUrl(), book.getUrl())
-                && Objects.equals(getIsbnList(), book.getIsbnList());
+               && isPeerReviewed() == book.isPeerReviewed()
+               && Objects.equals(getSeriesTitle(), book.getSeriesTitle())
+               && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
+               && Objects.equals(getPublisher(), book.getPublisher())
+               && getLevel() == book.getLevel()
+               && Objects.equals(getUrl(), book.getUrl())
+               && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(
-                getSeriesTitle(),
-                getSeriesNumber(),
-                getPublisher(),
-                getLevel(),
-                isOpenAccess(),
-                isPeerReviewed(),
-                getUrl(),
-                getIsbnList()
+            getSeriesTitle(),
+            getSeriesNumber(),
+            getPublisher(),
+            getLevel(),
+            isOpenAccess(),
+            isPeerReviewed(),
+            getUrl(),
+            getIsbnList()
         );
     }
 
     public static final class Builder {
+
         private String seriesTitle;
         private String seriesNumber;
         private String publisher;
