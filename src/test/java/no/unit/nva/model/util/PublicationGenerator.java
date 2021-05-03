@@ -291,7 +291,7 @@ public class PublicationGenerator extends ModelTest {
 
     public static List<String> convertIsbnStringToList(String isbnList) {
         if (StringUtils.isBlank(isbnList)) {
-            return null;
+            return Collections.emptyList();
         } else {
             String unquoted = isbnList.replaceAll(QUOTE, EMPTY_STRING);
             String[] split = unquoted.split(SEPARATOR);
