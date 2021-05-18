@@ -1,11 +1,11 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
 import java.net.URI;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Organization {
@@ -30,7 +30,7 @@ public class Organization {
     }
 
     public Map<String, String> getLabels() {
-        return labels;
+        return Objects.nonNull(labels) ? labels : Collections.emptyMap();
     }
 
     public void setLabels(Map<String, String> labels) {
@@ -48,7 +48,7 @@ public class Organization {
         }
         Organization that = (Organization) o;
         return Objects.equals(getId(), that.getId())
-                && Objects.equals(getLabels(), that.getLabels());
+               && Objects.equals(getLabels(), that.getLabels());
     }
 
     @JacocoGenerated
@@ -58,6 +58,7 @@ public class Organization {
     }
 
     public static final class Builder {
+
         private URI id;
         private Map<String, String> labels;
 
