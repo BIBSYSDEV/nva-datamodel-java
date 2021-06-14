@@ -71,7 +71,7 @@ dependencies {
     testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
     testImplementation group: 'com.github.BIBSYSDEV', name: 'nva-testutils', version: '0.1.9'
     testImplementation group: 'io.swagger.core.v3', name: 'swagger-core', version: '2.1.4'
-    testImplementation group: 'org.javers', name: 'javers-core', version: '6.0.1'
+    testImplementation group: 'org.javers', name: 'javers-core', version: '6.2.0'
     testImplementation group: 'com.github.bibsysdev', name: 'nva-testutils', version: '0.1.18'
     testImplementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
     testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
