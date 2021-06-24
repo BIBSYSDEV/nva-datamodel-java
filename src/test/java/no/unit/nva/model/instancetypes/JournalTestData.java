@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes;
 
+import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
 import no.unit.nva.model.pages.Range;
 
 public class JournalTestData extends TestData {
@@ -7,6 +8,7 @@ public class JournalTestData extends TestData {
     private final String issue;
     private final String articleNumber;
     private final Range pages;
+    private JournalArticleContentType content;
 
     /**
      * Generates a random test data set for a journal article.
@@ -38,6 +40,14 @@ public class JournalTestData extends TestData {
 
     public Range getPages() {
         return pages;
+    }
+
+    public JournalArticleContentType getContent() {
+        return content;
+    }
+
+    public void setContent(String contentTypeString) {
+        this.content = JournalArticleContentType.lookup(contentTypeString);
     }
 
 }
