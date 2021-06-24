@@ -93,11 +93,10 @@ class JournalArticleTest {
     void journalArticleSerializationContainsJournalArticleContentType() throws JsonProcessingException {
         JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
         JournalArticle journalArticle = generateJournalArticle(journalTestData);
-        String jSon = objectMapper.writeValueAsString(journalArticle);
-        CharSequence expectedContentPhrase = "content\" : \""+ RESEARCH_ARTICLE.getValue()+"\"";
-        assertTrue(jSon.contains(expectedContentPhrase));
+        String json = objectMapper.writeValueAsString(journalArticle);
+        CharSequence expectedContentPhrase = "content\" : \"" + RESEARCH_ARTICLE.getValue() + "\"";
+        assertTrue(json.contains(expectedContentPhrase));
     }
-
 
     private JournalArticle generateJournalArticle(JournalTestData testData) {
         return new JournalArticle.Builder()
