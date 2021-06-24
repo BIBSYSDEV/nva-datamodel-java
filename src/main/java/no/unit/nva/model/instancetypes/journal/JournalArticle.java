@@ -96,11 +96,11 @@ public class JournalArticle extends PeerReviewedPaper {
             this.peerReviewed = peerReviewed;
             return this;
         }
+
         public Builder withContent(JournalArticleContentType content) {
             this.content = content;
             return this;
         }
-
 
         public JournalArticle build() {
             return new JournalArticle(this);
