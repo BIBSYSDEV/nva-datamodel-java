@@ -19,11 +19,22 @@ public class JournalTestData extends TestData {
         issue = random(1, 12);
         articleNumber = random(10000, 50000);
         pages = generateRange();
+        content = randomContent();
     }
 
     public JournalTestData(boolean peerReviewed) {
         this();
         setPeerReviewed(peerReviewed);
+    }
+
+    public JournalTestData(String content) {
+        this();
+        setContent(JournalArticleContentType.lookup(content));
+    }
+
+    public JournalTestData(JournalArticleContentType content) {
+        this();
+        setContent(content);
     }
 
     public String getVolume() {
@@ -46,8 +57,12 @@ public class JournalTestData extends TestData {
         return content;
     }
 
-    public void setContent(String contentTypeString) {
-        this.content = JournalArticleContentType.lookup(contentTypeString);
+    private void setContent(JournalArticleContentType content) {
+        this.content = content;
+    }
+
+    private JournalArticleContentType randomContent() {
+        return JournalArticleContentType.values()[RANDOM.nextInt(JournalArticleContentType.values().length)];
     }
 
 }

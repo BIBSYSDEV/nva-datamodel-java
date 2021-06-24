@@ -10,12 +10,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.io.IOException;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.PROFESSIONAL_ARTICLE;
+import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.RESEARCH_ARTICLE;
 import static nva.commons.core.JsonUtils.objectMapper;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class JournalArticleTest {
 
@@ -28,11 +31,11 @@ class JournalArticleTest {
     }
 
     @Test
-    public void canSerializeAndDeserializeJournalArticleWithContentTypeResearchArticle()
+    void canSerializeAndDeserializeJournalArticleWithContentTypeResearchArticle()
             throws JsonProcessingException {
 
         JournalArticle expectedJournalArticle = new JournalArticle.Builder()
-                .withContent(JournalArticleContentType.PROFESSIONAL_ARTICLE).build();
+                .withContent(PROFESSIONAL_ARTICLE).build();
         String expectedJson = objectMapper.writeValueAsString(expectedJournalArticle);
 
         JournalArticle actualJournalArticle = objectMapper.readValue(expectedJson, JournalArticle.class);
@@ -55,8 +58,7 @@ class JournalArticleTest {
     })
     void publicationReturnsJsonWhenInputIsValid(String content) throws IOException {
 
-        JournalTestData expectedJournalArticleTestData = new JournalTestData();
-        expectedJournalArticleTestData.setContent(content);
+        JournalTestData expectedJournalArticleTestData = new JournalTestData(content);
 
         JournalArticle expectedJournalArticle = generateJournalArticle(expectedJournalArticleTestData);
         String expectedJson = objectMapper.writeValueAsString(expectedJournalArticle);
@@ -69,10 +71,8 @@ class JournalArticleTest {
     }
 
     @Test
-    public void canSerializeJournalArticleWithContentTypeWithoutDataloss() throws JsonProcessingException {
-        String contentTypeString = "Research article";
-        JournalTestData expectedJournalArticleTestData = new JournalTestData();
-        expectedJournalArticleTestData.setContent(contentTypeString);
+    void canSerializeJournalArticleWithContentTypeWithoutDataloss() throws JsonProcessingException {
+        JournalTestData expectedJournalArticleTestData = new JournalTestData(RESEARCH_ARTICLE);
 
         JournalArticle expectedJournalArticle = generateJournalArticle(expectedJournalArticleTestData);
         String expectedJson = objectMapper.writeValueAsString(expectedJournalArticle);
@@ -83,13 +83,21 @@ class JournalArticleTest {
     }
 
     @Test
-    public void journalArticleBuilderCreatesObjectWithoutEmptyValues() throws JsonProcessingException {
-        String contentTypeString = "Research article";
-        JournalTestData journalTestData = new JournalTestData();
-        journalTestData.setContent(contentTypeString);
+    void journalArticleBuilderCreatesJournalArticleWithoutEmptyValues() {
+        JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
         JournalArticle journalArticle = generateJournalArticle(journalTestData);
         assertThat(journalArticle, doesNotHaveEmptyValues());
     }
+
+    @Test
+    void journalArticleSerializationContainsJournalArticleContentType() throws JsonProcessingException {
+        JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
+        JournalArticle journalArticle = generateJournalArticle(journalTestData);
+        String jSon = objectMapper.writeValueAsString(journalArticle);
+        CharSequence expectedContentPhrase = "content\" : \""+ RESEARCH_ARTICLE.getValue()+"\"";
+        assertTrue(jSon.contains(expectedContentPhrase));
+    }
+
 
     private JournalArticle generateJournalArticle(JournalTestData testData) {
         return new JournalArticle.Builder()

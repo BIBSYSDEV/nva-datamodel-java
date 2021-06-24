@@ -17,7 +17,7 @@ public enum JournalArticleContentType {
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid JournalArticleContentType, expected one of: %s";
     public static final String DELIMITER = ", ";
 
-    private String value;
+    private final String value;
 
     JournalArticleContentType(String value) {
         this.value = value;
