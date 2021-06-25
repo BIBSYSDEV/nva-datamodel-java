@@ -12,6 +12,7 @@ public class JournalArticle extends PeerReviewedPaper {
     private String volume;
     private String issue;
     private String articleNumber;
+    private JournalArticleContentType content;
 
     @JacocoGenerated
     public JournalArticle() {
@@ -25,6 +26,7 @@ public class JournalArticle extends PeerReviewedPaper {
         setArticleNumber(builder.articleNumber);
         setPages(builder.pages);
         setPeerReviewed(builder.peerReviewed);
+        setContent(builder.content);
     }
 
     public String getVolume() {
@@ -51,12 +53,21 @@ public class JournalArticle extends PeerReviewedPaper {
         this.articleNumber = articleNumber;
     }
 
+    public JournalArticleContentType getContent() {
+        return content;
+    }
+
+    public void setContent(JournalArticleContentType content) {
+        this.content = content;
+    }
+
     public static final class Builder {
         private String volume;
         private String issue;
         private String articleNumber;
         private Range pages;
         private boolean peerReviewed;
+        private JournalArticleContentType content;
 
         public Builder() {
         }
@@ -86,6 +97,11 @@ public class JournalArticle extends PeerReviewedPaper {
             return this;
         }
 
+        public Builder withContent(JournalArticleContentType content) {
+            this.content = content;
+            return this;
+        }
+
         public JournalArticle build() {
             return new JournalArticle(this);
         }
@@ -106,12 +122,13 @@ public class JournalArticle extends PeerReviewedPaper {
         JournalArticle that = (JournalArticle) o;
         return Objects.equals(getVolume(), that.getVolume())
                 && Objects.equals(getIssue(), that.getIssue())
-                && Objects.equals(getArticleNumber(), that.getArticleNumber());
+                && Objects.equals(getArticleNumber(), that.getArticleNumber())
+                && Objects.equals(getContent(), that.getContent());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getVolume(), getIssue(), getArticleNumber());
+        return Objects.hash(super.hashCode(), getVolume(), getIssue(), getArticleNumber(), getContent());
     }
 }

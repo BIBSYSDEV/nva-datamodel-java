@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes;
 
+import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
 import no.unit.nva.model.pages.Range;
 
 public class JournalTestData extends TestData {
@@ -7,6 +8,7 @@ public class JournalTestData extends TestData {
     private final String issue;
     private final String articleNumber;
     private final Range pages;
+    private JournalArticleContentType content;
 
     /**
      * Generates a random test data set for a journal article.
@@ -17,11 +19,22 @@ public class JournalTestData extends TestData {
         issue = random(1, 12);
         articleNumber = random(10000, 50000);
         pages = generateRange();
+        content = randomContent();
     }
 
     public JournalTestData(boolean peerReviewed) {
         this();
         setPeerReviewed(peerReviewed);
+    }
+
+    public JournalTestData(String content) {
+        this();
+        setContent(JournalArticleContentType.lookup(content));
+    }
+
+    public JournalTestData(JournalArticleContentType content) {
+        this();
+        setContent(content);
     }
 
     public String getVolume() {
@@ -38,6 +51,18 @@ public class JournalTestData extends TestData {
 
     public Range getPages() {
         return pages;
+    }
+
+    public JournalArticleContentType getContent() {
+        return content;
+    }
+
+    private void setContent(JournalArticleContentType content) {
+        this.content = content;
+    }
+
+    private JournalArticleContentType randomContent() {
+        return JournalArticleContentType.values()[RANDOM.nextInt(JournalArticleContentType.values().length)];
     }
 
 }

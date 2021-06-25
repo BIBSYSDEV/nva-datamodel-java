@@ -1,12 +1,24 @@
 package no.unit.nva.model.instancetypes.journal;
 
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.model.instancetypes.JournalTestData;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.IOException;
+
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.PROFESSIONAL_ARTICLE;
+import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.RESEARCH_ARTICLE;
+import static nva.commons.core.JsonUtils.objectMapper;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class JournalArticleTest {
 
@@ -18,6 +30,74 @@ class JournalArticleTest {
         assertDoesNotThrow(() -> generateJournalArticle(testData));
     }
 
+    @Test
+    void canSerializeAndDeserializeJournalArticleWithContentTypeResearchArticle()
+            throws JsonProcessingException {
+
+        JournalArticle expectedJournalArticle = new JournalArticle.Builder()
+                .withContent(PROFESSIONAL_ARTICLE).build();
+        String expectedJson = objectMapper.writeValueAsString(expectedJournalArticle);
+
+        JournalArticle actualJournalArticle = objectMapper.readValue(expectedJson, JournalArticle.class);
+        assertEquals(expectedJournalArticle, actualJournalArticle);
+
+        String actualJson = objectMapper.writeValueAsString(expectedJournalArticle);
+        assertEquals(expectedJson, actualJson);
+    }
+
+
+    @DisplayName("Test JournalArticle with content can be serialized/deserialized")
+    @ParameterizedTest(name = "Test JournalArticle with Content type {0} can be (de-)serialized")
+    @ValueSource(strings = {
+            "Research article",
+            "Review article",
+            "Case report",
+            "Study protocol",
+            "Professional article",
+            "Popular science article"
+    })
+    void publicationReturnsJsonWhenInputIsValid(String content) throws IOException {
+
+        JournalTestData expectedJournalArticleTestData = new JournalTestData(content);
+
+        JournalArticle expectedJournalArticle = generateJournalArticle(expectedJournalArticleTestData);
+        String expectedJson = objectMapper.writeValueAsString(expectedJournalArticle);
+
+        JournalArticle actualJournalArticle = objectMapper.readValue(expectedJson, JournalArticle.class);
+        assertEquals(expectedJournalArticle, actualJournalArticle);
+
+        String actualJson = objectMapper.writeValueAsString(expectedJournalArticle);
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    void canSerializeJournalArticleWithContentTypeWithoutDataloss() throws JsonProcessingException {
+        JournalTestData expectedJournalArticleTestData = new JournalTestData(RESEARCH_ARTICLE);
+
+        JournalArticle expectedJournalArticle = generateJournalArticle(expectedJournalArticleTestData);
+        String expectedJson = objectMapper.writeValueAsString(expectedJournalArticle);
+        JournalArticle actualJournalArticle = objectMapper.readValue(expectedJson, JournalArticle.class);
+
+        assertEquals(expectedJournalArticle, actualJournalArticle);
+        assertThat(expectedJournalArticle, is(equalTo(actualJournalArticle)));
+    }
+
+    @Test
+    void journalArticleBuilderCreatesJournalArticleWithoutEmptyValues() {
+        JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
+        JournalArticle journalArticle = generateJournalArticle(journalTestData);
+        assertThat(journalArticle, doesNotHaveEmptyValues());
+    }
+
+    @Test
+    void journalArticleSerializationContainsJournalArticleContentType() throws JsonProcessingException {
+        JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
+        JournalArticle journalArticle = generateJournalArticle(journalTestData);
+        String json = objectMapper.writeValueAsString(journalArticle);
+        CharSequence expectedContentPhrase = "content\" : \"" + RESEARCH_ARTICLE.getValue() + "\"";
+        assertTrue(json.contains(expectedContentPhrase));
+    }
+
     private JournalArticle generateJournalArticle(JournalTestData testData) {
         return new JournalArticle.Builder()
                 .withVolume(testData.getVolume())
@@ -25,6 +105,7 @@ class JournalArticleTest {
                 .withPages(testData.getPages())
                 .withArticleNumber(testData.getArticleNumber())
                 .withPeerReviewed(testData.isPeerReviewed())
+                .withContent(testData.getContent())
                 .build();
     }
 

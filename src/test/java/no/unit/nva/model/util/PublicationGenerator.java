@@ -41,6 +41,7 @@ import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
@@ -224,6 +225,7 @@ public class PublicationGenerator extends ModelTest {
                    .withVolume("24")
                    .withPages(getPages())
                    .withPeerReviewed(true)
+                   .withContent(JournalArticleContentType.PROFESSIONAL_ARTICLE)
                    .build();
     }
 
