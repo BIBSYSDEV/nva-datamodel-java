@@ -94,7 +94,7 @@ class JournalArticleTest {
         JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
         JournalArticle journalArticle = generateJournalArticle(journalTestData);
         String json = objectMapper.writeValueAsString(journalArticle);
-        CharSequence expectedContentPhrase = "content\" : \"" + RESEARCH_ARTICLE.getValue() + "\"";
+        String expectedContentPhrase = "content\" : \"" + RESEARCH_ARTICLE.getValue() + "\"";
         assertTrue(json.contains(expectedContentPhrase));
     }
 

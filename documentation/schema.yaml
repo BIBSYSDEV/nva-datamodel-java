@@ -47,11 +47,31 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/ResearchProject'
+    additionalIdentifiers:
+      uniqueItems: true
+      type: array
+      items:
+        $ref: '#/components/schemas/AdditionalIdentifier'
+    modelVersion:
+      type: string
     type:
       type: string
   discriminator:
     propertyName: type
 referencedSchemas:
+  AdditionalIdentifier:
+    required:
+    - type
+    type: object
+    properties:
+      source:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Approval:
     required:
     - type
@@ -566,6 +586,15 @@ referencedSchemas:
           type: string
         articleNumber:
           type: string
+        content:
+          type: string
+          enum:
+          - Research article
+          - Review article
+          - Case report
+          - Study protocol
+          - Professional article
+          - Popular science article
         pages:
           $ref: '#/components/schemas/Range'
         type:
@@ -843,6 +872,13 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/ResearchProject'
+      additionalIdentifiers:
+        uniqueItems: true
+        type: array
+        items:
+          $ref: '#/components/schemas/AdditionalIdentifier'
+      modelVersion:
+        type: string
       type:
         type: string
     discriminator:
@@ -876,10 +912,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
