@@ -1,8 +1,8 @@
 {
   "type" : "Publication",
   "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
-  "status" : "PUBLISHED",
-  "owner" : "me@example.org",
+  "status" : "DRAFT",
+  "owner" : "eier@example.org",
   "publisher" : {
     "type" : "Organization",
     "id" : "http://example.org/org/123",
@@ -14,15 +14,21 @@
   "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
   "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
   "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
-  "handle" : "https://example.org/fakeHandle/13213",
-  "doi" : "https://example.org/yet/another/fake/doi/1231/12311",
+  "handle" : "http://example.org/handle/123",
+  "doi" : "http://example.org/doi/1231/98765",
   "doiRequest" : {
     "type" : "DoiRequest",
-    "status" : "APPROVED",
+    "status" : "REQUESTED",
     "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
-    "createdDate" : "2020-09-23T09:51:23.044996ZZ"
+    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "messages" : [ {
+      "type" : "DoiRequestMessage",
+      "text" : "Some Text",
+      "author" : "SomeAuthor",
+      "timestamp" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
   },
-  "link" : "https://this.should.have.been.removed",
+  "link" : "http://example.org/link",
   "entityDescription" : {
     "type" : "EntityDescription",
     "mainTitle" : "Hovedtittelen",
@@ -64,34 +70,27 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "Degree",
-        "seriesTitle" : "Degrees of this type series",
-        "seriesNumber" : "8",
-        "publisher" : "Some university publisher",
-        "openAccess" : false,
-        "peerReviewed" : false,
-        "url" : "http://example.org/degree/1",
-        "isbnList" : [ "9780201309515" ]
+        "type" : "Journal",
+        "title" : "Tim's lovely publishing house",
+        "level" : "LEVEL_1",
+        "openAccess" : true,
+        "peerReviewed" : true,
+        "printIssn" : "2222-2227",
+        "onlineIssn" : "1111-1119",
+        "url" : "https://www.example.org/quodab"
       },
-      "doi" : "https://example.org/doi/12313/2313",
+      "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "DegreePhd",
-        "submittedDate" : {
-          "type" : "PublicationDate",
-          "year" : "2020",
-          "month" : "4",
-          "day" : "7"
-        },
-        "peerReviewed" : false,
+        "type" : "JournalArticle",
+        "volume" : "24",
+        "issue" : "2",
+        "articleNumber" : "1234456",
+        "content" : "Professional article",
+        "peerReviewed" : true,
         "pages" : {
-          "type" : "MonographPages",
-          "introduction" : {
-            "type" : "Range",
-            "begin" : "i",
-            "end" : "ix"
-          },
-          "pages" : "321",
-          "illustrated" : true
+          "type" : "Range",
+          "begin" : "1",
+          "end" : "15"
         }
       }
     },
@@ -135,5 +134,11 @@
       "approvalStatus" : "APPLIED",
       "applicationCode" : "123123"
     } ]
-  } ]
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "autautem",
+    "value" : "713ec713-f58c-4e94-af96-2fd7ac71e676"
+  } ],
+  "modelVersion" : "0.11.15"
 }
