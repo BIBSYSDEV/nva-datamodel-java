@@ -12,12 +12,13 @@ public class ChapterArticle extends PeerReviewedPaper {
     }
 
     private ChapterArticle(Builder builder) {
-        super(builder.pages, builder.peerReviewed);
+        super(builder.pages, builder.peerReviewed, builder.originalResearch);
     }
 
     public static final class Builder {
         private boolean peerReviewed;
         private Range pages;
+        private boolean originalResearch;
 
         public Builder() {
         }
@@ -31,6 +32,12 @@ public class ChapterArticle extends PeerReviewedPaper {
             this.pages = pages;
             return this;
         }
+
+        public Builder withOriginalResearch(boolean originalResearch) {
+            this.originalResearch = originalResearch;
+            return this;
+        }
+
 
         public ChapterArticle build() {
             return new ChapterArticle(this);

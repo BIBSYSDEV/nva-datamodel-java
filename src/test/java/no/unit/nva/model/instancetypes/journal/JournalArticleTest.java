@@ -12,12 +12,14 @@ import java.io.IOException;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.PROFESSIONAL_ARTICLE;
 import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.RESEARCH_ARTICLE;
+import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.REVIEW_ARTICLE;
 import static nva.commons.core.JsonUtils.objectMapper;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class JournalArticleTest {
@@ -98,6 +100,45 @@ class JournalArticleTest {
         assertTrue(json.contains(expectedContentPhrase));
     }
 
+    @Test
+    void journalArticleSerializationContainsJournalArticleOriginalResearch() throws JsonProcessingException {
+        JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
+        JournalArticle journalArticle = generateJournalArticle(journalTestData);
+        journalArticle.setOriginalResearch(true);
+        String json = objectMapper.writeValueAsString(journalArticle);
+        String expectedOrginalityPhrase = "\"originalResearch\" : true";
+        assertTrue(json.contains(expectedOrginalityPhrase));
+    }
+
+    @ParameterizedTest(name = "Test JournalArticle with Content type {0} can be annotated with 'Original Research'")
+    @ValueSource(strings = {
+            "Research article",
+            "Review article"
+    })
+    void originalResearchCanBeAssignedToContentTypeResearchOrReviewArticle(String content) {
+        JournalTestData journalTestData = new JournalTestData(content);
+        JournalArticle journalArticle = generateJournalArticle(journalTestData);
+        journalArticle.setOriginalResearch(true);
+        assertTrue(journalArticle.isOriginalResearch());
+    }
+
+    @ParameterizedTest(name = "Test JournalArticle with Content type {0} can not be annotated with 'Original Research'")
+    @ValueSource(strings = {
+            "Case report",
+            "Study protocol",
+            "Professional article",
+            "Popular science article"
+    })
+    void originalResearchCanOnlyBeAssignedToContentTypeResearchOrReviewArticle(String content)  {
+        JournalTestData journalTestData = new JournalTestData(content);
+        JournalArticle journalArticle = generateJournalArticle(journalTestData);
+        journalArticle.setOriginalResearch(true);
+        assertFalse(journalArticle.isOriginalResearch());
+    }
+
+
+
+
     private JournalArticle generateJournalArticle(JournalTestData testData) {
         return new JournalArticle.Builder()
                 .withVolume(testData.getVolume())
@@ -106,6 +147,7 @@ class JournalArticleTest {
                 .withArticleNumber(testData.getArticleNumber())
                 .withPeerReviewed(testData.isPeerReviewed())
                 .withContent(testData.getContent())
+                .withOriginalResearch(testData.isOriginalResearch())
                 .build();
     }
 

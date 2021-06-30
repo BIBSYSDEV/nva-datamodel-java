@@ -9,6 +9,7 @@ public class JournalTestData extends TestData {
     private final String articleNumber;
     private final Range pages;
     private JournalArticleContentType content;
+    private boolean originalResearch;
 
     /**
      * Generates a random test data set for a journal article.
@@ -65,4 +66,11 @@ public class JournalTestData extends TestData {
         return JournalArticleContentType.values()[RANDOM.nextInt(JournalArticleContentType.values().length)];
     }
 
+    public void setOriginalResearch(boolean originalResearch) {
+        this.originalResearch = originalResearch;
+    }
+
+    public boolean isOriginalResearch() {
+        return originalResearch;
+    }
 }
