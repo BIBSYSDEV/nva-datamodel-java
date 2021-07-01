@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
+import no.unit.nva.model.instancetypes.book.BookMonographContentType;
 import nva.commons.core.JsonUtils;
 
 import java.util.LinkedHashMap;
@@ -54,9 +55,10 @@ public class InstanceTest extends ModelTest {
                                              String pages,
                                              boolean illustrated,
                                              boolean peerReviewed,
-                                             boolean textbookContent) {
+                                             boolean textbookContent,
+                                             BookMonographContentType contentType) {
         LinkedHashMap<String, Object> instance = generateMapRepresentation(type, null, null, null, introductionBegin,
-                introductionEnd, pages, illustrated, peerReviewed, textbookContent);
+                introductionEnd, pages, illustrated, peerReviewed, textbookContent, contentType);
         return objectMapper.valueToTree(instance);
     }
 
@@ -93,7 +95,8 @@ public class InstanceTest extends ModelTest {
                 pages,
                 illustrated,
                 peerReviewed,
-                textbookContent);
+                textbookContent,
+                null);
         return objectMapper.writeValueAsString(instance);
     }
 
@@ -126,7 +129,8 @@ public class InstanceTest extends ModelTest {
                 null,
                 false,
                 peerReviewed,
-                false);
+                false,
+                null);
         return objectMapper.valueToTree(instance);
     }
 
@@ -139,7 +143,8 @@ public class InstanceTest extends ModelTest {
                                                                       String pages,
                                                                       boolean illustrated,
                                                                       boolean peerReviewed,
-                                                                      boolean textbookContent) {
+                                                                      boolean textbookContent,
+                                                                      BookMonographContentType contentType) {
         LinkedHashMap<String, Object> instance = new LinkedHashMap<>();
         instance.put("type", type);
 
@@ -164,6 +169,7 @@ public class InstanceTest extends ModelTest {
                 instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));
                 instance.put("peerReviewed", peerReviewed);
                 instance.put("textbookContent", textbookContent);
+                instance.put("contentType", contentType);
                 break;
             default:
                 instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));

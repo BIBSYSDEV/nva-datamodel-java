@@ -71,7 +71,8 @@ public class DegreeMasterTest extends InstanceTest {
                 pages,
                 illustrated,
                 false,
-                false);
+                false,
+                null);
         JsonNode actual = jsonStringToJsonNode(json);
         assertEquals(expected, actual);
     }

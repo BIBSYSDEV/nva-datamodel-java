@@ -87,7 +87,7 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
         );
         JsonNode actual = objectMapper.convertValue(bookAnthology, JsonNode.class);
         JsonNode expected = generateMonographJson(BOOK_ANTHOLOGY,
-                begin, end, pages, illustrated, peerReviewed, textbookContent);
+                begin, end, pages, illustrated, peerReviewed, textbookContent, null);
         assertEquals(expected, actual);
     }
 

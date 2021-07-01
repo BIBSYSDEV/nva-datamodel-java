@@ -7,18 +7,30 @@ import no.unit.nva.model.pages.MonographPages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class BookMonograph extends PeerReviewedMonograph {
 
+    private BookMonographContentType contentType;
+
+    public BookMonographContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(BookMonographContentType contentType) {
+        this.contentType = contentType;
+    }
+
     public BookMonograph() {
         super();
     }
 
     private BookMonograph(Builder builder) {
         super(builder.pages, builder.peerReviewed, builder.textbookContent);
+        setContentType(builder.contentType);
     }
 
     public static final class Builder {
         private boolean peerReviewed;
         private MonographPages pages;
         private boolean textbookContent;
+        private BookMonographContentType contentType;
 
         public Builder() {
         }
@@ -37,6 +49,12 @@ public class BookMonograph extends PeerReviewedMonograph {
             this.textbookContent = textbookContent;
             return this;
         }
+
+        public Builder withContentType(BookMonographContentType contentType) {
+            this.contentType = contentType;
+            return this;
+        }
+
 
         public BookMonograph build() {
             return new BookMonograph(this);
