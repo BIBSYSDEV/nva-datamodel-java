@@ -10,16 +10,20 @@ public class PeerReviewedPaper extends PeerReviewed<Range> {
 
     @JsonProperty("pages")
     private Range pages;
+    @JsonProperty("originalResearch")
+    protected boolean originalResearch;
 
 
     public PeerReviewedPaper() {
         super();
     }
 
-    public PeerReviewedPaper(Range pages, boolean peerReviewed) {
+    public PeerReviewedPaper(Range pages, boolean peerReviewed, boolean originalResearch) {
         super(peerReviewed);
         this.pages = pages;
+        this.originalResearch = originalResearch;
     }
+
 
     @Override
     public Range getPages() {
@@ -29,6 +33,10 @@ public class PeerReviewedPaper extends PeerReviewed<Range> {
     @Override
     public void setPages(Range pages) {
         this.pages = pages;
+    }
+
+    public boolean isOriginalResearch() {
+        return originalResearch;
     }
 
     @JacocoGenerated
@@ -42,12 +50,14 @@ public class PeerReviewedPaper extends PeerReviewed<Range> {
         }
         PeerReviewedPaper that = (PeerReviewedPaper) o;
         return isPeerReviewed() == that.isPeerReviewed()
-                && Objects.equals(getPages(), that.getPages());
+                && Objects.equals(getPages(), that.getPages())
+                && isOriginalResearch() == that.isOriginalResearch();
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getPages(), isPeerReviewed());
+        return Objects.hash(getPages(), isPeerReviewed(), isOriginalResearch());
     }
+
 }

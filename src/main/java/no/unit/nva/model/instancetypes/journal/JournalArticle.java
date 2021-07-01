@@ -27,6 +27,7 @@ public class JournalArticle extends PeerReviewedPaper {
         setPages(builder.pages);
         setPeerReviewed(builder.peerReviewed);
         setContent(builder.content);
+        setOriginalResearch(builder.originalResearch);
     }
 
     public String getVolume() {
@@ -61,6 +62,44 @@ public class JournalArticle extends PeerReviewedPaper {
         this.content = content;
     }
 
+    public void setOriginalResearch(boolean originalResearch) {
+        if (isOriginalResearchCandidate()) {
+            this.originalResearch = originalResearch;
+        }
+    }
+
+    private boolean isOriginalResearchCandidate() {
+        return content == null
+                || content == JournalArticleContentType.RESEARCH_ARTICLE
+                || content == JournalArticleContentType.REVIEW_ARTICLE;
+    }
+
+    @JacocoGenerated
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof JournalArticle)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        JournalArticle that = (JournalArticle) o;
+        return Objects.equals(getVolume(), that.getVolume())
+                && Objects.equals(getIssue(), that.getIssue())
+                && Objects.equals(getArticleNumber(), that.getArticleNumber())
+                && Objects.equals(getContent(), that.getContent())
+                && this.isOriginalResearch() == that.isOriginalResearch();
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getVolume(), getIssue(), getArticleNumber(), getContent());
+    }
+
     public static final class Builder {
         private String volume;
         private String issue;
@@ -68,6 +107,7 @@ public class JournalArticle extends PeerReviewedPaper {
         private Range pages;
         private boolean peerReviewed;
         private JournalArticleContentType content;
+        private boolean originalResearch;
 
         public Builder() {
         }
@@ -102,33 +142,13 @@ public class JournalArticle extends PeerReviewedPaper {
             return this;
         }
 
+        public Builder withOriginalResearch(boolean originalResearch) {
+            this.originalResearch = originalResearch;
+            return this;
+        }
+
         public JournalArticle build() {
             return new JournalArticle(this);
         }
-    }
-
-    @JacocoGenerated
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof JournalArticle)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        JournalArticle that = (JournalArticle) o;
-        return Objects.equals(getVolume(), that.getVolume())
-                && Objects.equals(getIssue(), that.getIssue())
-                && Objects.equals(getArticleNumber(), that.getArticleNumber())
-                && Objects.equals(getContent(), that.getContent());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getVolume(), getIssue(), getArticleNumber(), getContent());
     }
 }
