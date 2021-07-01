@@ -73,7 +73,8 @@ public class DegreeBachelorTest extends InstanceTest {
                 pages,
                 illustrated,
                 false,
-                false
+                false,
+                null
         );
         assertEquals(expected, json);
     }

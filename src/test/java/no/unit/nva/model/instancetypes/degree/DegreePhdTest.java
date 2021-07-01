@@ -74,7 +74,8 @@ public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
                 pages,
                 illustrated,
                 false,
-                false);
+                false,
+                null);
         assertEquals(expected, json);
     }
 

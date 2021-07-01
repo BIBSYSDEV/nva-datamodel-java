@@ -7,10 +7,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.IOException;
+
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static no.unit.nva.model.instancetypes.book.BookMonographContentType.ENCYCLOPEDIA;
+import static no.unit.nva.model.instancetypes.book.BookMonographContentType.lookup;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookMonographTest extends InstanceTest {
 
@@ -83,9 +92,77 @@ class BookMonographTest extends InstanceTest {
         );
         JsonNode json = jsonStringToJsonNode(objectMapper.writeValueAsString(bookMonograph));
         JsonNode expected = generateMonographJson(BOOK_MONOGRAPH,
-                begin, end, pages, illustrated, peerReviewed, textbookContent);
+                begin, end, pages, illustrated, peerReviewed, textbookContent, null);
         assertEquals(expected, json);
     }
+
+
+    @DisplayName("Test BookMonograph with contentType can be serialized/deserialized ")
+    @ParameterizedTest(name = "Test BookMonograph with Content type {0} can be (de-)serialized")
+    @ValueSource(strings = {
+            "Academic Monograph",
+            "Non-fiction Monograph",
+            "Popular Science Monograph",
+            "Textbook",
+            "Encyclopedia"
+    })
+    void publicationReturnsJsonWhenInputIsValid(String contentTypeString) throws IOException {
+
+        final String begin = "i";
+        final String end = "xxviii";
+        final String pages = "398";
+        final boolean illustrated = true;
+        final boolean peerReviewed = true;
+        final boolean textbookContent = true;
+
+        BookMonographContentType contentType = lookup(contentTypeString);
+
+        BookMonograph expectedBookMonograph = generateBookMonographWithContentType(begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                textbookContent,
+                contentType);
+
+        JsonNode actualBookMonographJson = jsonStringToJsonNode(objectMapper.writeValueAsString(expectedBookMonograph));
+        JsonNode expectedBookMonographJson = generateMonographJson(BOOK_MONOGRAPH,
+                begin, end, pages, illustrated, peerReviewed, textbookContent, contentType);
+
+        BookMonograph actualBookMonograph =
+                objectMapper.readValue(objectMapper.writeValueAsString(expectedBookMonograph), BookMonograph.class);
+
+        assertEquals(expectedBookMonographJson, actualBookMonographJson);
+        assertThat(expectedBookMonograph, is(equalTo(actualBookMonograph)));
+
+    }
+
+
+    @Test
+    void bookMonographBuilderCreatesBookMonographWithoutEmptyValues() {
+        BookMonograph expectedBookMonograph
+                = generateBookMonographWithContentType("i", "xxviii", "398", true, true, true, ENCYCLOPEDIA);
+        assertThat(expectedBookMonograph, doesNotHaveEmptyValues());
+    }
+
+    @Test
+    void bookMonographSerializationContainsBookMonographContentType() throws JsonProcessingException {
+
+        final BookMonographContentType bookMonographContentType = ENCYCLOPEDIA;
+        BookMonograph expectedBookMonograph = generateBookMonographWithContentType("i",
+                "xxviii",
+                "398",
+                true,
+                true,
+                true,
+                bookMonographContentType);
+        assertThat(expectedBookMonograph, doesNotHaveEmptyValues());
+
+        String json = objectMapper.writeValueAsString(expectedBookMonograph);
+        String expectedContentPhrase = "contentType\" : \"" + bookMonographContentType.getValue() + "\"";
+        assertTrue(json.contains(expectedContentPhrase));
+    }
+
 
     private BookMonograph generateBookMonograph(String introductionBegin,
                                                 String introductionEnd,
@@ -100,4 +177,22 @@ class BookMonographTest extends InstanceTest {
                 .withTextbookContent(textbookContent)
                 .build();
     }
+
+    private BookMonograph generateBookMonographWithContentType(String introductionBegin,
+                                                               String introductionEnd,
+                                                               String pages,
+                                                               boolean illustrated,
+                                                               boolean peerReviewed,
+                                                               boolean textbookContent,
+                                                               BookMonographContentType contentType) {
+
+        return new BookMonograph.Builder()
+                .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
+                .withPeerReviewed(peerReviewed)
+                .withTextbookContent(textbookContent)
+                .withContentType(contentType)
+                .build();
+    }
+
+
 }
