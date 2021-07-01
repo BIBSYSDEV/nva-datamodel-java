@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/eligendiet"
+        "url" : "https://www.example.org/accusamustenetur"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -91,7 +91,8 @@
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        }
+        },
+        "originalResearch" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -137,8 +138,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "etillum",
-    "value" : "2cfbabc0-dd47-4257-8b4f-316a9617d087"
+    "source" : "quiducimus",
+    "value" : "1ad82121-e502-490a-9608-6cc11e4f926f"
   } ],
-  "modelVersion" : "0.11.15"
+  "modelVersion" : "0.11.16"
 }
