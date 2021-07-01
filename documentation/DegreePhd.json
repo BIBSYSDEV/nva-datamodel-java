@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/quodab"
+        "url" : "https://www.example.org/velitdelectus"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -91,7 +91,8 @@
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        }
+        },
+        "originalResearch" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -137,8 +138,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "autautem",
-    "value" : "713ec713-f58c-4e94-af96-2fd7ac71e676"
+    "source" : "doloribusmagni",
+    "value" : "e8bcddd3-d5f3-4221-b530-4e697876c452"
   } ],
-  "modelVersion" : "0.11.15"
+  "modelVersion" : "0.11.16"
 }

@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/nemoculpa"
+        "url" : "https://www.example.org/nullavoluptates"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -91,7 +91,8 @@
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        }
+        },
+        "originalResearch" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -137,8 +138,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "omnissed",
-    "value" : "b11d93b2-0af1-4634-ad26-a4a27193a1bd"
+    "source" : "aperiamdolorem",
+    "value" : "9d8ce739-df87-4999-9209-9c5858cc25ac"
   } ],
-  "modelVersion" : "0.11.15"
+  "modelVersion" : "0.11.16"
 }

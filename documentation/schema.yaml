@@ -225,6 +225,8 @@ referencedSchemas:
       properties:
         pages:
           $ref: '#/components/schemas/Range'
+        originalResearch:
+          type: boolean
         type:
           type: string
   Contributor:
@@ -597,6 +599,8 @@ referencedSchemas:
           - Popular science article
         pages:
           $ref: '#/components/schemas/Range'
+        originalResearch:
+          type: boolean
         type:
           type: string
   JournalCorrigendum:

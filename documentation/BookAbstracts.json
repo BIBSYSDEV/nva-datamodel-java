@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/perspiciatismagni"
+        "url" : "https://www.example.org/veronemo"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -91,7 +91,8 @@
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        }
+        },
+        "originalResearch" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -137,8 +138,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "providentaut",
-    "value" : "2e94b0f4-c55a-486f-90ec-14f10742b32c"
+    "source" : "facereipsum",
+    "value" : "069219c7-14bf-44da-9fa5-5831331078d2"
   } ],
-  "modelVersion" : "0.11.15"
+  "modelVersion" : "0.11.16"
 }
