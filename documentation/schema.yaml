@@ -179,6 +179,14 @@ referencedSchemas:
       properties:
         textbookContent:
           type: boolean
+        contentType:
+          type: string
+          enum:
+          - Academic Monograph
+          - Non-fiction Monograph
+          - Popular Science Monograph
+          - Textbook
+          - Encyclopedia
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
