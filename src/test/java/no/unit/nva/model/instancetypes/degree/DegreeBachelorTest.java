@@ -13,8 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DegreeBachelorTest extends InstanceTest {
     private static final String DEGREE_BACHELOR = "DegreeBachelor";
-    public static final boolean EMPTY_TEXTBOOK_CONTENT = false;
+    public static final boolean NOT_ORIGINAL_RESEARCH = false;
     public static final boolean NOT_PEER_REVIEWED = false;
+    public static final boolean NOT_TEXTBOOK_CONTENT = false;
     public static final BookMonographContentType EMPTY_CONTENT_TYPE = null;
 
     @DisplayName("DegreeBachelor exists")
@@ -46,7 +47,7 @@ public class DegreeBachelorTest extends InstanceTest {
                 end,
                 pages,
                 illustrated,
-                EMPTY_TEXTBOOK_CONTENT
+                false
         );
         DegreeBachelor actual = objectMapper.readValue(json, DegreeBachelor.class);
         assertEquals(expected, actual);
@@ -77,8 +78,9 @@ public class DegreeBachelorTest extends InstanceTest {
                 pages,
                 illustrated,
                 NOT_PEER_REVIEWED,
-                DegreeBachelorTest.EMPTY_TEXTBOOK_CONTENT,
-                EMPTY_CONTENT_TYPE
+                NOT_TEXTBOOK_CONTENT,
+                EMPTY_CONTENT_TYPE,
+                NOT_ORIGINAL_RESEARCH
         );
         assertEquals(expected, json);
     }

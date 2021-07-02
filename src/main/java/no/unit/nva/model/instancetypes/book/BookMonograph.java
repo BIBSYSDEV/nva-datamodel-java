@@ -8,6 +8,7 @@ import no.unit.nva.model.pages.MonographPages;
 public class BookMonograph extends PeerReviewedMonograph {
 
     private BookMonographContentType contentType;
+    private boolean originalResearch;
 
     public BookMonographContentType getContentType() {
         return contentType;
@@ -17,6 +18,21 @@ public class BookMonograph extends PeerReviewedMonograph {
         this.contentType = contentType;
     }
 
+    public boolean isOriginalResearch() {
+        return originalResearch;
+    }
+
+    public void setOriginalResearch(boolean originalResearch) {
+        if (isOriginalResearchCandidate()) {
+            this.originalResearch = originalResearch;
+        }
+    }
+
+    private boolean isOriginalResearchCandidate() {
+        return contentType == null || contentType == BookMonographContentType.ACADEMIC_MONOGRAPH;
+    }
+
+
     public BookMonograph() {
         super();
     }
@@ -24,6 +40,7 @@ public class BookMonograph extends PeerReviewedMonograph {
     private BookMonograph(Builder builder) {
         super(builder.pages, builder.peerReviewed, builder.textbookContent);
         setContentType(builder.contentType);
+        setOriginalResearch(builder.originalResearch);
     }
 
     public static final class Builder {
@@ -31,6 +48,7 @@ public class BookMonograph extends PeerReviewedMonograph {
         private MonographPages pages;
         private boolean textbookContent;
         private BookMonographContentType contentType;
+        private boolean originalResearch;
 
         public Builder() {
         }
@@ -55,6 +73,10 @@ public class BookMonograph extends PeerReviewedMonograph {
             return this;
         }
 
+        public Builder withOriginalResearch(boolean originalResearch) {
+            this.originalResearch = originalResearch;
+            return this;
+        }
 
         public BookMonograph build() {
             return new BookMonograph(this);
