@@ -24,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class BookMonographTest extends InstanceTest {
 
     public static final String BOOK_MONOGRAPH = "BookMonograph";
+    public static final boolean NOT_ORIGINAL_RESEARCH = false;
+    public static final boolean IS_ORIGINAL_RESEARCH = true;
 
     @DisplayName("BookMonograph exists")
     @Test
@@ -76,7 +78,7 @@ class BookMonographTest extends InstanceTest {
             ",,123,true,false,true",
             ",,123,true,false,false"
     })
-    void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
+    void objectMapperSerializesAndDeserializesJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
@@ -92,7 +94,7 @@ class BookMonographTest extends InstanceTest {
         );
         JsonNode json = jsonStringToJsonNode(objectMapper.writeValueAsString(bookMonograph));
         JsonNode expected = generateMonographJson(BOOK_MONOGRAPH,
-                begin, end, pages, illustrated, peerReviewed, textbookContent, null);
+                begin, end, pages, illustrated, peerReviewed, textbookContent, null, NOT_ORIGINAL_RESEARCH);
         assertEquals(expected, json);
     }
 
@@ -127,7 +129,7 @@ class BookMonographTest extends InstanceTest {
 
         JsonNode actualBookMonographJson = jsonStringToJsonNode(objectMapper.writeValueAsString(expectedBookMonograph));
         JsonNode expectedBookMonographJson = generateMonographJson(BOOK_MONOGRAPH,
-                begin, end, pages, illustrated, peerReviewed, textbookContent, contentType);
+                begin, end, pages, illustrated, peerReviewed, textbookContent, contentType, NOT_ORIGINAL_RESEARCH);
 
         BookMonograph actualBookMonograph =
                 objectMapper.readValue(objectMapper.writeValueAsString(expectedBookMonograph), BookMonograph.class);
@@ -137,6 +139,37 @@ class BookMonographTest extends InstanceTest {
 
     }
 
+    @DisplayName("Test OriginalResearch for BookMonograph contentTypes")
+    @ParameterizedTest(name = "Test BookMonograph with Content type {0} can be annotated as OriginalResearch ")
+    @CsvSource({
+            "Academic Monograph,true",
+            "Non-fiction Monograph,false",
+            "Popular Science Monograph,false",
+            "Textbook,false",
+            "Encyclopedia,false"
+    })
+    void originalResearchIsAssignedToBookMonograpWithContentTypeAcademicResearchOnly(String contentTypeString,
+                                                                                     boolean expectedOriginalResearch) {
+
+        final String begin = "i";
+        final String end = "xxviii";
+        final String pages = "398";
+        final boolean illustrated = true;
+        final boolean peerReviewed = true;
+        final boolean textbookContent = true;
+
+        BookMonographContentType contentType = lookup(contentTypeString);
+
+        BookMonograph bookMonograph = generateBookMonographWithContentType(begin,
+                end,
+                pages,
+                illustrated,
+                peerReviewed,
+                textbookContent,
+                contentType);
+        bookMonograph.setOriginalResearch(IS_ORIGINAL_RESEARCH);
+        assertEquals(bookMonograph.isOriginalResearch(), expectedOriginalResearch);
+    }
 
     @Test
     void bookMonographBuilderCreatesBookMonographWithoutEmptyValues() {

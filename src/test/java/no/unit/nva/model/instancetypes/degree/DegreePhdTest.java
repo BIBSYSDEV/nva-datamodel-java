@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.instancetypes.InstanceTest;
+import no.unit.nva.model.instancetypes.book.BookMonographContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
     private static final String DEGREE_PHD = "DegreePhd";
+    public static final boolean NOT_PEER_REVIEWED = false;
+    public static final boolean NOT_TEXTBOOK_CONTENT = false;
+    public static final BookMonographContentType EMPTY_CONTENT_TYPE = null;
+    public static final boolean NOT_ORIGINAL_RESEARCH = false;
 
     @DisplayName("DegreePhd exists")
     @Test
@@ -73,9 +78,10 @@ public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
                 end,
                 pages,
                 illustrated,
-                false,
-                false,
-                null);
+                NOT_PEER_REVIEWED,
+                NOT_TEXTBOOK_CONTENT,
+                EMPTY_CONTENT_TYPE,
+                NOT_ORIGINAL_RESEARCH);
         assertEquals(expected, json);
     }
 

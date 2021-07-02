@@ -56,9 +56,10 @@ public class InstanceTest extends ModelTest {
                                              boolean illustrated,
                                              boolean peerReviewed,
                                              boolean textbookContent,
-                                             BookMonographContentType contentType) {
+                                             BookMonographContentType contentType,
+                                             boolean originalResearch) {
         LinkedHashMap<String, Object> instance = generateMapRepresentation(type, null, null, null, introductionBegin,
-                introductionEnd, pages, illustrated, peerReviewed, textbookContent, false, contentType);
+                introductionEnd, pages, illustrated, peerReviewed, textbookContent, originalResearch, contentType);
         return objectMapper.valueToTree(instance);
     }
 
@@ -174,11 +175,17 @@ public class InstanceTest extends ModelTest {
                 instance.put("originalResearch", originalResearch);
                 break;
             case "BookAnthology":
+                instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));
+                instance.put("peerReviewed", peerReviewed);
+                instance.put("textbookContent", textbookContent);
+                instance.put("contentType", contentType);
+                break;
             case "BookMonograph":
                 instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));
                 instance.put("peerReviewed", peerReviewed);
                 instance.put("textbookContent", textbookContent);
                 instance.put("contentType", contentType);
+                instance.put("originalResearch", originalResearch);
                 break;
             default:
                 instance.put("pages", getMonographPagesMap(introductionBegin, introductionEnd, pages, illustrated));

@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
 
     public static final String BOOK_ANTHOLOGY = "BookAnthology";
+    public static final boolean NOT_ORIGINAL_RESEARCH = false;
 
     @DisplayName("BookAnthology exists")
     @Test
@@ -87,7 +88,7 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
         );
         JsonNode actual = objectMapper.convertValue(bookAnthology, JsonNode.class);
         JsonNode expected = generateMonographJson(BOOK_ANTHOLOGY,
-                begin, end, pages, illustrated, peerReviewed, textbookContent, null);
+                begin, end, pages, illustrated, peerReviewed, textbookContent, null, NOT_ORIGINAL_RESEARCH);
         assertEquals(expected, actual);
     }
 
