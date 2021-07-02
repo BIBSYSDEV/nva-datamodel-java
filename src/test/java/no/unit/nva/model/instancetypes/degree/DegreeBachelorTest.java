@@ -3,6 +3,7 @@ package no.unit.nva.model.instancetypes.degree;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.model.instancetypes.InstanceTest;
+import no.unit.nva.model.instancetypes.book.BookMonographContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DegreeBachelorTest extends InstanceTest {
     private static final String DEGREE_BACHELOR = "DegreeBachelor";
+    public static final boolean EMPTY_TEXTBOOK_CONTENT = false;
+    public static final boolean NOT_PEER_REVIEWED = false;
+    public static final BookMonographContentType EMPTY_CONTENT_TYPE = null;
 
     @DisplayName("DegreeBachelor exists")
     @Test
@@ -42,7 +46,7 @@ public class DegreeBachelorTest extends InstanceTest {
                 end,
                 pages,
                 illustrated,
-                false
+                EMPTY_TEXTBOOK_CONTENT
         );
         DegreeBachelor actual = objectMapper.readValue(json, DegreeBachelor.class);
         assertEquals(expected, actual);
@@ -72,8 +76,9 @@ public class DegreeBachelorTest extends InstanceTest {
                 end,
                 pages,
                 illustrated,
-                false,
-                false
+                NOT_PEER_REVIEWED,
+                DegreeBachelorTest.EMPTY_TEXTBOOK_CONTENT,
+                EMPTY_CONTENT_TYPE
         );
         assertEquals(expected, json);
     }
