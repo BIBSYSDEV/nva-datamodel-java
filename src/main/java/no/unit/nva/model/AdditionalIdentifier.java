@@ -1,9 +1,11 @@
 package no.unit.nva.model;
 
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
+import nva.commons.core.JsonUtils;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class AdditionalIdentifier {
@@ -62,5 +64,11 @@ public class AdditionalIdentifier {
         AdditionalIdentifier that = (AdditionalIdentifier) o;
         return Objects.equals(getSource(), that.getSource()) && Objects.equals(getValue(),
                                                                                that.getValue());
+    }
+
+    @Override
+    @JacocoGenerated
+    public String toString() {
+        return attempt(() -> JsonUtils.objectMapperWithEmpty.writeValueAsString(this)).orElseThrow();
     }
 }

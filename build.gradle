@@ -15,7 +15,7 @@ apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-String versionNumber = '0.11.16'
+String versionNumber = '0.11.17'
 
 group 'com.github.bibsysdev'
 version versionNumber
@@ -39,7 +39,7 @@ java {
 
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
-def nvaCommonsVersion = '1.5.12'
+def nvaCommonsVersion = '1.7.6'
 
 gradleLint.rules = ['unused-dependency']
 
