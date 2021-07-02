@@ -108,7 +108,7 @@ class BookMonographTest extends InstanceTest {
             "Textbook",
             "Encyclopedia"
     })
-    void publicationReturnsJsonWhenInputIsValid(String contentTypeString) throws IOException {
+    void bookMonographCanBeSerializedAndDeserializedWithContentType(String contentTypeString) throws IOException {
 
         final String begin = "i";
         final String end = "xxviii";
