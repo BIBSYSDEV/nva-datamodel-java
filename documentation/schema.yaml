@@ -187,6 +187,8 @@ referencedSchemas:
           - Popular Science Monograph
           - Textbook
           - Encyclopedia
+        originalResearch:
+          type: boolean
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:

@@ -3,6 +3,7 @@ package no.unit.nva.model.instancetypes.degree;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.model.instancetypes.InstanceTest;
+import no.unit.nva.model.instancetypes.book.BookMonographContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DegreeMasterTest extends InstanceTest {
     private static final String DEGREE_MASTER = "DegreeMaster";
+    public static final boolean NOT_ORIGINAL_RESEARCH = false;
+    public static final BookMonographContentType EMPTY_CONTENT_TYPE = null;
+    public static final boolean NOT_TEXTBOOK_CONTENT = false;
+    public static final boolean NOT_PEER_REVIEWED = false;
 
     @DisplayName("DegreeMaster exists")
     @Test
@@ -70,9 +75,10 @@ public class DegreeMasterTest extends InstanceTest {
                 end,
                 pages,
                 illustrated,
-                false,
-                false,
-                null);
+                NOT_PEER_REVIEWED,
+                NOT_TEXTBOOK_CONTENT,
+                EMPTY_CONTENT_TYPE,
+                NOT_ORIGINAL_RESEARCH);
         JsonNode actual = jsonStringToJsonNode(json);
         assertEquals(expected, actual);
     }
