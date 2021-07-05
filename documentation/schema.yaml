@@ -233,6 +233,14 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        contentType:
+          type: string
+          enum:
+          - Academic Chapter
+          - Non-fiction Chapter
+          - Popular Science Chapter
+          - Textbook Chapter
+          - Encyclopedia Chapter
         pages:
           $ref: '#/components/schemas/Range'
         originalResearch:
