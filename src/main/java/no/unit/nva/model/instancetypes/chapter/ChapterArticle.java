@@ -7,18 +7,30 @@ import no.unit.nva.model.pages.Range;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ChapterArticle extends PeerReviewedPaper {
 
+    private ChapterArticleContentType contentType;
+
     public ChapterArticle() {
         super();
     }
 
     private ChapterArticle(Builder builder) {
         super(builder.pages, builder.peerReviewed, builder.originalResearch);
+        setContentType(builder.contentType);
+    }
+
+    public void setContentType(ChapterArticleContentType contentType) {
+        this.contentType = contentType;
+    }
+
+    public ChapterArticleContentType getContentType() {
+        return contentType;
     }
 
     public static final class Builder {
         private boolean peerReviewed;
         private Range pages;
         private boolean originalResearch;
+        private ChapterArticleContentType contentType;
 
         public Builder() {
         }
@@ -38,6 +50,10 @@ public class ChapterArticle extends PeerReviewedPaper {
             return this;
         }
 
+        public Builder withContentType(ChapterArticleContentType contentType) {
+            this.contentType = contentType;
+            return this;
+        }
 
         public ChapterArticle build() {
             return new ChapterArticle(this);
