@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.chapter;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import static java.lang.String.format;
@@ -18,6 +19,7 @@ public enum ChapterArticleContentType {
 
     private final String value;
 
+    @JsonCreator
     ChapterArticleContentType(String value) {
         this.value = value;
     }
