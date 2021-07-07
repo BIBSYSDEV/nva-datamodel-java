@@ -135,6 +135,9 @@ referencedSchemas:
           type: array
           items:
             type: string
+        linkedContext:
+          type: string
+          format: uri
         type:
           type: string
   BookAbstracts:
@@ -331,6 +334,9 @@ referencedSchemas:
           type: array
           items:
             type: string
+        linkedContext:
+          type: string
+          format: uri
         type:
           type: string
   DegreeBachelor:
@@ -588,6 +594,9 @@ referencedSchemas:
         url:
           type: string
           format: url
+        linkedContext:
+          type: string
+          format: uri
         type:
           type: string
   JournalArticle:
@@ -1001,6 +1010,9 @@ referencedSchemas:
           type: array
           items:
             type: string
+        linkedContext:
+          type: string
+          format: uri
         printIssn:
           type: string
         onlineIssn:
