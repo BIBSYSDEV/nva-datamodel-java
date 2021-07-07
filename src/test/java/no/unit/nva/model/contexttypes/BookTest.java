@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
@@ -24,12 +25,14 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BookTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String BOOK = "Book";
+    public static final String SAMPLE_LINKED_CONTEXT = "http://example.com/context";
 
     @DisplayName("Book can deserialize a book")
     @ParameterizedTest
@@ -60,7 +63,8 @@ class BookTest extends ModelTest {
                 expectedPeerReviewed,
                 expectedIsbn,
                 null,
-                null
+                null,
+                SAMPLE_LINKED_CONTEXT
         );
         Book book = objectMapper.readValue(json, Book.class);
         assertEquals(seriesTitle, book.getSeriesTitle());
@@ -100,6 +104,7 @@ class BookTest extends ModelTest {
                 .withOpenAccess(expectedOpenAccess)
                 .withPeerReviewed(expectedPeerReviewed)
                 .withIsbnList(expectedIsbnList)
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
                 .build();
         String expectedJson = generatePublicationJson(
                 BOOK,
@@ -111,7 +116,8 @@ class BookTest extends ModelTest {
                 expectedPeerReviewed,
                 expectedIsbnList,
                 null,
-                null
+                null,
+                SAMPLE_LINKED_CONTEXT
         );
         String actualJson = objectMapper.writeValueAsString(book);
         assertEquals(expectedJson, actualJson);
@@ -184,5 +190,34 @@ class BookTest extends ModelTest {
         List<String> resultIsbnList = book.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
+    }
+
+    @DisplayName("Book: serializes and deserializes with linkedContext")
+    @Test
+    void bookIsSerializedAndDeserializedWithLinkedContext() throws InvalidIsbnException, JsonProcessingException {
+        Book actualBook = new Book.Builder()
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
+                .build();
+
+        String expectedJson = generatePublicationJson(
+                BOOK,
+                null,
+                null,
+                null,
+                null,
+                false,
+                false,
+                null,
+                null,
+                null,
+                SAMPLE_LINKED_CONTEXT
+        );
+
+
+        String actualJson = objectMapper.writeValueAsString(actualBook);
+        assertEquals(expectedJson, actualJson);
+        Book deserializedBook = objectMapper.readValue(actualJson, Book.class);
+        assertEquals(actualBook, deserializedBook);
+        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedBook.getLinkedContext().toString());
     }
 }

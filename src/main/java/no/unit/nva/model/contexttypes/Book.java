@@ -3,6 +3,8 @@ package no.unit.nva.model.contexttypes;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +17,7 @@ import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Book implements BasicContext {
+public class Book implements BasicContext, LinkedContext {
 
     private String seriesTitle;
     private String seriesNumber;
@@ -26,6 +28,7 @@ public class Book implements BasicContext {
     private URL url;
     private List<String> isbnList;
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
+    private URI linkedContext;
 
     public Book() {
     }
@@ -39,6 +42,7 @@ public class Book implements BasicContext {
         setPeerReviewed(builder.peerReviewed);
         setUrl(builder.url);
         setIsbnList(builder.isbnList);
+        setLinkedContext(builder.linkedContext);
     }
 
     @Override
@@ -150,7 +154,8 @@ public class Book implements BasicContext {
                && Objects.equals(getPublisher(), book.getPublisher())
                && getLevel() == book.getLevel()
                && Objects.equals(getUrl(), book.getUrl())
-               && Objects.equals(getIsbnList(), book.getIsbnList());
+               && Objects.equals(getIsbnList(), book.getIsbnList())
+               && Objects.equals(getLinkedContext(), book.getLinkedContext());
     }
 
     @JacocoGenerated
@@ -164,8 +169,23 @@ public class Book implements BasicContext {
             isOpenAccess(),
             isPeerReviewed(),
             getUrl(),
-            getIsbnList()
+            getIsbnList(),
+            getLinkedContext()
         );
+    }
+
+    @Override
+    public URI getLinkedContext() {
+        return linkedContext;
+    }
+
+    @Override
+    public void setLinkedContext(String linkedContext) {
+        setLinkedContext(URI.create(linkedContext));
+    }
+
+    protected void setLinkedContext(URI linkedContext) {
+        this.linkedContext = linkedContext;
     }
 
     public static final class Builder {
@@ -178,6 +198,7 @@ public class Book implements BasicContext {
         private boolean peerReviewed;
         private URL url;
         private List<String> isbnList;
+        private URI linkedContext;
 
         public Builder() {
         }
@@ -219,6 +240,11 @@ public class Book implements BasicContext {
 
         public Builder withIsbnList(List<String> isbnList) {
             this.isbnList = isbnList;
+            return this;
+        }
+
+        public Builder withLinkedContext(String linkedContext) {
+            this.linkedContext = URI.create(linkedContext);
             return this;
         }
 

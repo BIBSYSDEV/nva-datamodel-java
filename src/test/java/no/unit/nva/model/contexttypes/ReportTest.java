@@ -13,6 +13,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +32,8 @@ public class ReportTest extends ModelTest {
     public static final String REPORT = "Report";
     public static final String ONLINE_ISSN = "0363-6941";
     public static final String PRINT_ISSN = "1945-662X";
+    public static final String SAMPLE_LINKED_CONTEXT = "https://example.org/linkedContext";
+
 
     @DisplayName("Reports can be created")
     @ParameterizedTest
@@ -68,7 +71,8 @@ public class ReportTest extends ModelTest {
                 expectedPeerReviewed,
                 expectedIsbn,
                 onlineIssn,
-                printIssn
+                printIssn,
+                SAMPLE_LINKED_CONTEXT
         );
         Report report = objectMapper.readValue(json, Report.class);
         assertEquals(seriesTitle, report.getSeriesTitle());
@@ -118,6 +122,7 @@ public class ReportTest extends ModelTest {
                 .withIsbnList(expectedIsbnList)
                 .withOnlineIssn(onlineIssn)
                 .withPrintIssn(printIssn)
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
                 .build();
         String expectedJson = generatePublicationJson(
                 REPORT,
@@ -129,7 +134,8 @@ public class ReportTest extends ModelTest {
                 expectedPeerReviewed,
                 expectedIsbnList,
                 onlineIssn,
-                printIssn
+                printIssn,
+                SAMPLE_LINKED_CONTEXT
         );
         String actualJson = objectMapper.writeValueAsString(report);
         assertEquals(expectedJson, actualJson);
@@ -212,5 +218,34 @@ public class ReportTest extends ModelTest {
         List<String> resultIsbnList = report.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
+    }
+
+    @DisplayName("Report: serializes and deserializes with linkedContext")
+    @Test
+    void reportIsSerializedAndDeserializedWithLinkedContext()
+            throws InvalidIsbnException, JsonProcessingException, InvalidIssnException {
+        Report actualReport = new Report.Builder()
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
+                .build();
+
+        String expectedJson = generatePublicationJson(
+                REPORT,
+                null,
+                null,
+                null,
+                null,
+                false,
+                false,
+                null,
+                null,
+                null,
+                SAMPLE_LINKED_CONTEXT
+        );
+
+        String actualJson = objectMapper.writeValueAsString(actualReport);
+        assertEquals(expectedJson, actualJson);
+        Report deserializedReport = objectMapper.readValue(actualJson, Report.class);
+        assertEquals(actualReport, deserializedReport);
+        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedReport.getLinkedContext().toString());
     }
 }
