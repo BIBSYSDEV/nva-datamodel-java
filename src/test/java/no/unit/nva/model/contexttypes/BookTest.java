@@ -3,8 +3,8 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Level;
+import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -30,6 +30,7 @@ class BookTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String BOOK = "Book";
+    public static final String SAMPLE_LINKED_CONTEXT = "http://example.com/context";
 
     @DisplayName("Book can deserialize a book")
     @ParameterizedTest
@@ -60,7 +61,8 @@ class BookTest extends ModelTest {
                 expectedPeerReviewed,
                 expectedIsbn,
                 null,
-                null
+                null,
+                SAMPLE_LINKED_CONTEXT
         );
         Book book = objectMapper.readValue(json, Book.class);
         assertEquals(seriesTitle, book.getSeriesTitle());
@@ -100,6 +102,7 @@ class BookTest extends ModelTest {
                 .withOpenAccess(expectedOpenAccess)
                 .withPeerReviewed(expectedPeerReviewed)
                 .withIsbnList(expectedIsbnList)
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
                 .build();
         String expectedJson = generatePublicationJson(
                 BOOK,
@@ -111,7 +114,8 @@ class BookTest extends ModelTest {
                 expectedPeerReviewed,
                 expectedIsbnList,
                 null,
-                null
+                null,
+                SAMPLE_LINKED_CONTEXT
         );
         String actualJson = objectMapper.writeValueAsString(book);
         assertEquals(expectedJson, actualJson);
@@ -184,5 +188,34 @@ class BookTest extends ModelTest {
         List<String> resultIsbnList = book.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
+    }
+
+    @DisplayName("Book: serializes and deserializes with linkedContext")
+    @Test
+    void bookIsSerializedAndDeserializedWithLinkedContext() throws InvalidIsbnException, JsonProcessingException {
+        Book actualBook = new Book.Builder()
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
+                .build();
+
+        String expectedJson = generatePublicationJson(
+                BOOK,
+                null,
+                null,
+                null,
+                null,
+                false,
+                false,
+                null,
+                null,
+                null,
+                SAMPLE_LINKED_CONTEXT
+        );
+
+
+        String actualJson = objectMapper.writeValueAsString(actualBook);
+        assertEquals(expectedJson, actualJson);
+        Book deserializedBook = objectMapper.readValue(actualJson, Book.class);
+        assertEquals(actualBook, deserializedBook);
+        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedBook.getLinkedContext().toString());
     }
 }

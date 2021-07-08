@@ -2,6 +2,8 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.net.URI;
 import java.net.URL;
 import no.unit.nva.model.Level;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
@@ -11,7 +13,7 @@ import nva.commons.core.JacocoGenerated;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal implements BasicContext, SerialPublication {
+public class Journal implements BasicContext, SerialPublication, LinkedContext {
     private String title;
     private Level level;
     private boolean openAccess;
@@ -19,6 +21,7 @@ public class Journal implements BasicContext, SerialPublication {
     private String printIssn;
     private String onlineIssn;
     private URL url;
+    private URI linkedContext;
 
     public Journal() {
     }
@@ -32,7 +35,9 @@ public class Journal implements BasicContext, SerialPublication {
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
         setUrl(builder.url);
+        setLinkedContextURI(builder.linkedContext);
     }
+
 
     public String getPrintIssn() {
         return printIssn;
@@ -114,6 +119,20 @@ public class Journal implements BasicContext, SerialPublication {
         this.url = url;
     }
 
+    @Override
+    public URI getLinkedContext() {
+        return linkedContext;
+    }
+
+    @Override
+    public void setLinkedContext(String linkedContext) {
+        setLinkedContextURI(URI.create(linkedContext));
+    }
+
+    private void setLinkedContextURI(URI linkedContext) {
+        this.linkedContext = linkedContext;
+    }
+
     public static final class Builder {
         private String title;
         private Level level;
@@ -122,6 +141,7 @@ public class Journal implements BasicContext, SerialPublication {
         private String printIssn;
         private String onlineIssn;
         private URL url;
+        private URI linkedContext;
 
         public Builder() {
         }
@@ -161,6 +181,12 @@ public class Journal implements BasicContext, SerialPublication {
             return this;
         }
 
+        public Journal.Builder withLinkedContext(String linkedContext) {
+            this.linkedContext = URI.create(linkedContext);
+            return this;
+        }
+
+
         public Journal build() throws InvalidIssnException {
             return new Journal(this);
         }
@@ -182,7 +208,8 @@ public class Journal implements BasicContext, SerialPublication {
                 && Objects.equals(isOpenAccess(), journal.isOpenAccess())
                 && Objects.equals(getLevel(), journal.getLevel())
                 && Objects.equals(getOnlineIssn(), journal.getOnlineIssn())
-                && Objects.equals(getUrl(), journal.getUrl());
+                && Objects.equals(getUrl(), journal.getUrl())
+                && Objects.equals(getLinkedContext(), journal.getLinkedContext());
     }
 
     @JacocoGenerated

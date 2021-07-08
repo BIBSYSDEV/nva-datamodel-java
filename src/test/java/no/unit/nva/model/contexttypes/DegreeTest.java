@@ -12,6 +12,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +30,7 @@ class DegreeTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String DEGREE = "Degree";
+    public static final String SAMPLE_LINKED_CONTEXT = "https://example.org/linkedContext";
 
     @DisplayName("Degree can deserialize a degree")
     @ParameterizedTest
@@ -53,7 +55,9 @@ class DegreeTest extends ModelTest {
                 false,
                 expectedIsbn,
                 null,
-                null
+                null,
+                SAMPLE_LINKED_CONTEXT
+
         );
         Degree degree = objectMapper.readValue(json, Degree.class);
         assertEquals(seriesTitle, degree.getSeriesTitle());
@@ -80,6 +84,7 @@ class DegreeTest extends ModelTest {
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
                 .withIsbnList(expectedIsbnList)
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
                 .build();
         String expectedJson = generatePublicationJson(
                 DEGREE,
@@ -91,7 +96,8 @@ class DegreeTest extends ModelTest {
                 false,
                 expectedIsbnList,
                 null,
-                null
+                null,
+                SAMPLE_LINKED_CONTEXT
         );
         String actualJson = objectMapper.writeValueAsString(degree);
         assertEquals(expectedJson, actualJson);
@@ -152,5 +158,33 @@ class DegreeTest extends ModelTest {
         List<String> resultIsbnList = degree.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
+    }
+
+    @DisplayName("Degree: serializes and deserializes with linkedContext")
+    @Test
+    void degreeIsSerializedAndDeserializedWithLinkedContext() throws InvalidIsbnException, JsonProcessingException {
+        Degree actualDegree = new Degree.Builder()
+                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
+                .build();
+
+        String expectedJson = generatePublicationJson(
+                DEGREE,
+                null,
+                null,
+                null,
+                null,
+                false,
+                false,
+                null,
+                null,
+                null,
+                SAMPLE_LINKED_CONTEXT
+        );
+
+        String actualJson = objectMapper.writeValueAsString(actualDegree);
+        assertEquals(expectedJson, actualJson);
+        Degree deserializedDegree = objectMapper.readValue(actualJson, Degree.class);
+        assertEquals(actualDegree, deserializedDegree);
+        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedDegree.getLinkedContext().toString());
     }
 }

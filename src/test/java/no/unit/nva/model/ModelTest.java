@@ -72,7 +72,9 @@ public class ModelTest implements JsonHandlingTest {
     public static final String ONLINE_ISSN = "onlineIssn";
     public static final String PRINT_ISSN = "printIssn";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
-    public static final URI LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
+    public static final String LINKED_CONTEXT = "linkedContext";
+
+    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -326,7 +328,7 @@ public class ModelTest implements JsonHandlingTest {
 
     private static PublicationContext generateMusicalContentContext() {
         return new MusicalContent.Builder()
-            .withLinkedContext(LINKED_CONTEXT)
+            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
             .build();
     }
 
@@ -342,13 +344,13 @@ public class ModelTest implements JsonHandlingTest {
 
     private static LinkedContext generateChapterContext() {
         return new Chapter.Builder()
-            .withLinkedContext(LINKED_CONTEXT)
+            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
             .build();
     }
 
     private static LinkedContext generateCartographicContext() {
         return new Cartograph.Builder()
-            .withLinkedContext(LINKED_CONTEXT)
+            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
             .build();
     }
 
@@ -496,7 +498,8 @@ public class ModelTest implements JsonHandlingTest {
                                                     boolean peerReviewed,
                                                     List<String> isbnList,
                                                     String onlineIssn,
-                                                    String printIssn) {
+                                                    String printIssn,
+                                                    String linkedContext) {
 
         String processedLevel = isNull(level) || level.isEmpty() ? level : Level.valueOf(level).name();
         ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
@@ -509,7 +512,7 @@ public class ModelTest implements JsonHandlingTest {
         jsonNode.put(OPEN_ACCESS, openAccess);
         jsonNode.put(PEER_REVIEWED, peerReviewed);
         jsonNode.set(ISBN_LIST, arrayNode(isbnList));
-
+        jsonNode.put(LINKED_CONTEXT, linkedContext);
         jsonNode.put(PRINT_ISSN, printIssn);
         jsonNode.put(ONLINE_ISSN, onlineIssn);
 
