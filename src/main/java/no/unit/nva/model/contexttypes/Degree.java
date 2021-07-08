@@ -22,7 +22,7 @@ public class Degree extends Book {
         setPublisher(builder.publisher);
         setIsbnList(builder.isbnList);
         setUrl(builder.url);
-        setLinkedContext(builder.linkedContext);
+        setLinkedContextURI(builder.linkedContext);
     }
 
     public static final class Builder {

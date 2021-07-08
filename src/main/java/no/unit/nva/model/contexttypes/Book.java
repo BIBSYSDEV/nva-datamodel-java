@@ -42,7 +42,7 @@ public class Book implements BasicContext, LinkedContext {
         setPeerReviewed(builder.peerReviewed);
         setUrl(builder.url);
         setIsbnList(builder.isbnList);
-        setLinkedContext(builder.linkedContext);
+        setLinkedContextURI(builder.linkedContext);
     }
 
     @Override
@@ -137,6 +137,21 @@ public class Book implements BasicContext, LinkedContext {
         this.publisher = publisher;
     }
 
+    @Override
+    public URI getLinkedContext() {
+        return linkedContext;
+    }
+
+    @Override
+    public void setLinkedContext(String linkedContext) {
+        setLinkedContextURI(URI.create(linkedContext));
+    }
+
+    protected void setLinkedContextURI(URI linkedContext) {
+        this.linkedContext = linkedContext;
+    }
+
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -172,20 +187,6 @@ public class Book implements BasicContext, LinkedContext {
             getIsbnList(),
             getLinkedContext()
         );
-    }
-
-    @Override
-    public URI getLinkedContext() {
-        return linkedContext;
-    }
-
-    @Override
-    public void setLinkedContext(String linkedContext) {
-        setLinkedContext(URI.create(linkedContext));
-    }
-
-    protected void setLinkedContext(URI linkedContext) {
-        this.linkedContext = linkedContext;
     }
 
     public static final class Builder {

@@ -32,7 +32,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
         setUrl(builder.url);
-        setLinkedContext(builder.linkedContext);
+        setLinkedContextURI(builder.linkedContext);
     }
 
     public String getPrintIssn() {

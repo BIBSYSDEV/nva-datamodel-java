@@ -35,7 +35,7 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
         setUrl(builder.url);
-        setLinkedContext(builder.linkedContext);
+        setLinkedContextURI(builder.linkedContext);
     }
 
 
@@ -126,10 +126,10 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
 
     @Override
     public void setLinkedContext(String linkedContext) {
-        setLinkedContext(URI.create(linkedContext));
+        setLinkedContextURI(URI.create(linkedContext));
     }
 
-    private void setLinkedContext(URI linkedContext) {
+    private void setLinkedContextURI(URI linkedContext) {
         this.linkedContext = linkedContext;
     }
 
