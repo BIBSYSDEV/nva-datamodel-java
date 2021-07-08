@@ -138,6 +138,10 @@ referencedSchemas:
         linkedContext:
           type: string
           format: uri
+        linkedContextURI:
+          type: string
+          format: uri
+          writeOnly: true
         type:
           type: string
   BookAbstracts:
@@ -337,6 +341,10 @@ referencedSchemas:
         linkedContext:
           type: string
           format: uri
+        linkedContextURI:
+          type: string
+          format: uri
+          writeOnly: true
         type:
           type: string
   DegreeBachelor:
@@ -597,6 +605,10 @@ referencedSchemas:
         linkedContext:
           type: string
           format: uri
+        linkedContextURI:
+          type: string
+          format: uri
+          writeOnly: true
         type:
           type: string
   JournalArticle:
@@ -1017,6 +1029,10 @@ referencedSchemas:
           type: string
         onlineIssn:
           type: string
+        linkedContextURI:
+          type: string
+          format: uri
+          writeOnly: true
   ReportBasic:
     required:
     - type
