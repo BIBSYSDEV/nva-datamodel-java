@@ -1,5 +1,8 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.net.MalformedURLException;
 import java.net.URI;
 
 /**
@@ -11,7 +14,24 @@ import java.net.URI;
  */
 public interface LinkedContext extends PublicationContext {
 
+    @JsonIgnore
+    String ERROR_TEMPLATE = "The URI <%s> is an invalid context";
+
     URI getLinkedContext();
 
-    void setLinkedContext(String linkedContext);
+    void setLinkedContext(URI linkedContext);
+
+    default void validateContext(URI linkedContext) {
+        try {
+            linkedContext.toURL();
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(String.format(getErrorTemplate(), linkedContext));
+        }
+    }
+
+    @JsonIgnore
+    default String getErrorTemplate() {
+        return ERROR_TEMPLATE;
+    }
+
 }

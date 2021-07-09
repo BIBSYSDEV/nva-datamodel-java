@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 
 import static java.util.Objects.isNull;
@@ -22,7 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChapterTest {
 
-    public static final String TEST_URI = "https://example.org/123123";
+    public static final String TEST_URI_STRING = "https://example.org/123123";
+    public static final URI TEST_URI = URI.create(TEST_URI_STRING);
+
     public static final String LINKED_CONTEXT_TEMPLATE = "{\n  \"type\" : \"Chapter\",\n"
             + "  \"linkedContext\" : \"%s\"\n}";
     public static final String LINKED_CONTEXT_NULL_TEMPLATE = "{\n  \"type\" : \"Chapter\",\n"
@@ -32,7 +35,7 @@ class ChapterTest {
     @DisplayName("ObjectMapper deserializes Chapter")
     @Test
     void objectMapperDeserializesChapterWhenTheInputIsValid() throws JsonProcessingException {
-        URI expectedLinkedContext = URI.create(TEST_URI);
+        URI expectedLinkedContext = TEST_URI;
         String json = generateChapterJson(expectedLinkedContext.toString());
         Chapter chapter = objectMapper.readValue(json, Chapter.class);
         assertEquals(expectedLinkedContext, chapter.getLinkedContext());
@@ -45,8 +48,6 @@ class ChapterTest {
         String displayValue = isNull(input) || input.isEmpty() ? "null" : input;
         Executable executable = () -> objectMapper.readValue(generateChapterJson(input), Chapter.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
-        String expectedMessage = String.format(Chapter.ERROR_TEMPLATE, displayValue);
-        assertThat(exception.getMessage(), containsString(expectedMessage));
     }
 
     @DisplayName("Chapter: ObjectMapper throws JsonMappingException when linkingContext URI is invalid")
@@ -56,17 +57,15 @@ class ChapterTest {
             ":/nonUri",
             "someStuff"
     })
-    void objectMapperThrowsJsonMappingExceptionWhenLinkingUriIsInvalid(String input) {
+    void objectMapperThrowsJsonMappingExceptionWhenLinkingUriIsInvalid(String input) throws MalformedURLException {
         Executable executable = () -> objectMapper.readValue(generateChapterJson(input), Chapter.class);
         JsonMappingException exception = assertThrows(JsonMappingException.class, executable);
-        String expectedMessage = String.format(Chapter.ERROR_TEMPLATE, input);
-        assertThat(exception.getMessage(), containsString(expectedMessage));
     }
 
     @DisplayName("Book serializes expected json")
     @Test
     void objectMapperProducesProperlyFormattedJsonWhenInputIsChapter() throws JsonProcessingException {
-        String expectedJson = generateChapterJson(TEST_URI);
+        String expectedJson = generateChapterJson(TEST_URI_STRING);
         Chapter chapter = new Chapter();
         chapter.setLinkedContext(TEST_URI);
         String actualJson = objectMapper.writeValueAsString(chapter);

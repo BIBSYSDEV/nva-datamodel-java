@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nva.commons.core.JacocoGenerated;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -32,12 +29,8 @@ public class Cartograph implements LinkedContext {
     }
 
     @Override
-    public void setLinkedContext(String linkedContext) {
-        try {
-            this.linkedContext = new URL(linkedContext).toURI();
-        } catch (URISyntaxException | MalformedURLException e) {
-            throw new IllegalArgumentException(String.format(ERROR_TEMPLATE, linkedContext));
-        }
+    public void setLinkedContext(URI linkedContext) {
+        this.linkedContext = linkedContext;
     }
 
     @JacocoGenerated

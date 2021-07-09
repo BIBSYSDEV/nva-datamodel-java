@@ -42,7 +42,7 @@ public class Book implements BasicContext, LinkedContext {
         setPeerReviewed(builder.peerReviewed);
         setUrl(builder.url);
         setIsbnList(builder.isbnList);
-        setLinkedContextURI(builder.linkedContext);
+        setLinkedContext(builder.linkedContext);
     }
 
     @Override
@@ -143,14 +143,9 @@ public class Book implements BasicContext, LinkedContext {
     }
 
     @Override
-    public void setLinkedContext(String linkedContext) {
-        setLinkedContextURI(URI.create(linkedContext));
-    }
-
-    protected void setLinkedContextURI(URI linkedContext) {
+    public void setLinkedContext(URI linkedContext) {
         this.linkedContext = linkedContext;
     }
-
 
     @JacocoGenerated
     @Override
