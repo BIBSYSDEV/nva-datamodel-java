@@ -125,8 +125,8 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
     }
 
     @Override
-    public void setLinkedContext(String linkedContext) {
-        setLinkedContextURI(URI.create(linkedContext));
+    public void setLinkedContext(URI linkedContext) {
+        this.linkedContext = linkedContext;
     }
 
     private void setLinkedContextURI(URI linkedContext) {
