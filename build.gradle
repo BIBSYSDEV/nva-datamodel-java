@@ -74,7 +74,7 @@ dependencies {
     testImplementation group: 'org.javers', name: 'javers-core', version: '6.0.1'
     testImplementation group: 'com.github.bibsysdev', name: 'nva-testutils', version: '0.1.18'
     testImplementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
-    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.31'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 
 }
