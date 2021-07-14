@@ -11,9 +11,11 @@ import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import org.junit.jupiter.api.Test;
 
+import java.net.URI;
+
 public class JournalTest {
 
-    public static final String SAMPLE_LINKED_CONTEXT = "https://example.org/linkedContext";
+    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
     @Test
     public void canDeserializeJournalWithEmptyPrintIssn() throws JsonProcessingException {
@@ -63,7 +65,7 @@ public class JournalTest {
         Journal actualJournal = objectMapper.readValue(expectedJson, Journal.class);
 
         assertEquals(expectedJournal, actualJournal);
-        assertEquals(SAMPLE_LINKED_CONTEXT, actualJournal.getLinkedContext().toString());
+        assertEquals(SAMPLE_LINKED_CONTEXT, actualJournal.getLinkedContext());
 
         String actualJson = objectMapper.writeValueAsString(actualJournal);
         String linkedContextPhrase = "\"linkedContext\" : \"" + SAMPLE_LINKED_CONTEXT + "\"";

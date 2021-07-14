@@ -13,6 +13,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,7 @@ class BookTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String BOOK = "Book";
-    public static final String SAMPLE_LINKED_CONTEXT = "http://example.com/context";
+    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("http://example.com/context");
 
     @DisplayName("Book can deserialize a book")
     @ParameterizedTest
@@ -216,6 +217,6 @@ class BookTest extends ModelTest {
         assertEquals(expectedJson, actualJson);
         Book deserializedBook = objectMapper.readValue(actualJson, Book.class);
         assertEquals(actualBook, deserializedBook);
-        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedBook.getLinkedContext().toString());
+        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedBook.getLinkedContext());
     }
 }

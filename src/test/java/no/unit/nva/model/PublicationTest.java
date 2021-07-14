@@ -1,5 +1,25 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.bibsysdev.BuildConfig;
+import com.github.jsonldjava.core.JsonLdOptions;
+import com.github.jsonldjava.core.JsonLdProcessor;
+import com.github.jsonldjava.utils.JsonUtils;
+import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.MalformedContributorException;
+import no.unit.nva.model.util.ContextUtil;
+import no.unit.nva.model.util.PublicationGenerator;
+import org.javers.core.Javers;
+import org.javers.core.JaversBuilder;
+import org.javers.core.diff.Diff;
+import org.junit.jupiter.api.Test;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Set;
+
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.DoiRequestStatus.APPROVED;
 import static no.unit.nva.model.DoiRequestStatus.REJECTED;
@@ -13,24 +33,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jsonldjava.core.JsonLdOptions;
-import com.github.jsonldjava.core.JsonLdProcessor;
-import com.github.jsonldjava.utils.JsonUtils;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Set;
-import com.github.bibsysdev.BuildConfig;
-import no.unit.nva.model.exceptions.InvalidIssnException;
-import no.unit.nva.model.exceptions.MalformedContributorException;
-import no.unit.nva.model.util.ContextUtil;
-import no.unit.nva.model.util.PublicationGenerator;
-import org.javers.core.Javers;
-import org.javers.core.JaversBuilder;
-import org.javers.core.diff.Diff;
-import org.junit.jupiter.api.Test;
 
 public class PublicationTest {
 
@@ -42,7 +44,7 @@ public class PublicationTest {
 
     @Test
     public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
-        throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException, MalformedContributorException {
         var publication = generatePublicationWithRejectedDoiRequestStatus();
 
         var validRequestedChange = APPROVED;
@@ -55,12 +57,11 @@ public class PublicationTest {
 
     @Test
     public void updatingDoiRequestWithInvalidRequestedStatusChangeThenThrowsIllegalArgumentException()
-        throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException, MalformedContributorException {
         var publication = generatePublicationWithRejectedDoiRequestStatus();
 
         var actualMessage = assertThrows(IllegalArgumentException.class,
-                                         () -> publication.updateDoiRequestStatus(REQUESTED))
-                                .getMessage();
+            () -> publication.updateDoiRequestStatus(REQUESTED)).getMessage();
 
         assertThat(actualMessage, containsStringIgnoringCase("not allowed"));
 
@@ -73,25 +74,25 @@ public class PublicationTest {
 
     @Test
     public void updatingDoiRequestStatusWithoutDoiRequestThrowsIllegalStateException()
-        throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException, MalformedContributorException {
         var publication = getPublicationWithoutDoiRequest();
 
         var actualException = assertThrows(IllegalStateException.class,
-                                           () -> publication.updateDoiRequestStatus(REQUESTED));
+            () -> publication.updateDoiRequestStatus(REQUESTED));
         assertThat(actualException.getMessage(),
-                   is(equalTo(Publication.ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST)));
+                is(equalTo(Publication.ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST)));
     }
 
     @Test
     public void getModelVersionReturnsModelVersionDefinedByGradle()
-        throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException, MalformedContributorException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
         assertThat(samplePublication.getModelVersion(), is(equalTo(BuildConfig.MODEL_VERSION)));
     }
 
     @Test
     public void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields()
-        throws MalformedContributorException, InvalidIssnException {
+            throws MalformedContributorException, InvalidIssnException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
         Publication copy = samplePublication.copy().build();
 
@@ -105,7 +106,7 @@ public class PublicationTest {
 
     @Test
     public void objectMapperReturnsSerializationWithAllFieldsSerialized()
-        throws MalformedContributorException, InvalidIssnException, JsonProcessingException {
+            throws MalformedContributorException, InvalidIssnException, JsonProcessingException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
         String jsonString = objectMapperWithEmpty.writeValueAsString(samplePublication);
         Publication copy = objectMapperWithEmpty.readValue(jsonString, Publication.class);
@@ -132,20 +133,20 @@ public class PublicationTest {
 
 
         Publication samplePublication = PublicationGenerator
-                                            .generateJournalArticlePublication()
-                                            .copy()
-                                            .withDoiRequest(null)
-                                            .withAdditionalIdentifiers(generateAdditionalIdentifiers())
-                                            .build();
+                .generateJournalArticlePublication()
+                .copy()
+                .withDoiRequest(null)
+                .withAdditionalIdentifiers(generateAdditionalIdentifiers())
+                .build();
         assertThat(samplePublication, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD)));
         return samplePublication;
     }
 
 
     private Publication generatePublicationWithRejectedDoiRequestStatus()
-        throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException, MalformedContributorException {
         var doiRequest = PublicationGenerator.generateJournalArticlePublication().getDoiRequest();
         return PublicationGenerator.generateJournalArticlePublication()
-                   .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
+                .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
     }
 }

@@ -239,8 +239,8 @@ public class Book implements BasicContext, LinkedContext {
             return this;
         }
 
-        public Builder withLinkedContext(String linkedContext) {
-            this.linkedContext = URI.create(linkedContext);
+        public Builder withLinkedContext(URI linkedContext) {
+            this.linkedContext = linkedContext;
             return this;
         }
 

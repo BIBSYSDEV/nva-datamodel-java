@@ -30,7 +30,7 @@ class DegreeTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String DEGREE = "Degree";
-    public static final String SAMPLE_LINKED_CONTEXT = "https://example.org/linkedContext";
+    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
     @DisplayName("Degree can deserialize a degree")
     @ParameterizedTest
@@ -57,7 +57,6 @@ class DegreeTest extends ModelTest {
                 null,
                 null,
                 SAMPLE_LINKED_CONTEXT
-
         );
         Degree degree = objectMapper.readValue(json, Degree.class);
         assertEquals(seriesTitle, degree.getSeriesTitle());
@@ -185,6 +184,6 @@ class DegreeTest extends ModelTest {
         assertEquals(expectedJson, actualJson);
         Degree deserializedDegree = objectMapper.readValue(actualJson, Degree.class);
         assertEquals(actualDegree, deserializedDegree);
-        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedDegree.getLinkedContext().toString());
+        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedDegree.getLinkedContext());
     }
 }
