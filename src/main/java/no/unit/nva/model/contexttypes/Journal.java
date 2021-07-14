@@ -181,8 +181,8 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
             return this;
         }
 
-        public Journal.Builder withLinkedContext(String linkedContext) {
-            this.linkedContext = URI.create(linkedContext);
+        public Journal.Builder withLinkedContext(URI linkedContext) {
+            this.linkedContext = linkedContext;
             return this;
         }
 

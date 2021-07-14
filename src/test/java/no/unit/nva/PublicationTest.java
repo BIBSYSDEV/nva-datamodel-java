@@ -98,8 +98,7 @@ public class PublicationTest extends ModelTest {
         publication.setStatus(NEW);
 
         InvalidPublicationStatusTransitionException exception =
-            assertThrows(InvalidPublicationStatusTransitionException.class,
-                         () -> publication.updateStatus(PUBLISHED));
+            assertThrows(InvalidPublicationStatusTransitionException.class, () -> publication.updateStatus(PUBLISHED));
 
         String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
                                              NEW, PUBLISHED);

@@ -143,8 +143,8 @@ public class Report extends Book implements SerialPublication, BasicContext {
             return this;
         }
 
-        public Builder withLinkedContext(String linkedContext) {
-            this.linkedContext = URI.create(linkedContext);
+        public Builder withLinkedContext(URI linkedContext) {
+            this.linkedContext = linkedContext;
             return this;
         }
 

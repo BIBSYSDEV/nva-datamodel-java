@@ -239,7 +239,7 @@ public class PublicationGenerator extends ModelTest {
                    .withOnlineIssn("1111-1119")
                    .withPrintIssn("2222-2227")
                    .withUrl(randomUrl)
-                   .withLinkedContext(SOME_URI.toString())
+                   .withLinkedContext(SOME_URI)
                    .build();
     }
 

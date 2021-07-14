@@ -499,7 +499,7 @@ public class ModelTest implements JsonHandlingTest {
                                                     List<String> isbnList,
                                                     String onlineIssn,
                                                     String printIssn,
-                                                    String linkedContext) {
+                                                    URI linkedContext) {
 
         String processedLevel = isNull(level) || level.isEmpty() ? level : Level.valueOf(level).name();
         ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
@@ -512,7 +512,7 @@ public class ModelTest implements JsonHandlingTest {
         jsonNode.put(OPEN_ACCESS, openAccess);
         jsonNode.put(PEER_REVIEWED, peerReviewed);
         jsonNode.set(ISBN_LIST, arrayNode(isbnList));
-        jsonNode.put(LINKED_CONTEXT, linkedContext);
+        jsonNode.put(LINKED_CONTEXT, linkedContext.toString());
         jsonNode.put(PRINT_ISSN, printIssn);
         jsonNode.put(ONLINE_ISSN, onlineIssn);
 

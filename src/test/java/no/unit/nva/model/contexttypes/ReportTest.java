@@ -32,7 +32,7 @@ public class ReportTest extends ModelTest {
     public static final String REPORT = "Report";
     public static final String ONLINE_ISSN = "0363-6941";
     public static final String PRINT_ISSN = "1945-662X";
-    public static final String SAMPLE_LINKED_CONTEXT = "https://example.org/linkedContext";
+    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
 
     @DisplayName("Reports can be created")
@@ -246,6 +246,6 @@ public class ReportTest extends ModelTest {
         assertEquals(expectedJson, actualJson);
         Report deserializedReport = objectMapper.readValue(actualJson, Report.class);
         assertEquals(actualReport, deserializedReport);
-        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedReport.getLinkedContext().toString());
+        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedReport.getLinkedContext());
     }
 }
