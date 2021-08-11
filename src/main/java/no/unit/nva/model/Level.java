@@ -17,15 +17,14 @@ public enum Level {
     NO_LEVEL(null);
 
     public static final String ERROR_TEMPLATE = "The specified level \"%s\" is not a legal value (%s)";
-    private  List<String> aliases;
+    private List<String> aliases;
     private Integer level;
 
     Level(Integer level, String... aliases) {
         if (nonNull(level) && nonNull(aliases)) {
             this.aliases = Arrays.asList(aliases);
             this.level = level;
-        }
-        else{
+        } else {
             this.aliases = Collections.emptyList();
         }
     }
@@ -36,12 +35,6 @@ public enum Level {
             .filter(enumValue -> enumValue.aliases.contains(level.toLowerCase(Locale.ROOT)))
             .collect(SingletonCollector.tryCollect())
             .orElseThrow(fail -> new InvalidNpiLevelException(errorMessage(level)));
-    }
-
-
-    @JsonValue
-    public  String toJsonString(){
-        return this.toString();
     }
 
     /**
@@ -55,6 +48,11 @@ public enum Level {
         return Arrays.stream(values())
             .filter(levelInteger -> levelInteger.level.equals(integer)).findFirst()
             .orElseThrow(() -> new InvalidNpiLevelException(errorMessage(integer.toString())));
+    }
+
+    @JsonValue
+    public String toJsonString() {
+        return this.toString();
     }
 
     private static String errorMessage(String input) {
