@@ -1,18 +1,16 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.JacocoGenerated;
 
-import java.util.Objects;
-
 public class PeerReviewedPaper extends PeerReviewed<Range> {
 
-    @JsonProperty("pages")
-    private Range pages;
     @JsonProperty("originalResearch")
     protected boolean originalResearch;
-
+    @JsonProperty("pages")
+    private Range pages;
 
     public PeerReviewedPaper() {
         super();
@@ -23,7 +21,6 @@ public class PeerReviewedPaper extends PeerReviewed<Range> {
         this.pages = pages;
         this.originalResearch = originalResearch;
     }
-
 
     @Override
     public Range getPages() {
@@ -39,6 +36,16 @@ public class PeerReviewedPaper extends PeerReviewed<Range> {
         return originalResearch;
     }
 
+    public void setOriginalResearch(boolean originalResearch) {
+        this.originalResearch = originalResearch;
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPages(), isPeerReviewed(), isOriginalResearch());
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -50,14 +57,7 @@ public class PeerReviewedPaper extends PeerReviewed<Range> {
         }
         PeerReviewedPaper that = (PeerReviewedPaper) o;
         return isPeerReviewed() == that.isPeerReviewed()
-                && Objects.equals(getPages(), that.getPages())
-                && isOriginalResearch() == that.isOriginalResearch();
+               && Objects.equals(getPages(), that.getPages())
+               && isOriginalResearch() == that.isOriginalResearch();
     }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPages(), isPeerReviewed(), isOriginalResearch());
-    }
-
 }
