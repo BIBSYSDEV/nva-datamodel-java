@@ -62,6 +62,7 @@ public class JournalArticle extends PeerReviewedPaper {
         this.content = content;
     }
 
+    @Override
     public void setOriginalResearch(boolean originalResearch) {
         if (isOriginalResearchCandidate()) {
             this.originalResearch = originalResearch;
