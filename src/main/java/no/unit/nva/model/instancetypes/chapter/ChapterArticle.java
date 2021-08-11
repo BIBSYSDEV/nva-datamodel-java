@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes.chapter;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
 import no.unit.nva.model.instancetypes.PeerReviewedPaper;
 import no.unit.nva.model.pages.Range;
 
@@ -8,55 +9,72 @@ import no.unit.nva.model.pages.Range;
 public class ChapterArticle extends PeerReviewedPaper {
 
     private ChapterArticleContentType contentType;
+    private URI partOf;
 
     public ChapterArticle() {
         super();
-    }
-
-    private ChapterArticle(Builder builder) {
-        super(builder.pages, builder.peerReviewed, builder.originalResearch);
-        setContentType(builder.contentType);
-    }
-
-    public void setContentType(ChapterArticleContentType contentType) {
-        this.contentType = contentType;
     }
 
     public ChapterArticleContentType getContentType() {
         return contentType;
     }
 
+    public void setContentType(ChapterArticleContentType contentType) {
+        this.contentType = contentType;
+    }
+
+    public URI getPartOf() {
+        return partOf;
+    }
+
+    public void setPartOf(URI partOf) {
+        this.partOf = partOf;
+    }
+
+    public Builder copy() {
+        return new Builder()
+            .withContentType(getContentType())
+            .withOriginalResearch(isOriginalResearch())
+            .withPeerReviewed(isPeerReviewed())
+            .withPartOf(getPartOf())
+            .withPages(getPages());
+    }
+
     public static final class Builder {
-        private boolean peerReviewed;
-        private Range pages;
-        private boolean originalResearch;
-        private ChapterArticleContentType contentType;
+
+        private final ChapterArticle chapterArticle;
 
         public Builder() {
+            chapterArticle = new ChapterArticle();
         }
 
         public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
-            return this;
-        }
-
-        public Builder withPages(Range pages) {
-            this.pages = pages;
+            chapterArticle.setPeerReviewed(peerReviewed);
             return this;
         }
 
         public Builder withOriginalResearch(boolean originalResearch) {
-            this.originalResearch = originalResearch;
+            chapterArticle.setOriginalResearch(originalResearch);
+            return this;
+        }
+
+        public Builder withPages(Range pages) {
+            chapterArticle.setPages(pages);
             return this;
         }
 
         public Builder withContentType(ChapterArticleContentType contentType) {
-            this.contentType = contentType;
+            chapterArticle.setContentType(contentType);
+            return this;
+        }
+
+        public Builder withPartOf(URI partOf) {
+            chapterArticle.setPartOf(partOf);
             return this;
         }
 
         public ChapterArticle build() {
-            return new ChapterArticle(this);
+            return chapterArticle;
         }
     }
 }
