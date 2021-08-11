@@ -66,8 +66,8 @@ class BookTest extends ModelTest {
         "uri:not:http:uri"
     })
     public void bookThrowsExceptionWhenSeriesUriIsInvalid(String invalidSeriesUri) {
-        Executable action = ()-> randomBook().copy().withSeriesUri(URI.create(invalidSeriesUri)).build();
-        InvalidSeriesException exception= assertThrows(InvalidSeriesException.class,action);
+        Executable action = () -> randomBook().copy().withSeriesUri(URI.create(invalidSeriesUri)).build();
+        InvalidSeriesException exception = assertThrows(InvalidSeriesException.class, action);
         assertThat(exception.getMessage(), containsString(invalidSeriesUri));
     }
 
