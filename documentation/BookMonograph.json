@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/etnihil",
+        "url" : "https://www.example.org/dictaarchitecto",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -88,12 +88,12 @@
         "articleNumber" : "1234456",
         "content" : "Professional article",
         "peerReviewed" : true,
+        "originalResearch" : false,
         "pages" : {
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        },
-        "originalResearch" : false
+        }
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -139,8 +139,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "etfuga",
-    "value" : "682daee8-e132-4079-ad48-97b87b6e65bf"
+    "source" : "sintdolorem",
+    "value" : "62d9bfb6-8e57-41b2-9cae-e845c2d5a0b3"
   } ],
-  "modelVersion" : "0.12.1"
+  "modelVersion" : "0.12.3"
 }

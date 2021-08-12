@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/perferendisdistinctio",
+        "url" : "https://www.example.org/sintdolorum",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -88,12 +88,12 @@
         "articleNumber" : "1234456",
         "content" : "Professional article",
         "peerReviewed" : true,
+        "originalResearch" : false,
         "pages" : {
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        },
-        "originalResearch" : false
+        }
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -139,8 +139,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "eanumquam",
-    "value" : "c04d6c76-6281-4887-af49-01593b464e31"
+    "source" : "eaquequasi",
+    "value" : "446a6985-cbac-48ad-a74f-a82fb13be58c"
   } ],
-  "modelVersion" : "0.12.1"
+  "modelVersion" : "0.12.3"
 }

@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/aliasaspernatur",
+        "url" : "https://www.example.org/etcupiditate",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -88,12 +88,12 @@
         "articleNumber" : "1234456",
         "content" : "Professional article",
         "peerReviewed" : true,
+        "originalResearch" : false,
         "pages" : {
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        },
-        "originalResearch" : false
+        }
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -139,8 +139,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "quitempora",
-    "value" : "8b5b2dc2-3f90-4fd4-83d6-fbd780f58fbc"
+    "source" : "oditenim",
+    "value" : "83107ac3-5019-4ee7-8e14-22c7785e2261"
   } ],
-  "modelVersion" : "0.12.1"
+  "modelVersion" : "0.12.3"
 }

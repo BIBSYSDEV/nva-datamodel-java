@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/molestiasveritatis",
+        "url" : "https://www.example.org/voluptasnon",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -88,12 +88,12 @@
         "articleNumber" : "1234456",
         "content" : "Professional article",
         "peerReviewed" : true,
+        "originalResearch" : false,
         "pages" : {
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        },
-        "originalResearch" : false
+        }
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -139,8 +139,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "occaecatiet",
-    "value" : "188ff3ff-a4a3-46b8-8199-becac1635a7e"
+    "source" : "exercitationemea",
+    "value" : "ec1ff19f-eff5-4cb0-a861-5a959609336f"
   } ],
-  "modelVersion" : "0.12.1"
+  "modelVersion" : "0.12.3"
 }
