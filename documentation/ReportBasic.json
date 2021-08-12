@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/remmodi",
+        "url" : "https://www.example.org/utet",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -88,12 +88,12 @@
         "articleNumber" : "1234456",
         "content" : "Professional article",
         "peerReviewed" : true,
+        "originalResearch" : false,
         "pages" : {
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        },
-        "originalResearch" : false
+        }
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -139,8 +139,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "perferendisqui",
-    "value" : "12e4da0f-3d22-4aca-bcff-4077f476450f"
+    "source" : "veniamin",
+    "value" : "21409fed-3ff1-4fc2-a1d4-e9e55569b45a"
   } ],
-  "modelVersion" : "0.12.1"
+  "modelVersion" : "0.12.3"
 }

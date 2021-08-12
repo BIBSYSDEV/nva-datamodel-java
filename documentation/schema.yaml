@@ -113,6 +113,9 @@ referencedSchemas:
       properties:
         seriesTitle:
           type: string
+        seriesUri:
+          type: string
+          format: uri
         seriesNumber:
           type: string
         publisher:
@@ -244,10 +247,10 @@ referencedSchemas:
           - Popular Science Chapter
           - Textbook Chapter
           - Encyclopedia Chapter
-        pages:
-          $ref: '#/components/schemas/Range'
         originalResearch:
           type: boolean
+        pages:
+          $ref: '#/components/schemas/Range'
         type:
           type: string
   Contributor:
@@ -312,6 +315,9 @@ referencedSchemas:
       properties:
         seriesTitle:
           type: string
+        seriesUri:
+          type: string
+          format: uri
         seriesNumber:
           type: string
         publisher:
@@ -628,10 +634,10 @@ referencedSchemas:
           - Study protocol
           - Professional article
           - Popular science article
-        pages:
-          $ref: '#/components/schemas/Range'
         originalResearch:
           type: boolean
+        pages:
+          $ref: '#/components/schemas/Range'
         type:
           type: string
   JournalCorrigendum:
@@ -947,10 +953,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
@@ -992,6 +998,9 @@ referencedSchemas:
       properties:
         seriesTitle:
           type: string
+        seriesUri:
+          type: string
+          format: uri
         seriesNumber:
           type: string
         publisher:
