@@ -1,19 +1,40 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.nonNull;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 import no.unit.nva.model.exceptions.InvalidNpiLevelException;
+import nva.commons.core.SingletonCollector;
 
 public enum Level {
-    LEVEL_2(2),
-    LEVEL_1(1),
-    LEVEL_0(0),
+    LEVEL_2(2, "level2", "level_2"),
+    LEVEL_1(1, "level1", "level_1"),
+    LEVEL_0(0, "level0", "level_0"),
     NO_LEVEL(null);
 
-    public static final String ERROR_TEMLATE = "The specified level \"%s\" is not a legal value (%s)";
+    public static final String ERROR_TEMPLATE = "The specified level \"%s\" is not a legal value (%s)";
+    private List<String> aliases;
     private Integer level;
 
-    Level(Integer level) {
-        this.level = level;
+    Level(Integer level, String... aliases) {
+        if (nonNull(level) && nonNull(aliases)) {
+            this.aliases = Arrays.asList(aliases);
+            this.level = level;
+        } else {
+            this.aliases = Collections.emptyList();
+        }
+    }
+
+    @JsonCreator
+    public static Level fromString(String level) {
+        return Arrays.stream(values())
+            .filter(enumValue -> enumValue.aliases.contains(level.toLowerCase(Locale.ROOT)))
+            .collect(SingletonCollector.tryCollect())
+            .orElseThrow(fail -> new InvalidNpiLevelException(errorMessage(level)));
     }
 
     /**
@@ -21,12 +42,20 @@ public enum Level {
      *
      * @param integer The level value as integer
      * @return Level value
-     * @throws InvalidNpiLevelException In cases where the the input level is not a valid level
+     * @throws InvalidNpiLevelException In cases where the input level is not a valid level
      */
-    public static Level getLevel(Integer integer) throws InvalidNpiLevelException {
+    public static Level getLevel(Integer integer) {
         return Arrays.stream(values())
-                .filter(levelInteger -> levelInteger.level.equals(integer)).findFirst()
-                .orElseThrow(() -> new InvalidNpiLevelException(
-                        String.format(ERROR_TEMLATE, integer.toString(), Arrays.toString(values()))));
+            .filter(levelInteger -> levelInteger.level.equals(integer)).findFirst()
+            .orElseThrow(() -> new InvalidNpiLevelException(errorMessage(integer.toString())));
+    }
+
+    @JsonValue
+    public String toJsonString() {
+        return this.toString();
+    }
+
+    private static String errorMessage(String input) {
+        return String.format(ERROR_TEMPLATE, input, Arrays.toString(values()));
     }
 }

@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.journal;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.PeerReviewedPaper;
 import no.unit.nva.model.pages.Range;
@@ -12,7 +13,9 @@ public class JournalArticle extends PeerReviewedPaper {
     private String volume;
     private String issue;
     private String articleNumber;
-    private JournalArticleContentType content;
+
+    @JsonAlias("content") //for backwards compatibility.
+    private JournalArticleContentType contentType;
 
     @JacocoGenerated
     public JournalArticle() {
@@ -26,7 +29,7 @@ public class JournalArticle extends PeerReviewedPaper {
         setArticleNumber(builder.articleNumber);
         setPages(builder.pages);
         setPeerReviewed(builder.peerReviewed);
-        setContent(builder.content);
+        setContentType(builder.content);
         setOriginalResearch(builder.originalResearch);
     }
 
@@ -54,12 +57,12 @@ public class JournalArticle extends PeerReviewedPaper {
         this.articleNumber = articleNumber;
     }
 
-    public JournalArticleContentType getContent() {
-        return content;
+    public JournalArticleContentType getContentType() {
+        return contentType;
     }
 
-    public void setContent(JournalArticleContentType content) {
-        this.content = content;
+    public void setContentType(JournalArticleContentType contentType) {
+        this.contentType = contentType;
     }
 
     @Override
@@ -70,9 +73,9 @@ public class JournalArticle extends PeerReviewedPaper {
     }
 
     private boolean isOriginalResearchCandidate() {
-        return content == null
-                || content == JournalArticleContentType.RESEARCH_ARTICLE
-                || content == JournalArticleContentType.REVIEW_ARTICLE;
+        return contentType == null
+               || contentType == JournalArticleContentType.RESEARCH_ARTICLE
+               || contentType == JournalArticleContentType.REVIEW_ARTICLE;
     }
 
     @JacocoGenerated
@@ -91,14 +94,14 @@ public class JournalArticle extends PeerReviewedPaper {
         return Objects.equals(getVolume(), that.getVolume())
                 && Objects.equals(getIssue(), that.getIssue())
                 && Objects.equals(getArticleNumber(), that.getArticleNumber())
-                && Objects.equals(getContent(), that.getContent())
+                && Objects.equals(getContentType(), that.getContentType())
                 && this.isOriginalResearch() == that.isOriginalResearch();
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getVolume(), getIssue(), getArticleNumber(), getContent());
+        return Objects.hash(super.hashCode(), getVolume(), getIssue(), getArticleNumber(), getContentType());
     }
 
     public static final class Builder {

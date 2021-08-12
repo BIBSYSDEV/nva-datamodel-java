@@ -16,6 +16,7 @@ import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.
 import static nva.commons.core.JsonUtils.objectMapper;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -96,8 +97,8 @@ class JournalArticleTest {
         JournalTestData journalTestData = new JournalTestData(RESEARCH_ARTICLE);
         JournalArticle journalArticle = generateJournalArticle(journalTestData);
         String json = objectMapper.writeValueAsString(journalArticle);
-        String expectedContentPhrase = "content\" : \"" + RESEARCH_ARTICLE.getValue() + "\"";
-        assertTrue(json.contains(expectedContentPhrase));
+        String expectedContentPhrase = "contentType\" : \"" + RESEARCH_ARTICLE.getValue() + "\"";
+        assertThat(json,containsString(expectedContentPhrase));
     }
 
     @Test
@@ -106,8 +107,8 @@ class JournalArticleTest {
         JournalArticle journalArticle = generateJournalArticle(journalTestData);
         journalArticle.setOriginalResearch(true);
         String json = objectMapper.writeValueAsString(journalArticle);
-        String expectedOrginalityPhrase = "\"originalResearch\" : true";
-        assertTrue(json.contains(expectedOrginalityPhrase));
+        String expectedOriginalityPhrase = "\"originalResearch\" : true";
+        assertTrue(json.contains(expectedOriginalityPhrase));
     }
 
     @ParameterizedTest(name = "Test JournalArticle with Content type {0} can be annotated with 'Original Research'")
