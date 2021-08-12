@@ -34,6 +34,7 @@ class LevelTest {
         "level_1", "level_2", "leVel_0",
         "LEVEL1", "LEVEL2", "LEVEL0",
         "LEVEL_1", "LEVEL_2", "LEVEL_0",
+        "NO_LEVEL","no_level"
     })
     public void objectMapperParsesLevelWhenInputIsEqualToOneOfTheAliases(String alias) throws JsonProcessingException {
         Level expectedLevel = calculateExpectedLevel(alias);
@@ -61,8 +62,9 @@ class LevelTest {
             return Level.LEVEL_2;
         } else if (alias.contains("0")) {
             return Level.LEVEL_0;
-        } else {
-            throw new RuntimeException("Level not found for alias:" + alias);
+        } else if (alias.equalsIgnoreCase("no_level")){
+            return Level.NO_LEVEL;
         }
+        else throw new RuntimeException("Level not found for alias "+alias);
     }
 }
