@@ -37,15 +37,15 @@ public class ReportTest extends ModelTest {
     @DisplayName("Reports can be created")
     @ParameterizedTest
     @CsvSource({
-            "Series,123,A publisher,9780201309515,0363-6941,1945-662X",
-            "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-            ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,,0363-6941,1945-662X",
-            ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,9780201309515|9788131700075,,"
+        "Series,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,,0363-6941,1945-662X",
+        ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperReturnsReportWhenInputIsValidJson(String seriesTitle,
                                                        String seriesNumber,
@@ -119,10 +119,9 @@ public class ReportTest extends ModelTest {
     @DisplayName("report complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
-            "Report,123,A publisher,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
-            "Report,123,A publisher,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
-            "Report,123,A publisher,\"9780201309515|9788131700075|obviousNonsense\","
-                    + "0363-6941,1945-662X"
+        "Report,123,A publisher,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
+        "Report,123,A publisher,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
+        "Report,123,A publisher,\"9780201309515|9788131700075|obviousNonsense\",0363-6941,1945-662X"
     })
     void reportThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                            String seriesNumber,
