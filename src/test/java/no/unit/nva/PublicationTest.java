@@ -17,8 +17,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import no.unit.nva.identifiers.SortableIdentifier;
+import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.File;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
@@ -111,6 +113,7 @@ public class PublicationTest extends ModelTest {
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
+        publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
         publication.getFileSet().getFiles().forEach(file -> publication.getFileSet()
                                                                 .setFiles(List.of(copyWithNewIdentifier(file))));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
