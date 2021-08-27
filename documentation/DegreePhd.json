@@ -72,12 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/delenititenetur",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +135,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "ametin",
-    "value" : "401ce42f-034c-46e5-b9ac-fb44ad40f1be"
+    "source" : "maioresalias",
+    "value" : "03aa9786-6980-4df5-b3ee-823e06aa54f9"
   } ],
-  "modelVersion" : "0.12.3"
+  "modelVersion" : "0.12.4"
 }

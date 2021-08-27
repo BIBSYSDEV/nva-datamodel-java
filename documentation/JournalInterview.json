@@ -72,12 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/esttempora",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +135,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "illonon",
-    "value" : "9b9c7c54-2601-4b16-a5ea-13f048d58430"
+    "source" : "delenitieos",
+    "value" : "0a7e0f88-9a85-4276-aed9-cdf19119f78d"
   } ],
-  "modelVersion" : "0.12.3"
+  "modelVersion" : "0.12.4"
 }

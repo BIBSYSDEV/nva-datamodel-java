@@ -11,6 +11,7 @@ public final class IssnUtil {
      *
      * @param issn a valid ISSN
      * @throws InvalidIssnException Thrown if the ISSN is invalid
+     * @return String, validated representation of the ISSN
      */
     @SuppressWarnings("PMD.NullAssignment")
     public static String checkIssn(String issn) throws InvalidIssnException {

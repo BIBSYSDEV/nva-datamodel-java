@@ -72,12 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/nihilneque",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +135,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "totamvoluptatem",
-    "value" : "9a10956c-8935-4049-a61e-7ce8ec9e220e"
+    "source" : "exipsum",
+    "value" : "d82f7c17-958f-4b21-9f7f-14362ef75998"
   } ],
-  "modelVersion" : "0.12.3"
+  "modelVersion" : "0.12.4"
 }

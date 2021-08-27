@@ -120,20 +120,6 @@ referencedSchemas:
           type: string
         publisher:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
-        url:
-          type: string
-          format: url
         isbnList:
           type: array
           items:
@@ -322,20 +308,6 @@ referencedSchemas:
           type: string
         publisher:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
-        url:
-          type: string
-          format: url
         isbnList:
           type: array
           items:
@@ -582,24 +554,10 @@ referencedSchemas:
       properties:
         title:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
         printIssn:
           type: string
         onlineIssn:
           type: string
-        url:
-          type: string
-          format: url
         linkedContext:
           type: string
           format: uri
@@ -953,10 +911,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
@@ -1005,20 +963,6 @@ referencedSchemas:
           type: string
         publisher:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
-        url:
-          type: string
-          format: url
         isbnList:
           type: array
           items:

@@ -72,12 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/nontotam",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +135,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "officiisaut",
-    "value" : "b8133675-d9dd-4519-8a8e-34352bdeae7d"
+    "source" : "quaereiciendis",
+    "value" : "06ad98ea-b5f5-4ac2-bf47-e14603bb8e16"
   } ],
-  "modelVersion" : "0.12.3"
+  "modelVersion" : "0.12.4"
 }

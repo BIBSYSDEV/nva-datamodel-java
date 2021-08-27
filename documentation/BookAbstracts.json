@@ -72,12 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/etnihil",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +135,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "harumut",
-    "value" : "4c006427-f391-4b79-b718-9c44c7982669"
+    "source" : "eumplaceat",
+    "value" : "08b1cf35-716c-4cc9-adf4-759a99848f40"
   } ],
-  "modelVersion" : "0.12.3"
+  "modelVersion" : "0.12.4"
 }

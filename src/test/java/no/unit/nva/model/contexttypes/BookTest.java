@@ -1,5 +1,24 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import no.unit.nva.model.ModelTest;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidSeriesException;
+import nva.commons.core.JsonUtils;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
 import static no.unit.nva.utils.RandomPublicationContexts.randomBook;
@@ -13,32 +32,12 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import no.unit.nva.model.Level;
-import no.unit.nva.model.ModelTest;
-import no.unit.nva.model.exceptions.InvalidIsbnException;
-import no.unit.nva.model.exceptions.InvalidSeriesException;
-import nva.commons.core.JsonUtils;
-import org.apache.commons.validator.routines.ISBNValidator;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class BookTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String BOOK = "Book";
     public static final URI SAMPLE_LINKED_CONTEXT = URI.create("http://example.com/context");
-    public static final ISBNValidator ISBN_VALIDATOR = ISBNValidator.getInstance();
 
     @Test
     public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws MalformedURLException, InvalidIsbnException {
@@ -82,30 +81,21 @@ class BookTest extends ModelTest {
     @DisplayName("Book can deserialize a book")
     @ParameterizedTest
     @CsvSource({
-        "A series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-        ",, Full publisher details, LEVEL_2, true, true, \"9780201309515|9788131700075\"",
-        "A series title,,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-        "Fulong of Oolong,12,T Publishing,LEVEL_0,false,false,\"9780201309515|9788131700075\""
+        "A series title,123,Full publisher details,\"9780201309515|9788131700075\"",
+        ",, Full publisher details,\"9780201309515|9788131700075\"",
+        "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
+        "Fulong of Oolong,12,T Publishing,\"9780201309515|9788131700075\""
     })
     void objectMapperReturnsBookWhenInputIsValidJson(String seriesTitle,
                                                      String seriesNumber,
                                                      String publisher,
-                                                     String level,
-                                                     String openAccess,
-                                                     String peerReviewed,
                                                      String isbnList) throws JsonProcessingException {
-        Level expectedLevel = Level.valueOf(level);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
         List<String> expectedIsbn = convertIsbnStringToList(isbnList);
         String json = generatePublicationJson(
             BOOK,
             seriesTitle,
             seriesNumber,
             publisher,
-            level,
-            expectedOpenAccess,
-            expectedPeerReviewed,
             expectedIsbn,
             null,
             null,
@@ -114,40 +104,28 @@ class BookTest extends ModelTest {
         Book book = objectMapper.readValue(json, Book.class);
         assertEquals(seriesTitle, book.getSeriesTitle());
         assertEquals(seriesNumber, book.getSeriesNumber());
-        assertEquals(expectedLevel, book.getLevel());
         assertEquals(expectedIsbn, book.getIsbnList());
-        assertEquals(expectedOpenAccess, book.isOpenAccess());
-        assertEquals(expectedPeerReviewed, book.isPeerReviewed());
     }
 
     @DisplayName("Book serializes expected json")
     @ParameterizedTest
     @CsvSource({
-        "A series title,123,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-        ",, Full publisher details, LEVEL_2, true, true, \"9780201309515|9788131700075\"",
-        "A series title,,Full publisher details,LEVEL_2,true,true,\"9780201309515|9788131700075\"",
-        "Fulong of Oolong,12,T Publishing,LEVEL_0,false,false,\"9780201309515|9788131700075\"",
-        "A Marxist analysis of marking systems,6903,ACO,LEVEL_1,true,false,"
+        "A series title,123,Full publisher details,\"9780201309515|9788131700075\"",
+        ",, Full publisher details,\"9780201309515|9788131700075\"",
+        "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
+        "Fulong of Oolong,12,T Publishing,\"9780201309515|9788131700075\"",
+        "A Marxist analysis of marking systems,6903,ACO,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsBook(String seriesTitle,
                                                                   String seriesNumber,
                                                                   String publisher,
-                                                                  String level,
-                                                                  String openAccess,
-                                                                  String peerReviewed,
                                                                   String isbnList) throws JsonProcessingException,
                                                                                           InvalidIsbnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
-        Level expectedLevel = Level.valueOf(level);
         Book book = new Book.Builder()
             .withSeriesTitle(seriesTitle)
             .withSeriesNumber(seriesNumber)
             .withPublisher(publisher)
-            .withLevel(expectedLevel)
-            .withOpenAccess(expectedOpenAccess)
-            .withPeerReviewed(expectedPeerReviewed)
             .withIsbnList(expectedIsbnList)
             .withLinkedContext(SAMPLE_LINKED_CONTEXT)
             .build();
@@ -156,9 +134,6 @@ class BookTest extends ModelTest {
             seriesTitle,
             seriesNumber,
             publisher,
-            level,
-            expectedOpenAccess,
-            expectedPeerReviewed,
             expectedIsbnList,
             null,
             null,
@@ -208,7 +183,7 @@ class BookTest extends ModelTest {
 
     @DisplayName("Book: serializes and deserializes with linkedContext")
     @Test
-    void bookIsSerializedAndDeserializedWithLinkedContext() throws InvalidIsbnException, JsonProcessingException {
+    void bookIsSerializedAndDeserializedWithLinkedContext() throws JsonProcessingException {
         Book actualBook = new Book.Builder()
             .withLinkedContext(SAMPLE_LINKED_CONTEXT)
             .build();
@@ -218,9 +193,6 @@ class BookTest extends ModelTest {
             null,
             null,
             null,
-            null,
-            false,
-            false,
             null,
             null,
             null,

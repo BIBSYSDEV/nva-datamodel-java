@@ -26,6 +26,7 @@ public class JournalCorrigendum extends JournalNonPeerReviewedContent {
      * @param issue         Journal issue for the article.
      * @param articleNumber Article number for the article.
      * @param pages         Page range for the article.
+     * @param corrigendumFor    The linked resource that the corrigendum amends.
      */
     public JournalCorrigendum(@JsonProperty("volume") String volume,
                               @JsonProperty("issue") String issue,
