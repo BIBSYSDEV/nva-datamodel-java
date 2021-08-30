@@ -35,15 +35,15 @@ public class ReportTest extends ModelTest {
     @DisplayName("Reports can be created")
     @ParameterizedTest
     @CsvSource({
-        "Series,123,A publisher,9780201309515,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
         ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,,0363-6941,1945-662X",
+        "Journal,123,A publisher,,0363-6941,1945-662X",
         ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,,"
+        "Journal,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperReturnsReportWhenInputIsValidJson(String seriesTitle,
                                                        String seriesNumber,
@@ -73,15 +73,15 @@ public class ReportTest extends ModelTest {
     @DisplayName("Report serializes expected json")
     @ParameterizedTest
     @CsvSource({
-        "Series,123,A publisher,9780201309515,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Journal,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
         ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,,0363-6941,1945-662X",
+        "Journal,123,A publisher,,0363-6941,1945-662X",
         ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Series,123,A publisher,9780201309515|9788131700075,,"
+        "Journal,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsReport(String seriesTitle,
                                                                     String seriesNumber,

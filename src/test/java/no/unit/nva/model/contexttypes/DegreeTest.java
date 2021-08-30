@@ -97,9 +97,9 @@ class DegreeTest extends ModelTest {
     @DisplayName("Degree complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
-            "Series title,123,Full publisher details,\"obviousNonsense|9788131700075\"",
-            "Series title,123,Full publisher details,\"9780201309515|obviousNonsense\"",
-            "Series title,123,Full publisher details,\"9780201309515|9788131700075|obviousNonsense\""
+            "Journal title,123,Full publisher details,\"obviousNonsense|9788131700075\"",
+            "Journal title,123,Full publisher details,\"9780201309515|obviousNonsense\"",
+            "Journal title,123,Full publisher details,\"9780201309515|9788131700075|obviousNonsense\""
     })
     void degreeThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                          String seriesNumber,

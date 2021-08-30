@@ -546,12 +546,9 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
-        title:
+        id:
           type: string
-        printIssn:
-          type: string
-        onlineIssn:
-          type: string
+          format: uri
         type:
           type: string
   JournalArticle:
@@ -1038,3 +1035,21 @@ referencedSchemas:
       propertyName: type
   SortableIdentifier:
     type: object
+  UnconfirmedJournal:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        title:
+          type: string
+        printIssn:
+          type: string
+        onlineIssn:
+          type: string
+        type:
+          type: string

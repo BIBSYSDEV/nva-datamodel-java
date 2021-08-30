@@ -23,7 +23,7 @@ import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
-import no.unit.nva.model.contexttypes.Journal;
+import no.unit.nva.model.contexttypes.UnconfirmedJournal;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
@@ -228,11 +228,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static BasicContext getPublishingContextJournal() throws InvalidIssnException {
-        return new Journal.Builder()
-                   .withTitle("Tim's lovely publishing house")
-                   .withOnlineIssn("1111-1119")
-                   .withPrintIssn("2222-2227")
-                   .build();
+        return new UnconfirmedJournal("Tim's lovely publishing house","1111-1119", "2222-2227");
     }
 
     public static PublicationDate getPublicationDate() {

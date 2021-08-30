@@ -11,11 +11,11 @@ import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Cartograph;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
-import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.Partitive;
 import no.unit.nva.model.contexttypes.MusicalContent;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
+import no.unit.nva.model.contexttypes.UnconfirmedJournal;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
@@ -180,7 +180,7 @@ public class ModelTest implements JsonHandlingTest {
             .withVolume("27")
             .withPages(generateRange())
             .build();
-        return generateReference(generateJournalContext(), featureArticle);
+        return generateReference(generateUnconfirmedSeries(), featureArticle);
     }
 
     protected static Reference generateJournalArticle() throws InvalidIssnException, MalformedURLException {
@@ -191,7 +191,7 @@ public class ModelTest implements JsonHandlingTest {
             .withPages(generateRange())
             .withPeerReviewed(true)
             .build();
-        return generateReference(generateJournalContext(), journalArticle);
+        return generateReference(generateUnconfirmedSeries(), journalArticle);
     }
 
     protected static Reference generateJournalCorrigendum() throws InvalidIssnException, MalformedURLException {
@@ -202,7 +202,7 @@ public class ModelTest implements JsonHandlingTest {
             .withPages(generateRange())
             .withCorrigendumFor(URI.create("https://example.org/article/42310"))
             .build();
-        return generateReference(generateJournalContext(), journalCorrigendum);
+        return generateReference(generateUnconfirmedSeries(), journalCorrigendum);
     }
 
 
@@ -213,7 +213,7 @@ public class ModelTest implements JsonHandlingTest {
                 .withVolume("200")
                 .withPages(generateRange())
                 .build();
-        return generateReference(generateJournalContext(), journalInterview);
+        return generateReference(generateUnconfirmedSeries(), journalInterview);
     }
 
     protected static Reference generateJournalLeader() throws InvalidIssnException, MalformedURLException {
@@ -223,7 +223,7 @@ public class ModelTest implements JsonHandlingTest {
             .withVolume("9")
             .withPages(generateRange())
             .build();
-        return generateReference(generateJournalContext(), journalLeader);
+        return generateReference(generateUnconfirmedSeries(), journalLeader);
     }
 
     protected static Reference generateJournalLetter() throws InvalidIssnException, MalformedURLException {
@@ -233,7 +233,7 @@ public class ModelTest implements JsonHandlingTest {
             .withVolume("9")
             .withPages(generateRange())
             .build();
-        return generateReference(generateJournalContext(), journalLetter);
+        return generateReference(generateUnconfirmedSeries(), journalLetter);
     }
 
     protected static Reference generateJournalReview() throws InvalidIssnException, MalformedURLException {
@@ -243,7 +243,7 @@ public class ModelTest implements JsonHandlingTest {
             .withVolume("12")
             .withPages(generateRange())
             .build();
-        return generateReference(generateJournalContext(), journalReview);
+        return generateReference(generateUnconfirmedSeries(), journalReview);
     }
 
     protected static Reference generateJournalShortCommunication() throws InvalidIssnException, MalformedURLException {
@@ -253,7 +253,7 @@ public class ModelTest implements JsonHandlingTest {
             .withVolume("2")
             .withPages(generateRange())
             .build();
-        return generateReference(generateJournalContext(), journalShortCommunication);
+        return generateReference(generateUnconfirmedSeries(), journalShortCommunication);
     }
 
     protected static Reference generateMusicNotation() throws InvalidIsmnException {
@@ -307,12 +307,11 @@ public class ModelTest implements JsonHandlingTest {
             .build();
     }
 
-    private static PublicationContext generateJournalContext() throws InvalidIssnException, MalformedURLException {
-        return new Journal.Builder()
-            .withOnlineIssn("1111-1119")
-            .withPrintIssn("2222-2227")
-            .withTitle("The journal of mechanically separated meats")
-            .build();
+    private static PublicationContext generateUnconfirmedSeries() throws InvalidIssnException {
+        return new UnconfirmedJournal(
+                "The journal of mechanically separated meats",
+                "2222-2227",
+                "1111-1119");
     }
 
     private static PublicationContext generateMusicalContentContext() {
