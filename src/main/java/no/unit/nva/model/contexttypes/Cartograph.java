@@ -9,27 +9,27 @@ import java.net.URI;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Cartograph implements LinkedContext {
+public class Cartograph implements Partitive {
 
-    private URI linkedContext;
+    private URI partOf;
 
     @JsonCreator
-    public Cartograph(@JsonProperty("linkedContext") URI linkedContext) {
-        this.linkedContext = linkedContext;
+    public Cartograph(@JsonProperty("partOf") URI partOf) {
+        this.partOf = partOf;
     }
 
     private Cartograph(Builder builder) {
-        this(builder.linkedContext);
+        this(builder.partOf);
     }
 
     @Override
-    public URI getLinkedContext() {
-        return linkedContext;
+    public URI getPartOf() {
+        return partOf;
     }
 
     @Override
-    public void setLinkedContext(URI linkedContext) {
-        this.linkedContext = linkedContext;
+    public void setPartOf(URI partOf) {
+        this.partOf = partOf;
     }
 
     @JacocoGenerated
@@ -42,23 +42,23 @@ public class Cartograph implements LinkedContext {
             return false;
         }
         Cartograph that = (Cartograph) o;
-        return Objects.equals(getLinkedContext(), that.getLinkedContext());
+        return Objects.equals(getPartOf(), that.getPartOf());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getLinkedContext());
+        return Objects.hash(getPartOf());
     }
 
     public static final class Builder {
-        private URI linkedContext;
+        private URI partOf;
 
         public Builder() {
         }
 
-        public Builder withLinkedContext(URI linkedContext) {
-            this.linkedContext = linkedContext;
+        public Builder withPartOf(URI partOf) {
+            this.partOf = partOf;
             return this;
         }
 

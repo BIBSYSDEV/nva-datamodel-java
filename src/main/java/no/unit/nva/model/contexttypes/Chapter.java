@@ -7,27 +7,27 @@ import java.net.URI;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Chapter implements LinkedContext {
+public class Chapter implements Partitive {
 
     public static final String ERROR_TEMPLATE = "The URI <%s> is an invalid context for a Chapter";
-    private URI linkedContext;
+    private URI partOf;
 
     public Chapter() {
     }
 
     private Chapter(Builder builder) {
-        linkedContext = builder.linkedContext;
+        partOf = builder.partOf;
     }
 
     @Override
-    public URI getLinkedContext() {
-        return linkedContext;
+    public URI getPartOf() {
+        return partOf;
     }
 
     @Override
-    public void setLinkedContext(URI linkedContext) {
-        validateContext(linkedContext);
-        this.linkedContext = linkedContext;
+    public void setPartOf(URI partOf) {
+        validateUri(partOf);
+        this.partOf = partOf;
     }
 
     @Override
@@ -45,23 +45,23 @@ public class Chapter implements LinkedContext {
             return false;
         }
         Chapter chapter = (Chapter) o;
-        return Objects.equals(getLinkedContext(), chapter.getLinkedContext());
+        return Objects.equals(getPartOf(), chapter.getPartOf());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getLinkedContext());
+        return Objects.hash(getPartOf());
     }
 
     public static final class Builder {
-        private URI linkedContext;
+        private URI partOf;
 
         public Builder() {
         }
 
-        public Builder withLinkedContext(URI linkedContext) {
-            this.linkedContext = linkedContext;
+        public Builder withPartOf(URI partOf) {
+            this.partOf = partOf;
             return this;
         }
 

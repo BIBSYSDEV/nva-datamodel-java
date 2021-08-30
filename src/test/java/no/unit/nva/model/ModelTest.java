@@ -12,7 +12,7 @@ import no.unit.nva.model.contexttypes.Cartograph;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Journal;
-import no.unit.nva.model.contexttypes.LinkedContext;
+import no.unit.nva.model.contexttypes.Partitive;
 import no.unit.nva.model.contexttypes.MusicalContent;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
@@ -69,9 +69,9 @@ public class ModelTest implements JsonHandlingTest {
     public static final String ONLINE_ISSN = "onlineIssn";
     public static final String PRINT_ISSN = "printIssn";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
-    public static final String LINKED_CONTEXT = "linkedContext";
+    public static final String PART_OF = "partOf";
 
-    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
+    public static final URI SAMPLE_PART_OF = URI.create("https://example.org/partof");
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
@@ -317,7 +317,7 @@ public class ModelTest implements JsonHandlingTest {
 
     private static PublicationContext generateMusicalContentContext() {
         return new MusicalContent.Builder()
-            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
+            .withPartOf(SAMPLE_PART_OF)
             .build();
     }
 
@@ -330,15 +330,15 @@ public class ModelTest implements JsonHandlingTest {
             .build();
     }
 
-    private static LinkedContext generateChapterContext() {
+    private static Partitive generateChapterContext() {
         return new Chapter.Builder()
-            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
+            .withPartOf(SAMPLE_PART_OF)
             .build();
     }
 
-    private static LinkedContext generateCartographicContext() {
+    private static Partitive generateCartographicContext() {
         return new Cartograph.Builder()
-            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
+            .withPartOf(SAMPLE_PART_OF)
             .build();
     }
 
@@ -480,7 +480,7 @@ public class ModelTest implements JsonHandlingTest {
                                                     List<String> isbnList,
                                                     String onlineIssn,
                                                     String printIssn,
-                                                    URI linkedContext) {
+                                                    URI partOf) {
 
         ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
         jsonNode.put(TYPE, type);
@@ -489,8 +489,8 @@ public class ModelTest implements JsonHandlingTest {
         jsonNode.put(SERIES_NUMBER, seriesNumber);
         jsonNode.put(PUBLISHER, publisher);
         jsonNode.set(ISBN_LIST, arrayNode(isbnList));
-        if (nonNull(linkedContext)) {
-            jsonNode.put(LINKED_CONTEXT, linkedContext.toString());
+        if (nonNull(partOf)) {
+            jsonNode.put(PART_OF, partOf.toString());
         }
         jsonNode.put(PRINT_ISSN, printIssn);
         jsonNode.put(ONLINE_ISSN, onlineIssn);
