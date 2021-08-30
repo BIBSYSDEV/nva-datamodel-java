@@ -232,7 +232,6 @@ public class PublicationGenerator extends ModelTest {
                    .withTitle("Tim's lovely publishing house")
                    .withOnlineIssn("1111-1119")
                    .withPrintIssn("2222-2227")
-                   .withLinkedContext(SOME_URI)
                    .build();
     }
 

@@ -6,15 +6,13 @@ import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import nva.commons.core.JacocoGenerated;
 
-import java.net.URI;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal implements BasicContext, SerialPublication, LinkedContext {
+public class Journal implements BasicContext, SerialPublication {
     private String title;
     private String printIssn;
     private String onlineIssn;
-    private URI linkedContext;
 
     public Journal() {
     }
@@ -24,7 +22,6 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
         setTitle(builder.title);
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
-        setLinkedContextURI(builder.linkedContext);
     }
 
 
@@ -68,25 +65,10 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
         this.title = title;
     }
 
-    @Override
-    public URI getLinkedContext() {
-        return linkedContext;
-    }
-
-    @Override
-    public void setLinkedContext(URI linkedContext) {
-        this.linkedContext = linkedContext;
-    }
-
-    private void setLinkedContextURI(URI linkedContext) {
-        this.linkedContext = linkedContext;
-    }
-
     public static final class Builder {
         private String title;
         private String printIssn;
         private String onlineIssn;
-        private URI linkedContext;
 
         public Builder() {
         }
@@ -106,12 +88,6 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
             return this;
         }
 
-        public Journal.Builder withLinkedContext(URI linkedContext) {
-            this.linkedContext = linkedContext;
-            return this;
-        }
-
-
         public Journal build() throws InvalidIssnException {
             return new Journal(this);
         }
@@ -129,13 +105,12 @@ public class Journal implements BasicContext, SerialPublication, LinkedContext {
         Journal journal = (Journal) o;
         return Objects.equals(getTitle(), journal.getTitle())
                 && Objects.equals(getPrintIssn(), journal.getPrintIssn())
-                && Objects.equals(getOnlineIssn(), journal.getOnlineIssn())
-                && Objects.equals(getLinkedContext(), journal.getLinkedContext());
+                && Objects.equals(getOnlineIssn(), journal.getOnlineIssn());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getPrintIssn(), getOnlineIssn());
+        return Objects.hash(getTitle(), getPrintIssn(), getOnlineIssn());
     }
 }

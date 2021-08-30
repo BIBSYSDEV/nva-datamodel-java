@@ -552,13 +552,6 @@ referencedSchemas:
           type: string
         onlineIssn:
           type: string
-        linkedContext:
-          type: string
-          format: uri
-        linkedContextURI:
-          type: string
-          format: uri
-          writeOnly: true
         type:
           type: string
   JournalArticle:
