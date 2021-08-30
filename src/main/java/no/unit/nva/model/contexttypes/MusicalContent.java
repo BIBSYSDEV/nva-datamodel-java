@@ -8,8 +8,6 @@ import java.net.URI;
 import java.util.Objects;
 
 public class MusicalContent implements LinkedContext {
-    public static final String ERROR_TEMPLATE = "The URI <%s> is an invalid context for MusicalContent";
-
     private URI linkedContext;
 
     @JsonCreator

@@ -10,7 +10,6 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Cartograph implements LinkedContext {
-    public static final String ERROR_TEMPLATE = "The URI <%s> is an invalid context for a Cartograph";
 
     private URI linkedContext;
 
