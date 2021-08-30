@@ -23,6 +23,7 @@ public interface LinkedContext extends PublicationContext {
 
     default void validateContext(URI linkedContext) {
         try {
+            //noinspection ResultOfMethodCallIgnored
             linkedContext.toURL();
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException(String.format(getErrorTemplate(), linkedContext));
