@@ -37,10 +37,9 @@ class BookTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String BOOK = "Book";
-    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("http://example.com/context");
 
     @Test
-    public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws MalformedURLException, InvalidIsbnException {
+    public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws InvalidIsbnException {
         Book book = randomBook();
         assertThat(book.getSeriesUri(), is(not(nullValue())));
         assertThat(book, doesNotHaveEmptyValues());
@@ -71,7 +70,7 @@ class BookTest extends ModelTest {
     }
 
     @Test
-    public void copyReturnsBookEqualToOriginalButDifferentObject() throws MalformedURLException, InvalidIsbnException {
+    public void copyReturnsBookEqualToOriginalButDifferentObject() throws InvalidIsbnException {
         Book original = randomBook();
         assertThat(original, doesNotHaveEmptyValues());
         Book copy = original.copy().build();
@@ -99,7 +98,7 @@ class BookTest extends ModelTest {
             expectedIsbn,
             null,
             null,
-            SAMPLE_LINKED_CONTEXT
+            null
         );
         Book book = objectMapper.readValue(json, Book.class);
         assertEquals(seriesTitle, book.getSeriesTitle());
@@ -127,7 +126,6 @@ class BookTest extends ModelTest {
             .withSeriesNumber(seriesNumber)
             .withPublisher(publisher)
             .withIsbnList(expectedIsbnList)
-            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
             .build();
         String expectedJson = generatePublicationJson(
             BOOK,
@@ -137,7 +135,7 @@ class BookTest extends ModelTest {
             expectedIsbnList,
             null,
             null,
-            SAMPLE_LINKED_CONTEXT
+            null
         );
         String actualJson = objectMapper.writeValueAsString(book);
         assertEquals(expectedJson, actualJson);
@@ -164,7 +162,7 @@ class BookTest extends ModelTest {
 
     @DisplayName("Book: Null ISBNs are handled gracefully")
     @Test
-    void bookReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, MalformedURLException {
+    void bookReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException {
         Book book = randomBook().copy().withIsbnList(null).build();
 
         List<String> resultIsbnList = book.getIsbnList();
@@ -174,35 +172,10 @@ class BookTest extends ModelTest {
 
     @DisplayName("Book: Empty ISBNs are handled gracefully")
     @Test
-    void bookReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, MalformedURLException {
+    void bookReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException {
         Book book = randomBook().copy().withIsbnList(Collections.emptyList()).build();
         List<String> resultIsbnList = book.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
-    }
-
-    @DisplayName("Book: serializes and deserializes with linkedContext")
-    @Test
-    void bookIsSerializedAndDeserializedWithLinkedContext() throws JsonProcessingException {
-        Book actualBook = new Book.Builder()
-            .withLinkedContext(SAMPLE_LINKED_CONTEXT)
-            .build();
-
-        String expectedJson = generatePublicationJson(
-            BOOK,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            SAMPLE_LINKED_CONTEXT
-        );
-
-        String actualJson = objectMapper.writeValueAsString(actualBook);
-        assertEquals(expectedJson, actualJson);
-        Book deserializedBook = objectMapper.readValue(actualJson, Book.class);
-        assertEquals(actualBook, deserializedBook);
-        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedBook.getLinkedContext());
     }
 }

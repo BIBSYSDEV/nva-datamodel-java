@@ -5,7 +5,6 @@ import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import nva.commons.core.JacocoGenerated;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,7 +25,6 @@ public class Report extends Book implements SerialPublication, BasicContext {
         setIsbnList(builder.isbnList);
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
-        setLinkedContext(builder.linkedContext);
     }
 
     public String getPrintIssn() {
@@ -77,8 +75,6 @@ public class Report extends Book implements SerialPublication, BasicContext {
         private List<String> isbnList;
         private String printIssn;
         private String onlineIssn;
-        private URI linkedContext;
-
 
         public Builder() {
         }
@@ -110,11 +106,6 @@ public class Report extends Book implements SerialPublication, BasicContext {
 
         public Builder withOnlineIssn(String onlineIssn) {
             this.onlineIssn = onlineIssn;
-            return this;
-        }
-
-        public Builder withLinkedContext(URI linkedContext) {
-            this.linkedContext = linkedContext;
             return this;
         }
 

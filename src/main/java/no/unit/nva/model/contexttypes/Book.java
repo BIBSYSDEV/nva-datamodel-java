@@ -18,7 +18,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Book implements BasicContext, LinkedContext {
+public class Book implements BasicContext {
 
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
     public static final Pattern EXPECTED_SERIES_URI_PATTERN =
@@ -29,7 +29,6 @@ public class Book implements BasicContext, LinkedContext {
     private String seriesNumber;
     private String publisher;
     private List<String> isbnList;
-    private URI linkedContext;
 
     public Book() {
     }
@@ -37,8 +36,7 @@ public class Book implements BasicContext, LinkedContext {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getSeriesTitle(), getSeriesUri(), getSeriesNumber(), getPublisher(), getIsbnList(),
-                getLinkedContext());
+        return Objects.hash(getSeriesTitle(), getSeriesUri(), getSeriesNumber(), getPublisher(), getIsbnList());
     }
 
     @JacocoGenerated
@@ -55,8 +53,7 @@ public class Book implements BasicContext, LinkedContext {
                && Objects.equals(getSeriesUri(), book.getSeriesUri())
                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
                && Objects.equals(getPublisher(), book.getPublisher())
-               && Objects.equals(getIsbnList(), book.getIsbnList())
-               && Objects.equals(getLinkedContext(), book.getLinkedContext());
+               && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
     public URI getSeriesUri() {
@@ -126,21 +123,10 @@ public class Book implements BasicContext, LinkedContext {
         this.publisher = publisher;
     }
 
-    @Override
-    public URI getLinkedContext() {
-        return linkedContext;
-    }
-
-    @Override
-    public void setLinkedContext(URI linkedContext) {
-        this.linkedContext = linkedContext;
-    }
-
     public Builder copy() throws InvalidIsbnException {
         return new Builder()
             .withSeriesNumber(getSeriesNumber())
             .withSeriesTitle(getSeriesTitle())
-            .withLinkedContext(getLinkedContext())
             .withPublisher(getPublisher())
             .withIsbnList(getIsbnList())
             .withSeriesUri(getSeriesUri());
@@ -176,11 +162,6 @@ public class Book implements BasicContext, LinkedContext {
 
         public Builder withIsbnList(List<String> isbnList) throws InvalidIsbnException {
             book.setIsbnList(isbnList);
-            return this;
-        }
-
-        public Builder withLinkedContext(URI linkedContext) {
-            book.setLinkedContext(linkedContext);
             return this;
         }
 

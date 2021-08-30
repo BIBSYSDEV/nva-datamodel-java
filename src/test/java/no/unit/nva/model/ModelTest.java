@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static nva.commons.core.attempt.Try.attempt;
 
 public class ModelTest implements JsonHandlingTest {
@@ -488,7 +489,9 @@ public class ModelTest implements JsonHandlingTest {
         jsonNode.put(SERIES_NUMBER, seriesNumber);
         jsonNode.put(PUBLISHER, publisher);
         jsonNode.set(ISBN_LIST, arrayNode(isbnList));
-        jsonNode.put(LINKED_CONTEXT, linkedContext.toString());
+        if (nonNull(linkedContext)) {
+            jsonNode.put(LINKED_CONTEXT, linkedContext.toString());
+        }
         jsonNode.put(PRINT_ISSN, printIssn);
         jsonNode.put(ONLINE_ISSN, onlineIssn);
 

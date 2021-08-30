@@ -2,7 +2,6 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import java.net.URI;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 
 import java.util.List;
@@ -20,7 +19,6 @@ public class Degree extends Book {
         setSeriesNumber(builder.seriesNumber);
         setPublisher(builder.publisher);
         setIsbnList(builder.isbnList);
-        setLinkedContext(builder.linkedContext);
     }
 
     public static final class Builder {
@@ -28,8 +26,6 @@ public class Degree extends Book {
         private String seriesNumber;
         private String publisher;
         private List<String> isbnList;
-        private URI linkedContext;
-
 
         public Builder() {
         }
@@ -51,11 +47,6 @@ public class Degree extends Book {
 
         public Builder withIsbnList(List<String> isbnList) {
             this.isbnList = isbnList;
-            return this;
-        }
-
-        public Builder withLinkedContext(URI linkedContext) {
-            this.linkedContext = linkedContext;
             return this;
         }
 

@@ -19,7 +19,6 @@ public final class RandomPublicationContexts {
         return new Builder()
             .withIsbnList(randomIsbnList())
             .withPublisher(randomString())
-            .withLinkedContext(randomUri())
             .withSeriesTitle(randomString())
             .withSeriesNumber(randomString())
             .withSeriesUri(validSeriesUri())

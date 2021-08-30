@@ -30,7 +30,6 @@ class DegreeTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String DEGREE = "Degree";
-    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
 
     @DisplayName("Degree can deserialize a degree")
     @ParameterizedTest
@@ -53,7 +52,7 @@ class DegreeTest extends ModelTest {
                 expectedIsbn,
                 null,
                 null,
-                SAMPLE_LINKED_CONTEXT
+                null
         );
         Degree degree = objectMapper.readValue(json, Degree.class);
         assertEquals(seriesTitle, degree.getSeriesTitle());
@@ -80,7 +79,6 @@ class DegreeTest extends ModelTest {
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
                 .withIsbnList(expectedIsbnList)
-                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
                 .build();
         String expectedJson = generatePublicationJson(
                 DEGREE,
@@ -90,7 +88,7 @@ class DegreeTest extends ModelTest {
                 expectedIsbnList,
                 null,
                 null,
-                SAMPLE_LINKED_CONTEXT
+                null
         );
         String actualJson = objectMapper.writeValueAsString(degree);
         assertEquals(expectedJson, actualJson);
@@ -151,30 +149,5 @@ class DegreeTest extends ModelTest {
         List<String> resultIsbnList = degree.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
-    }
-
-    @DisplayName("Degree: serializes and deserializes with linkedContext")
-    @Test
-    void degreeIsSerializedAndDeserializedWithLinkedContext() throws InvalidIsbnException, JsonProcessingException {
-        Degree actualDegree = new Degree.Builder()
-                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
-                .build();
-
-        String expectedJson = generatePublicationJson(
-                DEGREE,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                SAMPLE_LINKED_CONTEXT
-        );
-
-        String actualJson = objectMapper.writeValueAsString(actualDegree);
-        assertEquals(expectedJson, actualJson);
-        Degree deserializedDegree = objectMapper.readValue(actualJson, Degree.class);
-        assertEquals(actualDegree, deserializedDegree);
-        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedDegree.getLinkedContext());
     }
 }
