@@ -43,6 +43,7 @@ public class Publication
     private EntityDescription entityDescription;
     private FileSet fileSet;
     private List<ResearchProject> projects;
+    private List<URI> subjects;
 
     public Publication() {
     }
@@ -63,6 +64,7 @@ public class Publication
         setEntityDescription(builder.entityDescription);
         setFileSet(builder.fileSet);
         setProjects(builder.projects);
+        setSubjects(builder.subjects);
     }
 
     @Override
@@ -113,6 +115,16 @@ public class Publication
     @Override
     public void setDoiRequest(DoiRequest doiRequest) {
         this.doiRequest = doiRequest;
+    }
+
+    @Override
+    public List<URI> getSubjects() {
+        return subjects;
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
     }
 
     /**
@@ -254,7 +266,9 @@ public class Publication
                 .withLink(getLink())
                 .withEntityDescription(getEntityDescription())
                 .withFileSet(getFileSet())
-                .withProjects(getProjects());
+                .withProjects(getProjects())
+                .withSubjects(getSubjects());
+
     }
 
     @JacocoGenerated
@@ -281,7 +295,8 @@ public class Publication
                 && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getEntityDescription(), that.getEntityDescription())
                 && Objects.equals(getFileSet(), that.getFileSet())
-                && Objects.equals(getProjects(), that.getProjects());
+                && Objects.equals(getProjects(), that.getProjects())
+                && Objects.equals(getSubjects(), that.getSubjects());
     }
 
     @JacocoGenerated
@@ -289,7 +304,7 @@ public class Publication
     public int hashCode() {
         return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
                 getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
-                getEntityDescription(), getFileSet(), getProjects());
+                getEntityDescription(), getFileSet(), getProjects(), getSubjects());
     }
 
     /**
@@ -327,6 +342,7 @@ public class Publication
         private EntityDescription entityDescription;
         private FileSet fileSet;
         private List<ResearchProject> projects;
+        private List<URI> subjects;
 
         public Builder() {
         }
@@ -403,6 +419,11 @@ public class Publication
 
         public Builder withProjects(List<ResearchProject> projects) {
             this.projects = projects;
+            return this;
+        }
+
+        public Builder withSubjects(List<URI> subjects) {
+            this.subjects = subjects;
             return this;
         }
 

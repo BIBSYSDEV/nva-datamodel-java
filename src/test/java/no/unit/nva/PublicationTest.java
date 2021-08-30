@@ -123,6 +123,7 @@ public class PublicationTest extends ModelTest {
             .withPublishedDate(now)
             .withPublisher(generateOrganization())
             .withStatus(PUBLISHED)
+            .withSubjects(List.of(URI.create("https://example.org/fakeSubject/123")))
             .build();
     }
 

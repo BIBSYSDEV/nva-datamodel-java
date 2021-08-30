@@ -41,6 +41,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @JsonProperty("@context")
     private JsonNode context;
     private List<ResearchProject> projects;
+    private List<URI> subjects;
 
     @Override
     public FileSet getFileSet() {
@@ -191,6 +192,16 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public void setDoiRequest(DoiRequest doiRequest) {
         this.doiRequest = doiRequest;
         this.doiRequested = Objects.nonNull(doiRequest);
+    }
+
+    @Override
+    public List<URI> getSubjects() {
+        return subjects;
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
     }
 
     public Boolean getDoiRequested() {

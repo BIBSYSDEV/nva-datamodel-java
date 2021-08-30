@@ -47,6 +47,11 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/ResearchProject'
+    subjects:
+      type: array
+      items:
+        type: string
+        format: uri
     type:
       type: string
   discriminator:
@@ -843,6 +848,11 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/ResearchProject'
+      subjects:
+        type: array
+        items:
+          type: string
+          format: uri
       type:
         type: string
     discriminator:
