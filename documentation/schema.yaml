@@ -52,6 +52,11 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/AdditionalIdentifier'
+    subjects:
+      type: array
+      items:
+        type: string
+        format: uri
     modelVersion:
       type: string
     type:
@@ -863,6 +868,11 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/AdditionalIdentifier'
+      subjects:
+        type: array
+        items:
+          type: string
+          format: uri
       modelVersion:
         type: string
       type:

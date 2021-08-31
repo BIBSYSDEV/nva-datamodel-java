@@ -41,5 +41,9 @@
   },
   "day": {
     "@type": "xsd:gDay"
+  },
+  "subjects": {
+    "@type": "@id",
+    "@container": "@list"
   }
 }
