@@ -16,7 +16,6 @@ import java.net.URI;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,18 +26,18 @@ class ChapterTest {
     public static final URI TEST_URI = URI.create(TEST_URI_STRING);
 
     public static final String LINKED_CONTEXT_TEMPLATE = "{\n  \"type\" : \"Chapter\",\n"
-            + "  \"linkedContext\" : \"%s\"\n}";
+            + "  \"partOf\" : \"%s\"\n}";
     public static final String LINKED_CONTEXT_NULL_TEMPLATE = "{\n  \"type\" : \"Chapter\",\n"
-            + "  \"linkedContext\" : %s\n}";
+            + "  \"partOf\" : %s\n}";
     private final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @DisplayName("ObjectMapper deserializes Chapter")
     @Test
     void objectMapperDeserializesChapterWhenTheInputIsValid() throws JsonProcessingException {
-        URI expectedLinkedContext = TEST_URI;
-        String json = generateChapterJson(expectedLinkedContext.toString());
+        URI expectedPartOf = TEST_URI;
+        String json = generateChapterJson(expectedPartOf.toString());
         Chapter chapter = objectMapper.readValue(json, Chapter.class);
-        assertEquals(expectedLinkedContext, chapter.getLinkedContext());
+        assertEquals(expectedPartOf, chapter.getPartOf());
     }
 
     @DisplayName("Chapter: ObjectMapper throws JsonMappingException when linkingContext URI is null")
@@ -67,7 +66,7 @@ class ChapterTest {
     void objectMapperProducesProperlyFormattedJsonWhenInputIsChapter() throws JsonProcessingException {
         String expectedJson = generateChapterJson(TEST_URI_STRING);
         Chapter chapter = new Chapter();
-        chapter.setLinkedContext(TEST_URI);
+        chapter.setPartOf(TEST_URI);
         String actualJson = objectMapper.writeValueAsString(chapter);
         assertEquals(expectedJson, actualJson);
     }

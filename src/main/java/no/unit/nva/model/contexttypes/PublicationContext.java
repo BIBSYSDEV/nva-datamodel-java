@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * PublicationContext provides a common root object for contexts of type
- * {@link LinkedContext} and {@link BasicContext}.
+ * {@link Partitive} and {@link BasicContext}.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({

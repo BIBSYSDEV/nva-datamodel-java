@@ -197,7 +197,7 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
-        linkedContext:
+        partOf:
           type: string
           format: uri
         type:
@@ -212,7 +212,7 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
-        linkedContext:
+        partOf:
           type: string
           format: uri
         type:
@@ -770,7 +770,7 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
-        linkedContext:
+        partOf:
           type: string
           format: uri
   Organization:
