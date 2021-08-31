@@ -41,6 +41,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @JsonProperty("@context")
     private JsonNode context;
     private List<ResearchProject> projects;
+    private List<URI> subjects;
 
     @Override
     public FileSet getFileSet() {
@@ -193,6 +194,16 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.doiRequested = Objects.nonNull(doiRequest);
     }
 
+    @Override
+    public List<URI> getSubjects() {
+        return subjects;
+    }
+
+    @Override
+    public void setSubjects(List<URI> uri) {
+        this.subjects = subjects;
+    }
+
     public Boolean getDoiRequested() {
         return doiRequested;
     }
@@ -233,7 +244,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                 && Objects.equals(getDoiRequest(), that.getDoiRequest())
                 && Objects.equals(getDoiRequested(), that.getDoiRequested())
                 && Objects.equals(getContext(), that.getContext())
-                && Objects.equals(getProjects(), that.getProjects());
+                && Objects.equals(getProjects(), that.getProjects())
+                && Objects.equals(getSubjects(), that.getSubjects());
     }
 
     @JacocoGenerated
@@ -242,6 +254,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         return Objects.hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(),
                 getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
                 getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), getDoiRequested(),
-                getContext(), getProjects());
+                getContext(), getProjects(), getSubjects());
     }
 }
