@@ -74,9 +74,6 @@
         "seriesTitle" : "Explorations in ego",
         "seriesNumber" : "123",
         "publisher" : "My publisher dot com",
-        "level" : "LEVEL_0",
-        "openAccess" : false,
-        "peerReviewed" : true,
         "isbnList" : [ "9780201309515" ]
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +136,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "nesciuntquas",
-    "value" : "4d97e93f-3c33-4e7a-b689-2d1e9eca2832"
+    "source" : "fakesource",
+    "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
   "modelVersion" : "0.12.4"

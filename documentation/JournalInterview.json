@@ -72,13 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/istemolestiae",
-        "linkedContext" : "https://123123/213123.com"
+        "onlineIssn" : "1111-1119"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -139,8 +134,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "quolaborum",
-    "value" : "aa1f425a-1d51-4476-9fad-138d87042271"
+    "source" : "fakesource",
+    "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
   "modelVersion" : "0.12.4"

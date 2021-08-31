@@ -72,13 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/estexplicabo",
-        "linkedContext" : "https://123123/213123.com"
+        "onlineIssn" : "1111-1119"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -139,8 +134,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "omnisveniam",
-    "value" : "67b06ba3-c285-422a-b0f3-042a1d7b73cd"
+    "source" : "fakesource",
+    "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
   "modelVersion" : "0.12.4"

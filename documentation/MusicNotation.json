@@ -72,13 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/doloraccusantium",
-        "linkedContext" : "https://123123/213123.com"
+        "onlineIssn" : "1111-1119"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -139,8 +134,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "voluptasquia",
-    "value" : "6baf409c-8ffb-4e7c-a0ac-7bf3bc8e58bd"
+    "source" : "fakesource",
+    "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
   "modelVersion" : "0.12.4"

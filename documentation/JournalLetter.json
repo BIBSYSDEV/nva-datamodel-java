@@ -72,13 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/quieaque",
-        "linkedContext" : "https://123123/213123.com"
+        "onlineIssn" : "1111-1119"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -137,8 +132,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "quasiest",
-    "value" : "e5e934ed-4f3a-4a69-a4aa-152a15c92cd3"
+    "source" : "fakesource",
+    "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
   "modelVersion" : "0.12.4"

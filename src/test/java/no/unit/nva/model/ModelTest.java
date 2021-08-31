@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Map;
 import no.unit.nva.JsonHandlingTest;
 import no.unit.nva.model.contexttypes.Book;
@@ -56,6 +55,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static nva.commons.core.attempt.Try.attempt;
 
 public class ModelTest implements JsonHandlingTest {
@@ -65,9 +65,6 @@ public class ModelTest implements JsonHandlingTest {
     public static final String SERIES_TITLE = "seriesTitle";
     public static final String SERIES_NUMBER = "seriesNumber";
     public static final String PUBLISHER = "publisher";
-    public static final String LEVEL = "level";
-    public static final String OPEN_ACCESS = "openAccess";
-    public static final String PEER_REVIEWED = "peerReviewed";
     public static final String ISBN_LIST = "isbnList";
     public static final String ONLINE_ISSN = "onlineIssn";
     public static final String PRINT_ISSN = "printIssn";
@@ -303,26 +300,18 @@ public class ModelTest implements JsonHandlingTest {
         return new Report.Builder()
             .withOnlineIssn("1111-1119")
             .withPrintIssn("2222-2227")
-            .withPeerReviewed(false)
-            .withOpenAccess(true)
-            .withLevel(Level.LEVEL_0)
             .withIsbnList(List.of("9780201309515"))
             .withPublisher("People's Socialist Republic of South Lakeland")
             .withSeriesNumber("58100117")
             .withSeriesTitle("Report of the people's agricultural commission on ovine husbandry")
-            .withUrl(new URL(("http://example.org/report/1")))
             .build();
     }
 
     private static PublicationContext generateJournalContext() throws InvalidIssnException, MalformedURLException {
         return new Journal.Builder()
-            .withLevel(Level.LEVEL_0)
             .withOnlineIssn("1111-1119")
             .withPrintIssn("2222-2227")
-            .withOpenAccess(true)
-            .withPeerReviewed(true)
             .withTitle("The journal of mechanically separated meats")
-            .withUrl(new URL(("http://example.org/journal/1")))
             .build();
     }
 
@@ -338,7 +327,6 @@ public class ModelTest implements JsonHandlingTest {
             .withSeriesNumber("8")
             .withSeriesTitle("Degrees of this type series")
             .withIsbnList(List.of("9780201309515"))
-            .withUrl(new URL(("http://example.org/degree/1")))
             .build();
     }
 
@@ -366,13 +354,9 @@ public class ModelTest implements JsonHandlingTest {
     private static Book generateBookContext() throws InvalidIsbnException, MalformedURLException {
         return new Book.Builder()
             .withIsbnList(List.of("9780201309515"))
-            .withLevel(Level.LEVEL_0)
-            .withOpenAccess(true)
-            .withPeerReviewed(false)
             .withPublisher("Organic publishing AS")
             .withSeriesNumber("1")
             .withSeriesTitle("Bloop and how to grow 'em")
-            .withUrl(new URL(("http://example.org/book/1")))
             .build();
     }
 
@@ -493,26 +477,21 @@ public class ModelTest implements JsonHandlingTest {
                                                     String seriesTitle,
                                                     String seriesNumber,
                                                     String publisher,
-                                                    String level,
-                                                    boolean openAccess,
-                                                    boolean peerReviewed,
                                                     List<String> isbnList,
                                                     String onlineIssn,
                                                     String printIssn,
                                                     URI linkedContext) {
 
-        String processedLevel = isNull(level) || level.isEmpty() ? level : Level.valueOf(level).name();
         ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
         jsonNode.put(TYPE, type);
 
         jsonNode.put(SERIES_TITLE, seriesTitle);
         jsonNode.put(SERIES_NUMBER, seriesNumber);
         jsonNode.put(PUBLISHER, publisher);
-        jsonNode.put(LEVEL, processedLevel);
-        jsonNode.put(OPEN_ACCESS, openAccess);
-        jsonNode.put(PEER_REVIEWED, peerReviewed);
         jsonNode.set(ISBN_LIST, arrayNode(isbnList));
-        jsonNode.put(LINKED_CONTEXT, linkedContext.toString());
+        if (nonNull(linkedContext)) {
+            jsonNode.put(LINKED_CONTEXT, linkedContext.toString());
+        }
         jsonNode.put(PRINT_ISSN, printIssn);
         jsonNode.put(ONLINE_ISSN, onlineIssn);
 

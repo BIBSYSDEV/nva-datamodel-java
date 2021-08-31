@@ -72,13 +72,8 @@
       "publicationContext" : {
         "type" : "Journal",
         "title" : "Tim's lovely publishing house",
-        "level" : "LEVEL_1",
-        "openAccess" : true,
-        "peerReviewed" : true,
         "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/sedlaboriosam",
-        "linkedContext" : "https://123123/213123.com"
+        "onlineIssn" : "1111-1119"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -139,8 +134,8 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "quireprehenderit",
-    "value" : "575231e5-783d-46fe-8572-6175ade4c339"
+    "source" : "fakesource",
+    "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
   "modelVersion" : "0.12.4"

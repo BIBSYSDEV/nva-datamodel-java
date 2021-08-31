@@ -3,7 +3,6 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
-import no.unit.nva.model.Level;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import nva.commons.core.JsonUtils;
@@ -32,55 +31,41 @@ public class ReportTest extends ModelTest {
     public static final String REPORT = "Report";
     public static final String ONLINE_ISSN = "0363-6941";
     public static final String PRINT_ISSN = "1945-662X";
-    public static final URI SAMPLE_LINKED_CONTEXT = URI.create("https://example.org/linkedContext");
-
 
     @DisplayName("Reports can be created")
     @ParameterizedTest
     @CsvSource({
-            "Series,123,A publisher,LEVEL_0,false,false,9780201309515,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,true,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,true,true,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            ",123,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,false,false,,0363-6941,1945-662X",
-            ",,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,,"
+        "Series,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,,0363-6941,1945-662X",
+        ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperReturnsReportWhenInputIsValidJson(String seriesTitle,
                                                        String seriesNumber,
                                                        String publisher,
-                                                       String level,
-                                                       String openAccess,
-                                                       String peerReviewed,
                                                        String isbnList,
                                                        String printIssn,
                                                        String onlineIssn) throws JsonProcessingException {
-        Level expectedLevel = Level.valueOf(level);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
         List<String> expectedIsbn = convertIsbnStringToList(isbnList);
         String json = generatePublicationJson(
                 REPORT,
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                level,
-                expectedOpenAccess,
-                expectedPeerReviewed,
                 expectedIsbn,
                 onlineIssn,
                 printIssn,
-                SAMPLE_LINKED_CONTEXT
+                null
         );
         Report report = objectMapper.readValue(json, Report.class);
         assertEquals(seriesTitle, report.getSeriesTitle());
         assertEquals(seriesNumber, report.getSeriesNumber());
-        assertEquals(expectedLevel, report.getLevel());
         assertEquals(expectedIsbn, report.getIsbnList());
-        assertEquals(expectedOpenAccess, report.isOpenAccess());
-        assertEquals(expectedPeerReviewed, report.isPeerReviewed());
         assertEquals(onlineIssn, report.getOnlineIssn());
         assertEquals(printIssn, report.getPrintIssn());
     }
@@ -88,54 +73,41 @@ public class ReportTest extends ModelTest {
     @DisplayName("Report serializes expected json")
     @ParameterizedTest
     @CsvSource({
-            "Series,123,A publisher,LEVEL_0,false,false,9780201309515,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,true,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,true,true,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            ",123,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,false,false,,0363-6941,1945-662X",
-            ",,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,0363-6941,1945-662X",
-            "Series,123,A publisher,LEVEL_0,false,false,9780201309515|9788131700075,,"
+        "Series,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,,0363-6941,1945-662X",
+        ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "Series,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsReport(String seriesTitle,
                                                                     String seriesNumber,
                                                                     String publisher,
-                                                                    String level,
-                                                                    String openAccess,
-                                                                    String peerReviewed,
                                                                     String isbnList,
                                                                     String onlineIssn,
                                                                     String printIssn) throws JsonProcessingException,
             InvalidIsbnException, InvalidIssnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
-        boolean expectedOpenAccess = Boolean.getBoolean(openAccess);
-        boolean expectedPeerReviewed = Boolean.getBoolean(peerReviewed);
-        Level expectedLevel = Level.valueOf(level);
         Report report = new Report.Builder()
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
-                .withLevel(expectedLevel)
-                .withOpenAccess(expectedOpenAccess)
-                .withPeerReviewed(expectedPeerReviewed)
                 .withIsbnList(expectedIsbnList)
                 .withOnlineIssn(onlineIssn)
                 .withPrintIssn(printIssn)
-                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
                 .build();
         String expectedJson = generatePublicationJson(
                 REPORT,
                 seriesTitle,
                 seriesNumber,
                 publisher,
-                level,
-                expectedOpenAccess,
-                expectedPeerReviewed,
                 expectedIsbnList,
                 onlineIssn,
                 printIssn,
-                SAMPLE_LINKED_CONTEXT
+                null
         );
         String actualJson = objectMapper.writeValueAsString(report);
         assertEquals(expectedJson, actualJson);
@@ -144,17 +116,13 @@ public class ReportTest extends ModelTest {
     @DisplayName("report complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
-            "Report,123,A publisher,LEVEL_2,true,true,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
-            "Report,123,A publisher,LEVEL_2,true,true,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
-            "Report,123,A publisher,LEVEL_2,true,true,\"9780201309515|9788131700075|obviousNonsense\","
-                    + "0363-6941,1945-662X"
+        "Report,123,A publisher,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
+        "Report,123,A publisher,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
+        "Report,123,A publisher,\"9780201309515|9788131700075|obviousNonsense\",0363-6941,1945-662X"
     })
     void reportThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                            String seriesNumber,
                                                            String publisher,
-                                                           String level,
-                                                           String openAccess,
-                                                           String peerReviewed,
                                                            String isbnList,
                                                            String onlineIssn,
                                                            String printIssn) {
@@ -165,9 +133,6 @@ public class ReportTest extends ModelTest {
                 .withSeriesTitle(seriesTitle)
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
-                .withLevel(Level.valueOf(level))
-                .withOpenAccess(Boolean.getBoolean(openAccess))
-                .withPeerReviewed(Boolean.getBoolean(peerReviewed))
                 .withIsbnList(invalidIsbnList)
                 .withPrintIssn(printIssn)
                 .withOnlineIssn(onlineIssn)
@@ -186,9 +151,6 @@ public class ReportTest extends ModelTest {
         Report report = new Report.Builder()
                 .withSeriesTitle(null)
                 .withSeriesNumber(null)
-                .withLevel(Level.LEVEL_0)
-                .withPeerReviewed(false)
-                .withOpenAccess(false)
                 .withPublisher(null)
                 .withIsbnList(null)
                 .withOnlineIssn(ONLINE_ISSN)
@@ -206,9 +168,6 @@ public class ReportTest extends ModelTest {
         Report report = new Report.Builder()
                 .withSeriesTitle(null)
                 .withSeriesNumber(null)
-                .withLevel(Level.LEVEL_0)
-                .withPeerReviewed(false)
-                .withOpenAccess(false)
                 .withPublisher(null)
                 .withIsbnList(Collections.emptyList())
                 .withPrintIssn(PRINT_ISSN)
@@ -218,34 +177,5 @@ public class ReportTest extends ModelTest {
         List<String> resultIsbnList = report.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
-    }
-
-    @DisplayName("Report: serializes and deserializes with linkedContext")
-    @Test
-    void reportIsSerializedAndDeserializedWithLinkedContext()
-            throws InvalidIsbnException, JsonProcessingException, InvalidIssnException {
-        Report actualReport = new Report.Builder()
-                .withLinkedContext(SAMPLE_LINKED_CONTEXT)
-                .build();
-
-        String expectedJson = generatePublicationJson(
-                REPORT,
-                null,
-                null,
-                null,
-                null,
-                false,
-                false,
-                null,
-                null,
-                null,
-                SAMPLE_LINKED_CONTEXT
-        );
-
-        String actualJson = objectMapper.writeValueAsString(actualReport);
-        assertEquals(expectedJson, actualJson);
-        Report deserializedReport = objectMapper.readValue(actualJson, Report.class);
-        assertEquals(actualReport, deserializedReport);
-        assertEquals(SAMPLE_LINKED_CONTEXT, deserializedReport.getLinkedContext());
     }
 }

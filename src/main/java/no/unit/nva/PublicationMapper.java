@@ -65,8 +65,10 @@ public final class PublicationMapper {
     /**
      * Maps a publication and context to specified type.
      *
-     * @param publication publication
-     * @param context     jsonld context
+     * @param publication publication.
+     * @param context     jsonld context.
+     * @param <R>         Type to be converted to.
+     * @param responseType Class to be converted to.
      * @return publication response
      */
     public static <R extends WithContext> R convertValue(
@@ -79,7 +81,9 @@ public final class PublicationMapper {
     /**
      * Maps a publication to specified type with default context.
      *
-     * @param publication publication
+     * @param publication publication.
+     * @param <R> Type to be converted to.
+     * @param responseType Class to be converted to.
      * @return publication response
      */
     public static <R extends WithContext> R convertValue(

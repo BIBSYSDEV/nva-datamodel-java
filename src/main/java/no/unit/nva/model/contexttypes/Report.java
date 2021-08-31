@@ -1,8 +1,5 @@
 package no.unit.nva.model.contexttypes;
 
-import java.net.URI;
-import java.net.URL;
-import no.unit.nva.model.Level;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
@@ -25,14 +22,9 @@ public class Report extends Book implements SerialPublication, BasicContext {
         setSeriesTitle(builder.seriesTitle);
         setSeriesNumber(builder.seriesNumber);
         setPublisher(builder.publisher);
-        setLevel(builder.level);
-        setOpenAccess(builder.openAccess);
-        setPeerReviewed(builder.peerReviewed);
         setIsbnList(builder.isbnList);
         setPrintIssn(builder.printIssn);
         setOnlineIssn(builder.onlineIssn);
-        setUrl(builder.url);
-        setLinkedContext(builder.linkedContext);
     }
 
     public String getPrintIssn() {
@@ -80,15 +72,9 @@ public class Report extends Book implements SerialPublication, BasicContext {
         private String seriesTitle;
         private String seriesNumber;
         private String publisher;
-        private Level level;
-        private boolean openAccess;
-        private boolean peerReviewed;
         private List<String> isbnList;
         private String printIssn;
         private String onlineIssn;
-        private URL url;
-        private URI linkedContext;
-
 
         public Builder() {
         }
@@ -108,21 +94,6 @@ public class Report extends Book implements SerialPublication, BasicContext {
             return this;
         }
 
-        public Builder withLevel(Level level) {
-            this.level = level;
-            return this;
-        }
-
-        public Builder withOpenAccess(boolean openAccess) {
-            this.openAccess = openAccess;
-            return this;
-        }
-
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            this.peerReviewed = peerReviewed;
-            return this;
-        }
-
         public Builder withIsbnList(List<String> isbnList) {
             this.isbnList = isbnList;
             return this;
@@ -137,18 +108,6 @@ public class Report extends Book implements SerialPublication, BasicContext {
             this.onlineIssn = onlineIssn;
             return this;
         }
-
-        public Builder withUrl(URL url) {
-            this.url = url;
-            return this;
-        }
-
-        public Builder withLinkedContext(URI linkedContext) {
-            this.linkedContext = linkedContext;
-            return this;
-        }
-
-
 
         public Report build() throws InvalidIssnException, InvalidIsbnException {
             return new Report(this);

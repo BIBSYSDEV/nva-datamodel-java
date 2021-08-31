@@ -10,6 +10,7 @@ public final class IssnUtil {
      * Returns a valid ISSN or null.
      *
      * @param issn a valid ISSN
+     * @return String, validated representation of the ISSN
      * @throws InvalidIssnException Thrown if the ISSN is invalid
      */
     @SuppressWarnings("PMD.NullAssignment")

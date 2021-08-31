@@ -125,27 +125,10 @@ referencedSchemas:
           type: string
         publisher:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
-        url:
-          type: string
-          format: url
         isbnList:
           type: array
           items:
             type: string
-        linkedContext:
-          type: string
-          format: uri
         type:
           type: string
   BookAbstracts:
@@ -327,27 +310,10 @@ referencedSchemas:
           type: string
         publisher:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
-        url:
-          type: string
-          format: url
         isbnList:
           type: array
           items:
             type: string
-        linkedContext:
-          type: string
-          format: uri
         type:
           type: string
   DegreeBachelor:
@@ -587,31 +553,10 @@ referencedSchemas:
       properties:
         title:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
         printIssn:
           type: string
         onlineIssn:
           type: string
-        url:
-          type: string
-          format: url
-        linkedContext:
-          type: string
-          format: uri
-        linkedContextURI:
-          type: string
-          format: uri
-          writeOnly: true
         type:
           type: string
   JournalArticle:
@@ -1015,27 +960,10 @@ referencedSchemas:
           type: string
         publisher:
           type: string
-        level:
-          type: string
-          enum:
-          - LEVEL_2
-          - LEVEL_1
-          - LEVEL_0
-          - NO_LEVEL
-        openAccess:
-          type: boolean
-        peerReviewed:
-          type: boolean
-        url:
-          type: string
-          format: url
         isbnList:
           type: array
           items:
             type: string
-        linkedContext:
-          type: string
-          format: uri
         printIssn:
           type: string
         onlineIssn:

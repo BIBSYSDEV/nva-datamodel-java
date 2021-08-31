@@ -1,24 +1,24 @@
 package no.unit.nva.model.contexttypes;
 
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidSeriesException;
+import nva.commons.core.JacocoGenerated;
+import org.apache.commons.validator.routines.ISBNValidator;
+
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import no.unit.nva.model.Level;
-import no.unit.nva.model.exceptions.InvalidIsbnException;
-import no.unit.nva.model.exceptions.InvalidSeriesException;
-import nva.commons.core.JacocoGenerated;
-import org.apache.commons.validator.routines.ISBNValidator;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Book implements BasicContext, LinkedContext {
+public class Book implements BasicContext {
 
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
     public static final Pattern EXPECTED_SERIES_URI_PATTERN =
@@ -28,12 +28,7 @@ public class Book implements BasicContext, LinkedContext {
     private URI seriesUri;
     private String seriesNumber;
     private String publisher;
-    private Level level;
-    private boolean openAccess;
-    private boolean peerReviewed;
-    private URL url;
     private List<String> isbnList;
-    private URI linkedContext;
 
     public Book() {
     }
@@ -41,9 +36,7 @@ public class Book implements BasicContext, LinkedContext {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getSeriesTitle(), getSeriesUri(), getSeriesNumber(), getPublisher(), getLevel(),
-                            isOpenAccess(),
-                            isPeerReviewed(), getUrl(), getIsbnList(), getLinkedContext());
+        return Objects.hash(getSeriesTitle(), getSeriesUri(), getSeriesNumber(), getPublisher(), getIsbnList());
     }
 
     @JacocoGenerated
@@ -56,16 +49,11 @@ public class Book implements BasicContext, LinkedContext {
             return false;
         }
         Book book = (Book) o;
-        return isOpenAccess() == book.isOpenAccess()
-               && isPeerReviewed() == book.isPeerReviewed()
-               && Objects.equals(getSeriesTitle(), book.getSeriesTitle())
+        return Objects.equals(getSeriesTitle(), book.getSeriesTitle())
                && Objects.equals(getSeriesUri(), book.getSeriesUri())
                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
                && Objects.equals(getPublisher(), book.getPublisher())
-               && getLevel() == book.getLevel()
-               && Objects.equals(getUrl(), book.getUrl())
-               && Objects.equals(getIsbnList(), book.getIsbnList())
-               && Objects.equals(getLinkedContext(), book.getLinkedContext());
+               && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
     public URI getSeriesUri() {
@@ -81,46 +69,6 @@ public class Book implements BasicContext, LinkedContext {
         if (!EXPECTED_SERIES_URI_PATTERN.matcher(seriesUri.toString()).matches()) {
             throw new InvalidSeriesException(seriesUri.toString());
         }
-    }
-
-    @Override
-    public Level getLevel() {
-        return level;
-    }
-
-    @Override
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    @Override
-    public boolean isOpenAccess() {
-        return openAccess;
-    }
-
-    @Override
-    public void setOpenAccess(boolean openAccess) {
-        this.openAccess = openAccess;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return peerReviewed;
-    }
-
-    @Override
-    public void setPeerReviewed(boolean peerReviewed) {
-        this.peerReviewed = peerReviewed;
-    }
-
-    @Override
-    public URL getUrl() {
-        return url;
-    }
-
-    @Override
-    public void setUrl(URL url) {
-        this.url = url;
     }
 
     public List<String> getIsbnList() {
@@ -175,26 +123,11 @@ public class Book implements BasicContext, LinkedContext {
         this.publisher = publisher;
     }
 
-    @Override
-    public URI getLinkedContext() {
-        return linkedContext;
-    }
-
-    @Override
-    public void setLinkedContext(URI linkedContext) {
-        this.linkedContext = linkedContext;
-    }
-
     public Builder copy() throws InvalidIsbnException {
         return new Builder()
-            .withUrl(getUrl())
             .withSeriesNumber(getSeriesNumber())
             .withSeriesTitle(getSeriesTitle())
-            .withLinkedContext(getLinkedContext())
             .withPublisher(getPublisher())
-            .withPeerReviewed(isPeerReviewed())
-            .withOpenAccess(isOpenAccess())
-            .withLevel(getLevel())
             .withIsbnList(getIsbnList())
             .withSeriesUri(getSeriesUri());
     }
@@ -227,33 +160,8 @@ public class Book implements BasicContext, LinkedContext {
             return this;
         }
 
-        public Builder withLevel(Level level) {
-            book.setLevel(level);
-            return this;
-        }
-
-        public Builder withOpenAccess(boolean openAccess) {
-            book.setOpenAccess(openAccess);
-            return this;
-        }
-
-        public Builder withPeerReviewed(boolean peerReviewed) {
-            book.setPeerReviewed(peerReviewed);
-            return this;
-        }
-
-        public Builder withUrl(URL url) {
-            book.setUrl(url);
-            return this;
-        }
-
         public Builder withIsbnList(List<String> isbnList) throws InvalidIsbnException {
             book.setIsbnList(isbnList);
-            return this;
-        }
-
-        public Builder withLinkedContext(URI linkedContext) {
-            book.setLinkedContext(linkedContext);
             return this;
         }
 

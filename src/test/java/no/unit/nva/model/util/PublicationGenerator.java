@@ -1,16 +1,6 @@
 package no.unit.nva.model.util;
 
-import static nva.commons.core.attempt.Try.attempt;
 import com.github.javafaker.Faker;
-import java.net.URI;
-import java.net.URL;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
@@ -23,7 +13,6 @@ import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.File;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Grant;
-import no.unit.nva.model.Level;
 import no.unit.nva.model.License;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Organization;
@@ -49,6 +38,15 @@ import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.StringUtils;
+
+import java.net.URI;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @SuppressWarnings("MissingJavadocMethod")
 public class PublicationGenerator extends ModelTest {
@@ -231,16 +229,10 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static BasicContext getPublishingContextJournal() throws InvalidIssnException {
-        URL randomUrl = randomUrl();
         return new Journal.Builder()
-                   .withLevel(Level.LEVEL_1)
                    .withTitle("Tim's lovely publishing house")
-                   .withPeerReviewed(true)
-                   .withOpenAccess(true)
                    .withOnlineIssn("1111-1119")
                    .withPrintIssn("2222-2227")
-                   .withUrl(randomUrl)
-                   .withLinkedContext(SOME_URI)
                    .build();
     }
 
@@ -416,17 +408,10 @@ public class PublicationGenerator extends ModelTest {
     private static BasicContext getPublishingContextBook() throws InvalidIsbnException {
         return new Book.Builder()
                    .withIsbnList(List.of("9780201309515"))
-                   .withLevel(Level.LEVEL_0)
-                   .withOpenAccess(false)
-                   .withPeerReviewed(true)
                    .withPublisher("My publisher dot com")
                    .withSeriesNumber("123")
                    .withSeriesTitle("Explorations in ego")
                    .build();
-    }
-
-    private static URL randomUrl() {
-        return attempt(() -> URI.create("https://www.example.org/" + randomWord()).toURL()).orElseThrow();
     }
 
     private static String randomWord() {
