@@ -48,6 +48,7 @@ public class Publication
     private FileSet fileSet;
     private List<ResearchProject> projects;
     private Set<AdditionalIdentifier> additionalIdentifiers;
+    private List<URI> subjects;
 
     public Publication() {
     }
@@ -69,6 +70,7 @@ public class Publication
         setFileSet(builder.fileSet);
         setProjects(builder.projects);
         setAdditionalIdentifiers(builder.additionalIdentifiers);
+        setSubjects(builder.subjects);
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
@@ -189,6 +191,16 @@ public class Publication
         this.doiRequest = doiRequest;
     }
 
+    @Override
+    public List<URI> getSubjects() {
+        return subjects;
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
+    }
+
     /**
      * Update a publication with the requested status change.
      *
@@ -280,7 +292,8 @@ public class Publication
                    .withEntityDescription(getEntityDescription())
                    .withFileSet(getFileSet())
                    .withProjects(getProjects())
-                   .withAdditionalIdentifiers(getAdditionalIdentifiers());
+                   .withAdditionalIdentifiers(getAdditionalIdentifiers())
+                   .withSubjects(getSubjects());
     }
 
     /**
@@ -299,7 +312,7 @@ public class Publication
     public int hashCode() {
         return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
-                    getEntityDescription(), getFileSet(), getProjects(), getAdditionalIdentifiers());
+                    getEntityDescription(), getFileSet(), getProjects(), getAdditionalIdentifiers(), getSubjects());
     }
 
     @JacocoGenerated
@@ -327,7 +340,8 @@ public class Publication
                && Objects.equals(getEntityDescription(), that.getEntityDescription())
                && Objects.equals(getFileSet(), that.getFileSet())
                && Objects.equals(getProjects(), that.getProjects())
-               && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers());
+               && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
+               && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
     }
 
@@ -357,6 +371,7 @@ public class Publication
         private FileSet fileSet;
         private List<ResearchProject> projects;
         private Set<AdditionalIdentifier> additionalIdentifiers;
+        private List<URI> subjects;
 
         public Builder() {
         }
@@ -438,6 +453,11 @@ public class Publication
 
         public Builder withAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
             this.additionalIdentifiers = additionalIdentifiers;
+            return this;
+        }
+
+        public Builder withSubjects(List<URI> subjects) {
+            this.subjects = subjects;
             return this;
         }
 

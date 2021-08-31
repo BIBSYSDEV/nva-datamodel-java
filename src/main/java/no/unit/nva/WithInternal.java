@@ -2,6 +2,8 @@ package no.unit.nva;
 
 import java.net.URI;
 import java.time.Instant;
+import java.util.List;
+
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.Organization;
@@ -56,5 +58,9 @@ public interface WithInternal extends PublicationBase {
     DoiRequest getDoiRequest();
 
     void setDoiRequest(DoiRequest doiRequest);
+
+    List<URI> getSubjects();
+
+    void setSubjects(List<URI> uri);
 
 }
