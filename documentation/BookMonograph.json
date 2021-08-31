@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/distinctiosunt",
+        "url" : "https://www.example.org/doloremeum",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "illumnobis",
-    "value" : "78ddad54-3282-4bb4-a63a-cd418cb13a5f"
+    "source" : "etarchitecto",
+    "value" : "68da71c6-0057-4f50-b991-16a5e04b2e7d"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

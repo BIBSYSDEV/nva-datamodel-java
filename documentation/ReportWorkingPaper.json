@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/etiste",
+        "url" : "https://www.example.org/laborumtempore",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "expeditaad",
-    "value" : "52fcb47c-dc45-4acd-9504-824cc56436cf"
+    "source" : "nullavel",
+    "value" : "c0f49042-f2a9-4af9-a251-b3bcee453d4f"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

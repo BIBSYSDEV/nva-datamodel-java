@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/delenititenetur",
+        "url" : "https://www.example.org/estexplicabo",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "ametin",
-    "value" : "401ce42f-034c-46e5-b9ac-fb44ad40f1be"
+    "source" : "omnisveniam",
+    "value" : "67b06ba3-c285-422a-b0f3-042a1d7b73cd"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

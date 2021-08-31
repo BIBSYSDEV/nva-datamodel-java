@@ -62,9 +62,10 @@ class LevelTest {
             return Level.LEVEL_2;
         } else if (alias.contains("0")) {
             return Level.LEVEL_0;
-        } else if (alias.equalsIgnoreCase("no_level")){
+        } else if (alias.equalsIgnoreCase("no_level")) {
             return Level.NO_LEVEL;
+        } else {
+            throw new RuntimeException("Level not found for alias " + alias);
         }
-        else throw new RuntimeException("Level not found for alias "+alias);
     }
 }

@@ -129,6 +129,7 @@ public class PublicationGenerator extends ModelTest {
                    .withDoi(URI.create("http://example.org/doi/1231/98765"))
                    .withIndexedDate(now)
                    .withAdditionalIdentifiers(generateAdditionalIdentifiers())
+                   .withSubjects(List.of(URI.create("http://example.org/subject/123")))
                    .build();
     }
 

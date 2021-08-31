@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/doloresest",
+        "url" : "https://www.example.org/accusamusnesciunt",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -137,8 +137,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "ducimustemporibus",
-    "value" : "a6eca6dd-2460-4a91-a037-2bf0bc24189c"
+    "source" : "vitaedolore",
+    "value" : "c726cd8e-a3e4-48a3-8bcb-c8c2e703dac5"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

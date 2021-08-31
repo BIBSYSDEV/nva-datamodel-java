@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/nontotam",
+        "url" : "https://www.example.org/occaecatiut",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "officiisaut",
-    "value" : "b8133675-d9dd-4519-8a8e-34352bdeae7d"
+    "source" : "totamnobis",
+    "value" : "4352692a-a3cd-4616-8645-72f280b0331c"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }
