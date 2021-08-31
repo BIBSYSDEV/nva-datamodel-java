@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/esttempora",
+        "url" : "https://www.example.org/istemolestiae",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "illonon",
-    "value" : "9b9c7c54-2601-4b16-a5ea-13f048d58430"
+    "source" : "quolaborum",
+    "value" : "aa1f425a-1d51-4476-9fad-138d87042271"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

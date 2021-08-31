@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/reprehenderitrerum",
+        "url" : "https://www.example.org/fugiatexplicabo",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "autemiure",
-    "value" : "9bcb48a3-66f9-40a9-8096-852a87c0b9fe"
+    "source" : "quianesciunt",
+    "value" : "5e3d865a-296f-4a63-8f65-a9c1d5281f2d"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

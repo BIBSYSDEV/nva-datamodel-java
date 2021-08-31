@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/delenitivoluptatum",
+        "url" : "https://www.example.org/dictaquasi",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -137,8 +137,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "doloresnecessitatibus",
-    "value" : "6a91b42a-bb71-49a8-83f7-7ad73e49afbc"
+    "source" : "oditconsectetur",
+    "value" : "52d2b448-2d2f-4ed8-a880-f7b7ee6140e1"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

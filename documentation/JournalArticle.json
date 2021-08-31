@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/rationelaudantium",
+        "url" : "https://www.example.org/optiolaborum",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "nesciuntet",
-    "value" : "1623208b-ca25-4cb9-b8dd-1a1139d56eee"
+    "source" : "cumquetenetur",
+    "value" : "523db8c6-a376-4398-9322-fa24a154c969"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

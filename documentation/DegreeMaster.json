@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/voluptatemet",
+        "url" : "https://www.example.org/utnon",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "quiapossimus",
-    "value" : "41b827cf-884c-4491-9ee9-5267669e23bf"
+    "source" : "expeditaomnis",
+    "value" : "c429d3d5-f57c-489e-b666-fb53d87e5782"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

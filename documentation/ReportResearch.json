@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/nihilneque",
+        "url" : "https://www.example.org/dolorumaliquam",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "totamvoluptatem",
-    "value" : "9a10956c-8935-4049-a61e-7ce8ec9e220e"
+    "source" : "nihilqui",
+    "value" : "ec7d5505-5ae4-4e06-9df2-bca0eb357a95"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }

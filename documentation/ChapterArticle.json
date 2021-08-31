@@ -77,7 +77,7 @@
         "peerReviewed" : true,
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119",
-        "url" : "https://www.example.org/quodsed",
+        "url" : "https://www.example.org/maximedolor",
         "linkedContext" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
@@ -139,8 +139,9 @@
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
-    "source" : "inventoresint",
-    "value" : "4da25c6b-747b-40fd-aa6e-877fc8d79bc1"
+    "source" : "harumasperiores",
+    "value" : "eadfc278-1b35-4ea1-9f86-ff9d18e8f890"
   } ],
-  "modelVersion" : "0.12.3"
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.12.4"
 }
