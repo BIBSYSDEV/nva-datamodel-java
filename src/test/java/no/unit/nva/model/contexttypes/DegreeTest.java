@@ -54,7 +54,7 @@ class DegreeTest extends ModelTest {
                 null
         );
         Degree degree = objectMapper.readValue(json, Degree.class);
-        assertEquals(seriesTitle, degree.getSeriesTitle());
+        assertEquals(seriesTitle, ((UnconfirmedSeries) degree.getSeries()).getTitle());
         assertEquals(seriesNumber, degree.getSeriesNumber());
         assertEquals(expectedIsbn, degree.getIsbnList());
     }
@@ -74,7 +74,7 @@ class DegreeTest extends ModelTest {
             InvalidIsbnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Degree degree = new Degree.Builder()
-                .withSeriesTitle(seriesTitle)
+                .withSeries(new UnconfirmedSeries(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
                 .withIsbnList(expectedIsbnList)
@@ -108,7 +108,7 @@ class DegreeTest extends ModelTest {
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
         Executable executable = () -> new Degree.Builder()
-                .withSeriesTitle(seriesTitle)
+                .withSeries(new UnconfirmedSeries(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
                 .withIsbnList(invalidIsbnList)
@@ -124,7 +124,7 @@ class DegreeTest extends ModelTest {
     @Test
     void degreeReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException {
         Degree degree = new Degree.Builder()
-                .withSeriesTitle(null)
+                .withSeries(null)
                 .withSeriesNumber(null)
                 .withPublisher(null)
                 .withIsbnList(null)
@@ -139,7 +139,7 @@ class DegreeTest extends ModelTest {
     @Test
     void degreeReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException {
         Degree degree = new Degree.Builder()
-                .withSeriesTitle(null)
+                .withSeries(null)
                 .withSeriesNumber(null)
                 .withPublisher(null)
                 .withIsbnList(Collections.emptyList())

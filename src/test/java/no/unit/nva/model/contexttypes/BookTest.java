@@ -13,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,9 +27,12 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BookTest extends ModelTest {
@@ -41,7 +43,7 @@ class BookTest extends ModelTest {
     @Test
     public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws InvalidIsbnException {
         Book book = randomBook();
-        assertThat(book.getSeriesUri(), is(not(nullValue())));
+        assertThat(book.getSeries(), is(not(nullValue())));
         assertThat(book, doesNotHaveEmptyValues());
     }
 
@@ -53,8 +55,8 @@ class BookTest extends ModelTest {
     })
     public void bookAcceptsValidSeriesUri(String validSeriesUri) {
         Book book =
-            assertDoesNotThrow((() -> randomBook().copy().withSeriesUri(URI.create(validSeriesUri)).build()));
-        assertThat(book.getSeriesUri().toString(), is(equalTo(validSeriesUri)));
+            assertDoesNotThrow((() -> randomBook().copy().withSeries(new Series(URI.create(validSeriesUri))).build()));
+        assertThat(((Series) book.getSeries()).getId().toString(), is(equalTo(validSeriesUri)));
     }
 
     @ParameterizedTest
@@ -64,7 +66,7 @@ class BookTest extends ModelTest {
         "uri:not:http:uri"
     })
     public void bookThrowsExceptionWhenSeriesUriIsInvalid(String invalidSeriesUri) {
-        Executable action = () -> randomBook().copy().withSeriesUri(URI.create(invalidSeriesUri)).build();
+        Executable action = () -> randomBook().copy().withSeries(new Series(URI.create(invalidSeriesUri))).build();
         InvalidSeriesException exception = assertThrows(InvalidSeriesException.class, action);
         assertThat(exception.getMessage(), containsString(invalidSeriesUri));
     }
@@ -74,6 +76,7 @@ class BookTest extends ModelTest {
         Book original = randomBook();
         assertThat(original, doesNotHaveEmptyValues());
         Book copy = original.copy().build();
+        assertThat(original, is(not(sameInstance(copy))));
         assertThat(copy, is(equalTo(original)));
     }
 
@@ -101,7 +104,7 @@ class BookTest extends ModelTest {
             null
         );
         Book book = objectMapper.readValue(json, Book.class);
-        assertEquals(seriesTitle, book.getSeriesTitle());
+        assertEquals(seriesTitle, ((UnconfirmedSeries) book.getSeries()).getTitle());
         assertEquals(seriesNumber, book.getSeriesNumber());
         assertEquals(expectedIsbn, book.getIsbnList());
     }
@@ -121,8 +124,8 @@ class BookTest extends ModelTest {
                                                                   String isbnList) throws JsonProcessingException,
                                                                                           InvalidIsbnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
-        Book book = new Book.Builder()
-            .withSeriesTitle(seriesTitle)
+        Book book = new Book.BookBuilder()
+            .withSeries(new UnconfirmedSeries(seriesTitle))
             .withSeriesNumber(seriesNumber)
             .withPublisher(publisher)
             .withIsbnList(expectedIsbnList)

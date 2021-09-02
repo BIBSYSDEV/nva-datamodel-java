@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
-import no.unit.nva.model.instancetypes.cartographic.CartographicMap;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
@@ -20,7 +19,6 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
-import no.unit.nva.model.instancetypes.musicalcontent.MusicNotation;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -48,9 +46,7 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
     @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class),
     @JsonSubTypes.Type(name = "ChapterArticle", value = ChapterArticle.class),
-    @JsonSubTypes.Type(name = "OtherStudentWork", value = OtherStudentWork.class),
-    @JsonSubTypes.Type(name = "CartographicMap", value = CartographicMap.class),
-    @JsonSubTypes.Type(name = "MusicNotation", value = MusicNotation.class)
+    @JsonSubTypes.Type(name = "OtherStudentWork", value = OtherStudentWork.class)
 })
 public interface PublicationInstance<P extends Pages> {
 

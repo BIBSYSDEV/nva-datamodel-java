@@ -71,7 +71,10 @@
       "type" : "Reference",
       "publicationContext" : {
         "type" : "Book",
-        "seriesTitle" : "Explorations in ego",
+        "series" : {
+          "type" : "UnconfirmedSeries",
+          "title" : "Explorations in ego"
+        },
         "seriesNumber" : "123",
         "publisher" : "My publisher dot com",
         "isbnList" : [ "9780201309515" ]

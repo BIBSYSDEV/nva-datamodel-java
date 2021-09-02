@@ -70,25 +70,29 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "UnconfirmedJournal",
-        "title" : "Tim's lovely publishing house",
-        "printIssn" : "1111-1119",
-        "onlineIssn" : "2222-2227"
+        "type" : "Book",
+        "series" : {
+          "type" : "UnconfirmedSeries",
+          "title" : "Explorations in ego"
+        },
+        "seriesNumber" : "123",
+        "publisher" : "My publisher dot com",
+        "isbnList" : [ "9780201309515" ]
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "JournalArticle",
-        "volume" : "24",
-        "issue" : "2",
-        "articleNumber" : "1234456",
-        "contentType" : "Professional article",
-        "peerReviewed" : true,
-        "originalResearch" : false,
+        "type" : "BookAbstracts",
         "pages" : {
-          "type" : "Range",
-          "begin" : "1",
-          "end" : "15"
-        }
+          "type" : "MonographPages",
+          "introduction" : {
+            "type" : "Range",
+            "begin" : "i",
+            "end" : "xx"
+          },
+          "pages" : "221",
+          "illustrated" : true
+        },
+        "peerReviewed" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",

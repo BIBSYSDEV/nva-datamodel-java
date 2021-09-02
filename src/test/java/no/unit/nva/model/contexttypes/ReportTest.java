@@ -12,7 +12,6 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +62,7 @@ public class ReportTest extends ModelTest {
                 null
         );
         Report report = objectMapper.readValue(json, Report.class);
-        assertEquals(seriesTitle, report.getSeriesTitle());
+        assertEquals(seriesTitle, ((UnconfirmedSeries) report.getSeries()).getTitle());
         assertEquals(seriesNumber, report.getSeriesNumber());
         assertEquals(expectedIsbn, report.getIsbnList());
         assertEquals(onlineIssn, report.getOnlineIssn());
@@ -92,7 +91,7 @@ public class ReportTest extends ModelTest {
             InvalidIsbnException, InvalidIssnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Report report = new Report.Builder()
-                .withSeriesTitle(seriesTitle)
+                .withSeries(new UnconfirmedSeries(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
                 .withIsbnList(expectedIsbnList)
@@ -130,7 +129,7 @@ public class ReportTest extends ModelTest {
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
         Executable executable = () -> new Report.Builder()
-                .withSeriesTitle(seriesTitle)
+                .withSeries(new UnconfirmedSeries(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(publisher)
                 .withIsbnList(invalidIsbnList)
@@ -149,7 +148,7 @@ public class ReportTest extends ModelTest {
     @Test
     void reportReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, InvalidIssnException {
         Report report = new Report.Builder()
-                .withSeriesTitle(null)
+                .withSeries(null)
                 .withSeriesNumber(null)
                 .withPublisher(null)
                 .withIsbnList(null)
@@ -166,7 +165,7 @@ public class ReportTest extends ModelTest {
     @Test
     void reportReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, InvalidIssnException {
         Report report = new Report.Builder()
-                .withSeriesTitle(null)
+                .withSeries(null)
                 .withSeriesNumber(null)
                 .withPublisher(null)
                 .withIsbnList(Collections.emptyList())

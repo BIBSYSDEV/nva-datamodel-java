@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
@@ -10,66 +11,39 @@ import java.util.Objects;
 
 public class Report extends Book implements SerialPublication, BasicContext {
 
-    private String printIssn;
-    private String onlineIssn;
+    private final String printIssn;
+    private final String onlineIssn;
 
-    public Report() {
-        super();
+    public Report(@JsonProperty("series") BookSeries series,
+                  @JsonProperty("seriesTitle") String seriesTitle,
+                  @JsonProperty("seriesNumber") String seriesNumber,
+                  @JsonProperty("publisher") String publisher,
+                  @JsonProperty("isbnList") List<String> isbnList,
+                  @JsonProperty("printIssn") String printIssn,
+                  @JsonProperty("onlineIssn") String onlineIssn)
+            throws InvalidIsbnException, InvalidIssnException {
+        super(series, seriesTitle, seriesNumber, publisher, isbnList);
+        this.printIssn = IssnUtil.checkIssn(printIssn);
+        this.onlineIssn = IssnUtil.checkIssn(onlineIssn);
     }
 
     private Report(Builder builder) throws InvalidIssnException, InvalidIsbnException {
-        super();
-        setSeriesTitle(builder.seriesTitle);
-        setSeriesNumber(builder.seriesNumber);
-        setPublisher(builder.publisher);
-        setIsbnList(builder.isbnList);
-        setPrintIssn(builder.printIssn);
-        setOnlineIssn(builder.onlineIssn);
+        this(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList, builder.printIssn,
+                builder.onlineIssn);
     }
 
+    @Override
     public String getPrintIssn() {
         return printIssn;
     }
 
     @Override
-    public void setPrintIssn(String printIssn) throws InvalidIssnException {
-        this.printIssn = IssnUtil.checkIssn(printIssn);
-    }
-
     public String getOnlineIssn() {
         return onlineIssn;
     }
 
-    @Override
-    public void setOnlineIssn(String onlineIssn) throws InvalidIssnException {
-        this.onlineIssn = IssnUtil.checkIssn(onlineIssn);
-    }
-
-    @JacocoGenerated
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Report)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        Report report = (Report) o;
-        return Objects.equals(getPrintIssn(), report.getPrintIssn())
-                && Objects.equals(getOnlineIssn(), report.getOnlineIssn());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getPrintIssn(), getOnlineIssn());
-    }
-
     public static final class Builder {
-        private String seriesTitle;
+        private BookSeries series;
         private String seriesNumber;
         private String publisher;
         private List<String> isbnList;
@@ -79,8 +53,8 @@ public class Report extends Book implements SerialPublication, BasicContext {
         public Builder() {
         }
 
-        public Builder withSeriesTitle(String seriesTitle) {
-            this.seriesTitle = seriesTitle;
+        public Builder withSeries(BookSeries series) {
+            this.series = series;
             return this;
         }
 
@@ -112,5 +86,25 @@ public class Report extends Book implements SerialPublication, BasicContext {
         public Report build() throws InvalidIssnException, InvalidIsbnException {
             return new Report(this);
         }
+    }
+
+    @JacocoGenerated
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Report)) {
+            return false;
+        }
+        Report report = (Report) o;
+        return Objects.equals(getPrintIssn(), report.getPrintIssn())
+                && Objects.equals(getOnlineIssn(), report.getOnlineIssn());
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPrintIssn(), getOnlineIssn());
     }
 }

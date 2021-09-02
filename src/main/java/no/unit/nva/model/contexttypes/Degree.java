@@ -1,5 +1,7 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -9,20 +11,22 @@ import java.util.List;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Degree extends Book {
 
-    public Degree() {
-        super();
+    @JsonCreator
+    public Degree(@JsonProperty("series") BookSeries series,
+                  @JsonProperty("seriesTitle") String seriesTitle,
+                  @JsonProperty("seriesNumber") String seriesNumber,
+                  @JsonProperty("publisher") String publisher,
+                  @JsonProperty("isbnList") List<String> isbnList)
+            throws InvalidIsbnException {
+        super(series, seriesTitle, seriesNumber, publisher, isbnList);
     }
 
     private Degree(Builder builder) throws InvalidIsbnException {
-        super();
-        setSeriesTitle(builder.seriesTitle);
-        setSeriesNumber(builder.seriesNumber);
-        setPublisher(builder.publisher);
-        setIsbnList(builder.isbnList);
+        super(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList);
     }
 
     public static final class Builder {
-        private String seriesTitle;
+        private BookSeries series;
         private String seriesNumber;
         private String publisher;
         private List<String> isbnList;
@@ -30,8 +34,8 @@ public class Degree extends Book {
         public Builder() {
         }
 
-        public Builder withSeriesTitle(String seriesTitle) {
-            this.seriesTitle = seriesTitle;
+        public Builder withSeries(BookSeries series) {
+            this.series = series;
             return this;
         }
 

@@ -23,19 +23,38 @@ import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
+import no.unit.nva.model.contexttypes.Chapter;
+import no.unit.nva.model.contexttypes.Degree;
+import no.unit.nva.model.contexttypes.PublicationContext;
+import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.UnconfirmedJournal;
+import no.unit.nva.model.contexttypes.UnconfirmedSeries;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
+import no.unit.nva.model.instancetypes.book.BookMonograph;
+import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
+import no.unit.nva.model.instancetypes.chapter.ChapterArticleContentType;
+import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
+import no.unit.nva.model.instancetypes.degree.DegreeMaster;
+import no.unit.nva.model.instancetypes.degree.DegreePhd;
+import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
+import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
+import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
+import no.unit.nva.model.instancetypes.journal.JournalInterview;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
-import no.unit.nva.model.pages.MonographPages;
+import no.unit.nva.model.instancetypes.report.ReportBasic;
+import no.unit.nva.model.instancetypes.report.ReportPolicy;
+import no.unit.nva.model.instancetypes.report.ReportResearch;
+import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.StringUtils;
 
@@ -70,29 +89,72 @@ public class PublicationGenerator extends ModelTest {
      * @throws InvalidIsbnException          with Isbn is invalid.
      */
     public static Publication generatePublication(String type) throws InvalidIssnException,
-                                                                      MalformedContributorException,
-                                                                      InvalidIsbnException {
+            MalformedContributorException,
+            InvalidIsbnException {
         Reference reference;
         switch (type) {
+            case "BookAbstracts":
+                reference = generateReference(getPublishingContextBook(), getBookAbstractsInstance());
+                break;
             case "BookAnthology":
-                reference = getBookAnthologyReference();
+                reference = generateReference(getPublishingContextBook(), getBookAnthologyInstance());
                 break;
-            case "JournalLeader":
-                reference = getJournalLeaderReference();
+            case "BookMonograph":
+                reference = generateReference(getPublishingContextBook(), getBookMonographInstance());
                 break;
-            case "JournalLetter":
-                reference = getJournalLetterReference();
+            case "ChapterArticle":
+                reference = generateReference(getPublishingContextChapter(), getChapterArticleInstance());
                 break;
-            case "JournalReview":
-                reference = getJournalReviewReference();
+            case "DegreeBachelor":
+                reference = generateReference(getPublishingContextDegree(), getDegreeBachelorInstance());
                 break;
-            case "JournalShortCommunication":
-                reference = getJournalShortCommunicationReference();
+            case "DegreeMaster":
+                reference = generateReference(getPublishingContextDegree(), getDegreeMasterInstance());
+                break;
+            case "DegreePhd":
+                reference = generateReference(getPublishingContextDegree(), getDegreePhdInstance());
+                break;
+            case "FeatureArticle":
+                reference = generateReference(getPublishingContextJournal(), getFeatureArticleInstance());
                 break;
             case "JournalArticle":
-            default:
-                reference = getJournalArticleReference();
+                reference = generateReference(getPublishingContextJournal(), getJournalArticleInstance());
                 break;
+            case "JournalCorrigendum":
+                reference = generateReference(getPublishingContextJournal(), getJournalCorrigendumInstance());
+                break;
+            case "JournalInterview":
+                reference = generateReference(getPublishingContextJournal(), getJournalInterviewInstance());
+                break;
+            case "JournalLeader":
+                reference = generateReference(getPublishingContextJournal(), getJournalLeaderInstance());
+                break;
+            case "JournalLetter":
+                reference = generateReference(getPublishingContextJournal(), getJournalLetterInstance());
+                break;
+            case "JournalReview":
+                reference = generateReference(getPublishingContextJournal(), getJournalReviewInstance());
+                break;
+            case "JournalShortCommunication":
+                reference = generateReference(getPublishingContextJournal(), getJournalShortCommunicationInstance());
+                break;
+            case "OtherStudentWork":
+                reference = generateReference(getPublishingContextDegree(), getOtherStudentWorkInstance());
+                break;
+            case "ReportBasic":
+                reference = generateReference(getPublishingContextReport(), getReportBasicInstance());
+                break;
+            case "ReportPolicy":
+                reference = generateReference(getPublishingContextReport(), getReportPolicyInstance());
+                break;
+            case "ReportResearch":
+                reference = generateReference(getPublishingContextReport(), getReportResearchInstance());
+                break;
+            case "ReportWorkingPaper":
+                reference = generateReference(getPublishingContextReport(), getReportWorkingPaperInstance());
+                break;
+            default:
+                throw new RuntimeException("Unrecognized instance-type");
         }
         return generatePublicationWithReference(reference);
     }
@@ -305,56 +367,174 @@ public class PublicationGenerator extends ModelTest {
         );
     }
 
-    private static PublicationInstance<MonographPages> getBookAnthologyInstance() {
+    private static BookAbstracts getBookAbstractsInstance() {
+        return new BookAbstracts.Builder()
+                .withPages(generateMonographPages("i", "xx", "221", true))
+                .build();
+    }
+
+    private static BookAnthology getBookAnthologyInstance() {
         return new BookAnthology.Builder()
                    .withPages(generateMonographPages("i", "xx", "221", true))
                    .withPeerReviewed(true)
                    .build();
     }
 
-    private static Reference getBookAnthologyReference() throws InvalidIsbnException {
+    private static BookMonograph getBookMonographInstance() {
+        return new BookMonograph.Builder()
+                .withPages(generateMonographPages("i", "xx", "221", true))
+                .withPeerReviewed(true)
+                .build();
+    }
+
+    private static ChapterArticle getChapterArticleInstance() {
+        return new ChapterArticle.Builder()
+                .withPages(getPages())
+                .withPeerReviewed(true)
+                .withContentType(ChapterArticleContentType.ACADEMIC_CHAPTER)
+                .withOriginalResearch(true)
+                .build();
+    }
+
+    private static DegreeBachelor getDegreeBachelorInstance() {
+        return new DegreeBachelor.Builder()
+                .withPages(generateMonographPages("i", "xx", "221", true))
+                .withSubmittedDate(getPublicationDate())
+                .build();
+    }
+
+    private static DegreeMaster getDegreeMasterInstance() {
+        return new DegreeMaster.Builder()
+                .withPages(generateMonographPages("i", "xx", "221", true))
+                .withSubmittedDate(getPublicationDate())
+                .build();
+    }
+
+    private static DegreePhd getDegreePhdInstance() {
+        return new DegreePhd.Builder()
+                .withPages(generateMonographPages("i", "xx", "221", true))
+                .withSubmittedDate(getPublicationDate())
+                .build();
+    }
+
+    private static FeatureArticle getFeatureArticleInstance() {
+        return new FeatureArticle.Builder()
+                .withArticleNumber("11111")
+                .withIssue("1")
+                .withPages(getPages())
+                .withVolume("2")
+                .build();
+    }
+
+    private static JournalArticle getJournalArticleInstance() {
+        return new JournalArticle.Builder()
+                .withArticleNumber("11111")
+                .withIssue("1")
+                .withPages(getPages())
+                .withPeerReviewed(true)
+                .withContent(JournalArticleContentType.REVIEW_ARTICLE)
+                .withVolume("2")
+                .withOriginalResearch(true)
+                .build();
+    }
+
+    private static JournalCorrigendum getJournalCorrigendumInstance() {
+        return new JournalCorrigendum.Builder()
+                .withIssue("1")
+                .withPages(getPages())
+                .withCorrigendumFor(SOME_URI)
+                .withArticleNumber("11111")
+                .withVolume("2")
+                .build();
+    }
+
+    private static JournalInterview getJournalInterviewInstance() {
+        return new JournalInterview.Builder()
+                .withArticleNumber("11111")
+                .withPages(getPages())
+                .withVolume("2")
+                .withIssue("1")
+                .build();
+    }
+
+    private static JournalLeader getJournalLeaderInstance() {
+        return new JournalLeader.Builder()
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .build();
+    }
+
+    private static JournalLetter getJournalLetterInstance() {
+        return new JournalLetter.Builder()
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .build();
+    }
+
+    private static PublicationInstance<Range> getJournalReviewInstance() {
+        return new JournalReview.Builder()
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .build();
+    }
+
+    private static JournalShortCommunication getJournalShortCommunicationInstance() {
+        return new JournalShortCommunication.Builder()
+                .withArticleNumber("213222")
+                .withIssue("5")
+                .withVolume("27")
+                .withPages(getPages())
+                .build();
+    }
+
+    private static OtherStudentWork getOtherStudentWorkInstance() {
+        return new OtherStudentWork.Builder()
+                .withPages(generateMonographPages())
+                .withSubmittedDate(getPublicationDate())
+                .build();
+    }
+
+    private static ReportBasic getReportBasicInstance() {
+        return new ReportBasic.Builder()
+                .withPages(generateMonographPages())
+                .build();
+    }
+
+    private static ReportPolicy getReportPolicyInstance() {
+        return new ReportPolicy.Builder()
+                .withPages(generateMonographPages())
+                .build();
+    }
+
+    private static ReportResearch getReportResearchInstance() {
+        return new ReportResearch.Builder()
+                .withPages(generateMonographPages())
+                .build();
+    }
+
+    private static ReportWorkingPaper getReportWorkingPaperInstance() {
+        return new ReportWorkingPaper.Builder()
+                .withPages(generateMonographPages())
+                .build();
+    }
+
+    private static Reference generateReference(PublicationContext context, PublicationInstance<?> instance) {
         return new Reference.Builder()
-                   .withDoi(SOME_URI)
-                   .withPublishingContext(getPublishingContextBook())
-                   .withPublicationInstance(getBookAnthologyInstance())
-                   .build();
+                .withDoi(SOME_URI)
+                .withPublishingContext(context)
+                .withPublicationInstance(instance)
+                .build();
     }
 
     private static EntityDescription generateEntityDescriptionBookMonograph() throws MalformedContributorException,
                                                                                      InvalidIsbnException {
         return getEntityDescription(getBookMonographReference());
-    }
-
-    private static Reference getJournalLeaderReference() throws InvalidIssnException {
-        return new Reference.Builder()
-                   .withPublishingContext(getPublishingContextJournal())
-                   .withDoi(SOME_URI)
-                   .withPublicationInstance(getPublicationInstanceJournalLeader())
-                   .build();
-    }
-
-    private static Reference getJournalLetterReference() throws InvalidIssnException {
-        return new Reference.Builder()
-                   .withPublishingContext(getPublishingContextJournal())
-                   .withDoi(SOME_URI)
-                   .withPublicationInstance(getPublicationInstanceJournalLetter())
-                   .build();
-    }
-
-    private static Reference getJournalReviewReference() throws InvalidIssnException {
-        return new Reference.Builder()
-                   .withPublishingContext(getPublishingContextJournal())
-                   .withDoi(SOME_URI)
-                   .withPublicationInstance(getPublicationInstanceJournalReview())
-                   .build();
-    }
-
-    private static Reference getJournalShortCommunicationReference() throws InvalidIssnException {
-        return new Reference.Builder()
-                   .withPublishingContext(getPublishingContextJournal())
-                   .withDoi(SOME_URI)
-                   .withPublicationInstance(getPublicationInstanceJournalShortCommunication())
-                   .build();
     }
 
     private static Reference getBookMonographReference() throws InvalidIsbnException {
@@ -365,49 +545,39 @@ public class PublicationGenerator extends ModelTest {
                    .build();
     }
 
-    private static PublicationInstance<Range> getPublicationInstanceJournalLeader() {
-        return new JournalLeader.Builder()
-                   .withArticleNumber("213222")
-                   .withIssue("5")
-                   .withVolume("27")
-                   .withPages(getPages())
-                   .build();
-    }
-
-    private static PublicationInstance<Range> getPublicationInstanceJournalLetter() {
-        return new JournalLetter.Builder()
-                   .withArticleNumber("213222")
-                   .withIssue("5")
-                   .withVolume("27")
-                   .withPages(getPages())
-                   .build();
-    }
-
-    private static PublicationInstance<Range> getPublicationInstanceJournalReview() {
-        return new JournalReview.Builder()
-                   .withArticleNumber("213222")
-                   .withIssue("5")
-                   .withVolume("27")
-                   .withPages(getPages())
-                   .build();
-    }
-
-    private static PublicationInstance<Range> getPublicationInstanceJournalShortCommunication() {
-        return new JournalShortCommunication.Builder()
-                   .withArticleNumber("213222")
-                   .withIssue("5")
-                   .withVolume("27")
-                   .withPages(getPages())
-                   .build();
-    }
-
     private static BasicContext getPublishingContextBook() throws InvalidIsbnException {
-        return new Book.Builder()
+        return new Book.BookBuilder()
                    .withIsbnList(List.of("9780201309515"))
                    .withPublisher("My publisher dot com")
                    .withSeriesNumber("123")
-                   .withSeriesTitle("Explorations in ego")
+                   .withSeries(new UnconfirmedSeries("Explorations in ego"))
                    .build();
+    }
+
+    private static Chapter getPublishingContextChapter() {
+        return new Chapter.Builder()
+                .withPartOf(SOME_URI)
+                .build();
+    }
+
+    private static BasicContext getPublishingContextDegree() throws InvalidIsbnException {
+        return new Degree.Builder()
+                .withIsbnList(List.of("9780201309515"))
+                .withPublisher("My publisher dot com")
+                .withSeriesNumber("123")
+                .withSeries(new UnconfirmedSeries("Explorations in ego"))
+                .build();
+    }
+
+    private static Report getPublishingContextReport() throws InvalidIssnException, InvalidIsbnException {
+        return new Report.Builder()
+                .withIsbnList(List.of("9780201309515"))
+                .withPublisher("Hello cheesy world of anaemic flavours publishing")
+                .withSeries(new UnconfirmedSeries("Strøsand and Muck in context"))
+                .withSeriesNumber("221")
+                .withOnlineIssn("2222-2227")
+                .withPrintIssn("2222-2227")
+                .build();
     }
 
     private static String randomWord() {

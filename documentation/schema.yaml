@@ -116,11 +116,11 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
+        series:
+          $ref: '#/components/schemas/BookSeries'
         seriesTitle:
           type: string
-        seriesUri:
-          type: string
-          format: uri
+          writeOnly: true
         seriesNumber:
           type: string
         publisher:
@@ -187,21 +187,15 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
-  Cartograph:
+  BookSeries:
     required:
     - type
     type: object
+    properties:
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationContext'
-    - type: object
-      properties:
-        partOf:
-          type: string
-          format: uri
-        type:
-          type: string
   Chapter:
     required:
     - type
@@ -301,11 +295,11 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
+        series:
+          $ref: '#/components/schemas/BookSeries'
         seriesTitle:
           type: string
-        seriesUri:
-          type: string
-          format: uri
+          writeOnly: true
         seriesNumber:
           type: string
         publisher:
@@ -743,33 +737,6 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
-  MusicNotation:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/Range'
-        ismn:
-          type: string
-        formattedIsmn:
-          type: string
-        type:
-          type: string
-  MusicalContent:
-    type: object
-    allOf:
-    - $ref: '#/components/schemas/PublicationContext'
-    - type: object
-      properties:
-        partOf:
-          type: string
-          format: uri
   Organization:
     required:
     - type
@@ -905,10 +872,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
@@ -948,11 +915,11 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
+        series:
+          $ref: '#/components/schemas/BookSeries'
         seriesTitle:
           type: string
-        seriesUri:
-          type: string
-          format: uri
+          writeOnly: true
         seriesNumber:
           type: string
         publisher:
@@ -1043,6 +1010,21 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Series:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/BookSeries'
+    - type: object
+      properties:
+        id:
+          type: string
+          format: uri
+        type:
+          type: string
   SortableIdentifier:
     type: object
   UnconfirmedJournal:
@@ -1060,6 +1042,20 @@ referencedSchemas:
         printIssn:
           type: string
         onlineIssn:
+          type: string
+        type:
+          type: string
+  UnconfirmedSeries:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/BookSeries'
+    - type: object
+      properties:
+        title:
           type: string
         type:
           type: string

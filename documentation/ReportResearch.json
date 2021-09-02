@@ -70,24 +70,30 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "UnconfirmedJournal",
-        "title" : "Tim's lovely publishing house",
-        "printIssn" : "1111-1119",
+        "type" : "Report",
+        "series" : {
+          "type" : "UnconfirmedSeries",
+          "title" : "Strøsand and Muck in context"
+        },
+        "seriesNumber" : "221",
+        "publisher" : "Hello cheesy world of anaemic flavours publishing",
+        "isbnList" : [ "9780201309515" ],
+        "printIssn" : "2222-2227",
         "onlineIssn" : "2222-2227"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "JournalArticle",
-        "volume" : "24",
-        "issue" : "2",
-        "articleNumber" : "1234456",
-        "contentType" : "Professional article",
-        "peerReviewed" : true,
-        "originalResearch" : false,
+        "type" : "ReportResearch",
+        "peerReviewed" : false,
         "pages" : {
-          "type" : "Range",
-          "begin" : "1",
-          "end" : "15"
+          "type" : "MonographPages",
+          "introduction" : {
+            "type" : "Range",
+            "begin" : "i",
+            "end" : "ix"
+          },
+          "pages" : "321",
+          "illustrated" : true
         }
       }
     },
