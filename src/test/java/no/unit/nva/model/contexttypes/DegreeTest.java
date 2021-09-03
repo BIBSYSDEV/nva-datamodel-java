@@ -76,7 +76,7 @@ class DegreeTest extends ModelTest {
         Degree degree = new Degree.Builder()
                 .withSeries(new UnconfirmedSeries(seriesTitle))
                 .withSeriesNumber(seriesNumber)
-                .withPublisher(publisher)
+                .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(expectedIsbnList)
                 .build();
         String expectedJson = generatePublicationJson(
@@ -110,7 +110,7 @@ class DegreeTest extends ModelTest {
         Executable executable = () -> new Degree.Builder()
                 .withSeries(new UnconfirmedSeries(seriesTitle))
                 .withSeriesNumber(seriesNumber)
-                .withPublisher(publisher)
+                .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(invalidIsbnList)
                 .build();
 

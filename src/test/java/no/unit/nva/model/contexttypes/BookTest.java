@@ -28,11 +28,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BookTest extends ModelTest {
@@ -122,12 +120,12 @@ class BookTest extends ModelTest {
                                                                   String seriesNumber,
                                                                   String publisher,
                                                                   String isbnList) throws JsonProcessingException,
-                                                                                          InvalidIsbnException {
+            InvalidIsbnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Book book = new Book.BookBuilder()
             .withSeries(new UnconfirmedSeries(seriesTitle))
             .withSeriesNumber(seriesNumber)
-            .withPublisher(publisher)
+            .withPublisher(new UnconfirmedPublisher(publisher))
             .withIsbnList(expectedIsbnList)
             .build();
         String expectedJson = generatePublicationJson(

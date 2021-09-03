@@ -124,7 +124,7 @@ referencedSchemas:
         seriesNumber:
           type: string
         publisher:
-          type: string
+          $ref: '#/components/schemas/PublishingHouse'
         isbnList:
           type: array
           items:
@@ -303,7 +303,7 @@ referencedSchemas:
         seriesNumber:
           type: string
         publisher:
-          type: string
+          $ref: '#/components/schemas/PublishingHouse'
         isbnList:
           type: array
           items:
@@ -880,6 +880,24 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Publisher:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublishingHouse'
+    - type: object
+      properties:
+        id:
+          type: string
+          format: uri
+  PublishingHouse:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Range:
     required:
     - type
@@ -923,7 +941,7 @@ referencedSchemas:
         seriesNumber:
           type: string
         publisher:
-          type: string
+          $ref: '#/components/schemas/PublishingHouse'
         isbnList:
           type: array
           items:
@@ -1042,6 +1060,20 @@ referencedSchemas:
         printIssn:
           type: string
         onlineIssn:
+          type: string
+        type:
+          type: string
+  UnconfirmedPublisher:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublishingHouse'
+    - type: object
+      properties:
+        name:
           type: string
         type:
           type: string

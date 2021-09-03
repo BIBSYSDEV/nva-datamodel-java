@@ -106,7 +106,7 @@ public class ModelTest implements JsonHandlingTest {
 
         jsonNode.set(SERIES, generateUnconfirmedSeriesJson(seriesTitle));
         jsonNode.put(SERIES_NUMBER, seriesNumber);
-        jsonNode.put(PUBLISHER, publisher);
+        jsonNode.set(PUBLISHER, generateUnconfirmedPublishersJson(publisher));
         jsonNode.set(ISBN_LIST, arrayNode(isbnList));
         if (nonNull(partOf)) {
             jsonNode.put(PART_OF, partOf.toString());
@@ -124,6 +124,13 @@ public class ModelTest implements JsonHandlingTest {
         ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
         jsonNode.put("type", "UnconfirmedSeries");
         jsonNode.put("title", seriesTitle);
+        return jsonNode;
+    }
+
+    private static JsonNode generateUnconfirmedPublishersJson(String publisher) {
+        ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
+        jsonNode.put("type", "UnconfirmedPublisher");
+        jsonNode.put("name", publisher);
         return jsonNode;
     }
 

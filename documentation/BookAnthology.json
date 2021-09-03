@@ -76,7 +76,10 @@
           "title" : "Explorations in ego"
         },
         "seriesNumber" : "123",
-        "publisher" : "My publisher dot com",
+        "publisher" : {
+          "type" : "UnconfirmedPublisher",
+          "name" : "My publisher dot com"
+        },
         "isbnList" : [ "9780201309515" ]
       },
       "doi" : "https://123123/213123.com",
@@ -143,5 +146,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
-  "modelVersion" : "0.12.4"
+  "modelVersion" : "0.12.5"
 }

@@ -22,14 +22,16 @@ public class Book implements BasicContext {
 
     private final BookSeries series;
     private final String seriesNumber;
-    private final String publisher;
+
+    private final PublishingHouse publisher;
     private final List<String> isbnList;
 
     public Book(@JsonProperty("series") BookSeries series,
                 @JsonProperty("seriesTitle") String seriesTitle,
                 @JsonProperty("seriesNumber") String seriesNumber,
-                @JsonProperty("publisher") String publisher,
-                @JsonProperty("isbnList") List<String> isbnList) throws InvalidIsbnException {
+                @JsonProperty("publisher") PublishingHouse publisher,
+                @JsonProperty("isbnList") List<String> isbnList)
+            throws InvalidIsbnException {
         if (nonNull(seriesTitle) && isNull(series)) {
             this.series = new UnconfirmedSeries(seriesTitle);
         } else {
@@ -40,7 +42,8 @@ public class Book implements BasicContext {
         this.isbnList = extractValidIsbnList(isbnList);
     }
 
-    private Book(BookSeries series, String seriesNumber, String publisher, List<String> isbnList)
+
+    private Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList)
             throws InvalidIsbnException {
         this.series = series;
         this.seriesNumber = seriesNumber;
@@ -56,7 +59,7 @@ public class Book implements BasicContext {
         return seriesNumber;
     }
 
-    public String getPublisher() {
+    public PublishingHouse getPublisher() {
         return publisher;
     }
 
@@ -100,7 +103,7 @@ public class Book implements BasicContext {
     public static final class BookBuilder {
         private BookSeries series;
         private String seriesNumber;
-        private String publisher;
+        private PublishingHouse publisher;
         private List<String> isbnList;
 
         public BookBuilder() {
@@ -116,7 +119,7 @@ public class Book implements BasicContext {
             return this;
         }
 
-        public BookBuilder withPublisher(String publisher) {
+        public BookBuilder withPublisher(PublishingHouse publisher) {
             this.publisher = publisher;
             return this;
         }

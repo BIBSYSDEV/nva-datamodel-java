@@ -15,7 +15,7 @@ public class Degree extends Book {
     public Degree(@JsonProperty("series") BookSeries series,
                   @JsonProperty("seriesTitle") String seriesTitle,
                   @JsonProperty("seriesNumber") String seriesNumber,
-                  @JsonProperty("publisher") String publisher,
+                  @JsonProperty("publisher") PublishingHouse publisher,
                   @JsonProperty("isbnList") List<String> isbnList)
             throws InvalidIsbnException {
         super(series, seriesTitle, seriesNumber, publisher, isbnList);
@@ -28,7 +28,7 @@ public class Degree extends Book {
     public static final class Builder {
         private BookSeries series;
         private String seriesNumber;
-        private String publisher;
+        private PublishingHouse publisher;
         private List<String> isbnList;
 
         public Builder() {
@@ -44,7 +44,7 @@ public class Degree extends Book {
             return this;
         }
 
-        public Builder withPublisher(String publisher) {
+        public Builder withPublisher(PublishingHouse publisher) {
             this.publisher = publisher;
             return this;
         }

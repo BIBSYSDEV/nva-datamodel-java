@@ -28,6 +28,7 @@ import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.UnconfirmedJournal;
+import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
@@ -89,8 +90,7 @@ public class PublicationGenerator extends ModelTest {
      * @throws InvalidIsbnException          with Isbn is invalid.
      */
     public static Publication generatePublication(String type) throws InvalidIssnException,
-            MalformedContributorException,
-            InvalidIsbnException {
+            MalformedContributorException, InvalidIsbnException {
         Reference reference;
         switch (type) {
             case "BookAbstracts":
@@ -200,7 +200,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static Publication generateBookMonographPublication() throws MalformedContributorException,
-                                                                        InvalidIsbnException {
+            InvalidIsbnException {
         return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
                                    generateEntityDescriptionBookMonograph());
     }
@@ -533,7 +533,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     private static EntityDescription generateEntityDescriptionBookMonograph() throws MalformedContributorException,
-                                                                                     InvalidIsbnException {
+            InvalidIsbnException {
         return getEntityDescription(getBookMonographReference());
     }
 
@@ -548,7 +548,7 @@ public class PublicationGenerator extends ModelTest {
     private static BasicContext getPublishingContextBook() throws InvalidIsbnException {
         return new Book.BookBuilder()
                    .withIsbnList(List.of("9780201309515"))
-                   .withPublisher("My publisher dot com")
+                   .withPublisher(new UnconfirmedPublisher("My publisher dot com"))
                    .withSeriesNumber("123")
                    .withSeries(new UnconfirmedSeries("Explorations in ego"))
                    .build();
@@ -563,7 +563,7 @@ public class PublicationGenerator extends ModelTest {
     private static BasicContext getPublishingContextDegree() throws InvalidIsbnException {
         return new Degree.Builder()
                 .withIsbnList(List.of("9780201309515"))
-                .withPublisher("My publisher dot com")
+                .withPublisher(new UnconfirmedPublisher("My publisher dot com"))
                 .withSeriesNumber("123")
                 .withSeries(new UnconfirmedSeries("Explorations in ego"))
                 .build();
@@ -572,7 +572,7 @@ public class PublicationGenerator extends ModelTest {
     private static Report getPublishingContextReport() throws InvalidIssnException, InvalidIsbnException {
         return new Report.Builder()
                 .withIsbnList(List.of("9780201309515"))
-                .withPublisher("Hello cheesy world of anaemic flavours publishing")
+                .withPublisher(new UnconfirmedPublisher("Hello cheesy world of anaemic flavours publishing"))
                 .withSeries(new UnconfirmedSeries("Strøsand and Muck in context"))
                 .withSeriesNumber("221")
                 .withOnlineIssn("2222-2227")
