@@ -881,7 +881,11 @@ referencedSchemas:
     discriminator:
       propertyName: type
   Publisher:
+    required:
+    - type
     type: object
+    discriminator:
+      propertyName: type
     allOf:
     - $ref: '#/components/schemas/PublishingHouse'
     - type: object
@@ -889,6 +893,8 @@ referencedSchemas:
         id:
           type: string
           format: uri
+        type:
+          type: string
   PublishingHouse:
     required:
     - type
