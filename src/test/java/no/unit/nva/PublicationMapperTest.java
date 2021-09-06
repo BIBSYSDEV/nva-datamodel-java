@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 import no.unit.nva.api.CreatePublicationRequest;
 import no.unit.nva.api.PublicationResponse;
@@ -51,6 +52,7 @@ public class PublicationMapperTest {
         request.setEntityDescription(generateEntityDescriptionJournalArticle());
         request.setProjects(getProjects());
         request.setFileSet(getFileSet(UUID.randomUUID()));
+        request.setSubjects(getSubjects());
         request.setContext(SOME_CONTEXT);
 
         Publication publication = PublicationMapper.toExistingPublication(request,
@@ -58,6 +60,11 @@ public class PublicationMapperTest {
 
         assertNotNull(publication);
         assertNotEquals(publication.getCreatedDate(), publication.getModifiedDate());
+        assertEquals(getSubjects(), publication.getSubjects());
+    }
+
+    private List<URI> getSubjects() {
+        return List.of(URI.create("http://uri.to.subject"));
     }
 
     @Test

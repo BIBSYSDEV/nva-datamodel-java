@@ -21,8 +21,8 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
     private FileSet fileSet;
     @JsonProperty("@context")
     private JsonNode context;
-    private Boolean doiRequested;
     private List<ResearchProject> projects;
+    private List<URI> subjects;
 
     @Override
     public EntityDescription getEntityDescription() {
@@ -42,6 +42,16 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
     @Override
     public void setProjects(List<ResearchProject> projects) {
         this.projects = projects;
+    }
+
+    @Override
+    public List<URI> getSubjects() {
+        return subjects;
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
     }
 
     @Override
@@ -87,13 +97,14 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
         return Objects.equals(getEntityDescription(), that.getEntityDescription())
                 && Objects.equals(getFileSet(), that.getFileSet())
                 && Objects.equals(getContext(), that.getContext())
-                && Objects.equals(doiRequested, that.doiRequested)
-                && Objects.equals(getProjects(), that.getProjects());
+                && Objects.equals(getProjects(), that.getProjects())
+                && Objects.equals(getSubjects(), that.getSubjects());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getEntityDescription(), getFileSet(), getContext(), doiRequested, getProjects());
+        return Objects.hash(getEntityDescription(), getFileSet(), getContext(), getProjects(),
+                getSubjects());
     }
 }
