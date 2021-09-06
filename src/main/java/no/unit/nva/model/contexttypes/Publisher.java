@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nva.commons.core.JacocoGenerated;
@@ -11,6 +12,7 @@ import java.util.Objects;
 public class Publisher implements PublishingHouse {
     private final URI id;
 
+    @JsonCreator
     public Publisher(@JsonProperty("id") URI id) {
         this.id = id;
     }
