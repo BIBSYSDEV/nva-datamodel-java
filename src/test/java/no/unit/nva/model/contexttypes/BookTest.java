@@ -190,8 +190,8 @@ class BookTest extends ModelTest {
     @DisplayName("No-digits are removed from isbn upon creation of a Book with deserialization.")
     @ParameterizedTest
     @CsvSource({
-            "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
-            "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
+        "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
+        "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
     })
     void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String expectedIsbn, String inputIsbn)
             throws InvalidIsbnException, IOException {
@@ -209,8 +209,8 @@ class BookTest extends ModelTest {
     @DisplayName("No-digits are removed from isbn upon creation of a Book using the builder")
     @ParameterizedTest
     @CsvSource({
-            "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
-            "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
+        "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
+        "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
     })
     void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookUsingTheBuilder(String expectedIsbn, String inputIsbn)
             throws InvalidIsbnException {
