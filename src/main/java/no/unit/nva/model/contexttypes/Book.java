@@ -23,6 +23,7 @@ public class Book implements BasicContext {
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
     public static final Pattern EXPECTED_SERIES_URI_PATTERN =
         Pattern.compile("https://.*?nva\\.aws\\.unit\\.no/publication-channels/.*");
+    public static final String ONLY_DIGITS_REGEX = "[\\D.]";
     @Deprecated
     private String seriesTitle;
     private URI seriesUri;
@@ -87,6 +88,7 @@ public class Book implements BasicContext {
             return;
         }
         List<String> validIsbns = isbnList.stream()
+            .map(isbn -> isbn.replaceAll(ONLY_DIGITS_REGEX, ""))
             .map(ISBN_VALIDATOR::validate)
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
