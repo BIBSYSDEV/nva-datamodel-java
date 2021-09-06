@@ -37,6 +37,7 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
+import no.unit.nva.model.instancetypes.book.BookMonographContentType;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticleContentType;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
@@ -65,6 +66,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -203,6 +205,44 @@ public class PublicationGenerator extends ModelTest {
                                                                         InvalidIsbnException {
         return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
                                    generateEntityDescriptionBookMonograph());
+    }
+
+    public static Publication generateBookMonographWithUnconfirmedSeriesTitleString() throws InvalidIsbnException,
+            InvalidUnconfirmedSeriesException, MalformedContributorException {
+
+        var context = new Book(null,
+                "Some wild series title",
+                "2",
+                "Hansome publishing cowpoke",
+                Collections.emptyList());
+        var instance = new BookMonograph.Builder()
+                .withPages(generateMonographPages())
+                .withPeerReviewed(false)
+                .withContentType(BookMonographContentType.ACADEMIC_MONOGRAPH)
+                .withOriginalResearch(true)
+                .withTextbookContent(false)
+                .build();
+        var reference = new Reference.Builder()
+                .withPublishingContext(context)
+                .withPublicationInstance(instance)
+                .withDoi(SOME_URI)
+                .build();
+
+        var entityDescription = new EntityDescription.Builder()
+                .withReference(reference)
+                .withDescription("Yes, a description")
+                .withAbstract("Irrelevant abstract")
+                .withAlternativeTitles(Map.of("en", "Alternative title", "nb", "Alternativ tittel"))
+                .withContributors(List.of(generateContributor()))
+                .withDate(getPublicationDate())
+                .withMainTitle("A funky main title")
+                .withLanguage(SOME_URI)
+                .withMetadataSource(SOME_URI)
+                .withTags(List.of("tiny", "happy", "trolls"))
+                .withNpiSubjectHeading("Soulfulness")
+                .build();
+
+        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(), entityDescription);
     }
 
     public static List<ResearchProject> getProjects() {
