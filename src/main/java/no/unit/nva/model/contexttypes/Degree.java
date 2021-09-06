@@ -18,7 +18,7 @@ public class Degree extends Book {
     public Degree(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
                   @JsonProperty(value = JSON_PROPERTY_SERIES_TITLE, access = WRITE_ONLY) String unconfirmedSeriesTitle,
                   @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
-                  @JsonProperty(JSON_PROPERTY_PUBLISHER) String publisher,
+                  @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                   @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList)
             throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
         super(series, unconfirmedSeriesTitle, seriesNumber, publisher, isbnList);

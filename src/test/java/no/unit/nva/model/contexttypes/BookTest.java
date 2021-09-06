@@ -190,7 +190,7 @@ class BookTest extends ModelTest {
                 new UnconfirmedSeries(SOME_SERIES_TITLE),
                 SOME_SERIES_TITLE,
                 "1",
-                "Publisher",
+                new UnconfirmedPublisher("Publisher"),
                 emptyList())
         );
     }
@@ -201,7 +201,7 @@ class BookTest extends ModelTest {
                 new UnconfirmedSeries(SOME_SERIES_TITLE),
                 SOME_OTHER_SERIES_TITLE,
                 "1",
-                "Publisher",
+                new UnconfirmedPublisher("Publisher"),
                 emptyList());
         Exception exception = assertThrows(InvalidUnconfirmedSeriesException.class, executable);
         assertThat(exception.getMessage(), equalTo(InvalidUnconfirmedSeriesException.ERROR_MESSAGE));
@@ -215,7 +215,7 @@ class BookTest extends ModelTest {
                 new Series(seriesUri),
                 SOME_SERIES_TITLE,
                 "1",
-                "Publisher",
+                new UnconfirmedPublisher("Publisher"),
                 emptyList());
         assertTrue(book.getSeries().isConfirmed());
         assertThat(((Series) book.getSeries()).getId(), equalTo(seriesUri));

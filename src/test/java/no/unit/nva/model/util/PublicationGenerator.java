@@ -214,7 +214,7 @@ public class PublicationGenerator extends ModelTest {
         var context = new Book(null,
                 "Some wild series title",
                 "2",
-                "Hansome publishing cowpoke",
+                new UnconfirmedPublisher("Hansome publishing cowpoke"),
                 Collections.emptyList());
         var instance = new BookMonograph.Builder()
                 .withPages(generateMonographPages())
