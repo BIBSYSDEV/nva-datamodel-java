@@ -20,6 +20,11 @@ public class UnconfirmedSeries implements BookSeries {
         return title;
     }
 
+    @Override
+    public boolean isConfirmed() {
+        return false;
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {

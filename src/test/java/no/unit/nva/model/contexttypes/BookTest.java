@@ -33,6 +33,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest extends ModelTest {
 
@@ -204,5 +205,19 @@ class BookTest extends ModelTest {
                 emptyList());
         Exception exception = assertThrows(InvalidUnconfirmedSeriesException.class, executable);
         assertThat(exception.getMessage(), equalTo(InvalidUnconfirmedSeriesException.ERROR_MESSAGE));
+    }
+
+    @Test
+    void bookIgnoresSeriesTitleStringWhenInputIsSeriesTitleAndConfirmedSeries() throws InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
+        var seriesUri = URI.create("https://nva.aws.unit.no/publication-channels/series/123123");
+        var book = new Book(
+                new Series(seriesUri),
+                SOME_SERIES_TITLE,
+                "1",
+                "Publisher",
+                emptyList());
+        assertTrue(book.getSeries().isConfirmed());
+        assertThat(((Series) book.getSeries()).getId(), equalTo(seriesUri));
     }
 }

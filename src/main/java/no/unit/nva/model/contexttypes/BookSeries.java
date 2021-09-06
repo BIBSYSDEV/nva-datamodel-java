@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -9,4 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(name = "UnconfirmedSeries", value = UnconfirmedSeries.class)
 })
 public interface BookSeries {
+
+    @JsonIgnore
+    boolean isConfirmed();
 }

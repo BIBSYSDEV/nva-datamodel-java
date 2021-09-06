@@ -47,6 +47,11 @@ public class Book implements BasicContext {
 
     private BookSeries extractSeriesInformation(BookSeries series, String unconfirmedSeriesTitle)
             throws InvalidUnconfirmedSeriesException {
+
+        if (nonNull(series) && series.isConfirmed()) {
+            return series;
+        }
+
         validateUnconfirmedSeries(series, unconfirmedSeriesTitle);
 
         if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
@@ -65,7 +70,7 @@ public class Book implements BasicContext {
     }
 
     private boolean hasUnmatchedSeriesStringValues(BookSeries series, String unconfirmedSeriesTitle) {
-        return series instanceof UnconfirmedSeries
+        return !series.isConfirmed()
                 && !((UnconfirmedSeries) series).getTitle().equals(unconfirmedSeriesTitle);
     }
 
