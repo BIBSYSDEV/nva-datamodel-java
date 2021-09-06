@@ -15,11 +15,11 @@ public class Report extends Book implements SerialPublication, BasicContext {
     private final String printIssn;
     private final String onlineIssn;
 
-    public Report(@JsonProperty("series") BookSeries series,
-                  @JsonProperty("seriesTitle") String seriesTitle,
-                  @JsonProperty("seriesNumber") String seriesNumber,
-                  @JsonProperty("publisher") String publisher,
-                  @JsonProperty("isbnList") List<String> isbnList,
+    public Report(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
+                  @JsonProperty(JSON_PROPERTY_SERIES_TITLE) String seriesTitle,
+                  @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
+                  @JsonProperty(JSON_PROPERTY_PUBLISHER) String publisher,
+                  @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList,
                   @JsonProperty("printIssn") String printIssn,
                   @JsonProperty("onlineIssn") String onlineIssn)
             throws InvalidIsbnException, InvalidIssnException, InvalidUnconfirmedSeriesException {

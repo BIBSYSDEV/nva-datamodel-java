@@ -21,17 +21,22 @@ import static java.util.Objects.nonNull;
 public class Book implements BasicContext {
 
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
+    public static final String JSON_PROPERTY_SERIES = "series";
+    public static final String JSON_PROPERTY_SERIES_TITLE = "seriesTitle";
+    public static final String JSON_PROPERTY_SERIES_NUMBER = "seriesNumber";
+    public static final String JSON_PROPERTY_PUBLISHER = "publisher";
+    public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
 
     private final BookSeries series;
     private final String seriesNumber;
     private final String publisher;
     private final List<String> isbnList;
 
-    public Book(@JsonProperty("series") BookSeries series,
-                @JsonProperty(value = "seriesTitle", access = WRITE_ONLY) String unconfirmedSeriesTitle,
-                @JsonProperty("seriesNumber") String seriesNumber,
-                @JsonProperty("publisher") String publisher,
-                @JsonProperty("isbnList") List<String> isbnList) throws InvalidIsbnException,
+    public Book(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
+                @JsonProperty(value = JSON_PROPERTY_SERIES_TITLE, access = WRITE_ONLY) String unconfirmedSeriesTitle,
+                @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
+                @JsonProperty(JSON_PROPERTY_PUBLISHER) String publisher,
+                @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidIsbnException,
             InvalidUnconfirmedSeriesException {
 
         this.series = extractSeriesInformation(series, unconfirmedSeriesTitle);
