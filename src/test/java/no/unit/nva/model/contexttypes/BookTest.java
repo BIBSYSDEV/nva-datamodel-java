@@ -193,7 +193,8 @@ class BookTest extends ModelTest {
             "9788131700075",
             "9780201309515"
     })
-    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String isbn) throws InvalidIsbnException, IOException {
+    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String isbn)
+            throws InvalidIsbnException, IOException {
         Book actuallBook = randomBook();
         actuallBook.setIsbnList(convertIsbnStringToList(isbn));
         String actuallBookString = objectMapper.writeValueAsString(actuallBook);
