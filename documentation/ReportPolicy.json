@@ -76,7 +76,10 @@
           "title" : "Strøsand and Muck in context"
         },
         "seriesNumber" : "221",
-        "publisher" : "Hello cheesy world of anaemic flavours publishing",
+        "publisher" : {
+          "type" : "UnconfirmedPublisher",
+          "name" : "Hello cheesy world of anaemic flavours publishing"
+        },
         "isbnList" : [ "9780201309515" ],
         "printIssn" : "2222-2227",
         "onlineIssn" : "1111-1119"

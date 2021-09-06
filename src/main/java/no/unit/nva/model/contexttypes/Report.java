@@ -20,7 +20,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
     public Report(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
                   @JsonProperty(JSON_PROPERTY_SERIES_TITLE) String seriesTitle,
                   @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
-                  @JsonProperty(JSON_PROPERTY_PUBLISHER) String publisher,
+                  @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                   @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList,
                   @JsonProperty("printIssn") String printIssn,
                   @JsonProperty("onlineIssn") String onlineIssn)
@@ -49,7 +49,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
     public static final class Builder {
         private BookSeries series;
         private String seriesNumber;
-        private String publisher;
+        private PublishingHouse publisher;
         private List<String> isbnList;
         private String printIssn;
         private String onlineIssn;
@@ -67,7 +67,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
             return this;
         }
 
-        public Builder withPublisher(String publisher) {
+        public Builder withPublisher(PublishingHouse publisher) {
             this.publisher = publisher;
             return this;
         }

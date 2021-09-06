@@ -124,12 +124,12 @@ class BookTest extends ModelTest {
                                                                   String seriesNumber,
                                                                   String publisher,
                                                                   String isbnList) throws JsonProcessingException,
-                                                                                          InvalidIsbnException {
+            InvalidIsbnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Book book = new Book.BookBuilder()
             .withSeries(new UnconfirmedSeries(seriesTitle))
             .withSeriesNumber(seriesNumber)
-            .withPublisher(publisher)
+            .withPublisher(new UnconfirmedPublisher(publisher))
             .withIsbnList(expectedIsbnList)
             .build();
         String expectedJson = generatePublicationJson(
@@ -190,7 +190,7 @@ class BookTest extends ModelTest {
                 new UnconfirmedSeries(SOME_SERIES_TITLE),
                 SOME_SERIES_TITLE,
                 "1",
-                "Publisher",
+                new UnconfirmedPublisher("Publisher"),
                 emptyList())
         );
     }
@@ -201,7 +201,7 @@ class BookTest extends ModelTest {
                 new UnconfirmedSeries(SOME_SERIES_TITLE),
                 SOME_OTHER_SERIES_TITLE,
                 "1",
-                "Publisher",
+                new UnconfirmedPublisher("Publisher"),
                 emptyList());
         Exception exception = assertThrows(InvalidUnconfirmedSeriesException.class, executable);
         assertThat(exception.getMessage(), equalTo(InvalidUnconfirmedSeriesException.ERROR_MESSAGE));
@@ -215,7 +215,7 @@ class BookTest extends ModelTest {
                 new Series(seriesUri),
                 SOME_SERIES_TITLE,
                 "1",
-                "Publisher",
+                new UnconfirmedPublisher("Publisher"),
                 emptyList());
         assertTrue(book.getSeries().isConfirmed());
         assertThat(((Series) book.getSeries()).getId(), equalTo(seriesUri));
