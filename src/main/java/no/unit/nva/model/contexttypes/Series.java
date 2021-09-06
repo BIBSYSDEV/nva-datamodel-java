@@ -33,6 +33,10 @@ public class Series implements BookSeries {
         }
     }
 
+    @Override
+    public boolean isConfirmed() {
+        return true;
+    }
 
     @JacocoGenerated
     @Override

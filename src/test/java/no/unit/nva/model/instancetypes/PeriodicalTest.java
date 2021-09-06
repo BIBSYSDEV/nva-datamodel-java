@@ -58,7 +58,7 @@ public class PeriodicalTest {
     }
 
     @Test
-    public void seriesConstructorCreatesObjectWithId() throws JsonProcessingException {
+    public void canDeserializeJournalWithId() throws JsonProcessingException {
         String json = "{ \"type\": \"Journal\", \"id\": \"https://example.org/series\" }";
         Journal journal = objectMapper.readValue(json, Journal.class);
         assertNotNull(journal);
@@ -67,7 +67,7 @@ public class PeriodicalTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    void seriesConstructorThrowsExceptionWhenIdIsInvalid(String value) {
+    void deserializationThrowsExceptionWhenIdIsInvalid(String value) {
         String jsonizedValue = isNull(value) ? value : "\"" + value + "\"";
         String json = "{ \"type\": \"Journal\", \"id\": " + jsonizedValue + " }";
         Exception exception = assertThrows(Exception.class, () -> objectMapper.readValue(json, Journal.class));

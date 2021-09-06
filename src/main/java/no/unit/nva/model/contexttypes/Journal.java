@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
@@ -15,6 +16,7 @@ import static java.util.Objects.isNull;
 public class Journal implements Periodical, BasicContext {
     private final URI id;
 
+    @JsonCreator
     public Journal(@JsonProperty("id") String id) {
         if (isNull(id) || id.isEmpty()) {
             throw new InvalidSeriesException(id);

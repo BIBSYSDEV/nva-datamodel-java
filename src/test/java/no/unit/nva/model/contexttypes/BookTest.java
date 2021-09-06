@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
 import static no.unit.nva.utils.RandomPublicationContexts.randomBook;
@@ -32,11 +33,14 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String BOOK = "Book";
+    public static final String SOME_SERIES_TITLE = "Some series title";
+    public static final String SOME_OTHER_SERIES_TITLE = "Unmatched series title";
 
     @Test
     public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws InvalidIsbnException {
@@ -174,9 +178,46 @@ class BookTest extends ModelTest {
     @DisplayName("Book: Empty ISBNs are handled gracefully")
     @Test
     void bookReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException {
-        Book book = randomBook().copy().withIsbnList(Collections.emptyList()).build();
+        Book book = randomBook().copy().withIsbnList(emptyList()).build();
         List<String> resultIsbnList = book.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
+    }
+
+    @Test
+    void bookDoesNotThrowExceptionWhenInputUnconfirmedSeriesStringsMatch() {
+        assertDoesNotThrow(() -> new Book(
+                new UnconfirmedSeries(SOME_SERIES_TITLE),
+                SOME_SERIES_TITLE,
+                "1",
+                "Publisher",
+                emptyList())
+        );
+    }
+
+    @Test
+    void bookThrowsExceptionWhenInputUnconfirmedSeriesStringsAreUnmatched() {
+        Executable executable = () -> new Book(
+                new UnconfirmedSeries(SOME_SERIES_TITLE),
+                SOME_OTHER_SERIES_TITLE,
+                "1",
+                "Publisher",
+                emptyList());
+        Exception exception = assertThrows(InvalidUnconfirmedSeriesException.class, executable);
+        assertThat(exception.getMessage(), equalTo(InvalidUnconfirmedSeriesException.ERROR_MESSAGE));
+    }
+
+    @Test
+    void bookIgnoresSeriesTitleStringWhenInputIsSeriesTitleAndConfirmedSeries() throws InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
+        var seriesUri = URI.create("https://nva.aws.unit.no/publication-channels/series/123123");
+        var book = new Book(
+                new Series(seriesUri),
+                SOME_SERIES_TITLE,
+                "1",
+                "Publisher",
+                emptyList());
+        assertTrue(book.getSeries().isConfirmed());
+        assertThat(((Series) book.getSeries()).getId(), equalTo(seriesUri));
     }
 }

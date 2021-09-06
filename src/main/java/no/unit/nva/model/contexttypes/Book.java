@@ -3,6 +3,7 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -19,6 +21,11 @@ import static java.util.Objects.nonNull;
 public class Book implements BasicContext {
 
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
+    public static final String JSON_PROPERTY_SERIES = "series";
+    public static final String JSON_PROPERTY_SERIES_TITLE = "seriesTitle";
+    public static final String JSON_PROPERTY_SERIES_NUMBER = "seriesNumber";
+    public static final String JSON_PROPERTY_PUBLISHER = "publisher";
+    public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
 
     private final BookSeries series;
     private final String seriesNumber;
@@ -26,22 +33,51 @@ public class Book implements BasicContext {
     private final PublishingHouse publisher;
     private final List<String> isbnList;
 
-    public Book(@JsonProperty("series") BookSeries series,
-                @JsonProperty("seriesTitle") String seriesTitle,
-                @JsonProperty("seriesNumber") String seriesNumber,
-                @JsonProperty("publisher") PublishingHouse publisher,
-                @JsonProperty("isbnList") List<String> isbnList)
-            throws InvalidIsbnException {
-        if (nonNull(seriesTitle) && isNull(series)) {
-            this.series = new UnconfirmedSeries(seriesTitle);
-        } else {
-            this.series = series;
-        }
+    public Book(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
+                @JsonProperty(value = JSON_PROPERTY_SERIES_TITLE, access = WRITE_ONLY) String unconfirmedSeriesTitle,
+                @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
+                @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
+                @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
+
+        this.series = extractSeriesInformation(series, unconfirmedSeriesTitle);
         this.seriesNumber = seriesNumber;
         this.publisher = publisher;
         this.isbnList = extractValidIsbnList(isbnList);
     }
 
+    private BookSeries extractSeriesInformation(BookSeries series, String unconfirmedSeriesTitle)
+            throws InvalidUnconfirmedSeriesException {
+
+        if (nonNull(series) && series.isConfirmed()) {
+            return series;
+        }
+
+        validateUnconfirmedSeries(series, unconfirmedSeriesTitle);
+
+        if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
+            return new UnconfirmedSeries(unconfirmedSeriesTitle);
+        } else {
+            return series;
+        }
+    }
+
+    private void validateUnconfirmedSeries(BookSeries series, String unconfirmedSeriesTitle)
+            throws InvalidUnconfirmedSeriesException {
+        if (hasSeriesStringAndSeriesObject(series, unconfirmedSeriesTitle)
+                && hasUnmatchedSeriesStringValues(series, unconfirmedSeriesTitle)) {
+            throw new InvalidUnconfirmedSeriesException();
+        }
+    }
+
+    private boolean hasUnmatchedSeriesStringValues(BookSeries series, String unconfirmedSeriesTitle) {
+        return !series.isConfirmed()
+                && !((UnconfirmedSeries) series).getTitle().equals(unconfirmedSeriesTitle);
+    }
+
+    private boolean hasSeriesStringAndSeriesObject(BookSeries series, String unconfirmedSeriesTitle) {
+        return nonNull(series) && nonNull(unconfirmedSeriesTitle);
+    }
 
     private Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList)
             throws InvalidIsbnException {
@@ -51,7 +87,7 @@ public class Book implements BasicContext {
         this.isbnList = extractValidIsbnList(isbnList);
     }
 
-    public BookSeries getSeries()  {
+    public BookSeries getSeries() {
         return series;
     }
 

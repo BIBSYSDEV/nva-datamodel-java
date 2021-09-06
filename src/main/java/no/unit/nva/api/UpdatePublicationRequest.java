@@ -2,6 +2,8 @@ package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
@@ -18,11 +20,11 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
 
     private SortableIdentifier identifier;
     private EntityDescription entityDescription;
-    private ResearchProject project;
     private FileSet fileSet;
     @JsonProperty("@context")
     private JsonNode context;
     private List<ResearchProject> projects;
+    private List<URI> subjects;
 
     @Override
     public SortableIdentifier getIdentifier() {
@@ -54,6 +56,15 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
         this.projects = projects;
     }
 
+    @Override
+    public List<URI> getSubjects() {
+        return subjects;
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
+    }
 
 
     @Override
@@ -88,14 +99,14 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
         UpdatePublicationRequest that = (UpdatePublicationRequest) o;
         return Objects.equals(identifier, that.identifier)
             && Objects.equals(entityDescription, that.entityDescription)
-            && Objects.equals(project, that.project)
             && Objects.equals(fileSet, that.fileSet)
+            && Objects.equals(subjects, that.subjects)
             && Objects.equals(context, that.context);
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(identifier, entityDescription, project, fileSet, context);
+        return Objects.hash(identifier, entityDescription, fileSet, subjects, context);
     }
 }

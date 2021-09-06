@@ -5,23 +5,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 
 import java.util.List;
+
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Degree extends Book {
 
     @JsonCreator
-    public Degree(@JsonProperty("series") BookSeries series,
-                  @JsonProperty("seriesTitle") String seriesTitle,
-                  @JsonProperty("seriesNumber") String seriesNumber,
-                  @JsonProperty("publisher") PublishingHouse publisher,
-                  @JsonProperty("isbnList") List<String> isbnList)
-            throws InvalidIsbnException {
-        super(series, seriesTitle, seriesNumber, publisher, isbnList);
+    public Degree(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
+                  @JsonProperty(value = JSON_PROPERTY_SERIES_TITLE, access = WRITE_ONLY) String unconfirmedSeriesTitle,
+                  @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
+                  @JsonProperty(JSON_PROPERTY_PUBLISHER) String publisher,
+                  @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList)
+            throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
+        super(series, unconfirmedSeriesTitle, seriesNumber, publisher, isbnList);
     }
 
-    private Degree(Builder builder) throws InvalidIsbnException {
+    private Degree(Builder builder) throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
         super(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList);
     }
 
@@ -54,7 +57,7 @@ public class Degree extends Book {
             return this;
         }
 
-        public Degree build() throws InvalidIsbnException {
+        public Degree build() throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
             return new Degree(this);
         }
     }

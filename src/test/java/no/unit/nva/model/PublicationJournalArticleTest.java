@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Assertions;
@@ -55,7 +56,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
         }
     )
     void publicationReturnsJsonWhenInputIsValid(String type) throws MalformedContributorException,
-            InvalidIssnException, IOException, InvalidIsbnException {
+            InvalidIssnException, IOException, InvalidIsbnException, InvalidUnconfirmedSeriesException {
         Publication publication = PublicationGenerator.generatePublication(type);
         JsonNode document = toPublicationWithContext(publication);
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),

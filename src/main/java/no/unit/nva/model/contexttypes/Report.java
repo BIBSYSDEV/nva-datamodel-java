@@ -1,9 +1,11 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.List;
@@ -14,20 +16,22 @@ public class Report extends Book implements SerialPublication, BasicContext {
     private final String printIssn;
     private final String onlineIssn;
 
-    public Report(@JsonProperty("series") BookSeries series,
-                  @JsonProperty("seriesTitle") String seriesTitle,
-                  @JsonProperty("seriesNumber") String seriesNumber,
-                  @JsonProperty("publisher") PublishingHouse publisher,
-                  @JsonProperty("isbnList") List<String> isbnList,
+    @JsonCreator
+    public Report(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
+                  @JsonProperty(JSON_PROPERTY_SERIES_TITLE) String seriesTitle,
+                  @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
+                  @JsonProperty(JSON_PROPERTY_PUBLISHER) String publisher,
+                  @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList,
                   @JsonProperty("printIssn") String printIssn,
                   @JsonProperty("onlineIssn") String onlineIssn)
-            throws InvalidIsbnException, InvalidIssnException {
+            throws InvalidIsbnException, InvalidIssnException, InvalidUnconfirmedSeriesException {
         super(series, seriesTitle, seriesNumber, publisher, isbnList);
         this.printIssn = IssnUtil.checkIssn(printIssn);
         this.onlineIssn = IssnUtil.checkIssn(onlineIssn);
     }
 
-    private Report(Builder builder) throws InvalidIssnException, InvalidIsbnException {
+    private Report(Builder builder) throws InvalidIssnException, InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
         this(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList, builder.printIssn,
                 builder.onlineIssn);
     }
@@ -83,7 +87,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
             return this;
         }
 
-        public Report build() throws InvalidIssnException, InvalidIsbnException {
+        public Report build() throws InvalidIssnException, InvalidIsbnException, InvalidUnconfirmedSeriesException {
             return new Report(this);
         }
     }

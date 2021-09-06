@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,15 +35,15 @@ public class ReportTest extends ModelTest {
     @DisplayName("Reports can be created")
     @ParameterizedTest
     @CsvSource({
-        "Journal,123,A publisher,9780201309515,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
         ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,,0363-6941,1945-662X",
+        "A Report series,123,A publisher,,0363-6941,1945-662X",
         ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,,"
+        "A Report series,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperReturnsReportWhenInputIsValidJson(String seriesTitle,
                                                        String seriesNumber,
@@ -72,15 +73,15 @@ public class ReportTest extends ModelTest {
     @DisplayName("Report serializes expected json")
     @ParameterizedTest
     @CsvSource({
-        "Journal,123,A publisher,9780201309515,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report series,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
         ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,,0363-6941,1945-662X",
+        "A Report series,123,A publisher,,0363-6941,1945-662X",
         ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,,"
+        "A Report series,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsReport(String seriesTitle,
                                                                     String seriesNumber,
@@ -88,7 +89,7 @@ public class ReportTest extends ModelTest {
                                                                     String isbnList,
                                                                     String onlineIssn,
                                                                     String printIssn) throws JsonProcessingException,
-            InvalidIsbnException, InvalidIssnException {
+            InvalidIsbnException, InvalidIssnException, InvalidUnconfirmedSeriesException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Report report = new Report.Builder()
                 .withSeries(new UnconfirmedSeries(seriesTitle))
@@ -112,12 +113,13 @@ public class ReportTest extends ModelTest {
         assertEquals(expectedJson, actualJson);
     }
 
-    @DisplayName("report complains if ISBNs are invalid")
+
+    @DisplayName("Report complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
-        "Report,123,A publisher,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
-        "Report,123,A publisher,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
-        "Report,123,A publisher,\"9780201309515|9788131700075|obviousNonsense\",0363-6941,1945-662X"
+        "A Report series,123,A publisher,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
+        "A Report series,123,A publisher,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
+        "A Report series,123,A publisher,\"9780201309515|9788131700075|obviousNonsense\",0363-6941,1945-662X"
     })
     void reportThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                            String seriesNumber,
@@ -143,10 +145,10 @@ public class ReportTest extends ModelTest {
         assertEquals(expectedMessage, actualMessage);
     }
 
-
     @DisplayName("Report: Null ISBNs are handled gracefully")
     @Test
-    void reportReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, InvalidIssnException {
+    void reportReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, InvalidIssnException,
+            InvalidUnconfirmedSeriesException {
         Report report = new Report.Builder()
                 .withSeries(null)
                 .withSeriesNumber(null)
@@ -163,7 +165,8 @@ public class ReportTest extends ModelTest {
 
     @DisplayName("Report: Empty ISBNs are handled gracefully")
     @Test
-    void reportReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, InvalidIssnException {
+    void reportReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, InvalidIssnException,
+            InvalidUnconfirmedSeriesException {
         Report report = new Report.Builder()
                 .withSeries(null)
                 .withSeriesNumber(null)
