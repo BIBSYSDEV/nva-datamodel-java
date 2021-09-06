@@ -1,12 +1,9 @@
 package no.unit.nva.model.contexttypes;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.JsonObject;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
@@ -19,12 +16,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.util.PublicationGenerator.convertIsbnStringToList;
@@ -44,7 +39,6 @@ class BookTest extends ModelTest {
 
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String BOOK = "Book";
-    public static final String SAMPLE_OF_SYMBOLS = "*/.-+^!#&%(){}[]";
 
     @Test
     public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws InvalidIsbnException {
@@ -190,40 +184,34 @@ class BookTest extends ModelTest {
     @DisplayName("No-digits are removed from isbn upon creation of a Book with deserialization.")
     @ParameterizedTest
     @CsvSource({
-        "9788131700075",
-        "9780201309515"
+            "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
+            "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
     })
-    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String isbn)
+    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String expectedIsbn, String inputIsbn)
             throws InvalidIsbnException, IOException {
         Book actuallBook = randomBook();
-        actuallBook.setIsbnList(convertIsbnStringToList(isbn));
+        actuallBook.setIsbnList(convertIsbnStringToList(expectedIsbn));
         String actuallBookString = objectMapper.writeValueAsString(actuallBook);
-        String wrongIsbn = objectMapper.writeValueAsString(actuallBook.getIsbnList()
-                .stream()
-                .map(isbnValue -> addNonedigitsToString(isbn))
-                .collect(Collectors.toList()));
+        String wrongIsbn = objectMapper.writeValueAsString(convertIsbnStringToList(inputIsbn));
         JsonNode wrongIsbnJsonNode = JsonUtils.objectMapperNoEmpty.readTree(wrongIsbn);
         ObjectNode bookObjectNode = (ObjectNode) JsonUtils.objectMapperNoEmpty.readTree(actuallBookString);
         bookObjectNode.set("isbnList", wrongIsbnJsonNode);
         String tempString = objectMapper.writeValueAsString(bookObjectNode);
         Book deserializedBook = objectMapper.readValue(tempString, Book.class);
-        assertThat(deserializedBook.getIsbnList(), is(equalTo(convertIsbnStringToList(isbn))));
+        assertThat(deserializedBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
     }
 
     @DisplayName("No-digits are removed from isbn upon creation of a Book using the builder")
     @ParameterizedTest
     @CsvSource({
-        "9788131700075",
-        "9780201309515"
+        "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
+        "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
     })
-    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookUsingTheBuilder(String isbn) throws InvalidIsbnException {
+    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookUsingTheBuilder(String expectedIsbn, String inputIsbn)
+            throws InvalidIsbnException {
         Book actuallBook = new Book.Builder()
-                .withIsbnList(convertIsbnStringToList(addNonedigitsToString(isbn)))
+                .withIsbnList(convertIsbnStringToList(inputIsbn))
                 .build();
-        assertThat(actuallBook.getIsbnList(), is(equalTo(convertIsbnStringToList(isbn))));
-    }
-
-    private String addNonedigitsToString(String isbn) {
-        return SAMPLE_OF_SYMBOLS + isbn;
+        assertThat(actuallBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
     }
 }
