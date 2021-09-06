@@ -28,22 +28,22 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReportTest extends ModelTest {
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-    public static final String REPORT = "Report";
+    public static final String REPORT = "A Report";
     public static final String ONLINE_ISSN = "0363-6941";
     public static final String PRINT_ISSN = "1945-662X";
 
     @DisplayName("Reports can be created")
     @ParameterizedTest
     @CsvSource({
-        "Journal,123,A publisher,9780201309515,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
         ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,,0363-6941,1945-662X",
+        "A Report,123,A publisher,,0363-6941,1945-662X",
         ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,,"
+        "A Report,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperReturnsReportWhenInputIsValidJson(String seriesTitle,
                                                        String seriesNumber,
@@ -73,15 +73,15 @@ public class ReportTest extends ModelTest {
     @DisplayName("Report serializes expected json")
     @ParameterizedTest
     @CsvSource({
-        "Journal,123,A publisher,9780201309515,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
+        "A Report,,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
         ",123,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,,0363-6941,1945-662X",
+        "A Report,123,A publisher,,0363-6941,1945-662X",
         ",,A publisher,9780201309515|9788131700075,0363-6941,1945-662X",
-        "Journal,123,A publisher,9780201309515|9788131700075,,"
+        "A Report,123,A publisher,9780201309515|9788131700075,,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsReport(String seriesTitle,
                                                                     String seriesNumber,
@@ -113,12 +113,12 @@ public class ReportTest extends ModelTest {
         assertEquals(expectedJson, actualJson);
     }
 
-    @DisplayName("report complains if ISBNs are invalid")
+    @DisplayName("Report complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
-        "Report,123,A publisher,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
-        "Report,123,A publisher,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
-        "Report,123,A publisher,\"9780201309515|9788131700075|obviousNonsense\",0363-6941,1945-662X"
+        "A Report,123,A publisher,\"obviousNonsense|9788131700075\",0363-6941,1945-662X",
+        "A Report,123,A publisher,\"9780201309515|obviousNonsense\",0363-6941,1945-662X",
+        "A Report,123,A publisher,\"9780201309515|9788131700075|obviousNonsense\",0363-6941,1945-662X"
     })
     void reportThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                            String seriesNumber,
