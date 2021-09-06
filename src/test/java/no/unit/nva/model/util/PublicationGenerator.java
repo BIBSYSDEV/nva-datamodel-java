@@ -291,7 +291,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static BasicContext getPublishingContextJournal() throws InvalidIssnException {
-        return new UnconfirmedJournal("Tim's lovely publishing house","1111-1119", "2222-2227");
+        return new UnconfirmedJournal("Tim's lovely publishing house","2222-2227", "1111-1119");
     }
 
     public static PublicationDate getPublicationDate() {
@@ -575,7 +575,7 @@ public class PublicationGenerator extends ModelTest {
                 .withPublisher("Hello cheesy world of anaemic flavours publishing")
                 .withSeries(new UnconfirmedSeries("Strøsand and Muck in context"))
                 .withSeriesNumber("221")
-                .withOnlineIssn("2222-2227")
+                .withOnlineIssn("1111-1119")
                 .withPrintIssn("2222-2227")
                 .build();
     }
