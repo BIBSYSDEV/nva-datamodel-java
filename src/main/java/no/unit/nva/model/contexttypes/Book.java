@@ -1,19 +1,19 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
-import no.unit.nva.model.exceptions.InvalidSeriesException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -21,55 +21,83 @@ import static java.util.Objects.nonNull;
 public class Book implements BasicContext {
 
     public static final ISBNValidator ISBN_VALIDATOR = new ISBNValidator();
-    public static final Pattern EXPECTED_SERIES_URI_PATTERN =
-        Pattern.compile("https://.*?nva\\.aws\\.unit\\.no/publication-channels/.*");
+    public static final String JSON_PROPERTY_SERIES = "series";
+    public static final String JSON_PROPERTY_SERIES_TITLE = "seriesTitle";
+    public static final String JSON_PROPERTY_SERIES_NUMBER = "seriesNumber";
+    public static final String JSON_PROPERTY_PUBLISHER = "publisher";
+    public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
     public static final String ONLY_DIGITS_REGEX = "[\\D.]";
-    @Deprecated
-    private String seriesTitle;
-    private URI seriesUri;
-    private String seriesNumber;
-    private String publisher;
-    private List<String> isbnList;
 
-    public Book() {
+
+    private final BookSeries series;
+    private final String seriesNumber;
+    private final String publisher;
+    private final List<String> isbnList;
+
+    public Book(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
+                @JsonProperty(value = JSON_PROPERTY_SERIES_TITLE, access = WRITE_ONLY) String unconfirmedSeriesTitle,
+                @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
+                @JsonProperty(JSON_PROPERTY_PUBLISHER) String publisher,
+                @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
+
+        this.series = extractSeriesInformation(series, unconfirmedSeriesTitle);
+        this.seriesNumber = seriesNumber;
+        this.publisher = publisher;
+        this.isbnList = extractValidIsbnList(isbnList);
     }
 
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getSeriesTitle(), getSeriesUri(), getSeriesNumber(), getPublisher(), getIsbnList());
-    }
+    private BookSeries extractSeriesInformation(BookSeries series, String unconfirmedSeriesTitle)
+            throws InvalidUnconfirmedSeriesException {
 
-    @JacocoGenerated
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+        if (nonNull(series) && series.isConfirmed()) {
+            return series;
         }
-        if (!(o instanceof Book)) {
-            return false;
+
+        validateUnconfirmedSeries(series, unconfirmedSeriesTitle);
+
+        if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
+            return new UnconfirmedSeries(unconfirmedSeriesTitle);
+        } else {
+            return series;
         }
-        Book book = (Book) o;
-        return Objects.equals(getSeriesTitle(), book.getSeriesTitle())
-               && Objects.equals(getSeriesUri(), book.getSeriesUri())
-               && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
-               && Objects.equals(getPublisher(), book.getPublisher())
-               && Objects.equals(getIsbnList(), book.getIsbnList());
     }
 
-    public URI getSeriesUri() {
-        return seriesUri;
-    }
-
-    public void setSeriesUri(URI seriesUri) {
-        validateSeriesUri(seriesUri);
-        this.seriesUri = seriesUri;
-    }
-
-    private void validateSeriesUri(URI seriesUri) {
-        if (!EXPECTED_SERIES_URI_PATTERN.matcher(seriesUri.toString()).matches()) {
-            throw new InvalidSeriesException(seriesUri.toString());
+    private void validateUnconfirmedSeries(BookSeries series, String unconfirmedSeriesTitle)
+            throws InvalidUnconfirmedSeriesException {
+        if (hasSeriesStringAndSeriesObject(series, unconfirmedSeriesTitle)
+                && hasUnmatchedSeriesStringValues(series, unconfirmedSeriesTitle)) {
+            throw new InvalidUnconfirmedSeriesException();
         }
+    }
+
+    private boolean hasUnmatchedSeriesStringValues(BookSeries series, String unconfirmedSeriesTitle) {
+        return !series.isConfirmed()
+                && !((UnconfirmedSeries) series).getTitle().equals(unconfirmedSeriesTitle);
+    }
+
+    private boolean hasSeriesStringAndSeriesObject(BookSeries series, String unconfirmedSeriesTitle) {
+        return nonNull(series) && nonNull(unconfirmedSeriesTitle);
+    }
+
+    private Book(BookSeries series, String seriesNumber, String publisher, List<String> isbnList)
+            throws InvalidIsbnException {
+        this.series = series;
+        this.seriesNumber = seriesNumber;
+        this.publisher = publisher;
+        this.isbnList = extractValidIsbnList(isbnList);
+    }
+
+    public BookSeries getSeries() {
+        return series;
+    }
+
+    public String getSeriesNumber() {
+        return seriesNumber;
+    }
+
+    public String getPublisher() {
+        return publisher;
     }
 
     public List<String> getIsbnList() {
@@ -77,15 +105,15 @@ public class Book implements BasicContext {
     }
 
     /**
-     * Adds the ISBN list to the object after checking that the ISBNs are valid and removing ISBN-punctuation.
+     * Returns the ISBN list to the object after checking that the ISBNs are valid and removing ISBN-punctuation.
      *
      * @param isbnList List of ISBN candidates.
-     * @throws InvalidIsbnException If one of the ISBNs is found to be invalid
+     * @return List of valid ISBN strings.
+     * @throws InvalidIsbnException If one of the ISBNs is found to be invalid.
      */
-    public void setIsbnList(List<String> isbnList) throws InvalidIsbnException {
+    private List<String> extractValidIsbnList(List<String> isbnList) throws InvalidIsbnException {
         if (isNull(isbnList) || isbnList.isEmpty()) {
-            this.isbnList = Collections.emptyList();
-            return;
+            return Collections.emptyList();
         }
         List<String> validIsbns = isbnList.stream()
             .map(isbn -> isbn.replaceAll(ONLY_DIGITS_REGEX, ""))
@@ -98,77 +126,71 @@ public class Book implements BasicContext {
             errors.removeAll(validIsbns);
             throw new InvalidIsbnException(errors);
         }
-        this.isbnList = validIsbns;
+        return validIsbns;
     }
 
-    public String getSeriesTitle() {
-        return seriesTitle;
-    }
 
-    public void setSeriesTitle(String seriesTitle) {
-        this.seriesTitle = seriesTitle;
-    }
-
-    public String getSeriesNumber() {
-        return seriesNumber;
-    }
-
-    public void setSeriesNumber(String seriesNumber) {
-        this.seriesNumber = seriesNumber;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public Builder copy() throws InvalidIsbnException {
-        return new Builder()
+    public BookBuilder copy() throws InvalidIsbnException {
+        return new BookBuilder()
             .withSeriesNumber(getSeriesNumber())
-            .withSeriesTitle(getSeriesTitle())
+            .withSeries(getSeries())
             .withPublisher(getPublisher())
-            .withIsbnList(getIsbnList())
-            .withSeriesUri(getSeriesUri());
+            .withIsbnList(getIsbnList());
     }
 
-    public static final class Builder {
+    public static final class BookBuilder {
+        private BookSeries series;
+        private String seriesNumber;
+        private String publisher;
+        private List<String> isbnList;
 
-        private final Book book;
-
-        public Builder() {
-            book = new Book();
+        public BookBuilder() {
         }
 
-        public Builder withSeriesTitle(String seriesTitle) {
-            book.setSeriesTitle(seriesTitle);
+        public BookBuilder withSeries(BookSeries series) {
+            this.series = series;
             return this;
         }
 
-        public Builder withSeriesUri(URI seriesUri) {
-            book.setSeriesUri(seriesUri);
+        public BookBuilder withSeriesNumber(String seriesNumber) {
+            this.seriesNumber = seriesNumber;
             return this;
         }
 
-        public Builder withSeriesNumber(String seriesNumber) {
-            book.setSeriesNumber(seriesNumber);
+        public BookBuilder withPublisher(String publisher) {
+            this.publisher = publisher;
             return this;
         }
 
-        public Builder withPublisher(String publisher) {
-            book.setPublisher(publisher);
+        public BookBuilder withIsbnList(List<String> isbnList) {
+            this.isbnList = isbnList;
             return this;
         }
 
-        public Builder withIsbnList(List<String> isbnList) throws InvalidIsbnException {
-            book.setIsbnList(isbnList);
-            return this;
+        public Book build() throws InvalidIsbnException {
+            return new Book(series, seriesNumber, publisher, isbnList);
         }
+    }
 
-        public Book build() {
-            return book;
+    @JacocoGenerated
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
+        if (!(o instanceof Book)) {
+            return false;
+        }
+        Book book = (Book) o;
+        return Objects.equals(getSeries(), book.getSeries())
+                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
+                && Objects.equals(getPublisher(), book.getPublisher())
+                && Objects.equals(getIsbnList(), book.getIsbnList());
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSeries(), getSeriesNumber(), getPublisher(), getIsbnList());
     }
 }

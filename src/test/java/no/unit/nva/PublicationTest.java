@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.javafaker.Faker;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -47,7 +46,6 @@ public class PublicationTest extends ModelTest {
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final UUID REPLACEMENT_IDENTIFIER_2 = UUID.fromString("5032710d-a326-43d3-a8fb-57a451873c78");
     public static final String JOURNAL_ARTICLE = "JournalArticle";
-    public static final Faker FAKER = Faker.instance();
     public static final Javers JAVERS = JaversBuilder.javers().build();
     ObjectMapper objectMapper = JsonUtils.objectMapper;
 
