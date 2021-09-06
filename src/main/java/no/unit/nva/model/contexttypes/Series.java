@@ -7,29 +7,35 @@ import no.unit.nva.model.exceptions.InvalidSeriesException;
 import nva.commons.core.JacocoGenerated;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Objects;
-
-import static java.util.Objects.isNull;
+import java.util.regex.Pattern;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal implements Periodical, BasicContext {
+public class Series implements BookSeries {
+    public static final Pattern EXPECTED_SERIES_URI_PATTERN =
+            Pattern.compile("https://.*?nva\\.aws\\.unit\\.no/publication-channels/.*");
+
     private final URI id;
 
     @JsonCreator
-    public Journal(@JsonProperty("id") String id) {
-        if (isNull(id) || id.isEmpty()) {
-            throw new InvalidSeriesException(id);
-        }
-        try {
-            this.id = new URI(id);
-        } catch (URISyntaxException e) {
-            throw new InvalidSeriesException(id);
-        }
+    public Series(@JsonProperty("id") URI id) {
+        validateSeriesUri(id);
+        this.id = id;
     }
 
     public URI getId() {
         return id;
+    }
+
+    private void validateSeriesUri(URI seriesUri) {
+        if (!EXPECTED_SERIES_URI_PATTERN.matcher(seriesUri.toString()).matches()) {
+            throw new InvalidSeriesException(seriesUri.toString());
+        }
+    }
+
+    @Override
+    public boolean isConfirmed() {
+        return true;
     }
 
     @JacocoGenerated
@@ -38,11 +44,11 @@ public class Journal implements Periodical, BasicContext {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Journal)) {
+        if (!(o instanceof Series)) {
             return false;
         }
-        Journal journal = (Journal) o;
-        return Objects.equals(getId(), journal.getId());
+        Series series = (Series) o;
+        return Objects.equals(getId(), series.getId());
     }
 
     @JacocoGenerated

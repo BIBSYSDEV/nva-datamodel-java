@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
@@ -14,6 +15,7 @@ public class UnconfirmedJournal implements Periodical, BasicContext {
     private final String printIssn;
     private final String onlineIssn;
 
+    @JsonCreator
     public UnconfirmedJournal(@JsonProperty("title") String title,
                               @JsonProperty("printIssn") String printIssn,
                               @JsonProperty("onlineIssn") String onlineIssn) throws InvalidIssnException {

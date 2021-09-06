@@ -72,23 +72,21 @@
       "publicationContext" : {
         "type" : "UnconfirmedJournal",
         "title" : "Tim's lovely publishing house",
-        "printIssn" : "1111-1119",
-        "onlineIssn" : "2222-2227"
+        "printIssn" : "2222-2227",
+        "onlineIssn" : "1111-1119"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "JournalArticle",
-        "volume" : "24",
-        "issue" : "2",
-        "articleNumber" : "1234456",
-        "contentType" : "Professional article",
-        "peerReviewed" : true,
-        "originalResearch" : false,
+        "type" : "FeatureArticle",
+        "volume" : "2",
+        "issue" : "1",
+        "articleNumber" : "11111",
         "pages" : {
           "type" : "Range",
           "begin" : "1",
           "end" : "15"
-        }
+        },
+        "peerReviewed" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",

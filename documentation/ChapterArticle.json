@@ -70,20 +70,15 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "UnconfirmedJournal",
-        "title" : "Tim's lovely publishing house",
-        "printIssn" : "1111-1119",
-        "onlineIssn" : "2222-2227"
+        "type" : "Chapter",
+        "partOf" : "https://123123/213123.com"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "JournalArticle",
-        "volume" : "24",
-        "issue" : "2",
-        "articleNumber" : "1234456",
-        "contentType" : "Professional article",
+        "type" : "ChapterArticle",
+        "contentType" : "Academic Chapter",
         "peerReviewed" : true,
-        "originalResearch" : false,
+        "originalResearch" : true,
         "pages" : {
           "type" : "Range",
           "begin" : "1",
