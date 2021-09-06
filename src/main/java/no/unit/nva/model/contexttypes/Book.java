@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -26,12 +27,12 @@ public class Book implements BasicContext {
     private final List<String> isbnList;
 
     public Book(@JsonProperty("series") BookSeries series,
-                @JsonProperty("seriesTitle") String seriesTitle,
+                @JsonProperty(value = "seriesTitle", access = WRITE_ONLY) String unconfirmedSeriesTitle,
                 @JsonProperty("seriesNumber") String seriesNumber,
                 @JsonProperty("publisher") String publisher,
                 @JsonProperty("isbnList") List<String> isbnList) throws InvalidIsbnException {
-        if (nonNull(seriesTitle) && isNull(series)) {
-            this.series = new UnconfirmedSeries(seriesTitle);
+        if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
+            this.series = new UnconfirmedSeries(unconfirmedSeriesTitle);
         } else {
             this.series = series;
         }
@@ -48,7 +49,7 @@ public class Book implements BasicContext {
         this.isbnList = extractValidIsbnList(isbnList);
     }
 
-    public BookSeries getSeries()  {
+    public BookSeries getSeries() {
         return series;
     }
 
