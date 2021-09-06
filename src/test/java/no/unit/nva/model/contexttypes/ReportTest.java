@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReportTest extends ModelTest {
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
-    public static final String REPORT = "A Report";
+    public static final String REPORT = "Report";
     public static final String ONLINE_ISSN = "0363-6941";
     public static final String PRINT_ISSN = "1945-662X";
 
