@@ -15,7 +15,7 @@ apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-String versionNumber = '0.12.4'
+String versionNumber = '0.12.6'
 
 group 'com.github.bibsysdev'
 version versionNumber
