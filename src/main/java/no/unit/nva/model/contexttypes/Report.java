@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.List;
@@ -21,13 +22,14 @@ public class Report extends Book implements SerialPublication, BasicContext {
                   @JsonProperty("isbnList") List<String> isbnList,
                   @JsonProperty("printIssn") String printIssn,
                   @JsonProperty("onlineIssn") String onlineIssn)
-            throws InvalidIsbnException, InvalidIssnException {
+            throws InvalidIsbnException, InvalidIssnException, InvalidUnconfirmedSeriesException {
         super(series, seriesTitle, seriesNumber, publisher, isbnList);
         this.printIssn = IssnUtil.checkIssn(printIssn);
         this.onlineIssn = IssnUtil.checkIssn(onlineIssn);
     }
 
-    private Report(Builder builder) throws InvalidIssnException, InvalidIsbnException {
+    private Report(Builder builder) throws InvalidIssnException, InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
         this(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList, builder.printIssn,
                 builder.onlineIssn);
     }
@@ -83,7 +85,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
             return this;
         }
 
-        public Report build() throws InvalidIssnException, InvalidIsbnException {
+        public Report build() throws InvalidIssnException, InvalidIsbnException, InvalidUnconfirmedSeriesException {
             return new Report(this);
         }
     }

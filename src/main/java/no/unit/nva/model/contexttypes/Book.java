@@ -3,6 +3,7 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
 
@@ -30,15 +31,41 @@ public class Book implements BasicContext {
                 @JsonProperty(value = "seriesTitle", access = WRITE_ONLY) String unconfirmedSeriesTitle,
                 @JsonProperty("seriesNumber") String seriesNumber,
                 @JsonProperty("publisher") String publisher,
-                @JsonProperty("isbnList") List<String> isbnList) throws InvalidIsbnException {
-        if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
-            this.series = new UnconfirmedSeries(unconfirmedSeriesTitle);
-        } else {
-            this.series = series;
-        }
+                @JsonProperty("isbnList") List<String> isbnList) throws InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
+
+        this.series = extractSeriesInformation(series, unconfirmedSeriesTitle);
         this.seriesNumber = seriesNumber;
         this.publisher = publisher;
         this.isbnList = extractValidIsbnList(isbnList);
+    }
+
+    private BookSeries extractSeriesInformation(BookSeries series, String unconfirmedSeriesTitle)
+            throws InvalidUnconfirmedSeriesException {
+        validateUnconfirmedSeries(series, unconfirmedSeriesTitle);
+
+        if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
+            return new UnconfirmedSeries(unconfirmedSeriesTitle);
+        } else {
+            return series;
+        }
+    }
+
+    private void validateUnconfirmedSeries(BookSeries series, String unconfirmedSeriesTitle)
+            throws InvalidUnconfirmedSeriesException {
+        if (hasSeriesStringAndSeriesObject(series, unconfirmedSeriesTitle)
+                && hasUnmatchedSeriesStringValues(series, unconfirmedSeriesTitle)) {
+            throw new InvalidUnconfirmedSeriesException();
+        }
+    }
+
+    private boolean hasUnmatchedSeriesStringValues(BookSeries series, String unconfirmedSeriesTitle) {
+        return series instanceof UnconfirmedSeries
+                && !((UnconfirmedSeries) series).getTitle().equals(unconfirmedSeriesTitle);
+    }
+
+    private boolean hasSeriesStringAndSeriesObject(BookSeries series, String unconfirmedSeriesTitle) {
+        return nonNull(series) && nonNull(unconfirmedSeriesTitle);
     }
 
     private Book(BookSeries series, String seriesNumber, String publisher, List<String> isbnList)

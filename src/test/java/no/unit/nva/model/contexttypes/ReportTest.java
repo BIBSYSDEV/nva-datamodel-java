@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,7 +89,7 @@ public class ReportTest extends ModelTest {
                                                                     String isbnList,
                                                                     String onlineIssn,
                                                                     String printIssn) throws JsonProcessingException,
-            InvalidIsbnException, InvalidIssnException {
+            InvalidIsbnException, InvalidIssnException, InvalidUnconfirmedSeriesException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Report report = new Report.Builder()
                 .withSeries(new UnconfirmedSeries(seriesTitle))
@@ -146,7 +147,8 @@ public class ReportTest extends ModelTest {
 
     @DisplayName("Report: Null ISBNs are handled gracefully")
     @Test
-    void reportReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, InvalidIssnException {
+    void reportReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, InvalidIssnException,
+            InvalidUnconfirmedSeriesException {
         Report report = new Report.Builder()
                 .withSeries(null)
                 .withSeriesNumber(null)
@@ -163,7 +165,8 @@ public class ReportTest extends ModelTest {
 
     @DisplayName("Report: Empty ISBNs are handled gracefully")
     @Test
-    void reportReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, InvalidIssnException {
+    void reportReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, InvalidIssnException,
+            InvalidUnconfirmedSeriesException {
         Report report = new Report.Builder()
                 .withSeries(null)
                 .withSeriesNumber(null)

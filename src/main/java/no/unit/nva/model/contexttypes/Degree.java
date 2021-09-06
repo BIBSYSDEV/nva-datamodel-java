@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 
 import java.util.List;
 
@@ -17,11 +18,11 @@ public class Degree extends Book {
                   @JsonProperty("seriesNumber") String seriesNumber,
                   @JsonProperty("publisher") String publisher,
                   @JsonProperty("isbnList") List<String> isbnList)
-            throws InvalidIsbnException {
+            throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
         super(series, seriesTitle, seriesNumber, publisher, isbnList);
     }
 
-    private Degree(Builder builder) throws InvalidIsbnException {
+    private Degree(Builder builder) throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
         super(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList);
     }
 
@@ -54,7 +55,7 @@ public class Degree extends Book {
             return this;
         }
 
-        public Degree build() throws InvalidIsbnException {
+        public Degree build() throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
             return new Degree(this);
         }
     }

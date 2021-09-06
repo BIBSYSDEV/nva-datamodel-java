@@ -31,6 +31,7 @@ import no.unit.nva.model.contexttypes.UnconfirmedJournal;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
@@ -89,8 +90,7 @@ public class PublicationGenerator extends ModelTest {
      * @throws InvalidIsbnException          with Isbn is invalid.
      */
     public static Publication generatePublication(String type) throws InvalidIssnException,
-            MalformedContributorException,
-            InvalidIsbnException {
+            MalformedContributorException, InvalidIsbnException, InvalidUnconfirmedSeriesException {
         Reference reference;
         switch (type) {
             case "BookAbstracts":
@@ -560,7 +560,8 @@ public class PublicationGenerator extends ModelTest {
                 .build();
     }
 
-    private static BasicContext getPublishingContextDegree() throws InvalidIsbnException {
+    private static BasicContext getPublishingContextDegree() throws InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
         return new Degree.Builder()
                 .withIsbnList(List.of("9780201309515"))
                 .withPublisher("My publisher dot com")
@@ -569,7 +570,8 @@ public class PublicationGenerator extends ModelTest {
                 .build();
     }
 
-    private static Report getPublishingContextReport() throws InvalidIssnException, InvalidIsbnException {
+    private static Report getPublishingContextReport() throws InvalidIssnException, InvalidIsbnException,
+            InvalidUnconfirmedSeriesException {
         return new Report.Builder()
                 .withIsbnList(List.of("9780201309515"))
                 .withPublisher("Hello cheesy world of anaemic flavours publishing")

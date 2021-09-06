@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,7 +72,7 @@ class DegreeTest extends ModelTest {
                                                                   String seriesNumber,
                                                                   String publisher,
                                                                   String isbnList) throws JsonProcessingException,
-            InvalidIsbnException {
+            InvalidIsbnException, InvalidUnconfirmedSeriesException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Degree degree = new Degree.Builder()
                 .withSeries(new UnconfirmedSeries(seriesTitle))
@@ -122,7 +123,7 @@ class DegreeTest extends ModelTest {
 
     @DisplayName("Degree: Null ISBNs are handled gracefully")
     @Test
-    void degreeReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException {
+    void degreeReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
         Degree degree = new Degree.Builder()
                 .withSeries(null)
                 .withSeriesNumber(null)
@@ -137,7 +138,7 @@ class DegreeTest extends ModelTest {
 
     @DisplayName("Degree: Empty ISBNs are handled gracefully")
     @Test
-    void degreeReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException {
+    void degreeReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
         Degree degree = new Degree.Builder()
                 .withSeries(null)
                 .withSeriesNumber(null)
