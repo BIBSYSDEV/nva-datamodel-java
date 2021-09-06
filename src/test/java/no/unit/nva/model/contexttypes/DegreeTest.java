@@ -12,7 +12,6 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,10 +33,10 @@ class DegreeTest extends ModelTest {
     @DisplayName("Degree can deserialize a degree")
     @ParameterizedTest
     @CsvSource({
-            "A series title,123,Full publisher details,\"9780201309515|9788131700075\"",
-            ",, Full publisher details,\"9780201309515|9788131700075\"",
-            "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
-            "Fulong of Oolong,12,T Publishing,\"9780201309515|9788131700075\""
+        "A series title,123,Full publisher details,\"9780201309515|9788131700075\"",
+        ",, Full publisher details,\"9780201309515|9788131700075\"",
+        "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
+        "Fulong of Oolong,12,T Publishing,\"9780201309515|9788131700075\""
     })
     void objectMapperReturnsDegreeWhenInputIsValidJson(String seriesTitle,
                                                      String seriesNumber,
@@ -63,10 +62,10 @@ class DegreeTest extends ModelTest {
     @DisplayName("Degree serializes expected json")
     @ParameterizedTest
     @CsvSource({
-            "A series title,123,Full publisher details,\"9780201309515\"",
-            ",, Full publisher details,\"9780201309515|9788131700075\"",
-            "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
-            "A Marxist analysis of marking systems,6903,ACO,"
+        "A series title,123,Full publisher details,\"9780201309515\"",
+        ",, Full publisher details,\"9780201309515|9788131700075\"",
+        "A series title,,Full publisher details,\"9780201309515|9788131700075\"",
+        "A Marxist analysis of marking systems,6903,ACO,"
     })
     void objectMapperProducesProperlyFormattedJsonWhenInputIsDegree(String seriesTitle,
                                                                   String seriesNumber,
@@ -97,9 +96,9 @@ class DegreeTest extends ModelTest {
     @DisplayName("Degree complains if ISBNs are invalid")
     @ParameterizedTest
     @CsvSource({
-            "Series title,123,Full publisher details,\"obviousNonsense|9788131700075\"",
-            "Series title,123,Full publisher details,\"9780201309515|obviousNonsense\"",
-            "Series title,123,Full publisher details,\"9780201309515|9788131700075|obviousNonsense\""
+        "Journal title,123,Full publisher details,\"obviousNonsense|9788131700075\"",
+        "Journal title,123,Full publisher details,\"9780201309515|obviousNonsense\"",
+        "Journal title,123,Full publisher details,\"9780201309515|9788131700075|obviousNonsense\""
     })
     void degreeThrowsInvalidIsbnExceptionWhenIsbnIsInvalid(String seriesTitle,
                                                          String seriesNumber,
