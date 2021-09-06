@@ -1,96 +1,33 @@
 package no.unit.nva.model.contexttypes;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.contexttypes.utils.IssnUtil;
-import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.exceptions.InvalidSeriesException;
 import nva.commons.core.JacocoGenerated;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal implements BasicContext, SerialPublication {
-    private String title;
-    private String printIssn;
-    private String onlineIssn;
+public class Journal implements Periodical, BasicContext {
+    private final URI id;
 
-    public Journal() {
-    }
-
-    private Journal(Journal.Builder builder) throws InvalidIssnException {
-        super();
-        setTitle(builder.title);
-        setPrintIssn(builder.printIssn);
-        setOnlineIssn(builder.onlineIssn);
-    }
-
-
-    public String getPrintIssn() {
-        return printIssn;
-    }
-
-    /**
-     * Sets the print ISSN for a Journal object.
-     *
-     * @param printIssn a valid ISSN
-     * @throws InvalidIssnException Thrown if the ISSN is invalid
-     */
-    @JsonSetter
-    @Override
-    public void setPrintIssn(String printIssn) throws InvalidIssnException {
-        this.printIssn = IssnUtil.checkIssn(printIssn);
-    }
-
-    public String getOnlineIssn() {
-        return onlineIssn;
-    }
-
-    /**
-     * Sets the online ISSN for a Journal object.
-     *
-     * @param onlineIssn a valid ISSN
-     * @throws InvalidIssnException Thrown if the ISSN is invalid
-     */
-    @JsonSetter
-    @Override
-    public void setOnlineIssn(String onlineIssn) throws InvalidIssnException {
-        this.onlineIssn = IssnUtil.checkIssn(onlineIssn);
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public static final class Builder {
-        private String title;
-        private String printIssn;
-        private String onlineIssn;
-
-        public Builder() {
+    public Journal(@JsonProperty("id") String id) {
+        if (isNull(id) || id.isEmpty()) {
+            throw new InvalidSeriesException(id);
         }
-
-        public Journal.Builder withTitle(String title) {
-            this.title = title;
-            return this;
+        try {
+            this.id = new URI(id);
+        } catch (URISyntaxException e) {
+            throw new InvalidSeriesException(id);
         }
+    }
 
-        public Journal.Builder withPrintIssn(String printIssn) {
-            this.printIssn = printIssn;
-            return this;
-        }
-
-        public Journal.Builder withOnlineIssn(String onlineIssn) {
-            this.onlineIssn = onlineIssn;
-            return this;
-        }
-
-        public Journal build() throws InvalidIssnException {
-            return new Journal(this);
-        }
+    public URI getId() {
+        return id;
     }
 
     @JacocoGenerated
@@ -103,14 +40,12 @@ public class Journal implements BasicContext, SerialPublication {
             return false;
         }
         Journal journal = (Journal) o;
-        return Objects.equals(getTitle(), journal.getTitle())
-                && Objects.equals(getPrintIssn(), journal.getPrintIssn())
-                && Objects.equals(getOnlineIssn(), journal.getOnlineIssn());
+        return Objects.equals(getId(), journal.getId());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getPrintIssn(), getOnlineIssn());
+        return Objects.hash(getId());
     }
 }
