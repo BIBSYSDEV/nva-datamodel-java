@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.contexttypes.utils.IssnUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -15,6 +16,7 @@ public class Report extends Book implements SerialPublication, BasicContext {
     private final String printIssn;
     private final String onlineIssn;
 
+    @JsonCreator
     public Report(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
                   @JsonProperty(JSON_PROPERTY_SERIES_TITLE) String seriesTitle,
                   @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
