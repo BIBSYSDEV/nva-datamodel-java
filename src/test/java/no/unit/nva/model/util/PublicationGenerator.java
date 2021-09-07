@@ -28,6 +28,7 @@ import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.UnconfirmedJournal;
+import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
@@ -202,7 +203,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static Publication generateBookMonographPublication() throws MalformedContributorException,
-                                                                        InvalidIsbnException {
+            InvalidIsbnException {
         return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
                                    generateEntityDescriptionBookMonograph());
     }
@@ -213,7 +214,7 @@ public class PublicationGenerator extends ModelTest {
         var context = new Book(null,
                 "Some wild series title",
                 "2",
-                "Hansome publishing cowpoke",
+                new UnconfirmedPublisher("Hansome publishing cowpoke"),
                 Collections.emptyList());
         var instance = new BookMonograph.Builder()
                 .withPages(generateMonographPages())
@@ -573,7 +574,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     private static EntityDescription generateEntityDescriptionBookMonograph() throws MalformedContributorException,
-                                                                                     InvalidIsbnException {
+            InvalidIsbnException {
         return getEntityDescription(getBookMonographReference());
     }
 
@@ -588,7 +589,7 @@ public class PublicationGenerator extends ModelTest {
     private static BasicContext getPublishingContextBook() throws InvalidIsbnException {
         return new Book.BookBuilder()
                    .withIsbnList(List.of("9780201309515"))
-                   .withPublisher("My publisher dot com")
+                   .withPublisher(new UnconfirmedPublisher("My publisher dot com"))
                    .withSeriesNumber("123")
                    .withSeries(new UnconfirmedSeries("Explorations in ego"))
                    .build();
@@ -604,7 +605,7 @@ public class PublicationGenerator extends ModelTest {
             InvalidUnconfirmedSeriesException {
         return new Degree.Builder()
                 .withIsbnList(List.of("9780201309515"))
-                .withPublisher("My publisher dot com")
+                .withPublisher(new UnconfirmedPublisher("My publisher dot com"))
                 .withSeriesNumber("123")
                 .withSeries(new UnconfirmedSeries("Explorations in ego"))
                 .build();
@@ -614,7 +615,7 @@ public class PublicationGenerator extends ModelTest {
             InvalidUnconfirmedSeriesException {
         return new Report.Builder()
                 .withIsbnList(List.of("9780201309515"))
-                .withPublisher("Hello cheesy world of anaemic flavours publishing")
+                .withPublisher(new UnconfirmedPublisher("Hello cheesy world of anaemic flavours publishing"))
                 .withSeries(new UnconfirmedSeries("Strøsand and Muck in context"))
                 .withSeriesNumber("221")
                 .withOnlineIssn("1111-1119")
