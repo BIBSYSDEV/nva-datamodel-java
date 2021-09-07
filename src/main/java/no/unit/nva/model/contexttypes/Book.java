@@ -26,6 +26,8 @@ public class Book implements BasicContext {
     public static final String JSON_PROPERTY_SERIES_NUMBER = "seriesNumber";
     public static final String JSON_PROPERTY_PUBLISHER = "publisher";
     public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
+    public static final String ANYTHING_BUT_DIGITS_REGEX = "[\\D.]";
+
 
     private final BookSeries series;
     private final String seriesNumber;
@@ -115,6 +117,7 @@ public class Book implements BasicContext {
             return Collections.emptyList();
         }
         List<String> validIsbns = isbnList.stream()
+            .map(isbn -> isbn.replaceAll(ANYTHING_BUT_DIGITS_REGEX, ""))
             .map(ISBN_VALIDATOR::validate)
             .filter(Objects::nonNull)
             .collect(Collectors.toList());

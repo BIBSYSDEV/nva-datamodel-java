@@ -1,7 +1,9 @@
 package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
@@ -14,6 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -182,6 +185,39 @@ class BookTest extends ModelTest {
         List<String> resultIsbnList = book.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
         assertThat(resultIsbnList, is(empty()));
+    }
+
+    @DisplayName("No-digits are removed from isbn upon creation of a Book with deserialization.")
+    @ParameterizedTest
+    @CsvSource({
+        "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
+        "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
+    })
+    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String expectedIsbn, String inputIsbn)
+            throws InvalidIsbnException, IOException {
+        Book actuallBook = randomBook();
+        String actuallBookString = objectMapper.writeValueAsString(actuallBook);
+        String wrongIsbn = objectMapper.writeValueAsString(convertIsbnStringToList(inputIsbn));
+        JsonNode wrongIsbnJsonNode = JsonUtils.objectMapperNoEmpty.readTree(wrongIsbn);
+        ObjectNode bookObjectNode = (ObjectNode) JsonUtils.objectMapperNoEmpty.readTree(actuallBookString);
+        bookObjectNode.set("isbnList", wrongIsbnJsonNode);
+        String tempString = objectMapper.writeValueAsString(bookObjectNode);
+        Book deserializedBook = objectMapper.readValue(tempString, Book.class);
+        assertThat(deserializedBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
+    }
+
+    @DisplayName("No-digits are removed from isbn upon creation of a Book using the builder")
+    @ParameterizedTest
+    @CsvSource({
+        "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
+        "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
+    })
+    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookUsingTheBuilder(String expectedIsbn, String inputIsbn)
+            throws InvalidIsbnException {
+        Book actuallBook = new Book.BookBuilder()
+                .withIsbnList(convertIsbnStringToList(inputIsbn))
+                .build();
+        assertThat(actuallBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
     }
 
     @Test
