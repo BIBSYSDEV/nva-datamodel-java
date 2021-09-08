@@ -15,7 +15,7 @@ apply plugin: 'de.fuerstenau.buildconfig'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-String versionNumber = '0.13.0'
+String versionNumber = '0.13.1'
 
 group 'com.github.bibsysdev'
 version versionNumber
@@ -44,7 +44,7 @@ def nvaCommonsVersion = '1.7.6'
 gradleLint.rules = ['unused-dependency']
 
 dependencies {
-    implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
+    implementation group: 'commons-validator', name: 'commons-validator', version: '1.7'
 
     compileOnly group: 'com.github.bibsysdev', name: 'core', version: nvaCommonsVersion
     testImplementation group: 'com.github.bibsysdev', name: 'core', version: nvaCommonsVersion

@@ -28,11 +28,13 @@ public class Book implements BasicContext {
     public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
     public static final String ANYTHING_BUT_DIGITS_REGEX = "[\\D.]";
 
-
+    @JsonProperty(JSON_PROPERTY_SERIES)
     private final BookSeries series;
+    @JsonProperty(JSON_PROPERTY_SERIES_NUMBER)
     private final String seriesNumber;
-
+    @JsonProperty(JSON_PROPERTY_PUBLISHER)
     private final PublishingHouse publisher;
+    @JsonProperty(JSON_PROPERTY_ISBN_LIST)
     private final List<String> isbnList;
 
     public Book(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
@@ -41,47 +43,13 @@ public class Book implements BasicContext {
                 @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                 @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidIsbnException,
             InvalidUnconfirmedSeriesException {
-
-        this.series = extractSeriesInformation(series, unconfirmedSeriesTitle);
-        this.seriesNumber = seriesNumber;
-        this.publisher = publisher;
-        this.isbnList = extractValidIsbnList(isbnList);
+        this(BookSeries.extractSeriesInformation(series, unconfirmedSeriesTitle),
+                seriesNumber,
+                publisher,
+                isbnList);
     }
 
-    private BookSeries extractSeriesInformation(BookSeries series, String unconfirmedSeriesTitle)
-            throws InvalidUnconfirmedSeriesException {
-
-        if (nonNull(series) && series.isConfirmed()) {
-            return series;
-        }
-
-        validateUnconfirmedSeries(series, unconfirmedSeriesTitle);
-
-        if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
-            return new UnconfirmedSeries(unconfirmedSeriesTitle);
-        } else {
-            return series;
-        }
-    }
-
-    private void validateUnconfirmedSeries(BookSeries series, String unconfirmedSeriesTitle)
-            throws InvalidUnconfirmedSeriesException {
-        if (hasSeriesStringAndSeriesObject(series, unconfirmedSeriesTitle)
-                && hasUnmatchedSeriesStringValues(series, unconfirmedSeriesTitle)) {
-            throw new InvalidUnconfirmedSeriesException();
-        }
-    }
-
-    private boolean hasUnmatchedSeriesStringValues(BookSeries series, String unconfirmedSeriesTitle) {
-        return !series.isConfirmed()
-                && !((UnconfirmedSeries) series).getTitle().equals(unconfirmedSeriesTitle);
-    }
-
-    private boolean hasSeriesStringAndSeriesObject(BookSeries series, String unconfirmedSeriesTitle) {
-        return nonNull(series) && nonNull(unconfirmedSeriesTitle);
-    }
-
-    private Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList)
+    public Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList)
             throws InvalidIsbnException {
         this.series = series;
         this.seriesNumber = seriesNumber;
