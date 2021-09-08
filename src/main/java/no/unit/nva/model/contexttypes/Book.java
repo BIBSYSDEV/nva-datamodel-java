@@ -28,7 +28,6 @@ public class Book implements BasicContext {
     public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
     public static final String ANYTHING_BUT_DIGITS_REGEX = "[\\D.]";
 
-
     private final BookSeries series;
     private final String seriesNumber;
 
@@ -43,6 +42,14 @@ public class Book implements BasicContext {
             InvalidUnconfirmedSeriesException {
 
         this.series = extractSeriesInformation(series, unconfirmedSeriesTitle);
+        this.seriesNumber = seriesNumber;
+        this.publisher = publisher;
+        this.isbnList = extractValidIsbnList(isbnList);
+    }
+
+    public Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList)
+            throws InvalidIsbnException {
+        this.series = series;
         this.seriesNumber = seriesNumber;
         this.publisher = publisher;
         this.isbnList = extractValidIsbnList(isbnList);
@@ -79,14 +86,6 @@ public class Book implements BasicContext {
 
     private boolean hasSeriesStringAndSeriesObject(BookSeries series, String unconfirmedSeriesTitle) {
         return nonNull(series) && nonNull(unconfirmedSeriesTitle);
-    }
-
-    private Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList)
-            throws InvalidIsbnException {
-        this.series = series;
-        this.seriesNumber = seriesNumber;
-        this.publisher = publisher;
-        this.isbnList = extractValidIsbnList(isbnList);
     }
 
     public BookSeries getSeries() {
