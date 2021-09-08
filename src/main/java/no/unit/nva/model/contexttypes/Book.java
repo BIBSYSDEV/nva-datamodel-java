@@ -2,7 +2,6 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.contexttypes.utils.BookSeriesUtil;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
@@ -44,7 +43,7 @@ public class Book implements BasicContext {
                 @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                 @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidIsbnException,
             InvalidUnconfirmedSeriesException {
-        this(BookSeriesUtil.extractSeriesInformation(series, unconfirmedSeriesTitle),
+        this(BookSeries.extractSeriesInformation(series, unconfirmedSeriesTitle),
                 seriesNumber,
                 publisher,
                 isbnList);
