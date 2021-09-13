@@ -3,79 +3,54 @@ plugins {
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
-    id 'nebula.lint' version '16.8.0'
-    id 'de.fuerstenau.buildconfig' version '1.1.8'
+    id 'nebula.lint' version '17.2.0'
+    id "com.github.gmazzo.buildconfig" version "3.0.3"
     id 'idea'
     id 'maven-publish'
     id 'signing'
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
-apply plugin: 'de.fuerstenau.buildconfig'
+apply plugin: 'com.github.gmazzo.buildconfig'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-String versionNumber = '0.13.1'
-
 group 'com.github.bibsysdev'
-version versionNumber
+version '0.13.3'
+
+wrapper {
+    gradleVersion = '7.2'
+    distributionType = Wrapper.DistributionType.ALL
+}
 
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
 
-configurations {
-    compileClasspath {
-        resolutionStrategy.activateDependencyLocking()
-    }
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
-}
-
-def junitVersion = '5.6.2'
-def jacksonVersion = '2.10.2'
-def nvaCommonsVersion = '1.7.6'
-
 gradleLint.rules = ['unused-dependency']
 
 dependencies {
-    implementation group: 'commons-validator', name: 'commons-validator', version: '1.7'
 
-    compileOnly group: 'com.github.bibsysdev', name: 'core', version: nvaCommonsVersion
-    testImplementation group: 'com.github.bibsysdev', name: 'core', version: nvaCommonsVersion
+    implementation libs.apache.commons.validator
+    compileOnly libs.nva.commons.core
+    testImplementation libs.nva.commons.core
 
-    compileOnly group: 'com.github.bibsysdev', name: 'identifiers', version: nvaCommonsVersion
-    testImplementation group: 'com.github.bibsysdev', name: 'identifiers', version: nvaCommonsVersion
+    compileOnly libs.nva.commons.identifiers
+    testImplementation libs.nva.commons.identifiers
 
-    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
-    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    compileOnly libs.bundles.jackson
+    testImplementation libs.bundles.jackson
 
-    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
-    testRuntimeOnly group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+    testImplementation libs.bundles.unittesting
+    testImplementation libs.nva.testutils
 
-    compileOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: jacksonVersion
-    testRuntimeOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: jacksonVersion
+    testImplementation libs.jsonld.java
+    testImplementation libs.swagger.core
 
-    compileOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
-    testRuntimeOnly group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
 
-    testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jacksonVersion
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion
-    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
-    testImplementation group: 'com.github.jsonld-java', name: 'jsonld-java', version: '0.13.0'
-    testImplementation group: 'com.github.BIBSYSDEV', name: 'nva-testutils', version: '0.1.9'
-    testImplementation group: 'io.swagger.core.v3', name: 'swagger-core', version: '2.1.4'
-    testImplementation group: 'org.javers', name: 'javers-core', version: '6.2.4'
-    testImplementation group: 'com.github.bibsysdev', name: 'nva-testutils', version: '0.1.24'
-    testImplementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
-    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
-    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testImplementation libs.javafaker
+    testRuntimeOnly libs.slf4j
 
 }
 
@@ -97,6 +72,11 @@ pmd {
     ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
     ruleSets = []
     ignoreFailures = false
+    pmdMain {
+        excludes = [
+                '**/BuildConfig.*'
+        ]
+    }
 }
 
 checkstyle {
@@ -110,15 +90,16 @@ tasks.withType(Checkstyle) {
         html.enabled true
         html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
     }
+    exclude '**/BuildConfig*'
+
+
 }
 
 buildConfig {
-    appName = project.name
-    version = project.version
-    clsName = 'BuildConfig'
-    packageName = project.group
-    charset = 'UTF-8'
-    buildConfigField 'String', 'MODEL_VERSION', versionNumber
+    className("BuildConfig")   // forces the class name. Defaults to 'BuildConfig'
+    packageName(project.group)  // forces the package. Defaults to '${project.group}'
+    useJavaOutput() //forces the output to be Java
+    buildConfigField("String", "MODEL_VERSION", "\"${project.version}\"")
 }
 
 java {
