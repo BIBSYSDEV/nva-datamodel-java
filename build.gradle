@@ -36,6 +36,7 @@ java {
         languageVersion = JavaLanguageVersion.of(11)
     }
 }
+gradleLint.rules = ['unused-dependency']
 
 def junitVersion = '5.6.2'
 def jacksonVersion = '2.10.2'
