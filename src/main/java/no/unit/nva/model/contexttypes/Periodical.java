@@ -1,5 +1,5 @@
 package no.unit.nva.model.contexttypes;
 
-public interface Periodical {
+public interface Periodical extends BasicContext {
 
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
 import static java.util.Objects.isNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Journal implements Periodical, BasicContext {
+public class Journal implements Periodical {
     private final URI id;
 
     @JsonCreator

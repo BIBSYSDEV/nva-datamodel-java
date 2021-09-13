@@ -10,7 +10,7 @@ import nva.commons.core.JacocoGenerated;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class UnconfirmedJournal implements Periodical, BasicContext {
+public class UnconfirmedJournal implements Periodical {
     private final String title;
     private final String printIssn;
     private final String onlineIssn;
