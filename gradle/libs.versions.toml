@@ -1,0 +1,46 @@
+[versions]
+junitVersion = { strictly = '5.6.2' }
+jacksonVersion = { strictly = '2.10.2' }
+nvaCommonsVersion = { strictly = '1.7.6' }
+apacheCommonsValidator = { strictly = '1.7' }
+nvaTestUtilsVersion = {strictly = '0.1.24'}
+hamcrestVersion = {strictly = '2.2'}
+jsonldJavaVersion = { strictly = '0.13.0'}
+swaggerCoreVersion = {strictly = '2.1.4'}
+javersVersion = {strictly = '6.2.4'}
+javaFakerVersion = {strictly = '1.0.2'}
+slf4jVersion= {strictly = '1.7.30'}
+
+
+[libraries]
+apache-commons-validator = { group = 'commons-validator', name = 'commons-validator', version.ref = 'apacheCommonsValidator' }
+
+nva-commons-core = { group = 'com.github.bibsysdev', name = 'core', version.ref = 'nvaCommonsVersion' }
+nva-commons-identifiers = { group = 'com.github.bibsysdev', name = 'identifiers', version.ref = 'nvaCommonsVersion' }
+
+nva-testutils = { group = 'com.github.bibsysdev', name = 'nva-testutils', version.ref = 'nvaTestUtilsVersion' }
+
+jackson-databind = { group = 'com.fasterxml.jackson.core', name = 'jackson-databind', version.ref = 'jacksonVersion' }
+jackson-annotations = { group = 'com.fasterxml.jackson.core', name = 'jackson-annotations', version.ref = 'jacksonVersion' }
+jackson-core = { group = 'com.fasterxml.jackson.core', name = 'jackson-core', version.ref = 'jacksonVersion' }
+jackson-datatype-jdk8 = { group = 'com.fasterxml.jackson.datatype', name = 'jackson-datatype-jdk8', version.ref = 'jacksonVersion' }
+jackson-datatype-jsr310 = { group = 'com.fasterxml.jackson.datatype', name = 'jackson-datatype-jsr310', version.ref = 'jacksonVersion' }
+
+junit-jupiter-api = { group = 'org.junit.jupiter', name = 'junit-jupiter-api', version.ref = 'junitVersion' }
+junit-jupiter-params = { group = 'org.junit.jupiter', name = 'junit-jupiter-params', version.ref = 'junitVersion' }
+junit-jupiter-engine = { group = 'org.junit.jupiter', name = 'junit-jupiter-engine', version.ref = 'junitVersion' }
+
+hamcrest = { group = 'org.hamcrest', name = 'hamcrest', version.ref = 'hamcrestVersion' }
+
+jsonld-java = { group = 'com.github.jsonld-java', name = 'jsonld-java', version.ref = 'jsonldJavaVersion' }
+swagger-core = { group = 'io.swagger.core.v3', name = 'swagger-core', version.ref = 'swaggerCoreVersion' }
+javers-core = { group = 'org.javers', name = 'javers-core', version.ref = 'javersVersion' }
+
+javafaker = { group = 'com.github.javafaker', name = 'javafaker', version.ref = 'javaFakerVersion' }
+slf4j = { group = 'org.slf4j', name = 'slf4j-simple', version.ref = 'slf4jVersion' }
+
+
+[bundles]
+unittesting = ["junit-jupiter-api","junit-jupiter-params","junit-jupiter-engine","hamcrest","javers-core"]
+jackson = ["jackson-core", "jackson-databind","jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
+
