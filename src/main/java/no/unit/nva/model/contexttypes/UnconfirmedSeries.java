@@ -27,8 +27,8 @@ public class UnconfirmedSeries implements BookSeries {
         this.issn = validateIssn(issn);
     }
 
-    public static UnconfirmedSeries fromTitle(String title)  {
-        return attempt(()->new UnconfirmedSeries(title,null)).orElseThrow();
+    public static UnconfirmedSeries fromTitle(String title) {
+        return attempt(() -> new UnconfirmedSeries(title, null)).orElseThrow();
     }
 
     public String getIssn() {
