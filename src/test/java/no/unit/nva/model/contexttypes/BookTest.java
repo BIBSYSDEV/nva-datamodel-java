@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JsonUtils;
@@ -46,7 +47,7 @@ class BookTest extends ModelTest {
     public static final String SOME_OTHER_SERIES_TITLE = "Unmatched series title";
 
     @Test
-    public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws InvalidIsbnException {
+    public void bookHasNonEmptySeriesUriWhenBookIsPartOfSeries() throws InvalidIsbnException, InvalidIssnException {
         Book book = randomBook();
         assertThat(book.getSeries(), is(not(nullValue())));
         assertThat(book, doesNotHaveEmptyValues());
@@ -77,7 +78,7 @@ class BookTest extends ModelTest {
     }
 
     @Test
-    public void copyReturnsBookEqualToOriginalButDifferentObject() throws InvalidIsbnException {
+    public void copyReturnsBookEqualToOriginalButDifferentObject() throws InvalidIsbnException, InvalidIssnException {
         Book original = randomBook();
         assertThat(original, doesNotHaveEmptyValues());
         Book copy = original.copy().build();
@@ -130,7 +131,7 @@ class BookTest extends ModelTest {
             InvalidIsbnException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Book book = new Book.BookBuilder()
-            .withSeries(new UnconfirmedSeries(seriesTitle))
+            .withSeries(UnconfirmedSeries.fromTitle(seriesTitle))
             .withSeriesNumber(seriesNumber)
             .withPublisher(new UnconfirmedPublisher(publisher))
             .withIsbnList(expectedIsbnList)
@@ -170,8 +171,8 @@ class BookTest extends ModelTest {
 
     @DisplayName("Book: Null ISBNs are handled gracefully")
     @Test
-    void bookReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException {
-        Book book = randomBook().copy().withIsbnList(null).build();
+    void bookReturnsEmptyListWhenIsbnsAreNull() throws InvalidIsbnException, InvalidIssnException {
+        Book book =  randomBook().copy().withIsbnList(null).build();
 
         List<String> resultIsbnList = book.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
@@ -180,7 +181,7 @@ class BookTest extends ModelTest {
 
     @DisplayName("Book: Empty ISBNs are handled gracefully")
     @Test
-    void bookReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException {
+    void bookReturnsEmptyListWhenIsbnListIsEmpty() throws InvalidIsbnException, InvalidIssnException {
         Book book = randomBook().copy().withIsbnList(emptyList()).build();
         List<String> resultIsbnList = book.getIsbnList();
         assertThat(resultIsbnList, is(not(nullValue())));
@@ -194,7 +195,7 @@ class BookTest extends ModelTest {
         "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
     })
     void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String expectedIsbn, String inputIsbn)
-            throws InvalidIsbnException, IOException {
+        throws InvalidIsbnException, IOException, InvalidIssnException {
         Book actuallBook = randomBook();
         String actuallBookString = objectMapper.writeValueAsString(actuallBook);
         String wrongIsbn = objectMapper.writeValueAsString(convertIsbnStringToList(inputIsbn));
@@ -223,7 +224,7 @@ class BookTest extends ModelTest {
     @Test
     void bookDoesNotThrowExceptionWhenInputUnconfirmedSeriesStringsMatch() {
         assertDoesNotThrow(() -> new Book(
-                new UnconfirmedSeries(SOME_SERIES_TITLE),
+                UnconfirmedSeries.fromTitle(SOME_SERIES_TITLE),
                 SOME_SERIES_TITLE,
                 "1",
                 new UnconfirmedPublisher("Publisher"),
@@ -234,7 +235,7 @@ class BookTest extends ModelTest {
     @Test
     void bookThrowsExceptionWhenInputUnconfirmedSeriesStringsAreUnmatched() {
         Executable executable = () -> new Book(
-                new UnconfirmedSeries(SOME_SERIES_TITLE),
+                UnconfirmedSeries.fromTitle(SOME_SERIES_TITLE),
                 SOME_OTHER_SERIES_TITLE,
                 "1",
                 new UnconfirmedPublisher("Publisher"),

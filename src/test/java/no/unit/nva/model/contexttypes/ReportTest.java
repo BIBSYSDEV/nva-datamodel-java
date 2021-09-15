@@ -92,7 +92,7 @@ public class ReportTest extends ModelTest {
             InvalidIsbnException, InvalidIssnException, InvalidUnconfirmedSeriesException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Report report = new Report.Builder()
-                .withSeries(new UnconfirmedSeries(seriesTitle))
+                .withSeries(UnconfirmedSeries.fromTitle(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(expectedIsbnList)
@@ -131,7 +131,7 @@ public class ReportTest extends ModelTest {
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
         Executable executable = () -> new Report.Builder()
-                .withSeries(new UnconfirmedSeries(seriesTitle))
+                .withSeries(UnconfirmedSeries.fromTitle(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(invalidIsbnList)

@@ -28,7 +28,7 @@ public interface BookSeries {
         validateUnconfirmedSeries(series, unconfirmedSeriesTitle);
 
         if (nonNull(unconfirmedSeriesTitle) && isNull(series)) {
-            return new UnconfirmedSeries(unconfirmedSeriesTitle);
+            return  UnconfirmedSeries.fromTitle(unconfirmedSeriesTitle);
         } else {
             return series;
         }
