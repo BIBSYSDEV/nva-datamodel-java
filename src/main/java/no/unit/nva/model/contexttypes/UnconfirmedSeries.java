@@ -15,26 +15,38 @@ public class UnconfirmedSeries implements BookSeries {
 
     public static final String TITLE = "title";
     public static final String ISSN = "issn";
+    public static final String ONLINE_ISSN = "onlineIssn";
     @JsonProperty(TITLE)
     private final String title;
     @JsonProperty(ISSN)
     private final String issn;
+    @JsonProperty(ONLINE_ISSN)
+    private final String onlineIssn;
 
     @JsonCreator
     public UnconfirmedSeries(@JsonProperty(TITLE) String title,
-                             @JsonProperty(ISSN) String issn) throws InvalidIssnException {
+                             @JsonProperty(ISSN) String issn,
+                             @JsonProperty(ONLINE_ISSN) String onlineIssn) throws InvalidIssnException {
         this.title = title;
         this.issn = validateIssn(issn);
+        this.onlineIssn = validateIssn(onlineIssn);
     }
 
     public static UnconfirmedSeries fromTitle(String title) {
-        return attempt(() -> new UnconfirmedSeries(title, null)).orElseThrow();
+        return attempt(() -> new UnconfirmedSeries(title, null, null)).orElseThrow();
     }
 
+    @JacocoGenerated
+    public String getOnlineIssn() {
+        return onlineIssn;
+    }
+
+    @JacocoGenerated
     public String getIssn() {
         return issn;
     }
 
+    @JacocoGenerated
     public String getTitle() {
         return title;
     }
@@ -44,13 +56,11 @@ public class UnconfirmedSeries implements BookSeries {
         return false;
     }
 
-    @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getIssn());
+        return Objects.hash(getTitle(), getIssn(), getOnlineIssn());
     }
 
-    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -60,7 +70,9 @@ public class UnconfirmedSeries implements BookSeries {
             return false;
         }
         UnconfirmedSeries that = (UnconfirmedSeries) o;
-        return Objects.equals(getTitle(), that.getTitle()) && Objects.equals(getIssn(), that.getIssn());
+        return Objects.equals(getTitle(), that.getTitle())
+               && Objects.equals(getIssn(), that.getIssn())
+               && Objects.equals(getOnlineIssn(), that.getOnlineIssn());
     }
 
     private String validateIssn(String issn) throws InvalidIssnException {

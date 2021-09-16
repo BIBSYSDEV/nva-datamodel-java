@@ -22,7 +22,7 @@ public final class RandomPublicationContexts {
         return new Book.BookBuilder()
             .withIsbnList(randomIsbnList())
             .withPublisher(new UnconfirmedPublisher(randomString()))
-            .withSeries(new UnconfirmedSeries(randomString(),randomIssn()))
+            .withSeries(new UnconfirmedSeries(randomString(),randomIssn(),randomIssn()))
             .withSeriesNumber(randomString())
             .build();
     }
