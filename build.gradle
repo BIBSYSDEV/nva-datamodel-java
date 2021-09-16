@@ -16,7 +16,7 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
 group 'com.github.bibsysdev'
-version '0.13.6'
+version '0.13.5'
 
 wrapper {
     gradleVersion = '7.2'
