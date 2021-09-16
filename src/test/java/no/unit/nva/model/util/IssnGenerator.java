@@ -5,7 +5,7 @@ final class IssnGenerator {
     public static final String SYMBOL_FOR_NUMBER_TEN = "X";
     private static final int MIDDLE_INDEX_OF_ISSN_STRING = 4;
 
-    private IssnGenerator(){
+    private IssnGenerator() {
 
     }
 
@@ -16,7 +16,6 @@ final class IssnGenerator {
     public static String randomIssn() {
         return createValidIssn(random7DigitNumber());
     }
-
 
     private static String random7DigitNumber() {
         return String.valueOf((int) (Math.random() * 9000000) + 1000000);
@@ -57,5 +56,4 @@ final class IssnGenerator {
                    ? issnMissingChecksum + SYMBOL_FOR_NUMBER_TEN
                    : issnMissingChecksum + checksum;
     }
-
 }
