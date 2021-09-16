@@ -17,36 +17,36 @@ import org.junit.jupiter.api.function.Executable;
 
 class UnconfirmedSeriesTest {
 
-    @Test
-    public void constructorReturnsUnconfirmedSeriesWhenInputContainsValidIssn() throws InvalidIssnException {
-        String randomIssn = randomIssn();
-        assertDoesNotThrow(() -> new UnconfirmedSeries(randomString(), randomIssn,randomIssn));
-        UnconfirmedSeries series = new UnconfirmedSeries(randomString(), randomIssn,randomIssn);
-        assertThat(series.getIssn(), is(equalTo(randomIssn)));
-    }
-
-    @Test
-    public void jsonCreatorReturnsUnconfirmedSeriesWhenInputContainsValidIssnString() {
-        String json = attempt(() -> new UnconfirmedSeries(randomString(), randomIssn(),randomIssn()))
-            .map(objectMapperWithEmpty::writeValueAsString)
-            .orElseThrow();
-
-        assertDoesNotThrow(() -> objectMapperWithEmpty.readValue(json, UnconfirmedSeries.class));
-    }
-
-    @Test
-    public void constructorThrowsExceptionWhenInputContainsInvalidIssn() {
-        String invalidIssn = randomInvalidIssn();
-        Executable action = () -> new UnconfirmedSeries(randomString(), invalidIssn,randomIssn());
-        InvalidIssnException exception = assertThrows(InvalidIssnException.class, action);
-        assertThat(exception.getMessage(), containsString(invalidIssn));
-    }
-
-    @Test
-    public void constructorThrowsExceptionWhenInputContainsInvalidOnlineIssn() {
-        String invalidIssn = randomInvalidIssn();
-        Executable action = () -> new UnconfirmedSeries(randomString(), randomIssn(),invalidIssn);
-        InvalidIssnException exception = assertThrows(InvalidIssnException.class, action);
-        assertThat(exception.getMessage(), containsString(invalidIssn));
-    }
+//    @Test
+//    public void constructorReturnsUnconfirmedSeriesWhenInputContainsValidIssn() throws InvalidIssnException {
+//        String randomIssn = randomIssn();
+//        assertDoesNotThrow(() -> new UnconfirmedSeries(randomString(), randomIssn,randomIssn));
+//        UnconfirmedSeries series = new UnconfirmedSeries(randomString(), randomIssn,randomIssn);
+//        assertThat(series.getIssn(), is(equalTo(randomIssn)));
+//    }
+//
+//    @Test
+//    public void jsonCreatorReturnsUnconfirmedSeriesWhenInputContainsValidIssnString() {
+//        String json = attempt(() -> new UnconfirmedSeries(randomString(), randomIssn(),randomIssn()))
+//            .map(objectMapperWithEmpty::writeValueAsString)
+//            .orElseThrow();
+//
+//        assertDoesNotThrow(() -> objectMapperWithEmpty.readValue(json, UnconfirmedSeries.class));
+//    }
+//
+//    @Test
+//    public void constructorThrowsExceptionWhenInputContainsInvalidIssn() {
+//        String invalidIssn = randomInvalidIssn();
+//        Executable action = () -> new UnconfirmedSeries(randomString(), invalidIssn,randomIssn());
+//        InvalidIssnException exception = assertThrows(InvalidIssnException.class, action);
+//        assertThat(exception.getMessage(), containsString(invalidIssn));
+//    }
+//
+//    @Test
+//    public void constructorThrowsExceptionWhenInputContainsInvalidOnlineIssn() {
+//        String invalidIssn = randomInvalidIssn();
+//        Executable action = () -> new UnconfirmedSeries(randomString(), randomIssn(),invalidIssn);
+//        InvalidIssnException exception = assertThrows(InvalidIssnException.class, action);
+//        assertThat(exception.getMessage(), containsString(invalidIssn));
+//    }
 }
