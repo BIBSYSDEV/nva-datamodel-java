@@ -1,5 +1,6 @@
 package no.unit.nva.utils;
 
+import static no.unit.nva.model.util.PublicationGenerator.randomIssn;
 import static no.unit.nva.utils.RandomData.randomIsbn;
 import static no.unit.nva.utils.RandomData.randomString;
 
@@ -9,6 +10,7 @@ import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidIssnException;
 
 public final class RandomPublicationContexts {
 
@@ -16,11 +18,11 @@ public final class RandomPublicationContexts {
 
     }
 
-    public static Book randomBook() throws InvalidIsbnException {
+    public static Book randomBook() throws InvalidIsbnException, InvalidIssnException {
         return new Book.BookBuilder()
             .withIsbnList(randomIsbnList())
             .withPublisher(new UnconfirmedPublisher(randomString()))
-            .withSeries(new UnconfirmedSeries(randomString()))
+            .withSeries(new UnconfirmedSeries(randomString(),randomIssn(),randomIssn()))
             .withSeriesNumber(randomString())
             .build();
     }

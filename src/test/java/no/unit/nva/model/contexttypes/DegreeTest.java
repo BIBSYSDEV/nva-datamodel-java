@@ -75,7 +75,7 @@ class DegreeTest extends ModelTest {
             InvalidIsbnException, InvalidUnconfirmedSeriesException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Degree degree = new Degree.Builder()
-                .withSeries(new UnconfirmedSeries(seriesTitle))
+                .withSeries(UnconfirmedSeries.fromTitle(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(expectedIsbnList)
@@ -109,7 +109,7 @@ class DegreeTest extends ModelTest {
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
         Executable executable = () -> new Degree.Builder()
-                .withSeries(new UnconfirmedSeries(seriesTitle))
+                .withSeries(UnconfirmedSeries.fromTitle(seriesTitle))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(invalidIsbnList)
