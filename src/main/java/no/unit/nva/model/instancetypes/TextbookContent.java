@@ -2,7 +2,11 @@ package no.unit.nva.model.instancetypes;
 
 public interface TextbookContent {
 
-    boolean isTextbookContent();
+    @Deprecated
+    default Boolean isTextbookContent() {
+        return null;
+    }
 
+    @Deprecated
     void setTextbookContent(boolean textbookContent);
 }

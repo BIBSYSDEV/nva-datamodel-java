@@ -29,8 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ReportTest extends ModelTest {
     public static final ObjectMapper objectMapper = JsonUtils.objectMapper;
     public static final String REPORT = "Report";
-    public static final String ONLINE_ISSN = "0363-6941";
-    public static final String PRINT_ISSN = "1945-662X";
 
     @DisplayName("Reports can be created")
     @ParameterizedTest
@@ -66,8 +64,8 @@ public class ReportTest extends ModelTest {
         assertEquals(seriesTitle, ((UnconfirmedSeries) report.getSeries()).getTitle());
         assertEquals(seriesNumber, report.getSeriesNumber());
         assertEquals(expectedIsbn, report.getIsbnList());
-        assertEquals(onlineIssn, report.getOnlineIssn());
-        assertEquals(printIssn, report.getPrintIssn());
+        assertEquals(onlineIssn, ((UnconfirmedSeries) report.getSeries()).getOnlineIssn());
+        assertEquals(printIssn, ((UnconfirmedSeries) report.getSeries()).getIssn());
     }
 
     @DisplayName("Report serializes expected json")
@@ -92,12 +90,10 @@ public class ReportTest extends ModelTest {
             InvalidIsbnException, InvalidIssnException, InvalidUnconfirmedSeriesException {
         List<String> expectedIsbnList = convertIsbnStringToList(isbnList);
         Report report = new Report.Builder()
-                .withSeries(UnconfirmedSeries.fromTitle(seriesTitle))
+                .withSeries(new UnconfirmedSeries(seriesTitle, printIssn, onlineIssn))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(expectedIsbnList)
-                .withOnlineIssn(onlineIssn)
-                .withPrintIssn(printIssn)
                 .build();
         String expectedJson = generatePublicationJson(
                 REPORT,
@@ -131,12 +127,10 @@ public class ReportTest extends ModelTest {
         ArrayList<String> invalidIsbnList = new ArrayList<>(convertIsbnStringToList(isbnList));
 
         Executable executable = () -> new Report.Builder()
-                .withSeries(UnconfirmedSeries.fromTitle(seriesTitle))
+                .withSeries(new UnconfirmedSeries(seriesTitle, printIssn, onlineIssn))
                 .withSeriesNumber(seriesNumber)
                 .withPublisher(new UnconfirmedPublisher(publisher))
                 .withIsbnList(invalidIsbnList)
-                .withPrintIssn(printIssn)
-                .withOnlineIssn(onlineIssn)
                 .build();
 
         Exception exception = assertThrows(InvalidIsbnException.class, executable);
@@ -154,8 +148,6 @@ public class ReportTest extends ModelTest {
                 .withSeriesNumber(null)
                 .withPublisher(null)
                 .withIsbnList(null)
-                .withOnlineIssn(ONLINE_ISSN)
-                .withPrintIssn(PRINT_ISSN)
                 .build();
 
         List<String> resultIsbnList = report.getIsbnList();
@@ -172,8 +164,6 @@ public class ReportTest extends ModelTest {
                 .withSeriesNumber(null)
                 .withPublisher(null)
                 .withIsbnList(Collections.emptyList())
-                .withPrintIssn(PRINT_ISSN)
-                .withOnlineIssn(ONLINE_ISSN)
                 .build();
 
         List<String> resultIsbnList = report.getIsbnList();

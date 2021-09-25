@@ -155,8 +155,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        textbookContent:
-          type: boolean
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
@@ -171,8 +169,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        textbookContent:
-          type: boolean
         contentType:
           type: string
           enum:
@@ -872,10 +868,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
@@ -952,10 +948,6 @@ referencedSchemas:
           type: array
           items:
             type: string
-        printIssn:
-          type: string
-        onlineIssn:
-          type: string
   ReportBasic:
     required:
     - type

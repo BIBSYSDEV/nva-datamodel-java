@@ -36,7 +36,7 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
-        String json = generateChapterArticleJsonString(expectedBegin, expectedEnd, true, true, false);
+        String json = generateChapterArticleJsonString(expectedBegin, expectedEnd, true, false);
         ChapterArticle chapterArticle = objectMapper.readValue(json, ChapterArticle.class);
         assertEquals(expectedPages, chapterArticle.getPages());
         assertTrue(chapterArticle.isPeerReviewed());
@@ -64,7 +64,7 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
         String expectedBegin = "225";
         String expectedEnd = "275";
         Pages expectedPages = generatePages(expectedBegin, expectedEnd);
-        String json = generateChapterArticleJsonString(expectedBegin, expectedEnd, true, true, true);
+        String json = generateChapterArticleJsonString(expectedBegin, expectedEnd, true, true);
         ChapterArticle chapterArticle = objectMapper.readValue(json, ChapterArticle.class);
         assertEquals(expectedPages, chapterArticle.getPages());
         assertTrue(chapterArticle.isPeerReviewed());
@@ -76,13 +76,12 @@ public class ChapterArticleTest extends InstanceTest implements JsonHandlingTest
     void objectMapperReturnsValidJsonWhenInputIsValidChapterArticleWithOriginalResearch() {
         String expectedBegin = "222";
         String expectedEnd = "232";
-        boolean expectedOriginalResearch = true;
         ChapterArticle chapterArticle = new ChapterArticle.Builder()
                 .withPages(generatePages(expectedBegin, expectedEnd))
                 .withPeerReviewed(false)
-                .withOriginalResearch(expectedOriginalResearch)
+                .withOriginalResearch(true)
                 .build();
-        JsonNode expectedJson = generateChapterArticleJson(expectedBegin, expectedEnd, false, expectedOriginalResearch);
+        JsonNode expectedJson = generateChapterArticleJson(expectedBegin, expectedEnd, false, true);
         JsonNode actualJson = objectMapper.convertValue(chapterArticle, JsonNode.class);
         assertEquals(expectedJson, actualJson);
     }

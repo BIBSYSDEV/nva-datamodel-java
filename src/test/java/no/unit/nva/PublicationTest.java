@@ -1,6 +1,5 @@
 package no.unit.nva;
 
-import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
@@ -18,6 +17,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import no.unit.nva.hamcrest.DoesNotHaveEmptyValues;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.File;
@@ -57,19 +58,18 @@ public class PublicationTest extends ModelTest {
         String publication = objectMapper.writeValueAsString(expected);
         Publication roundTripped = objectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
-        assertThat(expected, doesNotHaveNullOrEmptyFields());
+        assertThat(expected, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
     }
 
-    @DisplayName("copy returns a builder with all data of a publication")
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @ArgumentsSource(InstanceTypeProvider.class)
     void copyReturnsBuilderWithAllDataOfAPublication(String referenceInstanceType) throws Exception {
         Publication publication = generatePublication(referenceInstanceType);
         Publication copy = publication.copy().build();
-        assertThat(publication, doesNotHaveNullOrEmptyFields());
+        assertThat(publication, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
         Diff diff = JAVERS.compare(publication, copy);
         assertThat(diff.prettyPrint(), copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));

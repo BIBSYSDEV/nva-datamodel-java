@@ -12,13 +12,12 @@ public class BookAnthology extends PeerReviewedMonograph {
     }
 
     private BookAnthology(Builder builder) {
-        super(builder.pages, builder.peerReviewed, builder.textbookContent);
+        super(builder.pages, builder.peerReviewed);
     }
 
     public static final class Builder {
         private boolean peerReviewed;
         private MonographPages pages;
-        private boolean textbookContent;
 
         public Builder() {
         }
@@ -30,11 +29,6 @@ public class BookAnthology extends PeerReviewedMonograph {
 
         public Builder withPages(MonographPages pages) {
             this.pages = pages;
-            return this;
-        }
-
-        public Builder withTextbookContent(boolean textbookContent) {
-            this.textbookContent = textbookContent;
             return this;
         }
 

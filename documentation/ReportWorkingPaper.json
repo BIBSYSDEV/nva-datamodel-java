@@ -73,16 +73,16 @@
         "type" : "Report",
         "series" : {
           "type" : "UnconfirmedSeries",
-          "title" : "Strøsand and Muck in context"
+          "title" : "Explorations in ego",
+          "issn" : "0028-0836",
+          "onlineIssn" : "1476-4687"
         },
         "seriesNumber" : "221",
         "publisher" : {
           "type" : "UnconfirmedPublisher",
           "name" : "Hello cheesy world of anaemic flavours publishing"
         },
-        "isbnList" : [ "9780201309515" ],
-        "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119"
+        "isbnList" : [ "9780201309515" ]
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -147,5 +147,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
-  "modelVersion" : "0.13.4"
+  "modelVersion" : "0.13.5"
 }

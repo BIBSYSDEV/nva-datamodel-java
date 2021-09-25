@@ -15,7 +15,6 @@ public class DegreeMasterTest extends InstanceTest {
     private static final String DEGREE_MASTER = "DegreeMaster";
     public static final boolean NOT_ORIGINAL_RESEARCH = false;
     public static final BookMonographContentType EMPTY_CONTENT_TYPE = null;
-    public static final boolean NOT_TEXTBOOK_CONTENT = false;
     public static final boolean NOT_PEER_REVIEWED = false;
 
     @DisplayName("DegreeMaster exists")
@@ -41,7 +40,7 @@ public class DegreeMasterTest extends InstanceTest {
                 end,
                 pages,
                 illustrated,
-                false);
+                EMPTY_CONTENT_TYPE);
         DegreeMaster actual = objectMapper.readValue(json, DegreeMaster.class);
         DegreeMaster expected = generateDegreeMaster(
                 begin,
@@ -76,7 +75,6 @@ public class DegreeMasterTest extends InstanceTest {
                 pages,
                 illustrated,
                 NOT_PEER_REVIEWED,
-                NOT_TEXTBOOK_CONTENT,
                 EMPTY_CONTENT_TYPE,
                 NOT_ORIGINAL_RESEARCH);
         JsonNode actual = jsonStringToJsonNode(json);

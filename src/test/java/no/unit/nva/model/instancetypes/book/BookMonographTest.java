@@ -37,24 +37,23 @@ class BookMonographTest extends InstanceTest {
     @ParameterizedTest(name = "BookMonograph deserializes begin {0}, end {1}, pages {2}, illustrated {3}, "
             + "peerReviewed {4}, textbook {5}")
     @CsvSource({
-            "i,xxviii,398,true,true,true",
-            ",,231,false,true,true",
-            ",,123,true,false,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false",
+            ",,123,true,false"
     })
     void objectMapperReturnsBookMonographWhenInputIsValid(String begin,
                                                           String end,
                                                           String pages,
                                                           boolean illustrated,
-                                                          boolean peerReviewed,
-                                                          boolean textbookContent) throws JsonProcessingException {
+                                                          boolean peerReviewed) throws JsonProcessingException {
         BookMonograph expected = generateBookMonograph(
                 begin,
                 end,
                 pages,
                 illustrated,
                 peerReviewed,
-                textbookContent
+                BookMonographContentType.ACADEMIC_MONOGRAPH
         );
 
         String json = generateMonographJsonString(
@@ -64,7 +63,7 @@ class BookMonographTest extends InstanceTest {
                 pages,
                 illustrated,
                 peerReviewed,
-                textbookContent);
+                BookMonographContentType.ACADEMIC_MONOGRAPH);
         BookMonograph actual = objectMapper.readValue(json, BookMonograph.class);
         assertThat(expected, samePropertyValuesAs(actual));
     }
@@ -73,28 +72,27 @@ class BookMonographTest extends InstanceTest {
     @ParameterizedTest(name = "BookMonograph serializes begin {0}, end {1}, pages {2}, illustrated {3}, "
             + "peerReviewed {4}, textbook {5}")
     @CsvSource({
-            "i,xxviii,398,true,true,true",
-            ",,231,false,true,true",
-            ",,123,true,false,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false",
+            ",,123,true,false"
     })
     void objectMapperSerializesAndDeserializesJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
-                                                         boolean peerReviewed,
-                                                         boolean textbookContent) throws JsonProcessingException {
-
+                                                         boolean peerReviewed) throws JsonProcessingException {
+        BookMonographContentType contentType = ENCYCLOPEDIA;
         BookMonograph bookMonograph = generateBookMonograph(begin,
                 end,
                 pages,
                 illustrated,
                 peerReviewed,
-                textbookContent
+                contentType
         );
         JsonNode json = jsonStringToJsonNode(objectMapper.writeValueAsString(bookMonograph));
         JsonNode expected = generateMonographJson(BOOK_MONOGRAPH,
-                begin, end, pages, illustrated, peerReviewed, textbookContent, null, NOT_ORIGINAL_RESEARCH);
+                begin, end, pages, illustrated, peerReviewed, contentType, NOT_ORIGINAL_RESEARCH);
         assertEquals(expected, json);
     }
 
@@ -115,7 +113,6 @@ class BookMonographTest extends InstanceTest {
         final String pages = "398";
         final boolean illustrated = true;
         final boolean peerReviewed = true;
-        final boolean textbookContent = true;
 
         BookMonographContentType contentType = lookup(contentTypeString);
 
@@ -124,12 +121,11 @@ class BookMonographTest extends InstanceTest {
                 pages,
                 illustrated,
                 peerReviewed,
-                textbookContent,
                 contentType);
 
         JsonNode actualBookMonographJson = jsonStringToJsonNode(objectMapper.writeValueAsString(expectedBookMonograph));
         JsonNode expectedBookMonographJson = generateMonographJson(BOOK_MONOGRAPH,
-                begin, end, pages, illustrated, peerReviewed, textbookContent, contentType, NOT_ORIGINAL_RESEARCH);
+                begin, end, pages, illustrated, peerReviewed, contentType, NOT_ORIGINAL_RESEARCH);
 
         BookMonograph actualBookMonograph =
                 objectMapper.readValue(objectMapper.writeValueAsString(expectedBookMonograph), BookMonograph.class);
@@ -156,7 +152,6 @@ class BookMonographTest extends InstanceTest {
         final String pages = "398";
         final boolean illustrated = true;
         final boolean peerReviewed = true;
-        final boolean textbookContent = true;
 
         BookMonographContentType contentType = lookup(contentTypeString);
 
@@ -165,7 +160,6 @@ class BookMonographTest extends InstanceTest {
                 pages,
                 illustrated,
                 peerReviewed,
-                textbookContent,
                 contentType);
         bookMonograph.setOriginalResearch(IS_ORIGINAL_RESEARCH);
         assertEquals(bookMonograph.isOriginalResearch(), expectedOriginalResearch);
@@ -174,7 +168,7 @@ class BookMonographTest extends InstanceTest {
     @Test
     void bookMonographBuilderCreatesBookMonographWithoutEmptyValues() {
         BookMonograph expectedBookMonograph
-                = generateBookMonographWithContentType("i", "xxviii", "398", true, true, true, ENCYCLOPEDIA);
+                = generateBookMonographWithContentType("i", "xxviii", "398", true, true, ENCYCLOPEDIA);
         assertThat(expectedBookMonograph, doesNotHaveEmptyValues());
     }
 
@@ -185,7 +179,6 @@ class BookMonographTest extends InstanceTest {
         BookMonograph expectedBookMonograph = generateBookMonographWithContentType("i",
                 "xxviii",
                 "398",
-                true,
                 true,
                 true,
                 bookMonographContentType);
@@ -202,12 +195,12 @@ class BookMonographTest extends InstanceTest {
                                                 String pages,
                                                 boolean illustrated,
                                                 boolean peerReviewed,
-                                                boolean textbookContent) {
+                                                BookMonographContentType contentType) {
 
         return new BookMonograph.Builder()
                 .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
                 .withPeerReviewed(peerReviewed)
-                .withTextbookContent(textbookContent)
+                .withContentType(contentType)
                 .build();
     }
 
@@ -216,16 +209,12 @@ class BookMonographTest extends InstanceTest {
                                                                String pages,
                                                                boolean illustrated,
                                                                boolean peerReviewed,
-                                                               boolean textbookContent,
                                                                BookMonographContentType contentType) {
 
         return new BookMonograph.Builder()
                 .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
                 .withPeerReviewed(peerReviewed)
-                .withTextbookContent(textbookContent)
                 .withContentType(contentType)
                 .build();
     }
-
-
 }

@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
     private static final String DEGREE_PHD = "DegreePhd";
     public static final boolean NOT_PEER_REVIEWED = false;
-    public static final boolean NOT_TEXTBOOK_CONTENT = false;
     public static final BookMonographContentType EMPTY_CONTENT_TYPE = null;
     public static final boolean NOT_ORIGINAL_RESEARCH = false;
 
@@ -43,7 +42,7 @@ public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
                 end,
                 pages,
                 illustrated,
-                false);
+                EMPTY_CONTENT_TYPE);
         DegreePhd expected = generateDegreePhd(
                 begin,
                 end,
@@ -79,7 +78,6 @@ public class DegreePhdTest extends InstanceTest implements JsonHandlingTest {
                 pages,
                 illustrated,
                 NOT_PEER_REVIEWED,
-                NOT_TEXTBOOK_CONTENT,
                 EMPTY_CONTENT_TYPE,
                 NOT_ORIGINAL_RESEARCH);
         assertEquals(expected, json);

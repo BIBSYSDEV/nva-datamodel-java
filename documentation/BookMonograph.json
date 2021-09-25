@@ -73,7 +73,9 @@
         "type" : "Book",
         "series" : {
           "type" : "UnconfirmedSeries",
-          "title" : "Explorations in ego"
+          "title" : "Explorations in ego",
+          "issn" : "0028-0836",
+          "onlineIssn" : "1476-4687"
         },
         "seriesNumber" : "123",
         "publisher" : {
@@ -85,8 +87,8 @@
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
         "type" : "BookMonograph",
-        "textbookContent" : false,
-        "originalResearch" : false,
+        "contentType" : "Academic Monograph",
+        "originalResearch" : true,
         "peerReviewed" : true,
         "pages" : {
           "type" : "MonographPages",
@@ -147,5 +149,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
-  "modelVersion" : "0.13.4"
+  "modelVersion" : "0.13.5"
 }
