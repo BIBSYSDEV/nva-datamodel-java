@@ -27,8 +27,6 @@ public class ModelTest implements JsonHandlingTest {
     public static final String SERIES_NUMBER = "seriesNumber";
     public static final String PUBLISHER = "publisher";
     public static final String ISBN_LIST = "isbnList";
-    public static final String ONLINE_ISSN = "onlineIssn";
-    public static final String PRINT_ISSN = "printIssn";
     public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final String PART_OF = "partOf";
 
@@ -104,15 +102,13 @@ public class ModelTest implements JsonHandlingTest {
         ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
         jsonNode.put(TYPE, type);
 
-        jsonNode.set(SERIES, generateUnconfirmedSeriesJson(seriesTitle));
+        jsonNode.set(SERIES, generateUnconfirmedSeriesJson(seriesTitle, printIssn, onlineIssn));
         jsonNode.put(SERIES_NUMBER, seriesNumber);
         jsonNode.set(PUBLISHER, generateUnconfirmedPublishersJson(publisher));
         jsonNode.set(ISBN_LIST, arrayNode(isbnList));
         if (nonNull(partOf)) {
             jsonNode.put(PART_OF, partOf.toString());
         }
-        jsonNode.put(PRINT_ISSN, printIssn);
-        jsonNode.put(ONLINE_ISSN, onlineIssn);
 
         return attempt(() -> JsonUtils.objectMapper.writeValueAsString(jsonNode))
             .map(content -> JsonUtils.objectMapper.readValue(content, Map.class))
@@ -120,10 +116,12 @@ public class ModelTest implements JsonHandlingTest {
             .orElseThrow();
     }
 
-    private static JsonNode generateUnconfirmedSeriesJson(String seriesTitle) {
+    private static JsonNode generateUnconfirmedSeriesJson(String seriesTitle, String printIssn, String onlineIssn) {
         ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
         jsonNode.put("type", "UnconfirmedSeries");
         jsonNode.put("title", seriesTitle);
+        jsonNode.put("issn", printIssn);
+        jsonNode.put("onlineIssn", onlineIssn);
         return jsonNode;
     }
 

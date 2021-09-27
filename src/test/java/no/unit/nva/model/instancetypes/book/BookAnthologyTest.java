@@ -26,19 +26,18 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
 
     @DisplayName("BookAnthology: ObjectMapper correctly deserializes object")
     @ParameterizedTest(name = "BookAnthology deserialized with begin {0}, end {1}, pages {2}, illustrated {3}, "
-            + "peerReviewed {4}, textbook {5}")
+            + "peerReviewed {4}")
     @CsvSource({
-            "i,xxviii,398,true,true,true",
-            ",,231,false,true,true",
-            ",,123,true,false,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false",
+            ",,123,true,false"
     })
     void objectMapperReturnsBookAnthologyWhenInputIsValid(String begin,
                                                           String end,
                                                           String pages,
                                                           boolean illustrated,
-                                                          boolean peerReviewed,
-                                                          boolean textbookContent) throws JsonProcessingException {
+                                                          boolean peerReviewed) throws JsonProcessingException {
 
         String json = generateMonographJsonString(
                 BOOK_ANTHOLOGY,
@@ -47,15 +46,14 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
                 pages,
                 illustrated,
                 peerReviewed,
-                textbookContent);
+                BookMonographContentType.ACADEMIC_MONOGRAPH);
 
         BookAnthology expected = generateBookAnthology(
                 begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                textbookContent
+                peerReviewed
         );
 
         BookAnthology actual = objectMapper.readValue(json, BookAnthology.class);
@@ -64,31 +62,29 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
 
     @DisplayName("BookAnthology: ObjectMapper serializes valid input correctly")
     @ParameterizedTest(name = "BookAnthology serialized with begin {0}, end {1}, pages {2}, illustrated {3}, "
-            + "peerReviewed {4}, textbook {5}")
+            + "peerReviewed {4}")
     @CsvSource({
-            "i,xxviii,398,true,true,true",
-            ",,231,false,true,true",
-            ",,123,true,false,true",
-            ",,123,true,false,false"
+            "i,xxviii,398,true,true",
+            ",,231,false,true",
+            ",,123,true,false",
+            ",,123,true,false"
     })
     void objectMapperReturnsExpectedJsonWhenInputIsValid(String begin,
                                                          String end,
                                                          String pages,
                                                          boolean illustrated,
-                                                         boolean peerReviewed,
-                                                         boolean textbookContent) {
+                                                         boolean peerReviewed) {
 
         BookAnthology bookAnthology = generateBookAnthology(
                 begin,
                 end,
                 pages,
                 illustrated,
-                peerReviewed,
-                textbookContent
+                peerReviewed
         );
         JsonNode actual = objectMapper.convertValue(bookAnthology, JsonNode.class);
         JsonNode expected = generateMonographJson(BOOK_ANTHOLOGY,
-                begin, end, pages, illustrated, peerReviewed, textbookContent, null, NOT_ORIGINAL_RESEARCH);
+                begin, end, pages, illustrated, peerReviewed, null, NOT_ORIGINAL_RESEARCH);
         assertEquals(expected, actual);
     }
 
@@ -96,13 +92,11 @@ class BookAnthologyTest extends InstanceTest implements JsonHandlingTest {
                                                 String introductionEnd,
                                                 String pages,
                                                 boolean illustrated,
-                                                boolean peerReviewed,
-                                                boolean textbookContent) {
+                                                boolean peerReviewed) {
 
         return new BookAnthology.Builder()
                 .withPages(generateMonographPages(introductionBegin, introductionEnd, pages, illustrated))
                 .withPeerReviewed(peerReviewed)
-                .withTextbookContent(textbookContent)
                 .build();
     }
 }

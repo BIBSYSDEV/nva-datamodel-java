@@ -204,7 +204,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static Publication generateBookMonographPublication() throws MalformedContributorException,
-                                                                        InvalidIsbnException {
+            InvalidIsbnException, InvalidIssnException {
         return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
                                    generateEntityDescriptionBookMonograph());
     }
@@ -222,7 +222,6 @@ public class PublicationGenerator extends ModelTest {
             .withPeerReviewed(false)
             .withContentType(BookMonographContentType.ACADEMIC_MONOGRAPH)
             .withOriginalResearch(true)
-            .withTextbookContent(false)
             .build();
         var reference = new Reference.Builder()
             .withPublishingContext(context)
@@ -434,6 +433,8 @@ public class PublicationGenerator extends ModelTest {
         return new BookMonograph.Builder()
             .withPages(generateMonographPages("i", "xx", "221", true))
             .withPeerReviewed(true)
+            .withContentType(BookMonographContentType.ACADEMIC_MONOGRAPH)
+            .withOriginalResearch(true)
             .build();
     }
 
@@ -583,11 +584,11 @@ public class PublicationGenerator extends ModelTest {
     }
 
     private static EntityDescription generateEntityDescriptionBookMonograph() throws MalformedContributorException,
-                                                                                     InvalidIsbnException {
+            InvalidIsbnException, InvalidIssnException {
         return getEntityDescription(getBookMonographReference());
     }
 
-    private static Reference getBookMonographReference() throws InvalidIsbnException {
+    private static Reference getBookMonographReference() throws InvalidIsbnException, InvalidIssnException {
         return new Reference.Builder()
             .withPublishingContext(getPublishingContextBook())
             .withDoi(SOME_URI)
@@ -595,13 +596,17 @@ public class PublicationGenerator extends ModelTest {
             .build();
     }
 
-    private static BasicContext getPublishingContextBook() throws InvalidIsbnException {
+    private static BasicContext getPublishingContextBook() throws InvalidIsbnException, InvalidIssnException {
         return new Book.BookBuilder()
             .withIsbnList(List.of("9780201309515"))
             .withPublisher(new UnconfirmedPublisher("My publisher dot com"))
             .withSeriesNumber("123")
-            .withSeries(UnconfirmedSeries.fromTitle("Explorations in ego"))
+            .withSeries(getMonographSeries())
             .build();
+    }
+
+    private static UnconfirmedSeries getMonographSeries() throws InvalidIssnException {
+        return new UnconfirmedSeries("Explorations in ego","0028-0836", "1476-4687");
     }
 
     private static Chapter getPublishingContextChapter() {
@@ -611,12 +616,12 @@ public class PublicationGenerator extends ModelTest {
     }
 
     private static BasicContext getPublishingContextDegree() throws InvalidIsbnException,
-                                                                    InvalidUnconfirmedSeriesException {
+            InvalidUnconfirmedSeriesException, InvalidIssnException {
         return new Degree.Builder()
             .withIsbnList(List.of("9780201309515"))
             .withPublisher(new UnconfirmedPublisher("My publisher dot com"))
             .withSeriesNumber("123")
-            .withSeries(UnconfirmedSeries.fromTitle("Explorations in ego"))
+            .withSeries(getMonographSeries())
             .build();
     }
 
@@ -625,10 +630,8 @@ public class PublicationGenerator extends ModelTest {
         return new Report.Builder()
             .withIsbnList(List.of("9780201309515"))
             .withPublisher(new UnconfirmedPublisher("Hello cheesy world of anaemic flavours publishing"))
-            .withSeries(UnconfirmedSeries.fromTitle("Strøsand and Muck in context"))
+            .withSeries(getMonographSeries())
             .withSeriesNumber("221")
-            .withOnlineIssn("1111-1119")
-            .withPrintIssn("2222-2227")
             .build();
     }
 

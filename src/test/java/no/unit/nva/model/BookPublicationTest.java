@@ -5,6 +5,7 @@ import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.BookSeries;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.PublicationGenerator;
@@ -24,7 +25,7 @@ public class BookPublicationTest extends PublicationTest {
     @DisplayName("Book publications can be created")
     @Test
     void publicationReturnPublicationWhenInputIsValid() throws MalformedContributorException, IOException,
-            InvalidIsbnException {
+            InvalidIsbnException, InvalidIssnException {
         Publication bookPublication = PublicationGenerator.generateBookMonographPublication();
         JsonNode document = toPublicationWithContext(bookPublication);
 
