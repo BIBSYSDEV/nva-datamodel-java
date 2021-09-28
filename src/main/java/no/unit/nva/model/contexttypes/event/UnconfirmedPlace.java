@@ -8,12 +8,15 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class UnconfirmedPlace implements Place {
-    @JsonProperty("label")
+    public static final String COUNTRY = "country";
+    public static final String LABEL = "label";
+
+    @JsonProperty(LABEL)
     private final String label;
-    @JsonProperty("country")
+    @JsonProperty(COUNTRY)
     private final String country;
 
-    public UnconfirmedPlace(@JsonProperty("label") String label, @JsonProperty("country") String country) {
+    public UnconfirmedPlace(@JsonProperty(LABEL) String label, @JsonProperty(COUNTRY) String country) {
         this.label = label;
         this.country = country;
     }
