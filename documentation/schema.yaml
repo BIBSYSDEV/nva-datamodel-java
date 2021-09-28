@@ -77,6 +77,15 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Agent:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Approval:
     required:
     - type
@@ -229,6 +238,34 @@ referencedSchemas:
           type: boolean
         pages:
           $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  ConferenceLecture:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  ConferencePoster:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
         type:
           type: string
   Contributor:
@@ -432,6 +469,30 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Event:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        label:
+          type: string
+        place:
+          $ref: '#/components/schemas/Place'
+        time:
+          $ref: '#/components/schemas/TemporalExtent'
+        agent:
+          $ref: '#/components/schemas/Agent'
+        product:
+          $ref: '#/components/schemas/Publication'
+        subEvent:
+          $ref: '#/components/schemas/Event'
+        type:
+          type: string
   FeatureArticle:
     required:
     - type
@@ -698,6 +759,20 @@ referencedSchemas:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+  Lecture:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
   License:
     required:
     - type
@@ -735,18 +810,21 @@ referencedSchemas:
     required:
     - type
     type: object
-    properties:
-      id:
-        type: string
-        format: uri
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-      type:
-        type: string
     discriminator:
       propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Agent'
+    - type: object
+      properties:
+        id:
+          type: string
+          format: uri
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        type:
+          type: string
   OtherStudentWork:
     required:
     - type
@@ -764,6 +842,15 @@ referencedSchemas:
         type:
           type: string
   Pages:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Place:
     required:
     - type
     type: object
@@ -866,10 +953,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
@@ -923,6 +1010,19 @@ referencedSchemas:
         format: uri
       publicationInstance:
         $ref: '#/components/schemas/PublicationInstancePages'
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  ReifiedExtent:
+    required:
+    - type
+    type: object
+    properties:
+      value:
+        type: string
+      datatype:
+        type: string
       type:
         type: string
     discriminator:
@@ -1041,6 +1141,26 @@ referencedSchemas:
           type: string
   SortableIdentifier:
     type: object
+  TemporalExtent:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Pages'
+    - type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+        extent:
+          $ref: '#/components/schemas/ReifiedExtent'
+        type:
+          type: string
   UnconfirmedJournal:
     required:
     - type
@@ -1056,6 +1176,22 @@ referencedSchemas:
         printIssn:
           type: string
         onlineIssn:
+          type: string
+        type:
+          type: string
+  UnconfirmedPlace:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Place'
+    - type: object
+      properties:
+        label:
+          type: string
+        country:
           type: string
         type:
           type: string

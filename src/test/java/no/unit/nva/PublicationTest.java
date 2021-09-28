@@ -31,7 +31,6 @@ import nva.commons.core.JsonUtils;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -53,7 +52,7 @@ public class PublicationTest extends ModelTest {
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @ArgumentsSource(InstanceTypeProvider.class)
     void publicationReturnsValidPublicationWhenInputIsValid(String instanceType) throws Exception {
-        Publication expected = generatePublication(instanceType);
+        Publication expected = PublicationGenerator.generatePublication(instanceType);
 
         String publication = objectMapper.writeValueAsString(expected);
         Publication roundTripped = objectMapper.readValue(publication, Publication.class);
@@ -67,7 +66,7 @@ public class PublicationTest extends ModelTest {
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @ArgumentsSource(InstanceTypeProvider.class)
     void copyReturnsBuilderWithAllDataOfAPublication(String referenceInstanceType) throws Exception {
-        Publication publication = generatePublication(referenceInstanceType);
+        Publication publication = PublicationGenerator.generatePublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThat(publication, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
         Diff diff = JAVERS.compare(publication, copy);
@@ -78,14 +77,14 @@ public class PublicationTest extends ModelTest {
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @ArgumentsSource(InstanceTypeProvider.class)
     void projectsAreSetAsListsWhenInputIsSingleProject(String instanceType) throws Exception {
-        Publication expected = generatePublication(instanceType);
+        Publication expected = PublicationGenerator.generatePublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));
     }
 
     @ParameterizedTest
     @EnumSource(value = PublicationStatus.class, names = {"DRAFT_FOR_DELETION", "PUBLISHED"})
     void updateStatusForDraftPublication(PublicationStatus target) throws Exception {
-        Publication publication = generatePublication(JOURNAL_ARTICLE);
+        Publication publication = PublicationGenerator.generatePublication(JOURNAL_ARTICLE);
         publication.setStatus(DRAFT);
         publication.updateStatus(target);
 
@@ -94,7 +93,7 @@ public class PublicationTest extends ModelTest {
 
     @Test
     void updateStatusThrowsExceptionForInvalidStatusTransition() throws Exception {
-        Publication publication = generatePublication(JOURNAL_ARTICLE);
+        Publication publication = PublicationGenerator.generatePublication(JOURNAL_ARTICLE);
         publication.setStatus(NEW);
 
         InvalidPublicationStatusTransitionException exception =
@@ -103,10 +102,6 @@ public class PublicationTest extends ModelTest {
         String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
                                              NEW, PUBLISHED);
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
-    }
-
-    private Publication generatePublication(String instanceType) throws Exception {
-        return PublicationGenerator.generatePublication(instanceType);
     }
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {

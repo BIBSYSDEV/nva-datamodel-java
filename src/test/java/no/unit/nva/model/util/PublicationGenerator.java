@@ -3,6 +3,7 @@ package no.unit.nva.model.util;
 import com.github.javafaker.Faker;
 import java.net.URI;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,11 +35,17 @@ import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
+import no.unit.nva.model.contexttypes.Event;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.UnconfirmedJournal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;
+import no.unit.nva.model.instancetypes.event.ConferenceLecture;
+import no.unit.nva.model.instancetypes.event.ConferencePoster;
+import no.unit.nva.model.instancetypes.event.Lecture;
+import no.unit.nva.model.pages.TemporalExtent;
+import no.unit.nva.model.contexttypes.event.UnconfirmedPlace;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
@@ -109,6 +116,12 @@ public class PublicationGenerator extends ModelTest {
             case "ChapterArticle":
                 reference = generateReference(getPublishingContextChapter(), getChapterArticleInstance());
                 break;
+            case "ConferenceLecture":
+                reference = generateReference(getPublishingContextEvent(), getConferenceLecture());
+                break;
+            case "ConferencePoster":
+                reference = generateReference(getPublishingContextEvent(), getConferencePoster());
+                break;
             case "DegreeBachelor":
                 reference = generateReference(getPublishingContextDegree(), getDegreeBachelorInstance());
                 break;
@@ -141,6 +154,9 @@ public class PublicationGenerator extends ModelTest {
                 break;
             case "JournalShortCommunication":
                 reference = generateReference(getPublishingContextJournal(), getJournalShortCommunicationInstance());
+                break;
+            case "Lecture":
+                reference = generateReference(getPublishingContextEvent(), getLecture());
                 break;
             case "OtherStudentWork":
                 reference = generateReference(getPublishingContextDegree(), getOtherStudentWorkInstance());
@@ -195,6 +211,30 @@ public class PublicationGenerator extends ModelTest {
             .withAdditionalIdentifiers(generateAdditionalIdentifiers())
             .withSubjects(List.of(URI.create("http://example.org/subject/123")))
             .build();
+    }
+
+
+    private static PublicationInstance<?> getConferencePoster() {
+        return new ConferencePoster(generateMonographPages());
+    }
+
+    private static PublicationInstance<?> getConferenceLecture() {
+        return new ConferenceLecture(generateMonographPages());
+    }
+
+    private static PublicationInstance<?> getLecture() {
+        return new Lecture(generateMonographPages());
+    }
+
+    private static PublicationContext getPublishingContextEvent() {
+        return new Event.Builder()
+                .withLabel("A wondrous event that surprised the fallow deer")
+                .withPlace(new UnconfirmedPlace("The pea shop, Brighton", "Transnistria"))
+                .withTime(new TemporalExtent(LocalDateTime.now(), LocalDateTime.now().plusDays(3)))
+                .withAgent(new Organization.Builder().withLabels(Map.of("en", "Hallowed Blue Feet Inc.")).build())
+                .withProduct(null)
+                .withSubEvent(null)
+                .build();
     }
 
     public static Publication generateJournalArticlePublication() throws InvalidIssnException,

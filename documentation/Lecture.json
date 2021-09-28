@@ -69,24 +69,33 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "Report",
-        "series" : {
-          "type" : "UnconfirmedSeries",
-          "title" : "Explorations in ego",
-          "issn" : "0028-0836",
-          "onlineIssn" : "1476-4687"
+        "type" : "Event",
+        "label" : "A wondrous event that surprised the fallow deer",
+        "place" : {
+          "type" : "UnconfirmedPlace",
+          "label" : "The pea shop, Brighton",
+          "country" : "Transnistria"
         },
-        "seriesNumber" : "221",
-        "publisher" : {
-          "type" : "UnconfirmedPublisher",
-          "name" : "Hello cheesy world of anaemic flavours publishing"
+        "time" : {
+          "type" : "TemporalExtent",
+          "from" : "2020-09-23T09:51:23.044996Z",
+          "to" : "2020-09-23T09:51:23.044996Z",
+          "extent" : {
+            "type" : "ReifiedExtent",
+            "value" : "72",
+            "datatype" : "Hours"
+          }
         },
-        "isbnList" : [ "9780201309515" ]
+        "agent" : {
+          "type" : "Organization",
+          "labels" : {
+            "en" : "Hallowed Blue Feet Inc."
+          }
+        }
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "ReportPolicy",
-        "peerReviewed" : false,
+        "type" : "Lecture",
         "pages" : {
           "type" : "MonographPages",
           "introduction" : {
@@ -96,7 +105,8 @@
           },
           "pages" : "321",
           "illustrated" : true
-        }
+        },
+        "peerReviewed" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",

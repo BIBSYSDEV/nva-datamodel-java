@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.util.Collections;
@@ -8,9 +9,11 @@ import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Organization {
+public class Organization implements Agent {
 
+    @JsonProperty("id")
     private URI id;
+    @JsonProperty("labels")
     private Map<String, String> labels;
 
     public Organization() {
