@@ -1,15 +1,20 @@
 package no.unit.nva.model.contexttypes.event;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ReifiedExtent {
+    public static final String VALUE = "value";
+    public static final String DATATYPE = "datatype";
+    @JsonProperty(VALUE)
     private final String value;
+    @JsonProperty(DATATYPE)
     private final String datatype;
 
-    public ReifiedExtent(String value, String datatype) {
+    public ReifiedExtent(@JsonProperty(VALUE) String value, @JsonProperty(DATATYPE) String datatype) {
         this.value = value;
         this.datatype = datatype;
     }
