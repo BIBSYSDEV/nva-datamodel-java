@@ -11,10 +11,14 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class TemporalExtent implements Pages {
+    public static final String FROM = "from";
+    public static final String TO = "to";
+    @JsonProperty(FROM)
     private final LocalDateTime from;
+    @JsonProperty(TO)
     private final LocalDateTime to;
 
-    public TemporalExtent(@JsonProperty("from") LocalDateTime from, @JsonProperty("to") LocalDateTime to) {
+    public TemporalExtent(@JsonProperty(FROM) LocalDateTime from, @JsonProperty(TO) LocalDateTime to) {
         this.from = from;
         this.to = to;
     }
