@@ -28,7 +28,7 @@ public class TemporalExtent implements Pages {
     }
 
     public ReifiedExtent getExtent() {
-        return new ReifiedExtent(String.valueOf(ChronoUnit.SECONDS.between(to, from)), ChronoUnit.SECONDS.toString());
+        return new ReifiedExtent(String.valueOf(ChronoUnit.HOURS.between(from, to)), ChronoUnit.HOURS.toString());
     }
 
     @JacocoGenerated
