@@ -12,7 +12,6 @@ import java.io.IOException;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.PROFESSIONAL_ARTICLE;
 import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.RESEARCH_ARTICLE;
-import static no.unit.nva.model.instancetypes.journal.JournalArticleContentType.REVIEW_ARTICLE;
 import static nva.commons.core.JsonUtils.objectMapper;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'pmd'
+    id "com.github.gmazzo.buildconfig"
+    id 'idea'
+    id 'nebula.lint'
+}
+
+group 'com.github.bibsysdev'
+version '0.13.7'
+
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+
+test {
+    useJUnitPlatform()
+    failFast = true
+    finalizedBy(jacocoTestReport)
+}
+
+jacocoTestReport {
+    dependsOn(test)
+    reports {
+        xml.enabled true
+    }
+}
+
+pmd {
+    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+    ruleSets = []
+    ignoreFailures = false
+    pmdMain {
+        excludes = [
+                '**/BuildConfig.*'
+        ]
+    }
+}
+
+checkstyle {
+    configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
+    showViolations = true
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
+    }
+    exclude '**/BuildConfig*'
+}
+
+buildConfig {
+    className("BuildConfig")   // forces the class name. Defaults to 'BuildConfig'
+    packageName(project.group)  // forces the package. Defaults to '${project.group}'
+    useJavaOutput() //forces the output to be Java
+    buildConfigField("String", "MODEL_VERSION", "\"${project.version}\"")
+}
+
+
+
+
+

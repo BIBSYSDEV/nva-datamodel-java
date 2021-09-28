@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 public class SwaggerTest {
 
-    public static final String SCHEMA_YAML = "documentation/schema.yaml";
+    public static final String SCHEMA_YAML = "../documentation/schema.yaml";
 
     @Test
     public void writePublicationSchemaToFile() throws InvalidIssnException, MalformedContributorException, IOException {

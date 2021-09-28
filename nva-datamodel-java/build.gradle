@@ -1,0 +1,29 @@
+plugins{
+    id 'nvadatamodel.java-conventions'
+    id 'nvadatamodel.publish-maven'
+}
+
+
+dependencies {
+
+    implementation libs.apache.commons.validator
+    compileOnly libs.nva.commons.core
+    testImplementation libs.nva.commons.core
+
+    compileOnly libs.nva.commons.identifiers
+    testImplementation libs.nva.commons.identifiers
+
+    compileOnly libs.bundles.jackson
+    testImplementation libs.bundles.jackson
+
+    testImplementation libs.bundles.unittesting
+    testImplementation libs.nva.testutils
+
+    testImplementation libs.jsonld.java
+    testImplementation libs.swagger.core
+
+
+    testImplementation libs.javafaker
+    testRuntimeOnly libs.slf4j
+
+}

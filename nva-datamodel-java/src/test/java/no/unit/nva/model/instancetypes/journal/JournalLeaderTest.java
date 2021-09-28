@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.journal;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.JournalTestData;
 import org.junit.jupiter.api.DisplayName;
