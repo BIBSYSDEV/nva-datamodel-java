@@ -487,14 +487,12 @@ referencedSchemas:
           $ref: '#/components/schemas/Place'
         time:
           $ref: '#/components/schemas/TemporalExtent'
-        Agent:
+        agent:
           $ref: '#/components/schemas/Agent'
         product:
           $ref: '#/components/schemas/Publication'
         subEvent:
           $ref: '#/components/schemas/Event'
-        agent:
-          $ref: '#/components/schemas/Agent'
         type:
           type: string
   FeatureArticle:
@@ -957,10 +955,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
