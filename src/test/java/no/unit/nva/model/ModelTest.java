@@ -61,7 +61,6 @@ public class ModelTest implements JsonHandlingTest {
             .withAffiliations(Collections.singletonList(generateOrganization()))
             .withIdentity(generateIdentity())
             .withCorrespondingAuthor(true)
-            .withEmail(EXAMPLE_EMAIL)
             .build();
     }
 
