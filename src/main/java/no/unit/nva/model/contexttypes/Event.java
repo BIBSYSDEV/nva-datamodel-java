@@ -12,25 +12,31 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Event implements PublicationContext {
-    @JsonProperty("label")
+    public static final String LABEL = "label";
+    public static final String PLACE = "place";
+    public static final String TIME = "time";
+    public static final String AGENT = "agent";
+    public static final String PRODUCT = "product";
+    public static final String SUB_EVENT = "subEvent";
+    @JsonProperty(LABEL)
     private final String label;
-    @JsonProperty("place")
+    @JsonProperty(PLACE)
     private final Place place;
-    @JsonProperty("time")
+    @JsonProperty(TIME)
     private final TemporalExtent time;
-    @JsonProperty("agent")
+    @JsonProperty(AGENT)
     private final Agent agent;
-    @JsonProperty("product")
+    @JsonProperty(PRODUCT)
     private final Publication product;
-    @JsonProperty("subEvent")
+    @JsonProperty(SUB_EVENT)
     private final Event subEvent;
 
-    public Event(@JsonProperty("label") String label,
-                 @JsonProperty("place") Place place,
-                 @JsonProperty("time") TemporalExtent time,
-                 @JsonProperty("Agent") Agent agent,
-                 @JsonProperty("product") Publication product,
-                 @JsonProperty("subEvent") Event subEvent) {
+    public Event(@JsonProperty(LABEL) String label,
+                 @JsonProperty(PLACE) Place place,
+                 @JsonProperty(TIME) TemporalExtent time,
+                 @JsonProperty(AGENT) Agent agent,
+                 @JsonProperty(PRODUCT) Publication product,
+                 @JsonProperty(SUB_EVENT) Event subEvent) {
         this.label = label;
         this.place = place;
         this.time = time;
@@ -48,10 +54,6 @@ public class Event implements PublicationContext {
         private Event subEvent;
 
         public Builder() {
-        }
-
-        public static Builder anEvent() {
-            return new Builder();
         }
 
         public Builder withLabel(String label) {
