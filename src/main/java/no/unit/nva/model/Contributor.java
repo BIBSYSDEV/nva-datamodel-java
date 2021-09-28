@@ -1,7 +1,5 @@
 package no.unit.nva.model;
 
-import static java.util.Objects.isNull;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -20,7 +18,6 @@ public class Contributor {
     private final Role role;
     private final Integer sequence;
     private final boolean correspondingAuthor;
-    private final String email;
 
     /**
      * Constructor designed to ensure valid data in the object, since we can only have a corresponding author
@@ -31,41 +28,28 @@ public class Contributor {
      * @param role                The role that the contributor played
      * @param sequence            The order of the contributor in the contributors listing
      * @param correspondingAuthor Whether the contributor was a corresponding author
-     * @param email               Contact email for contributor, required if the contributor was a corresponding author
-     * @throws MalformedContributorException If the contributor is corresponding author, but no email is present
      */
     @JsonCreator
     public Contributor(@JsonProperty("identity") Identity identity,
                        @JsonProperty("affiliations") List<Organization> affiliations,
                        @JsonProperty("role") Role role,
                        @JsonProperty("sequence") Integer sequence,
-                       @JsonProperty("correspondingAuthor") boolean correspondingAuthor,
-                       @JsonProperty("email") String email) throws MalformedContributorException {
-        if (isCorrespondAuthorWithoutEmail(correspondingAuthor, email)) {
-            throw new MalformedContributorException(CORRESPONDING_AUTHOR_EMAIL_MISSING);
-        }
-
+                       @JsonProperty("correspondingAuthor") boolean correspondingAuthor) {
         this.identity = identity;
         this.affiliations = affiliations;
         this.role = role;
         this.sequence = sequence;
         this.correspondingAuthor = correspondingAuthor;
-        this.email = email;
     }
 
-    private Contributor(Builder builder) throws MalformedContributorException {
+    private Contributor(Builder builder) {
         this(
                 builder.identity,
                 builder.affiliations,
                 builder.role,
                 builder.sequence,
-                builder.correspondingAuthor,
-                builder.email
+                builder.correspondingAuthor
         );
-    }
-
-    private boolean isCorrespondAuthorWithoutEmail(boolean correspondingAuthor, String email) {
-        return correspondingAuthor && (isNull(email) || email.isBlank());
     }
 
     public Identity getIdentity() {
@@ -88,10 +72,6 @@ public class Contributor {
         return correspondingAuthor;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -106,19 +86,13 @@ public class Contributor {
                 && Objects.equals(getIdentity(), that.getIdentity())
                 && Objects.equals(getAffiliations(), that.getAffiliations())
                 && getRole() == that.getRole()
-                && Objects.equals(getSequence(), that.getSequence())
-                && Objects.equals(getEmail(), that.getEmail());
+                && Objects.equals(getSequence(), that.getSequence());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentity(),
-                getAffiliations(),
-                getRole(),
-                getSequence(),
-                isCorrespondingAuthor(),
-                getEmail());
+        return Objects.hash(getIdentity(), getAffiliations(), getRole(), getSequence(), isCorrespondingAuthor());
     }
 
     public static final class Builder {
@@ -127,7 +101,6 @@ public class Contributor {
         private Role role;
         private Integer sequence;
         private boolean correspondingAuthor;
-        private String email;
 
         public Builder() {
         }
@@ -154,11 +127,6 @@ public class Contributor {
 
         public Builder withCorrespondingAuthor(boolean correspondingAuthor) {
             this.correspondingAuthor = correspondingAuthor;
-            return this;
-        }
-
-        public Builder withEmail(String email) {
-            this.email = email;
             return this;
         }
 
