@@ -62,8 +62,3 @@ buildConfig {
     useJavaOutput() //forces the output to be Java
     buildConfigField("String", "MODEL_VERSION", "\"${project.version}\"")
 }
-
-
-
-
-
