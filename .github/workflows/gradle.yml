@@ -34,10 +34,11 @@ jobs:
         restore-keys: ${{ runner.os }}-gradle
 
     - name: Build with Gradle
-      run: ./gradlew build jacocoTestReport
+      run: ./gradlew build
 
     - shell: bash
       env:
         CODACY_PROJECT_TOKEN : ${{ secrets.CODACY_PROJECT_TOKEN }}
       run: |
+        echo $(pwd)
         java -jar codacy-coverage-reporter-assembly.jar report -l Java -r $(pwd)/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
