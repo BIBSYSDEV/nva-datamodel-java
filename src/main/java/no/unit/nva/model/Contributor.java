@@ -11,24 +11,12 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Contributor {
 
-    public static final String CORRESPONDING_AUTHOR_EMAIL_MISSING =
-            "The Contributor is corresponding author, but no email for correspondence is set";
     private final Identity identity;
     private final List<Organization> affiliations;
     private final Role role;
     private final Integer sequence;
     private final boolean correspondingAuthor;
 
-    /**
-     * Constructor designed to ensure valid data in the object, since we can only have a corresponding author
-     * with an email.
-     *
-     * @param identity            The identity of the contributor
-     * @param affiliations        The affiliation of the contributor
-     * @param role                The role that the contributor played
-     * @param sequence            The order of the contributor in the contributors listing
-     * @param correspondingAuthor Whether the contributor was a corresponding author
-     */
     @JsonCreator
     public Contributor(@JsonProperty("identity") Identity identity,
                        @JsonProperty("affiliations") List<Organization> affiliations,
