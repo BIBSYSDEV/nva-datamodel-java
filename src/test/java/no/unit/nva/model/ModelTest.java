@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import no.unit.nva.JsonHandlingTest;
-import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.JsonUtils;
@@ -21,13 +20,11 @@ import static nva.commons.core.attempt.Try.attempt;
 
 public class ModelTest implements JsonHandlingTest {
 
-    public static final String EMPTY_STRING = "";
     public static final String TYPE = "type";
     public static final String SERIES = "series";
     public static final String SERIES_NUMBER = "seriesNumber";
     public static final String PUBLISHER = "publisher";
     public static final String ISBN_LIST = "isbnList";
-    public static final String EXAMPLE_EMAIL = "nn@example.org";
     public static final String PART_OF = "partOf";
 
     public final ObjectMapper objectMapper = JsonUtils.objectMapper;
@@ -54,7 +51,7 @@ public class ModelTest implements JsonHandlingTest {
             .build();
     }
 
-    protected static Contributor generateContributor() throws MalformedContributorException {
+    protected static Contributor generateContributor() {
         return new Contributor.Builder()
             .withSequence(0)
             .withRole(Role.CREATOR)

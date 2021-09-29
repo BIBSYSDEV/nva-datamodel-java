@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
 import java.util.Objects;
-import no.unit.nva.model.exceptions.MalformedContributorException;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -118,7 +117,7 @@ public class Contributor {
             return this;
         }
 
-        public Contributor build() throws MalformedContributorException {
+        public Contributor build() {
             return new Contributor(this);
         }
     }

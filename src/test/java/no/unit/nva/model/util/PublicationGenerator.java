@@ -49,7 +49,6 @@ import no.unit.nva.model.contexttypes.event.UnconfirmedPlace;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
-import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
@@ -95,11 +94,9 @@ public class PublicationGenerator extends ModelTest {
      * @param type publication type.
      * @return a publication
      * @throws InvalidIssnException          when Issn is invalid.
-     * @throws MalformedContributorException when contributor is malformed
      * @throws InvalidIsbnException          with Isbn is invalid.
      */
     public static Publication generatePublication(String type) throws InvalidIssnException,
-                                                                      MalformedContributorException,
                                                                       InvalidIsbnException,
                                                                       InvalidUnconfirmedSeriesException {
         Reference reference;
@@ -237,20 +234,19 @@ public class PublicationGenerator extends ModelTest {
                 .build();
     }
 
-    public static Publication generateJournalArticlePublication() throws InvalidIssnException,
-                                                                         MalformedContributorException {
+    public static Publication generateJournalArticlePublication() throws InvalidIssnException {
         return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
                                    generateEntityDescriptionJournalArticle());
     }
 
-    public static Publication generateBookMonographPublication() throws MalformedContributorException,
+    public static Publication generateBookMonographPublication() throws
             InvalidIsbnException, InvalidIssnException {
         return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
                                    generateEntityDescriptionBookMonograph());
     }
 
     public static Publication generateBookMonographWithUnconfirmedSeriesTitleString()
-        throws InvalidIsbnException, InvalidUnconfirmedSeriesException, MalformedContributorException {
+        throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
 
         var context = new Book(null,
                                "Some wild series title",
@@ -326,17 +322,15 @@ public class PublicationGenerator extends ModelTest {
             .build();
     }
 
-    public static EntityDescription generateEntityDescriptionJournalArticle() throws InvalidIssnException,
-                                                                                     MalformedContributorException {
+    public static EntityDescription generateEntityDescriptionJournalArticle() throws InvalidIssnException {
         return getEntityDescription(getJournalArticleReference());
     }
 
-    public static EntityDescription generateEntityDescription(Reference reference) throws
-                                                                                   MalformedContributorException {
+    public static EntityDescription generateEntityDescription(Reference reference) {
         return getEntityDescription(reference);
     }
 
-    public static EntityDescription getEntityDescription(Reference reference) throws MalformedContributorException {
+    public static EntityDescription getEntityDescription(Reference reference) {
         return new EntityDescription.Builder()
             .withMainTitle("Hovedtittelen")
             .withLanguage(URI.create("http://example.org/norsk"))
@@ -447,8 +441,7 @@ public class PublicationGenerator extends ModelTest {
         return IssnGenerator.randomIssn();
     }
 
-    private static Publication generatePublicationWithReference(Reference reference)
-        throws MalformedContributorException {
+    private static Publication generatePublicationWithReference(Reference reference) {
         return generatePublication(SortableIdentifier.next(),
                                    UUID.randomUUID(),
                                    Instant.now(),
@@ -623,8 +616,8 @@ public class PublicationGenerator extends ModelTest {
             .build();
     }
 
-    private static EntityDescription generateEntityDescriptionBookMonograph() throws MalformedContributorException,
-            InvalidIsbnException, InvalidIssnException {
+    private static EntityDescription generateEntityDescriptionBookMonograph() throws InvalidIsbnException,
+            InvalidIssnException {
         return getEntityDescription(getBookMonographReference());
     }
 
