@@ -1,6 +1,7 @@
 plugins{
     id 'io.github.gradle-nexus.publish-plugin'
     id 'nvadatamodel.gradlelint'
+    id 'nvadatamodel.java-conventions'
 }
 
 nexusPublishing {
@@ -13,3 +14,6 @@ nexusPublishing {
     }
 }
 
+build {
+    dependsOn jacocoRootReport
+}
