@@ -26,7 +26,6 @@ jobs:
     - name: setup codacy version
       run:  curl -LSs "$(curl -LSs https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | endswith(".jar"))) | .[0].browser_download_url')" -o codacy-coverage-reporter-assembly.jar
 
-
     - name: Cache Gradle packages
       uses: actions/cache@v2
       with:
@@ -35,10 +34,10 @@ jobs:
         restore-keys: ${{ runner.os }}-gradle
 
     - name: Build with Gradle
-      run: ./gradlew build jacocoTestReport
+      run: ./gradlew build
 
     - shell: bash
       env:
         CODACY_PROJECT_TOKEN : ${{ secrets.CODACY_PROJECT_TOKEN }}
       run: |
-        java -jar codacy-coverage-reporter-assembly.jar report -l Java -r $(pwd)/build/reports/jacoco/test/jacocoTestReport.xml
+        java -jar codacy-coverage-reporter-assembly.jar report -l Java -r $(pwd)/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml

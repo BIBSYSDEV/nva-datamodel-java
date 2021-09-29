@@ -1,0 +1,9 @@
+plugins {
+    id 'nvadatamodel.java-conventions'
+    id 'java-gradle-plugin'
+}
+
+dependencies {
+    implementation project(":nva-datamodel-java")
+    testImplementation libs.bundles.unittesting
+}

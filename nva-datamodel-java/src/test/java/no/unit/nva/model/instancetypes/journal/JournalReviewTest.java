@@ -1,16 +1,12 @@
 package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import no.unit.nva.model.instancetypes.InstanceTest;
 import no.unit.nva.model.instancetypes.JournalTestData;
-import no.unit.nva.model.instancetypes.NonPeerReviewed;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
