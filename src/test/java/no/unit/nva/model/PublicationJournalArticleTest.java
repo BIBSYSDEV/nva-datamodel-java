@@ -5,7 +5,6 @@ import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
-import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +33,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
     public void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException,
-            MalformedContributorException, InvalidIssnException {
+            InvalidIssnException {
 
         Publication publication = PublicationGenerator.generateJournalArticlePublication();
 
@@ -55,8 +54,8 @@ public class PublicationJournalArticleTest extends PublicationTest {
             "JournalShortCommunication"
         }
     )
-    void publicationReturnsJsonWhenInputIsValid(String type) throws MalformedContributorException,
-            InvalidIssnException, IOException, InvalidIsbnException, InvalidUnconfirmedSeriesException {
+    void publicationReturnsJsonWhenInputIsValid(String type) throws InvalidIssnException, IOException,
+            InvalidIsbnException, InvalidUnconfirmedSeriesException {
         Publication publication = PublicationGenerator.generatePublication(type);
         JsonNode document = toPublicationWithContext(publication);
         Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),

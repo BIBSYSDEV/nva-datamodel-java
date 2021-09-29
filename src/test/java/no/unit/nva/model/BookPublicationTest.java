@@ -7,7 +7,6 @@ import no.unit.nva.model.contexttypes.UnconfirmedSeries;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
-import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.PublicationGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,8 +23,7 @@ public class BookPublicationTest extends PublicationTest {
 
     @DisplayName("Book publications can be created")
     @Test
-    void publicationReturnPublicationWhenInputIsValid() throws MalformedContributorException, IOException,
-            InvalidIsbnException, InvalidIssnException {
+    void publicationReturnPublicationWhenInputIsValid() throws IOException, InvalidIsbnException, InvalidIssnException {
         Publication bookPublication = PublicationGenerator.generateBookMonographPublication();
         JsonNode document = toPublicationWithContext(bookPublication);
 
@@ -36,7 +34,7 @@ public class BookPublicationTest extends PublicationTest {
     }
 
     @Test
-    void publicationReturnsSeriesWhenInputIsSeriesTitle() throws MalformedContributorException, InvalidIsbnException,
+    void publicationReturnsSeriesWhenInputIsSeriesTitle() throws InvalidIsbnException,
             InvalidUnconfirmedSeriesException {
         Publication publication = generateBookMonographWithUnconfirmedSeriesTitleString();
         BookSeries actual = ((Book) publication.getEntityDescription()

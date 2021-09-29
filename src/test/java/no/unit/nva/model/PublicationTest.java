@@ -9,7 +9,6 @@ import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import no.unit.nva.model.exceptions.InvalidIssnException;
-import no.unit.nva.model.exceptions.MalformedContributorException;
 import no.unit.nva.model.util.ContextUtil;
 import no.unit.nva.model.util.PublicationGenerator;
 import org.javers.core.Javers;
@@ -45,7 +44,7 @@ public class PublicationTest {
 
     @Test
     public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
-            throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException {
         var publication = generatePublicationWithRejectedDoiRequestStatus();
 
         var validRequestedChange = APPROVED;
@@ -58,7 +57,7 @@ public class PublicationTest {
 
     @Test
     public void updatingDoiRequestWithInvalidRequestedStatusChangeThenThrowsIllegalArgumentException()
-            throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException {
         var publication = generatePublicationWithRejectedDoiRequestStatus();
 
         var actualMessage = assertThrows(IllegalArgumentException.class,
@@ -75,7 +74,7 @@ public class PublicationTest {
 
     @Test
     public void updatingDoiRequestStatusWithoutDoiRequestThrowsIllegalStateException()
-            throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException {
         var publication = getPublicationWithoutDoiRequest();
 
         var actualException = assertThrows(IllegalStateException.class,
@@ -86,14 +85,14 @@ public class PublicationTest {
 
     @Test
     public void getModelVersionReturnsModelVersionDefinedByGradle()
-            throws InvalidIssnException, MalformedContributorException {
+            throws InvalidIssnException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
         assertThat(samplePublication.getModelVersion(), is(equalTo(BuildConfig.MODEL_VERSION)));
     }
 
     @Test
     public void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields()
-            throws MalformedContributorException, InvalidIssnException {
+            throws InvalidIssnException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
         Publication copy = samplePublication.copy().build();
 
@@ -107,7 +106,7 @@ public class PublicationTest {
 
     @Test
     public void objectMapperReturnsSerializationWithAllFieldsSerialized()
-            throws MalformedContributorException, InvalidIssnException, JsonProcessingException {
+            throws InvalidIssnException, JsonProcessingException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
         String jsonString = objectMapperWithEmpty.writeValueAsString(samplePublication);
         Publication copy = objectMapperWithEmpty.readValue(jsonString, Publication.class);
@@ -130,8 +129,7 @@ public class PublicationTest {
         return JsonLdProcessor.frame(input, frame, options);
     }
 
-    private Publication getPublicationWithoutDoiRequest() throws InvalidIssnException, MalformedContributorException {
-
+    private Publication getPublicationWithoutDoiRequest() throws InvalidIssnException {
 
         Publication samplePublication = PublicationGenerator
                 .generateJournalArticlePublication()
@@ -144,8 +142,7 @@ public class PublicationTest {
     }
 
 
-    private Publication generatePublicationWithRejectedDoiRequestStatus()
-            throws InvalidIssnException, MalformedContributorException {
+    private Publication generatePublicationWithRejectedDoiRequestStatus() throws InvalidIssnException {
         var doiRequest = PublicationGenerator.generateJournalArticlePublication().getDoiRequest();
         return PublicationGenerator.generateJournalArticlePublication()
                 .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
