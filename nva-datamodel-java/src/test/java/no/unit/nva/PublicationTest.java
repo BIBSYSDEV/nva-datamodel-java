@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -58,6 +59,7 @@ public class PublicationTest extends ModelTest {
         Publication roundTripped = objectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThat(expected, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
+        assertEquals(expected, roundTripped);
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);

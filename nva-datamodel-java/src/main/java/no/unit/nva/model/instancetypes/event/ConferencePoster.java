@@ -1,12 +1,12 @@
 package no.unit.nva.model.instancetypes.event;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.pages.MonographPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ConferencePoster extends ConferenceLecture {
-    public ConferencePoster(@JsonProperty("pages") MonographPages pages) {
-        super(pages);
+    @JsonCreator
+    public ConferencePoster() {
+        super();
     }
 }

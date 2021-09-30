@@ -1,30 +1,33 @@
 package no.unit.nva.model.instancetypes.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.PublicationInstance;
-import no.unit.nva.model.pages.MonographPages;
-import nva.commons.core.JacocoGenerated;
-
-import java.util.Objects;
+import no.unit.nva.model.pages.NullPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ConferenceLecture implements PublicationInstance<MonographPages> {
+public class ConferenceLecture implements PublicationInstance<NullPages> {
 
-    private MonographPages pages;
+    @JsonProperty("pages")
+    public static final NullPages pages = new NullPages();
 
-    public ConferenceLecture(@JsonProperty("pages") MonographPages pages) {
-        this.pages = pages;
+    @JsonCreator
+    public ConferenceLecture() {
     }
 
+    @JsonGetter("pages")
     @Override
-    public MonographPages getPages() {
+    public NullPages getPages() {
         return pages;
     }
 
+    @JsonSetter("pages")
     @Override
-    public void setPages(MonographPages pages) {
-        this.pages = pages;
+    public void setPages(NullPages pages) {
+
     }
 
     @Override
@@ -32,22 +35,16 @@ public class ConferenceLecture implements PublicationInstance<MonographPages> {
         return false;
     }
 
-    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return 222_222_222; // Implemented manually due to field-less class.
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ConferenceLecture)) {
-            return false;
-        }
-        ConferenceLecture that = (ConferenceLecture) o;
-        return Objects.equals(getPages(), that.getPages());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPages());
+        return o instanceof ConferenceLecture;
     }
 }
