@@ -445,7 +445,7 @@ referencedSchemas:
     - type: object
       properties:
         pages:
-          $ref: '#/components/schemas/MonographPages'
+          $ref: '#/components/schemas/NullPages'
         type:
           type: string
   ConferencePoster:
@@ -459,7 +459,7 @@ referencedSchemas:
     - type: object
       properties:
         pages:
-          $ref: '#/components/schemas/MonographPages'
+          $ref: '#/components/schemas/NullPages'
         type:
           type: string
   Contributor:
@@ -964,7 +964,7 @@ referencedSchemas:
     - type: object
       properties:
         pages:
-          $ref: '#/components/schemas/MonographPages'
+          $ref: '#/components/schemas/NullPages'
         type:
           type: string
   License:
@@ -1156,10 +1156,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:

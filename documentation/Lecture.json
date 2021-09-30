@@ -96,17 +96,10 @@
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
         "type" : "Lecture",
+        "peerReviewed" : false,
         "pages" : {
-          "type" : "MonographPages",
-          "introduction" : {
-            "type" : "Range",
-            "begin" : "i",
-            "end" : "ix"
-          },
-          "pages" : "321",
-          "illustrated" : true
-        },
-        "peerReviewed" : false
+          "type" : "NullPages"
+        }
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -156,5 +149,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
-  "modelVersion" : "0.13.6"
+  "modelVersion" : "0.13.7"
 }

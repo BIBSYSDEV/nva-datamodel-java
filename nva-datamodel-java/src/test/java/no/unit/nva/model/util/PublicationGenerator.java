@@ -90,6 +90,8 @@ import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.StringUtils;
 
+import javax.validation.constraints.Null;
+
 @SuppressWarnings("MissingJavadocMethod")
 public class PublicationGenerator extends ModelTest {
 
@@ -319,15 +321,15 @@ public class PublicationGenerator extends ModelTest {
     }
 
     private static PublicationInstance<?> getConferencePoster() {
-        return new ConferencePoster(generateMonographPages());
+        return new ConferencePoster();
     }
 
     private static PublicationInstance<?> getConferenceLecture() {
-        return new ConferenceLecture(generateMonographPages());
+        return new ConferenceLecture();
     }
 
     private static PublicationInstance<?> getLecture() {
-        return new Lecture(generateMonographPages());
+        return new Lecture();
     }
 
     private static PublicationContext getPublishingContextEvent() {
