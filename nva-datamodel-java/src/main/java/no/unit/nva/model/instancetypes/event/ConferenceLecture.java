@@ -37,7 +37,7 @@ public class ConferenceLecture implements PublicationInstance<NullPages> {
 
     @Override
     public int hashCode() {
-        return 222222222; // Implemented manually due to field-less class.
+        return 222_222_222; // Implemented manually due to field-less class.
     }
 
     @Override
