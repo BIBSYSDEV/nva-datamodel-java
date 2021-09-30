@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Publication;
-import no.unit.nva.model.contexttypes.event.Place;
+import no.unit.nva.model.contexttypes.place.Place;
 import no.unit.nva.model.pages.TemporalExtent;
 import nva.commons.core.JacocoGenerated;
 

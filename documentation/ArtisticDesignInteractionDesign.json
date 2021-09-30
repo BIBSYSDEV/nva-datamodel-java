@@ -1,0 +1,141 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "DRAFT",
+  "owner" : "eier@example.org",
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "http://example.org/org/123",
+    "labels" : {
+      "no" : "Eksempelforlaget"
+    }
+  },
+  "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+  "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "handle" : "http://example.org/handle/123",
+  "doi" : "http://example.org/doi/1231/98765",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "REQUESTED",
+    "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "messages" : [ {
+      "type" : "DoiRequestMessage",
+      "text" : "Some Text",
+      "author" : "SomeAuthor",
+      "timestamp" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "link" : "http://example.org/link",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "Hovedtittelen",
+    "alternativeTitles" : {
+      "en" : "English title"
+    },
+    "language" : "http://example.org/norsk",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "2020",
+      "month" : "4",
+      "day" : "7"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "http://example.org/person/123",
+        "name" : "Navnesen, Navn",
+        "nameType" : "Personal",
+        "orcId" : "orc123",
+        "arpId" : "arp123"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "http://example.org/org/123",
+        "labels" : {
+          "no" : "Eksempelforlaget"
+        }
+      } ],
+      "role" : "Creator",
+      "sequence" : 0,
+      "correspondingAuthor" : true
+    } ],
+    "npiSubjectHeading" : "010",
+    "tags" : [ "dokumenter", "publikasjoner" ],
+    "description" : "En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "ArtisticDesign",
+        "venues" : [ {
+          "type" : "Venue",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "Expo 2021",
+            "country" : "Germany"
+          },
+          "sequence" : 1
+        } ]
+      },
+      "doi" : "https://123123/213123.com",
+      "publicationInstance" : {
+        "type" : "ArtisticDesignInteractionDesign",
+        "description" : "A design for a webpage for fintech",
+        "pages" : {
+          "type" : "NullPages"
+        },
+        "peerReviewed" : false
+      }
+    },
+    "metadataSource" : "https://example.org/doi?doi=123/123",
+    "abstract" : "En lang streng som beskriver innholdet i dokumentet metadataene omtaler."
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+      "name" : "new document(1)",
+      "mimeType" : "application/pdf",
+      "size" : 2,
+      "license" : {
+        "type" : "License",
+        "identifier" : "NTNU-CC-BY-4.0",
+        "labels" : {
+          "no" : "CC-BY 4.0"
+        },
+        "link" : "http://example.org/license/123"
+      },
+      "administrativeAgreement" : true,
+      "publisherAuthority" : true,
+      "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "http://link.to.cristin.example.org/123",
+    "name" : "Det gode prosjektet",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "Norsk rødt felaget",
+      "id" : "123123"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-09-23T09:51:23.044996ZZ",
+      "approvedBy" : "REK",
+      "approvalStatus" : "APPLIED",
+      "applicationCode" : "123123"
+    } ]
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "http://example.org/subject/123" ],
+  "modelVersion" : "0.13.7"
+}
