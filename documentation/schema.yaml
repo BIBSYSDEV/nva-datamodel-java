@@ -115,6 +115,200 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  ArtisticDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        venues:
+          type: array
+          items:
+            $ref: '#/components/schemas/Venue'
+        type:
+          type: string
+  ArtisticDesignClothingDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignExhibition:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignGraphicDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignIllustration:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignInteractionDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignInteriorDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignLightDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignOther:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        typeDescription:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignProductDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignServiceDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArtisticDesignWebDesign:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
   Book:
     required:
     - type
@@ -806,6 +1000,15 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  NullPages:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Organization:
     required:
     - type
@@ -1227,3 +1430,17 @@ referencedSchemas:
           type: string
         type:
           type: string
+  Venue:
+    required:
+    - type
+    type: object
+    properties:
+      place:
+        $ref: '#/components/schemas/Place'
+      sequence:
+        type: integer
+        format: int32
+      type:
+        type: string
+    discriminator:
+      propertyName: type

@@ -1,4 +1,4 @@
-package no.unit.nva.model.contexttypes.event;
+package no.unit.nva.model.contexttypes.place;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

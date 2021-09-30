@@ -31,6 +31,7 @@ import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
+import no.unit.nva.model.contexttypes.ArtisticDesign;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
@@ -41,11 +42,24 @@ import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.UnconfirmedJournal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;
+import no.unit.nva.model.contexttypes.venue.Venue;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignClothingDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignExhibition;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignGraphicDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignIllustration;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignInteractionDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignInteriorDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignLightDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignOther;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignProductDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignServiceDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesignWebDesign;
 import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
+import no.unit.nva.model.pages.NullPages;
 import no.unit.nva.model.pages.TemporalExtent;
-import no.unit.nva.model.contexttypes.event.UnconfirmedPlace;
+import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
@@ -101,6 +115,50 @@ public class PublicationGenerator extends ModelTest {
                                                                       InvalidUnconfirmedSeriesException {
         Reference reference;
         switch (type) {
+            case "ArtisticDesignClothingDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignClothingDesignInstance());
+                break;
+            case "ArtisticDesignExhibition":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignExhibitionInstance());
+                break;
+            case "ArtisticDesignGraphicDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignGraphicDesignInstance());
+                break;
+            case "ArtisticDesignIllustration":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignIllustrationInstance());
+                break;
+            case "ArtisticDesignInteractionDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignInteractionDesignInstance());
+                break;
+            case "ArtisticDesignInteriorDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignInteriorDesignInstance());
+                break;
+            case "ArtisticDesignLightDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignLightDesignInstance());
+                break;
+            case "ArtisticDesignOther":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignOtherInstance());
+                break;
+            case "ArtisticDesignProductDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignProductDesignInstance());
+                break;
+            case "ArtisticDesignServiceDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignServiceDesignInstance());
+                break;
+            case "ArtisticDesignWebDesign":
+                reference = generateReference(getPublishingContextArtisticDesign(),
+                        getArtisticDesignWebDesignInstance());
+                break;
             case "BookAbstracts":
                 reference = generateReference(getPublishingContextBook(), getBookAbstractsInstance());
                 break;
@@ -210,6 +268,55 @@ public class PublicationGenerator extends ModelTest {
             .build();
     }
 
+
+    private static PublicationInstance<NullPages> getArtisticDesignWebDesignInstance() {
+        return new ArtisticDesignWebDesign("A design for a fintech SPA done in Adobe Flash, because why not?");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignServiceDesignInstance() {
+        return new ArtisticDesignServiceDesign("Service providing creative dummy text that someone wanted");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignProductDesignInstance() {
+        return new ArtisticDesignProductDesign("An anti-splashback device");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignOtherInstance() {
+        return new ArtisticDesignOther("Flooring design", "Kippers in epoxy, floor for large corporate office");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignLightDesignInstance() {
+        return new ArtisticDesignLightDesign("A solipsistic desideratum expressed in three colours");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignInteriorDesignInstance() {
+        return new ArtisticDesignInteriorDesign("A tiny house fitted out for the modern executive");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignInteractionDesignInstance() {
+        return new ArtisticDesignInteractionDesign("A design for a webpage for fintech");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignIllustrationInstance() {
+        return new ArtisticDesignIllustration("Explorations in calligraphy techniques in the style of Mark Tobey,"
+                + " but on toilet paper");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignGraphicDesignInstance() {
+        return new ArtisticDesignGraphicDesign("A brochure produced for a local electronics company");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignExhibitionInstance() {
+        return new ArtisticDesignExhibition("Many images collected from people's iPhones dipped in filter coffee");
+    }
+
+    private static PublicationInstance<NullPages> getArtisticDesignClothingDesignInstance() {
+        return new ArtisticDesignClothingDesign("A massive jacket with bells on and a smear of boar-sweat");
+    }
+
+    private static PublicationContext getPublishingContextArtisticDesign() {
+        return new ArtisticDesign(List.of(new Venue(new UnconfirmedPlace("Expo 2021", "Germany"), 1)));
+    }
 
     private static PublicationInstance<?> getConferencePoster() {
         return new ConferencePoster(generateMonographPages());
