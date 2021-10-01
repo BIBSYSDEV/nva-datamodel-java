@@ -224,7 +224,7 @@ class BookTest extends ModelTest {
     @DisplayName("X is not removed from isbn upon creation of a Book with deserialization.")
     @ParameterizedTest
     @CsvSource({
-            "9780804429573, 0-8044-2957-X"
+        "9780804429573, 0-8044-2957-X"
     })
     void setIsbnListDoesNotRemoveXFromIsbnWhenCreatingABookWithDeserialization(String expectedIsbn, String inputIsbn)
             throws InvalidIsbnException, IOException, InvalidIssnException {
@@ -242,7 +242,7 @@ class BookTest extends ModelTest {
     @DisplayName("X is not removed from isbn upon creation of a Book using the builder")
     @ParameterizedTest
     @CsvSource({
-            "9780804429573, 0-8044-2957-X"
+        "9780804429573, 0-8044-2957-X"
     })
     void setIsbnListDoesNotRemoveXFromIsbnWhenCreatingABookUsingTheBuilder(String expectedIsbn, String inputIsbn)
             throws InvalidIsbnException {
