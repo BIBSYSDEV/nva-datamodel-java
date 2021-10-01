@@ -221,6 +221,37 @@ class BookTest extends ModelTest {
         assertThat(actuallBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
     }
 
+    @DisplayName("X is not removed from isbn upon creation of a Book with deserialization.")
+    @ParameterizedTest
+    @CsvSource({
+            "9780804429573, 0-8044-2957-X"
+    })
+    void setIsbnListDoesNotRemoveXFromIsbnWhenCreatingABookWithDeserialization(String expectedIsbn, String inputIsbn)
+            throws InvalidIsbnException, IOException, InvalidIssnException {
+        Book actuallBook = randomBook();
+        String actuallBookString = objectMapper.writeValueAsString(actuallBook);
+        String wrongIsbn = objectMapper.writeValueAsString(convertIsbnStringToList(inputIsbn));
+        JsonNode wrongIsbnJsonNode = JsonUtils.objectMapperNoEmpty.readTree(wrongIsbn);
+        ObjectNode bookObjectNode = (ObjectNode) JsonUtils.objectMapperNoEmpty.readTree(actuallBookString);
+        bookObjectNode.set("isbnList", wrongIsbnJsonNode);
+        String tempString = objectMapper.writeValueAsString(bookObjectNode);
+        Book deserializedBook = objectMapper.readValue(tempString, Book.class);
+        assertThat(deserializedBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
+    }
+
+    @DisplayName("X is not removed from isbn upon creation of a Book using the builder")
+    @ParameterizedTest
+    @CsvSource({
+            "9780804429573, 0-8044-2957-X"
+    })
+    void setIsbnListDoesNotRemoveXFromIsbnWhenCreatingABookUsingTheBuilder(String expectedIsbn, String inputIsbn)
+            throws InvalidIsbnException {
+        Book actuallBook = new Book.BookBuilder()
+                .withIsbnList(convertIsbnStringToList(inputIsbn))
+                .build();
+        assertThat(actuallBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
+    }
+
     @Test
     void bookDoesNotThrowExceptionWhenInputUnconfirmedSeriesStringsMatch() {
         assertDoesNotThrow(() -> new Book(
