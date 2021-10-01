@@ -26,7 +26,7 @@ public class Book implements BasicContext {
     public static final String JSON_PROPERTY_SERIES_NUMBER = "seriesNumber";
     public static final String JSON_PROPERTY_PUBLISHER = "publisher";
     public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
-    public static final String ANYTHING_BUT_DIGITS_AND_X_REGEX = "[[^\\dxX]]";
+    public static final String ANYTHING_BUT_DIGITS_AND_X_REGEX = "[^\\dxX]";
 
     @JsonProperty(JSON_PROPERTY_SERIES)
     private final BookSeries series;
