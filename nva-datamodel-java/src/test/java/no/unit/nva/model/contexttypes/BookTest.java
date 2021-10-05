@@ -191,17 +191,18 @@ class BookTest extends ModelTest {
     @DisplayName("No-digits are removed from isbn upon creation of a Book with deserialization.")
     @ParameterizedTest
     @CsvSource({
-        "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
-        "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
+        "9788131700075, 97-8-813-170007-5",
+        "9780804429573, 0 8044 29 5 7 X"
     })
-    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookWithDeserialization(String expectedIsbn, String inputIsbn)
+    void isbnDeserializationReturnsIsbnsEndingWithoutSpacesAndHyphens(
+            String expectedIsbn, String inputIsbn)
         throws InvalidIsbnException, IOException, InvalidIssnException {
         Book actuallBook = randomBook();
         String actuallBookString = objectMapper.writeValueAsString(actuallBook);
-        String wrongIsbn = objectMapper.writeValueAsString(convertIsbnStringToList(inputIsbn));
-        JsonNode wrongIsbnJsonNode = JsonUtils.objectMapperNoEmpty.readTree(wrongIsbn);
+        String invalidIsbn = objectMapper.writeValueAsString(convertIsbnStringToList(inputIsbn));
+        JsonNode invalidIsbnJsonNode = JsonUtils.objectMapperNoEmpty.readTree(invalidIsbn);
         ObjectNode bookObjectNode = (ObjectNode) JsonUtils.objectMapperNoEmpty.readTree(actuallBookString);
-        bookObjectNode.set("isbnList", wrongIsbnJsonNode);
+        bookObjectNode.set("isbnList", invalidIsbnJsonNode);
         String tempString = objectMapper.writeValueAsString(bookObjectNode);
         Book deserializedBook = objectMapper.readValue(tempString, Book.class);
         assertThat(deserializedBook.getIsbnList(), is(equalTo(convertIsbnStringToList(expectedIsbn))));
@@ -210,11 +211,11 @@ class BookTest extends ModelTest {
     @DisplayName("No-digits are removed from isbn upon creation of a Book using the builder")
     @ParameterizedTest
     @CsvSource({
-        "9788131700075, ?9;7:8-8.1+3-1!7#0¤0%0&7/5*",
-        "9780201309515, 9^7'8¨0`2\\0(){}[]1=3  0_9~5´1±5"
+        "9788131700075, 97-8-813-170007-5",
+        "9780804429573, 0 8044 29 5 7 X"
     })
-    void setIsbnListRemovesNonedigitsFromIsbnWhenCreatingABookUsingTheBuilder(String expectedIsbn, String inputIsbn)
-            throws InvalidIsbnException {
+    void setIsbnListRemovesSpacesAndHyphensFromIsbnWhenCreatingABookUsingTheBuilder(
+            String expectedIsbn, String inputIsbn) throws InvalidIsbnException {
         Book actuallBook = new Book.BookBuilder()
                 .withIsbnList(convertIsbnStringToList(inputIsbn))
                 .build();
