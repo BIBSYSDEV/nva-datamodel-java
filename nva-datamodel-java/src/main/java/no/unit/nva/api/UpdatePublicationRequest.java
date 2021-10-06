@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
+import no.unit.nva.WithId;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
@@ -16,8 +17,9 @@ import no.unit.nva.model.FileSet;
 import no.unit.nva.model.ResearchProject;
 import nva.commons.core.JacocoGenerated;
 
-public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, WithFile, WithContext {
+public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, WithFile, WithContext, WithId {
 
+    private URI id;
     private SortableIdentifier identifier;
     private EntityDescription entityDescription;
     private FileSet fileSet;
@@ -25,6 +27,16 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
     private JsonNode context;
     private List<ResearchProject> projects;
     private List<URI> subjects;
+
+    @Override
+    public URI getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(URI id) {
+        this.id = id;
+    }
 
     @Override
     public SortableIdentifier getIdentifier() {
@@ -97,7 +109,8 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
             return false;
         }
         UpdatePublicationRequest that = (UpdatePublicationRequest) o;
-        return Objects.equals(identifier, that.identifier)
+        return Objects.equals(getId(), that.getId())
+            && Objects.equals(identifier, that.identifier)
             && Objects.equals(entityDescription, that.entityDescription)
             && Objects.equals(fileSet, that.fileSet)
             && Objects.equals(subjects, that.subjects)
@@ -107,6 +120,6 @@ public class UpdatePublicationRequest implements WithIdentifier, WithMetadata, W
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(identifier, entityDescription, fileSet, subjects, context);
+        return Objects.hash(id, identifier, entityDescription, fileSet, subjects, context);
     }
 }

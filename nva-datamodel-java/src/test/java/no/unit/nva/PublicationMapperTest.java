@@ -5,6 +5,8 @@ import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
 import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
 import static no.unit.nva.model.util.PublicationGenerator.getProjects;
 import static nva.commons.core.JsonUtils.objectMapper;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,6 +21,8 @@ import no.unit.nva.api.UpdatePublicationRequest;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.util.PublicationGenerator;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 public class PublicationMapperTest {
@@ -75,6 +79,7 @@ public class PublicationMapperTest {
             .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
 
         assertNotNull(response);
+        assertThat(response.getId(), notNullValue());
     }
 
     @Test
@@ -85,6 +90,7 @@ public class PublicationMapperTest {
             .convertValue(publication, PublicationResponse.class);
 
         assertNotNull(response);
+        assertThat(response.getId(), notNullValue());
     }
 
     @Test
@@ -99,6 +105,8 @@ public class PublicationMapperTest {
         assertEquals(publication.getFileSet(), request.getFileSet());
         assertEquals(publication.getProjects(), request.getProjects());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
+        assertThat(request.getId(), notNullValue());
+
     }
 
     @Test
@@ -113,6 +121,7 @@ public class PublicationMapperTest {
         assertEquals(publication.getFileSet(), request.getFileSet());
         assertEquals(publication.getProjects(), request.getProjects());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
+        assertThat(request.getId(), notNullValue());
     }
 }
 
