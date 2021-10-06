@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'com.github.bibsysdev'
-version '0.13.10'
+version '0.13.11'
 
 
 repositories {
@@ -22,6 +22,10 @@ test {
     useJUnitPlatform()
     failFast = true
     finalizedBy(jacocoTestReport)
+}
+
+test {
+    environment "ID_NAMESPACE", "https://www.example.org"
 }
 
 jacocoTestReport {

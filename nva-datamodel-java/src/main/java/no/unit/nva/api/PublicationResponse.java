@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
+import no.unit.nva.WithId;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
@@ -21,7 +22,7 @@ import no.unit.nva.model.ResearchProject;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
-public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithContext {
+public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithId, WithContext {
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -228,7 +229,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
             return false;
         }
         PublicationResponse that = (PublicationResponse) o;
-        return Objects.equals(getIdentifier(), that.getIdentifier())
+        return Objects.equals(getId(), that.getId())
+                && Objects.equals(getIdentifier(), that.getIdentifier())
                 && getStatus() == that.getStatus()
                 && Objects.equals(getOwner(), that.getOwner())
                 && Objects.equals(getPublisher(), that.getPublisher())
