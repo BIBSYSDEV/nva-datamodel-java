@@ -7,19 +7,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
 
-import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
-import nva.commons.core.Environment;
 
 public final class PublicationMapper {
 
     public static final String CONTEXT_PATH = "publicationContext.json";
     public static final String CONTEXT_ERROR_MESSAGE = "Error processing context: ";
-
-    public static final String ID_NAMESPACE_ENV = "ID_NAMESPACE";
-    public static final URI NAMESPACE = URI.create(getIdNamespace());
 
     private PublicationMapper() {
     }
@@ -148,13 +143,5 @@ public final class PublicationMapper {
         publication.setStatus(request.getStatus());
         publication.setDoi(request.getDoi());
         publication.setDoiRequest(request.getDoiRequest());
-    }
-
-    public static URI toId(SortableIdentifier identifier) {
-        return URI.create(NAMESPACE + "/" + identifier);
-    }
-
-    private static String getIdNamespace() {
-        return new Environment().readEnv(ID_NAMESPACE_ENV);
     }
 }
