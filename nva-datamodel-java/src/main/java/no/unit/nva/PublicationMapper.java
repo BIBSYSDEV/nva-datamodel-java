@@ -77,11 +77,10 @@ public final class PublicationMapper {
      * @param responseType Class to be converted to.
      * @return publication response
      */
-    public static <R extends WithContext & WithId> R convertValue(
+    public static <R extends WithContext> R convertValue(
         Publication publication, JsonNode context, Class<R> responseType) {
         R response = objectMapper.convertValue(publication, responseType);
         response.setContext(context);
-        response.setId(toId(publication.getIdentifier()));
         return response;
     }
 
@@ -93,7 +92,7 @@ public final class PublicationMapper {
      * @param responseType Class to be converted to.
      * @return publication response
      */
-    public static <R extends WithContext & WithId> R convertValue(
+    public static <R extends WithContext> R convertValue(
         Publication publication, Class<R> responseType) {
         return convertValue(publication, getContext(), responseType);
     }

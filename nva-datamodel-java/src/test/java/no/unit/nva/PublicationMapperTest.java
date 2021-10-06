@@ -6,11 +6,15 @@ import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
 import static no.unit.nva.model.util.PublicationGenerator.getProjects;
 import static nva.commons.core.JsonUtils.objectMapper;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.URI;
 import java.util.List;
@@ -21,8 +25,7 @@ import no.unit.nva.api.UpdatePublicationRequest;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.util.PublicationGenerator;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.Test;
 
 public class PublicationMapperTest {
@@ -80,6 +83,13 @@ public class PublicationMapperTest {
 
         assertNotNull(response);
         assertThat(response.getId(), notNullValue());
+        assertThatIdIsPresent(response);
+    }
+
+    private void assertThatIdIsPresent(PublicationResponse response) throws JsonProcessingException {
+        String string = JsonUtils.objectMapperWithEmpty.writeValueAsString(response);
+        ObjectNode json = (ObjectNode) JsonUtils.objectMapperWithEmpty.readTree(string);
+        assertThat(json.has("id"), is(equalTo(true)));
     }
 
     @Test
@@ -105,7 +115,6 @@ public class PublicationMapperTest {
         assertEquals(publication.getFileSet(), request.getFileSet());
         assertEquals(publication.getProjects(), request.getProjects());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
-        assertThat(request.getId(), notNullValue());
 
     }
 
@@ -121,7 +130,6 @@ public class PublicationMapperTest {
         assertEquals(publication.getFileSet(), request.getFileSet());
         assertEquals(publication.getProjects(), request.getProjects());
         assertEquals(publication.getEntityDescription(), request.getEntityDescription());
-        assertThat(request.getId(), notNullValue());
     }
 }
 

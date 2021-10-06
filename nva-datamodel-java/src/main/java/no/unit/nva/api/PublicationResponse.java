@@ -24,7 +24,6 @@ import nva.commons.core.JacocoGenerated;
 @SuppressWarnings("PMD.TooManyFields")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithId, WithContext {
 
-    private URI id;
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
@@ -44,16 +43,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private JsonNode context;
     private List<ResearchProject> projects;
     private List<URI> subjects;
-
-    @Override
-    public URI getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(URI id) {
-        this.id = id;
-    }
 
     @Override
     public FileSet getFileSet() {

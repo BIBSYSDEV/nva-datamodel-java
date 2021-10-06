@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
-import no.unit.nva.WithId;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
@@ -16,25 +15,14 @@ import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import nva.commons.core.JacocoGenerated;
 
-public class CreatePublicationRequest implements WithMetadata, WithFile, WithContext, WithId {
+public class CreatePublicationRequest implements WithMetadata, WithFile, WithContext {
 
-    private URI id;
     private EntityDescription entityDescription;
     private FileSet fileSet;
     @JsonProperty("@context")
     private JsonNode context;
     private List<ResearchProject> projects;
     private List<URI> subjects;
-
-    @Override
-    public URI getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(URI id) {
-        this.id = id;
-    }
 
     @Override
     public EntityDescription getEntityDescription() {
@@ -106,8 +94,7 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
             return false;
         }
         CreatePublicationRequest that = (CreatePublicationRequest) o;
-        return Objects.equals(getId(), that.getId())
-                && Objects.equals(getEntityDescription(), that.getEntityDescription())
+        return Objects.equals(getEntityDescription(), that.getEntityDescription())
                 && Objects.equals(getFileSet(), that.getFileSet())
                 && Objects.equals(getContext(), that.getContext())
                 && Objects.equals(getProjects(), that.getProjects())
@@ -117,7 +104,7 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEntityDescription(), getFileSet(), getContext(), getProjects(),
+        return Objects.hash(getEntityDescription(), getFileSet(), getContext(), getProjects(),
                 getSubjects());
     }
 }
