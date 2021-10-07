@@ -69,21 +69,33 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "ArtisticDesign",
-        "venues" : [ {
-          "type" : "Venue",
-          "place" : {
-            "type" : "UnconfirmedPlace",
-            "label" : "Expo 2021",
-            "country" : "Germany"
-          },
-          "sequence" : 1
-        } ]
+        "type" : "Event",
+        "label" : "A wondrous event that surprised the fallow deer",
+        "place" : {
+          "type" : "UnconfirmedPlace",
+          "label" : "The pea shop, Brighton",
+          "country" : "Transnistria"
+        },
+        "time" : {
+          "type" : "TemporalExtent",
+          "from" : "2020-09-23T09:51:23.044996Z",
+          "to" : "2020-09-23T09:51:23.044996Z",
+          "extent" : {
+            "type" : "ReifiedExtent",
+            "value" : "72",
+            "datatype" : "Hours"
+          }
+        },
+        "agent" : {
+          "type" : "Organization",
+          "labels" : {
+            "en" : "Hallowed Blue Feet Inc."
+          }
+        }
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "ArtisticDesignInteriorDesign",
-        "description" : "A tiny house fitted out for the modern executive",
+        "type" : "OtherPresentation",
         "peerReviewed" : false,
         "pages" : {
           "type" : "NullPages"

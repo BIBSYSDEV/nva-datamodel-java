@@ -28,6 +28,7 @@ public class InstanceTypeProvider implements ArgumentsProvider {
                 Arguments.of("ConferenceLecture"),
                 Arguments.of("ConferencePoster"),
                 Arguments.of("Lecture"),
+                Arguments.of("OtherPresentation"),
                 Arguments.of("DegreeBachelor"),
                 Arguments.of("DegreeMaster"),
                 Arguments.of("DegreePhd"),

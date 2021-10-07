@@ -1028,6 +1028,20 @@ referencedSchemas:
             type: string
         type:
           type: string
+  OtherPresentation:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
   OtherStudentWork:
     required:
     - type
@@ -1156,10 +1170,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
