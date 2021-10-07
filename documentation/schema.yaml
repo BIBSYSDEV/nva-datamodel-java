@@ -476,19 +476,25 @@ referencedSchemas:
       role:
         type: string
         enum:
+        - Academic coordinator
         - Advisor
-        - Creator
-        - Editor
-        - Illustrator
-        - Other
         - ContactPerson
+        - Creator
         - DataCollector
         - DataCurator
         - DataManager
         - Distributor
+        - Editor
+        - EditorialBoardMember
         - Funder
         - HostingInstitution
+        - Illustrator
+        - InterviewSubject
+        - Journalist
+        - Other
         - Producer
+        - ProgrammeLeader
+        - ProgrammeParticipant
         - ProjectLeader
         - ProjectManager
         - ProjectMember
