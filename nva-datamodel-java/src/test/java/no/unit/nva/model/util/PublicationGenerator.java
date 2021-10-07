@@ -57,6 +57,7 @@ import no.unit.nva.model.instancetypes.artistic.ArtisticDesignWebDesign;
 import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
+import no.unit.nva.model.instancetypes.event.OtherPresentation;
 import no.unit.nva.model.pages.NullPages;
 import no.unit.nva.model.pages.TemporalExtent;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
@@ -89,8 +90,6 @@ import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.StringUtils;
-
-import javax.validation.constraints.Null;
 
 @SuppressWarnings("MissingJavadocMethod")
 public class PublicationGenerator extends ModelTest {
@@ -215,6 +214,9 @@ public class PublicationGenerator extends ModelTest {
             case "Lecture":
                 reference = generateReference(getPublishingContextEvent(), getLecture());
                 break;
+            case "OtherPresentation":
+                reference = generateReference(getPublishingContextEvent(), getOtherPresentation());
+                break;
             case "OtherStudentWork":
                 reference = generateReference(getPublishingContextDegree(), getOtherStudentWorkInstance());
                 break;
@@ -330,6 +332,10 @@ public class PublicationGenerator extends ModelTest {
 
     private static PublicationInstance<?> getLecture() {
         return new Lecture();
+    }
+
+    private static PublicationInstance<NullPages> getOtherPresentation() {
+        return new OtherPresentation();
     }
 
     private static PublicationContext getPublishingContextEvent() {
