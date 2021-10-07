@@ -476,19 +476,25 @@ referencedSchemas:
       role:
         type: string
         enum:
+        - AcademicCoordinator
         - Advisor
-        - Creator
-        - Editor
-        - Illustrator
-        - Other
         - ContactPerson
+        - Creator
         - DataCollector
         - DataCurator
         - DataManager
         - Distributor
+        - Editor
+        - EditorialBoardMember
         - Funder
         - HostingInstitution
+        - Illustrator
+        - InterviewSubject
+        - Journalist
+        - Other
         - Producer
+        - ProgrammeLeader
+        - ProgrammeParticipant
         - ProjectLeader
         - ProjectManager
         - ProjectMember
@@ -1170,10 +1176,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
