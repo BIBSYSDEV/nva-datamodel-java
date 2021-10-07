@@ -84,10 +84,10 @@
       "publicationInstance" : {
         "type" : "ArtisticDesignServiceDesign",
         "description" : "Service providing creative dummy text that someone wanted",
-        "peerReviewed" : false,
         "pages" : {
           "type" : "NullPages"
-        }
+        },
+        "peerReviewed" : false
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
@@ -137,5 +137,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
-  "modelVersion" : "0.13.12"
+  "modelVersion" : "0.13.13"
 }
