@@ -7,7 +7,7 @@ import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Role {
-    ACADEMIC_COORDINATOR("Academic coordinator"),
+    ACADEMIC_COORDINATOR("AcademicCoordinator"),
     ADVISOR("Advisor"),
     CONTACT_PERSON("ContactPerson"),
     CREATOR("Creator"),
