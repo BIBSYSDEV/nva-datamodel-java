@@ -1,20 +1,18 @@
 package no.unit.nva.model;
 
+import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import com.fasterxml.jackson.databind.JsonNode;
-import nva.commons.core.JsonUtils;
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
+import org.junit.jupiter.api.Test;
 
 public class DoiRequestMessageTest {
 
@@ -40,11 +38,11 @@ public class DoiRequestMessageTest {
     @Test
     public void doiRequestMessageCanBeSerialized() {
         DoiRequestMessage message = sampleDoiRequestMessage();
-        JsonNode json = JsonUtils.objectMapper.convertValue(message, JsonNode.class);
+        JsonNode json = objectMapper.convertValue(message, JsonNode.class);
 
         List<String> fieldNames = extractFieldNames();
 
-        assertThat(message, doesNotHaveNullOrEmptyFields());
+        assertThat(message, doesNotHaveEmptyValues());
         assertThatAllFieldsAreSerialized(json, fieldNames);
     }
 

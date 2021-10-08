@@ -2,9 +2,8 @@ package no.unit.nva.model.contexttypes.place;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class UnconfirmedPlace implements Place {

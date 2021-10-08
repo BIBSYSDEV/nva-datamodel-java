@@ -1,8 +1,7 @@
 package no.unit.nva.model.instancetypes;
 
-import no.unit.nva.model.pages.Range;
-
 import java.util.Objects;
+import no.unit.nva.model.pages.Range;
 import nva.commons.core.JacocoGenerated;
 
 public class NonPeerReviewedPaper extends NonPeerReviewed<Range> {

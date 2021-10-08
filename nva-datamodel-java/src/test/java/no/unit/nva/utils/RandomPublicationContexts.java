@@ -3,9 +3,7 @@ package no.unit.nva.utils;
 import static no.unit.nva.model.util.PublicationGenerator.randomIssn;
 import static no.unit.nva.utils.RandomData.randomIsbn;
 import static no.unit.nva.utils.RandomData.randomString;
-
 import java.util.List;
-
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.UnconfirmedSeries;

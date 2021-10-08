@@ -1,10 +1,9 @@
 package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
 import java.net.URI;
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Chapter implements Partitive {

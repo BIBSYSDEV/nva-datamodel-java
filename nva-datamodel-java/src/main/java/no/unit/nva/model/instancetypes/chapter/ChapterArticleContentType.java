@@ -1,11 +1,10 @@
 package no.unit.nva.model.instancetypes.chapter;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ChapterArticleContentType {
     ACADEMIC_CHAPTER("Academic Chapter"),

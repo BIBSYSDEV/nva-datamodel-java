@@ -1,22 +1,19 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static no.unit.nva.DatamodelConfig.objectMapper;
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import no.unit.nva.JsonHandlingTest;
-import no.unit.nva.model.pages.MonographPages;
-import no.unit.nva.model.pages.Range;
-import nva.commons.core.JsonUtils;
-
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static nva.commons.core.attempt.Try.attempt;
+import no.unit.nva.JsonHandlingTest;
+import no.unit.nva.model.pages.MonographPages;
+import no.unit.nva.model.pages.Range;
 
 public class ModelTest implements JsonHandlingTest {
 
@@ -27,7 +24,6 @@ public class ModelTest implements JsonHandlingTest {
     public static final String ISBN_LIST = "isbnList";
     public static final String PART_OF = "partOf";
 
-    public final ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     protected static MonographPages generateMonographPages(String introductionBegin,
                                                            String introductionEnd,
@@ -95,7 +91,7 @@ public class ModelTest implements JsonHandlingTest {
                                                     String printIssn,
                                                     URI partOf) {
 
-        ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
+        ObjectNode jsonNode = objectMapper.createObjectNode();
         jsonNode.put(TYPE, type);
 
         jsonNode.set(SERIES, generateUnconfirmedSeriesJson(seriesTitle, printIssn, onlineIssn));
@@ -106,14 +102,14 @@ public class ModelTest implements JsonHandlingTest {
             jsonNode.put(PART_OF, partOf.toString());
         }
 
-        return attempt(() -> JsonUtils.objectMapper.writeValueAsString(jsonNode))
-            .map(content -> JsonUtils.objectMapper.readValue(content, Map.class))
-            .map(JsonUtils.objectMapper::writeValueAsString)
+        return attempt(() -> objectMapper.writeValueAsString(jsonNode))
+            .map(content -> objectMapper.readValue(content, Map.class))
+            .map(objectMapper::writeValueAsString)
             .orElseThrow();
     }
 
     private static JsonNode generateUnconfirmedSeriesJson(String seriesTitle, String printIssn, String onlineIssn) {
-        ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
+        ObjectNode jsonNode = objectMapper.createObjectNode();
         jsonNode.put("type", "UnconfirmedSeries");
         jsonNode.put("title", seriesTitle);
         jsonNode.put("issn", printIssn);
@@ -122,7 +118,7 @@ public class ModelTest implements JsonHandlingTest {
     }
 
     private static JsonNode generateUnconfirmedPublishersJson(String publisher) {
-        ObjectNode jsonNode = JsonUtils.objectMapper.createObjectNode();
+        ObjectNode jsonNode = objectMapper.createObjectNode();
         jsonNode.put("type", "UnconfirmedPublisher");
         jsonNode.put("name", publisher);
         return jsonNode;
@@ -130,9 +126,9 @@ public class ModelTest implements JsonHandlingTest {
 
     private static JsonNode arrayNode(List<String> isbnList) {
         if (isNull(isbnList)) {
-            return JsonUtils.objectMapper.nullNode();
+            return objectMapper.nullNode();
         }
-        ArrayNode arrayNode = JsonUtils.objectMapper.createArrayNode();
+        ArrayNode arrayNode = objectMapper.createArrayNode();
         isbnList.forEach(arrayNode::add);
         return arrayNode;
     }

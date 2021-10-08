@@ -1,12 +1,11 @@
 package no.unit.nva;
 
-import static nva.commons.core.JsonUtils.objectMapper;
+import static no.unit.nva.DatamodelConfig.objectMapper;
 import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
-
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;

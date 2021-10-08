@@ -1,7 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.net.MalformedURLException;
 import java.net.URI;
 

@@ -1,11 +1,9 @@
 package no.unit.nva.model.pages;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
-import java.util.Objects;
-
 import static java.util.Objects.isNull;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class MonographPages implements Pages {

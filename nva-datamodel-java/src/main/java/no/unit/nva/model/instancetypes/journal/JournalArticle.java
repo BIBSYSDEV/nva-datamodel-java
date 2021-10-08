@@ -2,11 +2,10 @@ package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Objects;
 import no.unit.nva.model.instancetypes.PeerReviewedPaper;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.JacocoGenerated;
-
-import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class JournalArticle extends PeerReviewedPaper {

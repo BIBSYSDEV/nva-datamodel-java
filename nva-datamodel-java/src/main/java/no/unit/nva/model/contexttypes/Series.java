@@ -3,12 +3,11 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidSeriesException;
-import nva.commons.core.JacocoGenerated;
-
 import java.net.URI;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import no.unit.nva.model.exceptions.InvalidSeriesException;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Series implements BookSeries {

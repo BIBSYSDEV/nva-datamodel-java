@@ -4,7 +4,6 @@ import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import com.github.bibsysdev.BuildConfig;
 import java.net.URI;
 import java.time.Instant;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
