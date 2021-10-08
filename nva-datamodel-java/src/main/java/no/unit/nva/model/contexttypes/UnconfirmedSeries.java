@@ -56,11 +56,13 @@ public class UnconfirmedSeries implements BookSeries {
         return false;
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), getIssn(), getOnlineIssn());
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {

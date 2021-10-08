@@ -2,12 +2,11 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class EntityDescription {
@@ -83,12 +82,12 @@ public class EntityDescription {
         this.contributors = contributors;
     }
 
-    public void setMetadataSource(URI metadataSource) {
-        this.metadataSource = metadataSource;
-    }
-
     public URI getMetadataSource() {
         return metadataSource;
+    }
+
+    public void setMetadataSource(URI metadataSource) {
+        this.metadataSource = metadataSource;
     }
 
     public String getAbstract() {
@@ -133,6 +132,22 @@ public class EntityDescription {
 
     @JacocoGenerated
     @Override
+    public int hashCode() {
+        return Objects.hash(getMainTitle(),
+                            getAlternativeTitles(),
+                            getLanguage(),
+                            getDate(),
+                            getContributors(),
+                            getAbstract(),
+                            getNpiSubjectHeading(),
+                            getTags(),
+                            getDescription(),
+                            getReference(),
+                            getMetadataSource());
+    }
+
+    @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -142,35 +157,20 @@ public class EntityDescription {
         }
         EntityDescription that = (EntityDescription) o;
         return Objects.equals(getMainTitle(), that.getMainTitle())
-                && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
-                && Objects.equals(getLanguage(), that.getLanguage())
-                && Objects.equals(getDate(), that.getDate())
-                && Objects.equals(getContributors(), that.getContributors())
-                && Objects.equals(getAbstract(), that.getAbstract())
-                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
-                && Objects.equals(getTags(), that.getTags())
-                && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getReference(), that.getReference())
-                && Objects.equals(getMetadataSource(), that.getMetadataSource());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getMainTitle(),
-                getAlternativeTitles(),
-                getLanguage(),
-                getDate(),
-                getContributors(),
-                getAbstract(),
-                getNpiSubjectHeading(),
-                getTags(),
-                getDescription(),
-                getReference(),
-                getMetadataSource());
+               && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
+               && Objects.equals(getLanguage(), that.getLanguage())
+               && Objects.equals(getDate(), that.getDate())
+               && Objects.equals(getContributors(), that.getContributors())
+               && Objects.equals(mainLanguageAbstract, that.mainLanguageAbstract)
+               && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
+               && Objects.equals(getTags(), that.getTags())
+               && Objects.equals(getDescription(), that.getDescription())
+               && Objects.equals(getReference(), that.getReference())
+               && Objects.equals(getMetadataSource(), that.getMetadataSource());
     }
 
     public static final class Builder {
+
         private String mainTitle;
         private Map<String, String> alternativeTitles;
         private URI language;

@@ -2,11 +2,12 @@ package no.unit.nva.model.contexttypes.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ReifiedExtent {
+
     public static final String VALUE = "value";
     public static final String DATATYPE = "datatype";
     @JsonProperty(VALUE)
@@ -27,6 +28,7 @@ public class ReifiedExtent {
         return datatype;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -37,9 +39,10 @@ public class ReifiedExtent {
         }
         ReifiedExtent that = (ReifiedExtent) o;
         return Objects.equals(getValue(), that.getValue())
-                && Objects.equals(getDatatype(), that.getDatatype());
+               && Objects.equals(getDatatype(), that.getDatatype());
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getValue(), getDatatype());

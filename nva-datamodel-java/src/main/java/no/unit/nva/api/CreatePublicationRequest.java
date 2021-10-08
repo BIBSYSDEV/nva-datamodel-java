@@ -2,7 +2,6 @@ package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +25,7 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
 
     @Override
     public EntityDescription getEntityDescription() {
-        return  entityDescription;
+        return entityDescription;
     }
 
     @Override
@@ -86,6 +85,13 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
 
     @JacocoGenerated
     @Override
+    public int hashCode() {
+        return Objects.hash(getEntityDescription(), getFileSet(), getContext(), getProjects(),
+                            getSubjects());
+    }
+
+    @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -95,16 +101,9 @@ public class CreatePublicationRequest implements WithMetadata, WithFile, WithCon
         }
         CreatePublicationRequest that = (CreatePublicationRequest) o;
         return Objects.equals(getEntityDescription(), that.getEntityDescription())
-                && Objects.equals(getFileSet(), that.getFileSet())
-                && Objects.equals(getContext(), that.getContext())
-                && Objects.equals(getProjects(), that.getProjects())
-                && Objects.equals(getSubjects(), that.getSubjects());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getEntityDescription(), getFileSet(), getContext(), getProjects(),
-                getSubjects());
+               && Objects.equals(getFileSet(), that.getFileSet())
+               && Objects.equals(getContext(), that.getContext())
+               && Objects.equals(getProjects(), that.getProjects())
+               && Objects.equals(getSubjects(), that.getSubjects());
     }
 }
