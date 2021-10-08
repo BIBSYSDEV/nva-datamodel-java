@@ -1,7 +1,13 @@
 package no.unit.nva.model;
 
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jsonldjava.utils.JsonUtils;
+import java.io.IOException;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
@@ -11,13 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.io.IOException;
-
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class PublicationJournalArticleTest extends PublicationTest {
 
@@ -58,8 +57,9 @@ public class PublicationJournalArticleTest extends PublicationTest {
             InvalidIsbnException, InvalidUnconfirmedSeriesException {
         Publication publication = PublicationGenerator.generatePublication(type);
         JsonNode document = toPublicationWithContext(publication);
-        Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
-                Publication.class);
+        Publication publicationFromJson = dataModelObjectMapper.readValue(
+            dataModelObjectMapper.writeValueAsString(document),
+            Publication.class);
         assertThat(publicationFromJson, doesNotHaveEmptyValues());
         assertThat(publication, is(equalTo(publicationFromJson)));
     }

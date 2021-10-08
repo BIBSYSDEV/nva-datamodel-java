@@ -2,7 +2,6 @@ package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;

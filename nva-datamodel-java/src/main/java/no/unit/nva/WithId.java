@@ -1,11 +1,10 @@
 package no.unit.nva;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.net.URI;
 import no.unit.nva.identifiers.SortableIdentifier;
 import nva.commons.core.Environment;
 import nva.commons.core.paths.UriWrapper;
-
-import java.net.URI;
 
 public interface WithId {
 

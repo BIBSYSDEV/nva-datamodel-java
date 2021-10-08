@@ -1,9 +1,8 @@
 package no.unit.nva.model.contexttypes.utils;
 
+import static java.util.Objects.isNull;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import org.apache.commons.validator.routines.ISSNValidator;
-
-import static java.util.Objects.isNull;
 
 public final class IssnUtil {
     /**

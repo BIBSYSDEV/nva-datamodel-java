@@ -1,17 +1,15 @@
 package no.unit.nva.model;
 
-import org.junit.jupiter.api.Test;
-
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Collections;
-
-import static no.unit.nva.hamcrest.DoesNotHaveNullOrEmptyFields.doesNotHaveNullOrEmptyFields;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Collections;
+import org.junit.jupiter.api.Test;
 
 class DoiRequestTest {
 
@@ -26,24 +24,22 @@ class DoiRequestTest {
 
         DoiRequest copy = doiRequest.copy().build();
 
-        assertThat(doiRequest, doesNotHaveNullOrEmptyFields());
+        assertThat(doiRequest, doesNotHaveEmptyValues());
         assertThat(copy, is(equalTo(doiRequest)));
         assertThat(copy, is(not(sameInstance(doiRequest))));
-
     }
 
     private DoiRequest sampleDoiRequest() {
         DoiRequestMessage message = new DoiRequestMessage.Builder()
-                .withAuthor(SOME_AUTHOR)
-                .withText(SOME_TEXT)
-                .withTimestamp(LATER_THAN_CREATION_TIME)
-                .build();
-        DoiRequest doiRequest = new DoiRequest.Builder()
-                .withStatus(DoiRequestStatus.REQUESTED)
-                .withModifiedDate(CREATION_TIME)
-                .withCreatedDate(CREATION_TIME)
-                .withMessages(Collections.singletonList(message))
-                .build();
-        return doiRequest;
+            .withAuthor(SOME_AUTHOR)
+            .withText(SOME_TEXT)
+            .withTimestamp(LATER_THAN_CREATION_TIME)
+            .build();
+        return new DoiRequest.Builder()
+            .withStatus(DoiRequestStatus.REQUESTED)
+            .withModifiedDate(CREATION_TIME)
+            .withCreatedDate(CREATION_TIME)
+            .withMessages(Collections.singletonList(message))
+            .build();
     }
 }

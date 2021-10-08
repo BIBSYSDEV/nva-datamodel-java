@@ -1,10 +1,9 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 import no.unit.nva.model.pages.MonographPages;
 import nva.commons.core.JacocoGenerated;
-
-import java.util.Objects;
 
 public class PeerReviewedMonograph extends PeerReviewed<MonographPages> {
 

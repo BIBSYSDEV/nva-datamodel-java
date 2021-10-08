@@ -1,7 +1,6 @@
 package no.unit.nva.model;
 
 import static java.util.Objects.isNull;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

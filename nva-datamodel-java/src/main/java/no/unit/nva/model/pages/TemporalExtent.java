@@ -2,12 +2,11 @@ package no.unit.nva.model.pages;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.contexttypes.event.ReifiedExtent;
-import nva.commons.core.JacocoGenerated;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import no.unit.nva.model.contexttypes.event.ReifiedExtent;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class TemporalExtent implements Pages {

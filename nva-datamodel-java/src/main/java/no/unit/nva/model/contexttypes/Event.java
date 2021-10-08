@@ -2,13 +2,12 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Objects;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.contexttypes.place.Place;
 import no.unit.nva.model.pages.TemporalExtent;
 import nva.commons.core.JacocoGenerated;
-
-import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Event implements PublicationContext {

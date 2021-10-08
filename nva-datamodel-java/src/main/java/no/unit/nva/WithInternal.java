@@ -2,7 +2,6 @@ package no.unit.nva;
 
 import java.net.URI;
 import java.time.Instant;
-
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.Organization;

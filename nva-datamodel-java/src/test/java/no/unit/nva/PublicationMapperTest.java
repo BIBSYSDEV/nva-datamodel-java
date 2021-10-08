@@ -1,19 +1,17 @@
 package no.unit.nva;
 
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.model.util.PublicationGenerator.generateEntityDescriptionJournalArticle;
 import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
 import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
 import static no.unit.nva.model.util.PublicationGenerator.getProjects;
-import static nva.commons.core.JsonUtils.objectMapper;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.URI;
@@ -25,14 +23,13 @@ import no.unit.nva.api.UpdatePublicationRequest;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.util.PublicationGenerator;
-import nva.commons.core.JsonUtils;
 import org.junit.jupiter.api.Test;
 
 public class PublicationMapperTest {
 
     public static final URI SOME_URI = URI.create("http://example.org");
     public static final String SOME_OWNER = "owner";
-    public static final ObjectNode SOME_CONTEXT = objectMapper.createObjectNode();
+    public static final ObjectNode SOME_CONTEXT = dataModelObjectMapper.createObjectNode();
 
     @Test
     public void canMapCreatePublicationRequestToNewPublication() throws Exception {
@@ -87,8 +84,8 @@ public class PublicationMapperTest {
     }
 
     private void assertThatIdIsPresent(PublicationResponse response) throws JsonProcessingException {
-        String string = JsonUtils.objectMapperWithEmpty.writeValueAsString(response);
-        ObjectNode json = (ObjectNode) JsonUtils.objectMapperWithEmpty.readTree(string);
+        String string = dataModelObjectMapper.writeValueAsString(response);
+        ObjectNode json = (ObjectNode) dataModelObjectMapper.readTree(string);
         assertThat(json.has("id"), is(equalTo(true)));
     }
 

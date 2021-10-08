@@ -2,10 +2,9 @@ package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.JacocoGenerated;
-
-import java.net.URI;
 
 /**
  * A Journal corrigendum is a correction to a previously published Journal article/content.

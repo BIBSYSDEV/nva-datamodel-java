@@ -1,12 +1,11 @@
 package no.unit.nva;
 
-import static nva.commons.core.JsonUtils.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
-
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
@@ -74,7 +73,7 @@ public final class PublicationMapper {
      */
     public static <R extends WithContext> R convertValue(
         Publication publication, JsonNode context, Class<R> responseType) {
-        R response = objectMapper.convertValue(publication, responseType);
+        R response = dataModelObjectMapper.convertValue(publication, responseType);
         response.setContext(context);
         return response;
     }
@@ -94,7 +93,7 @@ public final class PublicationMapper {
 
     private static JsonNode getContext() {
         try {
-            return objectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
+            return dataModelObjectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
         } catch (IOException e) {
             throw new IllegalStateException(CONTEXT_ERROR_MESSAGE + CONTEXT_PATH, e);
         }

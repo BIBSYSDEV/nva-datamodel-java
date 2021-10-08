@@ -1,11 +1,10 @@
 package no.unit.nva.model.instancetypes.journal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 import no.unit.nva.model.instancetypes.NonPeerReviewedPaper;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.JacocoGenerated;
-
-import java.util.Objects;
 
 public class JournalNonPeerReviewedContent extends NonPeerReviewedPaper implements JournalContent {
 

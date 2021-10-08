@@ -2,10 +2,9 @@ package no.unit.nva.model.contexttypes.venue;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Objects;
 import no.unit.nva.model.contexttypes.place.Place;
 import nva.commons.core.JacocoGenerated;
-
-import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Venue {

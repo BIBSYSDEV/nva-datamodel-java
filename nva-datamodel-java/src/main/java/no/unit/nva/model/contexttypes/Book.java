@@ -1,21 +1,19 @@
 package no.unit.nva.model.contexttypes;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.exceptions.InvalidIsbnException;
-import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
-import nva.commons.core.JacocoGenerated;
-import org.apache.commons.validator.routines.ISBNValidator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
+import nva.commons.core.JacocoGenerated;
+import org.apache.commons.validator.routines.ISBNValidator;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Book implements BasicContext {

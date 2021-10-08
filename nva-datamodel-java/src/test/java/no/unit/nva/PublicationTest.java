@@ -1,5 +1,6 @@
 package no.unit.nva;
 
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
@@ -11,14 +12,12 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
 import no.unit.nva.hamcrest.DoesNotHaveEmptyValues;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
@@ -28,7 +27,6 @@ import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.util.PublicationGenerator;
-import nva.commons.core.JsonUtils;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
@@ -48,15 +46,14 @@ public class PublicationTest extends ModelTest {
     public static final UUID REPLACEMENT_IDENTIFIER_2 = UUID.fromString("5032710d-a326-43d3-a8fb-57a451873c78");
     public static final String JOURNAL_ARTICLE = "JournalArticle";
     public static final Javers JAVERS = JaversBuilder.javers().build();
-    ObjectMapper objectMapper = JsonUtils.objectMapper;
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @ArgumentsSource(InstanceTypeProvider.class)
     void publicationReturnsValidPublicationWhenInputIsValid(String instanceType) throws Exception {
         Publication expected = PublicationGenerator.generatePublication(instanceType);
 
-        String publication = objectMapper.writeValueAsString(expected);
-        Publication roundTripped = objectMapper.readValue(publication, Publication.class);
+        String publication = dataModelObjectMapper.writeValueAsString(expected);
+        Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThat(expected, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
         assertEquals(expected, roundTripped);
@@ -112,7 +109,7 @@ public class PublicationTest extends ModelTest {
         publication.getFileSet().getFiles().forEach(file -> publication.getFileSet()
                                                                 .setFiles(List.of(copyWithNewIdentifier(file))));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
-        var publicationJson = objectMapper.writeValueAsString(publication)
+        var publicationJson = dataModelObjectMapper.writeValueAsString(publication)
                                   .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
         Files.write(Paths.get(path), publicationJson.getBytes());
     }

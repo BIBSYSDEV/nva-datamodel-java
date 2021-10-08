@@ -1,15 +1,13 @@
 package no.unit.nva.model.contexttypes;
 
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.contexttypes.venue.Venue;
-import nva.commons.core.JacocoGenerated;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import static java.util.Objects.nonNull;
+import no.unit.nva.model.contexttypes.venue.Venue;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ArtisticDesign implements PublicationContext {
