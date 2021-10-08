@@ -40,8 +40,7 @@ public class Venue {
             return false;
         }
         Venue venue = (Venue) o;
-        return getSequence() == venue.getSequence()
-                && Objects.equals(getPlace(), venue.getPlace());
+        return getSequence() == venue.getSequence() && Objects.equals(getPlace(), venue.getPlace());
     }
 
     @JacocoGenerated
