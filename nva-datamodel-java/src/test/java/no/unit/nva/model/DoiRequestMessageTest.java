@@ -1,6 +1,6 @@
 package no.unit.nva.model;
 
-import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -38,7 +38,7 @@ public class DoiRequestMessageTest {
     @Test
     public void doiRequestMessageCanBeSerialized() {
         DoiRequestMessage message = sampleDoiRequestMessage();
-        JsonNode json = objectMapper.convertValue(message, JsonNode.class);
+        JsonNode json = dataModelObjectMapper.convertValue(message, JsonNode.class);
 
         List<String> fieldNames = extractFieldNames();
 

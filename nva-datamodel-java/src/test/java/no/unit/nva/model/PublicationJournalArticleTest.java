@@ -1,6 +1,6 @@
 package no.unit.nva.model;
 
-import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -57,8 +57,9 @@ public class PublicationJournalArticleTest extends PublicationTest {
             InvalidIsbnException, InvalidUnconfirmedSeriesException {
         Publication publication = PublicationGenerator.generatePublication(type);
         JsonNode document = toPublicationWithContext(publication);
-        Publication publicationFromJson = objectMapper.readValue(objectMapper.writeValueAsString(document),
-                Publication.class);
+        Publication publicationFromJson = dataModelObjectMapper.readValue(
+            dataModelObjectMapper.writeValueAsString(document),
+            Publication.class);
         assertThat(publicationFromJson, doesNotHaveEmptyValues());
         assertThat(publication, is(equalTo(publicationFromJson)));
     }

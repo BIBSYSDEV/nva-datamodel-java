@@ -1,6 +1,6 @@
 package no.unit.nva.model;
 
-import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.DoiRequestStatus.APPROVED;
 import static no.unit.nva.model.DoiRequestStatus.REJECTED;
@@ -104,20 +104,20 @@ public class PublicationTest {
     public void objectMapperReturnsSerializationWithAllFieldsSerialized()
             throws InvalidIssnException, JsonProcessingException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
-        String jsonString = objectMapper.writeValueAsString(samplePublication);
-        Publication copy = objectMapper.readValue(jsonString, Publication.class);
+        String jsonString = dataModelObjectMapper.writeValueAsString(samplePublication);
+        Publication copy = dataModelObjectMapper.readValue(jsonString, Publication.class);
         assertThat(copy, is(equalTo(samplePublication)));
     }
 
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {
-        JsonNode document = objectMapper.readTree(objectMapper.writeValueAsString(publication));
-        JsonNode context = objectMapper.readTree(new FileInputStream(PUBLICATION_CONTEXT_JSON));
+        JsonNode document = dataModelObjectMapper.readTree(dataModelObjectMapper.writeValueAsString(publication));
+        JsonNode context = dataModelObjectMapper.readTree(new FileInputStream(PUBLICATION_CONTEXT_JSON));
         ContextUtil.injectContext(document, context);
         return document;
     }
 
     protected Object produceFramedPublication(JsonNode publicationWithContext) throws IOException {
-        Object input = JsonUtils.fromString(objectMapper.writeValueAsString(publicationWithContext));
+        Object input = JsonUtils.fromString(dataModelObjectMapper.writeValueAsString(publicationWithContext));
         Object frame = JsonUtils.fromInputStream(new FileInputStream(PUBLICATION_FRAME_JSON));
         JsonLdOptions options = new JsonLdOptions();
         options.setOmitGraph(true);

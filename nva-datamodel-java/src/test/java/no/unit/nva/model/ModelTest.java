@@ -2,7 +2,7 @@ package no.unit.nva.model;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -91,7 +91,7 @@ public class ModelTest implements JsonHandlingTest {
                                                     String printIssn,
                                                     URI partOf) {
 
-        ObjectNode jsonNode = objectMapper.createObjectNode();
+        ObjectNode jsonNode = dataModelObjectMapper.createObjectNode();
         jsonNode.put(TYPE, type);
 
         jsonNode.set(SERIES, generateUnconfirmedSeriesJson(seriesTitle, printIssn, onlineIssn));
@@ -102,14 +102,14 @@ public class ModelTest implements JsonHandlingTest {
             jsonNode.put(PART_OF, partOf.toString());
         }
 
-        return attempt(() -> objectMapper.writeValueAsString(jsonNode))
-            .map(content -> objectMapper.readValue(content, Map.class))
-            .map(objectMapper::writeValueAsString)
+        return attempt(() -> dataModelObjectMapper.writeValueAsString(jsonNode))
+            .map(content -> dataModelObjectMapper.readValue(content, Map.class))
+            .map(dataModelObjectMapper::writeValueAsString)
             .orElseThrow();
     }
 
     private static JsonNode generateUnconfirmedSeriesJson(String seriesTitle, String printIssn, String onlineIssn) {
-        ObjectNode jsonNode = objectMapper.createObjectNode();
+        ObjectNode jsonNode = dataModelObjectMapper.createObjectNode();
         jsonNode.put("type", "UnconfirmedSeries");
         jsonNode.put("title", seriesTitle);
         jsonNode.put("issn", printIssn);
@@ -118,7 +118,7 @@ public class ModelTest implements JsonHandlingTest {
     }
 
     private static JsonNode generateUnconfirmedPublishersJson(String publisher) {
-        ObjectNode jsonNode = objectMapper.createObjectNode();
+        ObjectNode jsonNode = dataModelObjectMapper.createObjectNode();
         jsonNode.put("type", "UnconfirmedPublisher");
         jsonNode.put("name", publisher);
         return jsonNode;
@@ -126,9 +126,9 @@ public class ModelTest implements JsonHandlingTest {
 
     private static JsonNode arrayNode(List<String> isbnList) {
         if (isNull(isbnList)) {
-            return objectMapper.nullNode();
+            return dataModelObjectMapper.nullNode();
         }
-        ArrayNode arrayNode = objectMapper.createArrayNode();
+        ArrayNode arrayNode = dataModelObjectMapper.createArrayNode();
         isbnList.forEach(arrayNode::add);
         return arrayNode;
     }

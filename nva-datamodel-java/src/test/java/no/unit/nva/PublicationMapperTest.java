@@ -1,6 +1,6 @@
 package no.unit.nva;
 
-import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.model.util.PublicationGenerator.generateEntityDescriptionJournalArticle;
 import static no.unit.nva.model.util.PublicationGenerator.getFileSet;
 import static no.unit.nva.model.util.PublicationGenerator.getOrganization;
@@ -29,7 +29,7 @@ public class PublicationMapperTest {
 
     public static final URI SOME_URI = URI.create("http://example.org");
     public static final String SOME_OWNER = "owner";
-    public static final ObjectNode SOME_CONTEXT = objectMapper.createObjectNode();
+    public static final ObjectNode SOME_CONTEXT = dataModelObjectMapper.createObjectNode();
 
     @Test
     public void canMapCreatePublicationRequestToNewPublication() throws Exception {
@@ -84,8 +84,8 @@ public class PublicationMapperTest {
     }
 
     private void assertThatIdIsPresent(PublicationResponse response) throws JsonProcessingException {
-        String string = objectMapper.writeValueAsString(response);
-        ObjectNode json = (ObjectNode) objectMapper.readTree(string);
+        String string = dataModelObjectMapper.writeValueAsString(response);
+        ObjectNode json = (ObjectNode) dataModelObjectMapper.readTree(string);
         assertThat(json.has("id"), is(equalTo(true)));
     }
 

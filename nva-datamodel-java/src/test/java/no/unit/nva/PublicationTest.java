@@ -1,6 +1,6 @@
 package no.unit.nva;
 
-import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
@@ -52,8 +52,8 @@ public class PublicationTest extends ModelTest {
     void publicationReturnsValidPublicationWhenInputIsValid(String instanceType) throws Exception {
         Publication expected = PublicationGenerator.generatePublication(instanceType);
 
-        String publication = objectMapper.writeValueAsString(expected);
-        Publication roundTripped = objectMapper.readValue(publication, Publication.class);
+        String publication = dataModelObjectMapper.writeValueAsString(expected);
+        Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThat(expected, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
         assertEquals(expected, roundTripped);
@@ -109,7 +109,7 @@ public class PublicationTest extends ModelTest {
         publication.getFileSet().getFiles().forEach(file -> publication.getFileSet()
                                                                 .setFiles(List.of(copyWithNewIdentifier(file))));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
-        var publicationJson = objectMapper.writeValueAsString(publication)
+        var publicationJson = dataModelObjectMapper.writeValueAsString(publication)
                                   .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
         Files.write(Paths.get(path), publicationJson.getBytes());
     }

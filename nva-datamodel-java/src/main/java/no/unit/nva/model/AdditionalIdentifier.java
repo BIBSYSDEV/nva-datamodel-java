@@ -1,6 +1,6 @@
 package no.unit.nva.model;
 
-import static no.unit.nva.DatamodelConfig.objectMapper;
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -69,6 +69,6 @@ public class AdditionalIdentifier {
     @Override
     @JacocoGenerated
     public String toString() {
-        return attempt(() -> objectMapper.writeValueAsString(this)).orElseThrow();
+        return attempt(() -> dataModelObjectMapper.writeValueAsString(this)).orElseThrow();
     }
 }
