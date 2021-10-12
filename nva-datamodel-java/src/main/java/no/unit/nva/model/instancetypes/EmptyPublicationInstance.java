@@ -2,7 +2,7 @@ package no.unit.nva.model.instancetypes;
 
 import no.unit.nva.model.pages.NullPages;
 
-public class EmptyPublicationInstance implements PublicationInstance<NullPages> {
+public final class EmptyPublicationInstance implements PublicationInstance<NullPages> {
 
     private EmptyPublicationInstance(){
     }

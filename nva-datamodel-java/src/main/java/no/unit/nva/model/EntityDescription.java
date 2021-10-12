@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import no.unit.nva.DatamodelConfig;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -73,7 +74,7 @@ public class EntityDescription {
     }
 
     public Map<String, String> getAlternativeTitles() {
-        return nonNull(alternativeTitles) ? alternativeTitles : Collections.emptyMap();
+        return DatamodelConfig.nonEmptyOrDefault(alternativeTitles);
     }
 
     public void setAlternativeTitles(Map<String, String> alternativeTitles) {
@@ -97,7 +98,7 @@ public class EntityDescription {
     }
 
     public List<Contributor> getContributors() {
-        return nonNull(contributors) ? contributors : Collections.emptyList();
+        return DatamodelConfig.nonEmptyOrDefault(contributors);
     }
 
     public void setContributors(List<Contributor> contributors) {
@@ -129,7 +130,7 @@ public class EntityDescription {
     }
 
     public List<String> getTags() {
-        return nonNull(tags) ? tags : Collections.emptyList();
+        return DatamodelConfig.nonEmptyOrDefault(tags);
     }
 
     public void setTags(List<String> tags) {
