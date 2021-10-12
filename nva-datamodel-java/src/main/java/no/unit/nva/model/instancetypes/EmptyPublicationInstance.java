@@ -4,12 +4,12 @@ import no.unit.nva.model.pages.NullPages;
 
 public final class EmptyPublicationInstance implements PublicationInstance<NullPages> {
 
-    private EmptyPublicationInstance(){
-    }
-    public static EmptyPublicationInstance create(){
-        return new EmptyPublicationInstance();
+    private EmptyPublicationInstance() {
     }
 
+    public static EmptyPublicationInstance create() {
+        return new EmptyPublicationInstance();
+    }
 
     @Override
     public NullPages getPages() {

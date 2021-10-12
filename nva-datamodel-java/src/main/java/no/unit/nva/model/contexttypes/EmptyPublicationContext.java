@@ -1,15 +1,11 @@
 package no.unit.nva.model.contexttypes;
 
-public final  class EmptyPublicationContext implements PublicationContext {
+public final class EmptyPublicationContext implements PublicationContext {
 
-    private EmptyPublicationContext(){
-
+    private EmptyPublicationContext() {
     }
 
-    public static EmptyPublicationContext create(){
+    public static EmptyPublicationContext create() {
         return new EmptyPublicationContext();
     }
-
-
-
 }

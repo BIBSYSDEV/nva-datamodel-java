@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
@@ -12,10 +13,10 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Reference {
 
-    private static final URI EMPTY_DOI = null;
     public static final String PUBLICATION_CONTEXT = "publicationContext";
     public static final String PUBLICATION_INSTANCE = "publicationInstance";
     public static final String DOI = "doi";
+    private static final URI EMPTY_DOI = null;
     @JsonProperty(PUBLICATION_CONTEXT)
     private PublicationContext publicationContext;
     @JsonProperty(DOI)
@@ -40,8 +41,12 @@ public class Reference {
             .build();
     }
 
+    public static Reference nonEmptyOrDefault(Reference reference) {
+        return nonNull(reference) ? reference : emptyReference();
+    }
+
     public PublicationContext getPublicationContext() {
-        return publicationContext;
+        return PublicationContext.nonEmptyOrDefault(publicationContext);
     }
 
     public void setPublicationContext(PublicationContext publicationContext) {
@@ -57,7 +62,7 @@ public class Reference {
     }
 
     public PublicationInstance<? extends Pages> getPublicationInstance() {
-        return publicationInstance;
+        return PublicationInstance.nonEmptyOrDefault(publicationInstance);
     }
 
     public void setPublicationInstance(PublicationInstance<? extends Pages> publicationInstance) {

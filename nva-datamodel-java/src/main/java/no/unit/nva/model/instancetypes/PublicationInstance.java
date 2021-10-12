@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes;
 
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -82,6 +83,11 @@ public interface PublicationInstance<P extends Pages> {
 
     static PublicationInstance<? extends Pages> emptyPublicationInstance() {
         return EmptyPublicationInstance.create();
+    }
+
+    static PublicationInstance<? extends Pages> nonEmptyOrDefault(
+        PublicationInstance<? extends Pages> publicationInstance) {
+        return nonNull(publicationInstance) ? publicationInstance : emptyPublicationInstance();
     }
 
     P getPages();

@@ -146,7 +146,7 @@ public class EntityDescription {
     }
 
     public Reference getReference() {
-        return reference;
+        return Reference.nonEmptyOrDefault(reference);
     }
 
     public void setReference(Reference reference) {
