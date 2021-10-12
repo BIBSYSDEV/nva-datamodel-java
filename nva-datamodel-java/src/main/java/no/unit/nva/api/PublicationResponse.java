@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
@@ -46,7 +47,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
 
     @Override
     public FileSet getFileSet() {
-        return  fileSet;
+        return fileSet;
     }
 
     @Override
@@ -155,26 +156,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
-    public List<ResearchProject> getProjects() {
-        return projects;
-    }
-
-    @Override
-    public void setProjects(List<ResearchProject> projects) {
-        this.projects = projects;
-    }
-
-    @Override
-    public EntityDescription getEntityDescription() {
-        return entityDescription;
-    }
-
-    @Override
-    public void setEntityDescription(EntityDescription entityDescription) {
-        this.entityDescription = entityDescription;
-    }
-
-    @Override
     public URI getDoi() {
         return doi;
     }
@@ -196,8 +177,28 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
+    public EntityDescription getEntityDescription() {
+        return entityDescription;
+    }
+
+    @Override
+    public void setEntityDescription(EntityDescription entityDescription) {
+        this.entityDescription = entityDescription;
+    }
+
+    @Override
+    public List<ResearchProject> getProjects() {
+        return Objects.nonNull(projects) ? projects : Collections.emptyList();
+    }
+
+    @Override
+    public void setProjects(List<ResearchProject> projects) {
+        this.projects = projects;
+    }
+
+    @Override
     public List<URI> getSubjects() {
-        return subjects;
+        return Objects.nonNull(subjects) ? subjects : Collections.emptyList();
     }
 
     @Override
@@ -221,6 +222,15 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
 
     @JacocoGenerated
     @Override
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(),
+                            getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
+                            getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), getDoiRequested(),
+                            getContext(), getProjects(), getSubjects());
+    }
+
+    @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -230,32 +240,23 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         }
         PublicationResponse that = (PublicationResponse) o;
         return Objects.equals(getId(), that.getId())
-                && Objects.equals(getIdentifier(), that.getIdentifier())
-                && getStatus() == that.getStatus()
-                && Objects.equals(getOwner(), that.getOwner())
-                && Objects.equals(getPublisher(), that.getPublisher())
-                && Objects.equals(getCreatedDate(), that.getCreatedDate())
-                && Objects.equals(getModifiedDate(), that.getModifiedDate())
-                && Objects.equals(getPublishedDate(), that.getPublishedDate())
-                && Objects.equals(getIndexedDate(), that.getIndexedDate())
-                && Objects.equals(getHandle(), that.getHandle())
-                && Objects.equals(getLink(), that.getLink())
-                && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                && Objects.equals(getFileSet(), that.getFileSet())
-                && Objects.equals(getDoi(), that.getDoi())
-                && Objects.equals(getDoiRequest(), that.getDoiRequest())
-                && Objects.equals(getDoiRequested(), that.getDoiRequested())
-                && Objects.equals(getContext(), that.getContext())
-                && Objects.equals(getProjects(), that.getProjects())
-                && Objects.equals(getSubjects(), that.getSubjects());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(),
-                getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
-                getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), getDoiRequested(),
-                getContext(), getProjects(), getSubjects());
+               && Objects.equals(getIdentifier(), that.getIdentifier())
+               && getStatus() == that.getStatus()
+               && Objects.equals(getOwner(), that.getOwner())
+               && Objects.equals(getPublisher(), that.getPublisher())
+               && Objects.equals(getCreatedDate(), that.getCreatedDate())
+               && Objects.equals(getModifiedDate(), that.getModifiedDate())
+               && Objects.equals(getPublishedDate(), that.getPublishedDate())
+               && Objects.equals(getIndexedDate(), that.getIndexedDate())
+               && Objects.equals(getHandle(), that.getHandle())
+               && Objects.equals(getLink(), that.getLink())
+               && Objects.equals(getEntityDescription(), that.getEntityDescription())
+               && Objects.equals(getFileSet(), that.getFileSet())
+               && Objects.equals(getDoi(), that.getDoi())
+               && Objects.equals(getDoiRequest(), that.getDoiRequest())
+               && Objects.equals(getDoiRequested(), that.getDoiRequested())
+               && Objects.equals(getContext(), that.getContext())
+               && Objects.equals(getProjects(), that.getProjects())
+               && Objects.equals(getSubjects(), that.getSubjects());
     }
 }

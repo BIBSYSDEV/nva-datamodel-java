@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,7 +26,9 @@ public class EntityDescription {
     private URI metadataSource;
 
     public EntityDescription() {
-
+        contributors = Collections.emptyList();
+        tags = Collections.emptyList();
+        alternativeTitles = Collections.emptyMap();
     }
 
     private EntityDescription(Builder builder) {
@@ -51,7 +54,7 @@ public class EntityDescription {
     }
 
     public Map<String, String> getAlternativeTitles() {
-        return alternativeTitles;
+        return Objects.nonNull(alternativeTitles) ? alternativeTitles : Collections.emptyMap();
     }
 
     public void setAlternativeTitles(Map<String, String> alternativeTitles) {
@@ -75,7 +78,7 @@ public class EntityDescription {
     }
 
     public List<Contributor> getContributors() {
-        return contributors;
+        return Objects.nonNull(contributors) ? contributors : Collections.emptyList();
     }
 
     public void setContributors(List<Contributor> contributors) {
@@ -107,7 +110,7 @@ public class EntityDescription {
     }
 
     public List<String> getTags() {
-        return tags;
+        return Objects.nonNull(tags) ? tags : Collections.emptyList();
     }
 
     public void setTags(List<String> tags) {
@@ -161,7 +164,7 @@ public class EntityDescription {
                && Objects.equals(getLanguage(), that.getLanguage())
                && Objects.equals(getDate(), that.getDate())
                && Objects.equals(getContributors(), that.getContributors())
-               && Objects.equals(mainLanguageAbstract, that.mainLanguageAbstract)
+               && Objects.equals(getAbstract(), that.getAbstract())
                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
                && Objects.equals(getTags(), that.getTags())
                && Objects.equals(getDescription(), that.getDescription())

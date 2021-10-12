@@ -2,12 +2,14 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ResearchProject extends Project {
+
     private List<Grant> grants;
     private List<Approval> approvals;
 
@@ -24,7 +26,7 @@ public class ResearchProject extends Project {
     }
 
     public List<Grant> getGrants() {
-        return grants;
+        return Objects.nonNull(grants) ? grants : Collections.emptyList();
     }
 
     public void setGrants(List<Grant> grants) {
@@ -32,7 +34,7 @@ public class ResearchProject extends Project {
     }
 
     public List<Approval> getApprovals() {
-        return approvals;
+        return Objects.nonNull(approvals) ? approvals : Collections.emptyList();
     }
 
     public void setApprovals(List<Approval> approvals) {
@@ -50,9 +52,9 @@ public class ResearchProject extends Project {
         }
         ResearchProject researchProject = (ResearchProject) o;
         return Objects.equals(getId(), researchProject.getId())
-                && Objects.equals(getName(), researchProject.getName())
-                && Objects.equals(getGrants(), researchProject.getGrants())
-                && Objects.equals(getApprovals(), researchProject.getApprovals());
+               && Objects.equals(getName(), researchProject.getName())
+               && Objects.equals(getGrants(), researchProject.getGrants())
+               && Objects.equals(getApprovals(), researchProject.getApprovals());
     }
 
     @JacocoGenerated
@@ -62,6 +64,7 @@ public class ResearchProject extends Project {
     }
 
     public static final class Builder {
+
         private URI id;
         private String name;
         private List<Grant> grants;
