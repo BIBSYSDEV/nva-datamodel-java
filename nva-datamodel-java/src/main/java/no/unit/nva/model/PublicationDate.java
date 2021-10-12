@@ -21,6 +21,10 @@ public class PublicationDate {
         setDay(builder.day);
     }
 
+    public static PublicationDate emptyDate() {
+        return new PublicationDate();
+    }
+
     public String getYear() {
         return year;
     }

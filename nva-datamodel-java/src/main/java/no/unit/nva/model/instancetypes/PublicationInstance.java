@@ -80,6 +80,10 @@ import no.unit.nva.model.pages.Pages;
 })
 public interface PublicationInstance<P extends Pages> {
 
+    static PublicationInstance<? extends Pages> emptyPublicationInstance() {
+        return EmptyPublicationInstance.create();
+    }
+
     P getPages();
 
     void setPages(P pages);

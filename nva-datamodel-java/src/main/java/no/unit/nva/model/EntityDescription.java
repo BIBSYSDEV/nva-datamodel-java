@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
@@ -12,6 +13,8 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class EntityDescription {
 
+    private static final String EMPTY_STRING = null;
+    private static final URI EMPTY_URI = null;
     private String mainTitle;
     private Map<String, String> alternativeTitles;
     private URI language;
@@ -45,6 +48,22 @@ public class EntityDescription {
         setMetadataSource(builder.metadataSource);
     }
 
+    public static EntityDescription nonEmptyOrDefault(EntityDescription entityDescription) {
+        return nonNull(entityDescription) ? entityDescription : emptyEntityDescription();
+    }
+
+    private static EntityDescription emptyEntityDescription() {
+        return new EntityDescription.Builder()
+            .withAbstract(EMPTY_STRING)
+            .withAlternativeTitles(Collections.emptyMap())
+            .withContributors(Collections.emptyList())
+            .withDate(PublicationDate.emptyDate())
+            .withDescription(EMPTY_STRING)
+            .withLanguage(EMPTY_URI)
+                   .withReference(Reference.emptyReference())
+            .build();
+    }
+
     public String getMainTitle() {
         return mainTitle;
     }
@@ -54,7 +73,7 @@ public class EntityDescription {
     }
 
     public Map<String, String> getAlternativeTitles() {
-        return Objects.nonNull(alternativeTitles) ? alternativeTitles : Collections.emptyMap();
+        return nonNull(alternativeTitles) ? alternativeTitles : Collections.emptyMap();
     }
 
     public void setAlternativeTitles(Map<String, String> alternativeTitles) {
@@ -78,7 +97,7 @@ public class EntityDescription {
     }
 
     public List<Contributor> getContributors() {
-        return Objects.nonNull(contributors) ? contributors : Collections.emptyList();
+        return nonNull(contributors) ? contributors : Collections.emptyList();
     }
 
     public void setContributors(List<Contributor> contributors) {
@@ -110,7 +129,7 @@ public class EntityDescription {
     }
 
     public List<String> getTags() {
-        return Objects.nonNull(tags) ? tags : Collections.emptyList();
+        return nonNull(tags) ? tags : Collections.emptyList();
     }
 
     public void setTags(List<String> tags) {

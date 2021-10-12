@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
+import static no.unit.nva.DatamodelConfig.nonEmptyOrDefault;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.BuildConfig;
@@ -59,11 +60,11 @@ public class Publication
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
-        return Objects.nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
+        return nonEmptyOrDefault(additionalIdentifiers);
     }
 
     public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
-        this.additionalIdentifiers = additionalIdentifiers;
+        this.additionalIdentifiers = nonEmptyOrDefault(additionalIdentifiers);
     }
 
     @Override
@@ -211,7 +212,7 @@ public class Publication
 
     @Override
     public EntityDescription getEntityDescription() {
-        return entityDescription;
+        return EntityDescription.nonEmptyOrDefault(entityDescription);
     }
 
     @Override
@@ -221,22 +222,22 @@ public class Publication
 
     @Override
     public List<ResearchProject> getProjects() {
-        return Objects.nonNull(projects) ? projects : Collections.emptyList();
+        return nonEmptyOrDefault(projects);
     }
 
     @Override
     public void setProjects(List<ResearchProject> projects) {
-        this.projects = projects;
+        this.projects = nonEmptyOrDefault(projects);
     }
 
     @Override
     public List<URI> getSubjects() {
-        return Objects.nonNull(subjects) ? subjects : Collections.emptyList();
+        return nonEmptyOrDefault(subjects);
     }
 
     @Override
     public void setSubjects(List<URI> subjects) {
-        this.subjects = subjects;
+        this.subjects = nonEmptyOrDefault(subjects);
     }
 
     @Override

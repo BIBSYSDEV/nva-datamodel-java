@@ -23,6 +23,7 @@ dependencies {
     testImplementation libs.swagger.core
 
 
+    testImplementation libs.guava
     testImplementation libs.javafaker
     testRuntimeOnly libs.slf4j
 

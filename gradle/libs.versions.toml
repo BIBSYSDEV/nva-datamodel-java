@@ -3,13 +3,14 @@ junitVersion = { strictly = '5.6.2' }
 jacksonVersion = { strictly = '2.13.0' }
 nvaCommonsVersion = { strictly = '1.14.0' }
 apacheCommonsValidator = { strictly = '1.7' }
-nvaTestUtilsVersion = {strictly = '0.1.24'}
-hamcrestVersion = {strictly = '2.2'}
-jsonldJavaVersion = { strictly = '0.13.0'}
-swaggerCoreVersion = {strictly = '2.1.4'}
-javersVersion = {strictly = '6.2.4'}
-javaFakerVersion = {strictly = '1.0.2'}
-slf4jVersion= {strictly = '1.7.30'}
+nvaTestUtilsVersion = { strictly = '0.1.24' }
+hamcrestVersion = { strictly = '2.2' }
+jsonldJavaVersion = { strictly = '0.13.0' }
+swaggerCoreVersion = { strictly = '2.1.4' }
+javersVersion = { strictly = '6.2.4' }
+javaFakerVersion = { strictly = '1.0.2' }
+slf4jVersion = { strictly = '1.7.30' }
+guava = { strictly = '31.0.1-jre' }
 
 
 [libraries]
@@ -40,7 +41,11 @@ javafaker = { group = 'com.github.javafaker', name = 'javafaker', version.ref = 
 slf4j = { group = 'org.slf4j', name = 'slf4j-simple', version.ref = 'slf4jVersion' }
 
 
+guava = { group = 'com.google.guava', name = 'guava', version.ref = 'guava' }
+
+
+
 [bundles]
-unittesting = ["junit-jupiter-api","junit-jupiter-params","junit-jupiter-engine","hamcrest","javers-core"]
-jackson = ["jackson-core", "jackson-databind","jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
+unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest", "javers-core"]
+jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
 
