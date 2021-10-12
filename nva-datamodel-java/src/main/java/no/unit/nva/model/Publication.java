@@ -247,7 +247,7 @@ public class Publication
 
     @Override
     public List<URI> getSubjects() {
-        return subjects;
+        return Objects.nonNull(subjects) ? subjects : Collections.emptyList();
     }
 
     @Override
