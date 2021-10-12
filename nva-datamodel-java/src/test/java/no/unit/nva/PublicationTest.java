@@ -189,8 +189,15 @@ public class PublicationTest extends ModelTest {
     }
 
     private boolean nodeShouldBeExpanded(Entry<String, JsonNode> child) {
-        return Reference.PUBLICATION_CONTEXT.equals(child.getKey())
-               || Reference.PUBLICATION_INSTANCE.equals(child.getKey());
+        return !(
+            Reference.PUBLICATION_CONTEXT.equals(child.getKey())
+            || Reference.PUBLICATION_INSTANCE.equals(child.getKey())
+            || "publisher".equals(child.getKey())
+            || "fileSet".equals(child.getKey())
+            || "additionalIdentifiers".equals(child.getKey())
+            || "doiRequest".equals(child.getKey())
+            || "alternativeTitles".equals(child.getKey())
+        );
     }
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
