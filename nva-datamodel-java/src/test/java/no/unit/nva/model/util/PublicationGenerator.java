@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import java.net.URI;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -89,15 +88,11 @@ import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.NullPages;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.pages.TemporalExtent;
-import nva.commons.core.StringUtils;
 
 @SuppressWarnings("MissingJavadocMethod")
 public class PublicationGenerator extends ModelTest {
 
     public static final URI SOME_URI = URI.create("https://123123/213123.com");
-    public static final String SEPARATOR = "\\|";
-    public static final String QUOTE = "\"";
-    public static final String EMPTY_STRING = "";
     public static final Faker FAKER = Faker.instance();
 
     private PublicationGenerator() {
@@ -251,7 +246,7 @@ public class PublicationGenerator extends ModelTest {
                                                   UUID fileIdentifier,
                                                   Instant now,
                                                   EntityDescription entityDescription) {
-        return new Publication.Builder()
+        return Publication.builder()
             .withIdentifier(publicationIdentifier)
             .withCreatedDate(now)
             .withModifiedDate(now)
@@ -354,48 +349,6 @@ public class PublicationGenerator extends ModelTest {
                                    generateEntityDescriptionJournalArticle());
     }
 
-    public static Publication generateBookMonographPublication() throws
-            InvalidIsbnException, InvalidIssnException {
-        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
-                                   generateEntityDescriptionBookMonograph());
-    }
-
-    public static Publication generateBookMonographWithUnconfirmedSeriesTitleString()
-        throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
-
-        var context = new Book(null,
-                               "Some wild series title",
-                               "2",
-                               new UnconfirmedPublisher("Hansome publishing cowpoke"),
-                               Collections.emptyList());
-        var instance = new BookMonograph.Builder()
-            .withPages(generateMonographPages())
-            .withPeerReviewed(false)
-            .withContentType(BookMonographContentType.ACADEMIC_MONOGRAPH)
-            .withOriginalResearch(true)
-            .build();
-        var reference = new Reference.Builder()
-            .withPublishingContext(context)
-            .withPublicationInstance(instance)
-            .withDoi(SOME_URI)
-            .build();
-
-        var entityDescription = new EntityDescription.Builder()
-            .withReference(reference)
-            .withDescription("Yes, a description")
-            .withAbstract("Irrelevant abstract")
-            .withAlternativeTitles(Map.of("en", "Alternative title", "nb", "Alternativ tittel"))
-            .withContributors(List.of(generateContributor()))
-            .withDate(getPublicationDate())
-            .withMainTitle("A funky main title")
-            .withLanguage(SOME_URI)
-            .withMetadataSource(SOME_URI)
-            .withTags(List.of("tiny", "happy", "trolls"))
-            .withNpiSubjectHeading("Soulfulness")
-            .build();
-
-        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(), entityDescription);
-    }
 
     public static List<ResearchProject> getProjects() {
         return List.of(new ResearchProject.Builder()
@@ -533,23 +486,11 @@ public class PublicationGenerator extends ModelTest {
             .build();
     }
 
-    public static List<String> convertIsbnStringToList(String isbnList) {
-        if (StringUtils.isBlank(isbnList)) {
-            return Collections.emptyList();
-        } else {
-            String unquoted = isbnList.replaceAll(QUOTE, EMPTY_STRING);
-            String[] split = unquoted.split(SEPARATOR);
-            return new ArrayList<>(Arrays.asList(split));
-        }
-    }
+
 
     public static Set<AdditionalIdentifier> generateAdditionalIdentifiers() {
         AdditionalIdentifier identifier = new AdditionalIdentifier(randomWord(), UUID.randomUUID().toString());
         return Set.of(identifier);
-    }
-
-    public static String randomInvalidIssn() {
-        return IssnGenerator.randomInvalidIssn();
     }
 
     public static String randomIssn() {
@@ -728,19 +669,6 @@ public class PublicationGenerator extends ModelTest {
             .withDoi(SOME_URI)
             .withPublishingContext(context)
             .withPublicationInstance(instance)
-            .build();
-    }
-
-    private static EntityDescription generateEntityDescriptionBookMonograph() throws InvalidIsbnException,
-            InvalidIssnException {
-        return getEntityDescription(getBookMonographReference());
-    }
-
-    private static Reference getBookMonographReference() throws InvalidIsbnException, InvalidIssnException {
-        return new Reference.Builder()
-            .withPublishingContext(getPublishingContextBook())
-            .withDoi(SOME_URI)
-            .withPublicationInstance(null)
             .build();
     }
 
