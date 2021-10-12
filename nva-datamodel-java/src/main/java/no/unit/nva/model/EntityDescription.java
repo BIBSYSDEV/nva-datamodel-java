@@ -60,7 +60,7 @@ public class EntityDescription {
             .withDate(PublicationDate.emptyDate())
             .withDescription(EMPTY_STRING)
             .withLanguage(EMPTY_URI)
-                   .withReference(Reference.emptyReference())
+            .withReference(Reference.emptyReference())
             .build();
     }
 
