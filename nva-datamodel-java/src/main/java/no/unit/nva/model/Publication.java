@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.BuildConfig;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -50,6 +51,7 @@ public class Publication
     private List<URI> subjects;
 
     public Publication() {
+
     }
 
     private Publication(Builder builder) {
@@ -73,7 +75,7 @@ public class Publication
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
-        return additionalIdentifiers;
+        return Objects.nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
     }
 
     public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
@@ -190,16 +192,6 @@ public class Publication
         this.doiRequest = doiRequest;
     }
 
-    @Override
-    public List<URI> getSubjects() {
-        return subjects;
-    }
-
-    @Override
-    public void setSubjects(List<URI> subjects) {
-        this.subjects = subjects;
-    }
-
     /**
      * Update a publication with the requested status change.
      *
@@ -216,9 +208,9 @@ public class Publication
 
         Instant now = Instant.now();
         DoiRequest updatedDoiRequest = getDoiRequest().copy()
-                                           .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
-                                           .withModifiedDate(now)
-                                           .build();
+            .withStatus(getDoiRequest().getStatus().changeStatus(requestedStatusChange))
+            .withModifiedDate(now)
+            .build();
         setDoiRequest(updatedDoiRequest);
         setModifiedDate(now);
     }
@@ -245,12 +237,22 @@ public class Publication
 
     @Override
     public List<ResearchProject> getProjects() {
-        return projects;
+        return Objects.nonNull(projects) ? projects : Collections.emptyList();
     }
 
     @Override
     public void setProjects(List<ResearchProject> projects) {
         this.projects = projects;
+    }
+
+    @Override
+    public List<URI> getSubjects() {
+        return subjects;
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
     }
 
     @Override
@@ -276,23 +278,23 @@ public class Publication
     @Override
     public Builder copy() {
         return new Builder()
-                   .withIdentifier(getIdentifier())
-                   .withStatus(getStatus())
-                   .withOwner(getOwner())
-                   .withPublisher(getPublisher())
-                   .withCreatedDate(getCreatedDate())
-                   .withModifiedDate(getModifiedDate())
-                   .withPublishedDate(getPublishedDate())
-                   .withIndexedDate(getIndexedDate())
-                   .withHandle(getHandle())
-                   .withDoi(getDoi())
-                   .withDoiRequest(getDoiRequest())
-                   .withLink(getLink())
-                   .withEntityDescription(getEntityDescription())
-                   .withFileSet(getFileSet())
-                   .withProjects(getProjects())
-                   .withAdditionalIdentifiers(getAdditionalIdentifiers())
-                   .withSubjects(getSubjects());
+            .withIdentifier(getIdentifier())
+            .withStatus(getStatus())
+            .withOwner(getOwner())
+            .withPublisher(getPublisher())
+            .withCreatedDate(getCreatedDate())
+            .withModifiedDate(getModifiedDate())
+            .withPublishedDate(getPublishedDate())
+            .withIndexedDate(getIndexedDate())
+            .withHandle(getHandle())
+            .withDoi(getDoi())
+            .withDoiRequest(getDoiRequest())
+            .withLink(getLink())
+            .withEntityDescription(getEntityDescription())
+            .withFileSet(getFileSet())
+            .withProjects(getProjects())
+            .withAdditionalIdentifiers(getAdditionalIdentifiers())
+            .withSubjects(getSubjects());
     }
 
     /**
@@ -332,15 +334,15 @@ public class Publication
                             && Objects.equals(getModifiedDate(), that.getModifiedDate())
                             && Objects.equals(getPublishedDate(), that.getPublishedDate());
         boolean secondHalf = Objects.equals(getIndexedDate(), that.getIndexedDate())
-               && Objects.equals(getHandle(), that.getHandle())
-               && Objects.equals(getDoi(), that.getDoi())
-               && Objects.equals(getDoiRequest(), that.getDoiRequest())
-               && Objects.equals(getLink(), that.getLink())
-               && Objects.equals(getEntityDescription(), that.getEntityDescription())
-               && Objects.equals(getFileSet(), that.getFileSet())
-               && Objects.equals(getProjects(), that.getProjects())
-               && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
-               && Objects.equals(getSubjects(), that.getSubjects());
+                             && Objects.equals(getHandle(), that.getHandle())
+                             && Objects.equals(getDoi(), that.getDoi())
+                             && Objects.equals(getDoiRequest(), that.getDoiRequest())
+                             && Objects.equals(getLink(), that.getLink())
+                             && Objects.equals(getEntityDescription(), that.getEntityDescription())
+                             && Objects.equals(getFileSet(), that.getFileSet())
+                             && Objects.equals(getProjects(), that.getProjects())
+                             && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
+                             && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
     }
 

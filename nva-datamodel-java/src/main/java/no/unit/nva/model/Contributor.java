@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
@@ -31,11 +32,11 @@ public class Contributor {
 
     private Contributor(Builder builder) {
         this(
-                builder.identity,
-                builder.affiliations,
-                builder.role,
-                builder.sequence,
-                builder.correspondingAuthor
+            builder.identity,
+            builder.affiliations,
+            builder.role,
+            builder.sequence,
+            builder.correspondingAuthor
         );
     }
 
@@ -44,7 +45,7 @@ public class Contributor {
     }
 
     public List<Organization> getAffiliations() {
-        return affiliations;
+        return Objects.nonNull(affiliations) ? affiliations : Collections.emptyList();
     }
 
     public Integer getSequence() {
@@ -61,6 +62,12 @@ public class Contributor {
 
     @JacocoGenerated
     @Override
+    public int hashCode() {
+        return Objects.hash(getIdentity(), getAffiliations(), getRole(), getSequence(), isCorrespondingAuthor());
+    }
+
+    @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -70,19 +77,14 @@ public class Contributor {
         }
         Contributor that = (Contributor) o;
         return isCorrespondingAuthor() == that.isCorrespondingAuthor()
-                && Objects.equals(getIdentity(), that.getIdentity())
-                && Objects.equals(getAffiliations(), that.getAffiliations())
-                && getRole() == that.getRole()
-                && Objects.equals(getSequence(), that.getSequence());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdentity(), getAffiliations(), getRole(), getSequence(), isCorrespondingAuthor());
+               && Objects.equals(getIdentity(), that.getIdentity())
+               && Objects.equals(getAffiliations(), that.getAffiliations())
+               && getRole() == that.getRole()
+               && Objects.equals(getSequence(), that.getSequence());
     }
 
     public static final class Builder {
+
         private Identity identity;
         private List<Organization> affiliations;
         private Role role;

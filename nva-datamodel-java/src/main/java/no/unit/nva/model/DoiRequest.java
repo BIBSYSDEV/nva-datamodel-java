@@ -55,7 +55,7 @@ public class DoiRequest {
     }
 
     public List<DoiRequestMessage> getMessages() {
-        return messages;
+        return Objects.nonNull(messages) ? messages : Collections.emptyList();
     }
 
     public void setMessages(List<DoiRequestMessage> messages) {
@@ -65,7 +65,7 @@ public class DoiRequest {
     /**
      * Create a copy of DoiRequest.
      *
-     * @return  DoiRequest copy
+     * @return DoiRequest copy
      */
     public DoiRequest.Builder copy() {
         return new DoiRequest.Builder()
@@ -87,9 +87,9 @@ public class DoiRequest {
         DoiRequest that = (DoiRequest) o;
 
         return getStatus() == that.getStatus()
-                && Objects.equals(getModifiedDate(), that.getModifiedDate())
-                && Objects.equals(getCreatedDate(), that.getCreatedDate())
-                && Objects.equals(getMessages(), that.getMessages());
+               && Objects.equals(getModifiedDate(), that.getModifiedDate())
+               && Objects.equals(getCreatedDate(), that.getCreatedDate())
+               && Objects.equals(getMessages(), that.getMessages());
     }
 
     @JacocoGenerated
@@ -98,9 +98,9 @@ public class DoiRequest {
         return Objects.hash(getStatus(), getCreatedDate(), getMessages());
     }
 
-
     @SuppressWarnings("MissingJavadocMethod")
     public static final class Builder {
+
         private DoiRequestStatus status;
         private Instant modifiedDate;
         private Instant createdDate;
