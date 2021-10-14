@@ -1,0 +1,12 @@
+plugins {
+    id 'sampleprojects.java-conventions'
+}
+
+dependencies {
+
+    implementation libs.datamodel
+    testImplementation libs.bundles.unittesting
+    implementation libs.nva.testutils
+    implementation libs.nva.commons.core
+    implementation libs.nva.commons.identifiers
+}

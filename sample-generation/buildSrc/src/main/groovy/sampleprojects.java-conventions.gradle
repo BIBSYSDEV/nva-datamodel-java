@@ -3,40 +3,26 @@ plugins {
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
-    id "com.github.gmazzo.buildconfig"
     id 'idea'
     id 'nebula.lint'
 }
 
 group 'com.github.bibsysdev'
-version '0.14.2'
 
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
 
 
 test {
-    useJUnitPlatform{
-            excludeTags("migrationTest")
-    }
+    useJUnitPlatform()
     failFast = true
-    environment "ID_NAMESPACE", "https://www.example.org"
     finalizedBy(jacocoTestReport)
 }
 
-tasks.register('migrationTest', Test) {
-    useJUnitPlatform {
-        includeEngines 'junit-jupiter'
-        includeTags ("migrationTest")
-        testLogging {
-            events 'skipped', 'passed', 'failed'
-        }
-    }
-    environment "DATAMODEL_VERSION", "${project.version}"
-}
 
 
 jacocoTestReport {
@@ -68,12 +54,5 @@ tasks.withType(Checkstyle) {
         html.enabled true
         html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
     }
-    exclude '**/BuildConfig*'
 }
 
-buildConfig {
-    className("BuildConfig")   // forces the class name. Defaults to 'BuildConfig'
-    packageName(project.group)  // forces the package. Defaults to '${project.group}'
-    useJavaOutput() //forces the output to be Java
-    buildConfigField("String", "MODEL_VERSION", "\"${project.version}\"")
-}
