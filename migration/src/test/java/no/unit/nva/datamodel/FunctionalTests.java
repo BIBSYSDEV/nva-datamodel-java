@@ -44,7 +44,6 @@ public class FunctionalTests {
 
     @BeforeEach
     public void init() throws IOException {
-
         crateSampleProjectFolder();
         deleteExistingSerializations();
         buildSampleProject();
