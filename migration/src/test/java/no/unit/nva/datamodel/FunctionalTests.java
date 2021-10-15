@@ -46,18 +46,14 @@ public class FunctionalTests {
     public void init() throws IOException {
         crateSampleProjectFolder();
         deleteExistingSerializations();
-        buildSampleProject();
+        buildNvaDatamodel();
         waitUntilLibraryHasBeenRegisteredInMavenLocal();
+        buildSampleProject();
     }
 
     @Tag("migrationTest")
     @Test
     public void gradleRunnerRunsSampleProject() throws FileNotFoundException, JsonProcessingException {
-        BuildResult buildResult = GradleRunner.create()
-            .withProjectDir(tempFolder)
-            .withArguments("build")
-            .build();
-        buildResult.getTasks().forEach(task -> assertThat(task.getOutcome(), is(not(equalTo(TaskOutcome.FAILED)))));
         List<String> jsons = listSerializedPublications();
         assertThat(jsons, is(not(empty())));
         for (String json : jsons) {
@@ -65,6 +61,14 @@ public class FunctionalTests {
             assertThat(objectNode.get(MODEL_VERSION_FIELD_IN_SERIALIZED_RESOURCES).textValue(),
                        is(equalTo(CURRENT_DATAMODEL_VERSION)));
         }
+    }
+
+    private void buildSampleProject() {
+        BuildResult buildResult = GradleRunner.create()
+            .withProjectDir(tempFolder)
+            .withArguments("build")
+            .build();
+        buildResult.getTasks().forEach(task -> assertThat(task.getOutcome(), is(not(equalTo(TaskOutcome.FAILED)))));
     }
 
     private void waitUntilLibraryHasBeenRegisteredInMavenLocal() {
@@ -75,7 +79,7 @@ public class FunctionalTests {
         }
     }
 
-    private void buildSampleProject() {
+    private void buildNvaDatamodel() {
         BuildResult gradleRunner = GradleRunner.create()
             .withProjectDir(rootFolder())
             .withArguments("publishToMavenLocal")

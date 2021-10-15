@@ -8,7 +8,6 @@ dependencies {
     implementation project(":nva-datamodel-java")
     testImplementation libs.bundles.unittesting
     testImplementation libs.nva.commons.core
-    testImplementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
-
+    testImplementation libs.apache.commons.io
 }
 
