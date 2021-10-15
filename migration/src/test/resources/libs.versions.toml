@@ -1,0 +1,36 @@
+[versions]
+junitVersion = { strictly = '5.6.2' }
+jacksonVersion = { strictly = '2.13.0' }
+nvaTestUtilsVersion = { strictly = '0.1.26' }
+hamcrestVersion = { strictly = '2.2' }
+javersVersion = { strictly = '6.2.4' }
+javaFakerVersion = { strictly = '1.0.2' }
+datamodel = { strictly = '<DATAMODEL_VERSION_PLACEHOLDER>' }
+nvaCommonsVersion = { strictly = '1.15.1' }
+
+[libraries]
+jackson-databind = { group = 'com.fasterxml.jackson.core', name = 'jackson-databind', version.ref = 'jacksonVersion' }
+jackson-annotations = { group = 'com.fasterxml.jackson.core', name = 'jackson-annotations', version.ref = 'jacksonVersion' }
+jackson-core = { group = 'com.fasterxml.jackson.core', name = 'jackson-core', version.ref = 'jacksonVersion' }
+jackson-datatype-jdk8 = { group = 'com.fasterxml.jackson.datatype', name = 'jackson-datatype-jdk8', version.ref = 'jacksonVersion' }
+jackson-datatype-jsr310 = { group = 'com.fasterxml.jackson.datatype', name = 'jackson-datatype-jsr310', version.ref = 'jacksonVersion' }
+
+junit-jupiter-api = { group = 'org.junit.jupiter', name = 'junit-jupiter-api', version.ref = 'junitVersion' }
+junit-jupiter-params = { group = 'org.junit.jupiter', name = 'junit-jupiter-params', version.ref = 'junitVersion' }
+junit-jupiter-engine = { group = 'org.junit.jupiter', name = 'junit-jupiter-engine', version.ref = 'junitVersion' }
+
+javers-core = { group = 'org.javers', name = 'javers-core', version.ref = 'javersVersion' }
+javafaker = { group = 'com.github.javafaker', name = 'javafaker', version.ref = 'javaFakerVersion' }
+hamcrest = { group = 'org.hamcrest', name = 'hamcrest', version.ref = 'hamcrestVersion' }
+nva-testutils = { group = 'com.github.bibsysdev', name = 'nva-testutils', version.ref = 'nvaTestUtilsVersion' }
+
+
+datamodel = { group = 'com.github.bibsysdev', name = 'nva-datamodel-java', version.ref = 'datamodel' }
+nva-commons-core = { group = 'com.github.bibsysdev', name = 'core', version.ref = 'nvaCommonsVersion' }
+nva-commons-identifiers = { group = 'com.github.bibsysdev', name = 'identifiers', version.ref = 'nvaCommonsVersion' }
+
+
+[bundles]
+unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest", "javers-core", "javafaker", "nva-testutils"]
+jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
+
