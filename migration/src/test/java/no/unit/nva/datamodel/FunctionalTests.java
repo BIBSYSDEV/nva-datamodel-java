@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,26 +36,37 @@ import org.junit.jupiter.api.io.TempDir;
 public class FunctionalTests {
 
     public static final String CURRENT_DATAMODEL_VERSION = new Environment().readEnv("DATAMODEL_VERSION");
+    public static final String PREVIOUS_DATAMODEL_VERSION = "0.14.1";
     public static final String SERIALIZATIONS = "serializations";
     public static final String SAMPLE_PROJECT_FOLDER_NAME = "sample-generation";
     public static final String DEPENDENCIES_FILE = "libs.versions.toml";
     public static final String MODEL_VERSION_FIELD_IN_SERIALIZED_RESOURCES = "modelVersion";
+    public static final int SOME_TIME_FOR_MAVEN_LOCAL_TO_REGISTER_CHANGES = 500;
+    public static final String HARDCODED_DATAMODEL_VERSION_PLACEHOLDER_IN_RESOURCE_FILE =
+        "<DATAMODEL_VERSION_PLACEHOLDER>";
+    public static final String GRADLE_FOLDER_IN_PROJECS = "gradle";
+    public static final String GRADLE_BUILD_COMMAND = "build";
+    public static final String GRADLE_COMMAND_FOR_PUBLISHING_TO_MAVEN_LOCAL = "publishToMavenLocal";
+    public static final String CURRENT_FOLDER = "";
+
     @TempDir
-    File tempFolder;
+    File temporaryDir;
+    File sampleProjectCurrentVersion;
+    File sampleProjectPreviousVersion;
 
     @BeforeEach
     public void init() throws IOException {
-        crateSampleProjectFolder();
-        deleteExistingSerializations();
-        buildNvaDatamodel();
+        setupTemporaryFolders();
+        buildWipNvaDatamodel();
         waitUntilLibraryHasBeenRegisteredInMavenLocal();
-        buildSampleProject();
+        buildSampleProject(CURRENT_DATAMODEL_VERSION, sampleProjectCurrentVersion);
+        buildSampleProject(PREVIOUS_DATAMODEL_VERSION, sampleProjectPreviousVersion);
     }
 
     @Tag("migrationTest")
     @Test
-    public void gradleRunnerRunsSampleProject() throws FileNotFoundException, JsonProcessingException {
-        List<String> jsons = listSerializedPublications();
+    public void gradleRunnerRunsSampleProjectOnCurrentVersion() throws FileNotFoundException, JsonProcessingException {
+        List<String> jsons = listSerializedPublications(sampleProjectCurrentVersion);
         assertThat(jsons, is(not(empty())));
         for (String json : jsons) {
             ObjectNode objectNode = (ObjectNode) JsonUtils.dtoObjectMapper.readTree(json);
@@ -63,26 +75,55 @@ public class FunctionalTests {
         }
     }
 
-    private void buildSampleProject() {
+    @Tag("migrationTest")
+    @Test
+    public void gradleRunnerRunsSampleProjectOnPreviousRange() throws FileNotFoundException, JsonProcessingException {
+        List<String> jsons = listSerializedPublications(sampleProjectPreviousVersion);
+        assertThat(jsons, is(not(empty())));
+        for (String json : jsons) {
+            ObjectNode objectNode = (ObjectNode) JsonUtils.dtoObjectMapper.readTree(json);
+            assertThat(objectNode.get(MODEL_VERSION_FIELD_IN_SERIALIZED_RESOURCES).textValue(),
+                       is(equalTo(PREVIOUS_DATAMODEL_VERSION)));
+        }
+    }
+
+    private void setupTemporaryFolders() throws IOException {
+        sampleProjectCurrentVersion = new File(temporaryDir, "current");
+        sampleProjectPreviousVersion = new File(temporaryDir, "previous");
+        createDirectory(sampleProjectCurrentVersion);
+        createDirectory(sampleProjectPreviousVersion);
+    }
+
+    private void createDirectory(File folder) throws IOException {
+        Files.createDirectory(folder.getAbsoluteFile().toPath());
+    }
+
+    private void buildSampleProject(String modelVersion, File testingFolder) throws IOException {
+        createSampleProjectFolder(testingFolder, modelVersion);
+        deleteExistingSerializations(testingFolder);
+        buildSampleProject(testingFolder);
+    }
+
+    private void buildSampleProject(File sampleProjectFile) {
         BuildResult buildResult = GradleRunner.create()
-            .withProjectDir(tempFolder)
-            .withArguments("build")
+            .withProjectDir(sampleProjectFile)
+            .withArguments(GRADLE_BUILD_COMMAND)
             .build();
         buildResult.getTasks().forEach(task -> assertThat(task.getOutcome(), is(not(equalTo(TaskOutcome.FAILED)))));
     }
 
     private void waitUntilLibraryHasBeenRegisteredInMavenLocal() {
         try {
-            Thread.sleep(500);
+            Thread.sleep(SOME_TIME_FOR_MAVEN_LOCAL_TO_REGISTER_CHANGES);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void buildNvaDatamodel() {
+    private void buildWipNvaDatamodel() {
         BuildResult gradleRunner = GradleRunner.create()
             .withProjectDir(rootFolder())
-            .withArguments("publishToMavenLocal")
+            .withArguments(GRADLE_COMMAND_FOR_PUBLISHING_TO_MAVEN_LOCAL)
             .build();
         gradleRunner.getTasks()
             .stream()
@@ -90,28 +131,27 @@ public class FunctionalTests {
             .forEach(outcome -> assertThat(outcome, is(not(equalTo(TaskOutcome.FAILED)))));
     }
 
-    private void crateSampleProjectFolder() throws IOException {
+    private void createSampleProjectFolder(File testingFolder, String version) throws IOException {
         File sampleProjectFolder = new File(rootFolder(), SAMPLE_PROJECT_FOLDER_NAME);
         assertThat(sampleProjectFolder.exists(), is(true));
-        FileUtils.copyDirectory(sampleProjectFolder, tempFolder);
-        injectDatamodelVersion();
+        FileUtils.copyDirectory(sampleProjectFolder, testingFolder);
+        injectDatamodelVersion(testingFolder, version);
     }
 
     private File rootFolder() {
-        return new File("").getAbsoluteFile().getParentFile();
+        return new File(CURRENT_FOLDER).getAbsoluteFile().getParentFile();
     }
 
-    private void deleteExistingSerializations() throws IOException {
-        File serializationsFolder = new File(tempFolder, SERIALIZATIONS);
+    private void deleteExistingSerializations(File sampleProjectFolder) throws IOException {
+        File serializationsFolder = new File(sampleProjectFolder, SERIALIZATIONS);
         FileUtils.deleteDirectory(serializationsFolder);
-        serializationsFolder.mkdirs();
+        createDirectory(serializationsFolder);
     }
 
-    private void injectDatamodelVersion() throws IOException {
+    private void injectDatamodelVersion(File testingFolder, String version) throws IOException {
         String libsVersionFile = IoUtils.stringFromResources(Path.of(DEPENDENCIES_FILE));
-        libsVersionFile = libsVersionFile.replaceAll("<DATAMODEL_VERSION_PLACEHOLDER>",
-                                                     CURRENT_DATAMODEL_VERSION);
-        File projectGradleFolder = new File(tempFolder, "gradle").getAbsoluteFile();
+        libsVersionFile = libsVersionFile.replaceAll(HARDCODED_DATAMODEL_VERSION_PLACEHOLDER_IN_RESOURCE_FILE, version);
+        File projectGradleFolder = new File(testingFolder, GRADLE_FOLDER_IN_PROJECS).getAbsoluteFile();
         File newLibsFile = new File(projectGradleFolder, DEPENDENCIES_FILE);
         BufferedWriter writer = new BufferedWriter(new FileWriter(newLibsFile));
         writer.write(libsVersionFile);
@@ -119,10 +159,11 @@ public class FunctionalTests {
         writer.close();
     }
 
-    private List<String> listSerializedPublications() throws FileNotFoundException {
-        File serializationsFolder = new File(tempFolder, SERIALIZATIONS);
+    private List<String> listSerializedPublications(File folder) throws FileNotFoundException {
+        File serializationsFolder = new File(folder, SERIALIZATIONS);
         File[] serializedFiles = serializationsFolder.listFiles();
         List<String> jsons = new ArrayList<>();
+        assert serializedFiles != null;
         for (File file : serializedFiles) {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String json = reader.lines().collect(Collectors.joining(System.lineSeparator()));
