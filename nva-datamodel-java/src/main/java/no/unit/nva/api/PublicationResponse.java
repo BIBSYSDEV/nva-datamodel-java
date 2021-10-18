@@ -1,6 +1,8 @@
 package no.unit.nva.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
@@ -23,6 +25,8 @@ import no.unit.nva.model.ResearchProject;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonTypeName("Publication")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithId, WithContext {
 
     private SortableIdentifier identifier;
@@ -202,7 +206,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
-    public void setSubjects(List<URI> uri) {
+    public void setSubjects(List<URI> subjects) {
         this.subjects = subjects;
     }
 
