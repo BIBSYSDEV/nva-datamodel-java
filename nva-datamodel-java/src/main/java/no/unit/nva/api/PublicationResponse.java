@@ -202,7 +202,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
-    public void setSubjects(List<URI> uri) {
+    public void setSubjects(List<URI> subjects) {
         this.subjects = subjects;
     }
 
