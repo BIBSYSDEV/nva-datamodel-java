@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'com.github.bibsysdev'
-version '0.14.4'
+version '0.14.5'
 
 
 repositories {
@@ -24,6 +24,7 @@ test {
     }
     failFast = true
     environment "ID_NAMESPACE", "https://www.example.org"
+    environment "DATAMODEL_VERSION", "${project.version}"
     finalizedBy(jacocoTestReport)
 }
 
