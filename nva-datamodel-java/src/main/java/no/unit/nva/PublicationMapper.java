@@ -1,9 +1,8 @@
 package no.unit.nva;
 
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
-import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
+import static no.unit.nva.api.PublicationContext.getContext;
 import com.fasterxml.jackson.databind.JsonNode;
-import java.io.IOException;
 import java.net.URI;
 import java.time.Instant;
 import no.unit.nva.model.Organization;
@@ -11,9 +10,6 @@ import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 
 public final class PublicationMapper {
-
-    public static final String CONTEXT_PATH = "publicationContext.json";
-    public static final String CONTEXT_ERROR_MESSAGE = "Error processing context: ";
 
     private PublicationMapper() {
     }
@@ -65,9 +61,9 @@ public final class PublicationMapper {
     /**
      * Maps a publication and context to specified type.
      *
-     * @param publication publication.
-     * @param context     jsonld context.
-     * @param <R>         Type to be converted to.
+     * @param publication  publication.
+     * @param context      jsonld context.
+     * @param <R>          Type to be converted to.
      * @param responseType Class to be converted to.
      * @return publication response
      */
@@ -81,22 +77,14 @@ public final class PublicationMapper {
     /**
      * Maps a publication to specified type with default context.
      *
-     * @param publication publication.
-     * @param <R> Type to be converted to.
+     * @param publication  publication.
+     * @param <R>          Type to be converted to.
      * @param responseType Class to be converted to.
      * @return publication response
      */
     public static <R extends WithContext> R convertValue(
         Publication publication, Class<R> responseType) {
         return convertValue(publication, getContext(), responseType);
-    }
-
-    private static JsonNode getContext() {
-        try {
-            return dataModelObjectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
-        } catch (IOException e) {
-            throw new IllegalStateException(CONTEXT_ERROR_MESSAGE + CONTEXT_PATH, e);
-        }
     }
 
     private static <REQUEST extends PublicationBase> Publication toPublication(REQUEST request) {

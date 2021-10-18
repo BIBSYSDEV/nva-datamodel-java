@@ -20,6 +20,7 @@ import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Organization;
+import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import nva.commons.core.JacocoGenerated;
@@ -48,6 +49,28 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private JsonNode context;
     private List<ResearchProject> projects;
     private List<URI> subjects;
+
+    public static PublicationResponse fromPublication(Publication publication) {
+        var response = new PublicationResponse();
+        response.setIdentifier(publication.getIdentifier());
+        response.setStatus(publication.getStatus());
+        response.setOwner(publication.getOwner());
+        response.setPublisher(publication.getPublisher());
+        response.setCreatedDate(publication.getCreatedDate());
+        response.setModifiedDate(publication.getModifiedDate());
+        response.setPublishedDate(publication.getPublishedDate());
+        response.setIndexedDate(publication.getIndexedDate());
+        response.setHandle(publication.getHandle());
+        response.setLink(publication.getLink());
+        response.setEntityDescription(publication.getEntityDescription());
+        response.setFileSet(publication.getFileSet());
+        response.setDoi(publication.getDoi());
+        response.setDoiRequest(publication.getDoiRequest());
+        response.setProjects(publication.getProjects());
+        response.setSubjects(publication.getSubjects());
+        response.setContext(PublicationContext.getContext());
+        return response;
+    }
 
     @Override
     public FileSet getFileSet() {
