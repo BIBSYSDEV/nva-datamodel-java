@@ -19,7 +19,7 @@ class PublicationResponseTest {
         Publication publication = PublicationGenerator.generatePublication("JournalArticle");
         assertThat(publication,doesNotHaveEmptyValues());
         PublicationResponse publicationResponse = PublicationResponse.fromPublication(publication);
-        assertThat(publicationResponse,doesNotHaveEmptyValuesIgnoringFields(Set.of("context")));
+        assertThat(publicationResponse,doesNotHaveEmptyValues());
     }
 
 }
