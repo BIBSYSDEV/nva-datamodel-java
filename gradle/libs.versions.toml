@@ -43,6 +43,6 @@ slf4j = { group = 'org.slf4j', name = 'slf4j-simple', version.ref = 'slf4jVersio
 
 
 [bundles]
-unittesting = ["junit-jupiter-api","junit-jupiter-params","junit-jupiter-engine","hamcrest","javers-core"]
+unittesting = ["junit-jupiter-api","junit-jupiter-params","junit-jupiter-engine","hamcrest","javers-core","nva-testutils"]
 jackson = ["jackson-core", "jackson-databind","jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
 
