@@ -34,6 +34,12 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.media.MediaInternet;
+import no.unit.nva.model.instancetypes.media.MediaJournal;
+import no.unit.nva.model.instancetypes.media.MediaNewspaper;
+import no.unit.nva.model.instancetypes.media.MediaOther;
+import no.unit.nva.model.instancetypes.media.MediaRadio;
+import no.unit.nva.model.instancetypes.media.MediaTelevision;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -76,7 +82,13 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "ConferenceLecture", value = ConferenceLecture.class),
     @JsonSubTypes.Type(name = "ConferencePoster", value = ConferencePoster.class),
     @JsonSubTypes.Type(name = "Lecture", value = Lecture.class),
-    @JsonSubTypes.Type(name = "OtherPresentation", value = OtherPresentation.class)
+    @JsonSubTypes.Type(name = "OtherPresentation", value = OtherPresentation.class),
+    @JsonSubTypes.Type(name = "MediaNewspaper", value = MediaNewspaper.class),
+    @JsonSubTypes.Type(name = "MediaJournal", value = MediaJournal.class),
+    @JsonSubTypes.Type(name = "MediaRadio", value = MediaRadio.class),
+    @JsonSubTypes.Type(name = "MediaTelevision", value = MediaTelevision.class),
+    @JsonSubTypes.Type(name = "MediaInternet", value = MediaInternet.class),
+    @JsonSubTypes.Type(name = "MediaOther", value = MediaOther.class)
 })
 public interface PublicationInstance<P extends Pages> {
 

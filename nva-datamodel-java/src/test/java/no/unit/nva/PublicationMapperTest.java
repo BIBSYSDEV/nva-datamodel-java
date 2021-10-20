@@ -81,6 +81,13 @@ public class PublicationMapperTest {
         assertNotNull(response);
         assertThat(response.getId(), notNullValue());
         assertThatIdIsPresent(response);
+        assertThatTypIsPresent(response);
+    }
+
+    private void assertThatTypIsPresent(PublicationResponse response) throws JsonProcessingException {
+        String string = dataModelObjectMapper.writeValueAsString(response);
+        ObjectNode json = (ObjectNode) dataModelObjectMapper.readTree(string);
+        assertThat(json.has("type"), is(equalTo(true)));
     }
 
     private void assertThatIdIsPresent(PublicationResponse response) throws JsonProcessingException {

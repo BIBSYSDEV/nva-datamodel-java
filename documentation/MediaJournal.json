@@ -69,33 +69,16 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "Book",
-        "series" : {
-          "type" : "UnconfirmedSeries",
-          "title" : "Explorations in ego",
-          "issn" : "0028-0836",
-          "onlineIssn" : "1476-4687"
-        },
-        "seriesNumber" : "123",
-        "publisher" : {
-          "type" : "UnconfirmedPublisher",
-          "name" : "My publisher dot com"
-        },
-        "isbnList" : [ "9780201309515" ]
+        "type" : "Media",
+        "place" : "Elsewhere",
+        "programme" : "Norbert and Friends"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "BookAnthology",
-        "peerReviewed" : true,
+        "type" : "MediaJournal",
+        "peerReviewed" : false,
         "pages" : {
-          "type" : "MonographPages",
-          "introduction" : {
-            "type" : "Range",
-            "begin" : "i",
-            "end" : "xx"
-          },
-          "pages" : "221",
-          "illustrated" : true
+          "type" : "NullPages"
         }
       }
     },

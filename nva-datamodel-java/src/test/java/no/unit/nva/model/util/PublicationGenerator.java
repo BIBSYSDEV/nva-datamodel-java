@@ -37,6 +37,7 @@ import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Event;
+import no.unit.nva.model.contexttypes.Media;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.UnconfirmedJournal;
@@ -82,6 +83,12 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
+import no.unit.nva.model.instancetypes.media.MediaInternet;
+import no.unit.nva.model.instancetypes.media.MediaJournal;
+import no.unit.nva.model.instancetypes.media.MediaNewspaper;
+import no.unit.nva.model.instancetypes.media.MediaOther;
+import no.unit.nva.model.instancetypes.media.MediaRadio;
+import no.unit.nva.model.instancetypes.media.MediaTelevision;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -214,6 +221,24 @@ public class PublicationGenerator extends ModelTest {
             case "Lecture":
                 reference = generateReference(getPublishingContextEvent(), getLecture());
                 break;
+            case "MediaNewspaper":
+                reference = generateReference(getPublicationContextMedia(), getMediaNewspaper());
+                break;
+            case "MediaJournal":
+                reference = generateReference(getPublicationContextMedia(), getMediaJournal());
+                break;
+            case "MediaRadio":
+                reference = generateReference(getPublicationContextMedia(), getMediaRadio());
+                break;
+            case "MediaTelevision":
+                reference = generateReference(getPublicationContextMedia(), getMediaTelevision());
+                break;
+            case "MediaInternet":
+                reference = generateReference(getPublicationContextMedia(), getMediaInternet());
+                break;
+            case "MediaOther":
+                reference = generateReference(getPublicationContextMedia(), getMediaOther());
+                break;
             case "OtherPresentation":
                 reference = generateReference(getPublishingContextEvent(), getOtherPresentation());
                 break;
@@ -334,6 +359,32 @@ public class PublicationGenerator extends ModelTest {
         return new Lecture();
     }
 
+    private static PublicationInstance<NullPages> getMediaNewspaper() {
+        return new MediaNewspaper();
+    }
+
+
+    private static PublicationInstance<NullPages> getMediaOther() {
+        return new MediaOther();
+    }
+
+    private static PublicationInstance<NullPages> getMediaInternet() {
+        return new MediaInternet();
+    }
+
+    private static PublicationInstance<NullPages> getMediaTelevision() {
+        return new MediaTelevision();
+    }
+
+    private static PublicationInstance<NullPages> getMediaRadio() {
+        return new MediaRadio();
+    }
+
+    private static PublicationInstance<NullPages> getMediaJournal() {
+        return new MediaJournal();
+    }
+
+
     private static PublicationInstance<NullPages> getOtherPresentation() {
         return new OtherPresentation();
     }
@@ -347,6 +398,11 @@ public class PublicationGenerator extends ModelTest {
                 .withProduct(null)
                 .withSubEvent(null)
                 .build();
+    }
+
+
+    private static PublicationContext getPublicationContextMedia() {
+        return new Media("Elsewhere", "Norbert and Friends");
     }
 
     public static Publication generateJournalArticlePublication() throws InvalidIssnException {
