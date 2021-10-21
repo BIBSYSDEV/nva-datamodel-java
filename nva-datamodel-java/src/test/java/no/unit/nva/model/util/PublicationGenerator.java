@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import java.net.URI;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -83,12 +82,11 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
-import no.unit.nva.model.instancetypes.media.MediaInternet;
-import no.unit.nva.model.instancetypes.media.MediaJournal;
-import no.unit.nva.model.instancetypes.media.MediaNewspaper;
-import no.unit.nva.model.instancetypes.media.MediaOther;
-import no.unit.nva.model.instancetypes.media.MediaRadio;
-import no.unit.nva.model.instancetypes.media.MediaTelevision;
+import no.unit.nva.model.instancetypes.media.ContributionType;
+import no.unit.nva.model.instancetypes.media.MediaInterview;
+import no.unit.nva.model.instancetypes.media.MediaDocumentary;
+import no.unit.nva.model.instancetypes.media.MediaProgrammeManagement;
+import no.unit.nva.model.instancetypes.media.MediaProgrammeParticipation;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -96,15 +94,11 @@ import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.NullPages;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.pages.TemporalExtent;
-import nva.commons.core.StringUtils;
 
 @SuppressWarnings("MissingJavadocMethod")
 public class PublicationGenerator extends ModelTest {
 
     public static final URI SOME_URI = URI.create("https://123123/213123.com");
-    public static final String SEPARATOR = "\\|";
-    public static final String QUOTE = "\"";
-    public static final String EMPTY_STRING = "";
     public static final Faker FAKER = Faker.instance();
 
     private PublicationGenerator() {
@@ -221,23 +215,17 @@ public class PublicationGenerator extends ModelTest {
             case "Lecture":
                 reference = generateReference(getPublishingContextEvent(), getLecture());
                 break;
-            case "MediaNewspaper":
-                reference = generateReference(getPublicationContextMedia(), getMediaNewspaper());
+            case "MediaProgrammeParticipation":
+                reference = generateReference(getPublicationContextMedia(), getProgrammeParticipation());
                 break;
-            case "MediaJournal":
-                reference = generateReference(getPublicationContextMedia(), getMediaJournal());
+            case "MediaDocumentary":
+                reference = generateReference(getPublicationContextMedia(), getMediaDocumentary());
                 break;
-            case "MediaRadio":
-                reference = generateReference(getPublicationContextMedia(), getMediaRadio());
+            case "MediaInterview":
+                reference = generateReference(getPublicationContextMedia(), getMediaInterview());
                 break;
-            case "MediaTelevision":
-                reference = generateReference(getPublicationContextMedia(), getMediaTelevision());
-                break;
-            case "MediaInternet":
-                reference = generateReference(getPublicationContextMedia(), getMediaInternet());
-                break;
-            case "MediaOther":
-                reference = generateReference(getPublicationContextMedia(), getMediaOther());
+            case "MediaProgrammeManagement":
+                reference = generateReference(getPublicationContextMedia(), getMediaProgrammeManagement());
                 break;
             case "OtherPresentation":
                 reference = generateReference(getPublishingContextEvent(), getOtherPresentation());
@@ -280,8 +268,8 @@ public class PublicationGenerator extends ModelTest {
             .withIdentifier(publicationIdentifier)
             .withCreatedDate(now)
             .withModifiedDate(now)
-            .withHandle(URI.create("http://example.org/handle/123"))
-            .withLink(URI.create("http://example.org/link"))
+            .withHandle(URI.create("https://example.org/handle/123"))
+            .withLink(URI.create("https://example.org/link"))
             .withStatus(PublicationStatus.DRAFT)
             .withPublisher(getOrganization())
             .withFileSet(getFileSet(fileIdentifier))
@@ -290,10 +278,10 @@ public class PublicationGenerator extends ModelTest {
             .withProjects(getProjects())
             .withDoiRequest(getDoiRequest(now))
             .withPublishedDate(now)
-            .withDoi(URI.create("http://example.org/doi/1231/98765"))
+            .withDoi(URI.create("https://example.org/doi/1231/98765"))
             .withIndexedDate(now)
             .withAdditionalIdentifiers(generateAdditionalIdentifiers())
-            .withSubjects(List.of(URI.create("http://example.org/subject/123")))
+            .withSubjects(List.of(URI.create("https://example.org/subject/123")))
             .build();
     }
 
@@ -359,31 +347,21 @@ public class PublicationGenerator extends ModelTest {
         return new Lecture();
     }
 
-    private static PublicationInstance<NullPages> getMediaNewspaper() {
-        return new MediaNewspaper();
+    private static PublicationInstance<NullPages> getProgrammeParticipation() {
+        return new MediaProgrammeParticipation(ContributionType.INTERNET);
     }
 
-
-    private static PublicationInstance<NullPages> getMediaOther() {
-        return new MediaOther();
+    private static PublicationInstance<NullPages> getMediaProgrammeManagement() {
+        return new MediaProgrammeManagement(ContributionType.INTERNET);
     }
 
-    private static PublicationInstance<NullPages> getMediaInternet() {
-        return new MediaInternet();
+    private static PublicationInstance<NullPages> getMediaInterview() {
+        return new MediaInterview(ContributionType.INTERNET);
     }
 
-    private static PublicationInstance<NullPages> getMediaTelevision() {
-        return new MediaTelevision();
+    private static PublicationInstance<NullPages> getMediaDocumentary() {
+        return new MediaDocumentary(ContributionType.INTERNET);
     }
-
-    private static PublicationInstance<NullPages> getMediaRadio() {
-        return new MediaRadio();
-    }
-
-    private static PublicationInstance<NullPages> getMediaJournal() {
-        return new MediaJournal();
-    }
-
 
     private static PublicationInstance<NullPages> getOtherPresentation() {
         return new OtherPresentation();
@@ -410,52 +388,10 @@ public class PublicationGenerator extends ModelTest {
                                    generateEntityDescriptionJournalArticle());
     }
 
-    public static Publication generateBookMonographPublication() throws
-            InvalidIsbnException, InvalidIssnException {
-        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(),
-                                   generateEntityDescriptionBookMonograph());
-    }
-
-    public static Publication generateBookMonographWithUnconfirmedSeriesTitleString()
-        throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
-
-        var context = new Book(null,
-                               "Some wild series title",
-                               "2",
-                               new UnconfirmedPublisher("Hansome publishing cowpoke"),
-                               Collections.emptyList());
-        var instance = new BookMonograph.Builder()
-            .withPages(generateMonographPages())
-            .withPeerReviewed(false)
-            .withContentType(BookMonographContentType.ACADEMIC_MONOGRAPH)
-            .withOriginalResearch(true)
-            .build();
-        var reference = new Reference.Builder()
-            .withPublishingContext(context)
-            .withPublicationInstance(instance)
-            .withDoi(SOME_URI)
-            .build();
-
-        var entityDescription = new EntityDescription.Builder()
-            .withReference(reference)
-            .withDescription("Yes, a description")
-            .withAbstract("Irrelevant abstract")
-            .withAlternativeTitles(Map.of("en", "Alternative title", "nb", "Alternativ tittel"))
-            .withContributors(List.of(generateContributor()))
-            .withDate(getPublicationDate())
-            .withMainTitle("A funky main title")
-            .withLanguage(SOME_URI)
-            .withMetadataSource(SOME_URI)
-            .withTags(List.of("tiny", "happy", "trolls"))
-            .withNpiSubjectHeading("Soulfulness")
-            .build();
-
-        return generatePublication(SortableIdentifier.next(), UUID.randomUUID(), Instant.now(), entityDescription);
-    }
 
     public static List<ResearchProject> getProjects() {
         return List.of(new ResearchProject.Builder()
-                           .withId(URI.create("http://link.to.cristin.example.org/123"))
+                           .withId(URI.create("https://link.to.cristin.example.org/123"))
                            .withName("Det gode prosjektet")
                            .withApprovals(getApprovals())
                            .withGrants(getGrants())
@@ -504,7 +440,7 @@ public class PublicationGenerator extends ModelTest {
     public static EntityDescription getEntityDescription(Reference reference) {
         return new EntityDescription.Builder()
             .withMainTitle("Hovedtittelen")
-            .withLanguage(URI.create("http://example.org/norsk"))
+            .withLanguage(URI.create("https://example.org/norsk"))
             .withAlternativeTitles(Collections.singletonMap("en", "English title"))
             .withDate(getPublicationDate())
             .withContributors(Collections.singletonList(generateContributor()))
@@ -551,7 +487,7 @@ public class PublicationGenerator extends ModelTest {
     public static License getLicense() {
         return new License.Builder()
             .withIdentifier("NTNU-CC-BY-4.0")
-            .withLink(URI.create("http://example.org/license/123"))
+            .withLink(URI.create("https://example.org/license/123"))
             .withLabels(Collections.singletonMap("no", "CC-BY 4.0"))
             .build();
     }
@@ -577,7 +513,7 @@ public class PublicationGenerator extends ModelTest {
 
     public static Organization getOrganization() {
         return new Organization.Builder()
-            .withId(URI.create("http://example.org/org/123"))
+            .withId(URI.create("https://example.org/org/123"))
             .withLabels(Collections.singletonMap("no", "Eksempelforlaget"))
             .build();
     }
@@ -589,23 +525,9 @@ public class PublicationGenerator extends ModelTest {
             .build();
     }
 
-    public static List<String> convertIsbnStringToList(String isbnList) {
-        if (StringUtils.isBlank(isbnList)) {
-            return Collections.emptyList();
-        } else {
-            String unquoted = isbnList.replaceAll(QUOTE, EMPTY_STRING);
-            String[] split = unquoted.split(SEPARATOR);
-            return new ArrayList<>(Arrays.asList(split));
-        }
-    }
-
     public static Set<AdditionalIdentifier> generateAdditionalIdentifiers() {
         AdditionalIdentifier identifier = new AdditionalIdentifier(randomWord(), UUID.randomUUID().toString());
         return Set.of(identifier);
-    }
-
-    public static String randomInvalidIssn() {
-        return IssnGenerator.randomInvalidIssn();
     }
 
     public static String randomIssn() {
@@ -784,19 +706,6 @@ public class PublicationGenerator extends ModelTest {
             .withDoi(SOME_URI)
             .withPublishingContext(context)
             .withPublicationInstance(instance)
-            .build();
-    }
-
-    private static EntityDescription generateEntityDescriptionBookMonograph() throws InvalidIsbnException,
-            InvalidIssnException {
-        return getEntityDescription(getBookMonographReference());
-    }
-
-    private static Reference getBookMonographReference() throws InvalidIsbnException, InvalidIssnException {
-        return new Reference.Builder()
-            .withPublishingContext(getPublishingContextBook())
-            .withDoi(SOME_URI)
-            .withPublicationInstance(null)
             .build();
     }
 

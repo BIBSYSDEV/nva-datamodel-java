@@ -1007,7 +1007,7 @@ referencedSchemas:
           type: string
         type:
           type: string
-  MediaInternet:
+  MediaDocumentary:
     required:
     - type
     type: object
@@ -1017,11 +1017,20 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        contributionType:
+          type: string
+          enum:
+          - INTERNET
+          - JOURNAL
+          - NEWSPAPER
+          - OTHER
+          - RADIO
+          - TELEVISION
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
-  MediaJournal:
+  MediaInterview:
     required:
     - type
     type: object
@@ -1031,11 +1040,20 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        contributionType:
+          type: string
+          enum:
+          - INTERNET
+          - JOURNAL
+          - NEWSPAPER
+          - OTHER
+          - RADIO
+          - TELEVISION
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
-  MediaNewspaper:
+  MediaProgrammeManagement:
     required:
     - type
     type: object
@@ -1045,11 +1063,20 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        contributionType:
+          type: string
+          enum:
+          - INTERNET
+          - JOURNAL
+          - NEWSPAPER
+          - OTHER
+          - RADIO
+          - TELEVISION
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
-  MediaOther:
+  MediaProgrammeParticipation:
     required:
     - type
     type: object
@@ -1059,34 +1086,15 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        pages:
-          $ref: '#/components/schemas/NullPages'
-        type:
+        contributionType:
           type: string
-  MediaRadio:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/NullPages'
-        type:
-          type: string
-  MediaTelevision:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
+          enum:
+          - INTERNET
+          - JOURNAL
+          - NEWSPAPER
+          - OTHER
+          - RADIO
+          - TELEVISION
         pages:
           $ref: '#/components/schemas/NullPages'
         type:

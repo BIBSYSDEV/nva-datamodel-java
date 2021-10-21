@@ -7,12 +7,26 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.Objects;
+
 public abstract class AbstractMediaInstance implements PublicationInstance<NullPages> {
 
-    public static final String PAGES = "pages";
+    private static final String PAGES = "pages";
+    public static final String CONTRIBUTION_TYPE = "contributionType";
 
+    @JsonProperty(CONTRIBUTION_TYPE)
+    private final ContributionType contributionType;
     @JsonProperty(PAGES)
     private static final NullPages pages = new NullPages();
+
+    protected AbstractMediaInstance(@JsonProperty(CONTRIBUTION_TYPE) ContributionType contributionType) {
+        this.contributionType = contributionType;
+    }
+
+    @JsonGetter(CONTRIBUTION_TYPE)
+    public ContributionType getContributionType() {
+        return contributionType;
+    }
 
     @JsonGetter(PAGES)
     @Override
@@ -31,16 +45,20 @@ public abstract class AbstractMediaInstance implements PublicationInstance<NullP
 
     @JacocoGenerated
     @Override
-    public int hashCode() {
-        return 100_201_314; // Implemented manually due to field-less class.
-    }
-
-    @JacocoGenerated
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        return o instanceof AbstractMediaInstance;
+        if (!(o instanceof AbstractMediaInstance)) {
+            return false;
+        }
+        AbstractMediaInstance that = (AbstractMediaInstance) o;
+        return getContributionType() == that.getContributionType();
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getContributionType());
     }
 }

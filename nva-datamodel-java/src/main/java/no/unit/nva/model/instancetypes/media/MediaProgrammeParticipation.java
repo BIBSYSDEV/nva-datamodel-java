@@ -1,14 +1,15 @@
 package no.unit.nva.model.instancetypes.media;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.NullPages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class MediaJournal extends AbstractMediaInstance {
+public class MediaProgrammeParticipation extends AbstractMediaInstance {
     @JsonCreator
-    public MediaJournal() {
-        super();
+    public MediaProgrammeParticipation(@JsonProperty(CONTRIBUTION_TYPE) ContributionType contributionType) {
+        super(contributionType);
     }
 
     @Override

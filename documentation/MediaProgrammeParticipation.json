@@ -69,26 +69,18 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "ArtisticDesign",
-        "venues" : [ {
-          "type" : "Venue",
-          "place" : {
-            "type" : "UnconfirmedPlace",
-            "label" : "Expo 2021",
-            "country" : "Germany"
-          },
-          "sequence" : 1
-        } ]
+        "type" : "Media",
+        "place" : "Elsewhere",
+        "programme" : "Norbert and Friends"
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "ArtisticDesignOther",
-        "description" : "Flooring design",
-        "typeDescription" : "Kippers in epoxy, floor for large corporate office",
+        "type" : "MediaProgrammeParticipation",
+        "contributionType" : "INTERNET",
+        "peerReviewed" : false,
         "pages" : {
           "type" : "NullPages"
-        },
-        "peerReviewed" : false
+        }
       }
     },
     "metadataSource" : "https://example.org/doi?doi=123/123",
