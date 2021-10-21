@@ -1020,12 +1020,12 @@ referencedSchemas:
         contributionType:
           type: string
           enum:
-          - INTERNET
-          - JOURNAL
-          - NEWSPAPER
-          - OTHER
-          - RADIO
-          - TELEVISION
+          - Internet
+          - Journal
+          - Newspaper
+          - Other
+          - Radio
+          - Television
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
@@ -1043,12 +1043,12 @@ referencedSchemas:
         contributionType:
           type: string
           enum:
-          - INTERNET
-          - JOURNAL
-          - NEWSPAPER
-          - OTHER
-          - RADIO
-          - TELEVISION
+          - Internet
+          - Journal
+          - Newspaper
+          - Other
+          - Radio
+          - Television
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
@@ -1066,12 +1066,12 @@ referencedSchemas:
         contributionType:
           type: string
           enum:
-          - INTERNET
-          - JOURNAL
-          - NEWSPAPER
-          - OTHER
-          - RADIO
-          - TELEVISION
+          - Internet
+          - Journal
+          - Newspaper
+          - Other
+          - Radio
+          - Television
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
@@ -1089,12 +1089,12 @@ referencedSchemas:
         contributionType:
           type: string
           enum:
-          - INTERNET
-          - JOURNAL
-          - NEWSPAPER
-          - OTHER
-          - RADIO
-          - TELEVISION
+          - Internet
+          - Journal
+          - Newspaper
+          - Other
+          - Radio
+          - Television
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
