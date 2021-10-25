@@ -1402,6 +1402,14 @@ referencedSchemas:
           type: string
         type:
           type: string
+  UnconfirmedOrganization:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/Agent'
+    - type: object
+      properties:
+        name:
+          type: string
   UnconfirmedPlace:
     required:
     - type
