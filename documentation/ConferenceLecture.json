@@ -87,11 +87,8 @@
           }
         },
         "agent" : {
-          "type" : "Organization",
-          "id" : null,
-          "labels" : {
-            "en" : "Hallowed Blue Feet Inc."
-          }
+          "type" : "UnconfirmedOrganization",
+          "name" : "Hallowed Blue Feet Inc."
         },
         "product" : null,
         "subEvent" : null
@@ -152,5 +149,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "http://example.org/subject/123" ],
-  "modelVersion" : "0.14.4"
+  "modelVersion" : "0.14.5"
 }

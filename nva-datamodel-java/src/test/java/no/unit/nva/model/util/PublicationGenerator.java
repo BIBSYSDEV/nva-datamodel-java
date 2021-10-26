@@ -31,6 +31,7 @@ import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
+import no.unit.nva.model.UnconfirmedOrganization;
 import no.unit.nva.model.contexttypes.ArtisticDesign;
 import no.unit.nva.model.contexttypes.BasicContext;
 import no.unit.nva.model.contexttypes.Book;
@@ -343,7 +344,7 @@ public class PublicationGenerator extends ModelTest {
                 .withLabel("A wondrous event that surprised the fallow deer")
                 .withPlace(new UnconfirmedPlace("The pea shop, Brighton", "Transnistria"))
                 .withTime(new TemporalExtent(LocalDateTime.now(), LocalDateTime.now().plusDays(3)))
-                .withAgent(new Organization.Builder().withLabels(Map.of("en", "Hallowed Blue Feet Inc.")).build())
+                .withAgent(new UnconfirmedOrganization("Hallowed Blue Feet Inc."))
                 .withProduct(null)
                 .withSubEvent(null)
                 .build();
