@@ -1,15 +1,15 @@
-package no.unit.nva.model.pages;
+package no.unit.nva.model.time;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Objects;
-import no.unit.nva.model.contexttypes.event.ReifiedExtent;
+
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class TemporalExtent implements Pages {
+public class Period implements Time {
     public static final String FROM = "from";
     public static final String TO = "to";
     @JsonProperty(FROM)
@@ -17,7 +17,8 @@ public class TemporalExtent implements Pages {
     @JsonProperty(TO)
     private final LocalDateTime to;
 
-    public TemporalExtent(@JsonProperty(FROM) LocalDateTime from, @JsonProperty(TO) LocalDateTime to) {
+    @JsonCreator
+    public Period(@JsonProperty(FROM) LocalDateTime from, @JsonProperty(TO) LocalDateTime to) {
         this.from = from;
         this.to = to;
     }
@@ -30,20 +31,16 @@ public class TemporalExtent implements Pages {
         return to;
     }
 
-    public ReifiedExtent getExtent() {
-        return new ReifiedExtent(String.valueOf(ChronoUnit.HOURS.between(from, to)), ChronoUnit.HOURS.toString());
-    }
-
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof TemporalExtent)) {
+        if (!(o instanceof Period)) {
             return false;
         }
-        TemporalExtent that = (TemporalExtent) o;
+        Period that = (Period) o;
         return Objects.equals(getFrom(), that.getFrom())
                 && Objects.equals(getTo(), that.getTo());
     }

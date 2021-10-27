@@ -6,7 +6,7 @@ import java.util.Objects;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.contexttypes.place.Place;
-import no.unit.nva.model.pages.TemporalExtent;
+import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -22,7 +22,7 @@ public class Event implements PublicationContext {
     @JsonProperty(PLACE)
     private final Place place;
     @JsonProperty(TIME)
-    private final TemporalExtent time;
+    private final Time time;
     @JsonProperty(AGENT)
     private final Agent agent;
     @JsonProperty(PRODUCT)
@@ -32,7 +32,7 @@ public class Event implements PublicationContext {
 
     public Event(@JsonProperty(LABEL) String label,
                  @JsonProperty(PLACE) Place place,
-                 @JsonProperty(TIME) TemporalExtent time,
+                 @JsonProperty(TIME) Time time,
                  @JsonProperty(AGENT) Agent agent,
                  @JsonProperty(PRODUCT) Publication product,
                  @JsonProperty(SUB_EVENT) Event subEvent) {
@@ -47,7 +47,7 @@ public class Event implements PublicationContext {
     public static final class Builder {
         private String label;
         private Place place;
-        private TemporalExtent time;
+        private Time time;
         private Agent agent;
         private Publication product;
         private Event subEvent;
@@ -65,7 +65,7 @@ public class Event implements PublicationContext {
             return this;
         }
 
-        public Builder withTime(TemporalExtent time) {
+        public Builder withTime(Time time) {
             this.time = time;
             return this;
         }
