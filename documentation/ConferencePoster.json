@@ -77,14 +77,8 @@
           "country" : "Transnistria"
         },
         "time" : {
-          "type" : "TemporalExtent",
-          "from" : "2020-09-23T09:51:23.044996Z",
-          "to" : "2020-09-23T09:51:23.044996Z",
-          "extent" : {
-            "type" : "ReifiedExtent",
-            "value" : "72",
-            "datatype" : "Hours"
-          }
+          "type" : "Instant",
+          "value" : "2020-09-23T09:51:23.044996Z"
         },
         "agent" : {
           "type" : "UnconfirmedOrganization",

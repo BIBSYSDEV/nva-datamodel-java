@@ -684,7 +684,7 @@ referencedSchemas:
         place:
           $ref: '#/components/schemas/Place'
         time:
-          $ref: '#/components/schemas/TemporalExtent'
+          $ref: '#/components/schemas/Time'
         agent:
           $ref: '#/components/schemas/Agent'
         product:
@@ -790,6 +790,21 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Instant:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Time'
+    - type: object
+      properties:
+        value:
+          type: string
+          format: date-time
+        type:
+          type: string
   Journal:
     required:
     - type
@@ -1073,6 +1088,24 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Period:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Time'
+    - type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+        type:
+          type: string
   Place:
     required:
     - type
@@ -1237,19 +1270,6 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
-  ReifiedExtent:
-    required:
-    - type
-    type: object
-    properties:
-      value:
-        type: string
-      datatype:
-        type: string
-      type:
-        type: string
-    discriminator:
-      propertyName: type
   Report:
     type: object
     allOf:
@@ -1364,26 +1384,15 @@ referencedSchemas:
           type: string
   SortableIdentifier:
     type: object
-  TemporalExtent:
+  Time:
     required:
     - type
     type: object
+    properties:
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/Pages'
-    - type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-        extent:
-          $ref: '#/components/schemas/ReifiedExtent'
-        type:
-          type: string
   UnconfirmedJournal:
     required:
     - type

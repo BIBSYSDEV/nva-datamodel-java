@@ -88,8 +88,8 @@ import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.NullPages;
+import no.unit.nva.model.time.Period;
 import no.unit.nva.model.pages.Range;
-import no.unit.nva.model.pages.TemporalExtent;
 import nva.commons.core.StringUtils;
 
 @SuppressWarnings("MissingJavadocMethod")
@@ -174,10 +174,10 @@ public class PublicationGenerator extends ModelTest {
                 reference = generateReference(getPublishingContextChapter(), getChapterArticleInstance());
                 break;
             case "ConferenceLecture":
-                reference = generateReference(getPublishingContextEvent(), getConferenceLecture());
+                reference = generateReference(getPublishingContextEventPeriod(), getConferenceLecture());
                 break;
             case "ConferencePoster":
-                reference = generateReference(getPublishingContextEvent(), getConferencePoster());
+                reference = generateReference(getPublishingContextEventInstant(), getConferencePoster());
                 break;
             case "DegreeBachelor":
                 reference = generateReference(getPublishingContextDegree(), getDegreeBachelorInstance());
@@ -213,10 +213,10 @@ public class PublicationGenerator extends ModelTest {
                 reference = generateReference(getPublishingContextJournal(), getJournalShortCommunicationInstance());
                 break;
             case "Lecture":
-                reference = generateReference(getPublishingContextEvent(), getLecture());
+                reference = generateReference(getPublishingContextEventPeriod(), getLecture());
                 break;
             case "OtherPresentation":
-                reference = generateReference(getPublishingContextEvent(), getOtherPresentation());
+                reference = generateReference(getPublishingContextEventPeriod(), getOtherPresentation());
                 break;
             case "OtherStudentWork":
                 reference = generateReference(getPublishingContextDegree(), getOtherStudentWorkInstance());
@@ -339,11 +339,22 @@ public class PublicationGenerator extends ModelTest {
         return new OtherPresentation();
     }
 
-    private static PublicationContext getPublishingContextEvent() {
+    private static PublicationContext getPublishingContextEventPeriod() {
         return new Event.Builder()
                 .withLabel("A wondrous event that surprised the fallow deer")
                 .withPlace(new UnconfirmedPlace("The pea shop, Brighton", "Transnistria"))
-                .withTime(new TemporalExtent(LocalDateTime.now(), LocalDateTime.now().plusDays(3)))
+                .withTime(new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(3)))
+                .withAgent(new UnconfirmedOrganization("Hallowed Blue Feet Inc."))
+                .withProduct(null)
+                .withSubEvent(null)
+                .build();
+    }
+
+    private static PublicationContext getPublishingContextEventInstant() {
+        return new Event.Builder()
+                .withLabel("A wondrous event that surprised the fallow deer")
+                .withPlace(new UnconfirmedPlace("The pea shop, Brighton", "Transnistria"))
+                .withTime(new no.unit.nva.model.time.Instant(LocalDateTime.now()))
                 .withAgent(new UnconfirmedOrganization("Hallowed Blue Feet Inc."))
                 .withProduct(null)
                 .withSubEvent(null)
