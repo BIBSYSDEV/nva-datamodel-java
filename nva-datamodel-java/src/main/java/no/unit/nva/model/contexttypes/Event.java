@@ -3,6 +3,8 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
+import java.util.Optional;
+
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.contexttypes.place.Place;
@@ -60,12 +62,12 @@ public class Event implements PublicationContext {
         return agent;
     }
 
-    public Publication getProduct() {
-        return product;
+    public Optional<Publication> getProduct() {
+        return Optional.ofNullable(product);
     }
 
-    public Event getSubEvent() {
-        return subEvent;
+    public Optional<Event> getSubEvent() {
+        return Optional.ofNullable(subEvent);
     }
 
     public static final class Builder {
