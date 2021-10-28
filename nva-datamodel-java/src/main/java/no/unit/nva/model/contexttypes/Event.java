@@ -3,6 +3,8 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
+import java.util.Optional;
+
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.contexttypes.place.Place;
@@ -42,6 +44,30 @@ public class Event implements PublicationContext {
         this.agent = agent;
         this.product = product;
         this.subEvent = subEvent;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public Optional<Publication> getProduct() {
+        return Optional.ofNullable(product);
+    }
+
+    public Optional<Event> getSubEvent() {
+        return Optional.ofNullable(subEvent);
     }
 
     public static final class Builder {
@@ -100,17 +126,17 @@ public class Event implements PublicationContext {
             return false;
         }
         Event event = (Event) o;
-        return Objects.equals(label, event.label)
-                && Objects.equals(place, event.place)
-                && Objects.equals(time, event.time)
-                && Objects.equals(agent, event.agent)
-                && Objects.equals(product, event.product)
-                && Objects.equals(subEvent, event.subEvent);
+        return Objects.equals(getLabel(), event.getLabel())
+                && Objects.equals(getPlace(), event.getPlace())
+                && Objects.equals(getTime(), event.getTime())
+                && Objects.equals(getAgent(), event.getAgent())
+                && Objects.equals(getProduct(), event.getProduct())
+                && Objects.equals(getSubEvent(), event.getSubEvent());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(label, place, time, agent, product, subEvent);
+        return Objects.hash(getLabel(), getPlace(), getTime(), getAgent(), getProduct(), getSubEvent());
     }
 }
