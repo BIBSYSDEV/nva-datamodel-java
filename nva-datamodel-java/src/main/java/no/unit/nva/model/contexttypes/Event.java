@@ -2,11 +2,12 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
 import no.unit.nva.model.Agent;
-import no.unit.nva.model.Publication;
 import no.unit.nva.model.contexttypes.place.Place;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
@@ -28,7 +29,7 @@ public class Event implements PublicationContext {
     @JsonProperty(AGENT)
     private final Agent agent;
     @JsonProperty(PRODUCT)
-    private final Publication product;
+    private final URI product;
     @JsonProperty(SUB_EVENT)
     private final Event subEvent;
 
@@ -36,7 +37,7 @@ public class Event implements PublicationContext {
                  @JsonProperty(PLACE) Place place,
                  @JsonProperty(TIME) Time time,
                  @JsonProperty(AGENT) Agent agent,
-                 @JsonProperty(PRODUCT) Publication product,
+                 @JsonProperty(PRODUCT) URI product,
                  @JsonProperty(SUB_EVENT) Event subEvent) {
         this.label = label;
         this.place = place;
@@ -62,7 +63,7 @@ public class Event implements PublicationContext {
         return agent;
     }
 
-    public Optional<Publication> getProduct() {
+    public Optional<URI> getProduct() {
         return Optional.ofNullable(product);
     }
 
@@ -75,7 +76,7 @@ public class Event implements PublicationContext {
         private Place place;
         private Time time;
         private Agent agent;
-        private Publication product;
+        private URI product;
         private Event subEvent;
 
         public Builder() {
@@ -101,7 +102,7 @@ public class Event implements PublicationContext {
             return this;
         }
 
-        public Builder withProduct(Publication product) {
+        public Builder withProduct(URI product) {
             this.product = product;
             return this;
         }
