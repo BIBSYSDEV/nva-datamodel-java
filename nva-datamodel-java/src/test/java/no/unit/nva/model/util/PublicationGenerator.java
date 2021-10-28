@@ -334,13 +334,21 @@ public class PublicationGenerator extends ModelTest {
     }
 
     private static PublicationContext getPublishingContextEventPeriod() {
+        var event = new Event.Builder()
+                .withLabel("subEvent 1")
+                .withAgent(new UnconfirmedOrganization("Sub-event organizer"))
+                .withPlace(new UnconfirmedPlace("Next door but one to The Pea shop, Brighton", "Transnistria"))
+                .withTime(new no.unit.nva.model.time.Instant(LocalDateTime.now()))
+                .withProduct(SOME_URI)
+                .build();
+
         return new Event.Builder()
                 .withLabel("A wondrous event that surprised the fallow deer")
                 .withPlace(new UnconfirmedPlace("The pea shop, Brighton", "Transnistria"))
                 .withTime(new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(3)))
                 .withAgent(new UnconfirmedOrganization("Hallowed Blue Feet Inc."))
-                .withProduct(null)
-                .withSubEvent(null)
+                .withProduct(SOME_URI)
+                .withSubEvent(event)
                 .build();
     }
 

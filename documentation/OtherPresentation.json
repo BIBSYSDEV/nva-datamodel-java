@@ -85,8 +85,26 @@
           "type" : "UnconfirmedOrganization",
           "name" : "Hallowed Blue Feet Inc."
         },
-        "product" : null,
-        "subEvent" : null
+        "product" : "https://123123/213123.com",
+        "subEvent" : {
+          "type" : "Event",
+          "label" : "subEvent 1",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "Next door but one to The Pea shop, Brighton",
+            "country" : "Transnistria"
+          },
+          "time" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "agent" : {
+            "type" : "UnconfirmedOrganization",
+            "name" : "Sub-event organizer"
+          },
+          "product" : "https://123123/213123.com",
+          "subEvent" : null
+        }
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
@@ -144,5 +162,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "https://example.org/subject/123" ],
-  "modelVersion" : "0.14.7"
+  "modelVersion" : "0.14.8"
 }
