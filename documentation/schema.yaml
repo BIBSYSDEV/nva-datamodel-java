@@ -688,7 +688,8 @@ referencedSchemas:
         agent:
           $ref: '#/components/schemas/Agent'
         product:
-          $ref: '#/components/schemas/Publication'
+          type: string
+          format: uri
         subEvent:
           $ref: '#/components/schemas/Event'
         type:
