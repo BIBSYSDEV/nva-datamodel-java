@@ -10,13 +10,13 @@ import no.unit.nva.model.contexttypes.venue.Venue;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ArtisticDesign implements PublicationContext {
+public class Artistic implements PublicationContext {
     public static final String VENUES = "venues";
 
     @JsonProperty(VENUES)
     private final List<Venue> venues;
 
-    public ArtisticDesign(@JsonProperty(VENUES) List<Venue> venues) {
+    public Artistic(@JsonProperty(VENUES) List<Venue> venues) {
         this.venues = nonNull(venues) ? venues : Collections.emptyList();
     }
 
@@ -30,10 +30,10 @@ public class ArtisticDesign implements PublicationContext {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ArtisticDesign)) {
+        if (!(o instanceof Artistic)) {
             return false;
         }
-        ArtisticDesign that = (ArtisticDesign) o;
+        Artistic that = (Artistic) o;
         return Objects.equals(getVenues(), that.getVenues());
     }
 

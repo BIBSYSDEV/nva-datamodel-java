@@ -3,17 +3,7 @@ package no.unit.nva.model.instancetypes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignClothingDesign;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignExhibition;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignGraphicDesign;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignIllustration;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignInteractionDesign;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignInteriorDesign;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignLightDesign;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignOther;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignProductDesign;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignServiceDesign;
-import no.unit.nva.model.instancetypes.artistic.ArtisticDesignWebDesign;
+import no.unit.nva.model.instancetypes.artistic.ArtisticDesign;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
@@ -42,17 +32,7 @@ import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(name = "ArtisticDesignClothingDesign", value = ArtisticDesignClothingDesign.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignExhibition", value = ArtisticDesignExhibition.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignGraphicDesign", value = ArtisticDesignGraphicDesign.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignIllustration", value = ArtisticDesignIllustration.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignInteractionDesign", value = ArtisticDesignInteractionDesign.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignInteriorDesign", value = ArtisticDesignInteriorDesign.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignLightDesign", value = ArtisticDesignLightDesign.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignOther", value = ArtisticDesignOther.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignProductDesign", value = ArtisticDesignProductDesign.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignServiceDesign", value = ArtisticDesignServiceDesign.class),
-    @JsonSubTypes.Type(name = "ArtisticDesignWebDesign", value = ArtisticDesignWebDesign.class),
+    @JsonSubTypes.Type(name = "ArtisticDesign", value = ArtisticDesign.class),
     @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
     @JsonSubTypes.Type(name = "JournalCorrigendum", value = JournalCorrigendum.class),

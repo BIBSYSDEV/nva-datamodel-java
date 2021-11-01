@@ -69,7 +69,7 @@
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "ArtisticDesign",
+        "type" : "Artistic",
         "venues" : [ {
           "type" : "Venue",
           "place" : {
@@ -77,13 +77,21 @@
             "label" : "Expo 2021",
             "country" : "Germany"
           },
+          "time" : {
+            "type" : "Period",
+            "from" : "2020-09-23T09:51:23.044996Z",
+            "to" : "2020-09-23T09:51:23.044996Z"
+          },
           "sequence" : 1
         } ]
       },
       "doi" : "https://123123/213123.com",
       "publicationInstance" : {
-        "type" : "ArtisticDesignProductDesign",
-        "description" : "An anti-splashback device",
+        "type" : "ArtisticDesign",
+        "subtype" : {
+          "type" : "ClothingDesign"
+        },
+        "description" : "A massive jacket with bells on and a smear of boar-sweat",
         "pages" : {
           "type" : "NullPages"
         },
@@ -137,5 +145,5 @@
     "value" : "1234"
   } ],
   "subjects" : [ "https://example.org/subject/123" ],
-  "modelVersion" : "0.14.8"
+  "modelVersion" : "0.14.9"
 }
