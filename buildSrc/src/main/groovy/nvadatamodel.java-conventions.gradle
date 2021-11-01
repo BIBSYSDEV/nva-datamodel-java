@@ -20,7 +20,7 @@ repositories {
 
 test {
     useJUnitPlatform{
-            excludeTags("migrationTest")
+            excludeTags "migrationTest"
     }
     failFast = true
     environment "ID_NAMESPACE", "https://www.example.org"
@@ -28,16 +28,18 @@ test {
     finalizedBy(jacocoTestReport)
 }
 
-tasks.register('migrationTest', Test) {
-    useJUnitPlatform {
-        includeEngines 'junit-jupiter'
-        includeTags ("migrationTest")
-        testLogging {
-            events 'skipped', 'passed', 'failed'
-        }
-    }
-    environment "DATAMODEL_VERSION", "${project.version}"
-}
+//Temporarily disabled
+//
+//tasks.register('migrationTesting',Test) {
+//    useJUnitPlatform {
+//        includeEngines 'junit-jupiter'
+//        includeTags ("migrationTest")
+//        testLogging {
+//            events 'skipped', 'passed', 'failed'
+//        }
+//    }
+//    environment "DATAMODEL_VERSION", "${project.version}"
+//}
 
 
 jacocoTestReport {
