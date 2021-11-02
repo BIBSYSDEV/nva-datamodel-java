@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(name = "Journal", value = Journal.class),
     @JsonSubTypes.Type(name = "UnconfirmedJournal", value = UnconfirmedJournal.class),
     @JsonSubTypes.Type(name = "Event", value = Event.class),
-    @JsonSubTypes.Type(name = "ArtisticDesign", value = ArtisticDesign.class)
+    @JsonSubTypes.Type(name = "Artistic", value = Artistic.class)
 })
 public interface PublicationContext {
 }

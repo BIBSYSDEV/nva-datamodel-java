@@ -1,5 +1,6 @@
 package no.unit.nva;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import no.unit.nva.hamcrest.DoesNotHaveEmptyValues;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
@@ -36,6 +37,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PublicationTest extends ModelTest {
@@ -70,7 +72,7 @@ public class PublicationTest extends ModelTest {
         Publication publication = PublicationGenerator.generatePublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThat(publication, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
-        Diff diff = JAVERS.compare(publication, copy);
+        Diff diff = compareAsObjectNodes(publication, copy);
         assertThat(diff.prettyPrint(), copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));
     }
@@ -103,6 +105,12 @@ public class PublicationTest extends ModelTest {
         String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
                                              NEW, PUBLISHED);
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
+    }
+
+    private Diff compareAsObjectNodes(Publication publication, Publication copy) {
+        var publicationObjectNode = dataModelObjectMapper.convertValue(publication, ObjectNode.class);
+        var copyObjectNode = dataModelObjectMapper.convertValue(copy, ObjectNode.class);
+        return JAVERS.compare(publicationObjectNode, copyObjectNode);
     }
 
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
