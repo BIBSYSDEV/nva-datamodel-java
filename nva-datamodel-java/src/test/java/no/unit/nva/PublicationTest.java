@@ -1,10 +1,11 @@
 package no.unit.nva;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import no.unit.nva.file.model.File;
+import no.unit.nva.file.model.FileSet;
 import no.unit.nva.hamcrest.DoesNotHaveEmptyValues;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
-import no.unit.nva.model.File;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
@@ -37,7 +38,6 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PublicationTest extends ModelTest {
@@ -116,8 +116,8 @@ public class PublicationTest extends ModelTest {
     private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
         publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
-        publication.getFileSet().getFiles().forEach(file -> publication.getFileSet()
-                                                                .setFiles(List.of(copyWithNewIdentifier(file))));
+        publication.getFileSet().getFiles().forEach(file -> publication
+                .setFileSet(new FileSet(List.of(copyWithNewIdentifier(file)))));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
         var publicationJson = dataModelObjectMapper.writeValueAsString(publication)
                                   .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);

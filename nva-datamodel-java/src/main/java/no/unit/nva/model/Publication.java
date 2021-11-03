@@ -16,6 +16,7 @@ import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;

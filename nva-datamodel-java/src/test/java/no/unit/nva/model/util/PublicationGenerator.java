@@ -1,6 +1,9 @@
 package no.unit.nva.model.util;
 
 import com.github.javafaker.Faker;
+import no.unit.nva.file.model.File;
+import no.unit.nva.file.model.FileSet;
+import no.unit.nva.file.model.License;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
@@ -10,10 +13,7 @@ import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.DoiRequestMessage;
 import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.EntityDescription;
-import no.unit.nva.model.File;
-import no.unit.nva.model.FileSet;
 import no.unit.nva.model.Grant;
-import no.unit.nva.model.License;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
@@ -395,9 +395,7 @@ public class PublicationGenerator extends ModelTest {
     }
 
     public static FileSet getFileSet(UUID fileIdentifier) {
-        return new FileSet.Builder()
-            .withFiles(Collections.singletonList(getFile(fileIdentifier)))
-            .build();
+        return new FileSet(Collections.singletonList(getFile(fileIdentifier)));
     }
 
     public static File getFile(UUID fileIdentifier) {

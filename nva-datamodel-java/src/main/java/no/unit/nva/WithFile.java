@@ -1,6 +1,7 @@
 package no.unit.nva;
 
-import no.unit.nva.model.FileSet;
+
+import no.unit.nva.file.model.FileSet;
 
 public interface WithFile extends PublicationBase {
 
