@@ -28,8 +28,6 @@ test {
     finalizedBy(jacocoTestReport)
 }
 
-//Temporarily disabled
-
 tasks.register('migrationTesting',Test) {
     useJUnitPlatform {
         includeEngines 'junit-jupiter'
