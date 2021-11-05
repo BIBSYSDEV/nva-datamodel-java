@@ -31,7 +31,6 @@ import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -45,7 +44,7 @@ public class FunctionalTests {
     public static final String SAMPLE_PROJECT_FOLDER_NAME = "sample-generation";
     public static final String DEPENDENCIES_FILE = "libs.versions.toml";
     public static final String MODEL_VERSION_FIELD_IN_SERIALIZED_RESOURCES = "modelVersion";
-    public static final int SOME_TIME_FOR_MAVEN_LOCAL_TO_REGISTER_CHANGES = 700;
+    public static final int SOME_TIME_FOR_MAVEN_LOCAL_TO_REGISTER_CHANGES = 2000;
     public static final String HARDCODED_DATAMODEL_VERSION_PLACEHOLDER_IN_RESOURCE_FILE =
         "<DATAMODEL_VERSION_PLACEHOLDER>";
     public static final String GRADLE_FOLDER_IN_PROJECS = "gradle";
@@ -54,10 +53,9 @@ public class FunctionalTests {
     public static final String CURRENT_FOLDER = "";
 
     @TempDir
-     static File temporaryDir;
-     static File sampleProjectCurrentVersion;
-     static File sampleProjectPreviousVersion;
-
+    static File temporaryDir;
+    static File sampleProjectCurrentVersion;
+    static File sampleProjectPreviousVersion;
 
     @BeforeAll
     public static void init() throws IOException {
