@@ -29,17 +29,17 @@ test {
 }
 
 //Temporarily disabled
-//
-//tasks.register('migrationTesting',Test) {
-//    useJUnitPlatform {
-//        includeEngines 'junit-jupiter'
-//        includeTags ("migrationTest")
-//        testLogging {
-//            events 'skipped', 'passed', 'failed'
-//        }
-//    }
-//    environment "DATAMODEL_VERSION", "${project.version}"
-//}
+
+tasks.register('migrationTesting',Test) {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+        includeTags ("migrationTest")
+        testLogging {
+            events 'skipped', 'passed', 'failed'
+        }
+    }
+    environment "DATAMODEL_VERSION", "${project.version}"
+}
 
 
 jacocoTestReport {
