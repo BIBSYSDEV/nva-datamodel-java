@@ -36,6 +36,8 @@ public class PublicationGeneratorTest {
         writeJson(json, publication.getIdentifier().toString());
     }
 
+
+
     private void writeJson(String json, String filename) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(new File(serializationsFolder, filename + ".json")));
         writer.write(json);
