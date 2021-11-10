@@ -9,9 +9,9 @@ import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.EntityDescription;
-import no.unit.nva.model.FileSet;
 import no.unit.nva.model.ResearchProject;
 import nva.commons.core.JacocoGenerated;
 

@@ -11,6 +11,7 @@ javersVersion = {strictly = '6.2.4'}
 javaFakerVersion = {strictly = '1.0.2'}
 slf4jVersion= {strictly = '1.7.30'}
 apacheCommonsIo = { strictly = '2.11.0' }
+nvaFileModel = { strictly = '1.0.0' }
 
 
 [libraries]
@@ -19,6 +20,7 @@ apache-commons-io = { group = 'commons-io', name = 'commons-io', version.ref = '
 
 nva-commons-core = { group = 'com.github.bibsysdev', name = 'core', version.ref = 'nvaCommonsVersion' }
 nva-commons-identifiers = { group = 'com.github.bibsysdev', name = 'identifiers', version.ref = 'nvaCommonsVersion' }
+nva-file-model = { group = 'com.github.bibsysdev', name = 'nva-file-model', version.ref = 'nvaFileModel' }
 
 nva-testutils = { group = 'com.github.bibsysdev', name = 'nva-testutils', version.ref = 'nvaTestUtilsVersion' }
 
