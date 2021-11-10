@@ -10,7 +10,7 @@ dependencies {
     compileOnly libs.nva.commons.core
     testImplementation libs.nva.commons.core
 
-    implementation libs.nva.file.model
+    api libs.nva.file.model
 
     compileOnly libs.nva.commons.identifiers
     testImplementation libs.nva.commons.identifiers

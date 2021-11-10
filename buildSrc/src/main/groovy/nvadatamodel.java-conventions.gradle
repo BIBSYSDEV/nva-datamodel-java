@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'jacoco'
     id 'checkstyle'
     id 'pmd'
@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'com.github.bibsysdev'
-version '0.14.10'
+version '0.14.11'
 
 
 repositories {
