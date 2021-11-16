@@ -20,7 +20,7 @@ repositories {
 
 test {
     useJUnitPlatform{
-            excludeTags "migrationTest"
+        excludeTags "migrationTest"
     }
     failFast = true
     environment "ID_NAMESPACE", "https://www.example.org"
@@ -39,6 +39,7 @@ tasks.register('migrationTesting',Test) {
     environment "DATAMODEL_VERSION", "${project.version}"
 }
 
+migrationTesting.enabled = false
 
 jacocoTestReport {
     dependsOn(test)

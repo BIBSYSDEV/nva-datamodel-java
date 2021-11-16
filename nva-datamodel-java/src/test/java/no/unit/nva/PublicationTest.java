@@ -132,6 +132,6 @@ public class PublicationTest extends ModelTest {
                         file.getLicense(),
                         file.isAdministrativeAgreement(),
                         file.isPublisherAuthority(),
-                        file.getEmbargoDate());
+                        file.getEmbargoDate().orElse(null));
     }
 }
