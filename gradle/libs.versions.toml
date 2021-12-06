@@ -1,17 +1,17 @@
 [versions]
 junitVersion = { strictly = '5.6.2' }
 jacksonVersion = { strictly = '2.13.0' }
-nvaCommonsVersion = { strictly = '1.14.0' }
+nvaCommonsVersion = { strictly = '1.16.20' }
 apacheCommonsValidator = { strictly = '1.7' }
-nvaTestUtilsVersion = {strictly = '0.1.24'}
-hamcrestVersion = {strictly = '2.2'}
-jsonldJavaVersion = { strictly = '0.13.0'}
-swaggerCoreVersion = {strictly = '2.1.4'}
-javersVersion = {strictly = '6.2.4'}
-javaFakerVersion = {strictly = '1.0.2'}
-slf4jVersion= {strictly = '1.7.30'}
+hamcrestVersion = { strictly = '2.2' }
+jsonldJavaVersion = { strictly = '0.13.0' }
+swaggerCoreVersion = { strictly = '2.1.4' }
+javersVersion = { strictly = '6.2.4' }
+javaFakerVersion = { strictly = '1.0.2' }
+slf4jVersion = { strictly = '1.7.30' }
 apacheCommonsIo = { strictly = '2.11.0' }
 nvaFileModel = { strictly = '1.0.3' }
+nva-language ={strictly = '1.0'}
 
 
 [libraries]
@@ -20,9 +20,9 @@ apache-commons-io = { group = 'commons-io', name = 'commons-io', version.ref = '
 
 nva-commons-core = { group = 'com.github.bibsysdev', name = 'core', version.ref = 'nvaCommonsVersion' }
 nva-commons-identifiers = { group = 'com.github.bibsysdev', name = 'identifiers', version.ref = 'nvaCommonsVersion' }
+nva-commons-testutils = { group = 'com.github.bibsysdev', name = 'nvatestutils', version.ref = 'nvaCommonsVersion' }
 nva-file-model = { group = 'com.github.bibsysdev', name = 'nva-file-model', version.ref = 'nvaFileModel' }
-
-nva-testutils = { group = 'com.github.bibsysdev', name = 'nva-testutils', version.ref = 'nvaTestUtilsVersion' }
+nva-language = {group = 'com.github.bibsysdev', name = 'nva-language', version.ref = 'nva-language' }
 
 jackson-databind = { group = 'com.fasterxml.jackson.core', name = 'jackson-databind', version.ref = 'jacksonVersion' }
 jackson-annotations = { group = 'com.fasterxml.jackson.core', name = 'jackson-annotations', version.ref = 'jacksonVersion' }
@@ -45,6 +45,6 @@ slf4j = { group = 'org.slf4j', name = 'slf4j-simple', version.ref = 'slf4jVersio
 
 
 [bundles]
-unittesting = ["junit-jupiter-api","junit-jupiter-params","junit-jupiter-engine","hamcrest","javers-core","nva-testutils"]
-jackson = ["jackson-core", "jackson-databind","jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
+unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest","javafaker", "javers-core", "nva-commons-testutils","nva-commons-identifiers", "nva-commons-core"]
+jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
 
