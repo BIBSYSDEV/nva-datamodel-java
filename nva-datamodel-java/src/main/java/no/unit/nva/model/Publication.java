@@ -4,7 +4,7 @@ import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.github.bibsysdev.BuildConfig;
+import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class Publication
     );
     public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
         "You must initiate creation of a DoiRequest before you can update it.";
-    private static final String MODEL_VERSION = BuildConfig.MODEL_VERSION;
+    private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
@@ -53,26 +53,6 @@ public class Publication
 
     public Publication() {
 
-    }
-
-    private Publication(Builder builder) {
-        setIdentifier(builder.identifier);
-        setStatus(builder.status);
-        setOwner(builder.owner);
-        setPublisher(builder.publisher);
-        setCreatedDate(builder.createdDate);
-        setModifiedDate(builder.modifiedDate);
-        setPublishedDate(builder.publishedDate);
-        setIndexedDate(builder.indexedDate);
-        setHandle(builder.handle);
-        setDoi(builder.doi);
-        setDoiRequest(builder.doiRequest);
-        setLink(builder.link);
-        setEntityDescription(builder.entityDescription);
-        setFileSet(builder.fileSet);
-        setProjects(builder.projects);
-        setAdditionalIdentifiers(builder.additionalIdentifiers);
-        setSubjects(builder.subjects);
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
@@ -357,114 +337,99 @@ public class Publication
 
     public static final class Builder {
 
-        private SortableIdentifier identifier;
-        private PublicationStatus status;
-        private String owner;
-        private Organization publisher;
-        private Instant createdDate;
-        private Instant modifiedDate;
-        private Instant publishedDate;
-        private Instant indexedDate;
-        private URI handle;
-        private URI doi;
-        private DoiRequest doiRequest;
-        private URI link;
-        private EntityDescription entityDescription;
-        private FileSet fileSet;
-        private List<ResearchProject> projects;
-        private Set<AdditionalIdentifier> additionalIdentifiers;
-        private List<URI> subjects;
+        private final Publication publication;
 
         public Builder() {
+            publication = new Publication();
         }
 
         public Builder withIdentifier(SortableIdentifier identifier) {
-            this.identifier = identifier;
+            publication.setIdentifier(identifier);
             return this;
         }
 
         public Builder withStatus(PublicationStatus status) {
-            this.status = status;
+            publication.setStatus(status);
             return this;
         }
 
         public Builder withOwner(String owner) {
-            this.owner = owner;
+            publication.setOwner(owner);
             return this;
         }
 
         public Builder withPublisher(Organization publisher) {
-            this.publisher = publisher;
+            publication.setPublisher(publisher);
             return this;
         }
 
         public Builder withCreatedDate(Instant createdDate) {
-            this.createdDate = createdDate;
+            publication.setCreatedDate(createdDate);
             return this;
         }
 
         public Builder withModifiedDate(Instant modifiedDate) {
-            this.modifiedDate = modifiedDate;
+            publication.setModifiedDate(modifiedDate);
             return this;
         }
 
         public Builder withPublishedDate(Instant publishedDate) {
-            this.publishedDate = publishedDate;
+            publication.setPublishedDate(publishedDate);
             return this;
         }
 
         public Builder withIndexedDate(Instant indexedDate) {
-            this.indexedDate = indexedDate;
+            publication.setIndexedDate(indexedDate);
             return this;
         }
 
         public Builder withHandle(URI handle) {
-            this.handle = handle;
+            publication.setHandle(handle);
             return this;
         }
 
         public Builder withDoi(URI doi) {
-            this.doi = doi;
+            publication.setDoi(doi);
             return this;
         }
 
         public Builder withDoiRequest(DoiRequest doiRequest) {
-            this.doiRequest = doiRequest;
+            publication.setDoiRequest(doiRequest);
             return this;
         }
 
         public Builder withLink(URI link) {
-            this.link = link;
+            publication.setLink(link);
             return this;
         }
 
         public Builder withEntityDescription(EntityDescription entityDescription) {
-            this.entityDescription = entityDescription;
+            publication.setEntityDescription(entityDescription);
             return this;
         }
 
         public Builder withFileSet(FileSet fileSet) {
-            this.fileSet = fileSet;
+            publication.setFileSet(fileSet);
             return this;
         }
 
         public Builder withProjects(List<ResearchProject> projects) {
-            this.projects = projects;
+            publication.setProjects(projects);
             return this;
         }
 
         public Builder withAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
-            this.additionalIdentifiers = additionalIdentifiers;
+            publication.setAdditionalIdentifiers(additionalIdentifiers);
             return this;
         }
 
         public Builder withSubjects(List<URI> subjects) {
-            this.subjects = subjects;
+            publication.setSubjects(subjects);
             return this;
         }
 
         public Publication build() {
-            return new Publication(this);
+            return publication;
         }
     }
 }
