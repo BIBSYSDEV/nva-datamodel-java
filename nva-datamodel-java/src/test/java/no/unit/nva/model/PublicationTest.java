@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.bibsysdev.BuildConfig;
+import com.github.bibsysdev.ResourcesBuildConfig;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
@@ -83,7 +84,7 @@ public class PublicationTest {
     public void getModelVersionReturnsModelVersionDefinedByGradle()
             throws InvalidIssnException {
         Publication samplePublication = getPublicationWithoutDoiRequest();
-        assertThat(samplePublication.getModelVersion(), is(equalTo(BuildConfig.MODEL_VERSION)));
+        assertThat(samplePublication.getModelVersion(), is(equalTo(ResourcesBuildConfig.RESOURCES_MODEL_VERSION)));
     }
 
     @Test
