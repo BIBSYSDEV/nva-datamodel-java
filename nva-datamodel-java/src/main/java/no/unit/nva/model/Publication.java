@@ -4,7 +4,7 @@ import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.github.bibsysdev.BuildConfig;
+import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class Publication
     );
     public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
         "You must initiate creation of a DoiRequest before you can update it.";
-    private static final String MODEL_VERSION = BuildConfig.MODEL_VERSION;
+    private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
