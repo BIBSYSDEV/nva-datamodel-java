@@ -4,7 +4,8 @@ plugins {
 
 dependencies {
 
-    implementation libs.datamodel
+    implementation libs.datamodel.core
+    testImplementation libs.datamodel.testutils
     testImplementation libs.bundles.unittesting
     implementation libs.nva.commons.testutils
     implementation libs.nva.commons.core

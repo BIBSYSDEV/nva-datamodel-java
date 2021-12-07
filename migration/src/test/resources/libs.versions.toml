@@ -1,5 +1,5 @@
 [versions]
-junitVersion = { strictly = '5.6.2' }
+junitVersion = { strictly = '5.8.2' }
 jacksonVersion = { strictly = '2.13.0' }
 hamcrestVersion = { strictly = '2.2' }
 javersVersion = { strictly = '6.2.4' }
@@ -23,7 +23,8 @@ javers-core = { group = 'org.javers', name = 'javers-core', version.ref = 'javer
 javafaker = { group = 'com.github.javafaker', name = 'javafaker', version.ref = 'javaFakerVersion' }
 hamcrest = { group = 'org.hamcrest', name = 'hamcrest', version.ref = 'hamcrestVersion' }
 
-datamodel = { group = 'com.github.bibsysdev', name = 'nva-datamodel-java', version.ref = 'datamodel' }
+datamodel-core = { group = 'com.github.bibsysdev', name = 'nva-datamodel-java', version.ref = 'datamodel' }
+datamodel-testutils = { group = 'com.github.bibsysdev', name = 'nva-datamodel-testutils', version.ref = 'datamodel' }
 nva-commons-core = { group = 'com.github.bibsysdev', name = 'core', version.ref = 'nvaCommonsVersion' }
 nva-commons-identifiers = { group = 'com.github.bibsysdev', name = 'identifiers', version.ref = 'nvaCommonsVersion' }
 nva-commons-testutils = { group = 'com.github.bibsysdev', name = 'nvatestutils', version.ref = 'nvaCommonsVersion' }
@@ -31,4 +32,3 @@ nva-commons-testutils = { group = 'com.github.bibsysdev', name = 'nvatestutils',
 [bundles]
 unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest", "javers-core", "javafaker", "nva-commons-testutils"]
 jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
-
