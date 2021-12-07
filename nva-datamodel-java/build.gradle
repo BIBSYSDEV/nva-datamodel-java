@@ -18,6 +18,7 @@ dependencies {
     compileOnly libs.bundles.jackson
     testImplementation libs.bundles.jackson
 
+    testImplementation project (":nva-datamodel-testutils")
     testImplementation libs.bundles.unittesting
 
 
