@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesignSubtype;
@@ -118,6 +120,18 @@ public class PublicationInstanceBuilder {
     public static Class<?> randomPublicationInstanceType() {
         List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
         return randomElement(publicationInstanceClasses);
+    }
+
+    public static Stream<Class<?>> journalArticleInstanceTypes() {
+        return listPublicationInstanceTypes().stream()
+            .map(PublicationInstanceBuilder::getPublicationContext)
+            .filter(contextAndInstanceTuple -> contextAndInstanceTuple.getContext() instanceof Journal)
+            .map(ContextAndInstanceTuple::getInstanceType);
+    }
+
+    private static ContextAndInstanceTuple getPublicationContext(Class<?> instanceType) {
+        var context = PublicationContextBuilder.randomPublicationContext(instanceType);
+        return new ContextAndInstanceTuple(context, instanceType);
     }
 
     public static List<Class<?>> listPublicationInstanceTypes() {

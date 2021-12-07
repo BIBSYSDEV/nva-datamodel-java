@@ -1,33 +1,8 @@
 package no.unit.nva;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import no.unit.nva.file.model.File;
-import no.unit.nva.file.model.FileSet;
-import no.unit.nva.hamcrest.DoesNotHaveEmptyValues;
-import no.unit.nva.identifiers.SortableIdentifier;
-import no.unit.nva.model.AdditionalIdentifier;
-import no.unit.nva.model.ModelTest;
-import no.unit.nva.model.Publication;
-import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
-import no.unit.nva.model.util.PublicationGenerator;
-import org.javers.core.Javers;
-import org.javers.core.JaversBuilder;
-import org.javers.core.diff.Diff;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.junit.jupiter.params.provider.EnumSource;
-import provider.InstanceTypeProvider;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
@@ -39,6 +14,31 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Stream;
+import no.unit.nva.file.model.File;
+import no.unit.nva.file.model.FileSet;
+import no.unit.nva.identifiers.SortableIdentifier;
+import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.ModelTest;
+import no.unit.nva.model.Publication;
+import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
+import no.unit.nva.model.testing.PublicationGenerator;
+import no.unit.nva.model.testing.PublicationInstanceBuilder;
+import org.javers.core.Javers;
+import org.javers.core.JaversBuilder;
+import org.javers.core.diff.Diff;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class PublicationTest extends ModelTest {
 
@@ -48,18 +48,21 @@ public class PublicationTest extends ModelTest {
     public static final SortableIdentifier REPLACEMENT_IDENTIFIER_1 =
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final UUID REPLACEMENT_IDENTIFIER_2 = UUID.fromString("5032710d-a326-43d3-a8fb-57a451873c78");
-    public static final String JOURNAL_ARTICLE = "JournalArticle";
     public static final Javers JAVERS = JaversBuilder.javers().build();
 
+    public static Stream<Class<?>> publicationInstanceProvider() {
+        return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
+    }
+
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
-    @ArgumentsSource(InstanceTypeProvider.class)
-    void publicationReturnsValidPublicationWhenInputIsValid(String instanceType) throws Exception {
-        Publication expected = PublicationGenerator.generatePublication(instanceType);
+    @MethodSource("publicationInstanceProvider")
+    void publicationReturnsValidPublicationWhenInputIsValid(Class<?> instanceType) throws Exception {
+        Publication expected = PublicationGenerator.randomPublication(instanceType);
 
         String publication = dataModelObjectMapper.writeValueAsString(expected);
         Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
-        assertThat(expected, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
+        assertThatPublicationDoesNotHaveEmptyFields(expected);
         assertEquals(expected, roundTripped);
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
@@ -67,27 +70,27 @@ public class PublicationTest extends ModelTest {
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
-    @ArgumentsSource(InstanceTypeProvider.class)
-    void copyReturnsBuilderWithAllDataOfAPublication(String referenceInstanceType) throws Exception {
-        Publication publication = PublicationGenerator.generatePublication(referenceInstanceType);
+    @MethodSource("publicationInstanceProvider")
+    void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType) {
+        Publication publication = PublicationGenerator.randomPublication(referenceInstanceType);
         Publication copy = publication.copy().build();
-        assertThat(publication, DoesNotHaveEmptyValues.doesNotHaveEmptyValues());
+        assertThatPublicationDoesNotHaveEmptyFields(publication);
         Diff diff = compareAsObjectNodes(publication, copy);
         assertThat(diff.prettyPrint(), copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
-    @ArgumentsSource(InstanceTypeProvider.class)
-    void projectsAreSetAsListsWhenInputIsSingleProject(String instanceType) throws Exception {
-        Publication expected = PublicationGenerator.generatePublication(instanceType);
+    @MethodSource("publicationInstanceProvider")
+    void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType) {
+        Publication expected = PublicationGenerator.randomPublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));
     }
 
     @ParameterizedTest
     @EnumSource(value = PublicationStatus.class, names = {"DRAFT_FOR_DELETION", "PUBLISHED"})
     void updateStatusForDraftPublication(PublicationStatus target) throws Exception {
-        Publication publication = PublicationGenerator.generatePublication(JOURNAL_ARTICLE);
+        Publication publication = PublicationGenerator.randomPublication();
         publication.setStatus(DRAFT);
         publication.updateStatus(target);
 
@@ -96,7 +99,7 @@ public class PublicationTest extends ModelTest {
 
     @Test
     void updateStatusThrowsExceptionForInvalidStatusTransition() throws Exception {
-        Publication publication = PublicationGenerator.generatePublication(JOURNAL_ARTICLE);
+        Publication publication = PublicationGenerator.randomPublication();
         publication.setStatus(NEW);
 
         InvalidPublicationStatusTransitionException exception =
@@ -107,20 +110,24 @@ public class PublicationTest extends ModelTest {
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
     }
 
+    private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
+        assertThat(expected, doesNotHaveEmptyValues());
+    }
+
     private Diff compareAsObjectNodes(Publication publication, Publication copy) {
         var publicationObjectNode = dataModelObjectMapper.convertValue(publication, ObjectNode.class);
         var copyObjectNode = dataModelObjectMapper.convertValue(copy, ObjectNode.class);
         return JAVERS.compare(publicationObjectNode, copyObjectNode);
     }
 
-    private void writePublicationToFile(String instanceType, Publication publication) throws IOException {
+    private void writePublicationToFile(Class<?> instanceType, Publication publication) throws IOException {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
         publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
         publication.getFileSet().getFiles().forEach(file -> publication
-                .setFileSet(new FileSet(List.of(copyWithNewIdentifier(file)))));
-        String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType);
+            .setFileSet(new FileSet(List.of(copyWithNewIdentifier(file)))));
+        String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType.getSimpleName());
         var publicationJson = dataModelObjectMapper.writeValueAsString(publication)
-                                  .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
+            .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
         Files.write(Paths.get(path), publicationJson.getBytes());
     }
 

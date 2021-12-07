@@ -5,7 +5,6 @@ import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues
 import static no.unit.nva.model.DoiRequestStatus.APPROVED;
 import static no.unit.nva.model.DoiRequestStatus.REJECTED;
 import static no.unit.nva.model.DoiRequestStatus.REQUESTED;
-import static no.unit.nva.model.util.PublicationGenerator.generateAdditionalIdentifiers;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.equalTo;
@@ -15,7 +14,6 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.bibsysdev.BuildConfig;
 import com.github.bibsysdev.ResourcesBuildConfig;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
@@ -24,8 +22,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Set;
 import no.unit.nva.model.exceptions.InvalidIssnException;
+import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.util.ContextUtil;
-import no.unit.nva.model.util.PublicationGenerator;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
@@ -40,9 +38,9 @@ public class PublicationTest {
 
 
     @Test
-    public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus()
-            throws InvalidIssnException {
-        var publication = generatePublicationWithRejectedDoiRequestStatus();
+    public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus() {
+        var publication = PublicationGenerator.randomPublication();
+        publication.getDoiRequest().setStatus(REQUESTED);
 
         var validRequestedChange = APPROVED;
         // ensure we have different status before trying to update
@@ -53,9 +51,9 @@ public class PublicationTest {
     }
 
     @Test
-    public void updatingDoiRequestWithInvalidRequestedStatusChangeThenThrowsIllegalArgumentException()
-            throws InvalidIssnException {
-        var publication = generatePublicationWithRejectedDoiRequestStatus();
+    public void updatingDoiRequestWithInvalidRequestedStatusChangeThenThrowsIllegalArgumentException() {
+        var publication = PublicationGenerator.randomPublication();
+        publication.getDoiRequest().setStatus(REJECTED);
 
         var actualMessage = assertThrows(IllegalArgumentException.class,
             () -> publication.updateDoiRequestStatus(REQUESTED)).getMessage();
@@ -70,9 +68,9 @@ public class PublicationTest {
     }
 
     @Test
-    public void updatingDoiRequestStatusWithoutDoiRequestThrowsIllegalStateException()
-            throws InvalidIssnException {
-        var publication = getPublicationWithoutDoiRequest();
+    public void updatingDoiRequestStatusWithoutDoiRequestThrowsIllegalStateException() {
+        var publication = PublicationGenerator.randomPublication();
+        publication.setDoiRequest(null);
 
         var actualException = assertThrows(IllegalStateException.class,
             () -> publication.updateDoiRequestStatus(REQUESTED));
@@ -81,16 +79,14 @@ public class PublicationTest {
     }
 
     @Test
-    public void getModelVersionReturnsModelVersionDefinedByGradle()
-            throws InvalidIssnException {
-        Publication samplePublication = getPublicationWithoutDoiRequest();
+    public void getModelVersionReturnsModelVersionDefinedByGradle() {
+        Publication samplePublication = PublicationGenerator.randomPublication();
         assertThat(samplePublication.getModelVersion(), is(equalTo(ResourcesBuildConfig.RESOURCES_MODEL_VERSION)));
     }
 
     @Test
-    public void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields()
-            throws InvalidIssnException {
-        Publication samplePublication = getPublicationWithoutDoiRequest();
+    public void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields() {
+        Publication samplePublication = PublicationGenerator.randomPublication();
         Publication copy = samplePublication.copy().build();
 
         assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD)));
@@ -103,8 +99,8 @@ public class PublicationTest {
 
     @Test
     public void objectMapperReturnsSerializationWithAllFieldsSerialized()
-            throws InvalidIssnException, JsonProcessingException {
-        Publication samplePublication = getPublicationWithoutDoiRequest();
+        throws JsonProcessingException {
+        Publication samplePublication = PublicationGenerator.randomPublication();
         String jsonString = dataModelObjectMapper.writeValueAsString(samplePublication);
         Publication copy = dataModelObjectMapper.readValue(jsonString, Publication.class);
         assertThat(copy, is(equalTo(samplePublication)));
@@ -126,22 +122,4 @@ public class PublicationTest {
         return JsonLdProcessor.frame(input, frame, options);
     }
 
-    private Publication getPublicationWithoutDoiRequest() throws InvalidIssnException {
-
-        Publication samplePublication = PublicationGenerator
-                .generateJournalArticlePublication()
-                .copy()
-                .withDoiRequest(null)
-                .withAdditionalIdentifiers(generateAdditionalIdentifiers())
-                .build();
-        assertThat(samplePublication, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD)));
-        return samplePublication;
-    }
-
-
-    private Publication generatePublicationWithRejectedDoiRequestStatus() throws InvalidIssnException {
-        var doiRequest = PublicationGenerator.generateJournalArticlePublication().getDoiRequest();
-        return PublicationGenerator.generateJournalArticlePublication()
-                .copy().withDoiRequest(doiRequest.copy().withStatus(REJECTED).build()).build();
-    }
 }
