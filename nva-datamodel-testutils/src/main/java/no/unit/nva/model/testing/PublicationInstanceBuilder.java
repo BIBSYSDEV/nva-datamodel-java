@@ -55,17 +55,6 @@ public class PublicationInstanceBuilder {
         return randomPublicationInstance(randomType);
     }
 
-    public static Class<?> randomPublicationInstanceType() {
-        List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
-        return randomElement(publicationInstanceClasses);
-    }
-
-    public static List<Class<?>> listPublicationInstanceTypes() {
-        JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
-        Type[] types = annotations[0].value();
-        return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
-    }
-
     @SuppressWarnings("PMD.NcssCount")
     public static PublicationInstance<? extends Pages> randomPublicationInstance(Class<?> randomType) {
         var typeName = randomType.getSimpleName();
@@ -124,6 +113,17 @@ public class PublicationInstanceBuilder {
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
+    }
+
+    public static Class<?> randomPublicationInstanceType() {
+        List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
+        return randomElement(publicationInstanceClasses);
+    }
+
+    public static List<Class<?>> listPublicationInstanceTypes() {
+        JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
+        Type[] types = annotations[0].value();
+        return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
     }
 
     private static OtherPresentation generateOtherPresentation() {
