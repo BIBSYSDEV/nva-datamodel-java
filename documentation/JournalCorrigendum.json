@@ -1,133 +1,151 @@
 {
   "type" : "Publication",
   "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
-  "status" : "DRAFT",
-  "owner" : "eier@example.org",
+  "status" : "DRAFT_FOR_DELETION",
+  "owner" : "nl8AKQqkWgCM49I",
   "publisher" : {
     "type" : "Organization",
-    "id" : "https://example.org/org/123",
+    "id" : "https://www.example.org/molestiaecumque",
     "labels" : {
-      "no" : "Eksempelforlaget"
+      "icJDQW3XOuLUxVp" : "P50ohMdXkh"
     }
   },
   "createdDate" : "2020-09-23T09:51:23.044996ZZ",
   "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
   "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
   "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
-  "handle" : "https://example.org/handle/123",
-  "doi" : "https://example.org/doi/1231/98765",
+  "handle" : "https://www.example.org/autvoluptatem",
+  "doi" : "https://doi.org/10.1234/ipsa",
   "doiRequest" : {
     "type" : "DoiRequest",
-    "status" : "REQUESTED",
+    "status" : "REJECTED",
     "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
     "createdDate" : "2020-09-23T09:51:23.044996ZZ",
     "messages" : [ {
       "type" : "DoiRequestMessage",
-      "text" : "Some Text",
-      "author" : "SomeAuthor",
+      "text" : "rlOAEzyX5zLrX",
+      "author" : "kP30uKj3ybd0",
       "timestamp" : "2020-09-23T09:51:23.044996ZZ"
     } ]
   },
-  "link" : "https://example.org/link",
+  "link" : "https://www.example.org/quiquae",
   "entityDescription" : {
     "type" : "EntityDescription",
-    "mainTitle" : "Hovedtittelen",
+    "mainTitle" : "ES0G0dyy20xjvjoo33",
     "alternativeTitles" : {
-      "en" : "English title"
+      "el" : "y0vTLHzcDKx"
     },
-    "language" : "https://example.org/norsk",
+    "language" : "http://lexvo.org/id/iso639-3/isl",
     "date" : {
       "type" : "PublicationDate",
-      "year" : "2020",
-      "month" : "4",
-      "day" : "7"
+      "year" : "HpBIt0LxJsaU",
+      "month" : "GDCEu8qj84T89PbNAm",
+      "day" : "WPhLlTUO95"
     },
     "contributors" : [ {
       "type" : "Contributor",
       "identity" : {
         "type" : "Identity",
-        "id" : "https://example.org/person/123",
-        "name" : "Navnesen, Navn",
-        "nameType" : "Personal",
-        "orcId" : "orc123",
-        "arpId" : "arp123"
+        "id" : "https://www.example.com/qHzvuo3PMKQ",
+        "name" : "PDPBk28Ke4imvra",
+        "nameType" : "Organizational",
+        "orcId" : "OtuxBU6wbeVYI",
+        "arpId" : "YTDqZXq4C2zXkPgEw4x"
       },
       "affiliations" : [ {
         "type" : "Organization",
-        "id" : "https://example.org/org/123",
+        "id" : "https://www.example.com/x4k5fJoyY3Bt",
         "labels" : {
-          "no" : "Eksempelforlaget"
+          "RkkWUdqyP80" : "CSyB4S4iAFP"
         }
       } ],
-      "role" : "Creator",
-      "sequence" : 0,
-      "correspondingAuthor" : true
+      "role" : "CuratorOrganizer",
+      "sequence" : 8,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/piwul1gayge",
+        "name" : "67zOdIw38WxB4A",
+        "nameType" : "Organizational",
+        "orcId" : "ojYEr0705m4D4GVx",
+        "arpId" : "VPFblQY2Qmx"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/nBRkXBjGqul",
+        "labels" : {
+          "WejIAR96umWmk6yyT" : "79vl2hJN9imOpX"
+        }
+      } ],
+      "role" : "RegistrationAuthority",
+      "sequence" : 3,
+      "correspondingAuthor" : false
     } ],
-    "npiSubjectHeading" : "010",
-    "tags" : [ "dokumenter", "publikasjoner" ],
-    "description" : "En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt",
+    "npiSubjectHeading" : "hP0yE75LMt7Hfz",
+    "tags" : [ "mCeezfGiahKKO" ],
+    "description" : "LzZXHDBdgeSVZhWjHmk",
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
-        "type" : "UnconfirmedJournal",
-        "title" : "Tim's lovely publishing house",
-        "printIssn" : "2222-2227",
-        "onlineIssn" : "1111-1119"
+        "type" : "Journal",
+        "id" : "https://api.dev.nva.aws.unit.no/publication-channels/Vv9Ooo1E2aaaiA"
       },
-      "doi" : "https://123123/213123.com",
+      "doi" : "https://www.example.com/p47mw81EqFc4Pw201V",
       "publicationInstance" : {
         "type" : "JournalCorrigendum",
-        "volume" : "2",
-        "issue" : "1",
-        "articleNumber" : "11111",
+        "volume" : "EdR73SSeWxG",
+        "issue" : "yuz5uZvB7Hy9UWSb",
+        "articleNumber" : "gnMUcmS8rBqRdvwun8L",
         "pages" : {
           "type" : "Range",
-          "begin" : "1",
-          "end" : "15"
+          "begin" : "2XbDMF0QFiZeB2FYw",
+          "end" : "2DDiCVC9mKGFkABc"
         },
-        "corrigendumFor" : "https://123123/213123.com",
+        "corrigendumFor" : "https://www.example.com/17rbnbtbfjUhY9Tb",
         "peerReviewed" : false
       }
     },
-    "metadataSource" : "https://example.org/doi?doi=123/123",
-    "abstract" : "En lang streng som beskriver innholdet i dokumentet metadataene omtaler."
+    "metadataSource" : "https://www.example.com/CbBZJgDMHD2",
+    "abstract" : "pRSak1s0R4zWtB"
   },
   "fileSet" : {
     "type" : "FileSet",
     "files" : [ {
       "type" : "File",
       "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
-      "name" : "new document(1)",
-      "mimeType" : "application/pdf",
-      "size" : 2,
+      "name" : "zlYdab9RHdiwv",
+      "mimeType" : "GqM7foiGlu2rN",
+      "size" : 671694924,
       "license" : {
         "type" : "License",
-        "identifier" : "NTNU-CC-BY-4.0",
+        "identifier" : "uv6Zc4FRqja7nuDsOp",
         "labels" : {
-          "no" : "CC-BY 4.0"
+          "wDjgMUW6nc8" : "JOxHnNcV7ZpmMyI2BA3"
         },
-        "link" : "https://example.org/license/123"
+        "link" : "https://www.example.com/WI9IRNFnoq939"
       },
-      "administrativeAgreement" : true,
-      "publisherAuthority" : true,
+      "administrativeAgreement" : false,
+      "publisherAuthority" : false,
       "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
     } ]
   },
   "projects" : [ {
     "type" : "ResearchProject",
-    "id" : "https://link.to.cristin.example.org/123",
-    "name" : "Det gode prosjektet",
+    "id" : "https://www.example.org/quiaet",
+    "name" : "2N3jvRDjf6",
     "grants" : [ {
       "type" : "Grant",
-      "source" : "Norsk rødt felaget",
-      "id" : "123123"
+      "source" : "cyHOmQ1XjabJBgsD22F",
+      "id" : "7x0KC5wniFAcWA7W"
     } ],
     "approvals" : [ {
       "type" : "Approval",
       "date" : "2020-09-23T09:51:23.044996ZZ",
-      "approvedBy" : "REK",
-      "approvalStatus" : "APPLIED",
-      "applicationCode" : "123123"
+      "approvedBy" : "NMA",
+      "approvalStatus" : "REJECTION",
+      "applicationCode" : "AokVwH42SPF94TgGzq"
     } ]
   } ],
   "additionalIdentifiers" : [ {
@@ -135,6 +153,6 @@
     "source" : "fakesource",
     "value" : "1234"
   } ],
-  "subjects" : [ "https://example.org/subject/123" ],
-  "modelVersion" : "0.14.12"
+  "subjects" : [ "https://www.example.org/esseest" ],
+  "modelVersion" : "0.14.14"
 }

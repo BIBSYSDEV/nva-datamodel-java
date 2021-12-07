@@ -1,21 +1,21 @@
 {
   "type" : "Publication",
   "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
-  "status" : "DRAFT",
-  "owner" : "eier@example.org",
+  "status" : "NEW",
+  "owner" : "RZtifPmGNd8U4qE",
   "publisher" : {
     "type" : "Organization",
-    "id" : "https://example.org/org/123",
+    "id" : "https://www.example.org/natusvoluptatum",
     "labels" : {
-      "no" : "Eksempelforlaget"
+      "uKugHgulX52O2XW" : "zzoGezAb7wZHV"
     }
   },
   "createdDate" : "2020-09-23T09:51:23.044996ZZ",
   "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
   "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
   "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
-  "handle" : "https://example.org/handle/123",
-  "doi" : "https://example.org/doi/1231/98765",
+  "handle" : "https://www.example.org/etcumque",
+  "doi" : "https://doi.org/10.1234/suscipit",
   "doiRequest" : {
     "type" : "DoiRequest",
     "status" : "REQUESTED",
@@ -23,58 +23,78 @@
     "createdDate" : "2020-09-23T09:51:23.044996ZZ",
     "messages" : [ {
       "type" : "DoiRequestMessage",
-      "text" : "Some Text",
-      "author" : "SomeAuthor",
+      "text" : "SSCGXmPQaw5",
+      "author" : "PtSLCi9Dwd0npdvJ",
       "timestamp" : "2020-09-23T09:51:23.044996ZZ"
     } ]
   },
-  "link" : "https://example.org/link",
+  "link" : "https://www.example.org/utadipisci",
   "entityDescription" : {
     "type" : "EntityDescription",
-    "mainTitle" : "Hovedtittelen",
+    "mainTitle" : "MyVbiABKqJfxSrb1D",
     "alternativeTitles" : {
-      "en" : "English title"
+      "ca" : "IMdWj4T7Wi1i4O"
     },
-    "language" : "https://example.org/norsk",
+    "language" : "http://lexvo.org/id/iso639-3/zho",
     "date" : {
       "type" : "PublicationDate",
-      "year" : "2020",
-      "month" : "4",
-      "day" : "7"
+      "year" : "nDnxmTcepSp",
+      "month" : "2PFsjm0d1UK3TqktK4P",
+      "day" : "LXIoJLcWZD"
     },
     "contributors" : [ {
       "type" : "Contributor",
       "identity" : {
         "type" : "Identity",
-        "id" : "https://example.org/person/123",
-        "name" : "Navnesen, Navn",
-        "nameType" : "Personal",
-        "orcId" : "orc123",
-        "arpId" : "arp123"
+        "id" : "https://www.example.com/JC03rxhKTIBBUyn",
+        "name" : "fOQEX7TKBzLNZ",
+        "nameType" : "Organizational",
+        "orcId" : "cUZhNRZRbfGmEOfR",
+        "arpId" : "Yw3JHLggK6mr"
       },
       "affiliations" : [ {
         "type" : "Organization",
-        "id" : "https://example.org/org/123",
+        "id" : "https://www.example.com/7xtgqjknJDvkvF8g",
         "labels" : {
-          "no" : "Eksempelforlaget"
+          "ysjc6gWxwFfJhqp" : "pbI8Fnvk8INq"
         }
       } ],
       "role" : "Creator",
-      "sequence" : 0,
-      "correspondingAuthor" : true
+      "sequence" : 2,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/NTq7wm5nrAgFHqY",
+        "name" : "0G525SYPmbo3Izere",
+        "nameType" : "Organizational",
+        "orcId" : "CuJkCItDNN7F5L",
+        "arpId" : "xwm2JSj2Pepcu"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/qrXHTbLppcePNjpU",
+        "labels" : {
+          "m1reZxBvcLZkhN" : "8NSqNHl2mepTkfnfbP"
+        }
+      } ],
+      "role" : "DataManager",
+      "sequence" : 5,
+      "correspondingAuthor" : false
     } ],
-    "npiSubjectHeading" : "010",
-    "tags" : [ "dokumenter", "publikasjoner" ],
-    "description" : "En streng som beskriver innholdet i dokumentet på en annen måte enn abstrakt",
+    "npiSubjectHeading" : "kGSUfaIfKDa",
+    "tags" : [ "fUOduzC0MWd" ],
+    "description" : "qRtIyhre7kQutd",
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
         "type" : "Event",
-        "label" : "A wondrous event that surprised the fallow deer",
+        "label" : "vo6vdwsIH2FJ5HlU890",
         "place" : {
           "type" : "UnconfirmedPlace",
-          "label" : "The pea shop, Brighton",
-          "country" : "Transnistria"
+          "label" : "LHsYHPWykmBeZ",
+          "country" : "ILLVzUfTBG"
         },
         "time" : {
           "type" : "Period",
@@ -82,31 +102,15 @@
           "to" : "2020-09-23T09:51:23.044996Z"
         },
         "agent" : {
-          "type" : "UnconfirmedOrganization",
-          "name" : "Hallowed Blue Feet Inc."
+          "type" : "Organization",
+          "id" : "https://www.example.com/XRbWl4Vfr1xK",
+          "labels" : {
+            "DsxHjVIKrHm" : "pff1p0B72Yd2Sxe8Wt"
+          }
         },
-        "product" : "https://123123/213123.com",
-        "subEvent" : {
-          "type" : "Event",
-          "label" : "subEvent 1",
-          "place" : {
-            "type" : "UnconfirmedPlace",
-            "label" : "Next door but one to The Pea shop, Brighton",
-            "country" : "Transnistria"
-          },
-          "time" : {
-            "type" : "Instant",
-            "value" : "2020-09-23T09:51:23.044996Z"
-          },
-          "agent" : {
-            "type" : "UnconfirmedOrganization",
-            "name" : "Sub-event organizer"
-          },
-          "product" : "https://123123/213123.com",
-          "subEvent" : null
-        }
+        "product" : "https://www.example.com/LHfyABsNSXrBrD8nyys"
       },
-      "doi" : "https://123123/213123.com",
+      "doi" : "https://www.example.com/QTBxDaOQzlXtDH50rqH",
       "publicationInstance" : {
         "type" : "OtherPresentation",
         "peerReviewed" : false,
@@ -115,45 +119,45 @@
         }
       }
     },
-    "metadataSource" : "https://example.org/doi?doi=123/123",
-    "abstract" : "En lang streng som beskriver innholdet i dokumentet metadataene omtaler."
+    "metadataSource" : "https://www.example.com/Uiz0E0fNAK5I",
+    "abstract" : "al2uVn9BLNPQ"
   },
   "fileSet" : {
     "type" : "FileSet",
     "files" : [ {
       "type" : "File",
       "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
-      "name" : "new document(1)",
-      "mimeType" : "application/pdf",
-      "size" : 2,
+      "name" : "GDkz8NfJUeHOgDw01Ll",
+      "mimeType" : "LRIBzlf6wyzk0tg",
+      "size" : 586319045,
       "license" : {
         "type" : "License",
-        "identifier" : "NTNU-CC-BY-4.0",
+        "identifier" : "Fykzr0NzBJOI",
         "labels" : {
-          "no" : "CC-BY 4.0"
+          "GrGM62YoCDMjlulm" : "9Dyv8i978oGWzAJ"
         },
-        "link" : "https://example.org/license/123"
+        "link" : "https://www.example.com/OvXjOPZRNHt"
       },
-      "administrativeAgreement" : true,
-      "publisherAuthority" : true,
+      "administrativeAgreement" : false,
+      "publisherAuthority" : false,
       "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
     } ]
   },
   "projects" : [ {
     "type" : "ResearchProject",
-    "id" : "https://link.to.cristin.example.org/123",
-    "name" : "Det gode prosjektet",
+    "id" : "https://www.example.org/quisquamut",
+    "name" : "bOdD5QEPRR51CSvtv",
     "grants" : [ {
       "type" : "Grant",
-      "source" : "Norsk rødt felaget",
-      "id" : "123123"
+      "source" : "N1c9s81bleKe9vx1Le",
+      "id" : "6nXO4oyYCRSy6X5qnQZ"
     } ],
     "approvals" : [ {
       "type" : "Approval",
       "date" : "2020-09-23T09:51:23.044996ZZ",
-      "approvedBy" : "REK",
-      "approvalStatus" : "APPLIED",
-      "applicationCode" : "123123"
+      "approvedBy" : "NMA",
+      "approvalStatus" : "NOTAPPLIED",
+      "applicationCode" : "68jI8MhAB8FP1t"
     } ]
   } ],
   "additionalIdentifiers" : [ {
@@ -161,6 +165,6 @@
     "source" : "fakesource",
     "value" : "1234"
   } ],
-  "subjects" : [ "https://example.org/subject/123" ],
-  "modelVersion" : "0.14.12"
+  "subjects" : [ "https://www.example.org/eumincidunt" ],
+  "modelVersion" : "0.14.14"
 }
