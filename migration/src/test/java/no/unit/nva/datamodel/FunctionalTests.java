@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import no.unit.nva.identifiers.SortableIdentifier;
@@ -113,22 +115,44 @@ public class FunctionalTests {
         throws FileNotFoundException {
         List<String> jsons = listSerializedPublications(samplesProjectPreviousVersion);
 
-        var deserializedFromOldVersionSerialization = jsons.stream()
-            .map(this::deserializeWithCurrentVersion)
-            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+        var deserializedFromOldVersionSerialization =
+            deserializeOldVersionSerializationsWithCurrentDatamodelVersion(jsons);
 
-        var deserializedFromNewVersionSerialization = deserializedFromOldVersionSerialization.values().stream()
-            .map(this::serializeWithCurrentVersion)
-            .map(this::deserializeWithCurrentVersion)
-            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+        var deserializedFromNewVersionSerialization =
+            serializeAndDeserializeWithCurrentModelVersion(deserializedFromOldVersionSerialization);
 
         var allIdentifiers = deserializedFromOldVersionSerialization.keySet();
 
+        assertDeserializationsFromOldModelSerializationsAndDeserializationsFromCurrentModelSerializationsAreEqual(
+            deserializedFromOldVersionSerialization, deserializedFromNewVersionSerialization, allIdentifiers);
+    }
+
+    private void
+    assertDeserializationsFromOldModelSerializationsAndDeserializationsFromCurrentModelSerializationsAreEqual
+        (Map<SortableIdentifier, Publication> deserializedFromOldVersionSerialization,
+         Map<SortableIdentifier, Publication> deserializedFromNewVersionSerialization,
+         Set<SortableIdentifier> allIdentifiers)
+    {
         for (SortableIdentifier identifier : allIdentifiers) {
             var deserializedFromOldVersion = deserializedFromOldVersionSerialization.get(identifier);
             var deserializedFromNewVersion = deserializedFromNewVersionSerialization.get(identifier);
             assertThat(deserializedFromNewVersion, is(equalTo(deserializedFromOldVersion)));
         }
+    }
+
+    private Map<SortableIdentifier, Publication> serializeAndDeserializeWithCurrentModelVersion(
+        Map<SortableIdentifier, Publication> deserializedFromOldVersionSerialization) {
+        return deserializedFromOldVersionSerialization.values().stream()
+            .map(this::serializeWithCurrentVersion)
+            .map(this::deserializeWithCurrentVersion)
+            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+    }
+
+    private Map<SortableIdentifier, Publication> deserializeOldVersionSerializationsWithCurrentDatamodelVersion(
+        List<String> jsons) {
+        return jsons.stream()
+            .map(this::deserializeWithCurrentVersion)
+            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
     }
 
     private String serializeWithCurrentVersion(Publication value) {
@@ -212,7 +236,7 @@ public class FunctionalTests {
 
         dependenciesFileContents = dependenciesFileContents.replaceFirst(
             MATCH_DATAMODEL_VERSION_IN_DEPENDENCY_FILE_FOR_REPLACING_IT, datamodelDependency(version));
-        assertThat(dependenciesFileContents,containsString(version));
+        assertThat(dependenciesFileContents, containsString(version));
         return dependenciesFileContents;
     }
 
