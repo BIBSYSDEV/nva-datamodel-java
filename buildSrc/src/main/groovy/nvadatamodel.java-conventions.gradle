@@ -39,7 +39,7 @@ tasks.register('migrationTesting',Test) {
     environment "DATAMODEL_VERSION", "${project.version}"
 }
 
-migrationTesting.enabled = false
+migrationTesting.enabled = true
 
 jacocoTestReport {
     dependsOn(test)

@@ -1,10 +1,5 @@
 plugins {
     id 'java'
-    id 'jacoco'
-    id 'checkstyle'
-    id 'pmd'
-    id 'idea'
-    id 'nebula.lint'
 }
 
 group 'com.github.bibsysdev'
@@ -20,39 +15,6 @@ repositories {
 test {
     useJUnitPlatform()
     failFast = true
-    finalizedBy(jacocoTestReport)
 }
 
-
-
-jacocoTestReport {
-    dependsOn(test)
-    reports {
-        xml.enabled true
-    }
-}
-
-pmd {
-    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
-    ruleSets = []
-    ignoreFailures = false
-    pmdMain {
-        excludes = [
-                '**/BuildConfig.*'
-        ]
-    }
-}
-
-checkstyle {
-    configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
-    showViolations = true
-}
-
-tasks.withType(Checkstyle) {
-    reports {
-        xml.enabled false
-        html.enabled true
-        html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
-    }
-}
 
