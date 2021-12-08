@@ -40,6 +40,7 @@ import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
+import no.unit.nva.model.ResourceOwner;
 import no.unit.nva.model.Role;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
@@ -143,6 +144,7 @@ public final class PublicationGenerator {
             .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
             .withProjects(randomProjects())
             .withOwner(randomString())
+            .withResourceOwner(randomResourceOwner())
             .withLink(randomUri())
             .withIndexedDate(randomInstant())
             .withHandle(randomUri())
@@ -155,6 +157,10 @@ public final class PublicationGenerator {
 
         assertThat(publication, doesNotHaveEmptyValues());
         return publication;
+    }
+
+    private static ResourceOwner randomResourceOwner() {
+        return new ResourceOwner(randomString(),randomUri());
     }
 
     private static DoiRequest randomDoiRequest() {
