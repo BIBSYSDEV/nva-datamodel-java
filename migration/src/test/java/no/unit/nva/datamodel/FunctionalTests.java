@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import no.unit.nva.identifiers.SortableIdentifier;
@@ -56,9 +58,11 @@ public class FunctionalTests {
         "datamodel\\s*=\\s*\\{\\s*strictly\\s*=\\s*'[^']+'\\s*}";
     public static final Pattern PATTERN_FOR_FINDING_DATAMODEL_VERSION_IN_DEPENDENCIES_FILE =
         Pattern.compile("[\\s\\S]*\\s*datamodel\\s*=\\s*\\{\\s*strictly\\s*=\\s*'[^']+'\\s*}[\\s\\S]*");
+    public static final String DATAMODEL_DEPENDENCY_TEMPLATE_FOR_DEPENDENCIES_FILE = "datamodel = {strictly = '%s'}";
 
     public static final String DATAMODEL_DEPENDENCY_NOT_FOUND_ERROR =
         "Could not find the datamodel dependency in the 'libs.versions.toml' file";
+    public static final String NEW_LINE = System.lineSeparator();
 
     @TempDir
     static File temporaryDir;
@@ -113,30 +117,16 @@ public class FunctionalTests {
         throws FileNotFoundException {
         List<String> jsons = listSerializedPublications(samplesProjectPreviousVersion);
 
-        var deserializedFromOldVersionSerialization = jsons.stream()
-            .map(this::deserializeWithCurrentVersion)
-            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+        var deserializedFromOldVersionSerialization =
+            deserializeOldVersionSerializationsWithCurrentDatamodelVersion(jsons);
 
-        var deserializedFromNewVersionSerialization = deserializedFromOldVersionSerialization.values().stream()
-            .map(this::serializeWithCurrentVersion)
-            .map(this::deserializeWithCurrentVersion)
-            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+        var deserializedFromNewVersionSerialization =
+            serializeAndDeserializeWithCurrentModelVersion(deserializedFromOldVersionSerialization);
 
         var allIdentifiers = deserializedFromOldVersionSerialization.keySet();
 
-        for (SortableIdentifier identifier : allIdentifiers) {
-            var deserializedFromOldVersion = deserializedFromOldVersionSerialization.get(identifier);
-            var deserializedFromNewVersion = deserializedFromNewVersionSerialization.get(identifier);
-            assertThat(deserializedFromNewVersion, is(equalTo(deserializedFromOldVersion)));
-        }
-    }
-
-    private String serializeWithCurrentVersion(Publication value) {
-        return attempt(() -> objectMapper.writeValueAsString(value)).orElseThrow();
-    }
-
-    private Publication deserializeWithCurrentVersion(String json) {
-        return attempt(() -> objectMapper.readValue(json, Publication.class)).orElseThrow();
+        assertThatDeserializingOldModelVersionsProducesEquivalentObjetsWithDeserializingCurrentModelVersions(
+            deserializedFromOldVersionSerialization, deserializedFromNewVersionSerialization, allIdentifiers);
     }
 
     private static void setupTemporaryFolders() throws IOException {
@@ -212,7 +202,7 @@ public class FunctionalTests {
 
         dependenciesFileContents = dependenciesFileContents.replaceFirst(
             MATCH_DATAMODEL_VERSION_IN_DEPENDENCY_FILE_FOR_REPLACING_IT, datamodelDependency(version));
-        assertThat(dependenciesFileContents,containsString(version));
+        assertThat(dependenciesFileContents, containsString(version));
         return dependenciesFileContents;
     }
 
@@ -220,10 +210,10 @@ public class FunctionalTests {
                                                                                 String dependenciesFileContents)
         throws IOException {
         Files.delete(dependenciesFile.toPath());
-        BufferedWriter writer = new BufferedWriter(new FileWriter(dependenciesFile));
-        writer.write(dependenciesFileContents);
-        writer.flush();
-        writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dependenciesFile))) {
+            writer.write(dependenciesFileContents);
+            writer.flush();
+        }
     }
 
     private static String readFileContents(File dependenciesFile) {
@@ -245,11 +235,41 @@ public class FunctionalTests {
     }
 
     private static String datamodelDependency(String version) {
-        return String.format("%sdatamodel = {strictly = '%s'}%s",
-                             System.lineSeparator(),
-                             version,
-                             System.lineSeparator()
-        );
+        return NEW_LINE + String.format(DATAMODEL_DEPENDENCY_TEMPLATE_FOR_DEPENDENCIES_FILE, version) + NEW_LINE;
+    }
+
+    private void assertThatDeserializingOldModelVersionsProducesEquivalentObjetsWithDeserializingCurrentModelVersions(
+        Map<SortableIdentifier, Publication> deserializedFromOldVersionSerialization,
+        Map<SortableIdentifier, Publication> deserializedFromNewVersionSerialization,
+        Set<SortableIdentifier> allIdentifiers) {
+        for (SortableIdentifier identifier : allIdentifiers) {
+            var deserializedFromOldVersion = deserializedFromOldVersionSerialization.get(identifier);
+            var deserializedFromNewVersion = deserializedFromNewVersionSerialization.get(identifier);
+            assertThat(deserializedFromNewVersion, is(equalTo(deserializedFromOldVersion)));
+        }
+    }
+
+    private Map<SortableIdentifier, Publication> serializeAndDeserializeWithCurrentModelVersion(
+        Map<SortableIdentifier, Publication> deserializedFromOldVersionSerialization) {
+        return deserializedFromOldVersionSerialization.values().stream()
+            .map(this::serializeWithCurrentVersion)
+            .map(this::deserializeWithCurrentVersion)
+            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+    }
+
+    private Map<SortableIdentifier, Publication> deserializeOldVersionSerializationsWithCurrentDatamodelVersion(
+        List<String> jsons) {
+        return jsons.stream()
+            .map(this::deserializeWithCurrentVersion)
+            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+    }
+
+    private String serializeWithCurrentVersion(Publication value) {
+        return attempt(() -> objectMapper.writeValueAsString(value)).orElseThrow();
+    }
+
+    private Publication deserializeWithCurrentVersion(String json) {
+        return attempt(() -> objectMapper.readValue(json, Publication.class)).orElseThrow();
     }
 
     private List<String> listSerializedPublications(File folder) throws FileNotFoundException {
