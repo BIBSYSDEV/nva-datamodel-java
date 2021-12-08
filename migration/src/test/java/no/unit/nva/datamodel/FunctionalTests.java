@@ -3,6 +3,7 @@ package no.unit.nva.datamodel;
 import static no.unit.nva.datamodel.migration.MigrationConfig.objectMapper;
 import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -18,10 +19,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import no.unit.nva.identifiers.SortableIdentifier;
@@ -35,7 +34,6 @@ import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -48,40 +46,38 @@ public class FunctionalTests {
     public static final String SAMPLE_PROJECT_FOLDER_NAME = "sample-generation";
     public static final String DEPENDENCIES_FILE = "libs.versions.toml";
     public static final String MODEL_VERSION_FIELD_IN_SERIALIZED_RESOURCES = "modelVersion";
-    public static final int SOME_TIME_FOR_MAVEN_LOCAL_TO_REGISTER_CHANGES = 2000;
-    public static final String HARDCODED_DATAMODEL_VERSION_PLACEHOLDER_IN_RESOURCE_FILE =
-        "<DATAMODEL_VERSION_PLACEHOLDER>";
+    public static final int SOME_TIME_FOR_MAVEN_LOCAL_TO_REGISTER_CHANGES = 4000;
+
     public static final String GRADLE_FOLDER_IN_PROJECTS = "gradle";
     public static final String GRADLE_BUILD_COMMAND = "build";
     public static final String GRADLE_COMMAND_FOR_PUBLISHING_TO_MAVEN_LOCAL = "publishToMavenLocal";
     public static final String CURRENT_FOLDER = "";
-    public static final String DATAMODEL_DEPENDENCY_REGEX_FOR_REPLACEMENT =
+    public static final String MATCH_DATAMODEL_VERSION_IN_DEPENDENCY_FILE_FOR_REPLACING_IT =
         "datamodel\\s*=\\s*\\{\\s*strictly\\s*=\\s*'[^']+'\\s*}";
-    public static final Pattern DATAMODEL_DEPENDENCY_REGEX_FOR_DETECTION =
+    public static final Pattern PATTERN_FOR_FINDING_DATAMODEL_VERSION_IN_DEPENDENCIES_FILE =
         Pattern.compile("[\\s\\S]*\\s*datamodel\\s*=\\s*\\{\\s*strictly\\s*=\\s*'[^']+'\\s*}[\\s\\S]*");
 
-    public static final String DATAMODEL_DEPENDENCY_NOT_FOUND_ERROR = "Could not find the datamodel dependency in the"
-                                                                      + " 'libs.versions.toml' file";
+    public static final String DATAMODEL_DEPENDENCY_NOT_FOUND_ERROR =
+        "Could not find the datamodel dependency in the 'libs.versions.toml' file";
 
     @TempDir
     static File temporaryDir;
-    static File sampleProjectCurrentVersion;
-    static File sampleProjectPreviousVersion;
-
+    static File samplesProjectCurrentVersion;
+    static File samplesProjectPreviousVersion;
 
     @BeforeAll
     public static void init() throws IOException {
         setupTemporaryFolders();
         publishCurrentVersionToMavenLocal();
         waitUntilLibraryHasBeenRegisteredInMavenLocal();
-        buildSampleProject(CURRENT_DATAMODEL_VERSION, sampleProjectCurrentVersion);
-        buildSampleProject(PREVIOUS_DATAMODEL_VERSION, sampleProjectPreviousVersion);
+        buildSampleProject(CURRENT_DATAMODEL_VERSION, samplesProjectCurrentVersion);
+        buildSampleProject(PREVIOUS_DATAMODEL_VERSION, samplesProjectPreviousVersion);
     }
 
     @Tag("migrationTest")
     @Test
     public void gradleRunnerRunsSampleProjectOnCurrentVersion() throws FileNotFoundException, JsonProcessingException {
-        List<String> jsons = listSerializedPublications(sampleProjectCurrentVersion);
+        List<String> jsons = listSerializedPublications(samplesProjectCurrentVersion);
         assertThat(jsons, is(not(empty())));
         for (String json : jsons) {
             ObjectNode objectNode = (ObjectNode) JsonUtils.dtoObjectMapper.readTree(json);
@@ -93,7 +89,7 @@ public class FunctionalTests {
     @Tag("migrationTest")
     @Test
     public void gradleRunnerRunsSampleProjectOnPreviousVersion() throws FileNotFoundException, JsonProcessingException {
-        List<String> jsons = listSerializedPublications(sampleProjectPreviousVersion);
+        List<String> jsons = listSerializedPublications(samplesProjectPreviousVersion);
         assertThat(jsons, is(not(empty())));
         for (String json : jsons) {
             ObjectNode objectNode = (ObjectNode) JsonUtils.dtoObjectMapper.readTree(json);
@@ -105,7 +101,7 @@ public class FunctionalTests {
     @Tag("migrationTest")
     @Test
     public void currentVersionSerializationsShouldBeDeserializedByCurrentVersion() throws FileNotFoundException {
-        List<String> jsons = listSerializedPublications(sampleProjectCurrentVersion);
+        List<String> jsons = listSerializedPublications(samplesProjectCurrentVersion);
         for (String json : jsons) {
             assertDoesNotThrow(() -> deserializeWithCurrentVersion(json));
         }
@@ -115,39 +111,39 @@ public class FunctionalTests {
     @Test
     public void currentVersionShouldProduceSameDeserializationWhenDeserializingOldAndNewSerializedVersions()
         throws FileNotFoundException {
-        List<String> jsons = listSerializedPublications(sampleProjectPreviousVersion);
+        List<String> jsons = listSerializedPublications(samplesProjectPreviousVersion);
+
         var deserializedFromOldVersionSerialization = jsons.stream()
             .map(this::deserializeWithCurrentVersion)
             .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
-        var newVersionSerializations = deserializedFromOldVersionSerialization.values().stream()
-            .map(this::serializeWithCurrentVersion)
-            .collect(Collectors.toList());
-        var deserializedFromNewVersionSerialization =  newVersionSerializations
-            .stream()
-            .map(this::deserializeWithCurrentVersion)
-            .collect(Collectors.toMap(Publication::getIdentifier, publication->publication));
 
-        var allIdentifiers =deserializedFromOldVersionSerialization.keySet();
-        for(SortableIdentifier identifier:allIdentifiers){
+        var deserializedFromNewVersionSerialization = deserializedFromOldVersionSerialization.values().stream()
+            .map(this::serializeWithCurrentVersion)
+            .map(this::deserializeWithCurrentVersion)
+            .collect(Collectors.toMap(Publication::getIdentifier, publication -> publication));
+
+        var allIdentifiers = deserializedFromOldVersionSerialization.keySet();
+
+        for (SortableIdentifier identifier : allIdentifiers) {
             var deserializedFromOldVersion = deserializedFromOldVersionSerialization.get(identifier);
             var deserializedFromNewVersion = deserializedFromNewVersionSerialization.get(identifier);
-            assertThat(deserializedFromNewVersion,is(equalTo(deserializedFromOldVersion)));
+            assertThat(deserializedFromNewVersion, is(equalTo(deserializedFromOldVersion)));
         }
     }
 
     private String serializeWithCurrentVersion(Publication value) {
-        return attempt(()->objectMapper.writeValueAsString(value)).orElseThrow();
+        return attempt(() -> objectMapper.writeValueAsString(value)).orElseThrow();
     }
 
     private Publication deserializeWithCurrentVersion(String json) {
-        return attempt(()->objectMapper.readValue(json, Publication.class)).orElseThrow();
+        return attempt(() -> objectMapper.readValue(json, Publication.class)).orElseThrow();
     }
 
     private static void setupTemporaryFolders() throws IOException {
-        sampleProjectCurrentVersion = new File(temporaryDir, "current");
-        sampleProjectPreviousVersion = new File(temporaryDir, "previous");
-        createDirectory(sampleProjectCurrentVersion);
-        createDirectory(sampleProjectPreviousVersion);
+        samplesProjectCurrentVersion = new File(temporaryDir, "current");
+        samplesProjectPreviousVersion = new File(temporaryDir, "previous");
+        createDirectory(samplesProjectCurrentVersion);
+        createDirectory(samplesProjectPreviousVersion);
     }
 
     private static void createDirectory(File folder) throws IOException {
@@ -206,28 +202,53 @@ public class FunctionalTests {
     }
 
     private static void injectDatamodelVersion(File testingFolder, String version) throws IOException {
-        File projectGradleFolder = new File(testingFolder, GRADLE_FOLDER_IN_PROJECTS).getAbsoluteFile();
-        File dependenciesFile = new File(projectGradleFolder,DEPENDENCIES_FILE).getAbsoluteFile();
-        String dependenciesFileContents = IoUtils.stringFromFile(dependenciesFile.toPath());
+        File dependenciesFile = findDependenciesFileInSamplesProject(testingFolder);
+        String dependenciesFileContents = updateDatamodelDependencyVersion(version, dependenciesFile);
+        writeBackDependenciesFileWithUpdatedDatamodelDependency(dependenciesFile, dependenciesFileContents);
+    }
 
-        assertThat(DATAMODEL_DEPENDENCY_NOT_FOUND_ERROR,
-                   DATAMODEL_DEPENDENCY_REGEX_FOR_DETECTION.matcher(dependenciesFileContents).matches(), is(true));
-        dependenciesFileContents=dependenciesFileContents.replaceFirst(DATAMODEL_DEPENDENCY_REGEX_FOR_REPLACEMENT, datamodelDependency(version));
-        System.out.println(dependenciesFileContents);
+    private static String updateDatamodelDependencyVersion(String version, File dependenciesFile) {
+        String dependenciesFileContents = readFileContents(dependenciesFile);
 
-        dependenciesFile.delete();
+        dependenciesFileContents = dependenciesFileContents.replaceFirst(
+            MATCH_DATAMODEL_VERSION_IN_DEPENDENCY_FILE_FOR_REPLACING_IT, datamodelDependency(version));
+        assertThat(dependenciesFileContents,containsString(version));
+        return dependenciesFileContents;
+    }
 
+    private static void writeBackDependenciesFileWithUpdatedDatamodelDependency(File dependenciesFile,
+                                                                                String dependenciesFileContents)
+        throws IOException {
+        Files.delete(dependenciesFile.toPath());
         BufferedWriter writer = new BufferedWriter(new FileWriter(dependenciesFile));
         writer.write(dependenciesFileContents);
         writer.flush();
         writer.close();
     }
 
+    private static String readFileContents(File dependenciesFile) {
+        String dependenciesFileContents = IoUtils.stringFromFile(dependenciesFile.toPath());
+        verifyThatDependenyFileContainsDatamodelDependency(dependenciesFileContents);
+        return dependenciesFileContents;
+    }
+
+    private static File findDependenciesFileInSamplesProject(File testingFolder) {
+        File projectGradleFolder = new File(testingFolder, GRADLE_FOLDER_IN_PROJECTS).getAbsoluteFile();
+        return new File(projectGradleFolder, DEPENDENCIES_FILE).getAbsoluteFile();
+    }
+
+    private static void verifyThatDependenyFileContainsDatamodelDependency(String dependenciesFileContents) {
+        assertThat(DATAMODEL_DEPENDENCY_NOT_FOUND_ERROR,
+                   PATTERN_FOR_FINDING_DATAMODEL_VERSION_IN_DEPENDENCIES_FILE
+                       .matcher(dependenciesFileContents).matches(), is(true)
+        );
+    }
+
     private static String datamodelDependency(String version) {
-        return String.format( "%sdatamodel = {strictly = '%s'}%s",
-                              System.lineSeparator(),
-                              version,
-                              System.lineSeparator()
+        return String.format("%sdatamodel = {strictly = '%s'}%s",
+                             System.lineSeparator(),
+                             version,
+                             System.lineSeparator()
         );
     }
 
