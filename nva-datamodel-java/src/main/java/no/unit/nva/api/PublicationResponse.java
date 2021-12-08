@@ -23,6 +23,7 @@ import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
+import no.unit.nva.model.ResourceOwner;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
@@ -33,6 +34,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
+    private ResourceOwner resourceOwner;
     private Organization publisher;
     private Instant createdDate;
     private Instant modifiedDate;
@@ -55,6 +57,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setIdentifier(publication.getIdentifier());
         response.setStatus(publication.getStatus());
         response.setOwner(publication.getOwner());
+        response.setResourceOwner(publication.getResourceOwner());
         response.setPublisher(publication.getPublisher());
         response.setCreatedDate(publication.getCreatedDate());
         response.setModifiedDate(publication.getModifiedDate());
@@ -150,6 +153,16 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @Override
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public ResourceOwner getResourceOwner() {
+        return resourceOwner;
+    }
+
+    @Override
+    public void setResourceOwner(ResourceOwner resourceOwner) {
+        this.resourceOwner = resourceOwner;
     }
 
     @Override

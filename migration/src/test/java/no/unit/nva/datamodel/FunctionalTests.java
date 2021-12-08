@@ -43,7 +43,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class FunctionalTests {
 
     public static final String CURRENT_DATAMODEL_VERSION = new Environment().readEnv("DATAMODEL_VERSION");
-    public static final String PREVIOUS_DATAMODEL_VERSION = "0.14.13";
+    public static final String PREVIOUS_DATAMODEL_VERSION = "0.14.15";
     public static final String SERIALIZATIONS_SUBFOLDER = "serializations";
     public static final String SAMPLE_PROJECT_FOLDER_NAME = "sample-generation";
     public static final String DEPENDENCIES_FILE = "libs.versions.toml";

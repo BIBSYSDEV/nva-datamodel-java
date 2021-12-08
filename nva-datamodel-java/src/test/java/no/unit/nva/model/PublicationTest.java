@@ -92,9 +92,8 @@ public class PublicationTest {
         assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD)));
 
         Diff diff = JAVERS.compare(samplePublication, copy);
-        assertThat(diff.hasChanges(), is(false));
         assertThat(copy, is(not(sameInstance(samplePublication))));
-        assertThat(copy, is(equalTo(samplePublication)));
+        assertThat(diff.prettyPrint(),copy, is(equalTo(samplePublication)));
     }
 
     @Test

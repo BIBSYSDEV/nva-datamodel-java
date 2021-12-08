@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
@@ -36,6 +37,7 @@ public class Publication
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private String owner;
+    private ResourceOwner resourceOwner;
     private Organization publisher;
     private Instant createdDate;
     private Instant modifiedDate;
@@ -115,12 +117,22 @@ public class Publication
 
     @Override
     public String getOwner() {
-        return owner;
+        return Optional.ofNullable(resourceOwner).map(ResourceOwner::getOwner).orElse(owner);
     }
 
     @Override
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public ResourceOwner getResourceOwner() {
+        return resourceOwner;
+    }
+
+    @Override
+    public void setResourceOwner(ResourceOwner resourceOwner) {
+        this.resourceOwner = resourceOwner;
     }
 
     @Override
@@ -262,6 +274,7 @@ public class Publication
             .withIdentifier(getIdentifier())
             .withStatus(getStatus())
             .withOwner(getOwner())
+            .withResourceOwner(getResourceOwner())
             .withPublisher(getPublisher())
             .withCreatedDate(getCreatedDate())
             .withModifiedDate(getModifiedDate())
@@ -310,6 +323,7 @@ public class Publication
         boolean firstHalf = Objects.equals(getIdentifier(), that.getIdentifier())
                             && getStatus() == that.getStatus()
                             && Objects.equals(getOwner(), that.getOwner())
+                            && Objects.equals(getResourceOwner(), that.getResourceOwner())
                             && Objects.equals(getPublisher(), that.getPublisher())
                             && Objects.equals(getCreatedDate(), that.getCreatedDate())
                             && Objects.equals(getModifiedDate(), that.getModifiedDate())
@@ -425,6 +439,11 @@ public class Publication
 
         public Builder withSubjects(List<URI> subjects) {
             publication.setSubjects(subjects);
+            return this;
+        }
+
+        public Builder withResourceOwner(ResourceOwner randomResourceOwner) {
+            publication.setResourceOwner(randomResourceOwner);
             return this;
         }
 
