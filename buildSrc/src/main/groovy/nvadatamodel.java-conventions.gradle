@@ -9,7 +9,7 @@ plugins {
 }
 
 group 'com.github.bibsysdev'
-version '0.14.13'
+version '0.14.15'
 
 
 repositories {
@@ -39,7 +39,7 @@ tasks.register('migrationTesting',Test) {
     environment "DATAMODEL_VERSION", "${project.version}"
 }
 
-migrationTesting.enabled = false
+migrationTesting.enabled = true
 
 jacocoTestReport {
     dependsOn(test)
