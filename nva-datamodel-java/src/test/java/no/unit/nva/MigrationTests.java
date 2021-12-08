@@ -12,15 +12,15 @@ import no.unit.nva.model.Publication;
 import no.unit.nva.model.testing.PublicationGenerator;
 import org.junit.jupiter.api.Test;
 
-//Migration tests from version 0.1.4.15 to 0.14.16
-public class Migration01415To01416Test {
+// Tests should be deleted when the associated deprecated field has been deleted.
+public class MigrationTests {
 
     @Test
     void resourceOwnerShouldOverrideOwnerWhenResourceOwnersOwnerIsNotNull()
         throws NoSuchFieldException, IllegalAccessException {
         var publication = PublicationGenerator.randomPublication();
 
-        //here we verify that actual field value is pottentially different from what we want to show outside
+        //here we verify that actual field value is potentially different from what we want to show outside
         String ownerFieldValue = extractOwnerFieldValue(publication);
         assertThat(ownerFieldValue, is(not(equalTo(publication.getResourceOwner().getOwner()))));
 
