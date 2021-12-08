@@ -214,7 +214,6 @@ public class FunctionalTests {
             writer.write(dependenciesFileContents);
             writer.flush();
         }
-        ;
     }
 
     private static String readFileContents(File dependenciesFile) {
@@ -239,11 +238,10 @@ public class FunctionalTests {
         return NEW_LINE + String.format(DATAMODEL_DEPENDENCY_TEMPLATE_FOR_DEPENDENCIES_FILE, version) + NEW_LINE;
     }
 
-    private void
-    assertThatDeserializingOldModelVersionsProducesEquivalentObjetsWithDeserializingCurrentModelVersions
-        (Map<SortableIdentifier, Publication> deserializedFromOldVersionSerialization,
-         Map<SortableIdentifier, Publication> deserializedFromNewVersionSerialization,
-         Set<SortableIdentifier> allIdentifiers) {
+    private void assertThatDeserializingOldModelVersionsProducesEquivalentObjetsWithDeserializingCurrentModelVersions(
+        Map<SortableIdentifier, Publication> deserializedFromOldVersionSerialization,
+        Map<SortableIdentifier, Publication> deserializedFromNewVersionSerialization,
+        Set<SortableIdentifier> allIdentifiers) {
         for (SortableIdentifier identifier : allIdentifiers) {
             var deserializedFromOldVersion = deserializedFromOldVersionSerialization.get(identifier);
             var deserializedFromNewVersion = deserializedFromNewVersionSerialization.get(identifier);
