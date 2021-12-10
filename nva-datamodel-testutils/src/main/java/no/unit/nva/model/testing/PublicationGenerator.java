@@ -89,7 +89,7 @@ public final class PublicationGenerator {
             .withIdentifier(identifier)
             .withCreatedDate(oneMinuteInThePast)
             .withModifiedDate(oneMinuteInThePast)
-            .withOwner(OWNER)
+            .withOwner(randomString())
             .withStatus(PublicationStatus.DRAFT)
             .withPublisher(samplePublisher())
             .withEntityDescription(entityDescription)
@@ -109,7 +109,7 @@ public final class PublicationGenerator {
 
     public static Publication generateEmptyPublication() {
         return new Publication.Builder()
-            .withOwner(OWNER)
+            .withOwner(randomString())
             .withPublisher(samplePublisher())
             .build();
     }

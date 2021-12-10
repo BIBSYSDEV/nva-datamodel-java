@@ -10,8 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.net.URI;
-import no.unit.nva.api.CreatePublicationRequest;
 import no.unit.nva.api.PublicationResponse;
 import no.unit.nva.api.UpdatePublicationRequest;
 import no.unit.nva.identifiers.SortableIdentifier;
@@ -21,25 +19,9 @@ import org.junit.jupiter.api.Test;
 
 public class PublicationMapperTest {
 
-    public static final URI SOME_URI = URI.create("http://example.org");
-    public static final String SOME_OWNER = "owner";
+
     public static final ObjectNode SOME_CONTEXT = dataModelObjectMapper.createObjectNode();
 
-    @Test
-    public void canMapCreatePublicationRequestToNewPublication() throws Exception {
-        Publication sampleData = PublicationGenerator.randomPublication();
-        CreatePublicationRequest request = new CreatePublicationRequest();
-        request.setEntityDescription(sampleData.getEntityDescription());
-        request.setProjects(sampleData.getProjects());
-        request.setFileSet(sampleData.getFileSet());
-        request.setContext(SOME_CONTEXT);
-
-        Publication publication = PublicationMapper
-            .toNewPublication(request, SOME_OWNER, SOME_URI, SOME_URI, sampleData.getPublisher());
-
-        assertNotNull(publication);
-        assertEquals(publication.getCreatedDate(), publication.getModifiedDate());
-    }
 
     @Test
     public void canMapUpdatePublicationRequestToExistingPublication() {
@@ -79,19 +61,7 @@ public class PublicationMapperTest {
         assertThat(response.getId(), notNullValue());
     }
 
-    @Test
-    public void convertValueReturnsCreatePublicationRequestWhenInputIsValidPublication() {
-        Publication publication = PublicationGenerator.randomPublication();
 
-        CreatePublicationRequest request = PublicationMapper
-            .convertValue(publication, CreatePublicationRequest.class);
-
-        assertNotNull(request);
-        assertNotNull(request.getContext());
-        assertEquals(publication.getFileSet(), request.getFileSet());
-        assertEquals(publication.getProjects(), request.getProjects());
-        assertEquals(publication.getEntityDescription(), request.getEntityDescription());
-    }
 
     @Test
     public void convertValueReturnsUpdatePublicationRequestWhenInputIsValidPublication() {
