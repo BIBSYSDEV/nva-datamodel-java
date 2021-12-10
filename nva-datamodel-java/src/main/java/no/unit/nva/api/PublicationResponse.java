@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithId;
@@ -246,8 +247,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.subjects = subjects;
     }
 
-    public Boolean getDoiRequested() {
-        return doiRequested;
+    public boolean getDoiRequested() {
+        return Optional.ofNullable(doiRequested).orElse(false);
     }
 
     @Override
