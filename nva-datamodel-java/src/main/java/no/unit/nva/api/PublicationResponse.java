@@ -247,7 +247,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.subjects = subjects;
     }
 
-    public boolean getDoiRequested() {
+    public boolean isDoiRequested() {
         return Optional.ofNullable(doiRequested).orElse(false);
     }
 
@@ -266,7 +266,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public int hashCode() {
         return Objects.hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(),
                             getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
-                            getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), getDoiRequested(),
+                            getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), isDoiRequested(),
                             getContext(), getProjects(), getSubjects());
     }
 
@@ -295,7 +295,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                && Objects.equals(getFileSet(), that.getFileSet())
                && Objects.equals(getDoi(), that.getDoi())
                && Objects.equals(getDoiRequest(), that.getDoiRequest())
-               && Objects.equals(getDoiRequested(), that.getDoiRequested())
+               && Objects.equals(isDoiRequested(), that.isDoiRequested())
                && Objects.equals(getContext(), that.getContext())
                && Objects.equals(getProjects(), that.getProjects())
                && Objects.equals(getSubjects(), that.getSubjects());
