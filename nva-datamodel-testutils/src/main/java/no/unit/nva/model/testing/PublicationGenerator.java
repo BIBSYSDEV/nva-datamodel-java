@@ -89,7 +89,7 @@ public final class PublicationGenerator {
             .withIdentifier(identifier)
             .withCreatedDate(oneMinuteInThePast)
             .withModifiedDate(oneMinuteInThePast)
-            .withOwner(OWNER)
+            .withOwner(randomString())
             .withStatus(PublicationStatus.DRAFT)
             .withPublisher(samplePublisher())
             .withEntityDescription(entityDescription)
@@ -109,7 +109,7 @@ public final class PublicationGenerator {
 
     public static Publication generateEmptyPublication() {
         return new Publication.Builder()
-            .withOwner(OWNER)
+            .withOwner(randomString())
             .withPublisher(samplePublisher())
             .build();
     }
@@ -163,7 +163,7 @@ public final class PublicationGenerator {
         return new ResourceOwner(randomString(),randomUri());
     }
 
-    private static DoiRequest randomDoiRequest() {
+    public static DoiRequest randomDoiRequest() {
         Instant creationDate = randomInstant();
         return new DoiRequest.Builder()
             .withStatus(randomArrayElement(DoiRequestStatus.values()))
@@ -173,7 +173,7 @@ public final class PublicationGenerator {
             .build();
     }
 
-    private static List<DoiRequestMessage> randomDoiRequestMessages(Instant creationDate) {
+    public static List<DoiRequestMessage> randomDoiRequestMessages(Instant creationDate) {
         var message = new DoiRequestMessage.Builder()
             .withAuthor(randomString())
             .withText(randomString())
@@ -182,19 +182,19 @@ public final class PublicationGenerator {
         return List.of(message);
     }
 
-    private static EntityDescription randomEntityDescription(Class<?> publicationInstanceClass) {
+    public static EntityDescription randomEntityDescription(Class<?> publicationInstanceClass) {
         return EntityDescriptionBuilder.randomEntityDescription(publicationInstanceClass);
     }
 
-    private static URI randomDoi() {
+    public static URI randomDoi() {
         return URI.create("https://doi.org/10.1234/" + randomWord());
     }
 
-    private static List<ResearchProject> randomProjects() {
+    public static List<ResearchProject> randomProjects() {
         return List.of(randomResearchProject());
     }
 
-    private static ResearchProject randomResearchProject() {
+    public static ResearchProject randomResearchProject() {
         return new ResearchProject.Builder()
             .withId(randomUri())
             .withName(randomString())
@@ -203,22 +203,22 @@ public final class PublicationGenerator {
             .build();
     }
 
-    private static List<Grant> randomGrants() {
+    public static List<Grant> randomGrants() {
         return List.of(randomGrant());
     }
 
-    private static Grant randomGrant() {
+    public static Grant randomGrant() {
         return new Grant.Builder()
             .withId(randomString())
             .withSource(randomString())
             .build();
     }
 
-    private static List<Approval> randomApprovals() {
+    public static List<Approval> randomApprovals() {
         return List.of(randomApproval());
     }
 
-    private static Approval randomApproval() {
+    public static Approval randomApproval() {
         return new Approval.Builder()
             .withApprovalStatus(randomArrayElement(ApprovalStatus.values()))
             .withDate(randomInstant())
@@ -227,11 +227,11 @@ public final class PublicationGenerator {
             .build();
     }
 
-    private static AdditionalIdentifier randomAdditionalIdentifier() {
+    public static AdditionalIdentifier randomAdditionalIdentifier() {
         return new AdditionalIdentifier(randomString(), randomString());
     }
 
-    private static Organization randomOrganization() {
+    public static Organization randomOrganization() {
         return new Organization.Builder()
             .withId(randomUri())
             .withLabels(Map.of(randomString(), randomString()))
