@@ -14,6 +14,8 @@ schema:
       - DRAFT_FOR_DELETION
     owner:
       type: string
+    resourceOwner:
+      $ref: '#/components/schemas/ResourceOwner'
     publisher:
       $ref: '#/components/schemas/Organization'
     createdDate:
@@ -995,6 +997,8 @@ referencedSchemas:
         - DRAFT_FOR_DELETION
       owner:
         type: string
+      resourceOwner:
+        $ref: '#/components/schemas/ResourceOwner'
       publisher:
         $ref: '#/components/schemas/Organization'
       createdDate:
@@ -1231,6 +1235,14 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  ResourceOwner:
+    type: object
+    properties:
+      owner:
+        type: string
+      ownerAffiliation:
+        type: string
+        format: uri
   Series:
     required:
     - type
