@@ -52,7 +52,8 @@ public class FunctionalTests {
 
     public static final String GRADLE_FOLDER_IN_PROJECTS = "gradle";
     public static final String GRADLE_BUILD_COMMAND = "build";
-    public static final String GRADLE_COMMAND_FOR_PUBLISHING_TO_MAVEN_LOCAL = "publishToMavenLocal";
+    public static final String[] GRADLE_COMMAND_FOR_PUBLISHING_TO_MAVEN_LOCAL =
+            new String[]{"publishToMavenLocal","-Pskip.signing"};
     public static final String CURRENT_FOLDER = "";
     public static final String MATCH_DATAMODEL_VERSION_IN_DEPENDENCY_FILE_FOR_REPLACING_IT =
         "datamodel\\s*=\\s*\\{\\s*strictly\\s*=\\s*'[^']+'\\s*}";
