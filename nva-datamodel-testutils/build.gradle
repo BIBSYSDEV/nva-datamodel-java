@@ -10,4 +10,5 @@ dependencies {
     implementation libs.nva.commons.identifiers
     implementation libs.nva.language
     implementation libs.bundles.unittesting
+    implementation libs.bundles.jackson
 }
