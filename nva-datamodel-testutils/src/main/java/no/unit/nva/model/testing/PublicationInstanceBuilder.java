@@ -3,15 +3,20 @@ package no.unit.nva.model.testing;
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
+import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
+import no.unit.nva.model.contexttypes.venue.Venue;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesignSubtype;
@@ -46,6 +51,7 @@ import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
+import no.unit.nva.model.time.Period;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -353,6 +359,16 @@ public class PublicationInstanceBuilder {
     }
 
     private static ArtisticDesign artisticDesign(ArtisticDesignSubtypeEnum subtype) {
-        return new ArtisticDesign(ArtisticDesignSubtype.create(subtype), randomString());
+        return new ArtisticDesign(ArtisticDesignSubtype.create(subtype), randomString(), randomVenues());
+    }
+
+    private static List<Venue> randomVenues() {
+        return List.of(randomVenue(), randomVenue());
+    }
+
+    private static Venue randomVenue() {
+        UnconfirmedPlace place = new UnconfirmedPlace(randomString(), "Germany");
+        Period time = new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
+        return new Venue(place, time, randomInteger());
     }
 }

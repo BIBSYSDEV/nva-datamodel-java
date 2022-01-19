@@ -127,10 +127,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
-        venues:
-          type: array
-          items:
-            $ref: '#/components/schemas/Venue'
         type:
           type: string
   ArtisticDesign:
@@ -147,6 +143,10 @@ referencedSchemas:
           $ref: '#/components/schemas/ArtisticDesignSubtype'
         description:
           type: string
+        venues:
+          type: array
+          items:
+            $ref: '#/components/schemas/Venue'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:

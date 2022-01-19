@@ -3,7 +3,6 @@ package no.unit.nva.model.testing;
 import static no.unit.nva.model.testing.RandomUtils.randomLabel;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
@@ -28,7 +27,6 @@ import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.Series;
 import no.unit.nva.model.contexttypes.place.Place;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
-import no.unit.nva.model.contexttypes.venue.Venue;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
@@ -169,17 +167,7 @@ public class PublicationContextBuilder {
     }
 
     private static Artistic randomArtisticDesign() {
-        return new Artistic(randomVenues());
-    }
-
-    private static List<Venue> randomVenues() {
-        return List.of(randomVenue(), randomVenue());
-    }
-
-    private static Venue randomVenue() {
-        UnconfirmedPlace place = new UnconfirmedPlace(randomString(), "Germany");
-        Period time = new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
-        return new Venue(place, time, randomInteger());
+        return new Artistic();
     }
 
     private static Place randomPlace() {
