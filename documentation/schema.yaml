@@ -117,6 +117,43 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Architecture:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        subtype:
+          type: string
+          enum:
+          - BUILDING
+          - PLANNING_PROPOSAL
+          - LANDSCAPE_ARCHITECTURE
+          - INTERIOR
+          - OTHER
+        description:
+          type: string
+        architectureOutput:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArchitectureOutput'
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  ArchitectureOutput:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Artistic:
     required:
     - type
@@ -294,6 +331,24 @@ referencedSchemas:
           type: boolean
         pages:
           $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  Competition:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/ArchitectureOutput'
+    - type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        time:
+          $ref: '#/components/schemas/Time'
         type:
           type: string
   ConferenceLecture:
@@ -1077,10 +1132,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
