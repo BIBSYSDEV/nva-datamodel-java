@@ -63,7 +63,6 @@ public class ArtisticDesign implements PublicationInstance<NullPages> {
         return false;
     }
 
-    @JsonGetter
     public List<Venue> getVenues() {
         return venues;
     }
