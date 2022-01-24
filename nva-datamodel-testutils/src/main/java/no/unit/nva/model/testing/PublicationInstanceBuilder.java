@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
-import no.unit.nva.model.contexttypes.venue.Venue;
+import no.unit.nva.model.instancetypes.artistic.venue.Venue;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesignSubtype;
