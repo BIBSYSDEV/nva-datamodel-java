@@ -21,7 +21,6 @@ import com.github.jsonldjava.utils.JsonUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Set;
-import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.util.ContextUtil;
 import org.javers.core.Javers;
@@ -120,5 +119,4 @@ public class PublicationTest {
         options.setPruneBlankNodeIdentifiers(true);
         return JsonLdProcessor.frame(input, frame, options);
     }
-
 }
