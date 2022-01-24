@@ -33,8 +33,8 @@ import no.unit.nva.model.pages.Pages;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(name = "ArtisticDesign", value = ArtisticDesign.class),
     @JsonSubTypes.Type(name = "Architecture", value = Architecture.class),
+    @JsonSubTypes.Type(name = "ArtisticDesign", value = ArtisticDesign.class),
     @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
     @JsonSubTypes.Type(name = "JournalCorrigendum", value = JournalCorrigendum.class),
