@@ -1,7 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.time.Instant;
 import nva.commons.core.JacocoGenerated;
