@@ -377,7 +377,8 @@ public class PublicationInstanceBuilder {
     }
 
     private static Exhibition randomExhibition() {
-        return new Exhibition(randomString(), randomString(), randomString(), randomPeriod(), randomString());
+        return new Exhibition(randomString(), randomString(), randomString(), randomPeriod(), randomString(),
+                randomInteger());
     }
 
     private static Period randomPeriod() {
@@ -386,16 +387,16 @@ public class PublicationInstanceBuilder {
 
     private static ArchitectureOutput randomAward() {
         return new Award(randomString(), randomString(), new Instant(LocalDateTime.now()), randomInteger(),
-                randomString());
+                randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomCompetition() {
-        return new Competition(randomString(), randomString(), new Instant(LocalDateTime.now()));
+        return new Competition(randomString(), randomString(), new Instant(LocalDateTime.now()), randomInteger());
     }
 
     private static ArchitectureOutput randomMentionInPublication() {
         return new MentionInPublication(randomString(), randomIssue(), new Instant(LocalDateTime.now()),
-                randomString());
+                randomString(), randomInteger());
     }
 
     private static ArtisticDesign generateRandomArtisticDesign() {

@@ -13,6 +13,7 @@ public class Exhibition implements ArchitectureOutput {
     public static final String ORGANIZER = "organizer";
     public static final String TIME = "time";
     public static final String OTHER_INFORMATION = "otherInformation";
+
     @JsonProperty(NAME)
     private final String name;
     @JsonProperty(PLACE)
@@ -23,17 +24,21 @@ public class Exhibition implements ArchitectureOutput {
     private final Period time;
     @JsonProperty(OTHER_INFORMATION)
     private final String otherInformation;
+    @JsonProperty(SEQUENCE)
+    private final int sequence;
 
     public Exhibition(@JsonProperty(NAME) String name,
                       @JsonProperty(PLACE) String place,
                       @JsonProperty(ORGANIZER) String organizer,
                       @JsonProperty(TIME) Period time,
-                      @JsonProperty(OTHER_INFORMATION) String otherInformation) {
+                      @JsonProperty(OTHER_INFORMATION) String otherInformation,
+                      @JsonProperty(SEQUENCE) int sequence) {
         this.name = name;
         this.place = place;
         this.organizer = organizer;
         this.time = time;
         this.otherInformation = otherInformation;
+        this.sequence = sequence;
     }
 
     public String getName() {
@@ -54,6 +59,11 @@ public class Exhibition implements ArchitectureOutput {
 
     public String getOtherInformation() {
         return otherInformation;
+    }
+
+    @Override
+    public int getSequence() {
+        return sequence;
     }
 
     @JacocoGenerated

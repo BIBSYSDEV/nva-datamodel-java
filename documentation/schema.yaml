@@ -150,6 +150,9 @@ referencedSchemas:
     - type
     type: object
     properties:
+      sequence:
+        type: integer
+        format: int32
       type:
         type: string
     discriminator:
@@ -1179,10 +1182,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:

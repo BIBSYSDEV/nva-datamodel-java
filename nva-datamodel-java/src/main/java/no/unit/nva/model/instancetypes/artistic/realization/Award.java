@@ -14,6 +14,7 @@ public class Award implements ArchitectureOutput {
     public static final String TIME = "time";
     public static final String RANKING = "ranking";
     public static final String OTHER_INFORMATION = "otherInformation";
+
     @JsonProperty(NAME)
     private final String name;
     @JsonProperty(ORGANIZER)
@@ -24,17 +25,21 @@ public class Award implements ArchitectureOutput {
     private final Integer ranking;
     @JsonProperty(OTHER_INFORMATION)
     private final String otherInformation;
+    @JsonProperty(SEQUENCE)
+    private final int sequence;
 
     public Award(@JsonProperty(NAME) String name,
                  @JsonProperty(ORGANIZER) String organizer,
                  @JsonProperty(TIME) Instant time,
                  @JsonProperty(RANKING) Integer ranking,
-                 @JsonProperty(OTHER_INFORMATION) String otherInformation) {
+                 @JsonProperty(OTHER_INFORMATION) String otherInformation,
+                 @JsonProperty(SEQUENCE) int sequence) {
         this.name = name;
         this.organizer = organizer;
         this.time = time;
         this.ranking = ranking;
         this.otherInformation = otherInformation;
+        this.sequence = sequence;
     }
 
     public String getName() {
@@ -55,6 +60,11 @@ public class Award implements ArchitectureOutput {
 
     public String getOtherInformation() {
         return otherInformation;
+    }
+
+    @Override
+    public int getSequence() {
+        return sequence;
     }
 
     @JacocoGenerated

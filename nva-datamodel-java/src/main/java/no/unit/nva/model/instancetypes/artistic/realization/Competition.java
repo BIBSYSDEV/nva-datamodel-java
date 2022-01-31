@@ -21,13 +21,17 @@ public class Competition implements ArchitectureOutput {
     private final String description;
     @JsonProperty(TIME)
     private final Time time;
+    @JsonProperty(SEQUENCE)
+    private final int sequence;
 
     public Competition(@JsonProperty(NAME) String name,
                        @JsonProperty(DESCRIPTION) String description,
-                       @JsonProperty(TIME) Time time) {
+                       @JsonProperty(TIME) Time time,
+                       @JsonProperty(SEQUENCE) int sequence) {
         this.name = name;
         this.description = description;
         this.time = time;
+        this.sequence = sequence;
     }
 
     public String getName() {
@@ -40,6 +44,11 @@ public class Competition implements ArchitectureOutput {
 
     public Time getTime() {
         return time;
+    }
+
+    @Override
+    public int getSequence() {
+        return sequence;
     }
 
     @JacocoGenerated
