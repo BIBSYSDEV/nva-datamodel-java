@@ -21,6 +21,7 @@ import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.realization.Award;
 import no.unit.nva.model.instancetypes.artistic.realization.Competition;
+import no.unit.nva.model.instancetypes.artistic.realization.Exhibition;
 import no.unit.nva.model.instancetypes.artistic.realization.MentionInPublication;
 import no.unit.nva.model.instancetypes.artistic.realization.Venue;
 import no.unit.nva.model.instancetypes.PublicationInstance;
@@ -372,7 +373,15 @@ public class PublicationInstanceBuilder {
     }
 
     private static List<ArchitectureOutput> randomArchitectureOutputs() {
-        return List.of(randomCompetition(), randomMentionInPublication(), randomAward());
+        return List.of(randomCompetition(), randomMentionInPublication(), randomAward(), randomExhibition());
+    }
+
+    private static Exhibition randomExhibition() {
+        return new Exhibition(randomString(), randomString(), randomString(), randomPeriod(), randomString());
+    }
+
+    private static Period randomPeriod() {
+        return new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(10));
     }
 
     private static ArchitectureOutput randomAward() {
