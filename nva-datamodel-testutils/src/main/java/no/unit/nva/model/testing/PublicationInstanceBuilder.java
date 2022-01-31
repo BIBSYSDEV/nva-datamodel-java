@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
+import no.unit.nva.model.instancetypes.artistic.Architecture;
+import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
+import no.unit.nva.model.instancetypes.artistic.ArchitectureSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.Competition;
 import no.unit.nva.model.instancetypes.artistic.venue.Venue;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesign;
@@ -51,6 +55,7 @@ import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
+import no.unit.nva.model.time.Instant;
 import no.unit.nva.model.time.Period;
 import nva.commons.core.JacocoGenerated;
 
@@ -68,6 +73,8 @@ public class PublicationInstanceBuilder {
         var typeName = randomType.getSimpleName();
 
         switch (typeName) {
+            case "Architecture":
+                return generateRandomArchitecture();
             case "ArtisticDesign":
                 return generateRandomArtisticDesign();
             case "FeatureArticle":
@@ -351,6 +358,23 @@ public class PublicationInstanceBuilder {
 
     private static String randomVolume() {
         return randomString();
+    }
+
+    private static PublicationInstance<? extends Pages> generateRandomArchitecture() {
+        var subtype = randomElement(ArchitectureSubtypeEnum.values());
+        return architecture(subtype);
+    }
+
+    private static PublicationInstance<? extends Pages> architecture(ArchitectureSubtypeEnum subtype) {
+        return new Architecture(subtype, randomString(), randomArchitectureOutputs());
+    }
+
+    private static List<ArchitectureOutput> randomArchitectureOutputs() {
+        return List.of(randomArchitectureOutput(), randomArchitectureOutput());
+    }
+
+    private static ArchitectureOutput randomArchitectureOutput() {
+        return new Competition(randomString(), randomString(), new Instant(LocalDateTime.now()));
     }
 
     private static ArtisticDesign generateRandomArtisticDesign() {
