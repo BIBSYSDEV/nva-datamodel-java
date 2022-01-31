@@ -1,4 +1,4 @@
-package no.unit.nva.model.instancetypes.artistic.venue;
+package no.unit.nva.model.instancetypes.artistic.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

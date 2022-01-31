@@ -1,7 +1,8 @@
-package no.unit.nva.model.instancetypes.artistic;
+package no.unit.nva.model.instancetypes.artistic.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
