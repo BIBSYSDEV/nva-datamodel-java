@@ -19,8 +19,9 @@ import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.instancetypes.artistic.Architecture;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureSubtypeEnum;
-import no.unit.nva.model.instancetypes.artistic.Competition;
-import no.unit.nva.model.instancetypes.artistic.venue.Venue;
+import no.unit.nva.model.instancetypes.artistic.realization.Competition;
+import no.unit.nva.model.instancetypes.artistic.realization.MentionInPublication;
+import no.unit.nva.model.instancetypes.artistic.realization.Venue;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.ArtisticDesignSubtype;
@@ -370,11 +371,16 @@ public class PublicationInstanceBuilder {
     }
 
     private static List<ArchitectureOutput> randomArchitectureOutputs() {
-        return List.of(randomArchitectureOutput(), randomArchitectureOutput());
+        return List.of(randomCompetition(), randomMentionInPublication());
     }
 
-    private static ArchitectureOutput randomArchitectureOutput() {
+    private static ArchitectureOutput randomCompetition() {
         return new Competition(randomString(), randomString(), new Instant(LocalDateTime.now()));
+    }
+
+    private static ArchitectureOutput randomMentionInPublication() {
+        return new MentionInPublication(randomString(), randomIssue(), new Instant(LocalDateTime.now()),
+                randomString());
     }
 
     private static ArtisticDesign generateRandomArtisticDesign() {

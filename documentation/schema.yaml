@@ -927,6 +927,26 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MentionInPublication:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/ArchitectureOutput'
+    - type: object
+      properties:
+        title:
+          type: string
+        issue:
+          type: string
+        time:
+          $ref: '#/components/schemas/Time'
+        otherInformation:
+          type: string
+        type:
+          type: string
   MonographPages:
     required:
     - type
