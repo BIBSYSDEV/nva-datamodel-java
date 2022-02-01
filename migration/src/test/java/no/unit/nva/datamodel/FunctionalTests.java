@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Publication;
@@ -44,7 +43,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class FunctionalTests {
 
     public static final String CURRENT_DATAMODEL_VERSION = new Environment().readEnv("DATAMODEL_VERSION");
-    public static final String PREVIOUS_DATAMODEL_VERSION = "0.14.15";
+    public static final String PREVIOUS_DATAMODEL_VERSION = "0.14.23";
     public static final String SERIALIZATIONS_SUBFOLDER = "serializations";
     public static final String SAMPLE_PROJECT_FOLDER_NAME = "sample-generation";
     public static final String DEPENDENCIES_FILE = "libs.versions.toml";
@@ -54,7 +53,7 @@ public class FunctionalTests {
     public static final String GRADLE_FOLDER_IN_PROJECTS = "gradle";
     public static final String GRADLE_BUILD_COMMAND = "build";
     public static final String[] GRADLE_COMMAND_FOR_PUBLISHING_TO_MAVEN_LOCAL =
-            new String[]{"publishToMavenLocal","-Pskip.signing"};
+        new String[]{"publishToMavenLocal", "-Pskip.signing"};
     public static final String CURRENT_FOLDER = "";
     public static final String MATCH_DATAMODEL_VERSION_IN_DEPENDENCY_FILE_FOR_REPLACING_IT =
         "datamodel\\s*=\\s*\\{\\s*strictly\\s*=\\s*'[^']+'\\s*}";
@@ -169,6 +168,7 @@ public class FunctionalTests {
         BuildResult gradleRunner = GradleRunner.create()
             .withProjectDir(rootFolder())
             .withArguments(GRADLE_COMMAND_FOR_PUBLISHING_TO_MAVEN_LOCAL)
+            .withDebug(true)
             .build();
         gradleRunner.getTasks()
             .stream()

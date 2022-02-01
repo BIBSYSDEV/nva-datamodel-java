@@ -404,7 +404,7 @@ public class PublicationInstanceBuilder {
 
     private static Venue randomVenue() {
         var place = new UnconfirmedPlace(randomString(), "Germany");
-        Period time = randomNvaPeriod();
+        var time = randomNvaPeriod();
         return new Venue(place, time, randomInteger());
     }
 
