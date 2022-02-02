@@ -11,6 +11,7 @@ dependencies {
     implementation libs.nva.commons.identifiers
     implementation libs.bundles.jackson
     testImplementation libs.bundles.unittesting
+    testImplementation project (":nva-datamodel-testutils")
     testImplementation libs.nva.commons.core
     testImplementation libs.apache.commons.io
 }

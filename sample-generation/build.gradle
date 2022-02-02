@@ -10,4 +10,6 @@ dependencies {
     implementation libs.nva.commons.testutils
     implementation libs.nva.commons.core
     implementation libs.nva.commons.identifiers
+    implementation libs.nva.commons.json
+    implementation libs.bundles.jackson
 }

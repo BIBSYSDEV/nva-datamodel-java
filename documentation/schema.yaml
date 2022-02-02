@@ -208,6 +208,23 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+  Award:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/ArchitectureOutput'
+    - type: object
+      properties:
+        name:
+          type: string
+        organizer:
+          type: string
+        time:
+          $ref: '#/components/schemas/Instant'
+        ranking:
+          type: integer
+          format: int32
+        otherInformation:
+          type: string
   Book:
     required:
     - type
@@ -715,17 +732,14 @@ referencedSchemas:
     required:
     - type
     type: object
+    properties:
+      value:
+        type: string
+        format: date-time
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/Time'
-    - type: object
-      properties:
-        value:
-          type: string
-          format: date-time
-        type:
-          type: string
   Journal:
     required:
     - type
@@ -1152,10 +1166,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
