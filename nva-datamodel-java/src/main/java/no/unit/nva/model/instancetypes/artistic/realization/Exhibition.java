@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes.artistic.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.time.Period;
 import nva.commons.core.JacocoGenerated;
@@ -13,11 +14,10 @@ public class Exhibition implements ArchitectureOutput {
     public static final String ORGANIZER = "organizer";
     public static final String TIME = "time";
     public static final String OTHER_INFORMATION = "otherInformation";
-
     @JsonProperty(NAME)
     private final String name;
     @JsonProperty(PLACE)
-    private final String place;
+    private final UnconfirmedPlace place;
     @JsonProperty(ORGANIZER)
     private final String organizer;
     @JsonProperty(TIME)
@@ -28,7 +28,7 @@ public class Exhibition implements ArchitectureOutput {
     private final int sequence;
 
     public Exhibition(@JsonProperty(NAME) String name,
-                      @JsonProperty(PLACE) String place,
+                      @JsonProperty(PLACE) UnconfirmedPlace place,
                       @JsonProperty(ORGANIZER) String organizer,
                       @JsonProperty(TIME) Period time,
                       @JsonProperty(OTHER_INFORMATION) String otherInformation,
@@ -45,7 +45,7 @@ public class Exhibition implements ArchitectureOutput {
         return name;
     }
 
-    public String getPlace() {
+    public UnconfirmedPlace getPlace() {
         return place;
     }
 

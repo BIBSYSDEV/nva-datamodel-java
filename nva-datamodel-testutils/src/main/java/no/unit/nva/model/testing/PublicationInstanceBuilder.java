@@ -4,12 +4,12 @@ import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
+import static no.unit.nva.testutils.RandomDataGenerator.randomLocalDateTime;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -376,26 +376,22 @@ public class PublicationInstanceBuilder {
         return List.of(randomCompetition(), randomMentionInPublication(), randomAward(), randomExhibition());
     }
 
-    private static Exhibition randomExhibition() {
-        return new Exhibition(randomString(), randomString(), randomString(), randomPeriod(), randomString(),
-                randomInteger());
-    }
-
-    private static Period randomPeriod() {
-        return new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(10));
-    }
-
     private static ArchitectureOutput randomAward() {
-        return new Award(randomString(), randomString(), new Instant(LocalDateTime.now()), randomInteger(),
+        return new Award(randomString(), randomString(), randomNvaInstant(), randomInteger(),
                 randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomCompetition() {
-        return new Competition(randomString(), randomString(), new Instant(LocalDateTime.now()), randomInteger());
+        return new Competition(randomString(), randomString(), randomNvaInstant(), randomInteger());
+    }
+
+    private static Exhibition randomExhibition() {
+        return new Exhibition(randomString(), randomUnconfirmedPlace(), randomString(), randomNvaPeriod(),
+                randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomMentionInPublication() {
-        return new MentionInPublication(randomString(), randomIssue(), new Instant(LocalDateTime.now()),
+        return new MentionInPublication(randomString(), randomIssue(), randomNvaInstant(),
                 randomString(), randomInteger());
     }
 
@@ -413,8 +409,19 @@ public class PublicationInstanceBuilder {
     }
 
     private static Venue randomVenue() {
-        UnconfirmedPlace place = new UnconfirmedPlace(randomString(), "Germany");
-        Period time = new Period(LocalDateTime.now(), LocalDateTime.now().plusDays(1));
-        return new Venue(place, time, randomInteger());
+        return new Venue(randomUnconfirmedPlace(), randomNvaPeriod(), randomInteger());
+    }
+
+    private static UnconfirmedPlace randomUnconfirmedPlace() {
+        return new UnconfirmedPlace(randomString(), randomString());
+    }
+
+    private static Instant randomNvaInstant() {
+        return new Instant(randomLocalDateTime());
+    }
+
+    private static Period randomNvaPeriod() {
+        var localDateTime = randomLocalDateTime();
+        return new Period(localDateTime, randomLocalDateTime(localDateTime));
     }
 }
