@@ -13,6 +13,10 @@ dependencies {
     testImplementation libs.nva.commons.core
     testImplementation libs.nva.commons.json
 
+    compileOnly libs.nva.commons.json
+    testImplementation libs.nva.commons.json
+
+
     api libs.nva.file.model
 
     compileOnly libs.nva.commons.identifiers
