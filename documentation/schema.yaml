@@ -640,7 +640,7 @@ referencedSchemas:
         name:
           type: string
         place:
-          type: string
+          $ref: '#/components/schemas/UnconfirmedPlace'
         organizer:
           type: string
         time:
@@ -1401,18 +1401,15 @@ referencedSchemas:
     required:
     - type
     type: object
+    properties:
+      label:
+        type: string
+      country:
+        type: string
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/Place'
-    - type: object
-      properties:
-        label:
-          type: string
-        country:
-          type: string
-        type:
-          type: string
   UnconfirmedPublisher:
     required:
     - type

@@ -386,7 +386,8 @@ public class PublicationInstanceBuilder {
     }
 
     private static Exhibition randomExhibition() {
-        return new Exhibition(randomString(), randomString(), randomString(), randomNvaPeriod(), randomString());
+        return new Exhibition(randomString(), randomUnconfirmedPlace(), randomString(), randomNvaPeriod(),
+                randomString());
     }
 
     private static ArchitectureOutput randomMentionInPublication() {
@@ -408,9 +409,11 @@ public class PublicationInstanceBuilder {
     }
 
     private static Venue randomVenue() {
-        var place = new UnconfirmedPlace(randomString(), "Germany");
-        var time = randomNvaPeriod();
-        return new Venue(place, time, randomInteger());
+        return new Venue(randomUnconfirmedPlace(), randomNvaPeriod(), randomInteger());
+    }
+
+    private static UnconfirmedPlace randomUnconfirmedPlace() {
+        return new UnconfirmedPlace(randomString(), "Germany");
     }
 
     private static Instant randomNvaInstant() {
