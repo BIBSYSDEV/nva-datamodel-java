@@ -378,21 +378,21 @@ public class PublicationInstanceBuilder {
 
     private static ArchitectureOutput randomAward() {
         return new Award(randomString(), randomString(), randomNvaInstant(), randomInteger(),
-                randomString());
+                randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomCompetition() {
-        return new Competition(randomString(), randomString(), randomNvaInstant());
+        return new Competition(randomString(), randomString(), randomNvaInstant(), randomInteger());
     }
 
     private static Exhibition randomExhibition() {
         return new Exhibition(randomString(), randomUnconfirmedPlace(), randomString(), randomNvaPeriod(),
-                randomString());
+                randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomMentionInPublication() {
         return new MentionInPublication(randomString(), randomIssue(), randomNvaInstant(),
-                randomString());
+                randomString(), randomInteger());
     }
 
     private static ArtisticDesign generateRandomArtisticDesign() {

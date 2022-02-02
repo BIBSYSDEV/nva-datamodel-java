@@ -6,6 +6,7 @@ import no.unit.nva.model.instancetypes.artistic.realization.Award;
 import no.unit.nva.model.instancetypes.artistic.realization.Competition;
 import no.unit.nva.model.instancetypes.artistic.realization.Exhibition;
 import no.unit.nva.model.instancetypes.artistic.realization.MentionInPublication;
+import no.unit.nva.model.instancetypes.artistic.realization.WithSequence;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -14,5 +15,5 @@ import no.unit.nva.model.instancetypes.artistic.realization.MentionInPublication
     @JsonSubTypes.Type(name = "Award", value = Award.class),
     @JsonSubTypes.Type(name = "Exhibition", value = Exhibition.class)
 })
-public interface ArchitectureOutput {
+public interface ArchitectureOutput extends WithSequence {
 }

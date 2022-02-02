@@ -8,9 +8,8 @@ import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Venue {
+public class Venue implements WithSequence {
     public static final String PLACE = "place";
-    public static final String SEQUENCE = "sequence";
     public static final String TIME = "time";
 
     @JsonProperty(PLACE)
@@ -37,6 +36,7 @@ public class Venue {
         return time;
     }
 
+    @Override
     public int getSequence() {
         return sequence;
     }

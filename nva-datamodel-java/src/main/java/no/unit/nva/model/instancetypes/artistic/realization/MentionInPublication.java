@@ -25,15 +25,19 @@ public class MentionInPublication implements ArchitectureOutput {
     private final Time time;
     @JsonProperty(OTHER_INFORMATION)
     private final String otherInformation;
+    @JsonProperty(SEQUENCE)
+    private final int sequence;
 
     public MentionInPublication(@JsonProperty(TITLE) String title,
                                 @JsonProperty(ISSUE) String issue,
                                 @JsonProperty(TIME) Instant time,
-                                @JsonProperty(OTHER_INFORMATION) String otherInformation) {
+                                @JsonProperty(OTHER_INFORMATION) String otherInformation,
+                                @JsonProperty(SEQUENCE) int sequence) {
         this.title = title;
         this.issue = issue;
         this.time = time;
         this.otherInformation = otherInformation;
+        this.sequence = sequence;
     }
 
     public String getTitle() {
@@ -50,6 +54,11 @@ public class MentionInPublication implements ArchitectureOutput {
 
     public String getOtherInformation() {
         return otherInformation;
+    }
+
+    @Override
+    public int getSequence() {
+        return sequence;
     }
 
     @JacocoGenerated
