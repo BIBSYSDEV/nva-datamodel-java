@@ -31,7 +31,7 @@ public class PublicationGeneratorTest {
     @MethodSource("publicationsProvider")
     void generatorReturnsPublicationWithNonEmptyFields() throws Exception {
         Publication publication =
-            attempt(()->PublicationGenerator.randomPublication()).orElseThrow(fail->logAndThrow(fail));
+            attempt(() -> PublicationGenerator.randomPublication()).orElseThrow(fail->logAndThrow(fail));
         String json = dtoObjectMapper.writeValueAsString(publication);
         writeJson(json, publication.getIdentifier().toString());
     }
