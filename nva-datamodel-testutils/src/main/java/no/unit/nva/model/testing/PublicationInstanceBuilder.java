@@ -21,6 +21,7 @@ import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.realization.Award;
 import no.unit.nva.model.instancetypes.artistic.realization.Competition;
+import no.unit.nva.model.instancetypes.artistic.realization.Exhibition;
 import no.unit.nva.model.instancetypes.artistic.realization.MentionInPublication;
 import no.unit.nva.model.instancetypes.artistic.realization.Venue;
 import no.unit.nva.model.instancetypes.PublicationInstance;
@@ -372,7 +373,7 @@ public class PublicationInstanceBuilder {
     }
 
     private static List<ArchitectureOutput> randomArchitectureOutputs() {
-        return List.of(randomCompetition(), randomMentionInPublication(), randomAward());
+        return List.of(randomCompetition(), randomMentionInPublication(), randomAward(), randomExhibition());
     }
 
     private static ArchitectureOutput randomAward() {
@@ -382,6 +383,11 @@ public class PublicationInstanceBuilder {
 
     private static ArchitectureOutput randomCompetition() {
         return new Competition(randomString(), randomString(), randomNvaInstant());
+    }
+
+    private static Exhibition randomExhibition() {
+        return new Exhibition(randomString(), randomUnconfirmedPlace(), randomString(), randomNvaPeriod(),
+                randomString());
     }
 
     private static ArchitectureOutput randomMentionInPublication() {
@@ -403,9 +409,11 @@ public class PublicationInstanceBuilder {
     }
 
     private static Venue randomVenue() {
-        var place = new UnconfirmedPlace(randomString(), "Germany");
-        var time = randomNvaPeriod();
-        return new Venue(place, time, randomInteger());
+        return new Venue(randomUnconfirmedPlace(), randomNvaPeriod(), randomInteger());
+    }
+
+    private static UnconfirmedPlace randomUnconfirmedPlace() {
+        return new UnconfirmedPlace(randomString(), randomString());
     }
 
     private static Instant randomNvaInstant() {

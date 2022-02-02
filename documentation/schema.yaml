@@ -631,6 +631,22 @@ referencedSchemas:
           $ref: '#/components/schemas/Event'
         type:
           type: string
+  Exhibition:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/ArchitectureOutput'
+    - type: object
+      properties:
+        name:
+          type: string
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        organizer:
+          type: string
+        time:
+          $ref: '#/components/schemas/Period'
+        otherInformation:
+          type: string
   FeatureArticle:
     required:
     - type
@@ -1047,20 +1063,17 @@ referencedSchemas:
     required:
     - type
     type: object
+    properties:
+      from:
+        type: string
+        format: date-time
+      to:
+        type: string
+        format: date-time
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/Time'
-    - type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-        type:
-          type: string
   Place:
     required:
     - type
@@ -1166,10 +1179,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
@@ -1388,18 +1401,15 @@ referencedSchemas:
     required:
     - type
     type: object
+    properties:
+      label:
+        type: string
+      country:
+        type: string
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/Place'
-    - type: object
-      properties:
-        label:
-          type: string
-        country:
-          type: string
-        type:
-          type: string
   UnconfirmedPublisher:
     required:
     - type
