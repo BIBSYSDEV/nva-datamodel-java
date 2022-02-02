@@ -413,7 +413,7 @@ public class PublicationInstanceBuilder {
     }
 
     private static UnconfirmedPlace randomUnconfirmedPlace() {
-        return new UnconfirmedPlace(randomString(), "Germany");
+        return new UnconfirmedPlace(randomString(), randomString());
     }
 
     private static Instant randomNvaInstant() {
