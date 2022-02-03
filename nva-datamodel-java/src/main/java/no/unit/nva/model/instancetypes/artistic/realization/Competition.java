@@ -61,7 +61,8 @@ public class Competition implements ArchitectureOutput {
             return false;
         }
         Competition that = (Competition) o;
-        return Objects.equals(getName(), that.getName())
+        return getSequence() == that.getSequence()
+                && Objects.equals(getName(), that.getName())
                 && Objects.equals(getDescription(), that.getDescription())
                 && Objects.equals(getTime(), that.getTime());
     }
@@ -69,6 +70,6 @@ public class Competition implements ArchitectureOutput {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDescription(), getTime());
+        return Objects.hash(getName(), getDescription(), getTime(), getSequence());
     }
 }

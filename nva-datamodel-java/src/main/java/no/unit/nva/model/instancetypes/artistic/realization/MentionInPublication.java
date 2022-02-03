@@ -71,7 +71,8 @@ public class MentionInPublication implements ArchitectureOutput {
             return false;
         }
         MentionInPublication that = (MentionInPublication) o;
-        return Objects.equals(getTitle(), that.getTitle())
+        return getSequence() == that.getSequence()
+                && Objects.equals(getTitle(), that.getTitle())
                 && Objects.equals(getIssue(), that.getIssue())
                 && Objects.equals(getTime(), that.getTime())
                 && Objects.equals(getOtherInformation(), that.getOtherInformation());
@@ -80,6 +81,6 @@ public class MentionInPublication implements ArchitectureOutput {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getIssue(), getTime(), getOtherInformation());
+        return Objects.hash(getTitle(), getIssue(), getTime(), getOtherInformation(), getSequence());
     }
 }
