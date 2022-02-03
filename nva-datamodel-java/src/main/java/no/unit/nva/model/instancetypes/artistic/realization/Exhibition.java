@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes.artistic.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.time.Period;
@@ -8,6 +9,7 @@ import nva.commons.core.JacocoGenerated;
 
 import java.util.Objects;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Exhibition implements ArchitectureOutput {
     public static final String NAME = "name";
     public static final String PLACE = "place";
@@ -76,7 +78,8 @@ public class Exhibition implements ArchitectureOutput {
             return false;
         }
         Exhibition that = (Exhibition) o;
-        return Objects.equals(getName(), that.getName())
+        return getSequence() == that.getSequence()
+                && Objects.equals(getName(), that.getName())
                 && Objects.equals(getPlace(), that.getPlace())
                 && Objects.equals(getOrganizer(), that.getOrganizer())
                 && Objects.equals(getTime(), that.getTime())
@@ -86,6 +89,6 @@ public class Exhibition implements ArchitectureOutput {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getPlace(), getOrganizer(), getTime(), getOtherInformation());
+        return Objects.hash(getName(), getPlace(), getOrganizer(), getTime(), getOtherInformation(), getSequence());
     }
 }

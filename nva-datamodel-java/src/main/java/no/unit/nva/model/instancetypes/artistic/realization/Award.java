@@ -1,12 +1,14 @@
 package no.unit.nva.model.instancetypes.artistic.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.time.Instant;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.Objects;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Award implements ArchitectureOutput {
 
     public static final String NAME = "name";
@@ -77,7 +79,8 @@ public class Award implements ArchitectureOutput {
             return false;
         }
         Award award = (Award) o;
-        return Objects.equals(getName(), award.getName())
+        return getSequence() == award.getSequence()
+                && Objects.equals(getName(), award.getName())
                 && Objects.equals(getOrganizer(), award.getOrganizer())
                 && Objects.equals(getTime(), award.getTime())
                 && Objects.equals(getRanking(), award.getRanking())
@@ -87,6 +90,6 @@ public class Award implements ArchitectureOutput {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getOrganizer(), getTime(), getRanking(), getOtherInformation());
+        return Objects.hash(getName(), getOrganizer(), getTime(), getRanking(), getOtherInformation(), getSequence());
     }
 }
