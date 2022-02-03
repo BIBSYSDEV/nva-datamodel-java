@@ -15,10 +15,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
+import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.instancetypes.artistic.Architecture;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
 import no.unit.nva.model.instancetypes.artistic.ArchitectureSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.MovingPicture;
+import no.unit.nva.model.instancetypes.artistic.film.MovingPictureSubtype;
+import no.unit.nva.model.instancetypes.artistic.film.MovingPictureSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.film.realization.Broadcast;
+import no.unit.nva.model.instancetypes.artistic.film.realization.CinematicRelease;
+import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOutput;
+import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
 import no.unit.nva.model.instancetypes.artistic.realization.Award;
 import no.unit.nva.model.instancetypes.artistic.realization.Competition;
 import no.unit.nva.model.instancetypes.artistic.realization.Exhibition;
@@ -76,6 +84,8 @@ public class PublicationInstanceBuilder {
         var typeName = randomType.getSimpleName();
 
         switch (typeName) {
+            case "MotionPicture":
+                return generateRandomMotionPicture();
             case "Architecture":
                 return generateRandomArchitecture();
             case "ArtisticDesign":
@@ -363,9 +373,35 @@ public class PublicationInstanceBuilder {
         return randomString();
     }
 
+    private static PublicationInstance<? extends Pages> generateRandomMotionPicture() {
+        var subtype = randomElement(MovingPictureSubtypeEnum.values());
+        return movingPicture(subtype);
+    }
+
     private static PublicationInstance<? extends Pages> generateRandomArchitecture() {
         var subtype = randomElement(ArchitectureSubtypeEnum.values());
         return architecture(subtype);
+    }
+
+    private static PublicationInstance<? extends Pages> movingPicture(MovingPictureSubtypeEnum subtype) {
+        return new MovingPicture(MovingPictureSubtype.create(subtype), randomString(), randomMovingPictureOutputs());
+    }
+
+    private static List<MovingPictureOutput> randomMovingPictureOutputs() {
+        return List.of(streaming(), cinematicRelease(), otherRelease());
+    }
+
+    private static OtherRelease otherRelease() {
+        return new OtherRelease(randomString(), randomUnconfirmedPlace(), new UnconfirmedPublisher(randomString()),
+                randomNvaInstant(), randomInteger());
+    }
+
+    private static CinematicRelease cinematicRelease() {
+        return new CinematicRelease(randomUnconfirmedPlace(), randomNvaInstant(), randomInteger());
+    }
+
+    private static Broadcast streaming() {
+        return new Broadcast(new UnconfirmedPublisher(randomString()), randomNvaInstant(), randomInteger());
     }
 
     private static PublicationInstance<? extends Pages> architecture(ArchitectureSubtypeEnum subtype) {
