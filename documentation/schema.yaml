@@ -212,7 +212,11 @@ referencedSchemas:
         type: string
         writeOnly: true
   Award:
+    required:
+    - type
     type: object
+    discriminator:
+      propertyName: type
     allOf:
     - $ref: '#/components/schemas/ArchitectureOutput'
     - type: object
@@ -227,6 +231,8 @@ referencedSchemas:
           type: integer
           format: int32
         otherInformation:
+          type: string
+        type:
           type: string
   Book:
     required:
@@ -635,7 +641,11 @@ referencedSchemas:
         type:
           type: string
   Exhibition:
+    required:
+    - type
     type: object
+    discriminator:
+      propertyName: type
     allOf:
     - $ref: '#/components/schemas/ArchitectureOutput'
     - type: object
@@ -643,12 +653,14 @@ referencedSchemas:
         name:
           type: string
         place:
-          type: string
+          $ref: '#/components/schemas/UnconfirmedPlace'
         organizer:
           type: string
         time:
           $ref: '#/components/schemas/Period'
         otherInformation:
+          type: string
+        type:
           type: string
   FeatureArticle:
     required:
@@ -1404,18 +1416,15 @@ referencedSchemas:
     required:
     - type
     type: object
+    properties:
+      label:
+        type: string
+      country:
+        type: string
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/Place'
-    - type: object
-      properties:
-        label:
-          type: string
-        country:
-          type: string
-        type:
-          type: string
   UnconfirmedPublisher:
     required:
     - type
