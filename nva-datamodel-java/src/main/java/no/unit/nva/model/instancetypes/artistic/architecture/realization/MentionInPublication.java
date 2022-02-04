@@ -1,8 +1,8 @@
-package no.unit.nva.model.instancetypes.artistic.realization;
+package no.unit.nva.model.instancetypes.artistic.architecture.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
+import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
 import no.unit.nva.model.time.Instant;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
@@ -14,15 +14,15 @@ public class MentionInPublication implements ArchitectureOutput {
 
     public static final String TITLE = "title";
     public static final String ISSUE = "issue";
-    public static final String TIME = "time";
+    public static final String DATE = "date";
     public static final String OTHER_INFORMATION = "otherInformation";
 
     @JsonProperty(TITLE)
     private final String title;
     @JsonProperty(ISSUE)
     private final String issue;
-    @JsonProperty(TIME)
-    private final Time time;
+    @JsonProperty(DATE)
+    private final Time date;
     @JsonProperty(OTHER_INFORMATION)
     private final String otherInformation;
     @JsonProperty(SEQUENCE)
@@ -30,12 +30,12 @@ public class MentionInPublication implements ArchitectureOutput {
 
     public MentionInPublication(@JsonProperty(TITLE) String title,
                                 @JsonProperty(ISSUE) String issue,
-                                @JsonProperty(TIME) Instant time,
+                                @JsonProperty(DATE) Instant date,
                                 @JsonProperty(OTHER_INFORMATION) String otherInformation,
                                 @JsonProperty(SEQUENCE) int sequence) {
         this.title = title;
         this.issue = issue;
-        this.time = time;
+        this.date = date;
         this.otherInformation = otherInformation;
         this.sequence = sequence;
     }
@@ -48,8 +48,8 @@ public class MentionInPublication implements ArchitectureOutput {
         return issue;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getDate() {
+        return date;
     }
 
     public String getOtherInformation() {
@@ -74,13 +74,13 @@ public class MentionInPublication implements ArchitectureOutput {
         return getSequence() == that.getSequence()
                 && Objects.equals(getTitle(), that.getTitle())
                 && Objects.equals(getIssue(), that.getIssue())
-                && Objects.equals(getTime(), that.getTime())
+                && Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getOtherInformation(), that.getOtherInformation());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getIssue(), getTime(), getOtherInformation(), getSequence());
+        return Objects.hash(getTitle(), getIssue(), getDate(), getOtherInformation(), getSequence());
     }
 }

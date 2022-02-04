@@ -1,4 +1,4 @@
-package no.unit.nva.model.instancetypes.artistic;
+package no.unit.nva.model.instancetypes.artistic.architecture;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

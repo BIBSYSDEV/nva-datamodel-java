@@ -1,8 +1,8 @@
-package no.unit.nva.model.instancetypes.artistic.realization;
+package no.unit.nva.model.instancetypes.artistic.architecture.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
+import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
@@ -13,24 +13,24 @@ public class Competition implements ArchitectureOutput {
 
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
-    public static final String TIME = "time";
+    public static final String DATE = "date";
 
     @JsonProperty(NAME)
     private final String name;
     @JsonProperty(DESCRIPTION)
     private final String description;
-    @JsonProperty(TIME)
-    private final Time time;
+    @JsonProperty(DATE)
+    private final Time date;
     @JsonProperty(SEQUENCE)
     private final int sequence;
 
     public Competition(@JsonProperty(NAME) String name,
                        @JsonProperty(DESCRIPTION) String description,
-                       @JsonProperty(TIME) Time time,
+                       @JsonProperty(DATE) Time date,
                        @JsonProperty(SEQUENCE) int sequence) {
         this.name = name;
         this.description = description;
-        this.time = time;
+        this.date = date;
         this.sequence = sequence;
     }
 
@@ -42,8 +42,8 @@ public class Competition implements ArchitectureOutput {
         return description;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getDate() {
+        return date;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class Competition implements ArchitectureOutput {
         return getSequence() == that.getSequence()
                 && Objects.equals(getName(), that.getName())
                 && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getTime(), that.getTime());
+                && Objects.equals(getDate(), that.getDate());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDescription(), getTime(), getSequence());
+        return Objects.hash(getName(), getDescription(), getDate(), getSequence());
     }
 }

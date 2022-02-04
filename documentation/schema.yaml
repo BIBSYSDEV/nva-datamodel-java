@@ -225,7 +225,7 @@ referencedSchemas:
           type: string
         organizer:
           type: string
-        time:
+        date:
           $ref: '#/components/schemas/Instant'
         ranking:
           type: integer
@@ -373,7 +373,7 @@ referencedSchemas:
           type: string
         description:
           type: string
-        time:
+        date:
           $ref: '#/components/schemas/Time'
         type:
           type: string
@@ -656,7 +656,7 @@ referencedSchemas:
           $ref: '#/components/schemas/UnconfirmedPlace'
         organizer:
           type: string
-        time:
+        date:
           $ref: '#/components/schemas/Period'
         otherInformation:
           type: string
@@ -986,7 +986,7 @@ referencedSchemas:
           type: string
         issue:
           type: string
-        time:
+        date:
           $ref: '#/components/schemas/Time'
         otherInformation:
           type: string
@@ -1194,10 +1194,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
@@ -1464,7 +1464,7 @@ referencedSchemas:
     properties:
       place:
         $ref: '#/components/schemas/Place'
-      time:
+      date:
         $ref: '#/components/schemas/Time'
       sequence:
         type: integer

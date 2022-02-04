@@ -1,8 +1,8 @@
-package no.unit.nva.model.instancetypes.artistic.realization;
+package no.unit.nva.model.instancetypes.artistic.architecture.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.artistic.ArchitectureOutput;
+import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
 import no.unit.nva.model.time.Instant;
 import nva.commons.core.JacocoGenerated;
 
@@ -13,7 +13,7 @@ public class Award implements ArchitectureOutput {
 
     public static final String NAME = "name";
     public static final String ORGANIZER = "organizer";
-    public static final String TIME = "time";
+    public static final String DATE = "date";
     public static final String RANKING = "ranking";
     public static final String OTHER_INFORMATION = "otherInformation";
 
@@ -21,8 +21,8 @@ public class Award implements ArchitectureOutput {
     private final String name;
     @JsonProperty(ORGANIZER)
     private final String organizer;
-    @JsonProperty(TIME)
-    private final Instant time;
+    @JsonProperty(DATE)
+    private final Instant date;
     @JsonProperty(RANKING)
     private final Integer ranking;
     @JsonProperty(OTHER_INFORMATION)
@@ -32,13 +32,13 @@ public class Award implements ArchitectureOutput {
 
     public Award(@JsonProperty(NAME) String name,
                  @JsonProperty(ORGANIZER) String organizer,
-                 @JsonProperty(TIME) Instant time,
+                 @JsonProperty(DATE) Instant date,
                  @JsonProperty(RANKING) Integer ranking,
                  @JsonProperty(OTHER_INFORMATION) String otherInformation,
                  @JsonProperty(SEQUENCE) int sequence) {
         this.name = name;
         this.organizer = organizer;
-        this.time = time;
+        this.date = date;
         this.ranking = ranking;
         this.otherInformation = otherInformation;
         this.sequence = sequence;
@@ -52,8 +52,8 @@ public class Award implements ArchitectureOutput {
         return organizer;
     }
 
-    public Instant getTime() {
-        return time;
+    public Instant getDate() {
+        return date;
     }
 
     public Integer getRanking() {
@@ -82,7 +82,7 @@ public class Award implements ArchitectureOutput {
         return getSequence() == award.getSequence()
                 && Objects.equals(getName(), award.getName())
                 && Objects.equals(getOrganizer(), award.getOrganizer())
-                && Objects.equals(getTime(), award.getTime())
+                && Objects.equals(getDate(), award.getDate())
                 && Objects.equals(getRanking(), award.getRanking())
                 && Objects.equals(getOtherInformation(), award.getOtherInformation());
     }
@@ -90,6 +90,6 @@ public class Award implements ArchitectureOutput {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getOrganizer(), getTime(), getRanking(), getOtherInformation(), getSequence());
+        return Objects.hash(getName(), getOrganizer(), getDate(), getRanking(), getOtherInformation(), getSequence());
     }
 }
