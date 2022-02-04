@@ -1,4 +1,4 @@
-package no.unit.nva.model.instancetypes.artistic;
+package no.unit.nva.model.instancetypes.artistic.design;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
