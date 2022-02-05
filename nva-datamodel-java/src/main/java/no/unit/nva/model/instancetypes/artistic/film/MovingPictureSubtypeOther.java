@@ -15,7 +15,7 @@ public class MovingPictureSubtypeOther extends MovingPictureSubtype {
     private final String description;
 
     protected MovingPictureSubtypeOther(@JsonProperty(TYPE) MovingPictureSubtypeEnum type,
-                                       @JsonProperty(DESCRIPTION) String description) {
+                                        @JsonProperty(DESCRIPTION) String description) {
         super(type);
         this.description = description;
     }
