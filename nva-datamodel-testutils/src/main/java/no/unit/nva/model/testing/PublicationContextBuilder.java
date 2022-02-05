@@ -42,7 +42,9 @@ public class PublicationContextBuilder {
         switch (className) {
             case "Architecture":
             case "ArtisticDesign":
-                return randomArtisticDesign();
+            case "MovingPicture":
+            case "PerformingArts":
+                return randomArtistic();
             case "FeatureArticle":
             case "JournalCorrigendum":
             case "JournalArticle":
@@ -167,7 +169,7 @@ public class PublicationContextBuilder {
         return URI.create("https://api.dev.nva.aws.unit.no/publication-channels/" + randomString());
     }
 
-    private static Artistic randomArtisticDesign() {
+    private static Artistic randomArtistic() {
         return new Artistic();
     }
 

@@ -320,6 +320,22 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Broadcast:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MovingPictureOutput'
+    - type: object
+      properties:
+        publisher:
+          $ref: '#/components/schemas/UnconfirmedPublisher'
+        date:
+          $ref: '#/components/schemas/Instant'
+        type:
+          type: string
   Chapter:
     required:
     - type
@@ -357,6 +373,22 @@ referencedSchemas:
           type: boolean
         pages:
           $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  CinematicRelease:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MovingPictureOutput'
+    - type: object
+      properties:
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        date:
+          $ref: '#/components/schemas/Instant'
         type:
           type: string
   Competition:
@@ -1007,6 +1039,55 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MovingPicture:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        subtype:
+          $ref: '#/components/schemas/MovingPictureSubtype'
+        description:
+          type: string
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/MovingPictureOutput'
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MovingPictureOutput:
+    required:
+    - type
+    type: object
+    properties:
+      sequence:
+        type: integer
+        format: int32
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  MovingPictureSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - FILM
+        - SHORT
+        - SERIAL
+        - INTERACTIVE
+        - AUGMENTED_VIRTUAL_REALITY
+        - OTHER
+      description:
+        type: string
+        writeOnly: true
   NullPages:
     required:
     - type
@@ -1049,6 +1130,26 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+  OtherRelease:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MovingPictureOutput'
+    - type: object
+      properties:
+        description:
+          type: string
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        publisher:
+          $ref: '#/components/schemas/UnconfirmedPublisher'
+        date:
+          $ref: '#/components/schemas/Instant'
+        type:
+          type: string
   OtherStudentWork:
     required:
     - type
@@ -1074,6 +1175,68 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  PerformingArts:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        subtype:
+          $ref: '#/components/schemas/PerformingArtsSubtype'
+        description:
+          type: string
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PerformingArtsOutput'
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  PerformingArtsOutput:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  PerformingArtsSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - THEATRICAL_PRODUCTION
+        - BROADCAST
+        - OTHER
+      description:
+        type: string
+        writeOnly: true
+  PerformingArtsVenue:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PerformingArtsOutput'
+    - type: object
+      properties:
+        place:
+          $ref: '#/components/schemas/Place'
+        date:
+          $ref: '#/components/schemas/Time'
+        sequence:
+          type: integer
+          format: int32
+        type:
+          type: string
   Period:
     required:
     - type
@@ -1194,10 +1357,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
@@ -1429,16 +1592,13 @@ referencedSchemas:
     required:
     - type
     type: object
+    properties:
+      name:
+        type: string
+      type:
+        type: string
     discriminator:
       propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublishingHouse'
-    - type: object
-      properties:
-        name:
-          type: string
-        type:
-          type: string
   UnconfirmedSeries:
     required:
     - type

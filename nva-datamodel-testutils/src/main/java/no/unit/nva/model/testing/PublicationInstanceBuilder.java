@@ -36,6 +36,11 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtype;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
+import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
+import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.performingarts.realization.PerformingArtsOutput;
+import no.unit.nva.model.instancetypes.artistic.performingarts.realization.PerformingArtsVenue;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
@@ -84,7 +89,9 @@ public class PublicationInstanceBuilder {
         var typeName = randomType.getSimpleName();
 
         switch (typeName) {
-            case "MotionPicture":
+            case "PerformingArts":
+                return generatePerformingArts();
+            case "MovingPicture":
                 return generateRandomMotionPicture();
             case "Architecture":
                 return generateRandomArchitecture();
@@ -373,6 +380,12 @@ public class PublicationInstanceBuilder {
         return randomString();
     }
 
+
+    private static PublicationInstance<? extends Pages> generatePerformingArts() {
+        var subtype = randomElement(PerformingArtsSubtypeEnum.values());
+        return performingArts(subtype);
+    }
+
     private static PublicationInstance<? extends Pages> generateRandomMotionPicture() {
         var subtype = randomElement(MovingPictureSubtypeEnum.values());
         return movingPicture(subtype);
@@ -381,6 +394,18 @@ public class PublicationInstanceBuilder {
     private static PublicationInstance<? extends Pages> generateRandomArchitecture() {
         var subtype = randomElement(ArchitectureSubtypeEnum.values());
         return architecture(subtype);
+    }
+
+    private static PublicationInstance<? extends Pages> performingArts(PerformingArtsSubtypeEnum subtype) {
+        return new PerformingArts(PerformingArtsSubtype.create(subtype), randomString(), randomPerformingArtsOutputs());
+    }
+
+    private static List<PerformingArtsOutput> randomPerformingArtsOutputs() {
+        return List.of(performingArtsVenue());
+    }
+
+    private static PerformingArtsVenue performingArtsVenue() {
+        return new PerformingArtsVenue(randomUnconfirmedPlace(), randomNvaPeriod(), randomInteger());
     }
 
     private static PublicationInstance<? extends Pages> movingPicture(MovingPictureSubtypeEnum subtype) {
