@@ -18,13 +18,13 @@ public class Architecture implements PublicationInstance<NullPages> {
     public static final String OUTPUT = "architectureOutput";
 
     @JsonProperty(SUBTYPE)
-    private final ArchitectureSubtypeEnum subtype;
+    private final ArchitectureSubtype subtype;
     @JsonProperty(DESCRIPTION)
     private final String description;
     @JsonProperty(OUTPUT)
     private final List<ArchitectureOutput> architectureOutput;
 
-    public Architecture(@JsonProperty(SUBTYPE) ArchitectureSubtypeEnum subtype,
+    public Architecture(@JsonProperty(SUBTYPE) ArchitectureSubtype subtype,
                         @JsonProperty(DESCRIPTION) String description,
                         @JsonProperty(OUTPUT) List<ArchitectureOutput> architectureOutput) {
         this.subtype = subtype;
@@ -50,7 +50,7 @@ public class Architecture implements PublicationInstance<NullPages> {
         return false;
     }
 
-    public ArchitectureSubtypeEnum getSubtype() {
+    public ArchitectureSubtype getSubtype() {
         return subtype;
     }
 
@@ -72,7 +72,7 @@ public class Architecture implements PublicationInstance<NullPages> {
             return false;
         }
         Architecture that = (Architecture) o;
-        return getSubtype() == that.getSubtype()
+        return Objects.equals(getSubtype(), that.getSubtype())
                 && Objects.equals(getDescription(), that.getDescription())
                 && Objects.equals(getArchitectureOutput(), that.getArchitectureOutput());
     }

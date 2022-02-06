@@ -128,13 +128,7 @@ referencedSchemas:
     - type: object
       properties:
         subtype:
-          type: string
-          enum:
-          - BUILDING
-          - PLANNING_PROPOSAL
-          - LANDSCAPE_ARCHITECTURE
-          - INTERIOR
-          - OTHER
+          $ref: '#/components/schemas/ArchitectureSubtype'
         description:
           type: string
         architectureOutput:
@@ -157,6 +151,20 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  ArchitectureSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - BUILDING
+        - PLANNING_PROPOSAL
+        - LANDSCAPE_ARCHITECTURE
+        - INTERIOR
+        - OTHER
+      description:
+        type: string
+        writeOnly: true
   Artistic:
     required:
     - type
@@ -1357,10 +1365,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
