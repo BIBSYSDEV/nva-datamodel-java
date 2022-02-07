@@ -19,6 +19,7 @@ import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
+import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureSubtype;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPicture;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPictureSubtype;
@@ -36,6 +37,11 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtype;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
+import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
+import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.performingarts.realization.PerformingArtsOutput;
+import no.unit.nva.model.instancetypes.artistic.performingarts.realization.PerformingArtsVenue;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
@@ -71,8 +77,10 @@ import no.unit.nva.model.time.Period;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
-@SuppressWarnings("PMD.CouplingBetweenObjects")
+@SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.GodClass"})
 public class PublicationInstanceBuilder {
+
+    public static final String OTHER = "Other";
 
     public static PublicationInstance<? extends Pages> randomPublicationInstance() {
         Class<?> randomType = randomPublicationInstanceType();
@@ -84,7 +92,9 @@ public class PublicationInstanceBuilder {
         var typeName = randomType.getSimpleName();
 
         switch (typeName) {
-            case "MotionPicture":
+            case "PerformingArts":
+                return generatePerformingArts();
+            case "MovingPicture":
                 return generateRandomMotionPicture();
             case "Architecture":
                 return generateRandomArchitecture();
@@ -373,6 +383,12 @@ public class PublicationInstanceBuilder {
         return randomString();
     }
 
+
+    private static PublicationInstance<? extends Pages> generatePerformingArts() {
+        var subtype = randomElement(PerformingArtsSubtypeEnum.values());
+        return performingArts(subtype);
+    }
+
     private static PublicationInstance<? extends Pages> generateRandomMotionPicture() {
         var subtype = randomElement(MovingPictureSubtypeEnum.values());
         return movingPicture(subtype);
@@ -383,8 +399,33 @@ public class PublicationInstanceBuilder {
         return architecture(subtype);
     }
 
+    private static PublicationInstance<? extends Pages> performingArts(PerformingArtsSubtypeEnum subtype) {
+        PerformingArtsSubtype performingArtsSubtype = performingArtsSubtype(subtype);
+        return new PerformingArts(performingArtsSubtype, randomString(), randomPerformingArtsOutputs());
+    }
+
+    private static PerformingArtsSubtype performingArtsSubtype(PerformingArtsSubtypeEnum subtype) {
+        return OTHER.equals(subtype.getType())
+                ? PerformingArtsSubtype.createOther(randomString())
+                : PerformingArtsSubtype.create(subtype);
+    }
+
+    private static List<PerformingArtsOutput> randomPerformingArtsOutputs() {
+        return List.of(performingArtsVenue());
+    }
+
+    private static PerformingArtsVenue performingArtsVenue() {
+        return new PerformingArtsVenue(randomUnconfirmedPlace(), randomNvaPeriod(), randomInteger());
+    }
+
     private static PublicationInstance<? extends Pages> movingPicture(MovingPictureSubtypeEnum subtype) {
-        return new MovingPicture(MovingPictureSubtype.create(subtype), randomString(), randomMovingPictureOutputs());
+        return new MovingPicture(getMovingPictureSubtype(subtype), randomString(), randomMovingPictureOutputs());
+    }
+
+    private static MovingPictureSubtype getMovingPictureSubtype(MovingPictureSubtypeEnum subtype) {
+        return OTHER.equals(subtype.getType())
+                ? MovingPictureSubtype.createOther(randomString())
+                : MovingPictureSubtype.create(subtype);
     }
 
     private static List<MovingPictureOutput> randomMovingPictureOutputs() {
@@ -405,7 +446,13 @@ public class PublicationInstanceBuilder {
     }
 
     private static PublicationInstance<? extends Pages> architecture(ArchitectureSubtypeEnum subtype) {
-        return new Architecture(subtype, randomString(), randomArchitectureOutputs());
+        return new Architecture(architectureSubtype(subtype), randomString(), randomArchitectureOutputs());
+    }
+
+    private static ArchitectureSubtype architectureSubtype(ArchitectureSubtypeEnum subtype) {
+        return OTHER.equals(subtype.getType())
+                ? ArchitectureSubtype.createOther(randomString())
+                : ArchitectureSubtype.create(subtype);
     }
 
     private static List<ArchitectureOutput> randomArchitectureOutputs() {
