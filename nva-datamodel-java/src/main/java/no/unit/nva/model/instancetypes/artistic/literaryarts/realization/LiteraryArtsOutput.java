@@ -2,17 +2,17 @@ package no.unit.nva.model.instancetypes.artistic.literaryarts.realization;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonTypeInfo(use = Id.NAME, include = As.EXISTING_PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(name = "PrintedMatter", value = PrintedMatter.class),
-    @JsonSubTypes.Type(name = "AUDIOBOOK", value = AudioVisual.class),
-    @JsonSubTypes.Type(name = "RADIO_PLAY", value = AudioVisual.class),
-    @JsonSubTypes.Type(name = "SHORT_FILM", value = AudioVisual.class),
-    @JsonSubTypes.Type(name = "PODCAST", value = AudioVisual.class),
-    @JsonSubTypes.Type(name = "OTHER", value = AudioVisual.class),
-    @JsonSubTypes.Type(name = "LivePerformance", value = LivePerformance.class),
+    @JsonSubTypes.Type(names = {"Audiobook", "RadioPlay", "ShortFilm", "Podcast", "Other"}, value = AudioVisual.class),
+    @JsonSubTypes.Type(names = {"Reading","Play","Other"}, value = LivePerformance.class),
     @JsonSubTypes.Type(name = "Web", value = Web.class)
 })
 public interface LiteraryArtsOutput {
+    String TYPE = "type";
+
 }

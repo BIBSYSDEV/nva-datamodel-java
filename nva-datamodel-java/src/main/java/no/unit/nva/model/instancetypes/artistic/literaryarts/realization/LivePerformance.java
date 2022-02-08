@@ -1,15 +1,18 @@
 package no.unit.nva.model.instancetypes.artistic.literaryarts.realization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import java.util.Objects;
 import no.unit.nva.model.contexttypes.place.Place;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.time.Instant;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
-import java.util.Objects;
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type", visible = true)
 public class LivePerformance implements LiteraryArtsOutput {
+
     public static final String TYPE = "type";
     public static final String PLACE = "place";
     public static final String DATE = "date";
@@ -42,6 +45,12 @@ public class LivePerformance implements LiteraryArtsOutput {
 
     @JacocoGenerated
     @Override
+    public int hashCode() {
+        return Objects.hash(getType(), getPlace(), getDate());
+    }
+
+    @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -51,13 +60,7 @@ public class LivePerformance implements LiteraryArtsOutput {
         }
         LivePerformance that = (LivePerformance) o;
         return Objects.equals(getType(), that.getType())
-                && Objects.equals(getPlace(), that.getPlace())
-                && Objects.equals(getDate(), that.getDate());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getType(), getPlace(), getDate());
+               && Objects.equals(getPlace(), that.getPlace())
+               && Objects.equals(getDate(), that.getDate());
     }
 }

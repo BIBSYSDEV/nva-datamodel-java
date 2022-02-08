@@ -460,7 +460,7 @@ public class PublicationInstanceBuilder {
     private static PrintedMatter printedMatter() {
         try {
             return new PrintedMatter(randomUnconfirmedPublisher(), randomNvaInstant(), List.of(randomIsbn13()),
-                    randomString());
+                    randomString(),PrintedMatter.TYPE_VALUE);
         } catch (InvalidIsbnException e) {
             throw new RuntimeException("Test framework produced invalid ISBN");
         }

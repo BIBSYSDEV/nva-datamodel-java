@@ -1,6 +1,8 @@
 package no.unit.nva.model.instancetypes.artistic.literaryarts.realization;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
 
 public enum AudioVisualType {
     AUDIOBOOK("Audiobook"),
@@ -13,6 +15,13 @@ public enum AudioVisualType {
 
     AudioVisualType(String type) {
         this.type = type;
+    }
+
+    @JsonCreator
+    public static AudioVisualType fromString(String input) {
+        return Arrays.stream(AudioVisualType.values()).filter(value -> value.getType().equalsIgnoreCase(input))
+            .findFirst()
+            .orElseThrow();
     }
 
     @JsonValue
