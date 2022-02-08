@@ -1,0 +1,283 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "DRAFT",
+  "owner" : "Sv6ZuYMZc52v",
+  "resourceOwner" : {
+    "owner" : "Sv6ZuYMZc52v",
+    "ownerAffiliation" : "https://www.example.org/addistinctio"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/dignissimosnulla",
+    "labels" : {
+      "CLyRXrsAjHcj0p" : "jx7ADsYGZ6X2ZP"
+    }
+  },
+  "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+  "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "handle" : "https://www.example.org/nemonihil",
+  "doi" : "https://doi.org/10.1234/harum",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "REQUESTED",
+    "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "messages" : [ {
+      "type" : "DoiRequestMessage",
+      "text" : "3YY0tPWvs4",
+      "author" : "u7jvdL82iblECO",
+      "timestamp" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "link" : "https://www.example.org/autdolor",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "xXCBdVGd2Gx664A",
+    "alternativeTitles" : {
+      "ru" : "5AJ55g6sA8A"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/fin",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "TAKpt4JNzdbLh9SkTA",
+      "month" : "jTfINf1FTfluC8wGlhg",
+      "day" : "j1TSLYdt4i3Cx"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/jfSSIyXw89ffym",
+        "name" : "JwhhYo9RuYIW",
+        "nameType" : "Personal",
+        "orcId" : "HMdptVq6GFAK",
+        "arpId" : "v0X2euYh4FZI"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/PRBAuCjJFpcU",
+        "labels" : {
+          "QTYgGbO3fXm" : "OGCQ5UAxP353ygMHld"
+        }
+      } ],
+      "role" : "Journalist",
+      "sequence" : 8,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/vDMFUkx17AqLCNjRB",
+        "name" : "wF3r8u7YIlNv2tmtd",
+        "nameType" : "Organizational",
+        "orcId" : "brPjgF2hDZOPlKhL4M",
+        "arpId" : "xiXWtQIV2WIcXJlvUhM"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/dTuaOjmQudNHxAW6",
+        "labels" : {
+          "IuOEAtFpIteEBPUfY2f" : "kqT1SWuyh4Iev9Q"
+        }
+      } ],
+      "role" : "Other",
+      "sequence" : 5,
+      "correspondingAuthor" : false
+    } ],
+    "npiSubjectHeading" : "jZg2sKx8nWxCjeT",
+    "tags" : [ "GGmsaiqPa13c6d" ],
+    "description" : "t2qxD7ETuxdHS6XajsG",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Artistic"
+      },
+      "doi" : "https://www.example.com/uQpowW6lcP0I5iZjSI",
+      "publicationInstance" : {
+        "type" : "LiteraryArts",
+        "subtype" : {
+          "type" : "Novel"
+        },
+        "outputs" : [ {
+          "type" : "PrintedMatter",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "4Q7W4LdRlhYqz"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "isbns" : [ "9790027404103" ],
+          "pages" : "cRXvD9WWOqh"
+        }, {
+          "type" : "AudioVisual",
+          "type" : "Audiobook",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "JBVlnxpP99hnLW4GigI"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "isbns" : [ "9791987914527" ],
+          "extent" : "WgyEx5QFhY5QWU"
+        }, {
+          "type" : "AudioVisual",
+          "type" : "RadioPlay",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "hN8PVNhfLIE"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "isbns" : [ "9781888810868" ],
+          "extent" : "UDcKSbPgmWOTGfwDJ"
+        }, {
+          "type" : "AudioVisual",
+          "type" : "ShortFilm",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "isS2SbkN2rJYGO"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "isbns" : [ "9780071850056" ],
+          "extent" : "QXyDs5S2Ld"
+        }, {
+          "type" : "AudioVisual",
+          "type" : "Podcast",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "fG546GRj5HMB3B1"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "isbns" : [ "9791895630854" ],
+          "extent" : "Brw3uzVBR9H4"
+        }, {
+          "type" : "AudioVisual",
+          "type" : "Other",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "l4BSY3dzbE9z0UyMvPS"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "isbns" : [ "9780095172271" ],
+          "extent" : "7t0rAYEkmSgrmpQS9F"
+        }, {
+          "type" : "LivePerformance",
+          "type" : "READING",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "Vtn7IAVYOwvSiAnW0",
+            "country" : "17v1KqReEu"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          }
+        }, {
+          "type" : "LivePerformance",
+          "type" : "PLAY",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "2VMuDrOYON4urF9cC",
+            "country" : "5tQeCWhV9JI"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          }
+        }, {
+          "type" : "LivePerformance",
+          "type" : "OTHER",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "qsDfAyNuDWiOhdV",
+            "country" : "8yoAwL6taYcrzWu"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          }
+        }, {
+          "type" : "Web",
+          "id" : "https://www.example.com/3wkXse6oaJBZLX",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "PVDaTe5RNzq"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          }
+        } ],
+        "peerReviewed" : false,
+        "pages" : {
+          "type" : "NullPages"
+        }
+      }
+    },
+    "metadataSource" : "https://www.example.com/PZisfvgOZBhr7",
+    "abstract" : "eXRIAXBn6j8J27x38"
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+      "name" : "FH17ZMHUZLJ8C",
+      "mimeType" : "5TH473fwEBek5",
+      "size" : 766892363,
+      "license" : {
+        "type" : "License",
+        "identifier" : "1xUgoP7JOzSVy4pyqN",
+        "labels" : {
+          "es6Cb4LxTPywRHB" : "0v1Pflsx4YiTz"
+        },
+        "link" : "https://www.example.com/ZsZEgn9IG7j"
+      },
+      "administrativeAgreement" : false,
+      "publisherAuthority" : false,
+      "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/eaab",
+    "name" : "ZWAGV7zCabWnZ",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "B15DRps32P",
+      "id" : "vj0C7OuBeEV4Xp1"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-09-23T09:51:23.044996ZZ",
+      "approvedBy" : "REK",
+      "approvalStatus" : "APPLIED",
+      "applicationCode" : "sD4Csajeym"
+    } ]
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/eosnostrum" ],
+  "modelVersion" : "0.15.1"
+}

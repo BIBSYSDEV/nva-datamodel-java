@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPicture;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArts;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
@@ -38,6 +39,7 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "Architecture", value = Architecture.class),
     @JsonSubTypes.Type(name = "ArtisticDesign", value = ArtisticDesign.class),
     @JsonSubTypes.Type(name = "MovingPicture", value = MovingPicture.class),
+    @JsonSubTypes.Type(name = "LiteraryArts", value = LiteraryArts.class),
     @JsonSubTypes.Type(name = "PerformingArts", value = PerformingArts.class),
     @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),

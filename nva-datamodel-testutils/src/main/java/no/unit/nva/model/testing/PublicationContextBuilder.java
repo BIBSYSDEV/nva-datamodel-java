@@ -42,6 +42,7 @@ public class PublicationContextBuilder {
         switch (className) {
             case "Architecture":
             case "ArtisticDesign":
+            case "LiteraryArts":
             case "MovingPicture":
             case "PerformingArts":
                 return randomArtistic();

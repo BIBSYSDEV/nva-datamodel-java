@@ -4,12 +4,14 @@ import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
+import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
 import static no.unit.nva.testutils.RandomDataGenerator.randomLocalDateTime;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +19,7 @@ import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
+import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureSubtype;
@@ -37,6 +40,16 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtype;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArts;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArtsSubtype;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArtsSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.realization.AudioVisual;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.realization.AudioVisualType;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.realization.LiteraryArtsOutput;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.realization.LivePerformance;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.realization.LivePerformanceType;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.realization.PrintedMatter;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.realization.Web;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
@@ -92,6 +105,8 @@ public class PublicationInstanceBuilder {
         var typeName = randomType.getSimpleName();
 
         switch (typeName) {
+            case "LiteraryArts":
+                return generateLiteraryArts();
             case "PerformingArts":
                 return generatePerformingArts();
             case "MovingPicture":
@@ -383,6 +398,10 @@ public class PublicationInstanceBuilder {
         return randomString();
     }
 
+    private static PublicationInstance<? extends Pages> generateLiteraryArts() {
+        var subtype = randomElement(LiteraryArtsSubtypeEnum.values());
+        return literaryArts(subtype);
+    }
 
     private static PublicationInstance<? extends Pages> generatePerformingArts() {
         var subtype = randomElement(PerformingArtsSubtypeEnum.values());
@@ -397,6 +416,64 @@ public class PublicationInstanceBuilder {
     private static PublicationInstance<? extends Pages> generateRandomArchitecture() {
         var subtype = randomElement(ArchitectureSubtypeEnum.values());
         return architecture(subtype);
+    }
+
+    private static PublicationInstance<? extends Pages> literaryArts(LiteraryArtsSubtypeEnum subtype) {
+        LiteraryArtsSubtype literaryArtsSubtype = literaryArtsSubtype(subtype);
+        return new LiteraryArts(literaryArtsSubtype, randomLiteraryArtsOutputs());
+    }
+
+    private static List<LiteraryArtsOutput> randomLiteraryArtsOutputs() {
+        var outputs = new ArrayList<LiteraryArtsOutput>();
+        outputs.add(printedMatter());
+        outputs.addAll(audioVisual());
+        outputs.addAll(livePerformances());
+        outputs.add(web());
+        return outputs;
+    }
+
+    private static LiteraryArtsOutput web() {
+        return new Web(randomUri(), randomUnconfirmedPublisher(), randomNvaInstant());
+    }
+
+    private static List<LiteraryArtsOutput> livePerformances() {
+        List<LiteraryArtsOutput> outputs = new ArrayList<>();
+        for (LivePerformanceType type: LivePerformanceType.values()) {
+            outputs.add(new LivePerformance(type, randomUnconfirmedPlace(), randomNvaInstant()));
+        }
+        return outputs;
+    }
+
+    private static List<LiteraryArtsOutput> audioVisual() {
+        List<LiteraryArtsOutput> outputs = new ArrayList<>();
+        for (AudioVisualType type: AudioVisualType.values()) {
+            try {
+                outputs.add(new AudioVisual(type, randomUnconfirmedPublisher(), randomNvaInstant(),
+                        List.of(randomIsbn13()), randomString()));
+            } catch (InvalidIsbnException e) {
+                throw new RuntimeException("Test framework produced invalid ISBN");
+            }
+        }
+        return outputs;
+    }
+
+    private static PrintedMatter printedMatter() {
+        try {
+            return new PrintedMatter(randomUnconfirmedPublisher(), randomNvaInstant(), List.of(randomIsbn13()),
+                    randomString());
+        } catch (InvalidIsbnException e) {
+            throw new RuntimeException("Test framework produced invalid ISBN");
+        }
+    }
+
+    private static UnconfirmedPublisher randomUnconfirmedPublisher() {
+        return new UnconfirmedPublisher(randomString());
+    }
+
+    private static LiteraryArtsSubtype literaryArtsSubtype(LiteraryArtsSubtypeEnum subtype) {
+        return OTHER.equals(subtype.getType())
+                ? LiteraryArtsSubtype.createOther(randomString())
+                : LiteraryArtsSubtype.create(subtype);
     }
 
     private static PublicationInstance<? extends Pages> performingArts(PerformingArtsSubtypeEnum subtype) {

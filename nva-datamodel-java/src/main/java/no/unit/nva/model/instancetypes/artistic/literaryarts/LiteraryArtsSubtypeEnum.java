@@ -1,0 +1,29 @@
+package no.unit.nva.model.instancetypes.artistic.literaryarts;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import no.unit.nva.model.instancetypes.artistic.WithType;
+
+public enum LiteraryArtsSubtypeEnum implements WithType {
+    NOVEL("Novel"),
+    POETRY("Poetry"),
+    NOVELLA("Novella"),
+    SHORT_STORY("ShortStory"),
+    ESSAY("Essay"),
+    TRANSLATION("Translation"),
+    RETELLING("Retelling"),
+    PLAY("Play"),
+    OTHER("Other");
+
+
+    @JsonValue
+    private final String type;
+
+    LiteraryArtsSubtypeEnum(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String getType() {
+        return type;
+    }
+}
