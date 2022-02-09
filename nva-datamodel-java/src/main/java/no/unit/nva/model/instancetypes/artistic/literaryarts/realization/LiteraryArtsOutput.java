@@ -8,11 +8,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 @JsonTypeInfo(use = Id.NAME, include = As.EXISTING_PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(name = "PrintedMatter", value = PrintedMatter.class),
-    @JsonSubTypes.Type(names = {"Audiobook", "RadioPlay", "ShortFilm", "Podcast", "Other"}, value = AudioVisual.class),
-    @JsonSubTypes.Type(names = {"Reading","Play","Other"}, value = LivePerformance.class),
+    @JsonSubTypes.Type(names = {"Audiobook", "RadioPlay", "ShortFilm", "Podcast", "OtherLiteraryAudioVisual"},
+        value = AudioVisual.class),
+    @JsonSubTypes.Type(names = {"Reading","Play","OtherLiteraryLivePerformance"}, value = LivePerformance.class),
     @JsonSubTypes.Type(name = "Web", value = Web.class)
 })
-public interface LiteraryArtsOutput {
-    String TYPE = "type";
 
+public interface LiteraryArtsOutput {
 }

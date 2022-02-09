@@ -2,6 +2,8 @@ package no.unit.nva.model.instancetypes.artistic.literaryarts.realization;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import nva.commons.core.JacocoGenerated;
+
 import java.util.Arrays;
 
 public enum AudioVisualType {
@@ -9,7 +11,7 @@ public enum AudioVisualType {
     RADIO_PLAY("RadioPlay"),
     SHORT_FILM("ShortFilm"),
     PODCAST("Podcast"),
-    OTHER("Other");
+    OTHER_LITERARY_AUDIO_VISUAL("OtherLiteraryAudioVisual");
 
     private final String type;
 
@@ -17,9 +19,11 @@ public enum AudioVisualType {
         this.type = type;
     }
 
+    @JacocoGenerated
     @JsonCreator
     public static AudioVisualType fromString(String input) {
-        return Arrays.stream(AudioVisualType.values()).filter(value -> value.getType().equalsIgnoreCase(input))
+        return Arrays.stream(AudioVisualType.values())
+            .filter(value -> value.getType().equalsIgnoreCase(input))
             .findFirst()
             .orElseThrow();
     }

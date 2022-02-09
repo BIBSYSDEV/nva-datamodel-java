@@ -20,6 +20,7 @@ public class AudioVisual implements LiteraryArtsOutput, WithIsbn {
     public static final String DATE = "date";
     public static final String ISBNS = "isbns";
     public static final String EXTENT = "extent";
+
     @JsonProperty(TYPE)
     private final AudioVisualType type;
     @JsonProperty(PUBLISHER)
@@ -66,12 +67,6 @@ public class AudioVisual implements LiteraryArtsOutput, WithIsbn {
 
     @JacocoGenerated
     @Override
-    public int hashCode() {
-        return Objects.hash(getType(), getPublisher(), getDate(), getIsbns(), getExtent());
-    }
-
-    @JacocoGenerated
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -80,10 +75,16 @@ public class AudioVisual implements LiteraryArtsOutput, WithIsbn {
             return false;
         }
         AudioVisual that = (AudioVisual) o;
-        return getType() == that.getType()
-               && Objects.equals(getPublisher(), that.getPublisher())
-               && Objects.equals(getDate(), that.getDate())
-               && Objects.equals(getIsbns(), that.getIsbns())
-               && Objects.equals(getExtent(), that.getExtent());
+        return Objects.equals(getType(), that.getType())
+            && Objects.equals(getPublisher(), that.getPublisher())
+            && Objects.equals(getDate(), that.getDate())
+            && Objects.equals(getIsbns(), that.getIsbns())
+            && Objects.equals(getExtent(), that.getExtent());
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getType(), getPublisher(), getDate(), getIsbns(), getExtent());
     }
 }

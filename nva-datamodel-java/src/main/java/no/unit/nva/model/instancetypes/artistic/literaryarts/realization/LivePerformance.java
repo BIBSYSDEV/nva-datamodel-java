@@ -16,6 +16,7 @@ public class LivePerformance implements LiteraryArtsOutput {
     public static final String TYPE = "type";
     public static final String PLACE = "place";
     public static final String DATE = "date";
+
     @JsonProperty(TYPE)
     private final LivePerformanceType type;
     @JsonProperty(PLACE)

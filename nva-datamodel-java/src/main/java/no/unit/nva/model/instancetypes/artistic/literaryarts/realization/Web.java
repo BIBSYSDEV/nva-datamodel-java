@@ -13,29 +13,34 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type", visible = true)
 public class Web implements LiteraryArtsOutput {
 
+    public static final String TYPE = "type";
     public static final String ID = "id";
     public static final String PUBLISHER = "publisher";
     public static final String DATE = "date";
+    public static final String TYPE_VALUE = "Web";
+
+    @JsonProperty(TYPE)
+    private final String type;
     @JsonProperty(ID)
     private final URI id;
     @JsonProperty(PUBLISHER)
     private final PublishingHouse publisher;
     @JsonProperty(DATE)
     private final Time date;
-    @JsonProperty(TYPE)
-    private final String type;
+
 
     public Web(@JsonProperty(ID) URI id,
                @JsonProperty(PUBLISHER) PublishingHouse publisher,
                @JsonProperty(DATE) Instant date) {
+        this.type = TYPE_VALUE;
         this.id = id;
         this.publisher = publisher;
         this.date = date;
-        this.type = "Web";
     }
 
-
-
+    public String getType() {
+        return type;
+    }
 
     public URI getId() {
         return id;

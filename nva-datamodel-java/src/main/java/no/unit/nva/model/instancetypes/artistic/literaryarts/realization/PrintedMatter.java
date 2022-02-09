@@ -17,6 +17,7 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type", visible = true)
 public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
 
+    public static final String TYPE = "type";
     public static final String PUBLISHER = "publisher";
     public static final String DATE = "date";
     public static final String ISBN = "isbns";
@@ -34,11 +35,11 @@ public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
     @JsonProperty(TYPE)
     private final String type;
 
-    public PrintedMatter(@JsonProperty(PUBLISHER) UnconfirmedPublisher publisher,
+    public PrintedMatter(@JsonProperty(TYPE) String type,
+                         @JsonProperty(PUBLISHER) UnconfirmedPublisher publisher,
                          @JsonProperty(DATE) Instant date,
                          @JsonProperty(ISBN) List<String> isbns,
-                         @JsonProperty(PAGES) String pages,
-                         @JsonProperty(TYPE) String type) throws
+                         @JsonProperty(PAGES) String pages) throws
                                                           InvalidIsbnException {
         this.publisher = publisher;
         this.date = date;
