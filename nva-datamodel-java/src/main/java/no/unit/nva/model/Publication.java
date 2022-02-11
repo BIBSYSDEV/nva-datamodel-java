@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
@@ -116,13 +115,15 @@ public class Publication
     }
 
     @Override
+    @Deprecated
     public String getOwner() {
-        return Optional.ofNullable(resourceOwner).map(ResourceOwner::getOwner).orElse(owner);
+        return null;
     }
 
     @Override
+    @Deprecated
     public void setOwner(String owner) {
-        this.owner = owner;
+
     }
 
     @Override
