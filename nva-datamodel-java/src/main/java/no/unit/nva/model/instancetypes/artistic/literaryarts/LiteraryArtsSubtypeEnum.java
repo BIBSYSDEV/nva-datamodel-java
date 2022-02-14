@@ -1,9 +1,9 @@
 package no.unit.nva.model.instancetypes.artistic.literaryarts;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import no.unit.nva.model.instancetypes.artistic.WithType;
+import no.unit.nva.model.instancetypes.artistic.IsType;
 
-public enum LiteraryArtsSubtypeEnum implements WithType {
+public enum LiteraryArtsSubtypeEnum implements IsType {
     NOVEL("Novel"),
     POETRY("Poetry"),
     NOVELLA("Novella"),

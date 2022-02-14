@@ -1,9 +1,9 @@
 package no.unit.nva.model.instancetypes.artistic.film;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import no.unit.nva.model.instancetypes.artistic.WithType;
+import no.unit.nva.model.instancetypes.artistic.IsType;
 
-public enum MovingPictureSubtypeEnum implements WithType {
+public enum MovingPictureSubtypeEnum implements IsType {
     FILM("Film"),
     SHORT("ShortFilm"),
     SERIAL("SerialFilmProduction"),

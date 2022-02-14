@@ -1,5 +1,5 @@
 package no.unit.nva.model.instancetypes.artistic;
 
-public interface WithType {
+public interface IsType {
     String getType();
 }
