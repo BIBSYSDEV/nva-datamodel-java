@@ -14,14 +14,13 @@ public enum LiteraryArtsSubtypeEnum implements IsType {
     PLAY("Play"),
     OTHER("Other");
 
-
-    @JsonValue
     private final String type;
 
     LiteraryArtsSubtypeEnum(String type) {
         this.type = type;
     }
 
+    @JsonValue
     @Override
     public String getType() {
         return type;

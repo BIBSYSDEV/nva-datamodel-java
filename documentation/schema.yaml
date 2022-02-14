@@ -1067,15 +1067,15 @@ referencedSchemas:
       type:
         type: string
         enum:
-        - NOVEL
-        - POETRY
-        - NOVELLA
-        - SHORT_STORY
-        - ESSAY
-        - TRANSLATION
-        - RETELLING
-        - PLAY
-        - OTHER
+        - Novel
+        - Poetry
+        - Novella
+        - ShortStory
+        - Essay
+        - Translation
+        - Retelling
+        - Play
+        - Other
       description:
         type: string
         writeOnly: true
@@ -1470,10 +1470,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:
