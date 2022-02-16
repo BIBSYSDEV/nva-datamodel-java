@@ -233,7 +233,7 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         date:
           $ref: '#/components/schemas/Time'
-        isbns:
+        isbnList:
           type: array
           items:
             type: string
@@ -1368,7 +1368,7 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         date:
           $ref: '#/components/schemas/Time'
-        isbns:
+        isbnList:
           type: array
           items:
             type: string

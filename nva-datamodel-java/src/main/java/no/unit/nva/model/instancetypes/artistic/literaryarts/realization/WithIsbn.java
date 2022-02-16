@@ -23,5 +23,5 @@ public interface WithIsbn {
         throw new InvalidIsbnException(isbns);
     }
 
-    List<String> getIsbns();
+    List<String> getIsbnList();
 }

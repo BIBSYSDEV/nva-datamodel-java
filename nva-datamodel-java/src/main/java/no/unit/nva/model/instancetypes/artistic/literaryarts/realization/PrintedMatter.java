@@ -20,7 +20,7 @@ public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
     public static final String TYPE = "type";
     public static final String PUBLISHER = "publisher";
     public static final String DATE = "date";
-    public static final String ISBN = "isbns";
+    public static final String ISBN_LIST = "isbnList";
     public static final String PAGES = "pages";
     public static final String TYPE_VALUE = "PrintedMatter";
 
@@ -28,8 +28,8 @@ public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
     private final PublishingHouse publisher;
     @JsonProperty(DATE)
     private final Time date;
-    @JsonProperty(ISBN)
-    private final List<String> isbns;
+    @JsonProperty(ISBN_LIST)
+    private final List<String> isbnList;
     @JsonProperty(PAGES)
     private final String pages;
     @JsonProperty(TYPE)
@@ -38,12 +38,11 @@ public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
     public PrintedMatter(@JsonProperty(TYPE) String type,
                          @JsonProperty(PUBLISHER) UnconfirmedPublisher publisher,
                          @JsonProperty(DATE) Instant date,
-                         @JsonProperty(ISBN) List<String> isbns,
-                         @JsonProperty(PAGES) String pages) throws
-                                                          InvalidIsbnException {
+                         @JsonProperty(ISBN_LIST) List<String> isbnList,
+                         @JsonProperty(PAGES) String pages) throws InvalidIsbnException {
         this.publisher = publisher;
         this.date = date;
-        this.isbns = nonNull(isbns) ? validateIsbn(isbns) : emptyList();
+        this.isbnList = nonNull(isbnList) ? validateIsbn(isbnList) : emptyList();
         this.pages = pages;
         this.type = validateType(type);
     }
@@ -61,8 +60,8 @@ public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
     }
 
     @Override
-    public List<String> getIsbns() {
-        return isbns;
+    public List<String> getIsbnList() {
+        return isbnList;
     }
 
     public String getPages() {
@@ -72,7 +71,7 @@ public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(getPublisher(), getDate(), getIsbns(), getPages(), getType());
+        return Objects.hash(getPublisher(), getDate(), getIsbnList(), getPages(), getType());
     }
 
     @Override
@@ -87,7 +86,7 @@ public class PrintedMatter implements LiteraryArtsOutput, WithIsbn {
         PrintedMatter that = (PrintedMatter) o;
         return Objects.equals(getPublisher(), that.getPublisher())
                && Objects.equals(getDate(), that.getDate())
-               && Objects.equals(getIsbns(), that.getIsbns())
+               && Objects.equals(getIsbnList(), that.getIsbnList())
                && Objects.equals(getPages(), that.getPages())
                && Objects.equals(getType(), that.getType());
     }

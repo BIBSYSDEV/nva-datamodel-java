@@ -18,7 +18,7 @@ public class AudioVisual implements LiteraryArtsOutput, WithIsbn {
     public static final String TYPE = "type";
     public static final String PUBLISHER = "publisher";
     public static final String DATE = "date";
-    public static final String ISBNS = "isbns";
+    public static final String ISBN_LIST = "isbnList";
     public static final String EXTENT = "extent";
 
     @JsonProperty(TYPE)
@@ -27,20 +27,20 @@ public class AudioVisual implements LiteraryArtsOutput, WithIsbn {
     private final PublishingHouse publisher;
     @JsonProperty(DATE)
     private final Time date;
-    @JsonProperty(ISBNS)
-    private final List<String> isbns;
+    @JsonProperty(ISBN_LIST)
+    private final List<String> isbnList;
     @JsonProperty(EXTENT)
     private final String extent;
 
     public AudioVisual(@JsonProperty(TYPE) AudioVisualType type,
                        @JsonProperty(PUBLISHER) PublishingHouse publisher,
                        @JsonProperty(DATE) Time date,
-                       @JsonProperty(ISBNS) List<String> isbns,
+                       @JsonProperty(ISBN_LIST) List<String> isbnList,
                        @JsonProperty(EXTENT) String extent) throws InvalidIsbnException {
         this.type = type;
         this.publisher = publisher;
         this.date = date;
-        this.isbns = nonNull(isbns) ? validateIsbn(isbns) : emptyList();
+        this.isbnList = nonNull(isbnList) ? validateIsbn(isbnList) : emptyList();
         this.extent = extent;
     }
 
@@ -61,8 +61,8 @@ public class AudioVisual implements LiteraryArtsOutput, WithIsbn {
     }
 
     @Override
-    public List<String> getIsbns() {
-        return isbns;
+    public List<String> getIsbnList() {
+        return isbnList;
     }
 
     @JacocoGenerated
@@ -78,13 +78,13 @@ public class AudioVisual implements LiteraryArtsOutput, WithIsbn {
         return Objects.equals(getType(), that.getType())
             && Objects.equals(getPublisher(), that.getPublisher())
             && Objects.equals(getDate(), that.getDate())
-            && Objects.equals(getIsbns(), that.getIsbns())
+            && Objects.equals(getIsbnList(), that.getIsbnList())
             && Objects.equals(getExtent(), that.getExtent());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getType(), getPublisher(), getDate(), getIsbns(), getExtent());
+        return Objects.hash(getType(), getPublisher(), getDate(), getIsbnList(), getExtent());
     }
 }
