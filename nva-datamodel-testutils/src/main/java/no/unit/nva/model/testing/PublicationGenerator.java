@@ -4,56 +4,36 @@ import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
 import com.github.javafaker.Faker;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import no.unit.nva.file.model.File;
-import no.unit.nva.file.model.FileSet;
-import no.unit.nva.file.model.License;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
-import no.unit.nva.model.Contributor;
 import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.DoiRequestMessage;
 import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Grant;
-import no.unit.nva.model.Identity;
-import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.Publication.Builder;
-import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.Reference;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
-import no.unit.nva.model.Role;
-import no.unit.nva.model.instancetypes.PublicationInstance;
-import no.unit.nva.model.instancetypes.journal.JournalArticle;
-import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
-import no.unit.nva.model.pages.Pages;
-import no.unit.nva.model.pages.Range;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
 public final class PublicationGenerator {
 
     public static final String OWNER = "owner@example.org";
-    public static final String PUBLISHER_ID = "http://example.org/123";
     public static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Faker FAKER = Faker.instance();
 
@@ -64,64 +44,17 @@ public final class PublicationGenerator {
 
     @JacocoGenerated
     public static Publication publicationWithIdentifier() {
-        return generatePublication(SortableIdentifier.next());
+        return randomPublication();
     }
 
     @JacocoGenerated
     public static Publication publicationWithoutIdentifier() {
-        return generatePublication(null);
+        var publication = randomPublication();
+        publication.setIdentifier(null);
+        return publication;
     }
 
-    /**
-     * Generate a minimal Publication for testing.
-     *
-     * @param identifier Sortable identifier
-     * @return publication
-     */
-    @JacocoGenerated
-    public static Publication generatePublication(SortableIdentifier identifier) {
 
-        EntityDescription entityDescription = createSampleEntityDescription();
-
-        Instant oneMinuteInThePast = Instant.now().minusSeconds(60L);
-
-        return new Publication.Builder()
-            .withIdentifier(identifier)
-            .withCreatedDate(oneMinuteInThePast)
-            .withModifiedDate(oneMinuteInThePast)
-            .withOwner(randomString())
-            .withStatus(PublicationStatus.DRAFT)
-            .withPublisher(samplePublisher())
-            .withEntityDescription(entityDescription)
-            .withFileSet(sampleFileSet())
-            .withSubjects(Collections.emptyList())
-            .build();
-    }
-
-    public static Contributor sampleContributor() {
-        return new Contributor.Builder()
-            .withIdentity(sampleIdentity())
-            .withAffiliations(sampleOrganization())
-            .withSequence(1)
-            .withRole(Role.CREATOR)
-            .build();
-    }
-
-    public static Publication generateEmptyPublication() {
-        return new Publication.Builder()
-            .withOwner(randomString())
-            .withPublisher(samplePublisher())
-            .build();
-    }
-
-    public static List<Publication> samplePublicationsOfDifferentOwners(int numberOfPublications,
-                                                                        boolean withIdentifier) {
-        return IntStream.range(0, numberOfPublications).boxed()
-            .map(ignored -> PublicationGenerator.publicationWithoutIdentifier())
-            .map(pub -> addIdentifier(pub, withIdentifier))
-            .map(PublicationGenerator::changeOwner)
-            .collect(Collectors.toList());
-    }
 
     public static URI randomUri() {
         String uriString = "https://www.example.org/" + randomWord() + randomWord();
@@ -238,79 +171,11 @@ public final class PublicationGenerator {
             .build();
     }
 
-    private static List<Organization> sampleOrganization() {
-        Organization organization = new Organization.Builder()
-            .withId(URI.create("https://someOrganziation.example.com"))
-            .withLabels(Map.of("someLabelKey", "someLabelValue"))
-            .build();
-        return List.of(organization);
-    }
-
-    private static Identity sampleIdentity() {
-        return new Identity.Builder()
-            .withName(OWNER)
-            .withId(URI.create("https://someUserId.example.org"))
-            .withArpId("someArpId")
-            .withNameType(NameType.PERSONAL)
-            .withOrcId("someOrcId")
-            .build();
-    }
-
-    private static Organization samplePublisher() {
-        return new Organization.Builder()
-            .withId(URI.create(PUBLISHER_ID))
-            .build();
-    }
-
-    private static FileSet sampleFileSet() {
-        var file = new File.Builder()
-            .withIdentifier(UUID.randomUUID())
-            .withLicense(new License.Builder()
-                             .withIdentifier("licenseId")
-                             .build())
-            .build();
-        return new FileSet(List.of(file));
-    }
-
-    private static EntityDescription createSampleEntityDescription() {
-        Contributor contributor = attempt(PublicationGenerator::sampleContributor).orElseThrow();
-
-        PublicationInstance<? extends Pages> publicationInstance =
-            new JournalArticle.Builder()
-                .withArticleNumber("1")
-                .withIssue("2")
-                .withVolume("Volume 1")
-                .withPages(new Range("beginRange", "endRange"))
-                .withContent(randomArrayElement(JournalArticleContentType.values()))
-                .build();
-        Reference reference = new Reference.Builder().withPublicationInstance(publicationInstance).build();
-
-        return new EntityDescription.Builder()
-            .withMainTitle(randomString())
-            .withDate(new PublicationDate.Builder().withYear("2020").withMonth("2").withDay("31").build())
-            .withReference(reference)
-            .withContributors(List.of(contributor))
-            .build();
-    }
 
     private static <T> T randomArrayElement(T... array) {
         return array[RANDOM.nextInt(array.length)];
     }
 
-    private static Publication addIdentifier(Publication pub, boolean addIdentifier) {
-        if (addIdentifier) {
-            pub.setIdentifier(SortableIdentifier.next());
-        }
-        return pub;
-    }
-
-    private static Publication changeOwner(Publication publication) {
-        return publication.copy().withOwner(randomEmail()).build();
-    }
-
-    private static String randomEmail() {
-        return FAKER.internet().emailAddress();
-    }
 
     private static String randomWord() {
         return FAKER.lorem().word();
