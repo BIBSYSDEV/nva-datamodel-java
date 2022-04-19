@@ -845,12 +845,12 @@ referencedSchemas:
         contentType:
           type: string
           enum:
-          - Research article
-          - Review article
-          - Case report
-          - Study protocol
-          - Professional article
-          - Popular science article
+          - AcademicArticle
+          - AcademicLiteratureReview
+          - CaseReport
+          - StudyProtocol
+          - ProfessionalArticle
+          - PopularScienceArticle
         originalResearch:
           type: boolean
         pages:
