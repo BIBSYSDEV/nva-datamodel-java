@@ -73,8 +73,8 @@ public class JournalArticle extends PeerReviewedPaper {
 
     private boolean isOriginalResearchCandidate() {
         return contentType == null
-               || contentType == JournalArticleContentType.RESEARCH_ARTICLE
-               || contentType == JournalArticleContentType.REVIEW_ARTICLE;
+               || contentType == JournalArticleContentType.ACADEMIC_ARTICLE
+               || contentType == JournalArticleContentType.ACADEMIC_LITERATURE_REVIEW;
     }
 
     @JacocoGenerated
