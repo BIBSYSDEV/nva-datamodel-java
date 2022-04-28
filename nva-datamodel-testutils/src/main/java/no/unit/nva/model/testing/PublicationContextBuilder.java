@@ -40,6 +40,7 @@ public class PublicationContextBuilder {
     public static PublicationContext randomPublicationContext(Class<?> publicationInstance) {
         String className = publicationInstance.getSimpleName();
         switch (className) {
+            case "JournalIssue":
             case "Architecture":
             case "ArtisticDesign":
             case "MovingPicture":

@@ -61,6 +61,7 @@ import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
 import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalInterview;
+import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
@@ -148,9 +149,20 @@ public class PublicationInstanceBuilder {
                 return generateLecture();
             case "OtherPresentation":
                 return generateOtherPresentation();
+            case "JournalIssue":
+                return generateJournalIssue();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
+    }
+
+    private static PublicationInstance<? extends Pages> generateJournalIssue() {
+        return new JournalIssue.Builder()
+            .withArticleNumber(randomArticleNumber())
+            .withIssue(randomIssue())
+            .withPages(randomRange())
+            .withVolume(randomVolume())
+            .build();
     }
 
     public static Class<?> randomPublicationInstanceType() {

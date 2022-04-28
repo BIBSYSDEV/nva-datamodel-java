@@ -23,6 +23,7 @@ import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalInterview;
+import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
@@ -62,7 +63,8 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "ConferenceLecture", value = ConferenceLecture.class),
     @JsonSubTypes.Type(name = "ConferencePoster", value = ConferencePoster.class),
     @JsonSubTypes.Type(name = "Lecture", value = Lecture.class),
-    @JsonSubTypes.Type(name = "OtherPresentation", value = OtherPresentation.class)
+    @JsonSubTypes.Type(name = "OtherPresentation", value = OtherPresentation.class),
+    @JsonSubTypes.Type(name = "JournalIssue", value = JournalIssue.class)
 })
 public interface PublicationInstance<P extends Pages> {
 
