@@ -461,6 +461,8 @@ referencedSchemas:
         enum:
         - AcademicCoordinator
         - Advisor
+        - Architect
+        - ArchitecturalPlanner
         - Consultant
         - ContactPerson
         - Creator
@@ -475,8 +477,10 @@ referencedSchemas:
         - Funder
         - HostingInstitution
         - Illustrator
+        - InteriorArchitect
         - InterviewSubject
         - Journalist
+        - LandscapeArchitect
         - Other
         - Producer
         - ProgrammeLeader
@@ -881,6 +885,26 @@ referencedSchemas:
         type:
           type: string
   JournalInterview:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  JournalIssue:
     required:
     - type
     type: object
@@ -1365,10 +1389,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
