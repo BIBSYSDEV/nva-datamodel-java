@@ -41,6 +41,7 @@ public class PublicationContextBuilder {
         String className = publicationInstance.getSimpleName();
         switch (className) {
             case "JournalIssue":
+            case "ConferenceAbstract":
             case "Architecture":
             case "ArtisticDesign":
             case "MovingPicture":
