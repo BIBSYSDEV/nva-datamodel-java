@@ -9,7 +9,8 @@ import no.unit.nva.model.pages.Range;
 public class ConferenceAbstract extends JournalNonPeerReviewedContent {
 
     /**
-     * Creates an object that matches the Journal pattern, but throws an exception if peerReviewed is set to true.
+     * Conference abstract as Publication in journal: an abstract of a presentation given at a conference
+     * and published in a Journal.
      *
      * @param volume        Journal volume for the article.
      * @param issue         Journal issue for the article.

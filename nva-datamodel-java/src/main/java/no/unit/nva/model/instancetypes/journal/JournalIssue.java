@@ -8,7 +8,9 @@ import no.unit.nva.model.pages.Range;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class JournalIssue extends JournalNonPeerReviewedContent {
     /**
-     * Creates an object that matches the Journal pattern, but throws an exception if peerReviewed is set to true.
+     * In order to represent entire issues of a journal — in cases where an institution has a special issue of a journal
+     * featuring work from a group of researcher associated with the department, or a similar collection.
+     * This class is used as a placeholder to hold information of such collections
      *
      * @param volume        Journal volume for the article.
      * @param issue         Journal issue for the article.
