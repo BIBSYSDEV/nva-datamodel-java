@@ -40,13 +40,13 @@ public class PublicationContextBuilder {
     public static PublicationContext randomPublicationContext(Class<?> publicationInstance) {
         String className = publicationInstance.getSimpleName();
         switch (className) {
-            case "JournalIssue":
-            case "ConferenceAbstract":
             case "Architecture":
             case "ArtisticDesign":
             case "MovingPicture":
             case "PerformingArts":
                 return randomArtistic();
+            case "JournalIssue":
+            case "ConferenceAbstract":
             case "FeatureArticle":
             case "JournalCorrigendum":
             case "JournalArticle":
@@ -64,6 +64,7 @@ public class PublicationContextBuilder {
             case "DegreeBachelor":
             case "DegreeMaster":
             case "DegreePhd":
+            case "DegreeLicentiate":
                 return attempt(PublicationContextBuilder::randomDegree).orElseThrow();
             case "ChapterArticle":
                 return randomChapter();
