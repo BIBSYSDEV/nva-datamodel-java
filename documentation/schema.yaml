@@ -567,6 +567,22 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+  DegreeLicentiate:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
   DegreeMaster:
     required:
     - type
