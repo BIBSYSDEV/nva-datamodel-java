@@ -12,6 +12,7 @@ import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
+import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
 import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
@@ -55,6 +56,7 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),
     @JsonSubTypes.Type(name = "DegreeMaster", value = DegreeMaster.class),
     @JsonSubTypes.Type(name = "DegreePhd", value = DegreePhd.class),
+    @JsonSubTypes.Type(name = "DegreeLicentiate", value = DegreeLicentiate.class),
     @JsonSubTypes.Type(name = "ReportBasic", value = ReportBasic.class),
     @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
     @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),

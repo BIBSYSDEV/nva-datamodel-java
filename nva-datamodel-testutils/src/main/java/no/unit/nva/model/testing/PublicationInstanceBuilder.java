@@ -48,6 +48,7 @@ import no.unit.nva.model.instancetypes.book.BookMonographContentType;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticleContentType;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
+import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
 import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
@@ -131,6 +132,8 @@ public class PublicationInstanceBuilder {
                 return generateDegreeMaster();
             case "DegreePhd":
                 return generateDegreePhd();
+            case "DegreeLicentiate":
+                return generateDegreeLicentiate();
             case "ReportBasic":
                 return generateReportBasic();
             case "ReportPolicy":
@@ -251,6 +254,13 @@ public class PublicationInstanceBuilder {
             .withPages(randomMonographPages())
             .withSubmittedDate(randomPublicationDate())
             .build();
+    }
+
+    private static DegreeLicentiate generateDegreeLicentiate() {
+        return new DegreeLicentiate.Builder()
+                   .withPages(randomMonographPages())
+                   .withSubmittedDate(randomPublicationDate())
+                   .build();
     }
 
     private static DegreeMaster generateDegreeMaster() {
