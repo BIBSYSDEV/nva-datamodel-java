@@ -9,7 +9,6 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +16,19 @@ import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureSubtype;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.architecture.realization.Award;
+import no.unit.nva.model.instancetypes.artistic.architecture.realization.Competition;
+import no.unit.nva.model.instancetypes.artistic.architecture.realization.Exhibition;
+import no.unit.nva.model.instancetypes.artistic.architecture.realization.MentionInPublication;
+import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
+import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtype;
+import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.design.realization.Venue;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPicture;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPictureSubtype;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPictureSubtypeEnum;
@@ -28,15 +36,6 @@ import no.unit.nva.model.instancetypes.artistic.film.realization.Broadcast;
 import no.unit.nva.model.instancetypes.artistic.film.realization.CinematicRelease;
 import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOutput;
 import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
-import no.unit.nva.model.instancetypes.artistic.architecture.realization.Award;
-import no.unit.nva.model.instancetypes.artistic.architecture.realization.Competition;
-import no.unit.nva.model.instancetypes.artistic.architecture.realization.Exhibition;
-import no.unit.nva.model.instancetypes.artistic.architecture.realization.MentionInPublication;
-import no.unit.nva.model.instancetypes.artistic.design.realization.Venue;
-import no.unit.nva.model.instancetypes.PublicationInstance;
-import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
-import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtype;
-import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesignSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
@@ -56,6 +55,7 @@ import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
 import no.unit.nva.model.instancetypes.event.OtherPresentation;
+import no.unit.nva.model.instancetypes.journal.ConferenceAbstract;
 import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
@@ -151,18 +151,11 @@ public class PublicationInstanceBuilder {
                 return generateOtherPresentation();
             case "JournalIssue":
                 return generateJournalIssue();
+            case "ConferenceAbstract":
+                return generateConferenceAbstract();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
-    }
-
-    private static PublicationInstance<? extends Pages> generateJournalIssue() {
-        return new JournalIssue.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
     }
 
     public static Class<?> randomPublicationInstanceType() {
@@ -177,15 +170,33 @@ public class PublicationInstanceBuilder {
             .map(ContextAndInstanceTuple::getInstanceType);
     }
 
-    private static ContextAndInstanceTuple getPublicationContext(Class<?> instanceType) {
-        var context = PublicationContextBuilder.randomPublicationContext(instanceType);
-        return new ContextAndInstanceTuple(context, instanceType);
-    }
-
     public static List<Class<?>> listPublicationInstanceTypes() {
         JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
         Type[] types = annotations[0].value();
         return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
+    }
+
+    private static PublicationInstance<? extends Pages> generateJournalIssue() {
+        return new JournalIssue.Builder()
+            .withArticleNumber(randomArticleNumber())
+            .withIssue(randomIssue())
+            .withPages(randomRange())
+            .withVolume(randomVolume())
+            .build();
+    }
+
+    private static PublicationInstance<? extends Pages> generateConferenceAbstract() {
+        return new ConferenceAbstract.Builder()
+            .withArticleNumber(randomArticleNumber())
+            .withIssue(randomIssue())
+            .withPages(randomRange())
+            .withVolume(randomVolume())
+            .build();
+    }
+
+    private static ContextAndInstanceTuple getPublicationContext(Class<?> instanceType) {
+        var context = PublicationContextBuilder.randomPublicationContext(instanceType);
+        return new ContextAndInstanceTuple(context, instanceType);
     }
 
     private static OtherPresentation generateOtherPresentation() {
@@ -395,7 +406,6 @@ public class PublicationInstanceBuilder {
         return randomString();
     }
 
-
     private static PublicationInstance<? extends Pages> generatePerformingArts() {
         var subtype = randomElement(PerformingArtsSubtypeEnum.values());
         return performingArts(subtype);
@@ -418,8 +428,8 @@ public class PublicationInstanceBuilder {
 
     private static PerformingArtsSubtype performingArtsSubtype(PerformingArtsSubtypeEnum subtype) {
         return OTHER.equals(subtype.getType())
-                ? PerformingArtsSubtype.createOther(randomString())
-                : PerformingArtsSubtype.create(subtype);
+                   ? PerformingArtsSubtype.createOther(randomString())
+                   : PerformingArtsSubtype.create(subtype);
     }
 
     private static List<PerformingArtsOutput> randomPerformingArtsOutputs() {
@@ -436,8 +446,8 @@ public class PublicationInstanceBuilder {
 
     private static MovingPictureSubtype getMovingPictureSubtype(MovingPictureSubtypeEnum subtype) {
         return OTHER.equals(subtype.getType())
-                ? MovingPictureSubtype.createOther(randomString())
-                : MovingPictureSubtype.create(subtype);
+                   ? MovingPictureSubtype.createOther(randomString())
+                   : MovingPictureSubtype.create(subtype);
     }
 
     private static List<MovingPictureOutput> randomMovingPictureOutputs() {
@@ -446,7 +456,7 @@ public class PublicationInstanceBuilder {
 
     private static OtherRelease otherRelease() {
         return new OtherRelease(randomString(), randomUnconfirmedPlace(), new UnconfirmedPublisher(randomString()),
-                randomNvaInstant(), randomInteger());
+                                randomNvaInstant(), randomInteger());
     }
 
     private static CinematicRelease cinematicRelease() {
@@ -463,8 +473,8 @@ public class PublicationInstanceBuilder {
 
     private static ArchitectureSubtype architectureSubtype(ArchitectureSubtypeEnum subtype) {
         return OTHER.equals(subtype.getType())
-                ? ArchitectureSubtype.createOther(randomString())
-                : ArchitectureSubtype.create(subtype);
+                   ? ArchitectureSubtype.createOther(randomString())
+                   : ArchitectureSubtype.create(subtype);
     }
 
     private static List<ArchitectureOutput> randomArchitectureOutputs() {
@@ -473,7 +483,7 @@ public class PublicationInstanceBuilder {
 
     private static ArchitectureOutput randomAward() {
         return new Award(randomString(), randomString(), randomNvaInstant(), randomInteger(),
-                randomString(), randomInteger());
+                         randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomCompetition() {
@@ -482,12 +492,12 @@ public class PublicationInstanceBuilder {
 
     private static Exhibition randomExhibition() {
         return new Exhibition(randomString(), randomUnconfirmedPlace(), randomString(), randomNvaPeriod(),
-                randomString(), randomInteger());
+                              randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomMentionInPublication() {
         return new MentionInPublication(randomString(), randomIssue(), randomNvaInstant(),
-                randomString(), randomInteger());
+                                        randomString(), randomInteger());
     }
 
     private static ArtisticDesign generateRandomArtisticDesign() {

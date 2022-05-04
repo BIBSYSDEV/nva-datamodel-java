@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.pages.Range;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class JournalIssue extends JournalNonPeerReviewedContent {
+public class ConferenceAbstract extends JournalNonPeerReviewedContent {
+
     /**
-     * In order to represent entire issues of a journal — in cases where an institution has a special issue of a journal
-     * featuring work from a group of researcher associated with the department, or a similar collection.
-     * This class is used as a placeholder to hold information of such collections
+     * Conference abstract as Publication in journal: an abstract of a presentation given at a conference
+     * and published in a Journal.
      *
      * @param volume        Journal volume for the article.
      * @param issue         Journal issue for the article.
@@ -18,18 +18,19 @@ public class JournalIssue extends JournalNonPeerReviewedContent {
      * @param pages         Page range for the article.
      */
     @JsonCreator
-    public JournalIssue(@JsonProperty("volume") String volume,
-                        @JsonProperty("issue") String issue,
-                        @JsonProperty("articleNumber") String articleNumber,
-                        @JsonProperty("pages") Range pages) {
+    public ConferenceAbstract(@JsonProperty("volume") String volume,
+                              @JsonProperty("issue") String issue,
+                              @JsonProperty("articleNumber") String articleNumber,
+                              @JsonProperty("pages") Range pages) {
         super(volume, issue, articleNumber, pages);
     }
 
-    private JournalIssue(Builder builder) {
+    private ConferenceAbstract(Builder builder) {
         this(builder.volume, builder.issue, builder.articleNumber, builder.pages);
     }
 
     public static final class Builder {
+
         private Range pages;
         private String volume;
         private String issue;
@@ -58,8 +59,8 @@ public class JournalIssue extends JournalNonPeerReviewedContent {
             return this;
         }
 
-        public JournalIssue build() {
-            return new JournalIssue(this);
+        public ConferenceAbstract build() {
+            return new ConferenceAbstract(this);
         }
     }
 }
