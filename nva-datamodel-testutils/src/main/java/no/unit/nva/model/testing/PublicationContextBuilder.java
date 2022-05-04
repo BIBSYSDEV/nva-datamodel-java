@@ -54,7 +54,6 @@ public class PublicationContextBuilder {
             case "JournalLetter":
             case "JournalLeader":
             case "JournalReview":
-            case "JournalShortCommunication":
                 return randomJournal();
             case "BookAnthology":
             case "BookAbstracts":

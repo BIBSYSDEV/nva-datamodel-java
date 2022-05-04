@@ -66,7 +66,6 @@ import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
-import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -120,8 +119,6 @@ public class PublicationInstanceBuilder {
                 return generateJournalLeader();
             case "JournalReview":
                 return generateJournalReview();
-            case "JournalShortCommunication":
-                return generateJournalShortCommunication();
             case "BookAbstracts":
                 return generateBookAbstracts();
             case "BookMonograph":
@@ -289,15 +286,6 @@ public class PublicationInstanceBuilder {
     private static BookAbstracts generateBookAbstracts() {
         return new BookAbstracts.Builder()
             .withPages(randomMonographPages())
-            .build();
-    }
-
-    private static JournalShortCommunication generateJournalShortCommunication() {
-        return new JournalShortCommunication.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
             .build();
     }
 
