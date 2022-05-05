@@ -67,6 +67,7 @@ import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
+import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
@@ -139,6 +140,8 @@ public class PublicationInstanceBuilder {
                 return generateReportResearch();
             case "ReportWorkingPaper":
                 return generateReportWorkingPaper();
+            case "ReportBookOfAbstract":
+                return generateReportBookOfAbstract();
             case "OtherStudentWork":
                 return generateOtherStudentWork();
             case "ConferenceLecture":
@@ -246,6 +249,12 @@ public class PublicationInstanceBuilder {
             .build();
     }
 
+    private static ReportBookOfAbstract generateReportBookOfAbstract() {
+        return new ReportBookOfAbstract.Builder()
+            .withPages(randomMonographPages())
+            .build();
+    }
+
     private static DegreePhd generateDegreePhd() {
         return new DegreePhd.Builder()
             .withPages(randomMonographPages())
@@ -255,9 +264,9 @@ public class PublicationInstanceBuilder {
 
     private static DegreeLicentiate generateDegreeLicentiate() {
         return new DegreeLicentiate.Builder()
-                   .withPages(randomMonographPages())
-                   .withSubmittedDate(randomPublicationDate())
-                   .build();
+            .withPages(randomMonographPages())
+            .withSubmittedDate(randomPublicationDate())
+            .build();
     }
 
     private static DegreeMaster generateDegreeMaster() {

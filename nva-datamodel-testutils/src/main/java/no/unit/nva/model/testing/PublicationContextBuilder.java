@@ -71,6 +71,7 @@ public class PublicationContextBuilder {
             case "ReportPolicy":
             case "ReportResearch":
             case "ReportWorkingPaper":
+            case "ReportBookOfAbstract":
                 return attempt(PublicationContextBuilder::randomReport).orElseThrow();
             case "ConferenceLecture":
             case "ConferencePoster":
