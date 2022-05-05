@@ -6,12 +6,25 @@ import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ *  Content type for "Chapter in Anthology" resource subtype when the creator chooses
+ *  "Chapter" Resource type while registering a publication
+ */
 public enum ChapterArticleContentType {
     ACADEMIC_CHAPTER("Academic Chapter"),
     NON_FICTION_CHAPTER("Non-fiction Chapter"),
     POPULAR_SCIENCE_CHAPTER("Popular Science Chapter"),
     TEXTBOOK_CHAPTER("Textbook Chapter"),
-    ENCYCLOPEDIA_CHAPTER("Encyclopedia Chapter");
+    ENCYCLOPEDIA_CHAPTER("Encyclopedia Chapter"),
+    /**
+     * Introduction in anthology: Introductory chapter in an anthology.
+     */
+    INTRODUCTION("Introduction"),
+    /**
+     * Chapter in Exhibition catalogue: A chapter in an exhibition catalogue,
+     * if it is written as an anthology and not a monograph.
+     */
+    EXHIBITION_CATALOG_CHAPTER("Exhibition Catalog Chapter");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid ChapterContentType, expected one of: %s";
     public static final String DELIMITER = ", ";
