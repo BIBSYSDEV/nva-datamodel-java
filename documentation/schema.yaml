@@ -313,6 +313,7 @@ referencedSchemas:
           - Popular Science Monograph
           - Textbook
           - Encyclopedia
+          - Exhibition catalog
         originalResearch:
           type: boolean
         pages:
@@ -1486,6 +1487,20 @@ referencedSchemas:
           items:
             type: string
   ReportBasic:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  ReportBookOfAbstract:
     required:
     - type
     type: object
