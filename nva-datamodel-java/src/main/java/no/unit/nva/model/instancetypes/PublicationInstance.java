@@ -29,7 +29,6 @@ import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
-import no.unit.nva.model.instancetypes.journal.JournalShortCommunication;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
@@ -49,7 +48,6 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class),
     @JsonSubTypes.Type(name = "JournalLeader", value = JournalLeader.class),
     @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),
-    @JsonSubTypes.Type(name = "JournalShortCommunication", value = JournalShortCommunication.class),
     @JsonSubTypes.Type(name = "BookAbstracts", value = BookAbstracts.class),
     @JsonSubTypes.Type(name = "BookMonograph", value = BookMonograph.class),
     @JsonSubTypes.Type(name = "BookAnthology", value = BookAnthology.class),
