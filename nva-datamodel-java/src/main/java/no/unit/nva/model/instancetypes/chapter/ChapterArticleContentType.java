@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- *  Content type for "Chapter in Anthology" resource subtype when the creator chooses
- *  "Chapter" Resource type while registering a publication
+ *  Content type for 'Chapter in Anthology' resource subtype when the creator chooses
+ *  'Chapter' Resource type while registering a publication
  */
 public enum ChapterArticleContentType {
     ACADEMIC_CHAPTER("Academic Chapter"),
