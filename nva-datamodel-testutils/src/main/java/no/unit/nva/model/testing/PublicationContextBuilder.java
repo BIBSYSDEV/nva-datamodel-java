@@ -67,6 +67,7 @@ public class PublicationContextBuilder {
                 return attempt(PublicationContextBuilder::randomDegree).orElseThrow();
             case "ChapterArticle":
             case "ChapterConferenceAbstract":
+            case "ChapterInReport":
                 return randomChapter();
             case "ReportBasic":
             case "ReportPolicy":

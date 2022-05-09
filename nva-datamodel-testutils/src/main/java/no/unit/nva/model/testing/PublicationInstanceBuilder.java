@@ -48,6 +48,7 @@ import no.unit.nva.model.instancetypes.book.BookMonographContentType;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticleContentType;
 import no.unit.nva.model.instancetypes.chapter.ChapterConferenceAbstract;
+import no.unit.nva.model.instancetypes.chapter.ChapterInReport;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
@@ -115,6 +116,8 @@ public class PublicationInstanceBuilder {
                 return generateChapterArticle();
             case "ChapterConferenceAbstract":
                 return generateChapterConferenceAbstract();
+            case "ChapterInReport":
+                return generateChapterInReport();
             case "JournalInterview":
                 return generateJournalInterview();
             case "JournalLetter":
@@ -348,6 +351,12 @@ public class PublicationInstanceBuilder {
 
     private static ChapterConferenceAbstract generateChapterConferenceAbstract() {
         return new ChapterConferenceAbstract.Builder()
+            .withPages(randomRange())
+            .build();
+    }
+
+    private static ChapterInReport generateChapterInReport() {
+        return new ChapterInReport.Builder()
             .withPages(randomRange())
             .build();
     }
