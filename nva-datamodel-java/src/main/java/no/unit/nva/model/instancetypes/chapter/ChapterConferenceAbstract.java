@@ -8,6 +8,9 @@ import no.unit.nva.model.pages.Range;
 @JsonTypeInfo(use = Id.NAME, property = "type")
 public class ChapterConferenceAbstract extends NonPeerReviewedPaper {
 
+    /**
+     * Conference abstract as Chapter: an abstract of a presentation given at a conference and published as a Chapter.
+     */
     public ChapterConferenceAbstract() {
         super();
     }
