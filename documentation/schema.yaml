@@ -400,6 +400,20 @@ referencedSchemas:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+  ChapterInReport:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
   CinematicRelease:
     required:
     - type
