@@ -378,8 +378,38 @@ referencedSchemas:
           - Popular Science Chapter
           - Textbook Chapter
           - Encyclopedia Chapter
+          - Introduction
+          - Exhibition Catalog Chapter
         originalResearch:
           type: boolean
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  ChapterConferenceAbstract:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+  ChapterInReport:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
         pages:
           $ref: '#/components/schemas/Range'
         type:
