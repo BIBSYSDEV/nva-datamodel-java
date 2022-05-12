@@ -68,6 +68,7 @@ import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
@@ -162,6 +163,8 @@ public class PublicationInstanceBuilder {
                 return generateJournalIssue();
             case "ConferenceAbstract":
                 return generateConferenceAbstract();
+            case "MediaFeatureArticle":
+                return generateMediaFeatureArticle();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
@@ -183,6 +186,10 @@ public class PublicationInstanceBuilder {
         JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
         Type[] types = annotations[0].value();
         return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
+    }
+
+    private static PublicationInstance<? extends Pages> generateMediaFeatureArticle() {
+        return new MediaFeatureArticle();
     }
 
     private static PublicationInstance<? extends Pages> generateJournalIssue() {
