@@ -85,6 +85,11 @@ public class PublicationContextBuilder {
             case "OtherPresentation":
                 return randomPresentation();
             case "MediaFeatureArticle":
+            case "MediaBlogPost":
+            case "MediaInterview":
+            case "MediaParticipation":
+            case "MediaPodcast":
+            case "MediaReaderOpinion":
                 return randomMediaContribution();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + className);
