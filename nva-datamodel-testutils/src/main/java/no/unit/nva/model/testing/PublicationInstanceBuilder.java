@@ -71,7 +71,7 @@ import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.media.MediaBlogPost;
 import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
 import no.unit.nva.model.instancetypes.media.MediaInterview;
-import no.unit.nva.model.instancetypes.media.MediaParticipation;
+import no.unit.nva.model.instancetypes.media.MediaParticipationInRadioOrTv;
 import no.unit.nva.model.instancetypes.media.MediaPodcast;
 import no.unit.nva.model.instancetypes.media.MediaReaderOpinion;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
@@ -174,7 +174,7 @@ public class PublicationInstanceBuilder {
                 return generateMediaBlogPost();
             case "MediaInterview":
                 return generateMediaInterview();
-            case "MediaParticipation":
+            case "MediaParticipationInRadioOrTv":
                 return generateMediaParticipation();
             case "MediaPodcast":
                 return generateMediaPodcast();
@@ -193,8 +193,8 @@ public class PublicationInstanceBuilder {
         return new MediaPodcast();
     }
 
-    private static MediaParticipation generateMediaParticipation() {
-        return new MediaParticipation();
+    private static MediaParticipationInRadioOrTv generateMediaParticipation() {
+        return new MediaParticipationInRadioOrTv();
     }
 
     private static MediaInterview generateMediaInterview() {

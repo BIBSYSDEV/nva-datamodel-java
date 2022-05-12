@@ -34,7 +34,7 @@ import no.unit.nva.model.instancetypes.journal.JournalReview;
 import no.unit.nva.model.instancetypes.media.MediaBlogPost;
 import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
 import no.unit.nva.model.instancetypes.media.MediaInterview;
-import no.unit.nva.model.instancetypes.media.MediaParticipation;
+import no.unit.nva.model.instancetypes.media.MediaParticipationInRadioOrTv;
 import no.unit.nva.model.instancetypes.media.MediaPodcast;
 import no.unit.nva.model.instancetypes.media.MediaReaderOpinion;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
@@ -82,7 +82,7 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "MediaFeatureArticle", value = MediaFeatureArticle.class),
     @JsonSubTypes.Type(name = "MediaBlogPost", value = MediaBlogPost.class),
     @JsonSubTypes.Type(name = "MediaInterview", value = MediaInterview.class),
-    @JsonSubTypes.Type(name = "MediaParticipation", value = MediaParticipation.class),
+    @JsonSubTypes.Type(name = "MediaParticipationInRadioOrTv", value = MediaParticipationInRadioOrTv.class),
     @JsonSubTypes.Type(name = "MediaPodcast", value = MediaPodcast.class),
     @JsonSubTypes.Type(name = "MediaReaderOpinion", value = MediaReaderOpinion.class)
 })

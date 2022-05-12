@@ -87,7 +87,7 @@ public class PublicationContextBuilder {
             case "MediaFeatureArticle":
             case "MediaBlogPost":
             case "MediaInterview":
-            case "MediaParticipation":
+            case "MediaParticipationInRadioOrTv":
             case "MediaPodcast":
             case "MediaReaderOpinion":
                 return randomMediaContribution();
