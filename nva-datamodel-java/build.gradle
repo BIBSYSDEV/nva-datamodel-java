@@ -33,7 +33,11 @@ dependencies {
     testImplementation libs.swagger.core
 
 
-    testImplementation libs.javafaker
-    testRuntimeOnly libs.slf4j
+    testImplementation (libs.bundles.unittesting){
+        exclude group: 'org.yaml', module: 'snakeyaml'
+    }
+    // snakeyaml dependency is messed up and requires exclusion and re-import
+    testImplementation libs.snakeyaml
+
 
 }
