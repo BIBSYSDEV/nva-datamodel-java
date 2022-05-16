@@ -23,7 +23,7 @@ public interface WithId {
     SortableIdentifier getIdentifier();
 
     private static URI toId(SortableIdentifier identifier) {
-        return new UriWrapper(NAMESPACE).addChild(identifier.toString()).getUri();
+        return UriWrapper.fromUri(NAMESPACE).addChild(identifier.toString()).getUri();
     }
 
     private static String getIdNamespace() {
