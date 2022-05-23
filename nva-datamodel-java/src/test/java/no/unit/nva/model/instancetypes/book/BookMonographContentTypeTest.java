@@ -8,7 +8,8 @@ import static no.unit.nva.model.instancetypes.book.BookMonographContentType.ERRO
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 import no.unit.nva.commons.json.JsonUtils;
@@ -31,7 +32,8 @@ class BookMonographContentTypeTest {
 
     @ParameterizedTest
     @EnumSource(BookMonographContentType.class)
-    void shouldReturnBookMonographContentTypeWhenInputIsDeprecatedValue(BookMonographContentType bookMonographContentType)
+    void shouldReturnBookMonographContentTypeWhenInputIsDeprecatedValue(
+        BookMonographContentType bookMonographContentType)
         throws JsonProcessingException {
         var deprecated = "\"" + bookMonographContentType.getDeprecatedValue() + "\"";
         var expectedBookMonographContentType = JsonUtils.dtoObjectMapper.readValue(deprecated,
@@ -55,5 +57,4 @@ class BookMonographContentTypeTest {
         return format(ERROR_MESSAGE_TEMPLATE, value, stream(BookMonographContentType.values())
             .map(BookMonographContentType::toString).collect(joining(DELIMITER)));
     }
-
 }
