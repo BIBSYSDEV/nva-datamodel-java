@@ -1083,6 +1083,116 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MediaBlogPost:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaContribution:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        medium:
+          type: string
+          enum:
+          - Journal
+          - Radio
+          - TV
+          - Internet
+          - Other
+        format:
+          type: string
+          enum:
+          - Text
+          - Sound
+          - Video
+        type:
+          type: string
+  MediaFeatureArticle:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaInterview:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaParticipationInRadioOrTv:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaPodcast:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaReaderOpinion:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
   MentionInPublication:
     required:
     - type

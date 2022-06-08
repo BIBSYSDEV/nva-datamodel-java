@@ -29,6 +29,7 @@ import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
+import no.unit.nva.model.instancetypes.media.MediaPodcast;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
@@ -67,10 +68,6 @@ public class PublicationTest extends ModelTest {
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
-    }
-
-    private Publication hackToAvoidJaversFailureOnDeprecatedOwnerField(Publication publication, String owner) {
-        return publication.copy().withOwner(owner).build();
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
@@ -112,6 +109,10 @@ public class PublicationTest extends ModelTest {
         String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
                                              NEW, PUBLISHED);
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
+    }
+
+    private Publication hackToAvoidJaversFailureOnDeprecatedOwnerField(Publication publication, String owner) {
+        return publication.copy().withOwner(owner).build();
     }
 
     private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {

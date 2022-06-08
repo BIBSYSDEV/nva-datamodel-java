@@ -68,6 +68,12 @@ import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.media.MediaBlogPost;
+import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
+import no.unit.nva.model.instancetypes.media.MediaInterview;
+import no.unit.nva.model.instancetypes.media.MediaParticipationInRadioOrTv;
+import no.unit.nva.model.instancetypes.media.MediaPodcast;
+import no.unit.nva.model.instancetypes.media.MediaReaderOpinion;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
@@ -162,9 +168,41 @@ public class PublicationInstanceBuilder {
                 return generateJournalIssue();
             case "ConferenceAbstract":
                 return generateConferenceAbstract();
+            case "MediaFeatureArticle":
+                return generateMediaFeatureArticle();
+            case "MediaBlogPost":
+                return generateMediaBlogPost();
+            case "MediaInterview":
+                return generateMediaInterview();
+            case "MediaParticipationInRadioOrTv":
+                return generateMediaParticipation();
+            case "MediaPodcast":
+                return generateMediaPodcast();
+            case "MediaReaderOpinion":
+                return generateMediaReaderOpinion();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
+    }
+
+    private static MediaReaderOpinion generateMediaReaderOpinion() {
+        return new MediaReaderOpinion();
+    }
+
+    private static MediaPodcast generateMediaPodcast() {
+        return new MediaPodcast();
+    }
+
+    private static MediaParticipationInRadioOrTv generateMediaParticipation() {
+        return new MediaParticipationInRadioOrTv();
+    }
+
+    private static MediaInterview generateMediaInterview() {
+        return new MediaInterview();
+    }
+
+    private static MediaBlogPost generateMediaBlogPost() {
+        return new MediaBlogPost();
     }
 
     public static Class<?> randomPublicationInstanceType() {
@@ -185,7 +223,11 @@ public class PublicationInstanceBuilder {
         return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
     }
 
-    private static PublicationInstance<? extends Pages> generateJournalIssue() {
+    private static MediaFeatureArticle generateMediaFeatureArticle() {
+        return new MediaFeatureArticle();
+    }
+
+    private static JournalIssue generateJournalIssue() {
         return new JournalIssue.Builder()
             .withArticleNumber(randomArticleNumber())
             .withIssue(randomIssue())
@@ -194,7 +236,7 @@ public class PublicationInstanceBuilder {
             .build();
     }
 
-    private static PublicationInstance<? extends Pages> generateConferenceAbstract() {
+    private static ConferenceAbstract generateConferenceAbstract() {
         return new ConferenceAbstract.Builder()
             .withArticleNumber(randomArticleNumber())
             .withIssue(randomIssue())
