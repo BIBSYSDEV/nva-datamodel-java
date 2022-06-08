@@ -308,12 +308,12 @@ referencedSchemas:
         contentType:
           type: string
           enum:
-          - Academic Monograph
-          - Non-fiction Monograph
-          - Popular Science Monograph
+          - AcademicMonograph
+          - NonFictionMonograph
+          - PopularScienceMonograph
           - Textbook
           - Encyclopedia
-          - Exhibition catalog
+          - ExhibitionCatalog
         originalResearch:
           type: boolean
         pages:
@@ -373,13 +373,13 @@ referencedSchemas:
         contentType:
           type: string
           enum:
-          - Academic Chapter
-          - Non-fiction Chapter
-          - Popular Science Chapter
-          - Textbook Chapter
-          - Encyclopedia Chapter
+          - AcademicChapter
+          - NonFictionChapter
+          - PopularScienceChapter
+          - TextbookChapter
+          - EncyclopediaChapter
           - Introduction
-          - Exhibition Catalog Chapter
+          - ExhibitionCatalogChapter
         originalResearch:
           type: boolean
         pages:
@@ -1436,10 +1436,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
