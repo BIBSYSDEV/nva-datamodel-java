@@ -53,7 +53,7 @@ class ChapterArticleContentTypeTest {
         assertEquals(expectedChapterArticleContentType, chapterArticleContentType);
     }
 
-    @ParameterizedTest(name = "should return ChaprterArticleContentType when input is {0}")
+    @ParameterizedTest(name = "should return ChapterArticleContentType when input is {0}")
     @MethodSource("deprecatedValuesProvider")
     void shouldReturnChapterArticleContentTypeWhenInputIsDeprecatedValue(
         ChapterArticleContentType chapterArticleContentType,String deprecatedValue)
