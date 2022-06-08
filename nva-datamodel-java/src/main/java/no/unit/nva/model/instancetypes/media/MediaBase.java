@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.media;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.Objects;
 import no.unit.nva.model.instancetypes.PublicationInstance;
@@ -10,20 +9,19 @@ import no.unit.nva.model.pages.NullPages;
 
 public class MediaBase implements PublicationInstance<NullPages> {
 
-    @JsonProperty("pages")
-    public static final NullPages pages = new NullPages();
+    public static final String PAGES_FIELD = "pages";
 
     @JsonCreator
     public MediaBase() {
     }
 
-    @JsonGetter("pages")
+    @JsonGetter(PAGES_FIELD)
     @Override
     public NullPages getPages() {
-        return pages;
+        return new NullPages();
     }
 
-    @JsonSetter("pages")
+    @JsonSetter(PAGES_FIELD)
     @Override
     public void setPages(NullPages pages) {
     }
