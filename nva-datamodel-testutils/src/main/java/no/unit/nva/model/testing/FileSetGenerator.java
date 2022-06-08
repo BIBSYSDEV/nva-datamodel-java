@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 import no.unit.nva.file.model.File;
 import no.unit.nva.file.model.FileSet;
+import no.unit.nva.file.model.FileType;
 import no.unit.nva.file.model.License;
 import nva.commons.core.JacocoGenerated;
 
@@ -26,6 +27,7 @@ public class FileSetGenerator {
 
     private static File randomFile() {
         return new File.Builder()
+                   .withType(FileType.PUBLISHED_FILE)
                    .withIdentifier(UUID.randomUUID())
                    .withLicense(randomLicense())
                    .withName(randomString())
