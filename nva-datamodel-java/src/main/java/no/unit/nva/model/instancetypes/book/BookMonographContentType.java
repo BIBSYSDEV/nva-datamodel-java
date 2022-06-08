@@ -46,8 +46,7 @@ public enum BookMonographContentType {
         return value;
     }
 
-    @Deprecated
-    public String getDeprecatedValue() {
+    private String getDeprecatedValue() {
         return deprecatedValue;
     }
 
