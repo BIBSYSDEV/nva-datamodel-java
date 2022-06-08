@@ -50,8 +50,7 @@ public enum ChapterArticleContentType {
         return value;
     }
 
-    @Deprecated
-    public String getDeprecatedValue() {
+    private String getDeprecatedValue() {
         return deprecatedValue;
     }
 
