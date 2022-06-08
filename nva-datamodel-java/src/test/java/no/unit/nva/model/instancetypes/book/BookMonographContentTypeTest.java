@@ -46,8 +46,9 @@ class BookMonographContentTypeTest {
 
     @ParameterizedTest(name = "should return BookMonographContentType when input is {0}")
     @MethodSource("deprecatedValuesProvider")
-    void shouldReturnBookMonographContentTypeWhenInputIsDeprecatedValue(String deprecatedValue,
-                                                                        BookMonographContentType bookMonographContentType)
+    void shouldReturnBookMonographContentTypeWhenInputIsDeprecatedValue(
+        String deprecatedValue,
+        BookMonographContentType bookMonographContentType)
         throws JsonProcessingException {
         var deprecated = "\"" + deprecatedValue + "\"";
         var expectedBookMonographContentType = JsonUtils.dtoObjectMapper.readValue(deprecated,
