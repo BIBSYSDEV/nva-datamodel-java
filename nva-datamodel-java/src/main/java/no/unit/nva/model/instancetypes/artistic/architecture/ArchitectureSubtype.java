@@ -2,21 +2,24 @@ package no.unit.nva.model.instancetypes.artistic.architecture;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
-import java.util.Objects;
-
 public class ArchitectureSubtype {
+
     public static final String TYPE = "type";
     public static final String DESCRIPTION = "description";
     @JsonProperty(TYPE)
     private final ArchitectureSubtypeEnum type;
 
+    protected ArchitectureSubtype(ArchitectureSubtypeEnum type) {
+        this.type = type;
+    }
+
     public static ArchitectureSubtype createOther(String description) {
         return new ArchitectureSubtypeOther(ArchitectureSubtypeEnum.OTHER, description);
     }
 
-    @JacocoGenerated
     @JsonCreator
     public static ArchitectureSubtype fromJson(@JsonProperty(TYPE) ArchitectureSubtypeEnum type,
                                                @JsonProperty(DESCRIPTION) String description) {
@@ -30,12 +33,14 @@ public class ArchitectureSubtype {
         return new ArchitectureSubtype(type);
     }
 
-    protected ArchitectureSubtype(ArchitectureSubtypeEnum type) {
-        this.type = type;
-    }
-
     public ArchitectureSubtypeEnum getType() {
         return type;
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getType());
     }
 
     @JacocoGenerated
@@ -49,11 +54,5 @@ public class ArchitectureSubtype {
         }
         ArchitectureSubtype architectureSubtype = (ArchitectureSubtype) o;
         return getType() == architectureSubtype.getType();
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getType());
     }
 }
