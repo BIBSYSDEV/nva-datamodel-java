@@ -39,7 +39,7 @@ public enum JournalArticleContentType {
     }
 
     @Deprecated
-    public String getDeprecatedValue() {
+    private String getDeprecatedValue() {
         return deprecatedValue;
     }
 
