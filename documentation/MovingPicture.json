@@ -1,0 +1,200 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "PUBLISHED",
+  "owner" : "YW4cF1dHcSBGKt",
+  "resourceOwner" : {
+    "owner" : "YW4cF1dHcSBGKt",
+    "ownerAffiliation" : "https://www.example.org/veritatisin"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/autemnecessitatibus",
+    "labels" : {
+      "olY6KL9znLU2Kky" : "H7zLVcP8Svd1iM"
+    }
+  },
+  "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+  "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "handle" : "https://www.example.org/accusamusquia",
+  "doi" : "https://doi.org/10.1234/debitis",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "REJECTED",
+    "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "messages" : [ {
+      "type" : "DoiRequestMessage",
+      "text" : "7BVl1TziX1jd",
+      "author" : "PVMrqCZjMYs7Da",
+      "timestamp" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "link" : "https://www.example.org/aliasut",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "vjfT5KmuLGIJLW",
+    "alternativeTitles" : {
+      "de" : "CHPr0VhIu97"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/zho",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "OTdPHzLvHz",
+      "month" : "SN5bX2DzzySbsbPy6",
+      "day" : "BwDleEXYmaGzj"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/ejcadn6jGkl",
+        "name" : "lighP4pkHV",
+        "nameType" : "Organizational",
+        "orcId" : "150T7gJR0Eo7fS1u",
+        "arpId" : "ApyXw2yls8AiUOWp3X"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/UUQE8dzAVe3iQOub",
+        "labels" : {
+          "4BEy41k6c42dEV" : "eb6H11aETC7I3aAEnO"
+        }
+      } ],
+      "role" : "Journalist",
+      "sequence" : 6,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/4XGZjY5gdeYYb2qe1",
+        "name" : "QcGDBZxn1arAQ0",
+        "nameType" : "Organizational",
+        "orcId" : "E5yObp9pxbvsDpMjtbB",
+        "arpId" : "zCMRR5BbSNNrLY"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/dx8HKByumhnc",
+        "labels" : {
+          "VmnfdJLQY6" : "fA9W09lDh8"
+        }
+      } ],
+      "role" : "InterviewSubject",
+      "sequence" : 1,
+      "correspondingAuthor" : false
+    } ],
+    "npiSubjectHeading" : "R77BT9oSMgm",
+    "tags" : [ "2z97pp3p13qibVqfK" ],
+    "description" : "DUjkZKMwMNaqCFL3T20",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Artistic"
+      },
+      "doi" : "https://www.example.com/q9ZyPCdSoZY8",
+      "publicationInstance" : {
+        "type" : "MovingPicture",
+        "subtype" : {
+          "type" : "InteractiveFilm"
+        },
+        "description" : "1t4Z9Z63W1oOCE3",
+        "outputs" : [ {
+          "type" : "Broadcast",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "LmI7MVtZvAL2o56"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "sequence" : 1673664335
+        }, {
+          "type" : "CinematicRelease",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "4kU67SL5za2V3",
+            "country" : "ijcCRE9XiNNN7NKqd"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "sequence" : 232399814
+        }, {
+          "type" : "OtherRelease",
+          "description" : "qKDwxKEQEwlU8tig",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "Zpmm98cFWUNvo1vmrfV",
+            "country" : "BzbBZsBSMJIFMMnIR9i"
+          },
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "mqLN6m4YgHqKVjWE"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "2020-09-23T09:51:23.044996Z"
+          },
+          "sequence" : 1601943787
+        } ],
+        "pages" : {
+          "type" : "NullPages"
+        },
+        "peerReviewed" : false
+      }
+    },
+    "metadataSource" : "https://www.example.com/YxMS7yUxcF7O",
+    "abstract" : "pT7xhYOMQJtxO7C"
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+      "name" : "Nemo7KuWcpR",
+      "mimeType" : "NvKTUcw9SpS8y4zK",
+      "size" : 2081055778,
+      "license" : {
+        "type" : "License",
+        "identifier" : "nTJhiF4Fb50YRj",
+        "labels" : {
+          "bvAkOrMB6Y7oGBSwQ0" : "ncXIhI29tIsX7rB"
+        },
+        "link" : "https://www.example.com/3xKw7Y6G0UwljP"
+      },
+      "administrativeAgreement" : false,
+      "publisherAuthority" : false,
+      "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/ducimusdolor",
+    "name" : "6ra2fDYKPSeReCZ1p7D",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "JPbvO7B7ZaJJ",
+      "id" : "CJYjmWMlW68f"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-09-23T09:51:23.044996ZZ",
+      "approvedBy" : "REK",
+      "approvalStatus" : "APPLIED",
+      "applicationCode" : "XZ4uNrA2BU"
+    } ]
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/illummolestiae" ],
+  "modelVersion" : "0.16.9"
+}
