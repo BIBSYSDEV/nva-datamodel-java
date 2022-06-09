@@ -29,7 +29,7 @@ import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
-import no.unit.nva.model.instancetypes.media.MediaPodcast;
+import no.unit.nva.model.instancetypes.MusicPerformance;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
@@ -51,7 +51,9 @@ public class PublicationTest extends ModelTest {
     public static final Javers JAVERS = JaversBuilder.javers().build();
 
     public static Stream<Class<?>> publicationInstanceProvider() {
-        return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
+        return PublicationInstanceBuilder.listPublicationInstanceTypes()
+            .stream()
+            .filter(cl->cl.equals(MusicPerformance.class));
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
@@ -64,8 +66,9 @@ public class PublicationTest extends ModelTest {
         Publication roundTripped = hackToAvoidJaversFailureOnDeprecatedOwnerField(transformed, expected.getOwner());
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThatPublicationDoesNotHaveEmptyFields(expected);
-        assertEquals(expected, roundTripped);
+
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
+        assertEquals(expected, roundTripped);
 
         writePublicationToFile(instanceType, expected);
     }
