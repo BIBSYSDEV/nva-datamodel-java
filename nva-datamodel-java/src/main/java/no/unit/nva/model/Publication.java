@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.ResourcesBuildConfig;
@@ -11,12 +12,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
@@ -36,7 +37,6 @@ public class Publication
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
-    private String owner;
     private ResourceOwner resourceOwner;
     private Organization publisher;
     private Instant createdDate;
@@ -113,16 +113,6 @@ public class Publication
     @Override
     public void setModifiedDate(Instant modifiedDate) {
         this.modifiedDate = modifiedDate;
-    }
-
-    @Override
-    public String getOwner() {
-        return Optional.ofNullable(resourceOwner).map(ResourceOwner::getOwner).orElse(owner);
-    }
-
-    @Override
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     @Override
@@ -273,7 +263,6 @@ public class Publication
         return new Builder()
             .withIdentifier(getIdentifier())
             .withStatus(getStatus())
-            .withOwner(getOwner())
             .withResourceOwner(getResourceOwner())
             .withPublisher(getPublisher())
             .withCreatedDate(getCreatedDate())
@@ -305,7 +294,7 @@ public class Publication
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
+        return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
                     getEntityDescription(), getFileSet(), getProjects(), getAdditionalIdentifiers(), getSubjects());
     }
@@ -322,7 +311,6 @@ public class Publication
         Publication that = (Publication) o;
         boolean firstHalf = Objects.equals(getIdentifier(), that.getIdentifier())
                             && getStatus() == that.getStatus()
-                            && Objects.equals(getOwner(), that.getOwner())
                             && Objects.equals(getResourceOwner(), that.getResourceOwner())
                             && Objects.equals(getPublisher(), that.getPublisher())
                             && Objects.equals(getCreatedDate(), that.getCreatedDate())
@@ -339,6 +327,11 @@ public class Publication
                              && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                              && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
+    }
+
+    @Override
+    public String toString() {
+        return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElseThrow();
     }
 
     private void verifyStatusTransition(PublicationStatus nextStatus)
@@ -364,11 +357,6 @@ public class Publication
 
         public Builder withStatus(PublicationStatus status) {
             publication.setStatus(status);
-            return this;
-        }
-
-        public Builder withOwner(String owner) {
-            publication.setOwner(owner);
             return this;
         }
 

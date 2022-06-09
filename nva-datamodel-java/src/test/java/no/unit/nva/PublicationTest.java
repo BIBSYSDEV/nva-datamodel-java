@@ -53,7 +53,7 @@ public class PublicationTest extends ModelTest {
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes()
             .stream()
-            .filter(cl->cl.equals(MusicPerformance.class));
+            .filter(MusicPerformance.class::equals);
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
@@ -62,13 +62,11 @@ public class PublicationTest extends ModelTest {
         Publication expected = PublicationGenerator.randomPublication(instanceType);
 
         String publication = dataModelObjectMapper.writeValueAsString(expected);
-        Publication transformed = dataModelObjectMapper.readValue(publication, Publication.class);
-        Publication roundTripped = hackToAvoidJaversFailureOnDeprecatedOwnerField(transformed, expected.getOwner());
+        Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThatPublicationDoesNotHaveEmptyFields(expected);
-
-        assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
         assertEquals(expected, roundTripped);
+        assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
     }
@@ -112,10 +110,6 @@ public class PublicationTest extends ModelTest {
         String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
                                              NEW, PUBLISHED);
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
-    }
-
-    private Publication hackToAvoidJaversFailureOnDeprecatedOwnerField(Publication publication, String owner) {
-        return publication.copy().withOwner(owner).build();
     }
 
     private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {

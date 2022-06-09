@@ -1,0 +1,166 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "NEW",
+  "resourceOwner" : {
+    "owner" : "nYLcDb3I4pSkRKtZ",
+    "ownerAffiliation" : "https://www.example.org/extempore"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/consecteturiste",
+    "labels" : {
+      "IaKptMwE3y5yHDJrXzP" : "Z3UNnaSaW1hHgV0qs"
+    }
+  },
+  "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+  "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "handle" : "https://www.example.org/autearum",
+  "doi" : "https://doi.org/10.1234/autem",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "APPROVED",
+    "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "messages" : [ {
+      "type" : "DoiRequestMessage",
+      "text" : "PeyqEOnmAB1a8HEH",
+      "author" : "tkgf5Ug4rFD99QCV1",
+      "timestamp" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "link" : "https://www.example.org/voluptatibusnatus",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "v9Hqibw2vqjia",
+    "alternativeTitles" : {
+      "fr" : "eVMG8SxZ7CHATM2RXn"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/ita",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "VT3YzHuzP1",
+      "month" : "FpaPTmhWIli",
+      "day" : "KDYQ7VEOHSAr8Q"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/fjh4NQFOR5aG1lKskXj",
+        "name" : "2rpqU2CLKzID",
+        "nameType" : "Personal",
+        "orcId" : "E5B0HTLHRzfpZE3cAYz",
+        "arpId" : "kn5YxECLfZ"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/nazyj28e7jemk",
+        "labels" : {
+          "qg7LyXOt2Xu2VJPdwEH" : "99BaQx9ryOs"
+        }
+      } ],
+      "role" : "Sponsor",
+      "sequence" : 1,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/KBI2214UtzkP",
+        "name" : "FeWWOsuW6nbsYpa5K4e",
+        "nameType" : "Organizational",
+        "orcId" : "PQIEbfdaQH66KfWwvS",
+        "arpId" : "cAyKUooNfvm"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/ns9azCnhE9CK",
+        "labels" : {
+          "ML71qAYwo9i" : "FhsaGzImUJ8G"
+        }
+      } ],
+      "role" : "DataManager",
+      "sequence" : 4,
+      "correspondingAuthor" : false
+    } ],
+    "npiSubjectHeading" : "3ulguEid40j74PM9",
+    "tags" : [ "QhSEIidbpqVRQ" ],
+    "description" : "H7me8tSn1bhaff1HCP2",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Artistic"
+      },
+      "doi" : "https://www.example.com/jpJPlGm2JgS",
+      "publicationInstance" : {
+        "type" : "MusicPerformance",
+        "manifestations" : [ {
+          "type" : "AudioVisualPublication",
+          "mediaType" : "DigitalFile",
+          "publisher" : "CuvMbnUnpkr5Es2",
+          "catalogueNumber" : "3irTPW2bvldSHWI",
+          "trackList" : [ {
+            "type" : "MusicTrack",
+            "title" : "eFkYePUpCTUJb1jC",
+            "composer" : "L0G5UOgFqq5ZRx",
+            "extent" : "176R8nUPsWDk"
+          } ]
+        } ],
+        "pages" : {
+          "type" : "NullPages"
+        },
+        "peerReviewed" : false
+      }
+    },
+    "metadataSource" : "https://www.example.com/vbsZHgscssi9NX1AY9h",
+    "abstract" : "hTgDuPFJ2AM"
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+      "name" : "tQYXfyrO02vTncC0l10",
+      "mimeType" : "eG3nUFoyluR5",
+      "size" : 95112208,
+      "license" : {
+        "type" : "License",
+        "identifier" : "Q3O3vWGNiKIaj8wlhE",
+        "labels" : {
+          "6sj6iBVDydAJC" : "iyOpRfxORj88D5R"
+        },
+        "link" : "https://www.example.com/hnQAiOhk7GwsOLiYZ"
+      },
+      "administrativeAgreement" : false,
+      "publisherAuthority" : false,
+      "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/doloremdolorem",
+    "name" : "B1mKepHh9hYYP72cu",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "FRvRHEUJhI",
+      "id" : "tq7caySeNt76"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-09-23T09:51:23.044996ZZ",
+      "approvedBy" : "NMA",
+      "approvalStatus" : "APPROVED",
+      "applicationCode" : "YsOv1lstk7uVhLo"
+    } ]
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/sintut" ],
+  "modelVersion" : "0.17.0"
+}
