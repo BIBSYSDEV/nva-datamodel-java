@@ -192,16 +192,37 @@ public class PublicationInstanceBuilder {
         }
     }
 
+    public static Class<?> randomPublicationInstanceType() {
+        List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
+        return randomElement(publicationInstanceClasses);
+    }
+
+    public static Stream<Class<?>> journalArticleInstanceTypes() {
+        return listPublicationInstanceTypes().stream()
+            .map(PublicationInstanceBuilder::getPublicationContext)
+            .filter(contextAndInstanceTuple -> contextAndInstanceTuple.getContext() instanceof Journal)
+            .map(ContextAndInstanceTuple::getInstanceType);
+    }
+
+    public static List<Class<?>> listPublicationInstanceTypes() {
+        JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
+        Type[] types = annotations[0].value();
+        return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
+    }
+
     private static MusicPerformance generateMusicPerformance() {
         return new MusicPerformance(List.of(randomAudioVisualPublication()));
     }
 
     private static MusicPerformanceManifestation randomAudioVisualPublication() {
-        return new AudioVisualPublication(randomElement(MusicMediaType.values()), randomString(), randomString(), randomTrackList());
+        return new AudioVisualPublication(randomElement(MusicMediaType.values()),
+                                          randomString(),
+                                          randomString(),
+                                          randomTrackList());
     }
 
     private static List<MusicTrack> randomTrackList() {
-        return List.of(new MusicTrack(randomString(),randomString(), randomString()));
+        return List.of(new MusicTrack(randomString(), randomString(), randomString()));
     }
 
     private static MediaReaderOpinion generateMediaReaderOpinion() {
@@ -222,24 +243,6 @@ public class PublicationInstanceBuilder {
 
     private static MediaBlogPost generateMediaBlogPost() {
         return new MediaBlogPost();
-    }
-
-    public static Class<?> randomPublicationInstanceType() {
-        List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
-        return randomElement(publicationInstanceClasses);
-    }
-
-    public static Stream<Class<?>> journalArticleInstanceTypes() {
-        return listPublicationInstanceTypes().stream()
-            .map(PublicationInstanceBuilder::getPublicationContext)
-            .filter(contextAndInstanceTuple -> contextAndInstanceTuple.getContext() instanceof Journal)
-            .map(ContextAndInstanceTuple::getInstanceType);
-    }
-
-    public static List<Class<?>> listPublicationInstanceTypes() {
-        JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
-        Type[] types = annotations[0].value();
-        return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
     }
 
     private static MediaFeatureArticle generateMediaFeatureArticle() {
