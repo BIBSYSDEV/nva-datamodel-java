@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
+import no.unit.nva.model.instancetypes.MusicPerformance;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
@@ -36,6 +37,10 @@ import no.unit.nva.model.instancetypes.artistic.film.realization.Broadcast;
 import no.unit.nva.model.instancetypes.artistic.film.realization.CinematicRelease;
 import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOutput;
 import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
+import no.unit.nva.model.instancetypes.artistic.music.AudioVisualPublication;
+import no.unit.nva.model.instancetypes.artistic.music.MusicMediaType;
+import no.unit.nva.model.instancetypes.artistic.music.MusicPerformanceManifestation;
+import no.unit.nva.model.instancetypes.artistic.music.MusicTrack;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
@@ -180,9 +185,44 @@ public class PublicationInstanceBuilder {
                 return generateMediaPodcast();
             case "MediaReaderOpinion":
                 return generateMediaReaderOpinion();
+            case "MusicPerformance":
+                return generateMusicPerformance();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
+    }
+
+    public static Class<?> randomPublicationInstanceType() {
+        List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
+        return randomElement(publicationInstanceClasses);
+    }
+
+    public static Stream<Class<?>> journalArticleInstanceTypes() {
+        return listPublicationInstanceTypes().stream()
+            .map(PublicationInstanceBuilder::getPublicationContext)
+            .filter(contextAndInstanceTuple -> contextAndInstanceTuple.getContext() instanceof Journal)
+            .map(ContextAndInstanceTuple::getInstanceType);
+    }
+
+    public static List<Class<?>> listPublicationInstanceTypes() {
+        JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
+        Type[] types = annotations[0].value();
+        return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
+    }
+
+    private static MusicPerformance generateMusicPerformance() {
+        return new MusicPerformance(List.of(randomAudioVisualPublication()));
+    }
+
+    private static MusicPerformanceManifestation randomAudioVisualPublication() {
+        return new AudioVisualPublication(randomElement(MusicMediaType.values()),
+                                          randomString(),
+                                          randomString(),
+                                          randomTrackList());
+    }
+
+    private static List<MusicTrack> randomTrackList() {
+        return List.of(new MusicTrack(randomString(), randomString(), randomString()));
     }
 
     private static MediaReaderOpinion generateMediaReaderOpinion() {
@@ -203,24 +243,6 @@ public class PublicationInstanceBuilder {
 
     private static MediaBlogPost generateMediaBlogPost() {
         return new MediaBlogPost();
-    }
-
-    public static Class<?> randomPublicationInstanceType() {
-        List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
-        return randomElement(publicationInstanceClasses);
-    }
-
-    public static Stream<Class<?>> journalArticleInstanceTypes() {
-        return listPublicationInstanceTypes().stream()
-            .map(PublicationInstanceBuilder::getPublicationContext)
-            .filter(contextAndInstanceTuple -> contextAndInstanceTuple.getContext() instanceof Journal)
-            .map(ContextAndInstanceTuple::getInstanceType);
-    }
-
-    public static List<Class<?>> listPublicationInstanceTypes() {
-        JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
-        Type[] types = annotations[0].value();
-        return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
     }
 
     private static MediaFeatureArticle generateMediaFeatureArticle() {

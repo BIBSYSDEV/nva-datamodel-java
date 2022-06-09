@@ -48,6 +48,7 @@ public class PublicationContextBuilder {
             case "ArtisticDesign":
             case "MovingPicture":
             case "PerformingArts":
+            case "MusicPerformance":
                 return randomArtistic();
             case "JournalIssue":
             case "ConferenceAbstract":

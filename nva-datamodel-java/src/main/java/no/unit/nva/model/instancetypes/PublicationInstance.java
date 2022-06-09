@@ -48,9 +48,9 @@ import no.unit.nva.model.pages.Pages;
 @JsonSubTypes({
     @JsonSubTypes.Type(name = "Architecture", value = Architecture.class),
     @JsonSubTypes.Type(name = "ArtisticDesign", value = ArtisticDesign.class),
+    @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "MovingPicture", value = MovingPicture.class),
     @JsonSubTypes.Type(name = "PerformingArts", value = PerformingArts.class),
-    @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
     @JsonSubTypes.Type(name = "JournalCorrigendum", value = JournalCorrigendum.class),
     @JsonSubTypes.Type(name = "JournalInterview", value = JournalInterview.class),
@@ -84,7 +84,8 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "MediaInterview", value = MediaInterview.class),
     @JsonSubTypes.Type(name = "MediaParticipationInRadioOrTv", value = MediaParticipationInRadioOrTv.class),
     @JsonSubTypes.Type(name = "MediaPodcast", value = MediaPodcast.class),
-    @JsonSubTypes.Type(name = "MediaReaderOpinion", value = MediaReaderOpinion.class)
+    @JsonSubTypes.Type(name = "MediaReaderOpinion", value = MediaReaderOpinion.class),
+    @JsonSubTypes.Type(name = "MusicPerformance", value = MusicPerformance.class)
 })
 public interface PublicationInstance<P extends Pages> {
 

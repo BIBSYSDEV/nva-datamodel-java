@@ -217,6 +217,35 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+  AudioVisualPublication:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        mediaType:
+          type: string
+          enum:
+          - CompactDisc
+          - DVD
+          - Streaming
+          - DigitalFile
+          - Vinyl
+          - Other
+        publisher:
+          type: string
+        catalogueNumber:
+          type: string
+        trackList:
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicTrack'
+        type:
+          type: string
   Award:
     required:
     - type
@@ -1275,6 +1304,48 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+  MusicPerformance:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        manifestations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicPerformanceManifestation'
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MusicPerformanceManifestation:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  MusicTrack:
+    required:
+    - type
+    type: object
+    properties:
+      title:
+        type: string
+      composer:
+        type: string
+      extent:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   NullPages:
     required:
     - type

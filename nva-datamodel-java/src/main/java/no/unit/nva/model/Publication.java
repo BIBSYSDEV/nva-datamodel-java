@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.isNull;
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.ResourcesBuildConfig;
@@ -16,6 +17,7 @@ import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
+import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
@@ -112,7 +114,6 @@ public class Publication
     public void setModifiedDate(Instant modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
-
 
     @Override
     public ResourceOwner getResourceOwner() {
@@ -326,6 +327,11 @@ public class Publication
                              && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                              && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
+    }
+
+    @Override
+    public String toString() {
+        return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElseThrow();
     }
 
     private void verifyStatusTransition(PublicationStatus nextStatus)
