@@ -1,11 +1,11 @@
-package no.unit.nva.model.instancetypes;
+package no.unit.nva.model.instancetypes.artistic.music;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
 import java.util.Objects;
-import no.unit.nva.model.instancetypes.artistic.music.MusicPerformanceManifestation;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 

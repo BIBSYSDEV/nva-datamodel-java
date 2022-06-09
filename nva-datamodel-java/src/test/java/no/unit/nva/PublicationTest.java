@@ -29,7 +29,6 @@ import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
-import no.unit.nva.model.instancetypes.MusicPerformance;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;

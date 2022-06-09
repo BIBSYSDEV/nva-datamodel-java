@@ -934,6 +934,30 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Ismn:
+    required:
+    - type
+    type: object
+    properties:
+      value:
+        type: string
+      formatted:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Isrc:
+    required:
+    - type
+    type: object
+    properties:
+      value:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Journal:
     required:
     - type
@@ -1356,6 +1380,30 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MusicScore:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        ensemble:
+          type: string
+        movements:
+          type: string
+        extent:
+          type: string
+        publisher:
+          $ref: '#/components/schemas/UnconfirmedPublisher'
+        ismn:
+          $ref: '#/components/schemas/Ismn'
+        isrc:
+          $ref: '#/components/schemas/Isrc'
+        type:
+          type: string
   MusicTrack:
     required:
     - type
