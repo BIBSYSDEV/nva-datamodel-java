@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
@@ -36,7 +35,6 @@ public class Publication
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
-    private String owner;
     private ResourceOwner resourceOwner;
     private Organization publisher;
     private Instant createdDate;
@@ -115,15 +113,6 @@ public class Publication
         this.modifiedDate = modifiedDate;
     }
 
-    @Override
-    public String getOwner() {
-        return Optional.ofNullable(resourceOwner).map(ResourceOwner::getOwner).orElse(owner);
-    }
-
-    @Override
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 
     @Override
     public ResourceOwner getResourceOwner() {
@@ -273,7 +262,6 @@ public class Publication
         return new Builder()
             .withIdentifier(getIdentifier())
             .withStatus(getStatus())
-            .withOwner(getOwner())
             .withResourceOwner(getResourceOwner())
             .withPublisher(getPublisher())
             .withCreatedDate(getCreatedDate())
@@ -305,7 +293,7 @@ public class Publication
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(), getModifiedDate(),
+        return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getDoiRequest(), getLink(),
                     getEntityDescription(), getFileSet(), getProjects(), getAdditionalIdentifiers(), getSubjects());
     }
@@ -322,7 +310,6 @@ public class Publication
         Publication that = (Publication) o;
         boolean firstHalf = Objects.equals(getIdentifier(), that.getIdentifier())
                             && getStatus() == that.getStatus()
-                            && Objects.equals(getOwner(), that.getOwner())
                             && Objects.equals(getResourceOwner(), that.getResourceOwner())
                             && Objects.equals(getPublisher(), that.getPublisher())
                             && Objects.equals(getCreatedDate(), that.getCreatedDate())
@@ -364,11 +351,6 @@ public class Publication
 
         public Builder withStatus(PublicationStatus status) {
             publication.setStatus(status);
-            return this;
-        }
-
-        public Builder withOwner(String owner) {
-            publication.setOwner(owner);
             return this;
         }
 

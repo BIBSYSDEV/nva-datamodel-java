@@ -33,7 +33,6 @@ import nva.commons.core.JacocoGenerated;
 @JacocoGenerated
 public final class PublicationGenerator {
 
-    public static final String OWNER = "owner@example.org";
     public static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Faker FAKER = Faker.instance();
 
@@ -76,7 +75,6 @@ public final class PublicationGenerator {
             .withModifiedDate(randomInstant())
             .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
             .withProjects(randomProjects())
-            .withOwner(randomString())
             .withResourceOwner(randomResourceOwner())
             .withLink(randomUri())
             .withIndexedDate(randomInstant())
