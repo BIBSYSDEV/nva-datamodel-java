@@ -51,9 +51,7 @@ public class PublicationTest extends ModelTest {
     public static final Javers JAVERS = JaversBuilder.javers().build();
 
     public static Stream<Class<?>> publicationInstanceProvider() {
-        return PublicationInstanceBuilder.listPublicationInstanceTypes()
-            .stream()
-            .filter(MusicPerformance.class::equals);
+        return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
