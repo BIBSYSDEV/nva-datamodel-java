@@ -475,6 +475,31 @@ referencedSchemas:
           $ref: '#/components/schemas/Time'
         type:
           type: string
+  Concert:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        time:
+          $ref: '#/components/schemas/Time'
+        extent:
+          type: string
+        description:
+          type: string
+        concertProgramme:
+          $ref: '#/components/schemas/ConcertProgramme'
+  ConcertProgramme:
+    type: object
+    properties:
+      title:
+        type: string
+      composer:
+        type: string
+      premiere:
+        type: boolean
   ConferenceAbstract:
     required:
     - type

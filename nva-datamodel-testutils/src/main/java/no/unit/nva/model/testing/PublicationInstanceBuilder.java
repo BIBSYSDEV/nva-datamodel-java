@@ -38,6 +38,8 @@ import no.unit.nva.model.instancetypes.artistic.film.realization.CinematicReleas
 import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOutput;
 import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
 import no.unit.nva.model.instancetypes.artistic.music.AudioVisualPublication;
+import no.unit.nva.model.instancetypes.artistic.music.Concert;
+import no.unit.nva.model.instancetypes.artistic.music.ConcertProgramme;
 import no.unit.nva.model.instancetypes.artistic.music.MusicMediaType;
 import no.unit.nva.model.instancetypes.artistic.music.MusicPerformanceManifestation;
 import no.unit.nva.model.instancetypes.artistic.music.MusicTrack;
@@ -89,6 +91,7 @@ import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.time.Instant;
 import no.unit.nva.model.time.Period;
+import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -211,7 +214,25 @@ public class PublicationInstanceBuilder {
     }
 
     private static MusicPerformance generateMusicPerformance() {
-        return new MusicPerformance(List.of(randomAudioVisualPublication()));
+        return new MusicPerformance(List.of(randomAudioVisualPublication(), randomConcert()));
+    }
+
+    private static Concert randomConcert() {
+        return new Concert(randomUnconfirmedPlace(),
+                           randomTime(),
+                           randomString(),
+                           randomString(),
+                           randomConcertProgramme());
+    }
+
+    private static ConcertProgramme randomConcertProgramme() {
+        return new ConcertProgramme(randomString(),randomString(),randomBoolean());
+    }
+
+    private static Time randomTime() {
+        var randomInstant = (Time) randomNvaInstant();
+        var randomPeriod = (Time) randomNvaPeriod();
+        return randomElement(randomInstant, randomPeriod);
     }
 
     private static MusicPerformanceManifestation randomAudioVisualPublication() {
