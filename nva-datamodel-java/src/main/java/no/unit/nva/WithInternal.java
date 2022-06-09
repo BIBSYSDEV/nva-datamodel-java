@@ -30,10 +30,6 @@ public interface WithInternal extends PublicationBase {
 
     void setModifiedDate(Instant modifiedDate);
 
-    String getOwner();
-
-    void setOwner(String owner);
-
     ResourceOwner getResourceOwner();
 
     void setResourceOwner(ResourceOwner resourceOwner);

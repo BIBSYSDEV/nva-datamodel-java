@@ -34,7 +34,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
-    private String owner;
     private ResourceOwner resourceOwner;
     private Organization publisher;
     private Instant createdDate;
@@ -57,7 +56,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         var response = new PublicationResponse();
         response.setIdentifier(publication.getIdentifier());
         response.setStatus(publication.getStatus());
-        response.setOwner(publication.getOwner());
         response.setResourceOwner(publication.getResourceOwner());
         response.setPublisher(publication.getPublisher());
         response.setCreatedDate(publication.getCreatedDate());
@@ -144,16 +142,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @Override
     public void setModifiedDate(Instant modifiedDate) {
         this.modifiedDate = modifiedDate;
-    }
-
-    @Override
-    public String getOwner() {
-        return owner;
-    }
-
-    @Override
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     @Override
@@ -264,7 +252,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentifier(), getStatus(), getOwner(), getPublisher(), getCreatedDate(),
+        return Objects.hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(),
                             getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
                             getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), isDoiRequested(),
                             getContext(), getProjects(), getSubjects());
@@ -283,7 +271,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         return Objects.equals(getId(), that.getId())
                && Objects.equals(getIdentifier(), that.getIdentifier())
                && getStatus() == that.getStatus()
-               && Objects.equals(getOwner(), that.getOwner())
                && Objects.equals(getPublisher(), that.getPublisher())
                && Objects.equals(getCreatedDate(), that.getCreatedDate())
                && Objects.equals(getModifiedDate(), that.getModifiedDate())

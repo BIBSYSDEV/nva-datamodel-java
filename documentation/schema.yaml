@@ -12,8 +12,6 @@ schema:
       - DRAFT
       - PUBLISHED
       - DRAFT_FOR_DELETION
-    owner:
-      type: string
     resourceOwner:
       $ref: '#/components/schemas/ResourceOwner'
     publisher:
@@ -1464,8 +1462,6 @@ referencedSchemas:
         - DRAFT
         - PUBLISHED
         - DRAFT_FOR_DELETION
-      owner:
-        type: string
       resourceOwner:
         $ref: '#/components/schemas/ResourceOwner'
       publisher:
