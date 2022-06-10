@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class ConcertTest {
 
+    //TODO: generalize this test for all types that have list fields
     @Test
     void shouldSerializeNullConcertProgrammeAsEmptyList() throws JsonProcessingException {
         var concert = new Concert(randomUnconfirmedPlace(), randomTime(), randomString(), randomString(), null);
