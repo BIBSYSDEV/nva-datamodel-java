@@ -9,11 +9,10 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.Objects.nonNull;
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ArtisticDesign implements PublicationInstance<NullPages> {
@@ -35,7 +34,7 @@ public class ArtisticDesign implements PublicationInstance<NullPages> {
                           @JsonProperty(VENUES) List<Venue> venues) {
         this.subtype = subtype;
         this.description = description;
-        this.venues = nonNull(venues) ? venues : Collections.emptyList();
+        this.venues = nullListAsEmpty(venues);
     }
 
     public ArtisticDesignSubtype getSubtype() {

@@ -12,8 +12,7 @@ import nva.commons.core.JacocoGenerated;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.Collections.emptyList;
-import static java.util.Objects.nonNull;
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class MovingPicture implements PublicationInstance<NullPages> {
@@ -33,7 +32,7 @@ public class MovingPicture implements PublicationInstance<NullPages> {
             @JsonProperty(OUTPUTS) List<MovingPictureOutput> outputs) {
         this.subtype = subtype;
         this.description = description;
-        this.outputs = nonNull(outputs) ? outputs : emptyList();
+        this.outputs = nullListAsEmpty(outputs);
     }
 
     public MovingPictureSubtype getSubtype() {

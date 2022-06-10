@@ -1,9 +1,9 @@
 package no.unit.nva.model;
 
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
@@ -24,7 +24,7 @@ public class Contributor {
                        @JsonProperty("sequence") Integer sequence,
                        @JsonProperty("correspondingAuthor") boolean correspondingAuthor) {
         this.identity = identity;
-        this.affiliations = affiliations;
+        this.affiliations = nullListAsEmpty(affiliations);
         this.role = role;
         this.sequence = sequence;
         this.correspondingAuthor = correspondingAuthor;
@@ -45,7 +45,7 @@ public class Contributor {
     }
 
     public List<Organization> getAffiliations() {
-        return Objects.nonNull(affiliations) ? affiliations : Collections.emptyList();
+        return affiliations;
     }
 
     public Integer getSequence() {
