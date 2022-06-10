@@ -29,7 +29,6 @@ import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
-import no.unit.nva.model.instancetypes.MusicPerformance;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
@@ -51,9 +50,7 @@ public class PublicationTest extends ModelTest {
     public static final Javers JAVERS = JaversBuilder.javers().build();
 
     public static Stream<Class<?>> publicationInstanceProvider() {
-        return PublicationInstanceBuilder.listPublicationInstanceTypes()
-            .stream()
-            .filter(MusicPerformance.class::equals);
+        return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
