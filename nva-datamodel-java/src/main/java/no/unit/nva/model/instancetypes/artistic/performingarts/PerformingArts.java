@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.performingarts;
 
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.PublicationInstance;
@@ -27,7 +28,7 @@ public class PerformingArts implements PublicationInstance<NullPages> {
                           @JsonProperty(OUTPUTS) List<PerformingArtsOutput> outputs) {
         this.subtype = subtype;
         this.description = description;
-        this.outputs = outputs;
+        this.outputs = nullListAsEmpty(outputs);
     }
 
     public PerformingArtsSubtype getSubtype() {

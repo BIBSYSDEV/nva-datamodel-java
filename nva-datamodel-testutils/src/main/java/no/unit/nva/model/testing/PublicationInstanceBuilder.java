@@ -276,7 +276,7 @@ public final class PublicationInstanceBuilder {
         return List.of(new MusicalWorkPerformance(randomString(), randomString(), randomBoolean()));
     }
 
-    private static Time randomTime() {
+    public static Time randomTime() {
         var randomInstant = (Time) randomNvaInstant();
         var randomPeriod = (Time) randomNvaPeriod();
         return randomElement(randomInstant, randomPeriod);
@@ -677,7 +677,7 @@ public final class PublicationInstanceBuilder {
         return new Venue(randomUnconfirmedPlace(), randomNvaPeriod(), randomInteger());
     }
 
-    private static UnconfirmedPlace randomUnconfirmedPlace() {
+    public static UnconfirmedPlace randomUnconfirmedPlace() {
         return new UnconfirmedPlace(randomString(), randomString());
     }
 

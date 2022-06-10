@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.music;
 
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -33,7 +34,7 @@ public class OtherPerformance implements MusicPerformanceManifestation {
         this.performanceType = performanceType;
         this.place = place;
         this.extent = extent;
-        this.musicalWorks = musicalWorks;
+        this.musicalWorks = nullListAsEmpty(musicalWorks);
     }
 
     @Override

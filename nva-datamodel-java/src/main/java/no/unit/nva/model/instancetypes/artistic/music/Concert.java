@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.music;
 
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Concert implements MusicPerformanceManifestation {
         this.time = time;
         this.extent = extent;
         this.description = description;
-        this.concertProgramme = concertProgramme;
+        this.concertProgramme = nullListAsEmpty(concertProgramme);
     }
 
     public UnconfirmedPlace getPlace() {

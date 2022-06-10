@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.music;
 
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -33,7 +34,7 @@ public class AudioVisualPublication implements MusicPerformanceManifestation {
         this.mediaType = mediaType;
         this.publisher = publisher;
         this.catalogueNumber = catalogueNumber;
-        this.trackList = trackList;
+        this.trackList = nullListAsEmpty(trackList);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.music;
 
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -18,7 +19,7 @@ public class MusicPerformance implements PublicationInstance<NullPages> {
 
     @JsonCreator
     public MusicPerformance(@JsonProperty(MANIFESTATIONS) List<MusicPerformanceManifestation> manifestations) {
-        this.manifestations = manifestations;
+        this.manifestations = nullListAsEmpty(manifestations);
     }
 
     public List<MusicPerformanceManifestation> getManifestations() {
