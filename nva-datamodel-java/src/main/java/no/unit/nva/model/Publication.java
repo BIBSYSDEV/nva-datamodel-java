@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
@@ -63,6 +64,19 @@ public class Publication
 
     public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
         this.additionalIdentifiers = additionalIdentifiers;
+    }
+
+
+    @JsonProperty("owner")
+    @Deprecated(since = "Resource owner was introduced. "
+                        + "Should be removed when publisher is moved into resourceOwner"
+                        + "and NP-9175 is fixed")
+    public String getOwner(){
+        return Optional.of(resourceOwner).map(ResourceOwner::getOwner).orElse(null);
+    }
+
+    public void setOwner(){
+        // NO-OP
     }
 
     @Override

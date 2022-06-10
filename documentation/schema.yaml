@@ -57,6 +57,8 @@ schema:
       items:
         type: string
         format: uri
+    owner:
+      type: string
     modelVersion:
       type: string
     type:
@@ -1688,6 +1690,8 @@ referencedSchemas:
         items:
           type: string
           format: uri
+      owner:
+        type: string
       modelVersion:
         type: string
       type:
