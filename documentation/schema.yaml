@@ -1419,6 +1419,19 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MusicalWork:
+    required:
+    - type
+    type: object
+    properties:
+      title:
+        type: string
+      composer:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   NullPages:
     required:
     - type
@@ -1445,6 +1458,28 @@ referencedSchemas:
           type: object
           additionalProperties:
             type: string
+        type:
+          type: string
+  OtherPerformance:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        performanceType:
+          type: string
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        extent:
+          type: string
+        musicalWorks:
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicalWork'
         type:
           type: string
   OtherPresentation:

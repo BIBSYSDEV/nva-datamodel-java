@@ -47,6 +47,8 @@ import no.unit.nva.model.instancetypes.artistic.music.MusicPerformance;
 import no.unit.nva.model.instancetypes.artistic.music.MusicPerformanceManifestation;
 import no.unit.nva.model.instancetypes.artistic.music.MusicScore;
 import no.unit.nva.model.instancetypes.artistic.music.MusicTrack;
+import no.unit.nva.model.instancetypes.artistic.music.MusicalWork;
+import no.unit.nva.model.instancetypes.artistic.music.OtherPerformance;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
@@ -224,7 +226,20 @@ public final class PublicationInstanceBuilder {
     }
 
     private static MusicPerformance generateMusicPerformance() {
-        return new MusicPerformance(List.of(randomAudioVisualPublication(), randomConcert(), randomMusicScore()));
+        return new MusicPerformance(List.of(randomAudioVisualPublication(),
+                                            randomConcert(),
+                                            randomMusicScore(),
+                                            randomOtherPerformance()));
+    }
+
+    private static MusicPerformanceManifestation randomOtherPerformance() {
+        //performanceType, place, extent
+        return new OtherPerformance(randomString(),randomUnconfirmedPlace(),randomString(),
+                                    List.of(randomWork()));
+    }
+
+    private static MusicalWork randomWork() {
+        return new MusicalWork(randomString(), randomString());
     }
 
     private static MusicPerformanceManifestation randomMusicScore() {
