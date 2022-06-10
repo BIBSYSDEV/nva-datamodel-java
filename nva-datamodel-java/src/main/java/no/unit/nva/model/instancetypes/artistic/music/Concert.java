@@ -2,6 +2,7 @@ package no.unit.nva.model.instancetypes.artistic.music;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import java.util.Objects;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.time.Time;
@@ -24,14 +25,14 @@ public class Concert implements MusicPerformanceManifestation {
     @JsonProperty(DESCRIPTION)
     private final String description;
     @JsonProperty(CONCERT_PROGRAMME)
-    private final ConcertProgramme concertProgramme;
+    private final List<MusicalWorkPerformance> concertProgramme;
 
     @JsonCreator
     public Concert(@JsonProperty(PLACE) UnconfirmedPlace place,
                    @JsonProperty(TIME) Time time,
                    @JsonProperty(EXTENT) String extent,
                    @JsonProperty(DESCRIPTION) String description,
-                   @JsonProperty(CONCERT_PROGRAMME) ConcertProgramme concertProgramme) {
+                   @JsonProperty(CONCERT_PROGRAMME) List<MusicalWorkPerformance> concertProgramme) {
         this.place = place;
         this.time = time;
         this.extent = extent;
@@ -55,7 +56,7 @@ public class Concert implements MusicPerformanceManifestation {
         return description;
     }
 
-    public ConcertProgramme getConcertProgramme() {
+    public List<MusicalWorkPerformance> getConcertProgramme() {
         return concertProgramme;
     }
 

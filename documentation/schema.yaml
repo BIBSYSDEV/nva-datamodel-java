@@ -490,16 +490,9 @@ referencedSchemas:
         description:
           type: string
         concertProgramme:
-          $ref: '#/components/schemas/ConcertProgramme'
-  ConcertProgramme:
-    type: object
-    properties:
-      title:
-        type: string
-      composer:
-        type: string
-      premiere:
-        type: boolean
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicalWorkPerformance'
   ConferenceAbstract:
     required:
     - type
@@ -1432,6 +1425,15 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MusicalWorkPerformance:
+    type: object
+    properties:
+      title:
+        type: string
+      composer:
+        type: string
+      premiere:
+        type: boolean
   NullPages:
     required:
     - type

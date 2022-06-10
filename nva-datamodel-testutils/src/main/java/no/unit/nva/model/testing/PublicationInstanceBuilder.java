@@ -39,7 +39,7 @@ import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOu
 import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
 import no.unit.nva.model.instancetypes.artistic.music.AudioVisualPublication;
 import no.unit.nva.model.instancetypes.artistic.music.Concert;
-import no.unit.nva.model.instancetypes.artistic.music.ConcertProgramme;
+import no.unit.nva.model.instancetypes.artistic.music.MusicalWorkPerformance;
 import no.unit.nva.model.instancetypes.artistic.music.Ismn;
 import no.unit.nva.model.instancetypes.artistic.music.Isrc;
 import no.unit.nva.model.instancetypes.artistic.music.MusicMediaType;
@@ -272,8 +272,8 @@ public final class PublicationInstanceBuilder {
                            randomConcertProgramme());
     }
 
-    private static ConcertProgramme randomConcertProgramme() {
-        return new ConcertProgramme(randomString(), randomString(), randomBoolean());
+    private static List<MusicalWorkPerformance> randomConcertProgramme() {
+        return List.of(new MusicalWorkPerformance(randomString(), randomString(), randomBoolean()));
     }
 
     private static Time randomTime() {
