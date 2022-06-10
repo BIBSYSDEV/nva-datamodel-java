@@ -100,13 +100,13 @@ import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
 @SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.GodClass"})
-public class PublicationInstanceBuilder {
+public final class PublicationInstanceBuilder {
 
     public static final String OTHER = "Other";
     private static final String VALID_ISMN_10 = "M-2306-7118-7";
     private static final String VALID_ISMN_13 = "979-0-9016791-7-7";
 
-    private PublicationInstanceBuilder(){
+    private PublicationInstanceBuilder() {
 
     }
 
@@ -648,7 +648,10 @@ public class PublicationInstanceBuilder {
     }
 
     private static ArtisticDesign artisticDesign(ArtisticDesignSubtypeEnum subtype) {
-        return new ArtisticDesign(ArtisticDesignSubtype.create(subtype), randomString(), randomVenues());
+        var materializedSubtype = ArtisticDesignSubtypeEnum.OTHER.equals(subtype)
+                                      ? ArtisticDesignSubtype.createOther(randomString())
+                                      : ArtisticDesignSubtype.create(subtype);
+        return new ArtisticDesign(materializedSubtype, randomString(), randomVenues());
     }
 
     private static List<Venue> randomVenues() {
