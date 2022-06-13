@@ -7,6 +7,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomLocalDateTime;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import java.util.Arrays;
@@ -36,6 +37,18 @@ import no.unit.nva.model.instancetypes.artistic.film.realization.Broadcast;
 import no.unit.nva.model.instancetypes.artistic.film.realization.CinematicRelease;
 import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOutput;
 import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
+import no.unit.nva.model.instancetypes.artistic.music.AudioVisualPublication;
+import no.unit.nva.model.instancetypes.artistic.music.Concert;
+import no.unit.nva.model.instancetypes.artistic.music.MusicalWorkPerformance;
+import no.unit.nva.model.instancetypes.artistic.music.Ismn;
+import no.unit.nva.model.instancetypes.artistic.music.Isrc;
+import no.unit.nva.model.instancetypes.artistic.music.MusicMediaType;
+import no.unit.nva.model.instancetypes.artistic.music.MusicPerformance;
+import no.unit.nva.model.instancetypes.artistic.music.MusicPerformanceManifestation;
+import no.unit.nva.model.instancetypes.artistic.music.MusicScore;
+import no.unit.nva.model.instancetypes.artistic.music.MusicTrack;
+import no.unit.nva.model.instancetypes.artistic.music.MusicalWork;
+import no.unit.nva.model.instancetypes.artistic.music.OtherPerformance;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
@@ -68,6 +81,12 @@ import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.media.MediaBlogPost;
+import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
+import no.unit.nva.model.instancetypes.media.MediaInterview;
+import no.unit.nva.model.instancetypes.media.MediaParticipationInRadioOrTv;
+import no.unit.nva.model.instancetypes.media.MediaPodcast;
+import no.unit.nva.model.instancetypes.media.MediaReaderOpinion;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
@@ -78,13 +97,20 @@ import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.time.Instant;
 import no.unit.nva.model.time.Period;
+import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
 @SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.GodClass"})
-public class PublicationInstanceBuilder {
+public final class PublicationInstanceBuilder {
 
     public static final String OTHER = "Other";
+    private static final String VALID_ISMN_10 = "M-2306-7118-7";
+    private static final String VALID_ISMN_13 = "979-0-9016791-7-7";
+
+    private PublicationInstanceBuilder() {
+
+    }
 
     public static PublicationInstance<? extends Pages> randomPublicationInstance() {
         Class<?> randomType = randomPublicationInstanceType();
@@ -162,6 +188,20 @@ public class PublicationInstanceBuilder {
                 return generateJournalIssue();
             case "ConferenceAbstract":
                 return generateConferenceAbstract();
+            case "MediaFeatureArticle":
+                return generateMediaFeatureArticle();
+            case "MediaBlogPost":
+                return generateMediaBlogPost();
+            case "MediaInterview":
+                return generateMediaInterview();
+            case "MediaParticipationInRadioOrTv":
+                return generateMediaParticipation();
+            case "MediaPodcast":
+                return generateMediaPodcast();
+            case "MediaReaderOpinion":
+                return generateMediaReaderOpinion();
+            case "MusicPerformance":
+                return generateMusicPerformance();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
@@ -185,7 +225,99 @@ public class PublicationInstanceBuilder {
         return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
     }
 
-    private static PublicationInstance<? extends Pages> generateJournalIssue() {
+    private static MusicPerformance generateMusicPerformance() {
+        return new MusicPerformance(List.of(randomAudioVisualPublication(),
+                                            randomConcert(),
+                                            randomMusicScore(),
+                                            randomOtherPerformance()));
+    }
+
+    private static MusicPerformanceManifestation randomOtherPerformance() {
+        //performanceType, place, extent
+        return new OtherPerformance(randomString(),randomUnconfirmedPlace(),randomString(),
+                                    List.of(randomWork()));
+    }
+
+    private static MusicalWork randomWork() {
+        return new MusicalWork(randomString(), randomString());
+    }
+
+    private static MusicPerformanceManifestation randomMusicScore() {
+        //ensemble movements extent, publisher,
+        return new MusicScore(randomString(),
+                              randomString(),
+                              randomString(),
+                              randomUnconfirmedPublisher(),
+                              randomIsmn(),
+                              randomIsrc());
+    }
+
+    private static Isrc randomIsrc() {
+        return attempt(() -> new Isrc("USRC17607839")).orElseThrow();
+    }
+
+    private static Ismn randomIsmn() {
+        return attempt(() -> new Ismn(randomElement(VALID_ISMN_13, VALID_ISMN_10))).orElseThrow();
+    }
+
+    private static UnconfirmedPublisher randomUnconfirmedPublisher() {
+        return new UnconfirmedPublisher(randomString());
+    }
+
+    private static Concert randomConcert() {
+        return new Concert(randomUnconfirmedPlace(),
+                           randomTime(),
+                           randomString(),
+                           randomString(),
+                           randomConcertProgramme());
+    }
+
+    private static List<MusicalWorkPerformance> randomConcertProgramme() {
+        return List.of(new MusicalWorkPerformance(randomString(), randomString(), randomBoolean()));
+    }
+
+    public static Time randomTime() {
+        var randomInstant = (Time) randomNvaInstant();
+        var randomPeriod = (Time) randomNvaPeriod();
+        return randomElement(randomInstant, randomPeriod);
+    }
+
+    private static MusicPerformanceManifestation randomAudioVisualPublication() {
+        return new AudioVisualPublication(randomElement(MusicMediaType.values()),
+                                          randomString(),
+                                          randomString(),
+                                          randomTrackList());
+    }
+
+    private static List<MusicTrack> randomTrackList() {
+        return List.of(new MusicTrack(randomString(), randomString(), randomString()));
+    }
+
+    private static MediaReaderOpinion generateMediaReaderOpinion() {
+        return new MediaReaderOpinion();
+    }
+
+    private static MediaPodcast generateMediaPodcast() {
+        return new MediaPodcast();
+    }
+
+    private static MediaParticipationInRadioOrTv generateMediaParticipation() {
+        return new MediaParticipationInRadioOrTv();
+    }
+
+    private static MediaInterview generateMediaInterview() {
+        return new MediaInterview();
+    }
+
+    private static MediaBlogPost generateMediaBlogPost() {
+        return new MediaBlogPost();
+    }
+
+    private static MediaFeatureArticle generateMediaFeatureArticle() {
+        return new MediaFeatureArticle();
+    }
+
+    private static JournalIssue generateJournalIssue() {
         return new JournalIssue.Builder()
             .withArticleNumber(randomArticleNumber())
             .withIssue(randomIssue())
@@ -194,7 +326,7 @@ public class PublicationInstanceBuilder {
             .build();
     }
 
-    private static PublicationInstance<? extends Pages> generateConferenceAbstract() {
+    private static ConferenceAbstract generateConferenceAbstract() {
         return new ConferenceAbstract.Builder()
             .withArticleNumber(randomArticleNumber())
             .withIssue(randomIssue())
@@ -531,7 +663,10 @@ public class PublicationInstanceBuilder {
     }
 
     private static ArtisticDesign artisticDesign(ArtisticDesignSubtypeEnum subtype) {
-        return new ArtisticDesign(ArtisticDesignSubtype.create(subtype), randomString(), randomVenues());
+        var materializedSubtype = ArtisticDesignSubtypeEnum.OTHER.equals(subtype)
+                                      ? ArtisticDesignSubtype.createOther(randomString())
+                                      : ArtisticDesignSubtype.create(subtype);
+        return new ArtisticDesign(materializedSubtype, randomString(), randomVenues());
     }
 
     private static List<Venue> randomVenues() {
@@ -542,7 +677,7 @@ public class PublicationInstanceBuilder {
         return new Venue(randomUnconfirmedPlace(), randomNvaPeriod(), randomInteger());
     }
 
-    private static UnconfirmedPlace randomUnconfirmedPlace() {
+    public static UnconfirmedPlace randomUnconfirmedPlace() {
         return new UnconfirmedPlace(randomString(), randomString());
     }
 

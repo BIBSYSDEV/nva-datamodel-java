@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPicture;
+import no.unit.nva.model.instancetypes.artistic.music.MusicPerformance;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
@@ -31,6 +32,12 @@ import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.media.MediaBlogPost;
+import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
+import no.unit.nva.model.instancetypes.media.MediaInterview;
+import no.unit.nva.model.instancetypes.media.MediaParticipationInRadioOrTv;
+import no.unit.nva.model.instancetypes.media.MediaPodcast;
+import no.unit.nva.model.instancetypes.media.MediaReaderOpinion;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
@@ -42,9 +49,9 @@ import no.unit.nva.model.pages.Pages;
 @JsonSubTypes({
     @JsonSubTypes.Type(name = "Architecture", value = Architecture.class),
     @JsonSubTypes.Type(name = "ArtisticDesign", value = ArtisticDesign.class),
+    @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "MovingPicture", value = MovingPicture.class),
     @JsonSubTypes.Type(name = "PerformingArts", value = PerformingArts.class),
-    @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
     @JsonSubTypes.Type(name = "JournalCorrigendum", value = JournalCorrigendum.class),
     @JsonSubTypes.Type(name = "JournalInterview", value = JournalInterview.class),
@@ -72,7 +79,14 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "Lecture", value = Lecture.class),
     @JsonSubTypes.Type(name = "OtherPresentation", value = OtherPresentation.class),
     @JsonSubTypes.Type(name = "JournalIssue", value = JournalIssue.class),
-    @JsonSubTypes.Type(name = "ConferenceAbstract", value = ConferenceAbstract.class)
+    @JsonSubTypes.Type(name = "ConferenceAbstract", value = ConferenceAbstract.class),
+    @JsonSubTypes.Type(name = "MediaFeatureArticle", value = MediaFeatureArticle.class),
+    @JsonSubTypes.Type(name = "MediaBlogPost", value = MediaBlogPost.class),
+    @JsonSubTypes.Type(name = "MediaInterview", value = MediaInterview.class),
+    @JsonSubTypes.Type(name = "MediaParticipationInRadioOrTv", value = MediaParticipationInRadioOrTv.class),
+    @JsonSubTypes.Type(name = "MediaPodcast", value = MediaPodcast.class),
+    @JsonSubTypes.Type(name = "MediaReaderOpinion", value = MediaReaderOpinion.class),
+    @JsonSubTypes.Type(name = "MusicPerformance", value = MusicPerformance.class)
 })
 public interface PublicationInstance<P extends Pages> {
 

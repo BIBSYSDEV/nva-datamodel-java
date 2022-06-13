@@ -1,18 +1,19 @@
 package no.unit.nva.model.instancetypes.artistic.architecture;
 
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.List;
+import java.util.Objects;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 
-import java.util.List;
-import java.util.Objects;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Architecture implements PublicationInstance<NullPages> {
+
     public static final String SUBTYPE = "subtype";
     public static final String DESCRIPTION = "description";
     public static final String OUTPUT = "architectureOutput";
@@ -29,8 +30,9 @@ public class Architecture implements PublicationInstance<NullPages> {
                         @JsonProperty(OUTPUT) List<ArchitectureOutput> architectureOutput) {
         this.subtype = subtype;
         this.description = description;
-        this.architectureOutput = architectureOutput;
+        this.architectureOutput = nullListAsEmpty(architectureOutput);
     }
+
 
     @JsonGetter
     @Override
@@ -73,8 +75,8 @@ public class Architecture implements PublicationInstance<NullPages> {
         }
         Architecture that = (Architecture) o;
         return Objects.equals(getSubtype(), that.getSubtype())
-                && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getArchitectureOutput(), that.getArchitectureOutput());
+               && Objects.equals(getDescription(), that.getDescription())
+               && Objects.equals(getArchitectureOutput(), that.getArchitectureOutput());
     }
 
     @JacocoGenerated

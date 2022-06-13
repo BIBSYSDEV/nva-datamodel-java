@@ -2,6 +2,7 @@ package no.unit.nva.model.testing;
 
 import static no.unit.nva.model.testing.RandomUtils.randomLabel;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
+import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
@@ -20,11 +21,14 @@ import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Event;
 import no.unit.nva.model.contexttypes.Journal;
+import no.unit.nva.model.contexttypes.MediaContribution;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.PublishingHouse;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.Series;
+import no.unit.nva.model.contexttypes.media.MediaFormat;
+import no.unit.nva.model.contexttypes.media.MediaSubType;
 import no.unit.nva.model.contexttypes.place.Place;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -44,6 +48,7 @@ public class PublicationContextBuilder {
             case "ArtisticDesign":
             case "MovingPicture":
             case "PerformingArts":
+            case "MusicPerformance":
                 return randomArtistic();
             case "JournalIssue":
             case "ConferenceAbstract":
@@ -80,9 +85,31 @@ public class PublicationContextBuilder {
             case "Lecture":
             case "OtherPresentation":
                 return randomPresentation();
+            case "MediaFeatureArticle":
+            case "MediaBlogPost":
+            case "MediaInterview":
+            case "MediaParticipationInRadioOrTv":
+            case "MediaPodcast":
+            case "MediaReaderOpinion":
+                return randomMediaContribution();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + className);
         }
+    }
+
+    private static MediaContribution randomMediaContribution() {
+        return new MediaContribution.Builder()
+            .withMedium(generateRandomMedium())
+            .withFormat(generateRandomMediaFormat())
+            .build();
+    }
+
+    private static MediaFormat generateRandomMediaFormat() {
+        return randomElement(MediaFormat.values());
+    }
+
+    private static MediaSubType generateRandomMedium() {
+        return randomElement(MediaSubType.values());
     }
 
     private static Degree randomDegree() throws InvalidIsbnException, InvalidUnconfirmedSeriesException {

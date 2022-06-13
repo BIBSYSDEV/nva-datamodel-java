@@ -15,7 +15,6 @@ public class ArtisticDesignSubtype {
         return new ArtisticDesignSubtypeOther(ArtisticDesignSubtypeEnum.OTHER, description);
     }
 
-    @JacocoGenerated
     @JsonCreator
     public static ArtisticDesignSubtype fromJson(@JsonProperty(TYPE) ArtisticDesignSubtypeEnum type,
                                                  @JsonProperty("description") String description) {

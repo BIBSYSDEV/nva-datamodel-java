@@ -59,18 +59,13 @@ public class PublicationTest extends ModelTest {
         Publication expected = PublicationGenerator.randomPublication(instanceType);
 
         String publication = dataModelObjectMapper.writeValueAsString(expected);
-        Publication transformed = dataModelObjectMapper.readValue(publication, Publication.class);
-        Publication roundTripped = hackToAvoidJaversFailureOnDeprecatedOwnerField(transformed, expected.getOwner());
+        Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThatPublicationDoesNotHaveEmptyFields(expected);
         assertEquals(expected, roundTripped);
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
-    }
-
-    private Publication hackToAvoidJaversFailureOnDeprecatedOwnerField(Publication publication, String owner) {
-        return publication.copy().withOwner(owner).build();
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")

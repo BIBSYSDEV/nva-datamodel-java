@@ -12,8 +12,6 @@ schema:
       - DRAFT
       - PUBLISHED
       - DRAFT_FOR_DELETION
-    owner:
-      type: string
     resourceOwner:
       $ref: '#/components/schemas/ResourceOwner'
     publisher:
@@ -59,6 +57,8 @@ schema:
       items:
         type: string
         format: uri
+    owner:
+      type: string
     modelVersion:
       type: string
     type:
@@ -219,6 +219,35 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+  AudioVisualPublication:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        mediaType:
+          type: string
+          enum:
+          - CompactDisc
+          - DVD
+          - Streaming
+          - DigitalFile
+          - Vinyl
+          - Other
+        publisher:
+          type: string
+        catalogueNumber:
+          type: string
+        trackList:
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicTrack'
+        type:
+          type: string
   Award:
     required:
     - type
@@ -448,6 +477,24 @@ referencedSchemas:
           $ref: '#/components/schemas/Time'
         type:
           type: string
+  Concert:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        time:
+          $ref: '#/components/schemas/Time'
+        extent:
+          type: string
+        description:
+          type: string
+        concertProgramme:
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicalWorkPerformance'
   ConferenceAbstract:
     required:
     - type
@@ -883,6 +930,30 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Ismn:
+    required:
+    - type
+    type: object
+    properties:
+      value:
+        type: string
+      formatted:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Isrc:
+    required:
+    - type
+    type: object
+    properties:
+      value:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Journal:
     required:
     - type
@@ -1084,6 +1155,116 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  MediaBlogPost:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaContribution:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        medium:
+          type: string
+          enum:
+          - Journal
+          - Radio
+          - TV
+          - Internet
+          - Other
+        format:
+          type: string
+          enum:
+          - Text
+          - Sound
+          - Video
+        type:
+          type: string
+  MediaFeatureArticle:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaInterview:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaParticipationInRadioOrTv:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaPodcast:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MediaReaderOpinion:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
   MentionInPublication:
     required:
     - type
@@ -1168,6 +1349,94 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+  MusicPerformance:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        manifestations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicPerformanceManifestation'
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  MusicPerformanceManifestation:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  MusicScore:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        ensemble:
+          type: string
+        movements:
+          type: string
+        extent:
+          type: string
+        publisher:
+          $ref: '#/components/schemas/UnconfirmedPublisher'
+        ismn:
+          $ref: '#/components/schemas/Ismn'
+        isrc:
+          $ref: '#/components/schemas/Isrc'
+        type:
+          type: string
+  MusicTrack:
+    required:
+    - type
+    type: object
+    properties:
+      title:
+        type: string
+      composer:
+        type: string
+      extent:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  MusicalWork:
+    required:
+    - type
+    type: object
+    properties:
+      title:
+        type: string
+      composer:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  MusicalWorkPerformance:
+    type: object
+    properties:
+      title:
+        type: string
+      composer:
+        type: string
+      premiere:
+        type: boolean
   NullPages:
     required:
     - type
@@ -1194,6 +1463,28 @@ referencedSchemas:
           type: object
           additionalProperties:
             type: string
+        type:
+          type: string
+  OtherPerformance:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/MusicPerformanceManifestation'
+    - type: object
+      properties:
+        performanceType:
+          type: string
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        extent:
+          type: string
+        musicalWorks:
+          type: array
+          items:
+            $ref: '#/components/schemas/MusicalWork'
         type:
           type: string
   OtherPresentation:
@@ -1355,8 +1646,6 @@ referencedSchemas:
         - DRAFT
         - PUBLISHED
         - DRAFT_FOR_DELETION
-      owner:
-        type: string
       resourceOwner:
         $ref: '#/components/schemas/ResourceOwner'
       publisher:
@@ -1402,6 +1691,8 @@ referencedSchemas:
         items:
           type: string
           format: uri
+      owner:
+        type: string
       modelVersion:
         type: string
       type:

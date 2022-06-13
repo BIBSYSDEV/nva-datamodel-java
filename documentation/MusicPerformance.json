@@ -1,0 +1,219 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "NEW",
+  "resourceOwner" : {
+    "owner" : "LI6jwWx14cZHiuM",
+    "ownerAffiliation" : "https://www.example.org/iureaut"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/repellendusquibusdam",
+    "labels" : {
+      "Oj46y63vML6PZSW" : "qu0MtjyGQA6VvCz1A4"
+    }
+  },
+  "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+  "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "handle" : "https://www.example.org/molestiaserror",
+  "doi" : "https://doi.org/10.1234/eos",
+  "doiRequest" : {
+    "type" : "DoiRequest",
+    "status" : "REQUESTED",
+    "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+    "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+    "messages" : [ {
+      "type" : "DoiRequestMessage",
+      "text" : "KYFZuvd081lF3",
+      "author" : "Z8MtEpiAp7I7",
+      "timestamp" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "link" : "https://www.example.org/assumendaaccusantium",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "kX0QctkpUP",
+    "alternativeTitles" : {
+      "sv" : "SwLidXO1TZAfXl"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/spa",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "pn4gnEGjTTUWab",
+      "month" : "6eytKOGMjm",
+      "day" : "1MATud8Ecyl"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/leDLKUOLNzvrlLvLKqE",
+        "name" : "DKOg8lYrsCajnl9axgs",
+        "nameType" : "Organizational",
+        "orcId" : "DZnSvSVp2lW",
+        "arpId" : "XXYLDC1ygbFwBGweb"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/KrRNHNKXPikwwvV",
+        "labels" : {
+          "NohF6Cktqq" : "DhSMJPRHzd5ZDoOK"
+        }
+      } ],
+      "role" : "RegistrationAgency",
+      "sequence" : 5,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/LWkugXYAKQqzqPbCQ",
+        "name" : "Wsy5X4jmu71Kah3IrcU",
+        "nameType" : "Organizational",
+        "orcId" : "y8KMH5DP8AVE79A",
+        "arpId" : "TkgoKI1FxMJTuI"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/m9qUHsEqSSs",
+        "labels" : {
+          "yzPuMcoDy2Gr" : "PWKgzXsfmB2qqH"
+        }
+      } ],
+      "role" : "Researcher",
+      "sequence" : 4,
+      "correspondingAuthor" : false
+    } ],
+    "npiSubjectHeading" : "j8LGoaGwWb90RLVqIu",
+    "tags" : [ "huSdn4PLS5Qmq" ],
+    "description" : "N3alAuuxaCpc",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Artistic"
+      },
+      "doi" : "https://www.example.com/5c8sqT5pvkMjn",
+      "publicationInstance" : {
+        "type" : "MusicPerformance",
+        "manifestations" : [ {
+          "type" : "AudioVisualPublication",
+          "mediaType" : "Streaming",
+          "publisher" : "4ZLZWXaVhBTi7VY4e",
+          "catalogueNumber" : "JC5JfKycKXxjuz",
+          "trackList" : [ {
+            "type" : "MusicTrack",
+            "title" : "zWiDhq8ZfmK9qIC6fq",
+            "composer" : "A3ULmCYdxwtKs",
+            "extent" : "tT0ySrX8kZFnQD36lyh"
+          } ]
+        }, {
+          "type" : "Concert",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "VqSXY4Qv0naQ",
+            "country" : "G0phu3EYaoNBxxd40U"
+          },
+          "time" : {
+            "type" : "Period",
+            "from" : "2020-09-23T09:51:23.044996Z",
+            "to" : "2020-09-23T09:51:23.044996Z"
+          },
+          "extent" : "PPH48nraee",
+          "description" : "HuqsdtzvRLH25p5O8jP",
+          "concertProgramme" : [ {
+            "type" : "MusicalWorkPerformance",
+            "title" : "hF76gUuqpJVhUDh58",
+            "composer" : "Jy4mKxw3Q9tlErC1YJ",
+            "premiere" : false
+          } ]
+        }, {
+          "type" : "MusicScore",
+          "ensemble" : "Rv0kwGOfj1",
+          "movements" : "Nd6SxoMhVTg3p",
+          "extent" : "J6hlBfyZaWAIS7C6iW",
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "azP4z2C0WQqQSs"
+          },
+          "ismn" : {
+            "type" : "Ismn",
+            "value" : "9790901679177",
+            "formatted" : "979-0-9016791-7-7"
+          },
+          "isrc" : {
+            "type" : "Isrc",
+            "value" : "USRC17607839"
+          }
+        }, {
+          "type" : "OtherPerformance",
+          "performanceType" : "EioBw6MNRirCUH24",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "rIrPHAojVh64LxH",
+            "country" : "rv82j7fch3MRDuIZ6Wq"
+          },
+          "extent" : "06gOUcmxe2A2",
+          "musicalWorks" : [ {
+            "type" : "MusicalWork",
+            "title" : "NJv0TAIW5OJiy",
+            "composer" : "Fqxpxew4aZXE"
+          } ]
+        } ],
+        "pages" : {
+          "type" : "NullPages"
+        },
+        "peerReviewed" : false
+      }
+    },
+    "metadataSource" : "https://www.example.com/ijRe4v6KwafQPtA",
+    "abstract" : "a4U9QtinwuCI0VNu"
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "File",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+      "name" : "vgxAOM6Es77dSqniXE3",
+      "mimeType" : "baWz7ZA70auIFNzTXH",
+      "size" : 790775413,
+      "license" : {
+        "type" : "License",
+        "identifier" : "HTFSC5p8RavJom2asE",
+        "labels" : {
+          "crJtmJ5G2fki" : "DghwTZy2gbRLKpr2gj"
+        },
+        "link" : "https://www.example.com/2TvrB4XcCpwOk"
+      },
+      "administrativeAgreement" : false,
+      "publisherAuthority" : false,
+      "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/odita",
+    "name" : "O72Qi2nao4wJKhx",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "4wvHz2Q7J68xz",
+      "id" : "26tI4BQ4v8ZEsgtGZD"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-09-23T09:51:23.044996ZZ",
+      "approvedBy" : "REK",
+      "approvalStatus" : "NOTAPPLIED",
+      "applicationCode" : "t1NtPGHFHlXM"
+    } ]
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/architectosed" ],
+  "owner" : "LI6jwWx14cZHiuM",
+  "modelVersion" : "0.17.0"
+}
