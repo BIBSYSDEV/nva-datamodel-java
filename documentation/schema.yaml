@@ -841,10 +841,15 @@ referencedSchemas:
         type:
           type: string
   File:
-    required:
-    - type
     type: object
     properties:
+      type:
+        type: string
+        enum:
+        - File
+        - PublishedFile
+        - UnpublishedFile
+        - UnpublishableFile
       identifier:
         type: string
         format: uuid
@@ -864,10 +869,6 @@ referencedSchemas:
       embargoDate:
         type: string
         format: date-time
-      type:
-        type: string
-    discriminator:
-      propertyName: type
   FileSet:
     required:
     - type
@@ -1727,10 +1728,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:

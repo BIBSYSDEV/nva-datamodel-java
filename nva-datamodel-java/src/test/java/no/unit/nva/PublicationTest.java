@@ -131,7 +131,8 @@ public class PublicationTest extends ModelTest {
     }
 
     private File copyWithNewIdentifier(File file) {
-        return new File(PublicationTest.REPLACEMENT_IDENTIFIER_2,
+        return new File(file.getType(),
+                        PublicationTest.REPLACEMENT_IDENTIFIER_2,
                         file.getName(),
                         file.getMimeType(),
                         file.getSize(),
