@@ -12,7 +12,9 @@ public class Identity {
     private String name;
     private NameType nameType;
     private String orcId;
+    @Deprecated
     private String arpId;
+    private URI personCristinId;
 
     public Identity() {
     }
@@ -23,6 +25,7 @@ public class Identity {
         setNameType(builder.nameType);
         setOrcId(builder.orcId);
         setArpId(builder.arpId);
+        setPersonCristinId(builder.personCristinId);
     }
 
     public URI getId() {
@@ -65,27 +68,36 @@ public class Identity {
         this.arpId = arpId;
     }
 
+    public URI getPersonCristinId() {
+        return personCristinId;
+    }
+
+    public void setPersonCristinId(URI personCristinId) {
+        this.personCristinId = personCristinId;
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Identity)) {
             return false;
         }
         Identity identity = (Identity) o;
         return Objects.equals(getId(), identity.getId())
-                && Objects.equals(getName(), identity.getName())
-                && getNameType() == identity.getNameType()
-                && Objects.equals(getOrcId(), identity.getOrcId())
-                && Objects.equals(getArpId(), identity.getArpId());
+               && Objects.equals(getName(), identity.getName())
+               && getNameType() == identity.getNameType()
+               && Objects.equals(getOrcId(), identity.getOrcId())
+               && Objects.equals(getArpId(), identity.getArpId())
+               && Objects.equals(getPersonCristinId(), identity.getPersonCristinId());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getNameType(), getOrcId(), getArpId());
+        return Objects.hash(getId(), getName(), getNameType(), getOrcId(), getArpId(), getPersonCristinId());
     }
 
     public static final class Builder {
@@ -94,6 +106,7 @@ public class Identity {
         private NameType nameType;
         private String orcId;
         private String arpId;
+        private URI personCristinId;
 
         public Builder() {
         }
@@ -120,6 +133,11 @@ public class Identity {
 
         public Builder withArpId(String arpId) {
             this.arpId = arpId;
+            return this;
+        }
+
+        public Builder withPersonCristinId(URI personCristinId) {
+            this.personCristinId = personCristinId;
             return this;
         }
 

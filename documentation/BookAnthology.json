@@ -1,110 +1,112 @@
 {
   "type" : "Publication",
   "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
-  "status" : "DRAFT",
+  "status" : "DRAFT_FOR_DELETION",
   "resourceOwner" : {
-    "owner" : "BO0fTTUF5iPZHtO5ShK",
-    "ownerAffiliation" : "https://www.example.org/modiquo"
+    "owner" : "5pzF6CVbD7iYcBArnU",
+    "ownerAffiliation" : "https://www.example.org/veritatisrerum"
   },
   "publisher" : {
     "type" : "Organization",
-    "id" : "https://www.example.org/voluptaseveniet",
+    "id" : "https://www.example.org/doloribusvoluptatem",
     "labels" : {
-      "tFTDKl7ip1Y" : "PmNbnCmvfpMoxRmiPu"
+      "0xNmy8nAaM" : "buPViRIajF1S8"
     }
   },
   "createdDate" : "2020-09-23T09:51:23.044996ZZ",
   "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
   "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
   "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
-  "handle" : "https://www.example.org/reiciendisdelectus",
-  "doi" : "https://doi.org/10.1234/dignissimos",
+  "handle" : "https://www.example.org/illumet",
+  "doi" : "https://doi.org/10.1234/voluptas",
   "doiRequest" : {
     "type" : "DoiRequest",
-    "status" : "REQUESTED",
+    "status" : "APPROVED",
     "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
     "createdDate" : "2020-09-23T09:51:23.044996ZZ",
     "messages" : [ {
       "type" : "DoiRequestMessage",
-      "text" : "0RwU8Q7Gn05Dwlby",
-      "author" : "T5ZoRO3bc2j",
+      "text" : "QISnRtEigzoFSUpXa",
+      "author" : "H4gy2VRytDTfw",
       "timestamp" : "2020-09-23T09:51:23.044996ZZ"
     } ]
   },
-  "link" : "https://www.example.org/quiiusto",
+  "link" : "https://www.example.org/quaeratquia",
   "entityDescription" : {
     "type" : "EntityDescription",
-    "mainTitle" : "kjARiSvXnX97IJq",
+    "mainTitle" : "c4vmgkrsWmEV",
     "alternativeTitles" : {
-      "pt" : "5Wiw1csz9Swrflmscqg"
+      "fi" : "W1Tnl0B7RmcUsA"
     },
-    "language" : "http://lexvo.org/id/iso639-3/nob",
+    "language" : "http://lexvo.org/id/iso639-3/mul",
     "date" : {
       "type" : "PublicationDate",
-      "year" : "PnlDE28kzDH5",
-      "month" : "avu1o6pxvhHyfl",
-      "day" : "UQMxMAGZ2VCqF0i"
+      "year" : "jQSUYnmDYkuhYRIpTZB",
+      "month" : "oEWaXsTZCukgqnMne",
+      "day" : "XLcIOcVxtFmMtJOq"
     },
     "contributors" : [ {
       "type" : "Contributor",
       "identity" : {
         "type" : "Identity",
-        "id" : "https://www.example.com/7v1zjEoFmRY3gL",
-        "name" : "vxJj5g2YMn",
+        "id" : "https://www.example.com/vXRqnfeBJSFlU",
+        "name" : "JAteUwPCMEQuwG221n",
         "nameType" : "Personal",
-        "orcId" : "TaB3vm8HWLhImHt",
-        "arpId" : "RaW2qpMIuuswl9"
+        "orcId" : "UfjS8VqpTcG",
+        "arpId" : "RU5hyb28YO4",
+        "personCristinId" : "https://www.example.com/SEf4EbHUsffR"
       },
       "affiliations" : [ {
         "type" : "Organization",
-        "id" : "https://www.example.com/pSamLtoZYzjP",
+        "id" : "https://www.example.com/K14Mb8z1d6y7",
         "labels" : {
-          "FHaO6EADkfUi" : "Rn5MCcPSMRjdHAIcb"
+          "TaOlcaulFdl9NHhmFhn" : "ke3PQPdQML"
         }
       } ],
-      "role" : "Producer",
-      "sequence" : 2,
+      "role" : "DataManager",
+      "sequence" : 6,
       "correspondingAuthor" : false
     }, {
       "type" : "Contributor",
       "identity" : {
         "type" : "Identity",
-        "id" : "https://www.example.com/7FFSEJXOZouMoiau",
-        "name" : "L9LiZi8Znj1Z4m",
-        "nameType" : "Personal",
-        "orcId" : "n0iHjZBbIIw",
-        "arpId" : "Ddi1pTmDsqVex"
+        "id" : "https://www.example.com/AbB7HCVHRqq9Qa3epsA",
+        "name" : "nv7enu8zRa",
+        "nameType" : "Organizational",
+        "orcId" : "engVRFZ5qwkKbgGWadJ",
+        "arpId" : "INY1tURcQ9t9oke4V6d",
+        "personCristinId" : "https://www.example.com/JDlrkIl2YmK"
       },
       "affiliations" : [ {
         "type" : "Organization",
-        "id" : "https://www.example.com/VdcB707znRCrc",
+        "id" : "https://www.example.com/bHrd8APYFgas",
         "labels" : {
-          "ij6YvEkZsaLuyaS" : "nMacgyQQUVyC"
+          "O7IffpPiZF95brcHaH" : "sV7pTqmEhk2e"
         }
       } ],
-      "role" : "Distributor",
-      "sequence" : 0,
+      "role" : "Sponsor",
+      "sequence" : 2,
       "correspondingAuthor" : false
     } ],
-    "npiSubjectHeading" : "Wf7oaeHzqIsjSEo",
-    "tags" : [ "LSsJVvyFtGa" ],
-    "description" : "kvVdHu320Dx",
+    "npiSubjectHeading" : "LotTAX0aL2ZiA4CzWf6",
+    "tags" : [ "SWmH1SqqyMcTuSKJD" ],
+    "description" : "uBmYjlDTHD9O",
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
         "type" : "Book",
         "series" : {
           "type" : "Series",
-          "id" : "https://api.dev.nva.aws.unit.no/publication-channels/LJo39cAVqLXb9"
+          "id" : "https://api.dev.nva.aws.unit.no/publication-channels/p9HGZFDOiN7"
         },
-        "seriesNumber" : "llN1Za3pGxscCPfkjJ",
+        "seriesNumber" : "VXYBOCKG1wvNOv",
         "publisher" : {
           "type" : "Publisher",
-          "id" : "https://api.dev.nva.aws.unit.no/publication-channels/znjKeL05n8"
+          "id" : "https://api.dev.nva.aws.unit.no/publication-channels/4cbCI4iVUtbvyuk"
         },
-        "isbnList" : [ "9790013136216" ]
+        "isbnList" : [ "9781901152005" ]
       },
-      "doi" : "https://www.example.com/w5HZmLH62VSJ3K8",
+      "doi" : "https://www.example.com/ysY1hUmuh1BJ",
       "publicationInstance" : {
         "type" : "BookAnthology",
         "peerReviewed" : false,
@@ -112,32 +114,32 @@
           "type" : "MonographPages",
           "introduction" : {
             "type" : "Range",
-            "begin" : "dRwVVpGlDm3IkFDH7",
-            "end" : "sbX7kek4O65P8thhUUt"
+            "begin" : "8k9MJoxxAmQH3rST",
+            "end" : "Tk6IqS6tBxi1eubK"
           },
-          "pages" : "9yORr1vblYQzj9AijXb",
-          "illustrated" : false
+          "pages" : "46PHUX59Znu",
+          "illustrated" : true
         }
       }
     },
-    "metadataSource" : "https://www.example.com/ITknN2wVga4",
-    "abstract" : "lMiNV7FYk6wMkx"
+    "metadataSource" : "https://www.example.com/7DeBz0vGSyr4BUnM28B",
+    "abstract" : "X8pJzkda16NWFoT50H"
   },
   "fileSet" : {
     "type" : "FileSet",
     "files" : [ {
       "type" : "PublishedFile",
       "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
-      "name" : "14zfTtENG4T4IVMH",
-      "mimeType" : "cexF1zth18W02I",
-      "size" : 507648540,
+      "name" : "II4EdIvc4zoB",
+      "mimeType" : "ekBGfMzaRP9svj",
+      "size" : 2052820408,
       "license" : {
         "type" : "License",
-        "identifier" : "1V2QgsQAqUy6S448",
+        "identifier" : "wLSEOzxNk8DBWKw",
         "labels" : {
-          "du7fSFYiBlvAGFgYk4" : "Ffvqi8sl8keaiVQ"
+          "4YiTpOqzHHSAilVq" : "vAbX8UEnL0gQFf0G1nc"
         },
-        "link" : "https://www.example.com/V1IFg9dAh9RAc5To0"
+        "link" : "https://www.example.com/ZBJ6LBQgIQ"
       },
       "administrativeAgreement" : false,
       "publisherAuthority" : false,
@@ -146,19 +148,19 @@
   },
   "projects" : [ {
     "type" : "ResearchProject",
-    "id" : "https://www.example.org/earumassumenda",
-    "name" : "vBmizsMLhG9b5OwqQH9",
+    "id" : "https://www.example.org/abest",
+    "name" : "LO5IWGmzAM0nnqoN4",
     "grants" : [ {
       "type" : "Grant",
-      "source" : "V3PmxWkCHO9PnbJGNMI",
-      "id" : "IitfzTLzD3"
+      "source" : "b2Ec4MNp5fCtK",
+      "id" : "WOhyz3sq0E1LJ"
     } ],
     "approvals" : [ {
       "type" : "Approval",
       "date" : "2020-09-23T09:51:23.044996ZZ",
       "approvedBy" : "NARA",
-      "approvalStatus" : "APPLIED",
-      "applicationCode" : "bJ9spiqhiUc"
+      "approvalStatus" : "REJECTION",
+      "applicationCode" : "j0VtZluM06C9iJJ1"
     } ]
   } ],
   "additionalIdentifiers" : [ {
@@ -166,7 +168,7 @@
     "source" : "fakesource",
     "value" : "1234"
   } ],
-  "subjects" : [ "https://www.example.org/officiamodi" ],
-  "owner" : "BO0fTTUF5iPZHtO5ShK",
-  "modelVersion" : "0.17.2"
+  "subjects" : [ "https://www.example.org/nemoincidunt" ],
+  "owner" : "5pzF6CVbD7iYcBArnU",
+  "modelVersion" : "0.17.3"
 }
