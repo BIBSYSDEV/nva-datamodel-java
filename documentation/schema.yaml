@@ -912,11 +912,6 @@ referencedSchemas:
         - Personal
       orcId:
         type: string
-      arpId:
-        type: string
-      personCristinId:
-        type: string
-        format: uri
       type:
         type: string
     discriminator:

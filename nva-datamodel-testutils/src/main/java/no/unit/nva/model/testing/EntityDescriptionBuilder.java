@@ -66,11 +66,9 @@ public class EntityDescriptionBuilder {
     private static Identity randomIdentity() {
         return new Identity.Builder()
                    .withId(randomUri())
-                   .withArpId(randomString())
                    .withName(randomString())
                    .withOrcId(randomString())
                    .withNameType(randomNameType())
-                   .withPersonCristinId(randomUri())
                    .build();
     }
 
