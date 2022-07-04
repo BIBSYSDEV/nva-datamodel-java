@@ -12,7 +12,6 @@ public class Identity {
     private String name;
     private NameType nameType;
     private String orcId;
-    private String arpId;
 
     public Identity() {
     }
@@ -22,7 +21,6 @@ public class Identity {
         setName(builder.name);
         setNameType(builder.nameType);
         setOrcId(builder.orcId);
-        setArpId(builder.arpId);
     }
 
     public URI getId() {
@@ -57,35 +55,26 @@ public class Identity {
         this.orcId = orcId;
     }
 
-    public String getArpId() {
-        return arpId;
-    }
-
-    public void setArpId(String arpId) {
-        this.arpId = arpId;
-    }
-
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Identity)) {
             return false;
         }
         Identity identity = (Identity) o;
         return Objects.equals(getId(), identity.getId())
-                && Objects.equals(getName(), identity.getName())
-                && getNameType() == identity.getNameType()
-                && Objects.equals(getOrcId(), identity.getOrcId())
-                && Objects.equals(getArpId(), identity.getArpId());
+               && Objects.equals(getName(), identity.getName())
+               && getNameType() == identity.getNameType()
+               && Objects.equals(getOrcId(), identity.getOrcId());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getNameType(), getOrcId(), getArpId());
+        return Objects.hash(getId(), getName(), getNameType(), getOrcId());
     }
 
     public static final class Builder {
@@ -93,7 +82,6 @@ public class Identity {
         private String name;
         private NameType nameType;
         private String orcId;
-        private String arpId;
 
         public Builder() {
         }
@@ -115,11 +103,6 @@ public class Identity {
 
         public Builder withOrcId(String orcId) {
             this.orcId = orcId;
-            return this;
-        }
-
-        public Builder withArpId(String arpId) {
-            this.arpId = arpId;
             return this;
         }
 

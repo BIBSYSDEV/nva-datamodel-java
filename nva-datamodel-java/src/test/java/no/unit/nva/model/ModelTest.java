@@ -43,12 +43,11 @@ public class ModelTest implements JsonHandlingTest {
 
     protected static Identity generateIdentity() {
         return new Identity.Builder()
-            .withId(URI.create("https://example.org/person/123"))
-            .withArpId("arp123")
-            .withOrcId("orc123")
-            .withName("Navnesen, Navn")
-            .withNameType(NameType.PERSONAL)
-            .build();
+                   .withId(URI.create("https://example.org/person/123"))
+                   .withOrcId("orc123")
+                   .withName("Navnesen, Navn")
+                   .withNameType(NameType.PERSONAL)
+                   .build();
     }
 
     protected static Organization generateOrganization() {
