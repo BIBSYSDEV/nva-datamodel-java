@@ -18,6 +18,7 @@ public enum Role {
     DATA_CURATOR("DataCurator"),
     DATA_MANAGER("DataManager"),
     DESIGNER("Designer"),
+    DIRECTOR("Director"),
     DISTRIBUTOR("Distributor"),
     EDITOR("Editor"),
     EDITORIAL_BOARD_MEMBER("EditorialBoardMember"),
@@ -30,6 +31,8 @@ public enum Role {
     LANDSCAPE_ARCHITECT("LandscapeArchitect"),
     OTHER("Other"),
     PRODUCER("Producer"),
+    PHOTOGRAPHER("Photographer"),
+    PRODUCTION_DESIGNER("ProductionDesigner"),
     PROGRAMME_LEADER("ProgrammeLeader"),
     PROGRAMME_PARTICIPANT("ProgrammeParticipant"),
     PROJECT_LEADER("ProjectLeader"),
@@ -41,8 +44,12 @@ public enum Role {
     RESEARCHER("Researcher"),
     RESEARCH_GROUP("ResearchGroup"),
     RIGHTS_HOLDER("RightsHolder"),
+    SCREENWRITER("Screenwriter"),
+    SOUND_DESIGNER("SoundDesigner"),
     SPONSOR("Sponsor"),
     SUPERVISOR("Supervisor"),
+    VFX_SUPERVISOR("VfxSupervisor"),
+    VIDEO_EDITOR("VideoEditor"),
     WORK_PACKAGE_LEADER("WorkPackageLeader");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid Role, expected one of: %s";
