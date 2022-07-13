@@ -13,6 +13,8 @@ public enum Role {
     ARCHITECTURAL_PLANNER("ArchitecturalPlanner"),
     ARTISTIC_DIRECTOR("ArtisticDirector"),
     CHOREOGRAPHER("Choreographer"),
+    COMPOSER("Composer"),
+    CONDUCTOR("Conductor"),
     CONSULTANT("Consultant"),
     CONTACT_PERSON("ContactPerson"),
     COSTUME_DESIGNER("CostumeDesigner"),
@@ -38,6 +40,8 @@ public enum Role {
     LANDSCAPE_ARCHITECT("LandscapeArchitect"),
     LIBRETTIST("Librettist"),
     LIGHT_DESIGNER("LightDesigner"),
+    MUSICIAN("Musician"),
+    ORGANIZER("Organizer"),
     OTHER("Other"),
     PRODUCER("Producer"),
     PHOTOGRAPHER("Photographer"),
@@ -55,12 +59,14 @@ public enum Role {
     RIGHTS_HOLDER("RightsHolder"),
     SCENOGRAPHER("Scenographer"),
     SCREENWRITER("Screenwriter"),
+    SOLOIST("Soloist"),
     SOUND_DESIGNER("SoundDesigner"),
     SPONSOR("Sponsor"),
     SUPERVISOR("Supervisor"),
     VFX_SUPERVISOR("VfxSupervisor"),
     VIDEO_EDITOR("VideoEditor"),
-    WORK_PACKAGE_LEADER("WorkPackageLeader");
+    WORK_PACKAGE_LEADER("WorkPackageLeader"),
+    WRITER("Writer");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid Role, expected one of: %s";
     public static final String DELIMITER = ", ";
