@@ -558,18 +558,28 @@ referencedSchemas:
         type: string
         enum:
         - AcademicCoordinator
+        - Actor
         - Advisor
         - Architect
         - ArchitecturalPlanner
+        - ArtisticDirector
+        - Choreographer
+        - Composer
+        - Conductor
         - Consultant
         - ContactPerson
+        - CostumeDesigner
         - Creator
         - CuratorOrganizer
+        - Dancer
         - DataCollector
         - DataCurator
         - DataManager
         - Designer
+        - Director
         - Distributor
+        - Dramatist
+        - Dramaturge
         - Editor
         - EditorialBoardMember
         - Funder
@@ -579,8 +589,14 @@ referencedSchemas:
         - InterviewSubject
         - Journalist
         - LandscapeArchitect
+        - Librettist
+        - LightDesigner
+        - Musician
+        - Organizer
         - Other
         - Producer
+        - Photographer
+        - ProductionDesigner
         - ProgrammeLeader
         - ProgrammeParticipant
         - ProjectLeader
@@ -592,9 +608,16 @@ referencedSchemas:
         - Researcher
         - ResearchGroup
         - RightsHolder
+        - Scenographer
+        - Screenwriter
+        - Soloist
+        - SoundDesigner
         - Sponsor
         - Supervisor
+        - VfxSupervisor
+        - VideoEditor
         - WorkPackageLeader
+        - Writer
       sequence:
         type: integer
         format: int32
@@ -1178,19 +1201,17 @@ referencedSchemas:
     - type: object
       properties:
         medium:
-          type: string
-          enum:
-          - Journal
-          - Radio
-          - TV
-          - Internet
-          - Other
+          $ref: '#/components/schemas/MediaSubType'
         format:
           type: string
           enum:
           - Text
           - Sound
           - Video
+        disseminationChannel:
+          type: string
+        partOf:
+          $ref: '#/components/schemas/SeriesEpisode'
         type:
           type: string
   MediaFeatureArticle:
@@ -1263,6 +1284,20 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+  MediaSubType:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - Journal
+        - Radio
+        - TV
+        - Internet
+        - Other
+      description:
+        type: string
+        writeOnly: true
   MentionInPublication:
     required:
     - type
@@ -1921,6 +1956,19 @@ referencedSchemas:
           format: uri
         type:
           type: string
+  SeriesEpisode:
+    required:
+    - type
+    type: object
+    properties:
+      series:
+        type: string
+      seriesPart:
+        type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   SortableIdentifier:
     type: object
   Time:
