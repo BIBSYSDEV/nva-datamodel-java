@@ -34,7 +34,7 @@ public class MediaContribution implements PublicationContext {
     public MediaContribution(@JsonProperty(MEDIUM) MediaSubType medium,
                              @JsonProperty(FORMAT) MediaFormat format,
                              @JsonProperty(DISSEMINATION_CHANNEL) String disseminationChannel,
-                             @JsonProperty(PART_OF) SeriesEpisode partOf ) {
+                             @JsonProperty(PART_OF) SeriesEpisode partOf) {
         this.medium = medium;
         this.format = format;
         this.disseminationChannel = disseminationChannel;
