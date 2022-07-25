@@ -28,63 +28,22 @@ import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.Test;
 
-public class PublicationTest {
+class PublicationTest {
 
     public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContext.json";
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final String DOI_REQUEST_FIELD = "doiRequest";
 
-
+    
     @Test
-    public void updatingDoiStatusSuccessfullyChangesToValidNewDoiStatus() {
-        var publication = PublicationGenerator.randomPublication();
-        publication.getDoiRequest().setStatus(REQUESTED);
-
-        var validRequestedChange = APPROVED;
-        // ensure we have different status before trying to update
-        assertThat(publication.getDoiRequest().getStatus(), not(equalTo(validRequestedChange)));
-
-        publication.updateDoiRequestStatus(validRequestedChange);
-        assertThat(publication.getDoiRequest().getStatus(), is(equalTo(validRequestedChange)));
-    }
-
-    @Test
-    public void updatingDoiRequestWithInvalidRequestedStatusChangeThenThrowsIllegalArgumentException() {
-        var publication = PublicationGenerator.randomPublication();
-        publication.getDoiRequest().setStatus(REJECTED);
-
-        var actualMessage = assertThrows(IllegalArgumentException.class,
-            () -> publication.updateDoiRequestStatus(REQUESTED)).getMessage();
-
-        assertThat(actualMessage, containsStringIgnoringCase("not allowed"));
-
-        String statusInRequest = REQUESTED.toString();
-        assertThat(actualMessage, containsStringIgnoringCase(statusInRequest));
-
-        String initialStatus = REJECTED.toString();
-        assertThat(actualMessage, containsStringIgnoringCase(initialStatus));
-    }
-
-    @Test
-    public void updatingDoiRequestStatusWithoutDoiRequestThrowsIllegalStateException() {
-        var publication = PublicationGenerator.randomPublication();
-        publication.setDoiRequest(null);
-
-        var actualException = assertThrows(IllegalStateException.class,
-            () -> publication.updateDoiRequestStatus(REQUESTED));
-        assertThat(actualException.getMessage(),
-                is(equalTo(Publication.ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST)));
-    }
-
-    @Test
-    public void getModelVersionReturnsModelVersionDefinedByGradle() {
+    void getModelVersionReturnsModelVersionDefinedByGradle() {
         Publication samplePublication = PublicationGenerator.randomPublication();
         assertThat(samplePublication.getModelVersion(), is(equalTo(ResourcesBuildConfig.RESOURCES_MODEL_VERSION)));
     }
 
     @Test
-    public void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields() {
+    void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields() {
         Publication samplePublication = PublicationGenerator.randomPublication();
         Publication copy = samplePublication.copy().build();
 
@@ -96,7 +55,7 @@ public class PublicationTest {
     }
 
     @Test
-    public void objectMapperReturnsSerializationWithAllFieldsSerialized()
+    void objectMapperReturnsSerializationWithAllFieldsSerialized()
         throws JsonProcessingException {
         Publication samplePublication = PublicationGenerator.randomPublication();
         String jsonString = dataModelObjectMapper.writeValueAsString(samplePublication);
