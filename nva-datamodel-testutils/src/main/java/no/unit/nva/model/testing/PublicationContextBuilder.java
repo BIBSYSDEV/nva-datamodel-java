@@ -29,6 +29,9 @@ import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.Series;
 import no.unit.nva.model.contexttypes.media.MediaFormat;
 import no.unit.nva.model.contexttypes.media.MediaSubType;
+import no.unit.nva.model.contexttypes.media.MediaSubTypeEnum;
+import no.unit.nva.model.contexttypes.media.MediaSubTypeOther;
+import no.unit.nva.model.contexttypes.media.SeriesEpisode;
 import no.unit.nva.model.contexttypes.place.Place;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
@@ -38,6 +41,7 @@ import no.unit.nva.model.time.Period;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
+@SuppressWarnings("PMD.CouplingBetweenObjects")
 @JacocoGenerated
 public class PublicationContextBuilder {
 
@@ -101,7 +105,13 @@ public class PublicationContextBuilder {
         return new MediaContribution.Builder()
             .withMedium(generateRandomMedium())
             .withFormat(generateRandomMediaFormat())
+            .withDisseminationChannel(randomString())
+            .withPartOf(generateRandomSeriesEpisode())
             .build();
+    }
+
+    private static SeriesEpisode generateRandomSeriesEpisode() {
+        return new SeriesEpisode(randomString(), randomString());
     }
 
     private static MediaFormat generateRandomMediaFormat() {
@@ -109,7 +119,10 @@ public class PublicationContextBuilder {
     }
 
     private static MediaSubType generateRandomMedium() {
-        return randomElement(MediaSubType.values());
+        var type = randomElement(MediaSubTypeEnum.values());
+        return MediaSubTypeEnum.OTHER == type
+                ? MediaSubTypeOther.createOther(randomString())
+                : MediaSubType.create(type);
     }
 
     private static Degree randomDegree() throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
@@ -209,4 +222,3 @@ public class PublicationContextBuilder {
         return new UnconfirmedPlace(randomString(), randomString());
     }
 }
-
