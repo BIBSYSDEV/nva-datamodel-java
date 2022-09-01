@@ -34,8 +34,6 @@ schema:
     doi:
       type: string
       format: uri
-    doiRequest:
-      $ref: '#/components/schemas/DoiRequest'
     link:
       type: string
       format: uri
@@ -716,47 +714,6 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
-  DoiRequest:
-    required:
-    - type
-    type: object
-    properties:
-      status:
-        type: string
-        enum:
-        - REQUESTED
-        - APPROVED
-        - REJECTED
-      modifiedDate:
-        type: string
-        format: date-time
-      createdDate:
-        type: string
-        format: date-time
-      messages:
-        type: array
-        items:
-          $ref: '#/components/schemas/DoiRequestMessage'
-      type:
-        type: string
-    discriminator:
-      propertyName: type
-  DoiRequestMessage:
-    required:
-    - type
-    type: object
-    properties:
-      text:
-        type: string
-      author:
-        type: string
-      timestamp:
-        type: string
-        format: date-time
-      type:
-        type: string
-    discriminator:
-      propertyName: type
   EntityDescription:
     required:
     - type
@@ -1701,8 +1658,6 @@ referencedSchemas:
       doi:
         type: string
         format: uri
-      doiRequest:
-        $ref: '#/components/schemas/DoiRequest'
       link:
         type: string
         format: uri
