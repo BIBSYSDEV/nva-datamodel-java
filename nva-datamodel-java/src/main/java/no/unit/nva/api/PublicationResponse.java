@@ -9,7 +9,6 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithId;
@@ -18,7 +17,6 @@ import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
-import no.unit.nva.model.DoiRequest;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
@@ -45,8 +43,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private EntityDescription entityDescription;
     private FileSet fileSet;
     private URI doi;
-    private DoiRequest doiRequest;
-    private Boolean doiRequested;
     @JsonProperty("@context")
     private JsonNode context;
     private List<ResearchProject> projects;
@@ -67,7 +63,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setEntityDescription(publication.getEntityDescription());
         response.setFileSet(publication.getFileSet());
         response.setDoi(publication.getDoi());
-        response.setDoiRequest(publication.getDoiRequest());
         response.setProjects(publication.getProjects());
         response.setSubjects(publication.getSubjects());
         response.setContext(PublicationContext.getContext());
@@ -193,17 +188,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public void setDoi(URI doi) {
         this.doi = doi;
     }
-
-    @Override
-    public DoiRequest getDoiRequest() {
-        return doiRequest;
-    }
-
-    @Override
-    public void setDoiRequest(DoiRequest doiRequest) {
-        this.doiRequest = doiRequest;
-        this.doiRequested = Objects.nonNull(doiRequest);
-    }
+    
 
     @Override
     public EntityDescription getEntityDescription() {
@@ -234,11 +219,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public void setSubjects(List<URI> subjects) {
         this.subjects = subjects;
     }
-
-    public boolean isDoiRequested() {
-        return Optional.ofNullable(doiRequested).orElse(false);
-    }
-
+    
     @Override
     public JsonNode getContext() {
         return context;
@@ -254,8 +235,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public int hashCode() {
         return Objects.hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(),
                             getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
-                            getEntityDescription(), getFileSet(), getDoi(), getDoiRequest(), isDoiRequested(),
-                            getContext(), getProjects(), getSubjects());
+                            getEntityDescription(), getFileSet(), getDoi(), getContext(), getProjects(), getSubjects());
     }
 
     @JacocoGenerated
@@ -281,8 +261,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                && Objects.equals(getEntityDescription(), that.getEntityDescription())
                && Objects.equals(getFileSet(), that.getFileSet())
                && Objects.equals(getDoi(), that.getDoi())
-               && Objects.equals(getDoiRequest(), that.getDoiRequest())
-               && Objects.equals(isDoiRequested(), that.isDoiRequested())
                && Objects.equals(getContext(), that.getContext())
                && Objects.equals(getProjects(), that.getProjects())
                && Objects.equals(getSubjects(), that.getSubjects());

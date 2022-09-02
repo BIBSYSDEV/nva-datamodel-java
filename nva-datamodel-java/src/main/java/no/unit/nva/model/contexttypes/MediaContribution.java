@@ -5,13 +5,16 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
 import no.unit.nva.model.contexttypes.media.MediaFormat;
 import no.unit.nva.model.contexttypes.media.MediaSubType;
+import no.unit.nva.model.contexttypes.media.SeriesEpisode;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class MediaContribution implements PublicationContext {
 
-    public static final String MEDIUM = "medium";
-    public static final String FORMAT = "format";
+    private static final String MEDIUM = "medium";
+    private static final String FORMAT = "format";
+    private static final String DISSEMINATION_CHANNEL = "disseminationChannel";
+    private static final String PART_OF = "partOf";
 
     @JsonProperty(MEDIUM)
     private final MediaSubType medium;
@@ -19,9 +22,23 @@ public class MediaContribution implements PublicationContext {
     @JsonProperty(FORMAT)
     private final MediaFormat format;
 
-    public MediaContribution(@JsonProperty(MEDIUM) MediaSubType medium, @JsonProperty(FORMAT) MediaFormat format) {
+    // Since we have no clue what this is, we need to revisit
+    // the use before making it required, which it apparently is.
+    @JsonProperty(DISSEMINATION_CHANNEL)
+    private final String disseminationChannel;
+
+    @JsonProperty(PART_OF)
+    private final SeriesEpisode partOf;
+
+
+    public MediaContribution(@JsonProperty(MEDIUM) MediaSubType medium,
+                             @JsonProperty(FORMAT) MediaFormat format,
+                             @JsonProperty(DISSEMINATION_CHANNEL) String disseminationChannel,
+                             @JsonProperty(PART_OF) SeriesEpisode partOf) {
         this.medium = medium;
         this.format = format;
+        this.disseminationChannel = disseminationChannel;
+        this.partOf = partOf;
     }
 
     public MediaSubType getMedium() {
@@ -32,30 +49,8 @@ public class MediaContribution implements PublicationContext {
         return format;
     }
 
-    public static final class Builder {
-
-        private MediaSubType medium;
-        private MediaFormat format;
-
-        public Builder withMedium(MediaSubType medium) {
-            this.medium = medium;
-            return this;
-        }
-
-        public Builder withFormat(MediaFormat format) {
-            this.format = format;
-            return this;
-        }
-
-        public MediaContribution build() {
-            return new MediaContribution(medium, format);
-        }
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getMedium(), getFormat());
+    public String getDisseminationChannel() {
+        return disseminationChannel;
     }
 
     @JacocoGenerated
@@ -69,6 +64,52 @@ public class MediaContribution implements PublicationContext {
         }
         MediaContribution that = (MediaContribution) o;
         return Objects.equals(getMedium(), that.getMedium())
-            && Objects.equals(getFormat(), that.getFormat());
+                && getFormat() == that.getFormat()
+                && Objects.equals(getDisseminationChannel(), that.getDisseminationChannel())
+                && Objects.equals(partOf, that.partOf);
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMedium(), getFormat(), getDisseminationChannel(), partOf);
+    }
+
+
+    public static final class Builder {
+        private MediaSubType medium;
+        private MediaFormat format;
+        // Since we have no clue what this is, we need to revisit
+        // the use before making it required, which it apparently is.
+        private String disseminationChannel;
+        private SeriesEpisode partOf;
+
+        public Builder() {
+        }
+
+
+        public Builder withMedium(MediaSubType medium) {
+            this.medium = medium;
+            return this;
+        }
+
+        public Builder withFormat(MediaFormat format) {
+            this.format = format;
+            return this;
+        }
+
+        public Builder withDisseminationChannel(String disseminationChannel) {
+            this.disseminationChannel = disseminationChannel;
+            return this;
+        }
+
+        public Builder withPartOf(SeriesEpisode partOf) {
+            this.partOf = partOf;
+            return this;
+        }
+
+        public MediaContribution build() {
+            return new MediaContribution(medium, format, disseminationChannel, partOf);
+        }
     }
 }
