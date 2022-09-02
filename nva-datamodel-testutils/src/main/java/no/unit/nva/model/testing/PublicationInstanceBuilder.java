@@ -269,7 +269,8 @@ public final class PublicationInstanceBuilder {
                            randomTime(),
                            randomString(),
                            randomString(),
-                           randomConcertProgramme());
+                           randomConcertProgramme(),
+                           randomBoolean());
     }
 
     private static List<MusicalWorkPerformance> randomConcertProgramme() {

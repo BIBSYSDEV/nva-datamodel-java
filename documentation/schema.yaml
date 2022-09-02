@@ -55,9 +55,9 @@ schema:
       items:
         type: string
         format: uri
-    owner:
-      type: string
     modelVersion:
+      type: string
+    owner:
       type: string
     type:
       type: string
@@ -493,6 +493,8 @@ referencedSchemas:
           type: array
           items:
             $ref: '#/components/schemas/MusicalWorkPerformance'
+        partOfSeries:
+          type: boolean
   ConferenceAbstract:
     required:
     - type
@@ -1679,9 +1681,9 @@ referencedSchemas:
         items:
           type: string
           format: uri
-      owner:
-        type: string
       modelVersion:
+        type: string
+      owner:
         type: string
       type:
         type: string
@@ -1716,10 +1718,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
       pages:
         $ref: '#/components/schemas/Pages'
+      peerReviewed:
+        type: boolean
       type:
         type: string
     discriminator:

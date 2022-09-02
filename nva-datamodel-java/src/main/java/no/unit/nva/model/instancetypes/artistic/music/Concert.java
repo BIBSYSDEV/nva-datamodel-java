@@ -11,34 +11,39 @@ import nva.commons.core.JacocoGenerated;
 
 public class Concert implements MusicPerformanceManifestation {
 
-    public static final String PLACE = "place";
-    public static final String TIME = "time";
-    public static final String EXTENT = "extent";
-    public static final String DESCRIPTION = "description";
-    public static final String CONCERT_PROGRAMME = "concertProgramme";
+    public static final String PLACE_FIELD = "place";
+    public static final String TIME_FIELD = "time";
+    public static final String EXTENT_FIELD = "extent";
+    public static final String DESCRIPTION_FIELD = "description";
+    public static final String CONCERT_PROGRAMME_FIELD = "concertProgramme";
+    public static final String PART_OF_SERIES_FIELD = "partOfSeries";
 
-    @JsonProperty(PLACE)
+    @JsonProperty(PLACE_FIELD)
     private final UnconfirmedPlace place;
-    @JsonProperty(TIME)
+    @JsonProperty(TIME_FIELD)
     private final Time time;
-    @JsonProperty(EXTENT)
+    @JsonProperty(EXTENT_FIELD)
     private final String extent;
-    @JsonProperty(DESCRIPTION)
+    @JsonProperty(DESCRIPTION_FIELD)
     private final String description;
-    @JsonProperty(CONCERT_PROGRAMME)
+    @JsonProperty(CONCERT_PROGRAMME_FIELD)
     private final List<MusicalWorkPerformance> concertProgramme;
+    @JsonProperty(PART_OF_SERIES_FIELD)
+    private final boolean partOfSeries;
 
     @JsonCreator
-    public Concert(@JsonProperty(PLACE) UnconfirmedPlace place,
-                   @JsonProperty(TIME) Time time,
-                   @JsonProperty(EXTENT) String extent,
-                   @JsonProperty(DESCRIPTION) String description,
-                   @JsonProperty(CONCERT_PROGRAMME) List<MusicalWorkPerformance> concertProgramme) {
+    public Concert(@JsonProperty(PLACE_FIELD) UnconfirmedPlace place,
+                   @JsonProperty(TIME_FIELD) Time time,
+                   @JsonProperty(EXTENT_FIELD) String extent,
+                   @JsonProperty(DESCRIPTION_FIELD) String description,
+                   @JsonProperty(CONCERT_PROGRAMME_FIELD) List<MusicalWorkPerformance> concertProgramme,
+                   @JsonProperty(PART_OF_SERIES_FIELD) boolean partOfSeries) {
         this.place = place;
         this.time = time;
         this.extent = extent;
         this.description = description;
         this.concertProgramme = nullListAsEmpty(concertProgramme);
+        this.partOfSeries = partOfSeries;
     }
 
     public UnconfirmedPlace getPlace() {
@@ -61,14 +66,12 @@ public class Concert implements MusicPerformanceManifestation {
         return concertProgramme;
     }
 
-    @Override
-    @JacocoGenerated
-    public int hashCode() {
-        return Objects.hash(getPlace(), getTime(), getExtent(), getDescription(), getConcertProgramme());
+    public boolean isPartOfSeries() {
+        return partOfSeries;
     }
 
-    @Override
     @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -77,10 +80,18 @@ public class Concert implements MusicPerformanceManifestation {
             return false;
         }
         Concert concert = (Concert) o;
-        return Objects.equals(getPlace(), concert.getPlace())
-               && Objects.equals(getTime(), concert.getTime())
-               && Objects.equals(getExtent(), concert.getExtent())
-               && Objects.equals(getDescription(), concert.getDescription())
-               && Objects.equals(getConcertProgramme(), concert.getConcertProgramme());
+        return isPartOfSeries() == concert.isPartOfSeries()
+                && Objects.equals(getPlace(), concert.getPlace())
+                && Objects.equals(getTime(), concert.getTime())
+                && Objects.equals(getExtent(), concert.getExtent())
+                && Objects.equals(getDescription(), concert.getDescription())
+                && Objects.equals(getConcertProgramme(), concert.getConcertProgramme());
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPlace(), getTime(), getExtent(), getDescription(),
+                getConcertProgramme(), isPartOfSeries());
     }
 }
