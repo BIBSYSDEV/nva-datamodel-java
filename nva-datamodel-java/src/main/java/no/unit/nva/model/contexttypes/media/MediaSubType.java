@@ -1,27 +1,57 @@
 package no.unit.nva.model.contexttypes.media;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import nva.commons.core.JacocoGenerated;
 
-public enum MediaSubType {
+import java.util.Objects;
 
-    JOURNAL("Journal"),
-    RADIO("Radio"),
-    TV("TV"),
-    INTERNET("Internet"),
-    OTHER("Other");
+public class MediaSubType {
+    public static final String TYPE = "type";
+    @JsonProperty(TYPE)
+    private final MediaSubTypeEnum type;
 
-    private String value;
-
-    MediaSubType(String value) {
-        this.value = value;
+    public static MediaSubType createOther(String description) {
+        return new MediaSubTypeOther(MediaSubTypeEnum.OTHER, description);
     }
 
-    @JsonValue
-    public String getValue() {
-        return value;
+    @JsonCreator
+    public static MediaSubType fromJson(@JsonProperty(TYPE) MediaSubTypeEnum type,
+                                        @JsonProperty("description") String description) {
+        if (MediaSubTypeEnum.OTHER.equals(type)) {
+            return createOther(description);
+        }
+        return new MediaSubType(type);
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public static MediaSubType create(MediaSubTypeEnum type) {
+        return new MediaSubType(type);
+    }
+
+    protected MediaSubType(MediaSubTypeEnum type) {
+        this.type = type;
+    }
+
+    public MediaSubTypeEnum getType() {
+        return type;
+    }
+
+    @JacocoGenerated
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MediaSubType)) {
+            return false;
+        }
+        MediaSubType that = (MediaSubType) o;
+        return getType() == that.getType();
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getType());
     }
 }
