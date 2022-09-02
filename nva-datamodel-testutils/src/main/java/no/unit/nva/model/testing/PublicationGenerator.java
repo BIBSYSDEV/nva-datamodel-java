@@ -7,7 +7,6 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import com.github.javafaker.Faker;
 import java.net.URI;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -17,9 +16,6 @@ import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
-import no.unit.nva.model.DoiRequest;
-import no.unit.nva.model.DoiRequestMessage;
-import no.unit.nva.model.DoiRequestStatus;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Grant;
 import no.unit.nva.model.Organization;
@@ -83,7 +79,6 @@ public final class PublicationGenerator {
             .withCreatedDate(randomInstant())
             .withEntityDescription(randomEntityDescription(publicationInstanceClass))
             .withFileSet(FileSetGenerator.randomFileSet())
-            .withDoiRequest(randomDoiRequest())
             .build();
 
         assertThat(publication, doesNotHaveEmptyValues());
@@ -93,26 +88,7 @@ public final class PublicationGenerator {
     private static ResourceOwner randomResourceOwner() {
         return new ResourceOwner(randomString(),randomUri());
     }
-
-    public static DoiRequest randomDoiRequest() {
-        Instant creationDate = randomInstant();
-        return new DoiRequest.Builder()
-            .withStatus(randomArrayElement(DoiRequestStatus.values()))
-            .withCreatedDate(creationDate)
-            .withModifiedDate(randomInstant(creationDate))
-            .withMessages(randomDoiRequestMessages(creationDate))
-            .build();
-    }
-
-    public static List<DoiRequestMessage> randomDoiRequestMessages(Instant creationDate) {
-        var message = new DoiRequestMessage.Builder()
-            .withAuthor(randomString())
-            .withText(randomString())
-            .withTimestamp(randomInstant(creationDate))
-            .build();
-        return List.of(message);
-    }
-
+    
     public static EntityDescription randomEntityDescription(Class<?> publicationInstanceClass) {
         return EntityDescriptionBuilder.randomEntityDescription(publicationInstanceClass);
     }
