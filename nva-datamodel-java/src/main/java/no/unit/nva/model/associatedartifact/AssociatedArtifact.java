@@ -7,8 +7,8 @@ import java.net.URI;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(name = "File", value = File.class),
-        @JsonSubTypes.Type(name = "Link", value = Link.class)
+    @JsonSubTypes.Type(name = "File", value = File.class),
+    @JsonSubTypes.Type(name = "Link", value = Link.class)
 })
 public interface AssociatedArtifact {
     URI getId();
