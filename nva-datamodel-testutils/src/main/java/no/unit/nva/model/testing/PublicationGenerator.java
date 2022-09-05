@@ -79,6 +79,7 @@ public final class PublicationGenerator {
             .withCreatedDate(randomInstant())
             .withEntityDescription(randomEntityDescription(publicationInstanceClass))
             .withFileSet(FileSetGenerator.randomFileSet())
+            .withAssociatedArtifacts(AssociatedArtifactListGenerator.random())
             .build();
 
         assertThat(publication, doesNotHaveEmptyValues());

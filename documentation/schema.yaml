@@ -55,9 +55,11 @@ schema:
       items:
         type: string
         format: uri
-    modelVersion:
-      type: string
+    associatedArtifacts:
+      $ref: '#/components/schemas/AssociatedArtifactCollection'
     owner:
+      type: string
+    modelVersion:
       type: string
     type:
       type: string
@@ -217,6 +219,43 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+  AssociatedArtifact:
+    required:
+    - type
+    type: object
+    properties:
+      id:
+        type: string
+        format: uri
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  AssociatedArtifactCollection:
+    required:
+    - type
+    type: object
+    properties:
+      artifacts:
+        type: array
+        items:
+          $ref: '#/components/schemas/AssociatedArtifact'
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  AssociatedArtifactList:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifactCollection'
+    - type: object
+      properties:
+        type:
+          type: string
   AudioVisualPublication:
     required:
     - type
@@ -823,34 +862,17 @@ referencedSchemas:
         type:
           type: string
   File:
+    required:
+    - type
     type: object
-    properties:
-      type:
-        type: string
-        enum:
-        - File
-        - PublishedFile
-        - UnpublishedFile
-        - UnpublishableFile
-      identifier:
-        type: string
-        format: uuid
-      name:
-        type: string
-      mimeType:
-        type: string
-      size:
-        type: integer
-        format: int64
-      license:
-        $ref: '#/components/schemas/License'
-      administrativeAgreement:
-        type: boolean
-      publisherAuthority:
-        type: boolean
-      embargoDate:
-        type: string
-        format: date-time
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifact'
+    - type: object
+      properties:
+        type:
+          type: string
   FileSet:
     required:
     - type
@@ -1135,6 +1157,22 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Link:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifact'
+    - type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
   MediaBlogPost:
     required:
     - type
@@ -1429,6 +1467,18 @@ referencedSchemas:
         type: string
       premiere:
         type: boolean
+  NullAssociatedArtifactList:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifactCollection'
+    - type: object
+      properties:
+        type:
+          type: string
   NullPages:
     required:
     - type
@@ -1681,9 +1731,11 @@ referencedSchemas:
         items:
           type: string
           format: uri
-      modelVersion:
-        type: string
+      associatedArtifacts:
+        $ref: '#/components/schemas/AssociatedArtifactCollection'
       owner:
+        type: string
+      modelVersion:
         type: string
       type:
         type: string
@@ -1718,10 +1770,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:

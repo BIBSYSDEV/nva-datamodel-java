@@ -20,6 +20,7 @@ import no.unit.nva.WithMetadata;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
+import no.unit.nva.model.associatedartifact.AssociatedArtifactCollection;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
 
@@ -32,8 +33,6 @@ public class Publication
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
         PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, PublicationStatus.DRAFT_FOR_DELETION)
     );
-    public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
-        "You must initiate creation of a DoiRequest before you can update it.";
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -51,6 +50,8 @@ public class Publication
     private List<ResearchProject> projects;
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
+
+    private AssociatedArtifactCollection associatedArtifacts;
     
     public Publication() {
     
@@ -254,7 +255,8 @@ public class Publication
             .withFileSet(getFileSet())
             .withProjects(getProjects())
             .withAdditionalIdentifiers(getAdditionalIdentifiers())
-            .withSubjects(getSubjects());
+            .withSubjects(getSubjects())
+            .withAssociatedArtifacts(getAssociatedArtifacts());
     }
     
     /**
@@ -317,95 +319,109 @@ public class Publication
             throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
         }
     }
-    
+
+    public AssociatedArtifactCollection getAssociatedArtifacts() {
+        return associatedArtifacts;
+    }
+
+    public void setAssociatedArtifacts(AssociatedArtifactCollection associatedArtifacts) {
+        this.associatedArtifacts = associatedArtifacts;
+    }
+
+
     public static final class Builder {
-        
         private final Publication publication;
-        
+
         public Builder() {
             publication = new Publication();
         }
-        
+
+
         public Builder withIdentifier(SortableIdentifier identifier) {
             publication.setIdentifier(identifier);
             return this;
         }
-        
+
         public Builder withStatus(PublicationStatus status) {
             publication.setStatus(status);
             return this;
         }
-        
+
+        public Builder withResourceOwner(ResourceOwner resourceOwner) {
+            publication.setResourceOwner(resourceOwner);
+            return this;
+        }
+
         public Builder withPublisher(Organization publisher) {
             publication.setPublisher(publisher);
             return this;
         }
-        
+
         public Builder withCreatedDate(Instant createdDate) {
             publication.setCreatedDate(createdDate);
             return this;
         }
-        
+
         public Builder withModifiedDate(Instant modifiedDate) {
             publication.setModifiedDate(modifiedDate);
             return this;
         }
-        
+
         public Builder withPublishedDate(Instant publishedDate) {
             publication.setPublishedDate(publishedDate);
             return this;
         }
-        
+
         public Builder withIndexedDate(Instant indexedDate) {
             publication.setIndexedDate(indexedDate);
             return this;
         }
-        
+
         public Builder withHandle(URI handle) {
             publication.setHandle(handle);
             return this;
         }
-        
+
         public Builder withDoi(URI doi) {
             publication.setDoi(doi);
             return this;
         }
-        
+
         public Builder withLink(URI link) {
             publication.setLink(link);
             return this;
         }
-        
+
         public Builder withEntityDescription(EntityDescription entityDescription) {
             publication.setEntityDescription(entityDescription);
             return this;
         }
-        
+
         public Builder withFileSet(FileSet fileSet) {
             publication.setFileSet(fileSet);
             return this;
         }
-        
+
         public Builder withProjects(List<ResearchProject> projects) {
             publication.setProjects(projects);
             return this;
         }
-        
+
         public Builder withAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
             publication.setAdditionalIdentifiers(additionalIdentifiers);
             return this;
         }
-        
+
         public Builder withSubjects(List<URI> subjects) {
             publication.setSubjects(subjects);
             return this;
         }
-        
-        public Builder withResourceOwner(ResourceOwner randomResourceOwner) {
-            publication.setResourceOwner(randomResourceOwner);
+
+        public Builder withAssociatedArtifacts(AssociatedArtifactCollection associatedArtifacts) {
+            publication.setAssociatedArtifacts(associatedArtifacts);
             return this;
         }
-        
+
         public Publication build() {
             return publication;
         }
