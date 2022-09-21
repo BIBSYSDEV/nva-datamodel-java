@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
@@ -95,6 +96,7 @@ import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
 import no.unit.nva.model.instancetypes.researchdata.DataSet;
 import no.unit.nva.model.instancetypes.researchdata.GeographicalDescription;
+import no.unit.nva.model.instancetypes.researchdata.ReferencedBy;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -234,8 +236,9 @@ public final class PublicationInstanceBuilder {
 
     private static DataSet generateDataSet() {
         var geographicalCoverage = new GeographicalDescription(randomString());
+        var referencedUri = new ReferencedBy(Set.of(randomUri()));
         return new DataSet(randomBoolean(),
-                geographicalCoverage, List.of(randomUri()), List.of(randomUri()), List.of(randomUri()));
+                geographicalCoverage, referencedUri, List.of(randomUri()), List.of(randomUri()));
     }
 
     private static DataManagementPlan generateDataManagementPlan() {

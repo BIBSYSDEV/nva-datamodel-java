@@ -22,15 +22,20 @@ public class DataSet extends NonPeerReviewed<NullPages> {
     public static final String REFERENCED_BY_FIELD = "referencedBy";
     public static final String RELATED_FIELD = "related";
     public static final String COMPLIES_WITH_FIELD = "compliesWith";
-    @JsonProperty(USER_AGREES_TO_TERMS_AND_CONDITIONS_FIELD) private final boolean userAgreesToTermsAndConditions;
-    @JsonProperty(GEOGRAPHICAL_COVERAGE_FIELD) private final GeographicalDescription geographicalCoverage;
-    @JsonProperty(REFERENCED_BY_FIELD) private final Set<URI> referencedBy;
-    @JsonProperty(RELATED_FIELD) private final Set<URI> related;
-    @JsonProperty(COMPLIES_WITH_FIELD) private final Set<URI> compliesWith;
+    @JsonProperty(USER_AGREES_TO_TERMS_AND_CONDITIONS_FIELD)
+    private final boolean userAgreesToTermsAndConditions;
+    @JsonProperty(GEOGRAPHICAL_COVERAGE_FIELD)
+    private final GeographicalDescription geographicalCoverage;
+    @JsonProperty(REFERENCED_BY_FIELD)
+    private final Set<URI> referencedBy;
+    @JsonProperty(RELATED_FIELD)
+    private final Set<URI> related;
+    @JsonProperty(COMPLIES_WITH_FIELD)
+    private final Set<URI> compliesWith;
 
     public DataSet(@JsonProperty(USER_AGREES_TO_TERMS_AND_CONDITIONS_FIELD) boolean userAgreesToTermsAndConditions,
                    @JsonProperty(GEOGRAPHICAL_COVERAGE_FIELD) GeographicalDescription geographicalCoverage,
-                   @JsonProperty(REFERENCED_BY_FIELD) Collection<URI> referencedBy,
+                   @JsonProperty(REFERENCED_BY_FIELD) ReferencedBy referencedBy,
                    @JsonProperty(RELATED_FIELD) Collection<URI> related,
                    @JsonProperty(COMPLIES_WITH_FIELD) Collection<URI> compliesWith) {
         super();

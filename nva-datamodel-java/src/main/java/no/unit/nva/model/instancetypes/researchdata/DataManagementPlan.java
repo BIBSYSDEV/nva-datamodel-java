@@ -29,9 +29,9 @@ public class DataManagementPlan extends NonPeerReviewedMonograph {
     private final Set<URI> related;
 
     /**
-     * Constructor for DataManagementPlan (DMP)
+     * Constructor for DataManagementPlan (DMP).
      * @param publisher The URI of the DMP publisher (may or may not be the same as the Publication publisher).
-     * @param related A collection of URIs referencing things covered by the DMP
+     * @param related A collection of URIs referencing things covered by the DMP.
      * @param pages The pages description for the DMP document.
      */
     public DataManagementPlan(@JsonProperty(PUBLISHER_FIELD) URI publisher,
