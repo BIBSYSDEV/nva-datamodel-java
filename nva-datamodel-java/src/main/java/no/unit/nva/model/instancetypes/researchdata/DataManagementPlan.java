@@ -7,7 +7,6 @@ import no.unit.nva.model.pages.MonographPages;
 import nva.commons.core.JacocoGenerated;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -35,7 +34,7 @@ public class DataManagementPlan extends NonPeerReviewedMonograph {
      * @param pages The pages description for the DMP document.
      */
     public DataManagementPlan(@JsonProperty(PUBLISHER_FIELD) URI publisher,
-                              @JsonProperty(RELATED_FIELD) Collection<URI> related,
+                              @JsonProperty(RELATED_FIELD) RelatedUris related,
                               @JsonProperty(PAGES_FIELD) MonographPages pages) {
         super(pages);
         this.publisher = publisher;

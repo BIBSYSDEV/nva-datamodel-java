@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.net.URI;
 import java.util.Set;
 
-public class ReferencedBy extends UriSet {
+public class ReferencedByUris extends UriSet {
     @JsonCreator
-    public ReferencedBy(Set<URI> uris) {
+    public ReferencedByUris(Set<URI> uris) {
         super(uris);
     }
 }

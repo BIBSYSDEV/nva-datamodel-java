@@ -7,7 +7,6 @@ import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -35,12 +34,12 @@ public class DataSet extends NonPeerReviewed<NullPages> {
 
     public DataSet(@JsonProperty(USER_AGREES_TO_TERMS_AND_CONDITIONS_FIELD) boolean userAgreesToTermsAndConditions,
                    @JsonProperty(GEOGRAPHICAL_COVERAGE_FIELD) GeographicalDescription geographicalCoverage,
-                   @JsonProperty(REFERENCED_BY_FIELD) ReferencedBy referencedBy,
-                   @JsonProperty(RELATED_FIELD) Collection<URI> related,
-                   @JsonProperty(COMPLIES_WITH_FIELD) Collection<URI> compliesWith) {
+                   @JsonProperty(REFERENCED_BY_FIELD) ReferencedByUris referencedByUris,
+                   @JsonProperty(RELATED_FIELD) RelatedUris related,
+                   @JsonProperty(COMPLIES_WITH_FIELD) CompliesWithUris compliesWith) {
         super();
         this.geographicalCoverage = geographicalCoverage;
-        this.referencedBy = nonNull(referencedBy) ? new HashSet<>(referencedBy) : emptySet();
+        this.referencedBy = nonNull(referencedByUris) ? new HashSet<>(referencedByUris) : emptySet();
         this.related = nonNull(related) ? new HashSet<>(related) : emptySet();
         this.compliesWith = nonNull(compliesWith) ? new HashSet<>(compliesWith) : emptySet();
         this.userAgreesToTermsAndConditions = userAgreesToTermsAndConditions;

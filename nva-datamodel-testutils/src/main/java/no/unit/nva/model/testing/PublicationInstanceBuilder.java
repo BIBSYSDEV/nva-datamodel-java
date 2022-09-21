@@ -93,10 +93,12 @@ import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
+import no.unit.nva.model.instancetypes.researchdata.CompliesWithUris;
 import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
 import no.unit.nva.model.instancetypes.researchdata.DataSet;
 import no.unit.nva.model.instancetypes.researchdata.GeographicalDescription;
-import no.unit.nva.model.instancetypes.researchdata.ReferencedBy;
+import no.unit.nva.model.instancetypes.researchdata.ReferencedByUris;
+import no.unit.nva.model.instancetypes.researchdata.RelatedUris;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -236,13 +238,16 @@ public final class PublicationInstanceBuilder {
 
     private static DataSet generateDataSet() {
         var geographicalCoverage = new GeographicalDescription(randomString());
-        var referencedUri = new ReferencedBy(Set.of(randomUri()));
+        var referencedUri = new ReferencedByUris(Set.of(randomUri()));
+        var relatedUris = new RelatedUris(Set.of(randomUri()));
+        var compliesWithUris = new CompliesWithUris(Set.of(randomUri()));
         return new DataSet(randomBoolean(),
-                geographicalCoverage, referencedUri, List.of(randomUri()), List.of(randomUri()));
+                geographicalCoverage, referencedUri, relatedUris, compliesWithUris);
     }
 
     private static DataManagementPlan generateDataManagementPlan() {
-        return new DataManagementPlan(randomUri(), List.of(randomUri()), randomMonographPages());
+        var relatedUris = new RelatedUris(Set.of(randomUri()));
+        return new DataManagementPlan(randomUri(), relatedUris, randomMonographPages());
     }
 
     private static MusicPerformance generateMusicPerformance() {
