@@ -1,0 +1,146 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "DRAFT",
+  "resourceOwner" : {
+    "owner" : "kdDa2Xlg7n1t1",
+    "ownerAffiliation" : "https://www.example.org/animised"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/quitemporibus",
+    "labels" : {
+      "wBrSvs49XLMOxqu4cb" : "Mj2ZLLZoZg6gT"
+    }
+  },
+  "createdDate" : "2020-09-23T09:51:23.044996ZZ",
+  "modifiedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "publishedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "indexedDate" : "2020-09-23T09:51:23.044996ZZ",
+  "handle" : "https://www.example.org/voluptatemrepellat",
+  "doi" : "https://doi.org/10.1234/veniam",
+  "link" : "https://www.example.org/inventoreillum",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "kWVmOpKju3K",
+    "alternativeTitles" : {
+      "es" : "edbE8rK4RAYyp"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/por",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "F8KiWWXehbPFKVDZ",
+      "month" : "m9G9mHGAGRhbM",
+      "day" : "0C3CUNiHcGV9"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/myuVTkH2cCc4jbMSc2",
+        "name" : "IuGJXq4vi4jZH7OZUF",
+        "nameType" : "Organizational",
+        "orcId" : "6ycsC9Jg8U"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/XQiMCRx1vC",
+        "labels" : {
+          "ktOojK8xMVpb" : "QwQIx9poHNjgd3qsM"
+        }
+      } ],
+      "role" : "Other",
+      "sequence" : 9,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/0xifN5Fr9f4RCks",
+        "name" : "41fOJF5kJhYz3LQ",
+        "nameType" : "Organizational",
+        "orcId" : "wHfHjEAOuGMhXcZUj2J"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/9uFnnHo3SF9p",
+        "labels" : {
+          "VFkRcsAqi1Wp" : "QZ0FiO8gM2WNY2B"
+        }
+      } ],
+      "role" : "ProjectManager",
+      "sequence" : 2,
+      "correspondingAuthor" : false
+    } ],
+    "npiSubjectHeading" : "3pbfjO6QBXQhk1rfO",
+    "tags" : [ "H20slvblehgBs" ],
+    "description" : "0kcRHHe3EPV4wC",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "ResearchData"
+      },
+      "doi" : "https://www.example.com/zjIRtYj0CObw2o0z",
+      "publicationInstance" : {
+        "type" : "DataSet",
+        "userAgreesToTermsAndConditions" : false,
+        "geographicalCoverage" : "tq2sLIZ78xmxchnXh",
+        "referencedBy" : [ "https://www.example.com/Zygmyilibp5" ],
+        "related" : [ "https://www.example.com/11CCU0JkfHjCctPqiX" ],
+        "compliesWith" : [ "https://www.example.com/IsYXHhfF0JyLPg" ],
+        "peerReviewed" : false,
+        "pages" : {
+          "type" : "NullPages"
+        }
+      }
+    },
+    "metadataSource" : "https://www.example.com/YhY1ZoalHm6",
+    "abstract" : "QqfD8uAN1Wgt5dnM23"
+  },
+  "fileSet" : {
+    "type" : "FileSet",
+    "files" : [ {
+      "type" : "PublishedFile",
+      "identifier" : "5032710d-a326-43d3-a8fb-57a451873c78",
+      "name" : "QdUmM3JY8P1ZE4Lh",
+      "mimeType" : "rYXCqsOTQtVoXk4a",
+      "size" : 714356013,
+      "license" : {
+        "type" : "License",
+        "identifier" : "r7NnLLA4915vPVfO6HL",
+        "labels" : {
+          "MTBc1l6i8gQpCq3" : "hsIBglIr1lfGI6xixR"
+        },
+        "link" : "https://www.example.com/7G173Rz24sP05"
+      },
+      "administrativeAgreement" : false,
+      "publisherAuthority" : false,
+      "embargoDate" : "2020-09-23T09:51:23.044996ZZ"
+    } ]
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/quovoluptatum",
+    "name" : "vLQ6NB3vYe752mjLj13",
+    "grants" : [ {
+      "type" : "Grant",
+      "source" : "D5VIEAvzBOh26WF2B4",
+      "id" : "hlHESLV5tHpgylpG"
+    } ],
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "2020-09-23T09:51:23.044996ZZ",
+      "approvedBy" : "NMA",
+      "approvalStatus" : "DECLINED",
+      "applicationCode" : "eQzSNmt0bxmzD"
+    } ]
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/etet" ],
+  "owner" : "kdDa2Xlg7n1t1",
+  "modelVersion" : "0.18.3"
+}

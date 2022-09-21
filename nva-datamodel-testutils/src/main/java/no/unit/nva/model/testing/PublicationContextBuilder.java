@@ -98,6 +98,7 @@ public class PublicationContextBuilder {
             case "MediaReaderOpinion":
                 return randomMediaContribution();
             case "DataManagementPlan":
+            case "DataSet":
                 return randomResearchData();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + className);

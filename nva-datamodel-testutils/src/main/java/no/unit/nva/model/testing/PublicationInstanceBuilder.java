@@ -93,6 +93,7 @@ import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
+import no.unit.nva.model.instancetypes.researchdata.DataSet;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -205,6 +206,8 @@ public final class PublicationInstanceBuilder {
                 return generateMusicPerformance();
             case "DataManagementPlan":
                 return generateDataManagementPlan();
+            case "DataSet":
+                return generateDataSet();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
@@ -228,7 +231,11 @@ public final class PublicationInstanceBuilder {
         return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
     }
 
-    private static PublicationInstance<? extends Pages> generateDataManagementPlan() {
+    private static DataSet generateDataSet() {
+        return new DataSet(randomBoolean(),
+                randomString(), List.of(randomUri()), List.of(randomUri()), List.of(randomUri()));
+    }
+    private static DataManagementPlan generateDataManagementPlan() {
         return new DataManagementPlan(randomUri(), List.of(randomUri()), randomMonographPages());
     }
 

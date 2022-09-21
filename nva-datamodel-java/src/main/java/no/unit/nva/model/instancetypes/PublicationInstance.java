@@ -45,6 +45,7 @@ import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
 import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
+import no.unit.nva.model.instancetypes.researchdata.DataSet;
 import no.unit.nva.model.pages.Pages;
 
 import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGES_FIELD;
@@ -91,7 +92,8 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "MediaPodcast", value = MediaPodcast.class),
     @JsonSubTypes.Type(name = "MediaReaderOpinion", value = MediaReaderOpinion.class),
     @JsonSubTypes.Type(name = "MusicPerformance", value = MusicPerformance.class),
-    @JsonSubTypes.Type(name = "DataManagementPlan", value = DataManagementPlan.class)
+    @JsonSubTypes.Type(name = "DataManagementPlan", value = DataManagementPlan.class),
+    @JsonSubTypes.Type(name = "DataSet", value = DataSet.class)
 })
 public interface PublicationInstance<P extends Pages> {
 
