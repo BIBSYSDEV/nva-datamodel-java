@@ -7,9 +7,13 @@ import no.unit.nva.model.pages.MonographPages;
 import nva.commons.core.JacocoGenerated;
 
 import java.net.URI;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import static java.util.Objects.nonNull;
 import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGES_FIELD;
 
 /**
@@ -22,7 +26,7 @@ public class DataManagementPlan extends NonPeerReviewedMonograph {
     @JsonProperty(PUBLISHER_FIELD)
     private final URI publisher;
     @JsonProperty(RELATED_FIELD)
-    private final List<URI> related;
+    private final Set<URI> related;
 
     /**
      * Constructor for DataManagementPlan (DMP)
@@ -30,18 +34,18 @@ public class DataManagementPlan extends NonPeerReviewedMonograph {
      * @param related A collection of URIs referencing things covered by the DMP
      */
     public DataManagementPlan(@JsonProperty(PUBLISHER_FIELD) URI publisher,
-                              @JsonProperty(RELATED_FIELD) List<URI> related,
+                              @JsonProperty(RELATED_FIELD) Collection<URI> related,
                               @JsonProperty(PAGES_FIELD) MonographPages pages) {
         super(pages);
         this.publisher = publisher;
-        this.related = related;
+        this.related = nonNull(related) ? new HashSet<>(related) : Collections.emptySet();
     }
 
     public URI getPublisher() {
         return publisher;
     }
 
-    public List<URI> getRelated() {
+    public Set<URI> getRelated() {
         return related;
     }
 
