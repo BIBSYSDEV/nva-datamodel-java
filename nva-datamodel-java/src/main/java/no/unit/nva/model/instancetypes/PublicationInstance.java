@@ -1,6 +1,7 @@
 package no.unit.nva.model.instancetypes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
@@ -43,7 +44,10 @@ import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
+import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
 import no.unit.nva.model.pages.Pages;
+
+import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGES_FIELD;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -86,10 +90,13 @@ import no.unit.nva.model.pages.Pages;
     @JsonSubTypes.Type(name = "MediaParticipationInRadioOrTv", value = MediaParticipationInRadioOrTv.class),
     @JsonSubTypes.Type(name = "MediaPodcast", value = MediaPodcast.class),
     @JsonSubTypes.Type(name = "MediaReaderOpinion", value = MediaReaderOpinion.class),
-    @JsonSubTypes.Type(name = "MusicPerformance", value = MusicPerformance.class)
+    @JsonSubTypes.Type(name = "MusicPerformance", value = MusicPerformance.class),
+    @JsonSubTypes.Type(name = "DataManagementPlan", value = DataManagementPlan.class)
 })
 public interface PublicationInstance<P extends Pages> {
 
+
+    @JsonProperty(PAGES_FIELD)
     P getPages();
 
     void setPages(P pages);
@@ -99,5 +106,9 @@ public interface PublicationInstance<P extends Pages> {
     @JsonIgnore
     default String getInstanceType() {
         return this.getClass().getSimpleName();
+    }
+
+    class Constants {
+        public static final String  PAGES_FIELD = "pages";
     }
 }

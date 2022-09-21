@@ -26,6 +26,7 @@ import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.PublishingHouse;
 import no.unit.nva.model.contexttypes.Report;
+import no.unit.nva.model.contexttypes.ResearchData;
 import no.unit.nva.model.contexttypes.Series;
 import no.unit.nva.model.contexttypes.media.MediaFormat;
 import no.unit.nva.model.contexttypes.media.MediaSubType;
@@ -96,9 +97,15 @@ public class PublicationContextBuilder {
             case "MediaPodcast":
             case "MediaReaderOpinion":
                 return randomMediaContribution();
+            case "DataManagementPlan":
+                return randomResearchData();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + className);
         }
+    }
+
+    private static ResearchData randomResearchData() {
+        return new ResearchData();
     }
 
     private static MediaContribution randomMediaContribution() {
