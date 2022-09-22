@@ -95,7 +95,8 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "MusicPerformance", value = MusicPerformance.class),
     @JsonSubTypes.Type(name = "DataManagementPlan", value = DataManagementPlan.class),
     @JsonSubTypes.Type(name = "DataSet", value = DataSet.class),
-    @JsonSubTypes.Type(name = "VisualArts", value = VisualArts.class)
+    @JsonSubTypes.Type(name = "VisualArts", value = VisualArts.class),
+    @JsonSubTypes.Type(name = "Map", value = Map.class)
 })
 public interface PublicationInstance<P extends Pages> {
 

@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
+import no.unit.nva.model.instancetypes.Map;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.architecture.ArchitectureOutput;
@@ -219,6 +220,8 @@ public final class PublicationInstanceBuilder {
                 return generateDataManagementPlan();
             case "DataSet":
                 return generateDataSet();
+            case "Map":
+                return generateMap();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
@@ -254,6 +257,10 @@ public final class PublicationInstanceBuilder {
     private static DataManagementPlan generateDataManagementPlan() {
         var relatedUris = new RelatedUris(Set.of(randomUri()));
         return new DataManagementPlan(relatedUris, randomMonographPages());
+    }
+
+    private static Map generateMap() {
+        return new Map(randomString(), randomMonographPages());
     }
 
     private static MusicPerformance generateMusicPerformance() {

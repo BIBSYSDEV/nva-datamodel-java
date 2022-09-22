@@ -20,6 +20,7 @@ import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Event;
+import no.unit.nva.model.contexttypes.GeographicalContent;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.MediaContribution;
 import no.unit.nva.model.contexttypes.PublicationContext;
@@ -101,9 +102,15 @@ public class PublicationContextBuilder {
             case "DataManagementPlan":
             case "DataSet":
                 return randomResearchData();
+            case "Map":
+                return randomGeographicalContent();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + className);
         }
+    }
+
+    private static GeographicalContent randomGeographicalContent() {
+        return new GeographicalContent(randomPublishingHouse());
     }
 
     private static ResearchData randomResearchData() {

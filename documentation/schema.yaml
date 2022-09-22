@@ -920,6 +920,20 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  GeographicalContent:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        publisher:
+          $ref: '#/components/schemas/PublishingHouse'
+        type:
+          type: string
   GeographicalDescription:
     required:
     - type
@@ -1202,6 +1216,22 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Map:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        description:
+          type: string
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
   MediaBlogPost:
     required:
     - type
