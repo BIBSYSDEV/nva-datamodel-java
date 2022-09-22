@@ -1,22 +1,42 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nva.commons.core.JacocoGenerated;
+
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ResearchData implements PublicationContext {
 
-    private static final int STATIC_VALUE_FOR_CLASS_WITH_NO_FIELDS = 1;
+    public static final String PUBLISHER_FIELD = "publisher";
+    @JsonProperty(PUBLISHER_FIELD)
+    private final PublishingHouse publisher;
 
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return STATIC_VALUE_FOR_CLASS_WITH_NO_FIELDS;
+    public ResearchData(@JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher) {
+        this.publisher = publisher;
+    }
+
+    public PublishingHouse getPublisher() {
+        return publisher;
     }
 
     @JacocoGenerated
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof ResearchData;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ResearchData)) {
+            return false;
+        }
+        ResearchData that = (ResearchData) o;
+        return Objects.equals(publisher, that.publisher);
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(publisher);
     }
 }

@@ -20,29 +20,19 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DataManagementPlan extends NonPeerReviewedMonograph {
-    public static final String PUBLISHER_FIELD = "publisher";
     public static final String RELATED_FIELD = "related";
-    @JsonProperty(PUBLISHER_FIELD)
-    private final URI publisher;
     @JsonProperty(RELATED_FIELD)
     private final Set<URI> related;
 
     /**
      * Constructor for DataManagementPlan (DMP).
-     * @param publisher The URI of the DMP publisher (may or may not be the same as the Publication publisher).
      * @param related A collection of URIs referencing things covered by the DMP.
      * @param pages The pages description for the DMP document.
      */
-    public DataManagementPlan(@JsonProperty(PUBLISHER_FIELD) URI publisher,
-                              @JsonProperty(RELATED_FIELD) RelatedUris related,
+    public DataManagementPlan(@JsonProperty(RELATED_FIELD) RelatedUris related,
                               @JsonProperty(PAGES_FIELD) MonographPages pages) {
         super(pages);
-        this.publisher = publisher;
         this.related = nonNull(related) ? new HashSet<>(related) : Collections.emptySet();
-    }
-
-    public URI getPublisher() {
-        return publisher;
     }
 
     public Set<URI> getRelated() {
@@ -62,13 +52,12 @@ public class DataManagementPlan extends NonPeerReviewedMonograph {
             return false;
         }
         DataManagementPlan that = (DataManagementPlan) o;
-        return Objects.equals(getPublisher(), that.getPublisher())
-                && Objects.equals(getRelated(), that.getRelated());
+        return Objects.equals(getRelated(), that.getRelated());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getPublisher(), getRelated());
+        return Objects.hash(super.hashCode(), getRelated());
     }
 }

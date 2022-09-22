@@ -637,9 +637,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        publisher:
-          type: string
-          format: uri
         related:
           uniqueItems: true
           type: array
@@ -1948,6 +1945,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
       properties:
+        publisher:
+          $ref: '#/components/schemas/PublishingHouse'
         type:
           type: string
   ResearchProject:

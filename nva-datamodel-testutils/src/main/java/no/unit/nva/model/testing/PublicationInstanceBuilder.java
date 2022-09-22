@@ -247,7 +247,7 @@ public final class PublicationInstanceBuilder {
 
     private static DataManagementPlan generateDataManagementPlan() {
         var relatedUris = new RelatedUris(Set.of(randomUri()));
-        return new DataManagementPlan(randomUri(), relatedUris, randomMonographPages());
+        return new DataManagementPlan(relatedUris, randomMonographPages());
     }
 
     private static MusicPerformance generateMusicPerformance() {

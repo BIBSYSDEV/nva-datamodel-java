@@ -106,7 +106,7 @@ public class PublicationContextBuilder {
     }
 
     private static ResearchData randomResearchData() {
-        return new ResearchData();
+        return new ResearchData(randomPublishingHouse());
     }
 
     private static MediaContribution randomMediaContribution() {
