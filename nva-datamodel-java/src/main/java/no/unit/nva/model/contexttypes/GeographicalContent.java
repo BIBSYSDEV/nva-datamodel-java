@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nva.commons.core.JacocoGenerated;
 
@@ -8,9 +9,11 @@ import java.util.Objects;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class GeographicalContent implements BasicContext {
 
+    private static final String PUBLISHER_FIELD = "publisher";
+    @JsonProperty(PUBLISHER_FIELD)
     private final PublishingHouse publisher;
 
-    public GeographicalContent(PublishingHouse publisher) {
+    public GeographicalContent(@JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher) {
         this.publisher = publisher;
     }
 
