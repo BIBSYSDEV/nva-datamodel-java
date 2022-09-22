@@ -48,7 +48,7 @@ public class ArtisticDesign implements PublicationInstance<NullPages> {
     @JsonGetter
     @Override
     public NullPages getPages() {
-        return new NullPages();
+        return NullPages.NULL_PAGES;
     }
 
     @JsonSetter

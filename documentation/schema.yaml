@@ -2102,3 +2102,44 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  VisualArts:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        subtype:
+          $ref: '#/components/schemas/VisualArtsSubtype'
+        description:
+          type: string
+        venues:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Venue'
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  VisualArtsSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - IndividualExhibition
+        - CollectiveExhibition
+        - Installation
+        - ArtInPublicSpace
+        - Performance
+        - VisualArts
+        - AudioArt
+        - ArtistBook
+        - Other
+      description:
+        type: string
+        writeOnly: true

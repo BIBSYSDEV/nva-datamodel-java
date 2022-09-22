@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.event;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.PublicationInstance;
@@ -12,9 +11,6 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ConferenceLecture implements PublicationInstance<NullPages> {
 
-    @JsonProperty("pages")
-    public static final NullPages pages = new NullPages();
-
     @JsonCreator
     public ConferenceLecture() {
     }
@@ -22,7 +18,7 @@ public class ConferenceLecture implements PublicationInstance<NullPages> {
     @JsonGetter("pages")
     @Override
     public NullPages getPages() {
-        return pages;
+        return NullPages.NULL_PAGES;
     }
 
     @JsonSetter("pages")

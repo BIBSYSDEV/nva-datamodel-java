@@ -67,7 +67,7 @@ public class DataSet extends NonPeerReviewed<NullPages> {
 
     @Override
     public NullPages getPages() {
-        return new NullPages();
+        return NullPages.NULL_PAGES;
     }
 
     @Override

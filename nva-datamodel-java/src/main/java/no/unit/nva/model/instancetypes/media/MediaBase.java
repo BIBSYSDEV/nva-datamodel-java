@@ -18,7 +18,7 @@ public class MediaBase implements PublicationInstance<NullPages> {
     @JsonGetter(PAGES_FIELD)
     @Override
     public NullPages getPages() {
-        return new NullPages();
+        return NullPages.NULL_PAGES;
     }
 
     @JsonSetter(PAGES_FIELD)

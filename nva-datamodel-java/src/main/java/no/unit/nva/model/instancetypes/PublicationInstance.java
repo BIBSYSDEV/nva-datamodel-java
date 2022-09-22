@@ -9,6 +9,7 @@ import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPicture;
 import no.unit.nva.model.instancetypes.artistic.music.MusicPerformance;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
+import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArts;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
@@ -93,7 +94,8 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "MediaReaderOpinion", value = MediaReaderOpinion.class),
     @JsonSubTypes.Type(name = "MusicPerformance", value = MusicPerformance.class),
     @JsonSubTypes.Type(name = "DataManagementPlan", value = DataManagementPlan.class),
-    @JsonSubTypes.Type(name = "DataSet", value = DataSet.class)
+    @JsonSubTypes.Type(name = "DataSet", value = DataSet.class),
+    @JsonSubTypes.Type(name = "VisualArts", value = VisualArts.class)
 })
 public interface PublicationInstance<P extends Pages> {
 
