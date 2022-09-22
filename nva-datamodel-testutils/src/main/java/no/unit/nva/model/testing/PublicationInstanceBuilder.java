@@ -55,6 +55,10 @@ import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSub
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.performingarts.realization.PerformingArtsOutput;
 import no.unit.nva.model.instancetypes.artistic.performingarts.realization.PerformingArtsVenue;
+import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArts;
+import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArtsSubtype;
+import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArtsSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArtsSubtypeOther;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
@@ -137,6 +141,8 @@ public final class PublicationInstanceBuilder {
                 return generateRandomArchitecture();
             case "ArtisticDesign":
                 return generateRandomArtisticDesign();
+            case "VisualArts":
+                return generateVisualArts();
             case "FeatureArticle":
                 return generateFeatureArticle();
             case "JournalCorrigendum":
@@ -681,6 +687,20 @@ public final class PublicationInstanceBuilder {
     private static ArchitectureOutput randomMentionInPublication() {
         return new MentionInPublication(randomString(), randomIssue(), randomNvaInstant(),
                                         randomString(), randomInteger());
+    }
+
+    private static VisualArts generateVisualArts() {
+        var subtype = randomVisualArtsSubtype();
+        var description = randomString();
+        var venues = Set.of(randomVenue());
+        return new VisualArts(subtype, description, venues);
+    }
+
+    private static VisualArtsSubtype randomVisualArtsSubtype() {
+        var subtype = randomElement(VisualArtsSubtypeEnum.values());
+        return VisualArtsSubtypeEnum.OTHER.equals(subtype)
+                ? new VisualArtsSubtypeOther(subtype, randomString())
+                : VisualArtsSubtype.create(subtype);
     }
 
     private static ArtisticDesign generateRandomArtisticDesign() {

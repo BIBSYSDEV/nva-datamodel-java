@@ -45,7 +45,7 @@ public class PerformingArts implements PublicationInstance<NullPages> {
 
     @Override
     public NullPages getPages() {
-        return new NullPages();
+        return NullPages.NULL_PAGES;
     }
 
     @Override
