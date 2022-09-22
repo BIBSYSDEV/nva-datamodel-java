@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
@@ -92,6 +93,12 @@ import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
 import no.unit.nva.model.instancetypes.report.ReportResearch;
 import no.unit.nva.model.instancetypes.report.ReportWorkingPaper;
+import no.unit.nva.model.instancetypes.researchdata.CompliesWithUris;
+import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
+import no.unit.nva.model.instancetypes.researchdata.DataSet;
+import no.unit.nva.model.instancetypes.researchdata.GeographicalDescription;
+import no.unit.nva.model.instancetypes.researchdata.ReferencedByUris;
+import no.unit.nva.model.instancetypes.researchdata.RelatedUris;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -202,6 +209,10 @@ public final class PublicationInstanceBuilder {
                 return generateMediaReaderOpinion();
             case "MusicPerformance":
                 return generateMusicPerformance();
+            case "DataManagementPlan":
+                return generateDataManagementPlan();
+            case "DataSet":
+                return generateDataSet();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
@@ -223,6 +234,20 @@ public final class PublicationInstanceBuilder {
         JsonSubTypes[] annotations = PublicationInstance.class.getAnnotationsByType(JsonSubTypes.class);
         Type[] types = annotations[0].value();
         return Arrays.stream(types).map(Type::value).collect(Collectors.toList());
+    }
+
+    private static DataSet generateDataSet() {
+        var geographicalCoverage = new GeographicalDescription(randomString());
+        var referencedUri = new ReferencedByUris(Set.of(randomUri()));
+        var relatedUris = new RelatedUris(Set.of(randomUri()));
+        var compliesWithUris = new CompliesWithUris(Set.of(randomUri()));
+        return new DataSet(randomBoolean(),
+                geographicalCoverage, referencedUri, relatedUris, compliesWithUris);
+    }
+
+    private static DataManagementPlan generateDataManagementPlan() {
+        var relatedUris = new RelatedUris(Set.of(randomUri()));
+        return new DataManagementPlan(relatedUris, randomMonographPages());
     }
 
     private static MusicPerformance generateMusicPerformance() {

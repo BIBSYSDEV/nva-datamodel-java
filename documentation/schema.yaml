@@ -55,9 +55,9 @@ schema:
       items:
         type: string
         format: uri
-    modelVersion:
-      type: string
     owner:
+      type: string
+    modelVersion:
       type: string
     type:
       type: string
@@ -627,6 +627,62 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  DataManagementPlan:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        related:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uri
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  DataSet:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        userAgreesToTermsAndConditions:
+          type: boolean
+        geographicalCoverage:
+          $ref: '#/components/schemas/GeographicalDescription'
+        referencedBy:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uri
+        related:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uri
+        compliesWith:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uri
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
   Degree:
     required:
     - type
@@ -860,6 +916,17 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/File'
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  GeographicalDescription:
+    required:
+    - type
+    type: object
+    properties:
+      description:
+        type: string
       type:
         type: string
     discriminator:
@@ -1681,9 +1748,9 @@ referencedSchemas:
         items:
           type: string
           format: uri
-      modelVersion:
-        type: string
       owner:
+        type: string
+      modelVersion:
         type: string
       type:
         type: string
@@ -1718,10 +1785,10 @@ referencedSchemas:
     - type
     type: object
     properties:
-      pages:
-        $ref: '#/components/schemas/Pages'
       peerReviewed:
         type: boolean
+      pages:
+        $ref: '#/components/schemas/Pages'
       type:
         type: string
     discriminator:
@@ -1866,6 +1933,20 @@ referencedSchemas:
       properties:
         pages:
           $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+  ResearchData:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        publisher:
+          $ref: '#/components/schemas/PublishingHouse'
         type:
           type: string
   ResearchProject:
