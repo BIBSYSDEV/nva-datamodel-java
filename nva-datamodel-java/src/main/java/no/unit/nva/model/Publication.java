@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.commons.json.JsonUtils;
+import no.unit.nva.file.model.File;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
@@ -317,7 +319,13 @@ public class Publication
             throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
         }
     }
-    
+
+    public List<File> getAssociatedArtifacts() {
+        var files = Optional.of(getFileSet())
+                .orElse(new FileSet(Collections.emptyList())).getFiles();
+        return new ArrayList<>(files);
+    }
+
     public static final class Builder {
         
         private final Publication publication;
