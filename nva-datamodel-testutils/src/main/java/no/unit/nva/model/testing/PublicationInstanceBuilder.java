@@ -39,6 +39,16 @@ import no.unit.nva.model.instancetypes.artistic.film.realization.Broadcast;
 import no.unit.nva.model.instancetypes.artistic.film.realization.CinematicRelease;
 import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOutput;
 import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArts;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArtsSubtype;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArtsSubtypeEnum;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsAudioVisual;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsAudioVisualSubtype;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsManifestation;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsMonograph;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsPerformance;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsPerformanceSubtype;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsWeb;
 import no.unit.nva.model.instancetypes.artistic.music.AudioVisualPublication;
 import no.unit.nva.model.instancetypes.artistic.music.Concert;
 import no.unit.nva.model.instancetypes.artistic.music.MusicalWorkPerformance;
@@ -134,6 +144,8 @@ public final class PublicationInstanceBuilder {
         var typeName = randomType.getSimpleName();
 
         switch (typeName) {
+            case "LiteraryArts":
+                return generateLiteraryArts();
             case "PerformingArts":
                 return generatePerformingArts();
             case "MovingPicture":
@@ -600,6 +612,34 @@ public final class PublicationInstanceBuilder {
 
     private static String randomVolume() {
         return randomString();
+    }
+
+    private static PublicationInstance<? extends Pages> generateLiteraryArts() {
+        var subtype = randomElement(LiteraryArtsSubtypeEnum.values());
+        return literaryArts(subtype);
+    }
+
+    private static PublicationInstance<? extends Pages> literaryArts(LiteraryArtsSubtypeEnum subtype) {
+        var literaryArtsSubtype = literaryArtsSubtype(subtype);
+        return new LiteraryArts(literaryArtsSubtype, randomLiteraryArtsManifestationList(), randomString());
+    }
+
+    private static List<LiteraryArtsManifestation> randomLiteraryArtsManifestationList() {
+        var isbn = "9780099470434";
+        var monograph = new LiteraryArtsMonograph(randomUnconfirmedPublisher(), randomPublicationDate(), isbn,
+                randomMonographPages());
+        var audioVisual = new LiteraryArtsAudioVisual(randomElement(LiteraryArtsAudioVisualSubtype.values()),
+                randomUnconfirmedPublisher(), randomPublicationDate(), isbn, randomInteger());
+        var performance = new LiteraryArtsPerformance(randomElement(LiteraryArtsPerformanceSubtype.values()),
+                randomUnconfirmedPlace(), randomPublicationDate());
+        var web = new LiteraryArtsWeb(randomUri(), randomUnconfirmedPublisher(), randomPublicationDate());
+        return List.of(monograph, audioVisual, performance, web);
+    }
+
+    private static LiteraryArtsSubtype literaryArtsSubtype(LiteraryArtsSubtypeEnum subtype) {
+        return LiteraryArtsSubtypeEnum.OTHER.equals(subtype)
+                ? LiteraryArtsSubtype.createOther(randomString())
+                : LiteraryArtsSubtype.create(subtype);
     }
 
     private static PublicationInstance<? extends Pages> generatePerformingArts() {

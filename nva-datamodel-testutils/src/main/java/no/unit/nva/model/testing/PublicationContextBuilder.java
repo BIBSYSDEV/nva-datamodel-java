@@ -47,6 +47,7 @@ import nva.commons.core.JacocoGenerated;
 @JacocoGenerated
 public class PublicationContextBuilder {
 
+    @SuppressWarnings("PMD.NcssCount")
     public static PublicationContext randomPublicationContext(Class<?> publicationInstance) {
         String className = publicationInstance.getSimpleName();
         switch (className) {
@@ -56,6 +57,7 @@ public class PublicationContextBuilder {
             case "PerformingArts":
             case "MusicPerformance":
             case "VisualArts":
+            case "LiteraryArts":
                 return randomArtistic();
             case "JournalIssue":
             case "ConferenceAbstract":

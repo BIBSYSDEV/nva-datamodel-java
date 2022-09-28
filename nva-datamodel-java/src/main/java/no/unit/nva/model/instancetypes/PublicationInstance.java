@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
 import no.unit.nva.model.instancetypes.artistic.design.ArtisticDesign;
 import no.unit.nva.model.instancetypes.artistic.film.MovingPicture;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArts;
 import no.unit.nva.model.instancetypes.artistic.music.MusicPerformance;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArts;
@@ -96,7 +97,8 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "DataManagementPlan", value = DataManagementPlan.class),
     @JsonSubTypes.Type(name = "DataSet", value = DataSet.class),
     @JsonSubTypes.Type(name = "VisualArts", value = VisualArts.class),
-    @JsonSubTypes.Type(name = "Map", value = Map.class)
+    @JsonSubTypes.Type(name = "Map", value = Map.class),
+    @JsonSubTypes.Type(name = "LiteraryArts", value = LiteraryArts.class)
 })
 public interface PublicationInstance<P extends Pages> {
 
