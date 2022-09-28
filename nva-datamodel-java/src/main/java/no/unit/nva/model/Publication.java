@@ -322,8 +322,9 @@ public class Publication
     }
 
     public List<File> getAssociatedArtifacts() {
-        var files = getFileSet().getFiles();
-        return nonNull(files) ? new ArrayList<>(files) : Collections.emptyList();
+        var files = Optional.of(getFileSet())
+                .orElse(new FileSet(Collections.emptyList())).getFiles();
+        return new ArrayList<>(files);
     }
 
     public static final class Builder {
