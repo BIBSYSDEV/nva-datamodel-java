@@ -11,7 +11,7 @@ import nva.commons.core.JacocoGenerated;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class LiteraryArtsMonograph implements LiteraryArtsManifestation{
+public class LiteraryArtsMonograph implements LiteraryArtsManifestation {
     public static final String PUBLISHER_FIELD = "publisher";
     public static final String DATE_FIELD = "publicationDate";
     public static final String ISBN_FIELD = "isbn";

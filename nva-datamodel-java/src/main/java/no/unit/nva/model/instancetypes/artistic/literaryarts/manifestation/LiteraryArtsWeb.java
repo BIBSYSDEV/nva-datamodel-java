@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class LiteraryArtsWeb implements LiteraryArtsManifestation{
+public class LiteraryArtsWeb implements LiteraryArtsManifestation {
     public static final String PUBLICATION_DATE_FIELD = "publicationDate";
     public static final String PUBLISHER_FIELD = "publisher";
     public static final String ID_FIELD = "id";

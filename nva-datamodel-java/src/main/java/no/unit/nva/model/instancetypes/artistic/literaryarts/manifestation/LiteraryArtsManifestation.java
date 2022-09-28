@@ -6,10 +6,10 @@ import no.unit.nva.model.PublicationDate;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(name = "LiteraryArtsAudioVisual", value = LiteraryArtsAudioVisual.class),
-        @JsonSubTypes.Type(name = "LiteraryArtsMonograph", value = LiteraryArtsMonograph.class),
-        @JsonSubTypes.Type(name = "LiteraryArtsPerformance", value = LiteraryArtsPerformance.class),
-        @JsonSubTypes.Type(name = "LiteraryArtsWeb", value = LiteraryArtsWeb.class)
+    @JsonSubTypes.Type(name = "LiteraryArtsAudioVisual", value = LiteraryArtsAudioVisual.class),
+    @JsonSubTypes.Type(name = "LiteraryArtsMonograph", value = LiteraryArtsMonograph.class),
+    @JsonSubTypes.Type(name = "LiteraryArtsPerformance", value = LiteraryArtsPerformance.class),
+    @JsonSubTypes.Type(name = "LiteraryArtsWeb", value = LiteraryArtsWeb.class)
 })
 public interface LiteraryArtsManifestation {
     PublicationDate getPublicationDate();
