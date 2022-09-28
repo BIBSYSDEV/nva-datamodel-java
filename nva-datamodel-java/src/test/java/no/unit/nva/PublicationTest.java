@@ -29,6 +29,7 @@ import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
+import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
@@ -53,6 +54,14 @@ public class PublicationTest extends ModelTest {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
+    // Test is temporary and will be deleted
+    @Test
+    void publicationShouldPresentFilesInAssociatedArtifacts() {
+        var publication = PublicationGenerator.randomPublication(BookMonograph.class);
+        var files = publication.getFileSet().getFiles();
+        var fileArtifacts = publication.getAssociatedArtifacts();
+        assertThat(fileArtifacts, is(equalTo(files)));
+    }
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
     void publicationReturnsValidPublicationWhenInputIsValid(Class<?> instanceType) throws Exception {
