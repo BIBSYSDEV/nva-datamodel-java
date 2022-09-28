@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import static java.util.Objects.hash;
+import static java.util.Objects.nonNull;
 import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -321,7 +322,8 @@ public class Publication
     }
 
     public List<File> getAssociatedArtifacts() {
-        return new ArrayList<>(getFileSet().getFiles());
+        var files = getFileSet().getFiles();
+        return nonNull(files) ? new ArrayList<>(files) : Collections.emptyList();
     }
 
     public static final class Builder {
