@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.model.PublicationDate;
@@ -17,6 +18,7 @@ public class LiteraryArtsPerformance implements LiteraryArtsManifestation {
     @JsonProperty(PLACE_FIELD) private final UnconfirmedPlace place;
     @JsonProperty(PUBLICATION_DATE_FIELD) private final PublicationDate publicationDate;
 
+    @JsonCreator
     public LiteraryArtsPerformance(@JsonProperty(SUBTYPE_FIELD) LiteraryArtsPerformanceSubtype subtype,
                                    @JsonProperty(PLACE_FIELD) UnconfirmedPlace place,
                                    @JsonProperty(PUBLICATION_DATE_FIELD) PublicationDate publicationDate) {

@@ -27,7 +27,7 @@ public enum LiteraryArtsAudioVisualSubtype {
     @JsonCreator
     public LiteraryArtsAudioVisualSubtype lookup(String candidate) {
         return Arrays.stream(LiteraryArtsAudioVisualSubtype.values())
-                .filter(value -> value.getName().equals(candidate))
+                .filter(value -> value.getName().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());
     }
 }

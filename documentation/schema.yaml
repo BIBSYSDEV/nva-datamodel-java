@@ -59,9 +59,9 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/File'
-    owner:
-      type: string
     modelVersion:
+      type: string
+    owner:
       type: string
     type:
       type: string
@@ -1919,9 +1919,9 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/File'
-      owner:
-        type: string
       modelVersion:
+        type: string
+      owner:
         type: string
       type:
         type: string

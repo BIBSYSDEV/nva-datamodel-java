@@ -31,7 +31,7 @@ public enum LiteraryArtsSubtypeEnum {
     @JsonCreator
     public LiteraryArtsSubtypeEnum lookup(String candidate) {
         return Arrays.stream(LiteraryArtsSubtypeEnum.values())
-                .filter(value -> value.getName().equals(candidate))
+                .filter(value -> value.getName().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());
     }
 }
