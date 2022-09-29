@@ -321,7 +321,7 @@ public class Publication
     }
 
     public List<File> getAssociatedArtifacts() {
-        var files = Optional.of(getFileSet())
+        var files = Optional.ofNullable(getFileSet())
                 .orElse(new FileSet(Collections.emptyList())).getFiles();
         return new ArrayList<>(files);
     }
