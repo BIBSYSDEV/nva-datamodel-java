@@ -39,8 +39,6 @@ schema:
       format: uri
     entityDescription:
       $ref: '#/components/schemas/EntityDescription'
-    fileSet:
-      $ref: '#/components/schemas/FileSet'
     projects:
       type: array
       items:
@@ -56,12 +54,15 @@ schema:
         type: string
         format: uri
     associatedArtifacts:
+      uniqueItems: true
       type: array
       items:
-        $ref: '#/components/schemas/File'
-    modelVersion:
-      type: string
+        $ref: '#/components/schemas/AssociatedArtifact'
+    fileSet:
+      $ref: '#/components/schemas/FileSet'
     owner:
+      type: string
+    modelVersion:
       type: string
     type:
       type: string
@@ -220,6 +221,43 @@ referencedSchemas:
         - WEB_DESIGN
       description:
         type: string
+        writeOnly: true
+  AssociatedArtifact:
+    type: object
+    properties:
+      type:
+        type: string
+        writeOnly: true
+        enum:
+        - File
+        - PublishedFile
+        - UnpublishedFile
+        - UnpublishableFile
+      identifier:
+        type: string
+        format: uuid
+        writeOnly: true
+      name:
+        type: string
+        writeOnly: true
+      mimeType:
+        type: string
+        writeOnly: true
+      size:
+        type: integer
+        format: int64
+        writeOnly: true
+      license:
+        $ref: '#/components/schemas/License'
+      administrativeAgreement:
+        type: boolean
+        writeOnly: true
+      publisherAuthority:
+        type: boolean
+        writeOnly: true
+      embargoDate:
+        type: string
+        format: date-time
         writeOnly: true
   AudioVisualPublication:
     required:
@@ -1899,8 +1937,6 @@ referencedSchemas:
         format: uri
       entityDescription:
         $ref: '#/components/schemas/EntityDescription'
-      fileSet:
-        $ref: '#/components/schemas/FileSet'
       projects:
         type: array
         items:
@@ -1916,12 +1952,15 @@ referencedSchemas:
           type: string
           format: uri
       associatedArtifacts:
+        uniqueItems: true
         type: array
         items:
-          $ref: '#/components/schemas/File'
-      modelVersion:
-        type: string
+          $ref: '#/components/schemas/AssociatedArtifact'
+      fileSet:
+        $ref: '#/components/schemas/FileSet'
       owner:
+        type: string
+      modelVersion:
         type: string
       type:
         type: string

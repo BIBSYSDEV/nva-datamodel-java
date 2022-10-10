@@ -1,19 +1,8 @@
 package no.unit.nva.model;
 
-import static java.util.Objects.hash;
-import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.ResourcesBuildConfig;
-import java.net.URI;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
@@ -22,8 +11,25 @@ import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.file.model.File;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
+
+import java.net.URI;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.hash;
+import static nva.commons.core.attempt.Try.attempt;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields", "PMD.GodClass"})
@@ -49,10 +55,11 @@ public class Publication
     private URI doi;
     private URI link;
     private EntityDescription entityDescription;
-    private FileSet fileSet;
     private List<ResearchProject> projects;
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
+
+    private Set<AssociatedArtifact> associatedArtifacts = new HashSet<>();
     
     public Publication() {
     
@@ -220,12 +227,25 @@ public class Publication
     
     @Override
     public FileSet getFileSet() {
-        return fileSet;
+
+        var files = associatedArtifacts.stream()
+                .filter(AssociatedFile.class::isInstance)
+                .map(AssociatedFile.class::cast)
+                .map(file -> new File(file.getType(), file.getIdentifier(), file.getName(),
+                        file.getMimeType(), file.getSize(), file.getLicense(), file.isAdministrativeAgreement(),
+                        file.isPublisherAuthority(), file.getEmbargoDate().orElse(null)))
+                .collect(Collectors.toList());
+        return new FileSet(files);
     }
     
     @Override
     public void setFileSet(FileSet fileSet) {
-        this.fileSet = fileSet;
+        this.associatedArtifacts = fileSet.getFiles().stream()
+                .map(file -> new AssociatedFile(file.getType(), file.getIdentifier(),
+                        file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
+                        file.isAdministrativeAgreement(), file.isPublisherAuthority(),
+                        file.getEmbargoDate().orElse(null)))
+                .collect(Collectors.toSet());
     }
     
     @JsonProperty("modelVersion")
@@ -320,10 +340,13 @@ public class Publication
         }
     }
 
-    public List<File> getAssociatedArtifacts() {
-        var files = Optional.ofNullable(getFileSet())
-                .orElse(new FileSet(Collections.emptyList())).getFiles();
-        return new ArrayList<>(files);
+    public Set<AssociatedArtifact> getAssociatedArtifacts() {
+        return Optional.ofNullable(associatedArtifacts)
+                .orElse(Collections.emptySet());
+    }
+
+    public void setAssociatedArtifacts(Collection<AssociatedArtifact> associatedArtifacts) {
+        this.associatedArtifacts.addAll(associatedArtifacts);
     }
 
     public static final class Builder {

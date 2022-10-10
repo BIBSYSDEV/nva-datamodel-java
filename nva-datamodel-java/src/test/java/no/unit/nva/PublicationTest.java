@@ -17,9 +17,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import no.unit.nva.file.model.File;
 import no.unit.nva.file.model.FileSet;
@@ -28,8 +31,11 @@ import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
+import no.unit.nva.model.testing.FileSetGenerator;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
@@ -59,9 +65,38 @@ public class PublicationTest extends ModelTest {
     void publicationShouldPresentFilesInAssociatedArtifacts() {
         var publication = PublicationGenerator.randomPublication(BookMonograph.class);
         var files = publication.getFileSet().getFiles();
-        var fileArtifacts = publication.getAssociatedArtifacts();
+        var fileArtifacts = toFileSet(publication.getAssociatedArtifacts());
         assertThat(fileArtifacts, is(equalTo(files)));
     }
+
+    private static List<File> toFileSet(Collection<AssociatedArtifact> artifacts) {
+        return artifacts.stream()
+            .filter(f -> f instanceof AssociatedFile).map(f -> (File) f)
+            .collect(Collectors.toList());
+    }
+
+    // Test is temporary and will be deleted
+    @Test
+    void publicationShouldSetAssociatedArtifactsWhenFilesIsSet() {
+        var publication = PublicationGenerator.randomPublication(BookMonograph.class);
+        publication.setFileSet(FileSetGenerator.randomFileSet());
+        var associatedArtifacts = publication.getAssociatedArtifacts().stream()
+                .filter(f -> f instanceof AssociatedFile)
+                .collect(Collectors.toList());
+        assertThat(toFileSet(associatedArtifacts), is(equalTo(publication.getFileSet().getFiles())));
+    }
+
+    // Test is temporary and will be deleted
+    @Test
+    void shouldSetFileSetWhenAssociatedFilesIsSet() {
+        var publication = PublicationGenerator.randomPublication(BookMonograph.class);
+        publication.setFileSet(new FileSet(Collections.emptyList()));
+        publication.setAssociatedArtifacts(Collections.emptySet());
+
+        assertThat(toFileSet(publication.getAssociatedArtifacts()), is(equalTo(publication.getFileSet().getFiles())));
+
+    }
+
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
     void publicationReturnsValidPublicationWhenInputIsValid(Class<?> instanceType) throws Exception {
