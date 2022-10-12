@@ -8,8 +8,10 @@ import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -60,6 +63,24 @@ public class PublicationTest extends ModelTest {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
+
+    // Test is temporary and will be deleted
+
+    @Test
+    void shouldRemoveFileWhenFileIsRemovedFromFileSet() {
+        var publication = PublicationGenerator.randomPublication();
+        var files = new ArrayList<>(List.copyOf(publication.getFileSet().getFiles()));
+        var initialSize = files.size();
+        var fileToBeRemoved = files.get(0);
+        files.remove(fileToBeRemoved);
+        assertThat(files.size(), is(lessThan(initialSize)));
+        publication.setFileSet(new FileSet(files));
+        var updated = publication.getFileSet().getFiles();
+        assertThat(updated, not(containsInAnyOrder(fileToBeRemoved)));
+        List<File> associatedArtifacts = toFileSet(publication.getAssociatedArtifacts());
+        assertThat(associatedArtifacts, is(equalTo(updated)));
+    }
+
     // Test is temporary and will be deleted
     @Test
     void publicationShouldPresentFilesInAssociatedArtifacts() {
@@ -91,10 +112,7 @@ public class PublicationTest extends ModelTest {
     void shouldSetFileSetWhenAssociatedFilesIsSet() {
         var publication = PublicationGenerator.randomPublication(BookMonograph.class);
         publication.setFileSet(new FileSet(Collections.emptyList()));
-        publication.setAssociatedArtifacts(Collections.emptySet());
-
         assertThat(toFileSet(publication.getAssociatedArtifacts()), is(equalTo(publication.getFileSet().getFiles())));
-
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")

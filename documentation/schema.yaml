@@ -53,13 +53,12 @@ schema:
       items:
         type: string
         format: uri
+    fileSet:
+      $ref: '#/components/schemas/FileSet'
     associatedArtifacts:
-      uniqueItems: true
       type: array
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
-    fileSet:
-      $ref: '#/components/schemas/FileSet'
     owner:
       type: string
     modelVersion:
@@ -1951,13 +1950,12 @@ referencedSchemas:
         items:
           type: string
           format: uri
+      fileSet:
+        $ref: '#/components/schemas/FileSet'
       associatedArtifacts:
-        uniqueItems: true
         type: array
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
-      fileSet:
-        $ref: '#/components/schemas/FileSet'
       owner:
         type: string
       modelVersion:

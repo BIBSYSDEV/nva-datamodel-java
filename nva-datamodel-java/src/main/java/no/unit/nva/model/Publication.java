@@ -8,7 +8,6 @@ import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.commons.json.JsonUtils;
-import no.unit.nva.file.model.File;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
@@ -20,7 +19,6 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -58,7 +56,8 @@ public class Publication
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
 
-    private Set<AssociatedArtifact> associatedArtifacts = new HashSet<>();
+    private FileSet fileSet;
+    private List<AssociatedArtifact> associatedArtifacts;
     
     public Publication() {
     
@@ -226,25 +225,20 @@ public class Publication
     
     @Override
     public FileSet getFileSet() {
-
-        var files = associatedArtifacts.stream()
-                .filter(AssociatedFile.class::isInstance)
-                .map(AssociatedFile.class::cast)
-                .map(file -> new File(file.getType(), file.getIdentifier(), file.getName(),
-                        file.getMimeType(), file.getSize(), file.getLicense(), file.isAdministrativeAgreement(),
-                        file.isPublisherAuthority(), file.getEmbargoDate().orElse(null)))
-                .collect(Collectors.toList());
-        return new FileSet(files);
+        return fileSet;
     }
     
     @Override
     public void setFileSet(FileSet fileSet) {
-        this.associatedArtifacts = fileSet.getFiles().stream()
+        this.fileSet = fileSet;
+        var files = fileSet.getFiles().stream()
                 .map(file -> new AssociatedFile(file.getType(), file.getIdentifier(),
                         file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
                         file.isAdministrativeAgreement(), file.isPublisherAuthority(),
                         file.getEmbargoDate().orElse(null)))
-                .collect(Collectors.toSet());
+                .map(AssociatedArtifact.class::cast)
+                .collect(Collectors.toList());
+        setAssociatedArtifacts(files);
     }
     
     @JsonProperty("modelVersion")
@@ -254,7 +248,7 @@ public class Publication
     
     @JsonProperty("modelVersion")
     public void setModelVersion() {
-        //NO-OP;
+        // NO-OP
     }
     
     @Override
@@ -339,13 +333,13 @@ public class Publication
         }
     }
 
-    public Set<AssociatedArtifact> getAssociatedArtifacts() {
+    public List<AssociatedArtifact> getAssociatedArtifacts() {
         return Optional.ofNullable(associatedArtifacts)
-                .orElse(Collections.emptySet());
+                .orElse(Collections.emptyList());
     }
 
-    public void setAssociatedArtifacts(Collection<AssociatedArtifact> associatedArtifacts) {
-        this.associatedArtifacts.addAll(associatedArtifacts);
+    private void setAssociatedArtifacts(Collection<AssociatedArtifact> associatedArtifacts) {
+        this.associatedArtifacts = List.copyOf(associatedArtifacts);
     }
 
     public static final class Builder {
