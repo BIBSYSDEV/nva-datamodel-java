@@ -26,6 +26,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.hash;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static nva.commons.core.attempt.Try.attempt;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -63,7 +65,7 @@ public class Publication
     }
     
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
-        return Objects.nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
+        return nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
     }
     
     public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
@@ -204,7 +206,7 @@ public class Publication
     
     @Override
     public List<ResearchProject> getProjects() {
-        return Objects.nonNull(projects) ? projects : Collections.emptyList();
+        return nonNull(projects) ? projects : Collections.emptyList();
     }
     
     @Override
@@ -214,7 +216,7 @@ public class Publication
     
     @Override
     public List<URI> getSubjects() {
-        return Objects.nonNull(subjects) ? subjects : Collections.emptyList();
+        return nonNull(subjects) ? subjects : Collections.emptyList();
     }
     
     @Override
@@ -224,13 +226,17 @@ public class Publication
     
     @Override
     public FileSet getFileSet() {
-        return fileSet;
+        return isNotNullOrEmptyFileSet(this.fileSet) ? fileSet : new FileSet(Collections.emptyList());
     }
-    
+
+    private boolean isNotNullOrEmptyFileSet(FileSet fileSet) {
+        return fileSet != null && nonNull(fileSet.getFiles());
+    }
+
     @Override
     public void setFileSet(FileSet fileSet) {
-        this.fileSet = fileSet;
-        var files = fileSet.getFiles().stream()
+        this.fileSet =  isNotNullOrEmptyFileSet(fileSet) ? fileSet : new FileSet(Collections.emptyList());
+        var files = this.fileSet.getFiles().stream()
                 .map(file -> new AssociatedFile(file.getType(), file.getIdentifier(),
                         file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
                         file.isAdministrativeAgreement(), file.isPublisherAuthority(),

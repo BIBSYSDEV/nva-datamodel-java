@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
@@ -46,6 +47,7 @@ import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -63,6 +65,19 @@ public class PublicationTest extends ModelTest {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
+    public static Stream<FileSet> nullAndEmptyFileSetProvider() {
+        return Stream.of(null, new FileSet(null), new FileSet(Collections.emptyList()));
+    }
+
+
+    // Test is temporary and will be deleted
+    @ParameterizedTest
+    @MethodSource("nullAndEmptyFileSetProvider")
+    void shouldProduceEmptyListForAssociatedArtifactWhenFileSetIsEmpty(FileSet fileSet) {
+        var publication = PublicationGenerator.randomPublication();
+        publication.setFileSet(fileSet);
+        assertThat(publication.getAssociatedArtifacts(), is(empty()));
+    }
 
     // Test is temporary and will be deleted
 
