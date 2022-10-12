@@ -17,7 +17,6 @@ import nva.commons.core.JacocoGenerated;
 
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -338,8 +337,8 @@ public class Publication
                 .orElse(Collections.emptyList());
     }
 
-    private void setAssociatedArtifacts(Collection<AssociatedArtifact> associatedArtifacts) {
-        this.associatedArtifacts = List.copyOf(associatedArtifacts);
+    private void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+        this.associatedArtifacts = associatedArtifacts;
     }
 
     public static final class Builder {
