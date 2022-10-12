@@ -1,29 +1,33 @@
 package no.unit.nva.model;
 
-import static java.util.Objects.hash;
-import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.ResourcesBuildConfig;
+import no.unit.nva.WithFile;
+import no.unit.nva.WithIdentifier;
+import no.unit.nva.WithInternal;
+import no.unit.nva.WithMetadata;
+import no.unit.nva.commons.json.JsonUtils;
+import no.unit.nva.file.model.FileSet;
+import no.unit.nva.identifiers.SortableIdentifier;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedFile;
+import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
+import nva.commons.core.JacocoGenerated;
+
 import java.net.URI;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import no.unit.nva.WithFile;
-import no.unit.nva.WithIdentifier;
-import no.unit.nva.WithInternal;
-import no.unit.nva.WithMetadata;
-import no.unit.nva.commons.json.JsonUtils;
-import no.unit.nva.file.model.File;
-import no.unit.nva.file.model.FileSet;
-import no.unit.nva.identifiers.SortableIdentifier;
-import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
-import nva.commons.core.JacocoGenerated;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.hash;
+import static java.util.Objects.nonNull;
+import static nva.commons.core.attempt.Try.attempt;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields", "PMD.GodClass"})
@@ -34,8 +38,7 @@ public class Publication
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
         PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, PublicationStatus.DRAFT_FOR_DELETION)
     );
-    public static final String ERROR_MESSAGE_UPDATEDOIREQUEST_MISSING_DOIREQUEST =
-        "You must initiate creation of a DoiRequest before you can update it.";
+
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -49,17 +52,19 @@ public class Publication
     private URI doi;
     private URI link;
     private EntityDescription entityDescription;
-    private FileSet fileSet;
     private List<ResearchProject> projects;
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
+
+    private FileSet fileSet;
+    private List<AssociatedArtifact> associatedArtifacts;
     
     public Publication() {
     
     }
     
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
-        return Objects.nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
+        return nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
     }
     
     public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
@@ -200,7 +205,7 @@ public class Publication
     
     @Override
     public List<ResearchProject> getProjects() {
-        return Objects.nonNull(projects) ? projects : Collections.emptyList();
+        return nonNull(projects) ? projects : Collections.emptyList();
     }
     
     @Override
@@ -210,7 +215,7 @@ public class Publication
     
     @Override
     public List<URI> getSubjects() {
-        return Objects.nonNull(subjects) ? subjects : Collections.emptyList();
+        return nonNull(subjects) ? subjects : Collections.emptyList();
     }
     
     @Override
@@ -220,12 +225,24 @@ public class Publication
     
     @Override
     public FileSet getFileSet() {
-        return fileSet;
+        return isNotNullOrEmptyFileSet(this.fileSet) ? fileSet : new FileSet(Collections.emptyList());
     }
-    
+
+    private boolean isNotNullOrEmptyFileSet(FileSet fileSet) {
+        return fileSet != null && nonNull(fileSet.getFiles());
+    }
+
     @Override
     public void setFileSet(FileSet fileSet) {
-        this.fileSet = fileSet;
+        this.fileSet =  isNotNullOrEmptyFileSet(fileSet) ? fileSet : new FileSet(Collections.emptyList());
+        var files = this.fileSet.getFiles().stream()
+                .map(file -> new AssociatedFile(file.getType(), file.getIdentifier(),
+                        file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
+                        file.isAdministrativeAgreement(), file.isPublisherAuthority(),
+                        file.getEmbargoDate().orElse(null)))
+                .map(AssociatedArtifact.class::cast)
+                .collect(Collectors.toList());
+        setAssociatedArtifacts(files);
     }
     
     @JsonProperty("modelVersion")
@@ -235,7 +252,7 @@ public class Publication
     
     @JsonProperty("modelVersion")
     public void setModelVersion() {
-        //NO-OP;
+        // NO-OP
     }
     
     @Override
@@ -320,10 +337,13 @@ public class Publication
         }
     }
 
-    public List<File> getAssociatedArtifacts() {
-        var files = Optional.ofNullable(getFileSet())
-                .orElse(new FileSet(Collections.emptyList())).getFiles();
-        return new ArrayList<>(files);
+    public List<AssociatedArtifact> getAssociatedArtifacts() {
+        return Optional.ofNullable(associatedArtifacts)
+                .orElse(Collections.emptyList());
+    }
+
+    private void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+        this.associatedArtifacts = associatedArtifacts;
     }
 
     public static final class Builder {

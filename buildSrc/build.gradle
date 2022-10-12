@@ -14,7 +14,6 @@ wrapper {
     gradleVersion = "7.4.2"
 }
 
-
 dependencies {
     implementation group: 'nebula.lint', name: 'nebula.lint.gradle.plugin', version: '17.2.3'
     implementation group: 'org.jacoco', name: 'org.jacoco.core', version: '0.8.7'
