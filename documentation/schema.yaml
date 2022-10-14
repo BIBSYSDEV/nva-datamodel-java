@@ -59,9 +59,9 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
-    owner:
-      type: string
     modelVersion:
+      type: string
+    owner:
       type: string
     type:
       type: string
@@ -1956,9 +1956,9 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
-      owner:
-        type: string
       modelVersion:
+        type: string
+      owner:
         type: string
       type:
         type: string
