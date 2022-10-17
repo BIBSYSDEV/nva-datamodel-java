@@ -8,6 +8,7 @@ import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.commons.json.JsonUtils;
+import no.unit.nva.file.model.File;
 import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
@@ -58,7 +59,7 @@ public class Publication
 
     private FileSet fileSet;
     private List<AssociatedArtifact> associatedArtifacts;
-    
+
     public Publication() {
     
     }
@@ -235,16 +236,28 @@ public class Publication
     @Override
     public void setFileSet(FileSet fileSet) {
         this.fileSet =  isNotNullOrEmptyFileSet(fileSet) ? fileSet : new FileSet(Collections.emptyList());
-        var files = this.fileSet.getFiles().stream()
-                .map(file -> new AssociatedFile(file.getType(), file.getIdentifier(),
-                        file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
-                        file.isAdministrativeAgreement(), file.isPublisherAuthority(),
-                        file.getEmbargoDate().orElse(null)))
+
+        temporarySetterForAssociatedArtifactsUntilFileSetIsRemoved();
+    }
+
+    private List<AssociatedArtifact> toAssociatedArtifacts(FileSet fileSet) {
+        return fileSet.getFiles().stream()
+                .map(Publication::toAssociatedArtifact)
                 .map(AssociatedArtifact.class::cast)
                 .collect(Collectors.toList());
-        setAssociatedArtifacts(files);
     }
-    
+
+    private static AssociatedFile toAssociatedArtifact(File file) {
+        return new AssociatedFile(file.getType(), file.getIdentifier(),
+                file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
+                file.isAdministrativeAgreement(), file.isPublisherAuthority(),
+                file.getEmbargoDate().orElse(null));
+    }
+
+    private void temporarySetterForAssociatedArtifactsUntilFileSetIsRemoved() {
+        this.associatedArtifacts = toAssociatedArtifacts(fileSet);
+    }
+
     @JsonProperty("modelVersion")
     public String getModelVersion() {
         return MODEL_VERSION;
@@ -338,12 +351,11 @@ public class Publication
     }
 
     public List<AssociatedArtifact> getAssociatedArtifacts() {
-        return Optional.ofNullable(associatedArtifacts)
-                .orElse(Collections.emptyList());
+        return nonNull(associatedArtifacts) ? associatedArtifacts : Collections.emptyList();
     }
 
-    private void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
-        this.associatedArtifacts = associatedArtifacts;
+    public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+        // NO-OP
     }
 
     public static final class Builder {
