@@ -23,6 +23,7 @@ import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
@@ -47,6 +48,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private JsonNode context;
     private List<ResearchProject> projects;
     private List<URI> subjects;
+    private List<AssociatedArtifact> associatedArtifacts;
 
     public static PublicationResponse fromPublication(Publication publication) {
         var response = new PublicationResponse();
@@ -66,6 +68,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setProjects(publication.getProjects());
         response.setSubjects(publication.getSubjects());
         response.setContext(PublicationContext.getContext());
+        response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         return response;
     }
 
@@ -230,16 +233,17 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.context = context;
     }
 
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(),
-                            getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(),
-                            getEntityDescription(), getFileSet(), getDoi(), getContext(), getProjects(), getSubjects());
+
+    public List<AssociatedArtifact> getAssociatedArtifacts() {
+        return associatedArtifacts;
     }
 
-    @JacocoGenerated
+    public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+        this.associatedArtifacts = associatedArtifacts;
+    }
+
     @Override
+    @JacocoGenerated
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -248,21 +252,30 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
             return false;
         }
         PublicationResponse that = (PublicationResponse) o;
-        return Objects.equals(getId(), that.getId())
-               && Objects.equals(getIdentifier(), that.getIdentifier())
-               && getStatus() == that.getStatus()
-               && Objects.equals(getPublisher(), that.getPublisher())
-               && Objects.equals(getCreatedDate(), that.getCreatedDate())
-               && Objects.equals(getModifiedDate(), that.getModifiedDate())
-               && Objects.equals(getPublishedDate(), that.getPublishedDate())
-               && Objects.equals(getIndexedDate(), that.getIndexedDate())
-               && Objects.equals(getHandle(), that.getHandle())
-               && Objects.equals(getLink(), that.getLink())
-               && Objects.equals(getEntityDescription(), that.getEntityDescription())
-               && Objects.equals(getFileSet(), that.getFileSet())
-               && Objects.equals(getDoi(), that.getDoi())
-               && Objects.equals(getContext(), that.getContext())
-               && Objects.equals(getProjects(), that.getProjects())
-               && Objects.equals(getSubjects(), that.getSubjects());
+        return Objects.equals(getIdentifier(), that.getIdentifier())
+                && getStatus() == that.getStatus()
+                && Objects.equals(getResourceOwner(), that.getResourceOwner())
+                && Objects.equals(getPublisher(), that.getPublisher())
+                && Objects.equals(getCreatedDate(), that.getCreatedDate())
+                && Objects.equals(getModifiedDate(), that.getModifiedDate())
+                && Objects.equals(getPublishedDate(), that.getPublishedDate())
+                && Objects.equals(getIndexedDate(), that.getIndexedDate())
+                && Objects.equals(getHandle(), that.getHandle())
+                && Objects.equals(getLink(), that.getLink())
+                && Objects.equals(getEntityDescription(), that.getEntityDescription())
+                && Objects.equals(getFileSet(), that.getFileSet())
+                && Objects.equals(getDoi(), that.getDoi())
+                && Objects.equals(getContext(), that.getContext())
+                && Objects.equals(getProjects(), that.getProjects())
+                && Objects.equals(getSubjects(), that.getSubjects())
+                && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts());
+    }
+
+    @Override
+    @JacocoGenerated
+    public int hashCode() {
+        return Objects.hash(getIdentifier(), getStatus(), getResourceOwner(), getPublisher(), getCreatedDate(),
+                getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(), getEntityDescription(),
+                getFileSet(), getDoi(), getContext(), getProjects(), getSubjects(), getAssociatedArtifacts());
     }
 }
