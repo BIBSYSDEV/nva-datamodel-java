@@ -2,9 +2,11 @@ package no.unit.nva.model.testing;
 
 import static no.unit.nva.model.testing.RandomUtils.randomLabel;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
+import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
+import static no.unit.nva.testutils.RandomDataGenerator.randomIssn;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import static nva.commons.core.attempt.Try.attempt;
@@ -23,12 +25,14 @@ import no.unit.nva.model.contexttypes.Event;
 import no.unit.nva.model.contexttypes.GeographicalContent;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.MediaContribution;
+import no.unit.nva.model.contexttypes.MediaContributionPeriodical;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.PublishingHouse;
 import no.unit.nva.model.contexttypes.Report;
 import no.unit.nva.model.contexttypes.ResearchData;
 import no.unit.nva.model.contexttypes.Series;
+import no.unit.nva.model.contexttypes.UnconfirmedMediaContributionPeriodical;
 import no.unit.nva.model.contexttypes.media.MediaFormat;
 import no.unit.nva.model.contexttypes.media.MediaSubType;
 import no.unit.nva.model.contexttypes.media.MediaSubTypeEnum;
@@ -95,6 +99,7 @@ public class PublicationContextBuilder {
             case "OtherPresentation":
                 return randomPresentation();
             case "MediaFeatureArticle":
+                return randomMediaContributionPeriodical();
             case "MediaBlogPost":
             case "MediaInterview":
             case "MediaParticipationInRadioOrTv":
@@ -119,6 +124,12 @@ public class PublicationContextBuilder {
         return new ResearchData(randomPublishingHouse());
     }
 
+    private static PublicationContext randomMediaContributionPeriodical() {
+        return randomBoolean()
+            ? new MediaContributionPeriodical(randomUri().toString())
+            : attempt(() -> new UnconfirmedMediaContributionPeriodical(randomString(),
+                randomIssn(), randomIssn())).orElseThrow();
+    }
     private static MediaContribution randomMediaContribution() {
         return new MediaContribution.Builder()
             .withMedium(generateRandomMedium())

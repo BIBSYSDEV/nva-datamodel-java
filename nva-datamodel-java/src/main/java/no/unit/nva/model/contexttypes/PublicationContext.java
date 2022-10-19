@@ -18,6 +18,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(name = "Event", value = Event.class),
     @JsonSubTypes.Type(name = "Artistic", value = Artistic.class),
     @JsonSubTypes.Type(name = "MediaContribution", value = MediaContribution.class),
+    @JsonSubTypes.Type(name = "MediaContributionPeriodical", value = MediaContributionPeriodical.class),
+    @JsonSubTypes.Type(name = "UnconfirmedMediaContributionPeriodical",
+        value = UnconfirmedMediaContributionPeriodical.class),
     @JsonSubTypes.Type(name = "ResearchData", value = ResearchData.class),
     @JsonSubTypes.Type(name = "GeographicalContent", value = GeographicalContent.class)
 })

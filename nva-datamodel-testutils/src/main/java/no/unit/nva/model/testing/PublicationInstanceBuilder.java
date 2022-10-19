@@ -365,7 +365,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static MediaFeatureArticle generateMediaFeatureArticle() {
-        return new MediaFeatureArticle();
+        return new MediaFeatureArticle(randomVolume(), randomIssue(), randomArticleNumber(), randomRange());
     }
 
     private static JournalIssue generateJournalIssue() {
