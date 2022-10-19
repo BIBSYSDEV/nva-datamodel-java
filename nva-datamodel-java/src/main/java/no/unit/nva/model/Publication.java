@@ -1,9 +1,19 @@
 package no.unit.nva.model;
 
+import static java.util.Objects.hash;
+import static java.util.Objects.nonNull;
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bibsysdev.ResourcesBuildConfig;
+import java.net.URI;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
@@ -17,20 +27,6 @@ import no.unit.nva.model.associatedartifacts.AssociatedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
 
-import java.net.URI;
-import java.time.Instant;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static java.util.Objects.hash;
-import static java.util.Objects.nonNull;
-import static nva.commons.core.attempt.Try.attempt;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields", "PMD.GodClass"})
 public class Publication
@@ -40,9 +36,9 @@ public class Publication
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
         PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, PublicationStatus.DRAFT_FOR_DELETION)
     );
-
+    
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
-    public static final ObjectMapper MAPPER = JsonUtils.dtoObjectMapper;
+    
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private ResourceOwner resourceOwner;
@@ -58,10 +54,10 @@ public class Publication
     private List<ResearchProject> projects;
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
-
+    
     private FileSet fileSet;
     private List<AssociatedArtifact> associatedArtifacts;
-
+    
     public Publication() {
     
     }
@@ -72,18 +68,6 @@ public class Publication
     
     public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
         this.additionalIdentifiers = additionalIdentifiers;
-    }
-    
-    @JsonProperty("owner")
-    @Deprecated(since = "Resource owner was introduced. "
-                        + "Should be removed when publisher is moved into resourceOwner"
-                        + "and NP-9175 is fixed")
-    public String getOwner() {
-        return Optional.of(resourceOwner).map(ResourceOwner::getOwner).orElse(null);
-    }
-    
-    public void setOwner() {
-        // NO-OP
     }
     
     @Override
@@ -230,36 +214,36 @@ public class Publication
     public FileSet getFileSet() {
         return isNotNullOrEmptyFileSet(this.fileSet) ? fileSet : new FileSet(Collections.emptyList());
     }
-
+    
     private boolean isNotNullOrEmptyFileSet(FileSet fileSet) {
         return fileSet != null && nonNull(fileSet.getFiles());
     }
-
+    
     @Override
     public void setFileSet(FileSet fileSet) {
-        this.fileSet =  isNotNullOrEmptyFileSet(fileSet) ? fileSet : new FileSet(Collections.emptyList());
-
+        this.fileSet = isNotNullOrEmptyFileSet(fileSet) ? fileSet : new FileSet(Collections.emptyList());
+        
         temporarySetterForAssociatedArtifactsUntilFileSetIsRemoved();
     }
-
+    
     private List<AssociatedArtifact> toAssociatedArtifacts(FileSet fileSet) {
         return fileSet.getFiles().stream()
-                .map(Publication::toAssociatedArtifact)
-                .map(AssociatedArtifact.class::cast)
-                .collect(Collectors.toList());
+                   .map(Publication::toAssociatedArtifact)
+                   .map(AssociatedArtifact.class::cast)
+                   .collect(Collectors.toList());
     }
-
+    
     private static AssociatedFile toAssociatedArtifact(File file) {
         return new AssociatedFile(file.getType(), file.getIdentifier(),
-                file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
-                file.isAdministrativeAgreement(), file.isPublisherAuthority(),
-                file.getEmbargoDate().orElse(null));
+            file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
+            file.isAdministrativeAgreement(), file.isPublisherAuthority(),
+            file.getEmbargoDate().orElse(null));
     }
-
+    
     private void temporarySetterForAssociatedArtifactsUntilFileSetIsRemoved() {
         this.associatedArtifacts = toAssociatedArtifacts(fileSet);
     }
-
+    
     @JsonProperty("modelVersion")
     public String getModelVersion() {
         return MODEL_VERSION;
@@ -269,11 +253,11 @@ public class Publication
     public void setModelVersion() {
         // NO-OP
     }
-
+    
     public List<AssociatedArtifact> getAssociatedArtifacts() {
         return nonNull(associatedArtifacts) ? associatedArtifacts : Collections.emptyList();
     }
-
+    
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.UnusedPrivateMethod"})
     private void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
         // NO-OP
@@ -282,22 +266,22 @@ public class Publication
     @Override
     public Builder copy() {
         return new Builder()
-            .withIdentifier(getIdentifier())
-            .withStatus(getStatus())
-            .withResourceOwner(getResourceOwner())
-            .withPublisher(getPublisher())
-            .withCreatedDate(getCreatedDate())
-            .withModifiedDate(getModifiedDate())
-            .withPublishedDate(getPublishedDate())
-            .withIndexedDate(getIndexedDate())
-            .withHandle(getHandle())
-            .withDoi(getDoi())
-            .withLink(getLink())
-            .withEntityDescription(getEntityDescription())
-            .withFileSet(getFileSet())
-            .withProjects(getProjects())
-            .withAdditionalIdentifiers(getAdditionalIdentifiers())
-            .withSubjects(getSubjects());
+                   .withIdentifier(getIdentifier())
+                   .withStatus(getStatus())
+                   .withResourceOwner(getResourceOwner())
+                   .withPublisher(getPublisher())
+                   .withCreatedDate(getCreatedDate())
+                   .withModifiedDate(getModifiedDate())
+                   .withPublishedDate(getPublishedDate())
+                   .withIndexedDate(getIndexedDate())
+                   .withHandle(getHandle())
+                   .withDoi(getDoi())
+                   .withLink(getLink())
+                   .withEntityDescription(getEntityDescription())
+                   .withFileSet(getFileSet())
+                   .withProjects(getProjects())
+                   .withAdditionalIdentifiers(getAdditionalIdentifiers())
+                   .withSubjects(getSubjects());
     }
     
     /**
@@ -347,12 +331,12 @@ public class Publication
                              && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
     }
-
-    @JacocoGenerated
-    public String toJson() {
-        return attempt(() -> MAPPER.writeValueAsString(this)).orElseThrow();
+    
+    @Override
+    public String toString() {
+        return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElseThrow();
     }
-
+    
     private void verifyStatusTransition(PublicationStatus nextStatus)
         throws InvalidPublicationStatusTransitionException {
         final PublicationStatus currentStatus = getStatus();
@@ -360,7 +344,7 @@ public class Publication
             throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
         }
     }
-
+    
     public static final class Builder {
         
         private final Publication publication;
