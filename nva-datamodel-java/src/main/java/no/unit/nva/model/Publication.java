@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bibsysdev.ResourcesBuildConfig;
 import no.unit.nva.WithFile;
 import no.unit.nva.WithIdentifier;
@@ -41,6 +42,7 @@ public class Publication
     );
 
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
+    public static final ObjectMapper MAPPER = JsonUtils.dtoObjectMapper;
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private ResourceOwner resourceOwner;
@@ -267,6 +269,15 @@ public class Publication
     public void setModelVersion() {
         // NO-OP
     }
+
+    public List<AssociatedArtifact> getAssociatedArtifacts() {
+        return nonNull(associatedArtifacts) ? associatedArtifacts : Collections.emptyList();
+    }
+
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.UnusedPrivateMethod"})
+    private void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+        // NO-OP
+    }
     
     @Override
     public Builder copy() {
@@ -336,26 +347,18 @@ public class Publication
                              && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
     }
-    
-    @Override
-    public String toString() {
-        return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElseThrow();
+
+    @JacocoGenerated
+    public String toJson() {
+        return attempt(() -> MAPPER.writeValueAsString(this)).orElseThrow();
     }
-    
+
     private void verifyStatusTransition(PublicationStatus nextStatus)
         throws InvalidPublicationStatusTransitionException {
         final PublicationStatus currentStatus = getStatus();
         if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
             throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
         }
-    }
-
-    public List<AssociatedArtifact> getAssociatedArtifacts() {
-        return nonNull(associatedArtifacts) ? associatedArtifacts : Collections.emptyList();
-    }
-
-    public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
-        // NO-OP
     }
 
     public static final class Builder {
