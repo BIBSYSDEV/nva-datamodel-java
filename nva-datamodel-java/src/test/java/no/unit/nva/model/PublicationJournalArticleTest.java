@@ -11,6 +11,10 @@ import com.github.jsonldjava.utils.JsonUtils;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Stream;
+
+import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedFile;
+import no.unit.nva.model.testing.AssociatedArtifactsGenerator;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -53,9 +57,8 @@ public class PublicationJournalArticleTest extends PublicationTest {
     void publicationReturnsJsonWhenInputIsValid(Class<?> publicationInstanceClass) throws IOException {
         Publication publication = PublicationGenerator.randomPublication(publicationInstanceClass);
         JsonNode document = toPublicationWithContext(publication);
-        Publication publicationFromJson = dataModelObjectMapper.readValue(
-            dataModelObjectMapper.writeValueAsString(document),
-            Publication.class);
+        String content = dataModelObjectMapper.writeValueAsString(document);
+        Publication publicationFromJson = dataModelObjectMapper.readValue(content, Publication.class);
         assertThat(publicationFromJson, doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest")));
         assertThat(publication, is(equalTo(publicationFromJson)));
     }

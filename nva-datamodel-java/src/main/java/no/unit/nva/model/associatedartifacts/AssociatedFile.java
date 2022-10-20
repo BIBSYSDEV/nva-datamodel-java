@@ -1,6 +1,8 @@
 package no.unit.nva.model.associatedartifacts;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import no.unit.nva.file.model.File;
 import no.unit.nva.file.model.FileType;
 import no.unit.nva.file.model.License;
@@ -8,6 +10,7 @@ import no.unit.nva.file.model.License;
 import java.time.Instant;
 import java.util.UUID;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
 public class AssociatedFile extends File implements AssociatedArtifact {
 
     /**
@@ -26,7 +29,8 @@ public class AssociatedFile extends File implements AssociatedArtifact {
      * @param embargoDate             The date after which the file may be published
      */
 
-    public AssociatedFile(@JsonProperty("type") FileType type,
+    @JsonCreator
+    public AssociatedFile(@JsonProperty("type") String type,
                           @JsonProperty("identifier") UUID identifier,
                           @JsonProperty("name") String name,
                           @JsonProperty("mimeType") String mimeType,

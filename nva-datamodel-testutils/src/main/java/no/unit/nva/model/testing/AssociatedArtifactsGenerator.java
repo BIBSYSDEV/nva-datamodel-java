@@ -12,6 +12,7 @@ import no.unit.nva.file.model.FileType;
 import no.unit.nva.file.model.License;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.AssociatedFile;
+import no.unit.nva.model.associatedartifacts.AssociatedLink;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -25,10 +26,14 @@ public final class AssociatedArtifactsGenerator {
         return List.of(randomAssociatedArtifact());
     }
 
-    private static AssociatedFile randomAssociatedArtifact() {
-        return new AssociatedFile(FileType.PUBLISHED_FILE, UUID.randomUUID(), randomString(),
+    public static AssociatedFile randomAssociatedArtifact() {
+        return new AssociatedFile(FileType.PUBLISHED_FILE.getValue(), UUID.randomUUID(), randomString(),
                 randomString(), randomInteger().longValue(), randomLicense(), randomBoolean(),
                 randomBoolean(), randomInstant());
+    }
+
+    private static AssociatedLink randomAssociatedLink() {
+        return new AssociatedLink(randomUri(), randomString(), randomString(), null);
     }
 
     private static License randomLicense() {
