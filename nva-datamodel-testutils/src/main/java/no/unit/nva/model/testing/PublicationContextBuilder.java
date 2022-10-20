@@ -99,12 +99,12 @@ public class PublicationContextBuilder {
             case "OtherPresentation":
                 return randomPresentation();
             case "MediaFeatureArticle":
+            case "MediaReaderOpinion":
                 return randomMediaContributionPeriodical();
             case "MediaBlogPost":
             case "MediaInterview":
             case "MediaParticipationInRadioOrTv":
             case "MediaPodcast":
-            case "MediaReaderOpinion":
                 return randomMediaContribution();
             case "DataManagementPlan":
             case "DataSet":
@@ -126,10 +126,11 @@ public class PublicationContextBuilder {
 
     private static PublicationContext randomMediaContributionPeriodical() {
         return randomBoolean()
-            ? new MediaContributionPeriodical(randomUri().toString())
+            ? new MediaContributionPeriodical(randomPublicationChannelsUri())
             : attempt(() -> new UnconfirmedMediaContributionPeriodical(randomString(),
                 randomIssn(), randomIssn())).orElseThrow();
     }
+
     private static MediaContribution randomMediaContribution() {
         return new MediaContribution.Builder()
             .withMedium(generateRandomMedium())
@@ -236,7 +237,7 @@ public class PublicationContextBuilder {
     }
 
     private static Journal randomJournal() {
-        return new Journal(randomPublicationChannelsUri().toString());
+        return new Journal(randomPublicationChannelsUri());
     }
 
     private static URI randomPublicationChannelsUri() {

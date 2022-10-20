@@ -25,6 +25,4 @@ public class MediaFeatureArticle extends JournalNonPeerReviewedContent {
         super(volume, issue, articleNumber, pages);
     }
 
-
-
 }

@@ -345,7 +345,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static MediaReaderOpinion generateMediaReaderOpinion() {
-        return new MediaReaderOpinion();
+        return new MediaReaderOpinion(randomVolume(), randomIssue(), randomArticleNumber(), randomRange());
     }
 
     private static MediaPodcast generateMediaPodcast() {
