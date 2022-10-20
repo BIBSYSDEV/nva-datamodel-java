@@ -10,12 +10,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import no.unit.nva.WithContext;
-import no.unit.nva.WithFile;
+import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithId;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
-import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Organization;
@@ -29,7 +28,8 @@ import nva.commons.core.JacocoGenerated;
 @SuppressWarnings("PMD.TooManyFields")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
-public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithId, WithContext {
+public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId,
+        WithContext {
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -42,7 +42,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private URI handle;
     private URI link;
     private EntityDescription entityDescription;
-    private FileSet fileSet;
     private URI doi;
     @JsonProperty("@context")
     private JsonNode context;
@@ -63,7 +62,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setHandle(publication.getHandle());
         response.setLink(publication.getLink());
         response.setEntityDescription(publication.getEntityDescription());
-        response.setFileSet(publication.getFileSet());
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         response.setDoi(publication.getDoi());
         response.setProjects(publication.getProjects());
@@ -71,16 +69,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setContext(PublicationContext.getContext());
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         return response;
-    }
-
-    @Override
-    public FileSet getFileSet() {
-        return fileSet;
-    }
-
-    @Override
-    public void setFileSet(FileSet fileSet) {
-        this.fileSet = fileSet;
     }
 
     @Override
@@ -235,10 +223,12 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
 
+    @Override
     public List<AssociatedArtifact> getAssociatedArtifacts() {
         return associatedArtifacts;
     }
 
+    @Override
     public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
     }
@@ -264,7 +254,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                 && Objects.equals(getHandle(), that.getHandle())
                 && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                && Objects.equals(getFileSet(), that.getFileSet())
                 && Objects.equals(getDoi(), that.getDoi())
                 && Objects.equals(getContext(), that.getContext())
                 && Objects.equals(getProjects(), that.getProjects())
@@ -277,6 +266,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public int hashCode() {
         return Objects.hash(getIdentifier(), getStatus(), getResourceOwner(), getPublisher(), getCreatedDate(),
                 getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(), getEntityDescription(),
-                getFileSet(), getDoi(), getContext(), getProjects(), getSubjects(), getAssociatedArtifacts());
+                getDoi(), getContext(), getProjects(), getSubjects(), getAssociatedArtifacts());
     }
 }

@@ -8,34 +8,27 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.List;
 import java.util.UUID;
-import no.unit.nva.file.model.File;
-import no.unit.nva.file.model.FileSet;
 import no.unit.nva.file.model.FileType;
 import no.unit.nva.file.model.License;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedFile;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
-public class FileSetGenerator {
+public final class AssociatedArtifactsGenerator {
 
-    public static FileSet randomFileSet() {
-        return new FileSet(randomFiles());
+    private AssociatedArtifactsGenerator() {
+        // NO-OP
     }
 
-    private static List<File> randomFiles() {
-        return List.of(randomFile());
+    public static List<AssociatedArtifact> randomAssociatedArtifacts() {
+        return List.of(randomAssociatedArtifact());
     }
 
-    private static File randomFile() {
-        return new File.Builder()
-                   .withType(FileType.PUBLISHED_FILE)
-                   .withIdentifier(UUID.randomUUID())
-                   .withLicense(randomLicense())
-                   .withName(randomString())
-                   .withAdministrativeAgreement(randomBoolean())
-                   .withEmbargoDate(randomInstant())
-                   .withMimeType(randomString())
-                   .withSize(randomInteger().longValue())
-                   .build();
+    private static AssociatedFile randomAssociatedArtifact() {
+        return new AssociatedFile(FileType.PUBLISHED_FILE, UUID.randomUUID(), randomString(),
+                randomString(), randomInteger().longValue(), randomLicense(), randomBoolean(),
+                randomBoolean(), randomInstant());
     }
 
     private static License randomLicense() {

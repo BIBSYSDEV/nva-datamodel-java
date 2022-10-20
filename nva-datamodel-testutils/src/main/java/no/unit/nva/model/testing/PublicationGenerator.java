@@ -37,20 +37,6 @@ public final class PublicationGenerator {
 
     }
 
-    @JacocoGenerated
-    public static Publication publicationWithIdentifier() {
-        return randomPublication();
-    }
-
-    @JacocoGenerated
-    public static Publication publicationWithoutIdentifier() {
-        var publication = randomPublication();
-        publication.setIdentifier(null);
-        return publication;
-    }
-
-
-
     public static URI randomUri() {
         String uriString = "https://www.example.org/" + randomWord() + randomWord();
         return URI.create(uriString);
@@ -78,7 +64,7 @@ public final class PublicationGenerator {
             .withDoi(randomDoi())
             .withCreatedDate(randomInstant())
             .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-            .withFileSet(FileSetGenerator.randomFileSet())
+            .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
             .build();
 
         assertThat(publication, doesNotHaveEmptyValues());

@@ -13,24 +13,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import no.unit.nva.WithFile;
+import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.commons.json.JsonUtils;
-import no.unit.nva.file.model.File;
-import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
-import no.unit.nva.model.associatedartifacts.AssociatedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields", "PMD.GodClass"})
 public class Publication
-    implements WithIdentifier, WithInternal, WithFile, WithMetadata, WithCopy<Publication.Builder> {
+    implements WithIdentifier, WithInternal, WithAssociatedArtifact, WithMetadata, WithCopy<Publication.Builder> {
     
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
@@ -55,7 +51,6 @@ public class Publication
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
     
-    private FileSet fileSet;
     private List<AssociatedArtifact> associatedArtifacts;
     
     public Publication() {
@@ -209,41 +204,7 @@ public class Publication
     public void setSubjects(List<URI> subjects) {
         this.subjects = subjects;
     }
-    
-    @Override
-    public FileSet getFileSet() {
-        return isNotNullOrEmptyFileSet(this.fileSet) ? fileSet : new FileSet(Collections.emptyList());
-    }
-    
-    private boolean isNotNullOrEmptyFileSet(FileSet fileSet) {
-        return fileSet != null && nonNull(fileSet.getFiles());
-    }
-    
-    @Override
-    public void setFileSet(FileSet fileSet) {
-        this.fileSet = isNotNullOrEmptyFileSet(fileSet) ? fileSet : new FileSet(Collections.emptyList());
-        
-        temporarySetterForAssociatedArtifactsUntilFileSetIsRemoved();
-    }
-    
-    private List<AssociatedArtifact> toAssociatedArtifacts(FileSet fileSet) {
-        return fileSet.getFiles().stream()
-                   .map(Publication::toAssociatedArtifact)
-                   .map(AssociatedArtifact.class::cast)
-                   .collect(Collectors.toList());
-    }
-    
-    private static AssociatedFile toAssociatedArtifact(File file) {
-        return new AssociatedFile(file.getType(), file.getIdentifier(),
-            file.getName(), file.getMimeType(), file.getSize(), file.getLicense(),
-            file.isAdministrativeAgreement(), file.isPublisherAuthority(),
-            file.getEmbargoDate().orElse(null));
-    }
-    
-    private void temporarySetterForAssociatedArtifactsUntilFileSetIsRemoved() {
-        this.associatedArtifacts = toAssociatedArtifacts(fileSet);
-    }
-    
+
     @JsonProperty("modelVersion")
     public String getModelVersion() {
         return MODEL_VERSION;
@@ -253,14 +214,15 @@ public class Publication
     public void setModelVersion() {
         // NO-OP
     }
-    
+
+    @Override
     public List<AssociatedArtifact> getAssociatedArtifacts() {
         return nonNull(associatedArtifacts) ? associatedArtifacts : Collections.emptyList();
     }
-    
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.UnusedPrivateMethod"})
-    private void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
-        // NO-OP
+
+    @Override
+    public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+        this.associatedArtifacts = associatedArtifacts;
     }
     
     @Override
@@ -278,9 +240,9 @@ public class Publication
                    .withDoi(getDoi())
                    .withLink(getLink())
                    .withEntityDescription(getEntityDescription())
-                   .withFileSet(getFileSet())
                    .withProjects(getProjects())
                    .withAdditionalIdentifiers(getAdditionalIdentifiers())
+                   .withAssociatedArtifacts(getAssociatedArtifacts())
                    .withSubjects(getSubjects());
     }
     
@@ -300,7 +262,8 @@ public class Publication
     public int hashCode() {
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
             getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
-            getEntityDescription(), getFileSet(), getProjects(), getAdditionalIdentifiers(), getSubjects());
+            getEntityDescription(), getProjects(), getAdditionalIdentifiers(), getSubjects(),
+            getAssociatedArtifacts());
     }
     
     @JacocoGenerated
@@ -325,7 +288,7 @@ public class Publication
                              && Objects.equals(getDoi(), that.getDoi())
                              && Objects.equals(getLink(), that.getLink())
                              && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                             && Objects.equals(getFileSet(), that.getFileSet())
+                             && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
                              && Objects.equals(getProjects(), that.getProjects())
                              && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                              && Objects.equals(getSubjects(), that.getSubjects());
@@ -408,8 +371,8 @@ public class Publication
             return this;
         }
         
-        public Builder withFileSet(FileSet fileSet) {
-            publication.setFileSet(fileSet);
+        public Builder withAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+            publication.setAssociatedArtifacts(associatedArtifacts);
             return this;
         }
         
