@@ -2,40 +2,36 @@ package no.unit.nva.model.associatedartifacts;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonValue;
-import nva.commons.core.JacocoGenerated;
-import nva.commons.core.SingletonCollector;
-
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
+import nva.commons.core.SingletonCollector;
 
-import static java.util.Objects.nonNull;
-
+@JsonTypeInfo(use= Id.NAME, property = "type")
 public class AssociatedLink implements AssociatedArtifact {
 
     public static final String ID_FIELD = "id";
     public static final String NAME_FIELD = "name";
     public static final String DESCRIPTION_FIELD = "description";
-    public static final String TYPE_FIELD = "type";
     @JsonProperty(ID_FIELD)
     private final URI id;
     @JsonProperty(NAME_FIELD)
     private final String name;
     @JsonProperty(DESCRIPTION_FIELD)
     private final String description;
-    @JsonProperty(TYPE_FIELD)
-    private final RelationType type;
+    
 
     @JsonCreator
     public AssociatedLink(@JsonProperty(ID_FIELD) URI id,
                           @JsonProperty(NAME_FIELD) String name,
-                          @JsonProperty(DESCRIPTION_FIELD) String description,
-                          @JsonProperty(TYPE_FIELD) RelationType type) {
+                          @JsonProperty(DESCRIPTION_FIELD) String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.type = nonNull(type) ? type : RelationType.GENERIC_LINKED_RESOURCE;
     }
 
     public URI getId() {
@@ -50,10 +46,7 @@ public class AssociatedLink implements AssociatedArtifact {
         return description;
     }
 
-    public String getType() {
-        return type.getType();
-    }
-
+    
     @Override
     @JacocoGenerated
     public boolean equals(Object o) {
@@ -66,14 +59,13 @@ public class AssociatedLink implements AssociatedArtifact {
         AssociatedLink that = (AssociatedLink) o;
         return Objects.equals(getId(), that.getId())
                 && Objects.equals(getName(), that.getName())
-                && Objects.equals(getDescription(), that.getDescription())
-                && getType() == that.getType();
+                && Objects.equals(getDescription(), that.getDescription());
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getDescription(), getType());
+        return Objects.hash(getId(), getName(), getDescription());
     }
 
     public enum RelationType {

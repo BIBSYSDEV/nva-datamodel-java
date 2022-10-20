@@ -8,32 +8,35 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.List;
 import java.util.UUID;
-import no.unit.nva.file.model.FileType;
-import no.unit.nva.file.model.License;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
-import no.unit.nva.model.associatedartifacts.AssociatedFile;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.AssociatedLink;
+import no.unit.nva.model.file.File;
+import no.unit.nva.model.file.License;
+import no.unit.nva.model.file.PublishedFile;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
 public final class AssociatedArtifactsGenerator {
-
+    
+    private static final boolean NOT_ADMINISTRATIVE_AGREEMENT = false;
+    
     private AssociatedArtifactsGenerator() {
         // NO-OP
     }
 
     public static List<AssociatedArtifact> randomAssociatedArtifacts() {
-        return List.of(randomAssociatedArtifact());
+        return new AssociatedArtifactList(randomFile(),randomAssociatedLink());
     }
 
-    public static AssociatedFile randomAssociatedArtifact() {
-        return new AssociatedFile(FileType.PUBLISHED_FILE.getValue(), UUID.randomUUID(), randomString(),
-                randomString(), randomInteger().longValue(), randomLicense(), randomBoolean(),
+    public static File randomFile() {
+        return new PublishedFile(UUID.randomUUID(), randomString(),
+                randomString(), randomInteger().longValue(), randomLicense(), NOT_ADMINISTRATIVE_AGREEMENT,
                 randomBoolean(), randomInstant());
     }
 
     private static AssociatedLink randomAssociatedLink() {
-        return new AssociatedLink(randomUri(), randomString(), randomString(), null);
+        return new AssociatedLink(randomUri(), randomString(), randomString());
     }
 
     private static License randomLicense() {

@@ -13,7 +13,6 @@ version '0.19.2'
 
 
 repositories {
-    mavenLocal()
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
@@ -23,7 +22,7 @@ test {
     useJUnitPlatform{
         excludeTags "migrationTest"
     }
-    failFast = true
+    failFast = false
     environment "ID_NAMESPACE", "https://www.example.org"
     environment "DATAMODEL_VERSION", "${project.version}"
     finalizedBy(jacocoTestReport)

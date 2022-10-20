@@ -1,7 +1,6 @@
 package no.unit.nva.model;
 
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,9 +11,6 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
-import no.unit.nva.model.associatedartifacts.AssociatedFile;
-import no.unit.nva.model.testing.AssociatedArtifactsGenerator;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -40,7 +36,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
 
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
-    public void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
+    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
 
         Publication publication = PublicationGenerator.randomPublication();
 

@@ -20,6 +20,7 @@ import no.unit.nva.WithMetadata;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
 
@@ -50,8 +51,7 @@ public class Publication
     private List<ResearchProject> projects;
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
-    
-    private List<AssociatedArtifact> associatedArtifacts;
+    private AssociatedArtifactList associatedArtifacts;
     
     public Publication() {
     
@@ -216,12 +216,12 @@ public class Publication
     }
 
     @Override
-    public List<AssociatedArtifact> getAssociatedArtifacts() {
-        return nonNull(associatedArtifacts) ? associatedArtifacts : Collections.emptyList();
+    public AssociatedArtifactList getAssociatedArtifacts() {
+        return nonNull(associatedArtifacts) ? associatedArtifacts : AssociatedArtifactList.empty();
     }
 
     @Override
-    public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+    public void setAssociatedArtifacts(AssociatedArtifactList associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
     }
     
@@ -372,7 +372,7 @@ public class Publication
         }
         
         public Builder withAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
-            publication.setAssociatedArtifacts(associatedArtifacts);
+            publication.setAssociatedArtifacts(new AssociatedArtifactList(associatedArtifacts));
             return this;
         }
         

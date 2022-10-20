@@ -9,8 +9,8 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import no.unit.nva.WithContext;
 import no.unit.nva.WithAssociatedArtifact;
+import no.unit.nva.WithContext;
 import no.unit.nva.WithId;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
@@ -22,7 +22,7 @@ import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
-import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
@@ -47,7 +47,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private JsonNode context;
     private List<ResearchProject> projects;
     private List<URI> subjects;
-    private List<AssociatedArtifact> associatedArtifacts;
+    private AssociatedArtifactList associatedArtifacts;
 
     public static PublicationResponse fromPublication(Publication publication) {
         var response = new PublicationResponse();
@@ -224,12 +224,12 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
 
 
     @Override
-    public List<AssociatedArtifact> getAssociatedArtifacts() {
+    public AssociatedArtifactList getAssociatedArtifacts() {
         return associatedArtifacts;
     }
 
     @Override
-    public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+    public void setAssociatedArtifacts(AssociatedArtifactList associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
     }
 
