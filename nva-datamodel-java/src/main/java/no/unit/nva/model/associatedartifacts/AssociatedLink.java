@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.net.URI;
 import java.util.Arrays;
@@ -12,11 +13,13 @@ import nva.commons.core.JacocoGenerated;
 import nva.commons.core.SingletonCollector;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
+@JsonTypeName(AssociatedLink.TYPE_NAME)
 public class AssociatedLink implements AssociatedArtifact {
 
     public static final String ID_FIELD = "id";
     public static final String NAME_FIELD = "name";
     public static final String DESCRIPTION_FIELD = "description";
+    public static final String TYPE_NAME = "AssociatedLink";
     @JsonProperty(ID_FIELD)
     private final URI id;
     @JsonProperty(NAME_FIELD)
