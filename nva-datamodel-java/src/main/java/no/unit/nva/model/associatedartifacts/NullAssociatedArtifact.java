@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 @JsonTypeInfo(use = Id.NAME, property = "type")
 public class NullAssociatedArtifact implements AssociatedArtifact {
 
-    private static final int STATIC_VALUE_FOR_HASH_CODE = 88961;
+    private static final int STATIC_VALUE_FOR_HASH_CODE = 88_961;
 
     public NullAssociatedArtifact() {
         // NO-OP

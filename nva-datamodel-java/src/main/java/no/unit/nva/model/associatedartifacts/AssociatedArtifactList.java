@@ -111,17 +111,10 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
         associatedArtifacts.clear();
     }
 
-    @Override
     @JacocoGenerated
+    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof AssociatedArtifactList)) {
-            return false;
-        }
-        AssociatedArtifactList that = (AssociatedArtifactList) o;
-        return Objects.equals(associatedArtifacts, that.associatedArtifacts);
+        return associatedArtifacts.equals(o);
     }
 
     @Override
