@@ -67,7 +67,7 @@ class PublicationTest {
             throws InvalidAssociatedArtifactsException, JsonProcessingException {
         var publication = PublicationGenerator.randomPublication();
         publication.setAssociatedArtifacts(new AssociatedArtifactList(new NullAssociatedArtifact()));
-        String serialized = dataModelObjectMapper.writeValueAsString(publication);
+        var serialized = dataModelObjectMapper.writeValueAsString(publication);
         var deserialized = dataModelObjectMapper.readValue(serialized, Publication.class);
         assertThat(deserialized, is(equalTo(publication)));
     }
