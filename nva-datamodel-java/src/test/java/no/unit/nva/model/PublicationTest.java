@@ -16,6 +16,8 @@ import com.github.jsonldjava.utils.JsonUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Set;
+
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.util.ContextUtil;
 import org.javers.core.Javers;
@@ -32,13 +34,13 @@ class PublicationTest {
 
     
     @Test
-    void getModelVersionReturnsModelVersionDefinedByGradle() {
+    void getModelVersionReturnsModelVersionDefinedByGradle() throws InvalidAssociatedArtifactsException {
         Publication samplePublication = PublicationGenerator.randomPublication();
         assertThat(samplePublication.getModelVersion(), is(equalTo(ResourcesBuildConfig.RESOURCES_MODEL_VERSION)));
     }
 
     @Test
-    void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields() {
+    void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields() throws InvalidAssociatedArtifactsException {
         Publication samplePublication = PublicationGenerator.randomPublication();
         Publication copy = samplePublication.copy().build();
 
@@ -51,7 +53,7 @@ class PublicationTest {
 
     @Test
     void objectMapperReturnsSerializationWithAllFieldsSerialized()
-        throws JsonProcessingException {
+            throws JsonProcessingException, InvalidAssociatedArtifactsException {
         Publication samplePublication = PublicationGenerator.randomPublication();
         String jsonString = dataModelObjectMapper.writeValueAsString(samplePublication);
         Publication copy = dataModelObjectMapper.readValue(jsonString, Publication.class);

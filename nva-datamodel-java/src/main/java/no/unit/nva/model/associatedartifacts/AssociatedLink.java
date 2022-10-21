@@ -11,7 +11,7 @@ import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.SingletonCollector;
 
-@JsonTypeInfo(use= Id.NAME, property = "type")
+@JsonTypeInfo(use = Id.NAME, property = "type")
 public class AssociatedLink implements AssociatedArtifact {
 
     public static final String ID_FIELD = "id";

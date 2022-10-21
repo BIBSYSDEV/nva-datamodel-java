@@ -2,7 +2,7 @@ package no.unit.nva.model.associatedartifacts;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.file.File;
+import no.unit.nva.model.associatedartifacts.file.File;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({

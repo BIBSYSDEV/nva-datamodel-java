@@ -9,19 +9,22 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class AssociatedArtifactList implements List<AssociatedArtifact> {
-    
+
+    public static final String NULL_OBJECT_MUST_BE_SINGLETON_IN_LIST = "AssociatedArtifactLists containing "
+            + "NullAssociatedArtifact must contain only this element as a singleton";
     private final List<AssociatedArtifact> associatedArtifacts;
     
     @JsonCreator
-    public AssociatedArtifactList(List<AssociatedArtifact> artifacts) {
+    public AssociatedArtifactList(List<AssociatedArtifact> artifacts) throws InvalidAssociatedArtifactsException {
+        throwExceptionIfNullObjectIsNotSingleton(artifacts);
         this.associatedArtifacts = artifacts;
     }
-    
-    public AssociatedArtifactList(AssociatedArtifact... artifacts) {
-        this.associatedArtifacts = Arrays.asList(artifacts);
+
+    public AssociatedArtifactList(AssociatedArtifact... artifacts) throws InvalidAssociatedArtifactsException {
+        this(Arrays.asList(artifacts));
     }
     
-    public static AssociatedArtifactList empty() {
+    public static AssociatedArtifactList empty() throws InvalidAssociatedArtifactsException {
         return new AssociatedArtifactList(Collections.emptyList());
     }
     
@@ -59,12 +62,22 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public boolean add(AssociatedArtifact associatedArtifact) {
         return associatedArtifacts.add(associatedArtifact);
     }
-    
+
+    @Override
+    public void add(int index, AssociatedArtifact element) {
+        associatedArtifacts.add(index, element);
+    }
+
     @Override
     public boolean remove(Object o) {
         return associatedArtifacts.remove(o);
     }
-    
+
+    @Override
+    public AssociatedArtifact remove(int index) {
+        return associatedArtifacts.remove(index);
+    }
+
     @Override
     public boolean containsAll(Collection<?> c) {
         return associatedArtifacts.containsAll(c);
@@ -114,17 +127,7 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public AssociatedArtifact set(int index, AssociatedArtifact element) {
         return associatedArtifacts.set(index, element);
     }
-    
-    @Override
-    public void add(int index, AssociatedArtifact element) {
-        associatedArtifacts.add(index, element);
-    }
-    
-    @Override
-    public AssociatedArtifact remove(int index) {
-        return associatedArtifacts.remove(index);
-    }
-    
+
     @Override
     public int indexOf(Object o) {
         return associatedArtifacts.indexOf(o);
@@ -148,5 +151,16 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     @Override
     public List<AssociatedArtifact> subList(int fromIndex, int toIndex) {
         return associatedArtifacts.subList(fromIndex, toIndex);
+    }
+
+    private void throwExceptionIfNullObjectIsNotSingleton(List<AssociatedArtifact> artifacts)
+            throws InvalidAssociatedArtifactsException {
+        if (containsNullObject(artifacts) && artifacts.size() > 1) {
+            throw new InvalidAssociatedArtifactsException(NULL_OBJECT_MUST_BE_SINGLETON_IN_LIST);
+        }
+    }
+
+    private boolean containsNullObject(List<AssociatedArtifact> artifacts) {
+        return artifacts.stream().anyMatch(NullAssociatedArtifact.class::isInstance);
     }
 }

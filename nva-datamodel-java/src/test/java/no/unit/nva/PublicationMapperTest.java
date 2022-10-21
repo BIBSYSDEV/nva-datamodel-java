@@ -13,6 +13,7 @@ import java.util.Set;
 import no.unit.nva.api.PublicationResponse;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +38,7 @@ class PublicationMapperTest {
     }
 
     @Test
-    void canMapPublicationToPublicationResponse() {
+    void canMapPublicationToPublicationResponse() throws InvalidAssociatedArtifactsException {
         Publication publication = PublicationGenerator.randomPublication();
 
         PublicationResponse response = PublicationMapper

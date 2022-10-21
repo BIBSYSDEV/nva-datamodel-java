@@ -1,4 +1,4 @@
-package no.unit.nva.model.file;
+package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
 import com.fasterxml.jackson.annotation.JsonProperty;

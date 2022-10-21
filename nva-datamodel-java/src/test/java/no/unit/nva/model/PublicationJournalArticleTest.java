@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -36,7 +37,8 @@ public class PublicationJournalArticleTest extends PublicationTest {
 
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
-    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
+    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame()
+            throws IOException, InvalidAssociatedArtifactsException {
 
         Publication publication = PublicationGenerator.randomPublication();
 
@@ -50,7 +52,8 @@ public class PublicationJournalArticleTest extends PublicationTest {
     @DisplayName("Test publications can be serialized/deserialized")
     @ParameterizedTest(name = "Test Publication context Journal with Instance type {0} can be (de-)serialized")
     @MethodSource("journalArticleInstanceTypes")
-    void publicationReturnsJsonWhenInputIsValid(Class<?> publicationInstanceClass) throws IOException {
+    void publicationReturnsJsonWhenInputIsValid(Class<?> publicationInstanceClass)
+            throws IOException, InvalidAssociatedArtifactsException {
         Publication publication = PublicationGenerator.randomPublication(publicationInstanceClass);
         JsonNode document = toPublicationWithContext(publication);
         String content = dataModelObjectMapper.writeValueAsString(document);

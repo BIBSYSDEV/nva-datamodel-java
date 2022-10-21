@@ -55,6 +55,9 @@ schema:
         format: uri
     associatedArtifacts:
       type: array
+      properties:
+        empty:
+          type: boolean
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     modelVersion:
@@ -226,40 +229,19 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
-  AssociatedFile:
-    type: object
-    allOf:
-    - $ref: '#/components/schemas/AssociatedArtifact'
-    - type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - File
-          - PublishedFile
-          - UnpublishedFile
-          - UnpublishableFile
-        identifier:
-          type: string
-          format: uuid
-        name:
-          type: string
-        mimeType:
-          type: string
-        size:
-          type: integer
-          format: int64
-        license:
-          $ref: '#/components/schemas/License'
-        administrativeAgreement:
-          type: boolean
-        publisherAuthority:
-          type: boolean
-        embargoDate:
-          type: string
-          format: date-time
+  AssociatedArtifactList:
+    type: array
+    properties:
+      empty:
+        type: boolean
+    items:
+      $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
+    required:
+    - type
     type: object
+    discriminator:
+      propertyName: type
     allOf:
     - $ref: '#/components/schemas/AssociatedArtifact'
     - type: object
@@ -273,8 +255,6 @@ referencedSchemas:
           type: string
         type:
           type: string
-          enum:
-          - GenericLinkedDocument
   AudioVisualPublication:
     required:
     - type
@@ -939,6 +919,39 @@ referencedSchemas:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+  File:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifact'
+    - type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+        name:
+          type: string
+        mimeType:
+          type: string
+        size:
+          type: integer
+          format: int64
+        license:
+          $ref: '#/components/schemas/License'
+        administrativeAgreement:
+          type: boolean
+        publisherAuthority:
+          type: boolean
+        embargoDate:
+          type: string
+          format: date-time
+        visibleForNonOwner:
+          type: boolean
+        type:
+          type: string
   GeographicalContent:
     required:
     - type
@@ -1215,6 +1228,18 @@ referencedSchemas:
       properties:
         pages:
           $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  LegacyFile:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/File'
+    - type: object
+      properties:
         type:
           type: string
   License:
@@ -1930,6 +1955,9 @@ referencedSchemas:
           format: uri
       associatedArtifacts:
         type: array
+        properties:
+          empty:
+            type: boolean
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       modelVersion:
@@ -1975,6 +2003,18 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  PublishedFile:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/File'
+    - type: object
+      properties:
+        type:
+          type: string
   Publisher:
     required:
     - type
@@ -2266,6 +2306,18 @@ referencedSchemas:
           type: string
         onlineIssn:
           type: string
+        type:
+          type: string
+  UnpublishableFile:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/File'
+    - type: object
+      properties:
         type:
           type: string
   Venue:

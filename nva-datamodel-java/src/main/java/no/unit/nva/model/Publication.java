@@ -21,6 +21,7 @@ import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
 
@@ -217,7 +218,9 @@ public class Publication
 
     @Override
     public AssociatedArtifactList getAssociatedArtifacts() {
-        return nonNull(associatedArtifacts) ? associatedArtifacts : AssociatedArtifactList.empty();
+        return nonNull(associatedArtifacts)
+                ? associatedArtifacts
+                : attempt(AssociatedArtifactList::empty).orElseThrow();
     }
 
     @Override
@@ -226,7 +229,7 @@ public class Publication
     }
     
     @Override
-    public Builder copy() {
+    public Builder copy() throws InvalidAssociatedArtifactsException {
         return new Builder()
                    .withIdentifier(getIdentifier())
                    .withStatus(getStatus())
@@ -371,7 +374,8 @@ public class Publication
             return this;
         }
         
-        public Builder withAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+        public Builder withAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts)
+                throws InvalidAssociatedArtifactsException {
             publication.setAssociatedArtifacts(new AssociatedArtifactList(associatedArtifacts));
             return this;
         }

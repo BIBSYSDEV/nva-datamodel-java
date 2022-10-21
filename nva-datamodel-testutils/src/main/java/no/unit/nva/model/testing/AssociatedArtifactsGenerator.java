@@ -11,9 +11,10 @@ import java.util.UUID;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.AssociatedLink;
-import no.unit.nva.model.file.File;
-import no.unit.nva.model.file.License;
-import no.unit.nva.model.file.PublishedFile;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
+import no.unit.nva.model.associatedartifacts.file.File;
+import no.unit.nva.model.associatedartifacts.file.License;
+import no.unit.nva.model.associatedartifacts.file.PublishedFile;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -25,7 +26,7 @@ public final class AssociatedArtifactsGenerator {
         // NO-OP
     }
 
-    public static List<AssociatedArtifact> randomAssociatedArtifacts() {
+    public static List<AssociatedArtifact> randomAssociatedArtifacts() throws InvalidAssociatedArtifactsException {
         return new AssociatedArtifactList(randomFile(),randomAssociatedLink());
     }
 
@@ -35,7 +36,7 @@ public final class AssociatedArtifactsGenerator {
                 randomBoolean(), randomInstant());
     }
 
-    private static AssociatedLink randomAssociatedLink() {
+    public static AssociatedLink randomAssociatedLink() {
         return new AssociatedLink(randomUri(), randomString(), randomString());
     }
 

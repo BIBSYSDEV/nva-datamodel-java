@@ -23,6 +23,7 @@ import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
@@ -49,7 +50,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
 
-    public static PublicationResponse fromPublication(Publication publication) {
+    public static PublicationResponse fromPublication(Publication publication)
+            throws InvalidAssociatedArtifactsException {
         var response = new PublicationResponse();
         response.setIdentifier(publication.getIdentifier());
         response.setStatus(publication.getStatus());

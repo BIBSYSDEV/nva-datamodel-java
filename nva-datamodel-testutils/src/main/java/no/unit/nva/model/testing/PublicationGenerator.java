@@ -24,6 +24,7 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -42,11 +43,12 @@ public final class PublicationGenerator {
         return URI.create(uriString);
     }
 
-    public static Publication randomPublication() {
+    public static Publication randomPublication() throws InvalidAssociatedArtifactsException {
         return randomPublication(randomPublicationInstanceType());
     }
 
-    public static Publication randomPublication(Class<?> publicationInstanceClass) {
+    public static Publication randomPublication(Class<?> publicationInstanceClass)
+            throws InvalidAssociatedArtifactsException {
 
         Publication publication = new Builder()
             .withIdentifier(SortableIdentifier.next())

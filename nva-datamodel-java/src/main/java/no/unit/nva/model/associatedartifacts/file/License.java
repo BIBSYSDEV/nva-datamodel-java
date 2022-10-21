@@ -1,4 +1,4 @@
-package no.unit.nva.model.file;
+package no.unit.nva.model.associatedartifacts.file;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;

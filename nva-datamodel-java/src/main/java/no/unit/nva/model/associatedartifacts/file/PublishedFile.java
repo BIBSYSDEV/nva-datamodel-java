@@ -1,4 +1,4 @@
-package no.unit.nva.model.file;
+package no.unit.nva.model.associatedartifacts.file;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,11 +8,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
 
+
 @JsonTypeInfo(use = Id.NAME, property = "type")
-@JsonTypeName(UnpublishedFile.TYPE)
-public class UnpublishedFile extends File {
+@JsonTypeName(PublishedFile.TYPE)
+public class PublishedFile extends File {
     
-    public static final String TYPE = "UnpublishedFile";
+    public static final String TYPE = "PublishedFile";
     
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
@@ -29,7 +30,7 @@ public class UnpublishedFile extends File {
      * @param embargoDate             The date after which the file may be published
      */
     @JsonCreator
-    public UnpublishedFile(
+    public PublishedFile(
         @JsonProperty(IDENTIFIER_FIELD) UUID identifier,
         @JsonProperty(NAME_FIELD) String name,
         @JsonProperty(MIME_TYPE_FIELD) String mimeType,
@@ -46,6 +47,6 @@ public class UnpublishedFile extends File {
     
     @Override
     public boolean isVisibleForNonOwner() {
-        return false;
+        return !isAdministrativeAgreement() && fileDoesNotHaveActiveEmbargo();
     }
 }

@@ -5,6 +5,7 @@ import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
+import static no.unit.nva.model.testing.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,6 +29,9 @@ import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
+import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
@@ -35,6 +39,7 @@ import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -69,7 +74,8 @@ public class PublicationTest extends ModelTest {
     
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @MethodSource("publicationInstanceProvider")
-    void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType) {
+    void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType)
+            throws InvalidAssociatedArtifactsException {
         Publication publication = PublicationGenerator.randomPublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThatPublicationDoesNotHaveEmptyFields(publication);
@@ -80,7 +86,8 @@ public class PublicationTest extends ModelTest {
     
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
-    void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType) {
+    void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType)
+            throws InvalidAssociatedArtifactsException {
         Publication expected = PublicationGenerator.randomPublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));
     }
@@ -96,7 +103,7 @@ public class PublicationTest extends ModelTest {
     }
     
     @Test
-    void updateStatusThrowsExceptionForInvalidStatusTransition() {
+    void updateStatusThrowsExceptionForInvalidStatusTransition() throws InvalidAssociatedArtifactsException {
         Publication publication = PublicationGenerator.randomPublication();
         publication.setStatus(NEW);
         
@@ -113,7 +120,14 @@ public class PublicationTest extends ModelTest {
     void initializingPublicationShouldNotThrowException() {
         assertDoesNotThrow(Publication::new);
     }
-    
+
+    @Test
+    void shouldThrowExceptionWhenCreatingAssociatedArtifactsWithNullArtifactsAndOtherArtifacts() {
+        Executable executable = () -> new AssociatedArtifactList(randomAssociatedLink(),
+                new NullAssociatedArtifact());
+        assertThrows(InvalidAssociatedArtifactsException.class, executable);
+    }
+
     private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
         assertThat(expected, doesNotHaveEmptyValues());
     }
