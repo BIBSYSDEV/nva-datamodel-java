@@ -53,10 +53,11 @@ schema:
       items:
         type: string
         format: uri
-    fileSet:
-      $ref: '#/components/schemas/FileSet'
     associatedArtifacts:
       type: array
+      properties:
+        empty:
+          type: boolean
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     modelVersion:
@@ -220,42 +221,40 @@ referencedSchemas:
         type: string
         writeOnly: true
   AssociatedArtifact:
+    required:
+    - type
     type: object
     properties:
       type:
         type: string
-        writeOnly: true
-        enum:
-        - File
-        - PublishedFile
-        - UnpublishedFile
-        - UnpublishableFile
-      identifier:
-        type: string
-        format: uuid
-        writeOnly: true
-      name:
-        type: string
-        writeOnly: true
-      mimeType:
-        type: string
-        writeOnly: true
-      size:
-        type: integer
-        format: int64
-        writeOnly: true
-      license:
-        $ref: '#/components/schemas/License'
-      administrativeAgreement:
+    discriminator:
+      propertyName: type
+  AssociatedArtifactList:
+    type: array
+    properties:
+      empty:
         type: boolean
-        writeOnly: true
-      publisherAuthority:
-        type: boolean
-        writeOnly: true
-      embargoDate:
-        type: string
-        format: date-time
-        writeOnly: true
+    items:
+      $ref: '#/components/schemas/AssociatedArtifact'
+  AssociatedLink:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifact'
+    - type: object
+      properties:
+        id:
+          type: string
+          format: uri
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
   AudioVisualPublication:
     required:
     - type
@@ -921,47 +920,38 @@ referencedSchemas:
         type:
           type: string
   File:
-    type: object
-    properties:
-      type:
-        type: string
-        enum:
-        - File
-        - PublishedFile
-        - UnpublishedFile
-        - UnpublishableFile
-      identifier:
-        type: string
-        format: uuid
-      name:
-        type: string
-      mimeType:
-        type: string
-      size:
-        type: integer
-        format: int64
-      license:
-        $ref: '#/components/schemas/License'
-      administrativeAgreement:
-        type: boolean
-      publisherAuthority:
-        type: boolean
-      embargoDate:
-        type: string
-        format: date-time
-  FileSet:
     required:
     - type
     type: object
-    properties:
-      files:
-        type: array
-        items:
-          $ref: '#/components/schemas/File'
-      type:
-        type: string
     discriminator:
       propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifact'
+    - type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+        name:
+          type: string
+        mimeType:
+          type: string
+        size:
+          type: integer
+          format: int64
+        license:
+          $ref: '#/components/schemas/License'
+        administrativeAgreement:
+          type: boolean
+        publisherAuthority:
+          type: boolean
+        embargoDate:
+          type: string
+          format: date-time
+        visibleForNonOwner:
+          type: boolean
+        type:
+          type: string
   GeographicalContent:
     required:
     - type
@@ -1238,6 +1228,18 @@ referencedSchemas:
       properties:
         pages:
           $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+  LegacyFile:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/File'
+    - type: object
+      properties:
         type:
           type: string
   License:
@@ -1701,6 +1703,18 @@ referencedSchemas:
         type: string
       premiere:
         type: boolean
+  NullAssociatedArtifact:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/AssociatedArtifact'
+    - type: object
+      properties:
+        type:
+          type: string
   NullPages:
     required:
     - type
@@ -1951,10 +1965,11 @@ referencedSchemas:
         items:
           type: string
           format: uri
-      fileSet:
-        $ref: '#/components/schemas/FileSet'
       associatedArtifacts:
         type: array
+        properties:
+          empty:
+            type: boolean
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       modelVersion:
@@ -2000,6 +2015,18 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  PublishedFile:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/File'
+    - type: object
+      properties:
+        type:
+          type: string
   Publisher:
     required:
     - type
@@ -2291,6 +2318,18 @@ referencedSchemas:
           type: string
         onlineIssn:
           type: string
+        type:
+          type: string
+  UnpublishableFile:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/File'
+    - type: object
+      properties:
         type:
           type: string
   Venue:

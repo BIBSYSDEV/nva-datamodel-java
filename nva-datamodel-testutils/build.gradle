@@ -7,6 +7,7 @@ plugins{
 dependencies {
     implementation project (":nva-datamodel-java")
     implementation libs.nva.commons.core
+    implementation libs.nva.commons.json
     implementation libs.nva.commons.identifiers
     implementation libs.nva.language
     implementation libs.bundles.unittesting

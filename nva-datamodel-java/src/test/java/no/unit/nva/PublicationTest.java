@@ -5,14 +5,12 @@ import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
+import static no.unit.nva.model.testing.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,34 +20,27 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import no.unit.nva.file.model.File;
-import no.unit.nva.file.model.FileSet;
+
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
-import no.unit.nva.model.associatedartifacts.AssociatedFile;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
+import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
-import no.unit.nva.model.instancetypes.book.BookMonograph;
-import no.unit.nva.model.testing.FileSetGenerator;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -60,71 +51,12 @@ public class PublicationTest extends ModelTest {
     public static final String DOCUMENTATION_PATH_TEMPLATE = "../documentation/%s.json";
     public static final SortableIdentifier REPLACEMENT_IDENTIFIER_1 =
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
-    public static final UUID REPLACEMENT_IDENTIFIER_2 = UUID.fromString("5032710d-a326-43d3-a8fb-57a451873c78");
     public static final Javers JAVERS = JaversBuilder.javers().build();
     
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
-    
-    public static Stream<FileSet> nullAndEmptyFileSetProvider() {
-        return Stream.of(null, new FileSet(null), new FileSet(Collections.emptyList()));
-    }
-    
-    // Test is temporary and will be deleted
-    @ParameterizedTest
-    @MethodSource("nullAndEmptyFileSetProvider")
-    void shouldProduceEmptyListForAssociatedArtifactWhenFileSetIsEmpty(FileSet fileSet) {
-        var publication = PublicationGenerator.randomPublication();
-        publication.setFileSet(fileSet);
-        assertThat(publication.getAssociatedArtifacts(), is(empty()));
-    }
-    
-    // Test is temporary and will be deleted
-    
-    @Test
-    void shouldRemoveFileWhenFileIsRemovedFromFileSet() {
-        var publication = PublicationGenerator.randomPublication();
-        var files = new ArrayList<>(List.copyOf(publication.getFileSet().getFiles()));
-        var initialSize = files.size();
-        var fileToBeRemoved = files.get(0);
-        files.remove(fileToBeRemoved);
-        assertThat(files.size(), is(lessThan(initialSize)));
-        publication.setFileSet(new FileSet(files));
-        var updated = publication.getFileSet().getFiles();
-        assertThat(updated, not(containsInAnyOrder(fileToBeRemoved)));
-        List<File> associatedArtifacts = toFileSet(publication.getAssociatedArtifacts());
-        assertThat(associatedArtifacts, is(equalTo(updated)));
-    }
-    
-    // Test is temporary and will be deleted
-    @Test
-    void publicationShouldPresentFilesInAssociatedArtifacts() {
-        var publication = PublicationGenerator.randomPublication(BookMonograph.class);
-        var files = publication.getFileSet().getFiles();
-        var fileArtifacts = toFileSet(publication.getAssociatedArtifacts());
-        assertThat(fileArtifacts, is(equalTo(files)));
-    }
-    
-    // Test is temporary and will be deleted
-    @Test
-    void publicationShouldSetAssociatedArtifactsWhenFilesIsSet() {
-        var publication = PublicationGenerator.randomPublication(BookMonograph.class);
-        publication.setFileSet(FileSetGenerator.randomFileSet());
-        var associatedArtifacts = publication.getAssociatedArtifacts().stream()
-                                      .filter(f -> f instanceof AssociatedFile)
-                                      .collect(Collectors.toList());
-        assertThat(toFileSet(associatedArtifacts), is(equalTo(publication.getFileSet().getFiles())));
-    }
-    
-    // Test is temporary and will be deleted
-    @Test
-    void shouldSetFileSetWhenAssociatedFilesIsSet() {
-        var publication = PublicationGenerator.randomPublication(BookMonograph.class);
-        publication.setFileSet(new FileSet(Collections.emptyList()));
-        assertThat(toFileSet(publication.getAssociatedArtifacts()), is(equalTo(publication.getFileSet().getFiles())));
-    }
-    
+
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
     void publicationReturnsValidPublicationWhenInputIsValid(Class<?> instanceType) throws Exception {
@@ -142,7 +74,8 @@ public class PublicationTest extends ModelTest {
     
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @MethodSource("publicationInstanceProvider")
-    void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType) {
+    void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType)
+            throws InvalidAssociatedArtifactsException {
         Publication publication = PublicationGenerator.randomPublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThatPublicationDoesNotHaveEmptyFields(publication);
@@ -153,7 +86,8 @@ public class PublicationTest extends ModelTest {
     
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
-    void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType) {
+    void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType)
+            throws InvalidAssociatedArtifactsException {
         Publication expected = PublicationGenerator.randomPublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));
     }
@@ -169,7 +103,7 @@ public class PublicationTest extends ModelTest {
     }
     
     @Test
-    void updateStatusThrowsExceptionForInvalidStatusTransition() {
+    void updateStatusThrowsExceptionForInvalidStatusTransition() throws InvalidAssociatedArtifactsException {
         Publication publication = PublicationGenerator.randomPublication();
         publication.setStatus(NEW);
         
@@ -186,13 +120,14 @@ public class PublicationTest extends ModelTest {
     void initializingPublicationShouldNotThrowException() {
         assertDoesNotThrow(Publication::new);
     }
-    
-    private static List<File> toFileSet(Collection<AssociatedArtifact> artifacts) {
-        return artifacts.stream()
-                   .filter(f -> f instanceof AssociatedFile).map(f -> (File) f)
-                   .collect(Collectors.toList());
+
+    @Test
+    void shouldThrowExceptionWhenCreatingAssociatedArtifactsWithNullArtifactsAndOtherArtifacts() {
+        Executable executable = () -> new AssociatedArtifactList(randomAssociatedLink(),
+                new NullAssociatedArtifact());
+        assertThrows(InvalidAssociatedArtifactsException.class, executable);
     }
-    
+
     private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
         assertThat(expected, doesNotHaveEmptyValues());
     }
@@ -206,24 +141,9 @@ public class PublicationTest extends ModelTest {
     private void writePublicationToFile(Class<?> instanceType, Publication publication) throws IOException {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
         publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
-        publication.getFileSet().getFiles().forEach(file -> publication
-                                                                .setFileSet(
-                                                                    new FileSet(List.of(copyWithNewIdentifier(file)))));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType.getSimpleName());
         var publicationJson = dataModelObjectMapper.writeValueAsString(publication)
                                   .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
         Files.write(Paths.get(path), publicationJson.getBytes());
-    }
-    
-    private File copyWithNewIdentifier(File file) {
-        return new File(file.getType(),
-            PublicationTest.REPLACEMENT_IDENTIFIER_2,
-            file.getName(),
-            file.getMimeType(),
-            file.getSize(),
-            file.getLicense(),
-            file.isAdministrativeAgreement(),
-            file.isPublisherAuthority(),
-            file.getEmbargoDate().orElse(null));
     }
 }

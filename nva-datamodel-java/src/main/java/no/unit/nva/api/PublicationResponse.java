@@ -9,13 +9,12 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithContext;
-import no.unit.nva.WithFile;
 import no.unit.nva.WithId;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
-import no.unit.nva.file.model.FileSet;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Organization;
@@ -23,13 +22,15 @@ import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
-import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
-public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithFile, WithId, WithContext {
+public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId,
+        WithContext {
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -42,15 +43,15 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private URI handle;
     private URI link;
     private EntityDescription entityDescription;
-    private FileSet fileSet;
     private URI doi;
     @JsonProperty("@context")
     private JsonNode context;
     private List<ResearchProject> projects;
     private List<URI> subjects;
-    private List<AssociatedArtifact> associatedArtifacts;
+    private AssociatedArtifactList associatedArtifacts;
 
-    public static PublicationResponse fromPublication(Publication publication) {
+    public static PublicationResponse fromPublication(Publication publication)
+            throws InvalidAssociatedArtifactsException {
         var response = new PublicationResponse();
         response.setIdentifier(publication.getIdentifier());
         response.setStatus(publication.getStatus());
@@ -63,7 +64,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setHandle(publication.getHandle());
         response.setLink(publication.getLink());
         response.setEntityDescription(publication.getEntityDescription());
-        response.setFileSet(publication.getFileSet());
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         response.setDoi(publication.getDoi());
         response.setProjects(publication.getProjects());
@@ -71,16 +71,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setContext(PublicationContext.getContext());
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         return response;
-    }
-
-    @Override
-    public FileSet getFileSet() {
-        return fileSet;
-    }
-
-    @Override
-    public void setFileSet(FileSet fileSet) {
-        this.fileSet = fileSet;
     }
 
     @Override
@@ -235,11 +225,13 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
 
-    public List<AssociatedArtifact> getAssociatedArtifacts() {
+    @Override
+    public AssociatedArtifactList getAssociatedArtifacts() {
         return associatedArtifacts;
     }
 
-    public void setAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
+    @Override
+    public void setAssociatedArtifacts(AssociatedArtifactList associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
     }
 
@@ -264,7 +256,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                 && Objects.equals(getHandle(), that.getHandle())
                 && Objects.equals(getLink(), that.getLink())
                 && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                && Objects.equals(getFileSet(), that.getFileSet())
                 && Objects.equals(getDoi(), that.getDoi())
                 && Objects.equals(getContext(), that.getContext())
                 && Objects.equals(getProjects(), that.getProjects())
@@ -277,6 +268,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public int hashCode() {
         return Objects.hash(getIdentifier(), getStatus(), getResourceOwner(), getPublisher(), getCreatedDate(),
                 getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(), getEntityDescription(),
-                getFileSet(), getDoi(), getContext(), getProjects(), getSubjects(), getAssociatedArtifacts());
+                getDoi(), getContext(), getProjects(), getSubjects(), getAssociatedArtifacts());
     }
 }

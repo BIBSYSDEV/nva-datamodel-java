@@ -24,6 +24,7 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -37,30 +38,17 @@ public final class PublicationGenerator {
 
     }
 
-    @JacocoGenerated
-    public static Publication publicationWithIdentifier() {
-        return randomPublication();
-    }
-
-    @JacocoGenerated
-    public static Publication publicationWithoutIdentifier() {
-        var publication = randomPublication();
-        publication.setIdentifier(null);
-        return publication;
-    }
-
-
-
     public static URI randomUri() {
         String uriString = "https://www.example.org/" + randomWord() + randomWord();
         return URI.create(uriString);
     }
 
-    public static Publication randomPublication() {
+    public static Publication randomPublication() throws InvalidAssociatedArtifactsException {
         return randomPublication(randomPublicationInstanceType());
     }
 
-    public static Publication randomPublication(Class<?> publicationInstanceClass) {
+    public static Publication randomPublication(Class<?> publicationInstanceClass)
+            throws InvalidAssociatedArtifactsException {
 
         Publication publication = new Builder()
             .withIdentifier(SortableIdentifier.next())
@@ -78,7 +66,7 @@ public final class PublicationGenerator {
             .withDoi(randomDoi())
             .withCreatedDate(randomInstant())
             .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-            .withFileSet(FileSetGenerator.randomFileSet())
+            .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
             .build();
 
         assertThat(publication, doesNotHaveEmptyValues());

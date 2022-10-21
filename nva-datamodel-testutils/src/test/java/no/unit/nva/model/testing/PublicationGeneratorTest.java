@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import no.unit.nva.model.Publication;
+import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.BookSeries;
 import no.unit.nva.model.contexttypes.Journal;
@@ -29,14 +30,16 @@ class PublicationGeneratorTest {
 
     @ParameterizedTest(name = "Should return publication of type {0} without empty fields")
     @MethodSource("publicationInstanceProvider")
-    void shouldReturnPublicationWithoutEmptyFields(Class<?> publicationInstance) {
+    void shouldReturnPublicationWithoutEmptyFields(Class<?> publicationInstance)
+            throws InvalidAssociatedArtifactsException {
         assertThat(PublicationGenerator.randomPublication(publicationInstance),
                    doesNotHaveEmptyValuesIgnoringFields(FIELDS_EXPECTED_TO_BE_NULL));
     }
 
     @ParameterizedTest
     @MethodSource("publicationInstanceProvider")
-    void shouldReturnPublicationWithPublicationChannelUriWherePublicationChannelUriIsExpected(Class<?> instantType) {
+    void shouldReturnPublicationWithPublicationChannelUriWherePublicationChannelUriIsExpected(Class<?> instantType)
+            throws InvalidAssociatedArtifactsException {
         Publication publication = PublicationGenerator.randomPublication(instantType);
         var publicationContext = publication.getEntityDescription().getReference().getPublicationContext();
         if (isGenerallyBook(publicationContext)) {
