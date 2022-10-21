@@ -22,7 +22,7 @@ test {
     useJUnitPlatform{
         excludeTags "migrationTest"
     }
-    failFast = false
+    failFast = true
     environment "ID_NAMESPACE", "https://www.example.org"
     environment "DATAMODEL_VERSION", "${project.version}"
     finalizedBy(jacocoTestReport)
