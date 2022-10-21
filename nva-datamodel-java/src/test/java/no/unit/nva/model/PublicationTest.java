@@ -17,7 +17,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Set;
 
+import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
+import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.util.ContextUtil;
 import org.javers.core.Javers;
@@ -58,6 +60,16 @@ class PublicationTest {
         String jsonString = dataModelObjectMapper.writeValueAsString(samplePublication);
         Publication copy = dataModelObjectMapper.readValue(jsonString, Publication.class);
         assertThat(copy, is(equalTo(samplePublication)));
+    }
+
+    @Test
+    void objectMapperShouldSerializeAndDeserializeNullAssociatedArtifact()
+            throws InvalidAssociatedArtifactsException, JsonProcessingException {
+        var publication = PublicationGenerator.randomPublication();
+        publication.setAssociatedArtifacts(new AssociatedArtifactList(new NullAssociatedArtifact()));
+        String serialized = dataModelObjectMapper.writeValueAsString(publication);
+        var deserialized = dataModelObjectMapper.readValue(serialized, Publication.class);
+        assertThat(deserialized, is(equalTo(publication)));
     }
 
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {

@@ -1,12 +1,15 @@
 package no.unit.nva.model.associatedartifacts;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import nva.commons.core.JacocoGenerated;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 public class AssociatedArtifactList implements List<AssociatedArtifact> {
 
@@ -107,17 +110,26 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public void clear() {
         associatedArtifacts.clear();
     }
-    
+
     @Override
+    @JacocoGenerated
     public boolean equals(Object o) {
-        return associatedArtifacts.equals(o);
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AssociatedArtifactList)) {
+            return false;
+        }
+        AssociatedArtifactList that = (AssociatedArtifactList) o;
+        return Objects.equals(associatedArtifacts, that.associatedArtifacts);
     }
-    
+
     @Override
+    @JacocoGenerated
     public int hashCode() {
-        return associatedArtifacts.hashCode();
+        return Objects.hash(associatedArtifacts);
     }
-    
+
     @Override
     public AssociatedArtifact get(int index) {
         return associatedArtifacts.get(index);
