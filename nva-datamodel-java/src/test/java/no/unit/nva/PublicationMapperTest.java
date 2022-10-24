@@ -1,5 +1,15 @@
 package no.unit.nva;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import no.unit.nva.api.PublicationResponse;
+import no.unit.nva.commons.json.JsonUtils;
+import no.unit.nva.model.Publication;
+import no.unit.nva.model.testing.PublicationGenerator;
+import org.junit.jupiter.api.Test;
+
+import java.util.Set;
+
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,15 +17,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Set;
-import no.unit.nva.api.PublicationResponse;
-import no.unit.nva.commons.json.JsonUtils;
-import no.unit.nva.model.Publication;
-import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
-import no.unit.nva.model.testing.PublicationGenerator;
-import org.junit.jupiter.api.Test;
 
 class PublicationMapperTest {
 
@@ -38,7 +39,7 @@ class PublicationMapperTest {
     }
 
     @Test
-    void canMapPublicationToPublicationResponse() throws InvalidAssociatedArtifactsException {
+    void canMapPublicationToPublicationResponse() {
         Publication publication = PublicationGenerator.randomPublication();
 
         PublicationResponse response = PublicationMapper
