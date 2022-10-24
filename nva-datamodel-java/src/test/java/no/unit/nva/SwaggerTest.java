@@ -6,16 +6,15 @@ import io.swagger.v3.core.util.Yaml;
 import java.io.File;
 import java.io.IOException;
 import no.unit.nva.model.Publication;
-import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import org.junit.jupiter.api.Test;
 
-public class SwaggerTest {
+class SwaggerTest {
 
     public static final String SCHEMA_YAML = "../documentation/schema.yaml";
 
     @Test
-    void writePublicationSchemaToFile() throws IOException, InvalidAssociatedArtifactsException {
+    void writePublicationSchemaToFile() throws IOException {
         Publication publication = PublicationGenerator.randomPublication();
         ResolvedSchema map = ModelConverters.getInstance().readAllAsResolvedSchema(publication.getClass());
 
