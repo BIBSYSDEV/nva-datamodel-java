@@ -3,6 +3,7 @@ package no.unit.nva.model.associatedartifacts;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
+
+import static java.util.Objects.nonNull;
 
 public class AssociatedArtifactList implements List<AssociatedArtifact> {
 
@@ -20,7 +23,7 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     @JsonCreator
     public AssociatedArtifactList(List<AssociatedArtifact> artifacts) throws InvalidAssociatedArtifactsException {
         throwExceptionIfNullObjectIsNotSingleton(artifacts);
-        this.associatedArtifacts = artifacts;
+        this.associatedArtifacts = nonNull(artifacts) ? artifacts : new ArrayList<>();
     }
 
     public AssociatedArtifactList(AssociatedArtifact... artifacts) throws InvalidAssociatedArtifactsException {
@@ -160,7 +163,7 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
 
     private void throwExceptionIfNullObjectIsNotSingleton(List<AssociatedArtifact> artifacts)
             throws InvalidAssociatedArtifactsException {
-        if (containsNullObject(artifacts) && artifacts.size() > 1) {
+        if (nonNull(artifacts) && containsNullObject(artifacts) && artifacts.size() > 1) {
             throw new InvalidAssociatedArtifactsException(NULL_OBJECT_MUST_BE_SINGLETON_IN_LIST);
         }
     }
