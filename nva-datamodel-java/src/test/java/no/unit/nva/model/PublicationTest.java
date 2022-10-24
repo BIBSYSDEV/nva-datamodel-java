@@ -36,7 +36,7 @@ class PublicationTest {
 
     
     @Test
-    void getModelVersionReturnsModelVersionDefinedByGradle() throws InvalidAssociatedArtifactsException {
+    void getModelVersionReturnsModelVersionDefinedByGradle() {
         Publication samplePublication = PublicationGenerator.randomPublication();
         assertThat(samplePublication.getModelVersion(), is(equalTo(ResourcesBuildConfig.RESOURCES_MODEL_VERSION)));
     }
@@ -55,7 +55,7 @@ class PublicationTest {
 
     @Test
     void objectMapperReturnsSerializationWithAllFieldsSerialized()
-            throws JsonProcessingException, InvalidAssociatedArtifactsException {
+            throws JsonProcessingException {
         Publication samplePublication = PublicationGenerator.randomPublication();
         String jsonString = dataModelObjectMapper.writeValueAsString(samplePublication);
         Publication copy = dataModelObjectMapper.readValue(jsonString, Publication.class);

@@ -2,14 +2,15 @@ package no.unit.nva.model.testing;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
+import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
 import com.github.javafaker.Faker;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
@@ -30,7 +31,6 @@ import nva.commons.core.JacocoGenerated;
 @JacocoGenerated
 public final class PublicationGenerator {
 
-    public static final Random RANDOM = new Random(System.currentTimeMillis());
     private static final Faker FAKER = Faker.instance();
 
     @JacocoGenerated
@@ -38,45 +38,39 @@ public final class PublicationGenerator {
 
     }
 
+    // This method is in use in api-tests
+    @JacocoGenerated
+    public static Publication publicationWithIdentifier() {
+        return randomPublication();
+    }
+
+    // This method is in use in api-tests
+    @JacocoGenerated
+    public static Publication publicationWithoutIdentifier() {
+        var publication = randomPublication();
+        publication.setIdentifier(null);
+        return publication;
+    }
+
+
+
     public static URI randomUri() {
         String uriString = "https://www.example.org/" + randomWord() + randomWord();
         return URI.create(uriString);
     }
 
-    public static Publication randomPublication() throws InvalidAssociatedArtifactsException {
+    public static Publication randomPublication() {
         return randomPublication(randomPublicationInstanceType());
     }
 
-    public static Publication randomPublication(Class<?> publicationInstanceClass)
-            throws InvalidAssociatedArtifactsException {
+    public static Publication randomPublication(Class<?> publicationInstanceClass) {
 
-        Publication publication = new Builder()
-            .withIdentifier(SortableIdentifier.next())
-            .withPublisher(randomOrganization())
-            .withSubjects(List.of(randomUri()))
-            .withStatus(randomArrayElement(PublicationStatus.values()))
-            .withPublishedDate(randomInstant())
-            .withModifiedDate(randomInstant())
-            .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
-            .withProjects(randomProjects())
-            .withResourceOwner(randomResourceOwner())
-            .withLink(randomUri())
-            .withIndexedDate(randomInstant())
-            .withHandle(randomUri())
-            .withDoi(randomDoi())
-            .withCreatedDate(randomInstant())
-            .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-            .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-            .build();
+        var publication = attempt(() -> buildRandomPublicationFromInstance(publicationInstanceClass)).orElseThrow();
 
         assertThat(publication, doesNotHaveEmptyValues());
         return publication;
     }
 
-    private static ResourceOwner randomResourceOwner() {
-        return new ResourceOwner(randomString(),randomUri());
-    }
-    
     public static EntityDescription randomEntityDescription(Class<?> publicationInstanceClass) {
         return EntityDescriptionBuilder.randomEntityDescription(publicationInstanceClass);
     }
@@ -114,11 +108,12 @@ public final class PublicationGenerator {
     }
 
     public static Approval randomApproval() {
+
         return new Approval.Builder()
-            .withApprovalStatus(randomArrayElement(ApprovalStatus.values()))
+            .withApprovalStatus(randomElement(ApprovalStatus.values()))
             .withDate(randomInstant())
             .withApplicationCode(randomString())
-            .withApprovedBy(randomArrayElement(ApprovalsBody.values()))
+            .withApprovedBy(randomElement(ApprovalsBody.values()))
             .build();
     }
 
@@ -133,11 +128,31 @@ public final class PublicationGenerator {
             .build();
     }
 
-
-    private static <T> T randomArrayElement(T... array) {
-        return array[RANDOM.nextInt(array.length)];
+    private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass)
+            throws InvalidAssociatedArtifactsException {
+        return new Builder()
+                .withIdentifier(SortableIdentifier.next())
+                .withPublisher(randomOrganization())
+                .withSubjects(List.of(randomUri()))
+                .withStatus(randomElement(PublicationStatus.values()))
+                .withPublishedDate(randomInstant())
+                .withModifiedDate(randomInstant())
+                .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
+                .withProjects(randomProjects())
+                .withResourceOwner(randomResourceOwner())
+                .withLink(randomUri())
+                .withIndexedDate(randomInstant())
+                .withHandle(randomUri())
+                .withDoi(randomDoi())
+                .withCreatedDate(randomInstant())
+                .withEntityDescription(randomEntityDescription(publicationInstanceClass))
+                .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
+                .build();
     }
 
+    private static ResourceOwner randomResourceOwner() {
+        return new ResourceOwner(randomString(),randomUri());
+    }
 
     private static String randomWord() {
         return FAKER.lorem().word();

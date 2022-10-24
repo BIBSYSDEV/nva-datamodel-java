@@ -26,7 +26,6 @@ import java.util.stream.Stream;
 
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
-import no.unit.nva.model.ModelTest;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
@@ -44,7 +43,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PublicationTest extends ModelTest {
+public class PublicationTest {
     
     public static final String TIMESTAMP_REGEX = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]+";
     public static final String SOME_TIMESTAMP = "2020-09-23T09:51:23.044996Z";
@@ -86,8 +85,7 @@ public class PublicationTest extends ModelTest {
     
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
-    void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType)
-            throws InvalidAssociatedArtifactsException {
+    void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType) {
         Publication expected = PublicationGenerator.randomPublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));
     }
@@ -103,7 +101,7 @@ public class PublicationTest extends ModelTest {
     }
     
     @Test
-    void updateStatusThrowsExceptionForInvalidStatusTransition() throws InvalidAssociatedArtifactsException {
+    void updateStatusThrowsExceptionForInvalidStatusTransition() {
         Publication publication = PublicationGenerator.randomPublication();
         publication.setStatus(NEW);
         
