@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.Set;
 
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
-import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.util.ContextUtil;
@@ -42,7 +41,7 @@ class PublicationTest {
     }
 
     @Test
-    void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields() throws InvalidAssociatedArtifactsException {
+    void equalsReturnsTrueWhenTwoPublicationInstancesHaveEquivalentFields() {
         Publication samplePublication = PublicationGenerator.randomPublication();
         Publication copy = samplePublication.copy().build();
 
@@ -63,8 +62,7 @@ class PublicationTest {
     }
 
     @Test
-    void objectMapperShouldSerializeAndDeserializeNullAssociatedArtifact()
-            throws InvalidAssociatedArtifactsException, JsonProcessingException {
+    void objectMapperShouldSerializeAndDeserializeNullAssociatedArtifact() throws JsonProcessingException {
         var publication = PublicationGenerator.randomPublication();
         publication.setAssociatedArtifacts(new AssociatedArtifactList(new NullAssociatedArtifact()));
         var serialized = dataModelObjectMapper.writeValueAsString(publication);

@@ -73,8 +73,7 @@ public class PublicationTest {
     
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @MethodSource("publicationInstanceProvider")
-    void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType)
-            throws InvalidAssociatedArtifactsException {
+    void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType) {
         Publication publication = PublicationGenerator.randomPublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThatPublicationDoesNotHaveEmptyFields(publication);

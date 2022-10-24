@@ -20,16 +20,16 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     private final List<AssociatedArtifact> associatedArtifacts;
     
     @JsonCreator
-    public AssociatedArtifactList(List<AssociatedArtifact> artifacts) throws InvalidAssociatedArtifactsException {
+    public AssociatedArtifactList(List<AssociatedArtifact> artifacts) {
         throwExceptionIfNullObjectIsNotOnlyElementInList(artifacts);
         this.associatedArtifacts = nonNull(artifacts) ? artifacts : Collections.emptyList();
     }
 
-    public AssociatedArtifactList(AssociatedArtifact... artifacts) throws InvalidAssociatedArtifactsException {
+    public AssociatedArtifactList(AssociatedArtifact... artifacts) {
         this(Arrays.asList(artifacts));
     }
     
-    public static AssociatedArtifactList empty() throws InvalidAssociatedArtifactsException {
+    public static AssociatedArtifactList empty() {
         return new AssociatedArtifactList(Collections.emptyList());
     }
     
@@ -160,8 +160,7 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
         return associatedArtifacts.subList(fromIndex, toIndex);
     }
 
-    private void throwExceptionIfNullObjectIsNotOnlyElementInList(List<AssociatedArtifact> artifacts)
-            throws InvalidAssociatedArtifactsException {
+    private void throwExceptionIfNullObjectIsNotOnlyElementInList(List<AssociatedArtifact> artifacts) {
         if (nonNull(artifacts) && containsNullObject(artifacts) && artifacts.size() > 1) {
             throw new InvalidAssociatedArtifactsException(NULL_OBJECT_MUST_BE_SINGLETON_IN_LIST);
         }

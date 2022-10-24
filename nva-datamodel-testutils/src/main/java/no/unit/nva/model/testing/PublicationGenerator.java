@@ -5,7 +5,6 @@ import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublica
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
 import com.github.javafaker.Faker;
 import java.net.URI;
@@ -25,7 +24,6 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
-import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -65,7 +63,7 @@ public final class PublicationGenerator {
 
     public static Publication randomPublication(Class<?> publicationInstanceClass) {
 
-        var publication = attempt(() -> buildRandomPublicationFromInstance(publicationInstanceClass)).orElseThrow();
+        var publication = buildRandomPublicationFromInstance(publicationInstanceClass);
 
         assertThat(publication, doesNotHaveEmptyValues());
         return publication;
@@ -128,8 +126,7 @@ public final class PublicationGenerator {
             .build();
     }
 
-    private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass)
-            throws InvalidAssociatedArtifactsException {
+    private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
                 .withIdentifier(SortableIdentifier.next())
                 .withPublisher(randomOrganization())

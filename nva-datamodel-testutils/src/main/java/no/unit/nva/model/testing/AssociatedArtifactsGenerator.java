@@ -11,7 +11,6 @@ import java.util.UUID;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.AssociatedLink;
-import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
@@ -26,7 +25,7 @@ public final class AssociatedArtifactsGenerator {
         // NO-OP
     }
 
-    public static List<AssociatedArtifact> randomAssociatedArtifacts() throws InvalidAssociatedArtifactsException {
+    public static List<AssociatedArtifact> randomAssociatedArtifacts() {
         return new AssociatedArtifactList(randomFile(),randomAssociatedLink());
     }
 
