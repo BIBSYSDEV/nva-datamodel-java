@@ -3,7 +3,6 @@ package no.unit.nva.model.associatedartifacts;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import nva.commons.core.JacocoGenerated;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,7 +22,7 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     @JsonCreator
     public AssociatedArtifactList(List<AssociatedArtifact> artifacts) throws InvalidAssociatedArtifactsException {
         throwExceptionIfNullObjectIsNotOnlyElementInList(artifacts);
-        this.associatedArtifacts = nonNull(artifacts) ? artifacts : new ArrayList<>();
+        this.associatedArtifacts = nonNull(artifacts) ? artifacts : Collections.emptyList();
     }
 
     public AssociatedArtifactList(AssociatedArtifact... artifacts) throws InvalidAssociatedArtifactsException {
