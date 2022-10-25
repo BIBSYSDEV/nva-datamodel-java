@@ -35,9 +35,9 @@ import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.LegacyFile;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
-import no.unit.nva.model.associatedartifacts.file.UnpublishableFile;
 import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
@@ -156,8 +156,8 @@ public class PublicationTest {
     void shouldConvertLegacyAndUnpublishableArtifactsToUnpublishableUponRequest() {
         var legacyFile = buildAdministrativeAgreement().buildLegacyFile();
         var unpublishableFile = buildAdministrativeAgreement().buildUnpublishableFile();
-        assertThat(legacyFile.toUnpublishableFile(), is(instanceOf(UnpublishableFile.class)));
-        assertThat(unpublishableFile.toUnpublishableFile(), is(instanceOf(UnpublishableFile.class)));
+        assertThat(legacyFile.toUnpublishableFile(), is(instanceOf(AdministrativeAgreement.class)));
+        assertThat(unpublishableFile.toUnpublishableFile(), is(instanceOf(AdministrativeAgreement.class)));
         
     }
     

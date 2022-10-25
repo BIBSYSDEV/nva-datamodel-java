@@ -21,11 +21,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
+import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
-import no.unit.nva.model.associatedartifacts.file.UnpublishableFile;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -144,7 +144,7 @@ public class FileModelTest {
     }
     
     public static File randomUnpublishableFile() {
-        return new UnpublishableFile(UUID.randomUUID(), randomString(), randomString(),
+        return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
             getCcByLicense(), randomBoolean(), randomBoolean(), randomInstant());
     }
@@ -186,7 +186,7 @@ public class FileModelTest {
     }
     
     private static File unpublishableNotAdministrativeAgreement() {
-        return new UnpublishableFile(UUID.randomUUID(),
+        return new AdministrativeAgreement(UUID.randomUUID(),
             randomString(),
             randomString(),
             randomInteger().longValue(),
@@ -211,8 +211,8 @@ public class FileModelTest {
                    .buildUnpublishableFile();
     }
     
-    private UnpublishableFile randomAdministrativeAgreement() {
-        return new UnpublishableFile(UUID.randomUUID(), randomString(), randomString(),
+    private AdministrativeAgreement randomAdministrativeAgreement() {
+        return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
             getCcByLicense(), ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant());
     }

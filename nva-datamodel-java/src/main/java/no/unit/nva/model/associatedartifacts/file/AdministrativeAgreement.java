@@ -9,8 +9,8 @@ import java.time.Instant;
 import java.util.UUID;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
-@JsonTypeName(UnpublishedFile.TYPE)
-public class UnpublishableFile extends File {
+@JsonTypeName(AdministrativeAgreement.TYPE)
+public class AdministrativeAgreement extends File {
     
     public static final String TYPE = "UnpublishableFile";
     
@@ -29,7 +29,7 @@ public class UnpublishableFile extends File {
      * @param embargoDate             The date after which the file may be published
      */
     @JsonCreator
-    public UnpublishableFile(
+    public AdministrativeAgreement(
         @JsonProperty(IDENTIFIER_FIELD) UUID identifier,
         @JsonProperty(NAME_FIELD) String name,
         @JsonProperty(MIME_TYPE_FIELD) String mimeType,

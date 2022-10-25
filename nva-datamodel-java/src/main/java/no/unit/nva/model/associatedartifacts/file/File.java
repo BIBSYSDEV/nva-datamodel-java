@@ -20,8 +20,8 @@ import nva.commons.core.JacocoGenerated;
 @JsonSubTypes({
     @JsonSubTypes.Type(name = LegacyFile.TYPE, value = LegacyFile.class),
     @JsonSubTypes.Type(name = PublishedFile.TYPE, value = PublishedFile.class),
-    @JsonSubTypes.Type(name = UnpublishedFile.TYPE, value = UnpublishableFile.class),
-    @JsonSubTypes.Type(name = UnpublishableFile.TYPE, value = UnpublishableFile.class)
+    @JsonSubTypes.Type(name = UnpublishedFile.TYPE, value = UnpublishedFile.class),
+    @JsonSubTypes.Type(name = AdministrativeAgreement.TYPE, value = AdministrativeAgreement.class)
 })
 public abstract class File implements JsonSerializable, AssociatedArtifact {
     
@@ -148,9 +148,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
     }
     
-    public final  UnpublishableFile toUnpublishableFile() {
+    public final AdministrativeAgreement toUnpublishableFile() {
         if (isAdministrativeAgreement()) {
-            return new UnpublishableFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
+            return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                 isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
         }
         throw new IllegalStateException("Cannot make unpublishable a non-administrative agreement");
@@ -266,7 +266,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         }
         
         public File buildUnpublishableFile() {
-            return new UnpublishableFile(identifier, name, mimeType, size, license, administrativeAgreement,
+            return new AdministrativeAgreement(identifier, name, mimeType, size, license, administrativeAgreement,
                 publisherAuthority,
                 embargoDate);
         }
