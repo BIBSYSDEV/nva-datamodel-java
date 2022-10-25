@@ -10,10 +10,10 @@ import java.util.UUID;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 //this allows migration of legacy types to the new type PublishedFile
-@JsonTypeName(PublishedFile.TYPE)
+@JsonTypeName(LegacyFile.TYPE)
 public class LegacyFile extends File {
     
-    public static final String LEGACY_TYPE = "File";
+    public static final String TYPE = "File";
     
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly

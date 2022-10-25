@@ -138,22 +138,6 @@ public class FileModelTest {
     }
     
     @Test
-    void legacyFileShouldBeMigratedToPublishedFile() throws JsonProcessingException {
-        var file = randomLegacyFile();
-        var jsonString = file.toJsonString();
-        var json = (ObjectNode) JsonUtils.dtoObjectMapper.readTree(jsonString);
-        json.put("type", LegacyFile.LEGACY_TYPE);
-        
-        var legacyJson = JsonUtils.dtoObjectMapper.writeValueAsString(json);
-        var beforeMigration = JsonUtils.dtoObjectMapper.readValue(legacyJson, File.class);
-        assertThat(beforeMigration, is(instanceOf(LegacyFile.class)));
-        
-        var migrated = beforeMigration.toJsonString();
-        var migratedDeserialized = JsonUtils.dtoObjectMapper.readValue(migrated, File.class);
-        assertThat(migratedDeserialized, is(instanceOf(PublishedFile.class)));
-    }
-    
-    @Test
     void shouldNotBeVisibleForNonOwnerWhenUnpublished() throws JsonProcessingException {
         var file = randomUnpublishedFile();
         var mapped = dataModelObjectMapper.writeValueAsString(file);
@@ -163,28 +147,40 @@ public class FileModelTest {
         assertThat(unmapped.isVisibleForNonOwner(), equalTo(false));
     }
     
-    private static File randomUnpublishableFile() {
+    public static File randomUnpublishableFile() {
         return new UnpublishableFile(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
             getCcByLicense(), randomBoolean(), randomBoolean(), randomInstant());
     }
     
-    private static File randomUnpublishedFile() {
+    public static File randomUnpublishedFile() {
         return buildNonAdministrativeAgreement().buildUnpublishedFile();
     }
     
-    private static File randomPublishedFile() {
+    public static File randomPublishedFile() {
         return buildNonAdministrativeAgreement().buildPublishedFile();
     }
     
-    private static File randomLegacyFile() {
+    public static File randomLegacyFile() {
         return buildNonAdministrativeAgreement().buildLegacyFile();
     }
     
-    private static File.Builder buildNonAdministrativeAgreement() {
+    public static File.Builder buildNonAdministrativeAgreement() {
         return File.builder()
                    .withName(randomString())
                    .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
+                   .withMimeType(randomString())
+                   .withSize(randomInteger().longValue())
+                   .withEmbargoDate(randomInstant())
+                   .withLicense(getCcByLicense())
+                   .withIdentifier(UUID.randomUUID())
+                   .withPublisherAuthority(randomBoolean());
+    }
+    
+    public static File.Builder buildAdministrativeAgreement() {
+        return File.builder()
+                   .withName(randomString())
+                   .withAdministrativeAgreement(ADMINISTRATIVE_AGREEMENT)
                    .withMimeType(randomString())
                    .withSize(randomInteger().longValue())
                    .withEmbargoDate(randomInstant())

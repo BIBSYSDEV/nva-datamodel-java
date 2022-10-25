@@ -5,17 +5,21 @@ import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
+import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
+import static no.unit.nva.model.file.FileModelTest.randomLegacyFile;
 import static no.unit.nva.model.testing.AssociatedArtifactsGenerator.randomAssociatedLink;
+import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +27,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
-
+import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Publication;
@@ -31,8 +35,11 @@ import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
+import no.unit.nva.model.associatedartifacts.file.LegacyFile;
+import no.unit.nva.model.associatedartifacts.file.PublishedFile;
+import no.unit.nva.model.associatedartifacts.file.UnpublishableFile;
+import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
-import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
@@ -55,11 +62,11 @@ public class PublicationTest {
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
-
+    
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
     void publicationReturnsValidPublicationWhenInputIsValid(Class<?> instanceType) throws Exception {
-        Publication expected = PublicationGenerator.randomPublication(instanceType);
+        Publication expected = randomPublication(instanceType);
         
         String publication = dataModelObjectMapper.writeValueAsString(expected);
         Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
@@ -74,7 +81,7 @@ public class PublicationTest {
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @MethodSource("publicationInstanceProvider")
     void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType) {
-        Publication publication = PublicationGenerator.randomPublication(referenceInstanceType);
+        Publication publication = randomPublication(referenceInstanceType);
         Publication copy = publication.copy().build();
         assertThatPublicationDoesNotHaveEmptyFields(publication);
         Diff diff = compareAsObjectNodes(publication, copy);
@@ -85,14 +92,14 @@ public class PublicationTest {
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
     void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType) {
-        Publication expected = PublicationGenerator.randomPublication(instanceType);
+        Publication expected = randomPublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));
     }
     
     @ParameterizedTest
     @EnumSource(value = PublicationStatus.class, names = {"DRAFT_FOR_DELETION", "PUBLISHED"})
     void updateStatusForDraftPublication(PublicationStatus target) throws Exception {
-        Publication publication = PublicationGenerator.randomPublication();
+        Publication publication = randomPublication();
         publication.setStatus(DRAFT);
         publication.updateStatus(target);
         
@@ -101,7 +108,7 @@ public class PublicationTest {
     
     @Test
     void updateStatusThrowsExceptionForInvalidStatusTransition() {
-        Publication publication = PublicationGenerator.randomPublication();
+        Publication publication = randomPublication();
         publication.setStatus(NEW);
         
         InvalidPublicationStatusTransitionException exception =
@@ -112,19 +119,39 @@ public class PublicationTest {
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
     }
     
+    //TODO: This is a temporary fix. type "File" for files should not be acceptable
+    @Test
+    void shouldReturnPublicationWithLegacyFileWhenInputIsPublicationWithLegacyFile()
+        throws JsonProcessingException {
+        var legacyFile = randomLegacyFile();
+        var publication = randomPublication()
+                              .copy()
+                              .withAssociatedArtifacts(List.of(legacyFile))
+                              .build();
+        var deserialized = serializeDeserialize(publication);
+        assertThat(deserialized.getAssociatedArtifacts().get(0), is(instanceOf(LegacyFile.class)));
+    }
+    
+    
+    
     // This test is included because of a bizarre error.
     @Test
     void initializingPublicationShouldNotThrowException() {
         assertDoesNotThrow(Publication::new);
     }
-
+    
     @Test
     void shouldThrowExceptionWhenCreatingAssociatedArtifactsWithNullArtifactsAndOtherArtifacts() {
         Executable executable = () -> new AssociatedArtifactList(randomAssociatedLink(),
-                new NullAssociatedArtifact());
+            new NullAssociatedArtifact());
         assertThrows(InvalidAssociatedArtifactsException.class, executable);
     }
-
+    
+    private Publication serializeDeserialize(Publication publication) throws JsonProcessingException {
+        var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
+        return JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
+    }
+    
     private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
         assertThat(expected, doesNotHaveEmptyValues());
     }

@@ -18,7 +18,7 @@ import nva.commons.core.JacocoGenerated;
  */
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(name = LegacyFile.LEGACY_TYPE, value = LegacyFile.class),
+    @JsonSubTypes.Type(name = LegacyFile.TYPE, value = LegacyFile.class),
     @JsonSubTypes.Type(name = PublishedFile.TYPE, value = PublishedFile.class),
     @JsonSubTypes.Type(name = UnpublishedFile.TYPE, value = UnpublishableFile.class),
     @JsonSubTypes.Type(name = UnpublishableFile.TYPE, value = UnpublishableFile.class)
