@@ -6,6 +6,7 @@ import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
+import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.randomLegacyFile;
 import static no.unit.nva.model.testing.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
@@ -15,7 +16,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -132,7 +132,42 @@ public class PublicationTest {
         assertThat(deserialized.getAssociatedArtifacts().get(0), is(instanceOf(LegacyFile.class)));
     }
     
+    @Test
+    void shouldConvertPublishableArtifactToPublishedUponRequest() {
+        var legacyFile = buildNonAdministrativeAgreement().buildLegacyFile();
+        var unpublishedFile = buildNonAdministrativeAgreement().buildUnpublishedFile();
+        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile();
+        assertThat(legacyFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
+        assertThat(unpublishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
+        assertThat(publishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
+    }
     
+    @Test
+    void shouldConvertPublishableArtifactToUnpublishedUponRequest() {
+        var legacyFile = buildNonAdministrativeAgreement().buildLegacyFile();
+        var unpublishedFile = buildNonAdministrativeAgreement().buildUnpublishedFile();
+        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile();
+        assertThat(legacyFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
+        assertThat(unpublishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
+        assertThat(publishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
+    }
+    
+    @Test
+    void shouldConvertLegacyAndUnpublishableArtifactsToUnpublishableUponRequest() {
+        var legacyFile = buildAdministrativeAgreement().buildLegacyFile();
+        var unpublishableFile = buildAdministrativeAgreement().buildUnpublishableFile();
+        assertThat(legacyFile.toUnpublishableFile(), is(instanceOf(UnpublishableFile.class)));
+        assertThat(unpublishableFile.toUnpublishableFile(), is(instanceOf(UnpublishableFile.class)));
+        
+    }
+    
+    @Test
+    void shouldNotConvertUnPublishableArtifactToPublishableArtifacts() {
+        var unpublishableFile = buildAdministrativeAgreement().buildUnpublishableFile();
+        assertThrows(IllegalStateException.class, unpublishableFile::toPublishedFile);
+        assertThrows(IllegalStateException.class, unpublishableFile::toUnpublishedFile);
+        assertThrows(IllegalStateException.class, unpublishableFile::toUnpublishedFile);
+    }
     
     // This test is included because of a bizarre error.
     @Test

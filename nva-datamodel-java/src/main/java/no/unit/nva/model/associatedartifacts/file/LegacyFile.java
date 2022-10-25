@@ -40,9 +40,6 @@ public class LegacyFile extends File {
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate);
-        if (administrativeAgreement) {
-            throw new IllegalStateException("An administrative agreement is not publishable");
-        }
     }
     
     @Override

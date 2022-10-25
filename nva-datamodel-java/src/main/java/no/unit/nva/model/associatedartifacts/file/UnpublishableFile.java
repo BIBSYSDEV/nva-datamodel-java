@@ -45,4 +45,14 @@ public class UnpublishableFile extends File {
     public boolean isVisibleForNonOwner() {
         return false;
     }
+    
+    @Override
+    public UnpublishedFile toUnpublishedFile() {
+        throw new IllegalStateException("Cannot make an unpublishable file publishable");
+    }
+    
+    @Override
+    public PublishedFile toPublishedFile() {
+        throw new IllegalStateException("Cannot make an unpublishable file publishable");
+    }
 }

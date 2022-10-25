@@ -48,4 +48,9 @@ public class UnpublishedFile extends File {
     public boolean isVisibleForNonOwner() {
         return false;
     }
+    
+    @Override
+    public UnpublishedFile toUnpublishedFile() {
+        return this;
+    }
 }
