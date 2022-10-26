@@ -9,26 +9,23 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
+import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.File;
-import no.unit.nva.model.associatedartifacts.file.LegacyFile;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
-import no.unit.nva.model.associatedartifacts.file.UnpublishableFile;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -71,26 +68,26 @@ public class FileModelTest {
     @MethodSource("fileProvider")
     void shouldRoundTripAllFileTypes(File file) throws JsonProcessingException {
         var json = JsonUtils.dtoObjectMapper.writeValueAsString(file);
-        var deserialzed = JsonUtils.dtoObjectMapper.readValue(json, File.class);
-        assertThat(deserialzed, doesNotHaveEmptyValues());
-        assertThat(deserialzed, is(equalTo(file)));
+        var deserialized = JsonUtils.dtoObjectMapper.readValue(json, File.class);
+        assertThat(deserialized, doesNotHaveEmptyValues());
+        assertThat(deserialized, is(equalTo(file)));
     }
     
     @Test
     void shouldThrowMissingLicenseExceptionWhenFileIsNotAdministrativeAgreementAndLicenseIsMissing() {
-        var file = getPublishedFile(FIRST_FILE_TXT, false, null);
+        var file = getPublishedFile();
         assertThrows(MissingLicenseException.class, file::validate);
     }
     
     @Test
     void shouldNotThrowMissingLicenseExceptionWhenFileIsAdministrativeAgreementAndLicenseIsMissing() {
-        var file = getAdministrativeAgreement(FIRST_FILE_TXT, true, null);
+        var file = getAdministrativeAgreement(null);
         assertDoesNotThrow(file::validate);
     }
     
     @Test
     void shouldNotThrowMissingLicenseExceptionWhenFileIsAdministrativeAgreementAndLicenseIsPresent() {
-        var file = getAdministrativeAgreement(FIRST_FILE_TXT, true, getCcByLicense());
+        var file = getAdministrativeAgreement(getCcByLicense());
         assertDoesNotThrow(file::validate);
     }
     
@@ -134,23 +131,6 @@ public class FileModelTest {
     void shouldNotAllowPublishableFilesToBeAdministrativeAgreements() {
         assertThrows(IllegalStateException.class, this::illegalPublishedFile);
         assertThrows(IllegalStateException.class, this::illegalUnPublishedFile);
-        assertThrows(IllegalStateException.class, this::illegalLegacyFile);
-    }
-    
-    @Test
-    void legacyFileShouldBeMigratedToPublishedFile() throws JsonProcessingException {
-        var file = randomLegacyFile();
-        var jsonString = file.toJsonString();
-        var json = (ObjectNode) JsonUtils.dtoObjectMapper.readTree(jsonString);
-        json.put("type", LegacyFile.LEGACY_TYPE);
-        
-        var legacyJson = JsonUtils.dtoObjectMapper.writeValueAsString(json);
-        var beforeMigration = JsonUtils.dtoObjectMapper.readValue(legacyJson, File.class);
-        assertThat(beforeMigration, is(instanceOf(LegacyFile.class)));
-        
-        var migrated = beforeMigration.toJsonString();
-        var migratedDeserialized = JsonUtils.dtoObjectMapper.readValue(migrated, File.class);
-        assertThat(migratedDeserialized, is(instanceOf(PublishedFile.class)));
     }
     
     @Test
@@ -163,25 +143,25 @@ public class FileModelTest {
         assertThat(unmapped.isVisibleForNonOwner(), equalTo(false));
     }
     
-    private static File randomUnpublishableFile() {
-        return new UnpublishableFile(UUID.randomUUID(), randomString(), randomString(),
+    public static File randomUnpublishableFile() {
+        return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
             getCcByLicense(), randomBoolean(), randomBoolean(), randomInstant());
     }
     
-    private static File randomUnpublishedFile() {
+    public static File randomUnpublishedFile() {
         return buildNonAdministrativeAgreement().buildUnpublishedFile();
     }
     
-    private static File randomPublishedFile() {
+    public static File randomPublishedFile() {
         return buildNonAdministrativeAgreement().buildPublishedFile();
     }
     
-    private static File randomLegacyFile() {
+    public static File randomLegacyFile() {
         return buildNonAdministrativeAgreement().buildLegacyFile();
     }
     
-    private static File.Builder buildNonAdministrativeAgreement() {
+    public static File.Builder buildNonAdministrativeAgreement() {
         return File.builder()
                    .withName(randomString())
                    .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
@@ -193,8 +173,20 @@ public class FileModelTest {
                    .withPublisherAuthority(randomBoolean());
     }
     
+    public static File.Builder buildAdministrativeAgreement() {
+        return File.builder()
+                   .withName(randomString())
+                   .withAdministrativeAgreement(ADMINISTRATIVE_AGREEMENT)
+                   .withMimeType(randomString())
+                   .withSize(randomInteger().longValue())
+                   .withEmbargoDate(randomInstant())
+                   .withLicense(getCcByLicense())
+                   .withIdentifier(UUID.randomUUID())
+                   .withPublisherAuthority(randomBoolean());
+    }
+    
     private static File unpublishableNotAdministrativeAgreement() {
-        return new UnpublishableFile(UUID.randomUUID(),
+        return new AdministrativeAgreement(UUID.randomUUID(),
             randomString(),
             randomString(),
             randomInteger().longValue(),
@@ -210,17 +202,17 @@ public class FileModelTest {
                    .withName(randomString());
     }
     
-    private File getAdministrativeAgreement(String fileName, boolean administrativeAgreement, License license) {
+    private File getAdministrativeAgreement(License license) {
         return File.builder()
                    .withIdentifier(UUID.randomUUID())
                    .withLicense(license)
-                   .withName(fileName)
-                   .withAdministrativeAgreement(administrativeAgreement)
+                   .withName(FileModelTest.FIRST_FILE_TXT)
+                   .withAdministrativeAgreement(true)
                    .buildUnpublishableFile();
     }
     
-    private UnpublishableFile randomAdministrativeAgreement() {
-        return new UnpublishableFile(UUID.randomUUID(), randomString(), randomString(),
+    private AdministrativeAgreement randomAdministrativeAgreement() {
+        return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
             getCcByLicense(), ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant());
     }
@@ -236,34 +228,26 @@ public class FileModelTest {
             Instant.now().plus(1, DAYS));
     }
     
-    private File illegalPublishedFile() {
-        return admAgreementBuilder().buildPublishedFile();
+    private void illegalPublishedFile() {
+        admAgreementBuilder().buildPublishedFile();
     }
     
-    private File illegalUnPublishedFile() {
-        return admAgreementBuilder().buildUnpublishedFile();
+    private void illegalUnPublishedFile() {
+        admAgreementBuilder().buildUnpublishedFile();
     }
     
-    private File illegalLegacyFile() {
-        return admAgreementBuilder().buildLegacyFile();
+    private File getPublishedFile() {
+        return getPublishedFile(UUID.randomUUID());
     }
     
-    private File getPublishedFile(String fileName, boolean administrativeAgreement, License license) {
-        return getPublishedFile(UUID.randomUUID(), fileName, administrativeAgreement, null, license);
-    }
-    
-    private File getPublishedFile(UUID identifier,
-                                  String fileName,
-                                  boolean administrativeAgreement,
-                                  Instant embargo,
-                                  License license) {
+    private File getPublishedFile(UUID identifier) {
         return File.builder()
-                   .withAdministrativeAgreement(administrativeAgreement)
-                   .withEmbargoDate(embargo)
+                   .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
+                   .withEmbargoDate(null)
                    .withIdentifier(identifier)
-                   .withLicense(license)
+                   .withLicense(null)
                    .withMimeType(APPLICATION_PDF)
-                   .withName(fileName)
+                   .withName(FIRST_FILE_TXT)
                    .withPublisherAuthority(true)
                    .withSize(SIZE)
                    .buildPublishedFile();

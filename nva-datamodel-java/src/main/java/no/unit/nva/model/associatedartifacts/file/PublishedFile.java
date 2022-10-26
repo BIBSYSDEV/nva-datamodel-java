@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
 
-
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(PublishedFile.TYPE)
 public class PublishedFile extends File {
@@ -49,4 +48,12 @@ public class PublishedFile extends File {
     public boolean isVisibleForNonOwner() {
         return !isAdministrativeAgreement() && fileDoesNotHaveActiveEmbargo();
     }
+    
+    
+    @Override
+    public PublishedFile toPublishedFile() {
+        return this;
+    }
+    
+   
 }
