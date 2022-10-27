@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Objects;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
 import nva.commons.core.JacocoGenerated;
@@ -15,14 +14,15 @@ public class Journal implements Periodical {
     private final URI id;
 
     @JsonCreator
-    public Journal(@JsonProperty("id") String id) {
-        if (isNull(id) || id.isEmpty()) {
-            throw new InvalidSeriesException(id);
-        }
-        try {
-            this.id = new URI(id);
-        } catch (URISyntaxException e) {
-            throw new InvalidSeriesException(id);
+    public Journal(@JsonProperty("id") URI id) {
+        validate(id);
+        this.id = id;
+    }
+
+    private static void validate(URI id) {
+        var stringOfUri = id.toString();
+        if (isNull(stringOfUri) || stringOfUri.isEmpty()) {
+            throw new InvalidSeriesException(stringOfUri);
         }
     }
 

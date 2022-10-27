@@ -345,7 +345,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static MediaReaderOpinion generateMediaReaderOpinion() {
-        return new MediaReaderOpinion();
+        return new MediaReaderOpinion(randomVolume(), randomIssue(), randomArticleNumber(), randomRange());
     }
 
     private static MediaPodcast generateMediaPodcast() {
@@ -365,7 +365,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static MediaFeatureArticle generateMediaFeatureArticle() {
-        return new MediaFeatureArticle();
+        return new MediaFeatureArticle(randomVolume(), randomIssue(), randomArticleNumber(), randomRange());
     }
 
     private static JournalIssue generateJournalIssue() {

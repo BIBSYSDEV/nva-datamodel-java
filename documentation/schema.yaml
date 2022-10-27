@@ -1447,6 +1447,21 @@ referencedSchemas:
           $ref: '#/components/schemas/SeriesEpisode'
         type:
           type: string
+  MediaContributionPeriodical:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        id:
+          type: string
+          format: uri
+        type:
+          type: string
   MediaFeatureArticle:
     required:
     - type
@@ -1457,8 +1472,14 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
         pages:
-          $ref: '#/components/schemas/NullPages'
+          $ref: '#/components/schemas/Range'
         type:
           type: string
   MediaInterview:
@@ -1513,8 +1534,14 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        volume:
+          type: string
+        issue:
+          type: string
+        articleNumber:
+          type: string
         pages:
-          $ref: '#/components/schemas/NullPages'
+          $ref: '#/components/schemas/Range'
         type:
           type: string
   MediaSubType:
@@ -2253,6 +2280,24 @@ referencedSchemas:
     discriminator:
       propertyName: type
   UnconfirmedJournal:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        title:
+          type: string
+        printIssn:
+          type: string
+        onlineIssn:
+          type: string
+        type:
+          type: string
+  UnconfirmedMediaContributionPeriodical:
     required:
     - type
     type: object
