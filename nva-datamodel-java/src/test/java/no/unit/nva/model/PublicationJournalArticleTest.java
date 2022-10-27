@@ -1,16 +1,7 @@
 package no.unit.nva.model;
 
-import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jsonldjava.utils.JsonUtils;
-import java.io.IOException;
-import java.util.Set;
-import java.util.stream.Stream;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -18,6 +9,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.io.IOException;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class PublicationJournalArticleTest extends PublicationTest {
 
@@ -36,7 +37,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
 
     @DisplayName("The serialized Publication class can be framed to match the RDF data model")
     @Test
-    public void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
+    void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
 
         Publication publication = PublicationGenerator.randomPublication();
 
@@ -53,9 +54,8 @@ public class PublicationJournalArticleTest extends PublicationTest {
     void publicationReturnsJsonWhenInputIsValid(Class<?> publicationInstanceClass) throws IOException {
         Publication publication = PublicationGenerator.randomPublication(publicationInstanceClass);
         JsonNode document = toPublicationWithContext(publication);
-        Publication publicationFromJson = dataModelObjectMapper.readValue(
-            dataModelObjectMapper.writeValueAsString(document),
-            Publication.class);
+        String content = dataModelObjectMapper.writeValueAsString(document);
+        Publication publicationFromJson = dataModelObjectMapper.readValue(content, Publication.class);
         assertThat(publicationFromJson, doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest")));
         assertThat(publication, is(equalTo(publicationFromJson)));
     }

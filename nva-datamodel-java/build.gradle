@@ -8,16 +8,13 @@ dependencies {
 
     implementation libs.apache.commons.validator
     compileOnly libs.nva.commons.core
-    compileOnly libs.nva.commons.json
+    implementation libs.nva.commons.json
 
     testImplementation libs.nva.commons.core
     testImplementation libs.nva.commons.json
 
     compileOnly libs.nva.commons.json
     testImplementation libs.nva.commons.json
-
-
-    api libs.nva.file.model
 
     compileOnly libs.nva.commons.identifiers
     testImplementation libs.nva.commons.identifiers

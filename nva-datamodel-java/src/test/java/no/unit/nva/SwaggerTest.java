@@ -9,12 +9,12 @@ import no.unit.nva.model.Publication;
 import no.unit.nva.model.testing.PublicationGenerator;
 import org.junit.jupiter.api.Test;
 
-public class SwaggerTest {
+class SwaggerTest {
 
     public static final String SCHEMA_YAML = "../documentation/schema.yaml";
 
     @Test
-    public void writePublicationSchemaToFile() throws IOException {
+    void writePublicationSchemaToFile() throws IOException {
         Publication publication = PublicationGenerator.randomPublication();
         ResolvedSchema map = ModelConverters.getInstance().readAllAsResolvedSchema(publication.getClass());
 
