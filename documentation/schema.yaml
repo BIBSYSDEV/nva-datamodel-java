@@ -80,6 +80,18 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  AdministrativeAgreement:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/File'
+    - type: object
+      properties:
+        type:
+          type: string
   Agent:
     required:
     - type
@@ -2365,7 +2377,7 @@ referencedSchemas:
           type: string
         type:
           type: string
-  UnpublishableFile:
+  UnpublishedFile:
     required:
     - type
     type: object
