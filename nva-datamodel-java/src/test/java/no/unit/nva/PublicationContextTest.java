@@ -6,11 +6,11 @@ import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -74,7 +73,7 @@ class PublicationContextTest {
     // TODO: actually filter the expected classes
     @Test
     void shouldWriteEveryNvaClassAsFragmentUri() {
-        var objectResources = generateObjectClassListForEveryNvaPublicationType();
+        var objectResources = generateListOfDistinctObjectClassesForEveryNvaPublicationType();
         var nvaObjects = objectResources.stream()
                 .filter(PublicationContextTest::isAnNvaObjectResource)
                 .filter(PublicationContextTest::isNonFragmentUri)
@@ -84,31 +83,30 @@ class PublicationContextTest {
 
     // TODO: test that every property and class is described in the ontology
 
-    private static HashSet<String> generateObjectClassListForEveryNvaPublicationType() {
-        var objectResources = new HashSet<String>();
-        var statementsIterator = generateModelContainingEveryPublicationType().listStatements();
-        statementsIterator.forEachRemaining(statement -> extractNonBlankObjectNodes(statement)
-                .ifPresent(objectResources::add));
-
-        return objectResources;
-    }
-
-    private static Optional<String> extractNonBlankObjectNodes(Statement statement) {
-        var object = statement.getObject();
-        return isFullyQualifiedUri(object)
-                ? Optional.of(object.asResource().getURI())
-                : Optional.empty();
+    private static Set<String> generateListOfDistinctObjectClassesForEveryNvaPublicationType() {
+        return generateStatementsForEveryPublicationType().stream()
+                .map(Statement::getObject)
+                .filter(PublicationContextTest::isFullyQualifiedUri)
+                .map(RDFNode::asResource)
+                .map(Resource::getURI)
+                .collect(Collectors.toSet());
     }
 
     private static boolean isFullyQualifiedUri(RDFNode object) {
         return object.isResource() && !object.asResource().isAnon();
     }
 
-    private static Model generateModelContainingEveryPublicationType() {
+    private static Set<Statement> generateStatementsForEveryPublicationType() {
+        var publications = publicationInstanceProvider()
+                .map(PublicationContextTest::generatePublicationWithContext)
+                .collect(Collectors.toList());
+        return addAllResourcesToModel(publications);
+    }
+
+    private static Set<Statement> addAllResourcesToModel(List<InputStream> inputStreams) {
         var model = ModelFactory.createDefaultModel();
-        publicationInstanceProvider().collect(Collectors.toList())
-                .forEach(type -> RDFDataMgr.read(model, generatePublicationWithContext(type), Lang.JSONLD11));
-        return model;
+        inputStreams.forEach(inputStream -> RDFDataMgr.read(model, inputStream, Lang.JSONLD11));
+        return model.listStatements().toSet();
     }
 
     private static boolean isNonFragmentUri(String item) {
@@ -119,20 +117,18 @@ class PublicationContextTest {
         return item.startsWith("https://nva.sikt.no/");
     }
 
-    private static HashSet<String> extractAllRdfProperties(InputStream inputStream) {
-        var statementsIterator = getPublicationStatements(inputStream);
-        var properties = new HashSet<String>();
-        statementsIterator.forEachRemaining(statement -> properties.add(statement.getPredicate().getLocalName()));
-        return properties;
+    private static Set<String> extractAllRdfProperties(InputStream inputStream) {
+        return getPublicationStatements(inputStream).stream()
+                        .map(Statement::getPredicate)
+                        .map(Property::getLocalName)
+                        .collect(Collectors.toSet());
     }
 
-    private static StmtIterator getPublicationStatements(InputStream inputStream) {
-        var model = ModelFactory.createDefaultModel();
-        RDFDataMgr.read(model, inputStream, Lang.JSONLD11);
-        return model.listStatements();
+    private static Set<Statement> getPublicationStatements(InputStream inputStream) {
+        return addAllResourcesToModel(List.of(inputStream));
     }
 
-    private static ByteArrayInputStream generatePublicationWithContext(Class<?> type) {
+    private static InputStream generatePublicationWithContext(Class<?> type) {
         var publication = PublicationGenerator.randomPublication(type);
         return new ByteArrayInputStream((addContextObjectToPublication(publication)));
     }
