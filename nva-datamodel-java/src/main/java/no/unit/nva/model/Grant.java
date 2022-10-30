@@ -7,6 +7,7 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Grant {
     private String source;
+    // TODO: Fix the id field here: it is either a URI, or the field must be renamed
     private String id;
 
     public Grant() {
