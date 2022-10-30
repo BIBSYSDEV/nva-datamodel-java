@@ -9,7 +9,7 @@ import nva.commons.core.JacocoGenerated;
 public class RandomUtils {
 
     public static Map<String, String> randomLabels() {
-        return Map.of(randomString(), randomString());
+        return Map.of(RandomLanguageUtil.randomBcp47CompatibleLanguage(), randomString());
     }
 
     public static String randomLabel() {

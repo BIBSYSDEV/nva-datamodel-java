@@ -1,6 +1,5 @@
 package no.unit.nva.model.testing;
 
-import static java.util.Objects.isNull;
 import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicationContext;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
@@ -12,8 +11,6 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.List;
 import java.util.Map;
-import no.unit.nva.language.Language;
-import no.unit.nva.language.LanguageConstants;
 import no.unit.nva.model.Contributor;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Identity;
@@ -26,13 +23,17 @@ import nva.commons.core.JacocoGenerated;
 @JacocoGenerated
 public class EntityDescriptionBuilder {
 
+    private EntityDescriptionBuilder() {
+        // NO-OP
+    }
+
     public static EntityDescription randomEntityDescription(Class<?> publicationInstanceClass) {
         return new EntityDescription.Builder()
             .withReference(randomReference(publicationInstanceClass))
             .withNpiSubjectHeading(randomNpiSubjectHeading())
             .withDescription(randomString())
             .withMainTitle(randomString())
-            .withLanguage(randomLanguage().getLexvoUri())
+            .withLanguage(RandomLanguageUtil.randomLexvoUri())
             .withTags(randomTags())
             .withMetadataSource(randomUri())
             .withDate(randomPublicationDate())
@@ -43,11 +44,7 @@ public class EntityDescriptionBuilder {
     }
 
     private static Map<String, String> randomAlternativeTitles() {
-        Language randomLanguageWithIso6391Code = randomLanguage();
-        while (isNull(randomLanguageWithIso6391Code.getIso6391Code())) {
-            randomLanguageWithIso6391Code = randomLanguage();
-        }
-        return Map.of(randomLanguageWithIso6391Code.getIso6391Code(), randomString());
+        return Map.of(RandomLanguageUtil.randomBcp47CompatibleLanguage(), randomString());
     }
 
     private static List<Contributor> randomContributors() {
@@ -93,10 +90,6 @@ public class EntityDescriptionBuilder {
 
     private static List<String> randomTags() {
         return List.of(randomString());
-    }
-
-    private static Language randomLanguage() {
-        return randomElement(LanguageConstants.ALL_LANGUAGES);
     }
 
     private static String randomNpiSubjectHeading() {
