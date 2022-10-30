@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 public final class RandomLanguageUtil {
 
     public static final Set<Language> unused = Set.of(LanguageConstants.NORWEGIAN, LanguageConstants.MISCELLANEOUS);
+
     public static String randomBcp47CompatibleLanguage() {
         var languages = getLanguageStream()
                 .map(Language::getIso6391Code)

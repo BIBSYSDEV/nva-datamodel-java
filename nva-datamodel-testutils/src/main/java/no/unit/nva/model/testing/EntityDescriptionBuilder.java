@@ -21,7 +21,7 @@ import no.unit.nva.model.Role;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
-public class EntityDescriptionBuilder {
+public final class EntityDescriptionBuilder {
 
     private EntityDescriptionBuilder() {
         // NO-OP
