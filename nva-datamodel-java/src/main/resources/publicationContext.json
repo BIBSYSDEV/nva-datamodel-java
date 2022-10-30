@@ -15,6 +15,10 @@
     "@id": "additionalIdentifier",
     "@container": "@set"
   },
+  "alternativeTitles": {
+    "@id": "alternativeTitle",
+    "@container": "@language"
+  },
   "approvals": {
     "@id": "approval",
     "@container": "@set"
@@ -31,9 +35,17 @@
       "@vocab": "https://nva.sikt.no/ontology/approvals-body#"
     }
   },
-  "alternativeTitles": {
-    "@id": "alternativeTitle",
-    "@container": "@language"
+  "architectureOutput": {
+    "@id": "architectureOutput",
+    "@container": "@set"
+  },
+  "compliesWith": {
+    "@id": "compliesWith",
+    "@container": "@set"
+  },
+  "concertProgramme": {
+    "@id": "concertProgramme",
+    "@container": "@set"
   },
   "contributors": {
     "@id": "contributor",
@@ -63,6 +75,10 @@
   },
   "indexedDate": {
     "@type": "xsd:dateTime"
+  },
+  "isbnList": {
+    "@id": "isbnList",
+    "@container": "@set"
   },
   "labels": {
     "@id": "label",
@@ -108,6 +124,14 @@
     "@id": "project",
     "@container": "@set"
   },
+  "related": {
+    "@id": "related",
+    "@container": "@set"
+  },
+  "referencedBy": {
+    "@id": "referencedBy",
+    "@container": "@set"
+  },
   "role": {
     "@type": "@vocab",
     "@context": {
@@ -131,6 +155,10 @@
   },
   "to": {
     "@type": "xsd:dateTime"
+  },
+  "trackList": {
+    "@id": "trackList",
+    "@container": "@set"
   },
   "venues": {
     "@id": "venue",
