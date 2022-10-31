@@ -112,10 +112,10 @@ class PublicationContextTest {
     }
 
     private static Set<String> initiateArrayFieldNameExtraction(JsonNode jsonNode) {
-        return extractPPropertiesThaHaveArrayValue(jsonNode.fields());
+        return extractPropertiesThatHaveArrayValue(jsonNode.fields());
     }
 
-    private static Set<String> extractPPropertiesThaHaveArrayValue(Iterator<Map.Entry<String, JsonNode>> fields) {
+    private static Set<String> extractPropertiesThatHaveArrayValue(Iterator<Map.Entry<String, JsonNode>> fields) {
         return streamOf(fields)
                 .map(PublicationContextTest::extractFieldNameFromJsonNode)
                 .flatMap(Set::stream)
@@ -128,7 +128,7 @@ class PublicationContextTest {
             fieldNames.add(current.getKey());
             fieldNames.addAll(iterateArray(current.getValue().elements()));
         } else if (current.getValue().isObject()) {
-            fieldNames.addAll(extractPPropertiesThaHaveArrayValue(current.getValue().fields()));
+            fieldNames.addAll(extractPropertiesThatHaveArrayValue(current.getValue().fields()));
         }
         return fieldNames;
     }
@@ -136,7 +136,7 @@ class PublicationContextTest {
     private static Set<String> iterateArray(Iterator<JsonNode> elements) {
         return streamOf(elements)
                 .map(JsonNode::fields)
-                .map(PublicationContextTest::extractPPropertiesThaHaveArrayValue)
+                .map(PublicationContextTest::extractPropertiesThatHaveArrayValue)
                 .flatMap(Set::stream).collect(Collectors.toSet());
     }
 
