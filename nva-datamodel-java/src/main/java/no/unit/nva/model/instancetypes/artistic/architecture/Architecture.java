@@ -22,6 +22,8 @@ public class Architecture implements PublicationInstance<NullPages> {
     private final ArchitectureSubtype subtype;
     @JsonProperty(DESCRIPTION)
     private final String description;
+
+    // TODO: migrate to output to match other classes
     @JsonProperty(OUTPUT)
     private final List<ArchitectureOutput> architectureOutput;
 

@@ -23,6 +23,8 @@ public class OtherPerformance implements MusicPerformanceManifestation {
     private final UnconfirmedPlace place;
     @JsonProperty(EXTENT)
     private final String extent;
+
+    // TODO: Migrate to outputs
     @JsonProperty(MUSICAL_WORKS)
     private final List<MusicalWork> musicalWorks;
 

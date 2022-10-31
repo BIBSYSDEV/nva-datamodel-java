@@ -3,10 +3,14 @@ package no.unit.nva.model;
 import static java.util.Objects.hash;
 import static java.util.Objects.nonNull;
 import static nva.commons.core.attempt.Try.attempt;
+import static nva.commons.core.ioutils.IoUtils.stringFromResources;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +58,7 @@ public class Publication
     private AssociatedArtifactList associatedArtifacts;
     
     public Publication() {
-    
+        // Default constructor, use setters.
     }
     
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
@@ -309,7 +313,12 @@ public class Publication
             throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
         }
     }
-    
+
+    @JsonIgnore
+    public String getJsonLdContext() {
+        return stringFromResources(Path.of("publicationContext.json"));
+    }
+
     public static final class Builder {
         
         private final Publication publication;

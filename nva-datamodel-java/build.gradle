@@ -29,6 +29,9 @@ dependencies {
     testImplementation libs.jsonld.java
     testImplementation libs.swagger.core
 
+    testImplementation libs.jena.core
+    testImplementation libs.jena.arq
+
 
     testImplementation (libs.bundles.unittesting){
         exclude group: 'org.yaml', module: 'snakeyaml'

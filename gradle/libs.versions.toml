@@ -13,6 +13,8 @@ apacheCommonsIo = { strictly = '2.11.0' }
 nva-language = { strictly = '1.0' }
 snakeyaml = { strictly = '1.29' }
 zalandoVersion = { strictly = '0.27.1'}
+jena = { strictly = '4.6.1'}
+
 
 [libraries]
 apache-commons-validator = { group = 'commons-validator', name = 'commons-validator', version.ref = 'apacheCommonsValidator' }
@@ -47,6 +49,9 @@ javers-core = { group = 'org.javers', name = 'javers-core', version.ref = 'javer
 javafaker = { group = 'com.github.javafaker', name = 'javafaker', version.ref = 'javaFakerVersion' }
 slf4j = { group = 'org.slf4j', name = 'slf4j-simple', version.ref = 'slf4jVersion' }
 snakeyaml = { group = 'org.yaml', name = 'snakeyaml', version.ref = 'snakeyaml' }
+
+jena-core = { group = 'org.apache.jena', name = 'jena-core', version.ref = 'jena' }
+jena-arq = { group = 'org.apache.jena', name = 'jena-arq', version.ref = 'jena' }
 
 
 [bundles]

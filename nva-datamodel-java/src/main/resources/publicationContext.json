@@ -1,52 +1,167 @@
 {
-  "@vocab": "https://nva.unit.no/publication#",
+  "@vocab": "https://nva.sikt.no/ontology/publication#",
   "xsd": "http://www.w3.org/2001/XMLSchema#",
-  "type": "@type",
   "id": "@id",
-  "handle": {
-    "@type": "@id"
+  "type": "@type",
+  "affiliations": {
+    "@id": "affiliation",
+    "@container": "@set"
+  },
+  "associatedArtifacts": {
+    "@id": "associatedArtifact",
+    "@container": "@set"
+  },
+  "additionalIdentifiers": {
+    "@id": "additionalIdentifier",
+    "@container": "@set"
   },
   "alternativeTitles": {
+    "@id": "alternativeTitle",
     "@container": "@language"
+  },
+  "approvals": {
+    "@id": "approval",
+    "@container": "@set"
+  },
+  "approvalStatus": {
+    "@type": "@vocab",
+    "@context": {
+      "@vocab": "https://nva.sikt.no/ontology/publication#"
+    }
+  },
+  "approvedBy": {
+    "@type": "@vocab",
+    "@context": {
+      "@vocab": "https://nva.sikt.no/ontology/approvals-body#"
+    }
+  },
+  "architectureOutput": {
+    "@id": "architectureOutput",
+    "@container": "@set"
+  },
+  "compliesWith": {
+    "@id": "compliesWith",
+    "@container": "@set"
+  },
+  "concertProgramme": {
+    "@id": "concertProgramme",
+    "@container": "@set"
+  },
+  "contributors": {
+    "@id": "contributor",
+    "@container": "@set"
   },
   "createdDate": {
     "@type": "xsd:dateTime"
   },
-  "publishedDate": {
+  "date": {
     "@type": "xsd:dateTime"
+  },
+  "doi": {
+    "@type": "@id"
+  },
+  "embargoDate": {
+    "@type": "xsd:dateTime"
+  },
+  "from": {
+    "@type": "xsd:dateTime"
+  },
+  "grants": {
+    "@id": "grant",
+    "@container": "@set"
+  },
+  "handle": {
+    "@type": "@id"
   },
   "indexedDate": {
     "@type": "xsd:dateTime"
   },
-  "modifiedDate": {
-    "@type": "xsd:dateTime"
-  },
-  "link": {
-    "@type": "@id"
-  },
-  "hasTag": {
-    "@container": "@list"
+  "isbnList": {
+    "@id": "isbnList",
+    "@container": "@set"
   },
   "labels": {
+    "@id": "label",
     "@container": "@language"
   },
   "language": {
     "@type": "@id"
   },
-  "year": {
-    "@type": "xsd:gYear"
+  "link": {
+    "@type": "@id"
   },
-  "month": {
-    "@type": "xsd:gMonth"
+  "manifestations": {
+    "@id": "manifestation",
+    "@container": "@set"
   },
-  "day": {
-    "@type": "xsd:gDay"
+  "metadataSource": {
+    "@type": "@id"
+  },
+  "modifiedDate": {
+    "@type": "xsd:dateTime"
+  },
+  "musicalWorks": {
+    "@id": "musicalWork",
+    "@container": "@set"
+  },
+  "ownerAffiliation": {
+    "@type": "@id"
+  },
+  "outputs": {
+    "@id": "output",
+    "@container": "@set"
+  },
+  "publishedDate": {
+    "@type": "xsd:dateTime"
+  },
+  "nameType": {
+    "@type": "@vocab",
+    "@context": {
+      "@vocab": "https://nva.sikt.no/ontology/publication#"
+    }
+  },
+  "projects": {
+    "@id": "project",
+    "@container": "@set"
+  },
+  "related": {
+    "@id": "related",
+    "@container": "@set"
+  },
+  "referencedBy": {
+    "@id": "referencedBy",
+    "@container": "@set"
+  },
+  "role": {
+    "@type": "@vocab",
+    "@context": {
+      "@vocab": "https://nva.sikt.no/ontology/role#"
+    }
+  },
+  "status": {
+    "@type": "@vocab",
+    "@context": {
+      "@vocab": "https://nva.sikt.no/ontology/publication#"
+    }
   },
   "subjects": {
+    "@id": "subject",
     "@type": "@id",
-    "@container": "@list"
+    "@container": "@set"
   },
-  "associatedArtifacts": {
+  "tags": {
+    "@id": "tag",
+    "@container": "@set"
+  },
+  "to": {
+    "@type": "xsd:dateTime"
+  },
+  "trackList": {
+    "@id": "trackList",
+    "@container": "@set"
+  },
+  "venues": {
+    "@id": "venue",
     "@container": "@set"
   }
 }
