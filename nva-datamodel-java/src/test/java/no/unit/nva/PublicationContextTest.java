@@ -23,8 +23,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static java.util.Collections.emptyList;
 import static nva.commons.core.attempt.Try.attempt;
@@ -79,16 +82,12 @@ class PublicationContextTest {
         return extractPropertyKeysThatSpecifyContainerSets(elements);
     }
 
-    private static HashSet<String> extractPropertyKeysThatSpecifyContainerSets(
+    private static Set<String> extractPropertyKeysThatSpecifyContainerSets(
             Iterator<Map.Entry<String, JsonNode>> elements) {
-        var properties = new HashSet<String>();
-        while (elements.hasNext()) {
-            var current = elements.next();
-            if (isContainerSetSpecification(current)) {
-                properties.add(current.getKey());
-            }
-        }
-        return properties;
+        return streamOf(elements)
+                .filter(PublicationContextTest::isContainerSetSpecification)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
     }
 
     private static Iterator<Map.Entry<String, JsonNode>> getElementsFromJsonContextObject() {
@@ -107,36 +106,38 @@ class PublicationContextTest {
         return publicationInstanceProvider()
                 .map(PublicationGenerator::randomPublication)
                 .map(PublicationContextTest::convertToJsonNode)
-                .map(PublicationContextTest::extractArrayFieldNames)
+                .map(PublicationContextTest::initiateArrayFieldNameExtraction)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
     }
 
-    private static Set<String> extractArrayFieldNames(JsonNode jsonNode) {
-        var fields = jsonNode.fields();
+    private static Set<String> initiateArrayFieldNameExtraction(JsonNode jsonNode) {
+        return extractPPropertiesThaHaveArrayValue(jsonNode.fields());
+    }
+
+    private static Set<String> extractPPropertiesThaHaveArrayValue(Iterator<Map.Entry<String, JsonNode>> fields) {
+        return streamOf(fields)
+                .map(PublicationContextTest::extractFieldNameFromJsonNode)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+    }
+
+    private static Set<String> extractFieldNameFromJsonNode(Map.Entry<String, JsonNode> current) {
         var fieldNames = new HashSet<String>();
-        extractPPropertiesThaHaveArrayValue(fields, fieldNames);
+        if (current.getValue().isArray()) {
+            fieldNames.add(current.getKey());
+            fieldNames.addAll(iterateArray(current.getValue().elements()));
+        } else if (current.getValue().isObject()) {
+            fieldNames.addAll(extractPPropertiesThaHaveArrayValue(current.getValue().fields()));
+        }
         return fieldNames;
     }
 
-    private static void extractPPropertiesThaHaveArrayValue(
-            Iterator<Map.Entry<String, JsonNode>> fields, HashSet<String> fieldNames) {
-        while (fields.hasNext()) {
-            var current = fields.next();
-            if (current.getValue().isArray()) {
-                fieldNames.add(current.getKey());
-                iterateArray(current.getValue().elements(), fieldNames);
-            }
-            if (current.getValue().isObject()) {
-                extractPPropertiesThaHaveArrayValue(current.getValue().fields(), fieldNames);
-            }
-        }
-    }
-
-    private static void iterateArray(Iterator<JsonNode> elements, HashSet<String> fieldNames) {
-        while (elements.hasNext()) {
-            extractPPropertiesThaHaveArrayValue(elements.next().fields(), fieldNames);
-        }
+    private static Set<String> iterateArray(Iterator<JsonNode> elements) {
+        return streamOf(elements)
+                .map(JsonNode::fields)
+                .map(PublicationContextTest::extractPPropertiesThaHaveArrayValue)
+                .flatMap(Set::stream).collect(Collectors.toSet());
     }
 
     private static Set<String> generateListOfDistinctObjectClassesForEveryNvaPublicationType() {
@@ -190,5 +191,9 @@ class PublicationContextTest {
 
     private static JsonNode convertToJsonNode(Publication instance) {
         return (JsonNode) attempt(() -> MAPPER.valueToTree(instance)).orElseThrow();
+    }
+
+    private static <T> Stream<T> streamOf(Iterator<T> iterator) {
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false);
     }
 }
