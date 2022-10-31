@@ -2,6 +2,7 @@ package no.unit.nva.model.testing;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
+import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
@@ -9,7 +10,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.github.javafaker.Faker;
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
@@ -122,7 +122,7 @@ public final class PublicationGenerator {
     public static Organization randomOrganization() {
         return new Organization.Builder()
             .withId(randomUri())
-            .withLabels(Map.of(randomString(), randomString()))
+            .withLabels(randomLabels())
             .build();
     }
 
