@@ -44,11 +44,7 @@ nva:ResearchProject a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Project .
-  
-nva:ProductDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:Artistic .
+
   
 nva:JournalIssue a rdfs:Class ;
   rdfs:comment "" ;
@@ -301,11 +297,7 @@ nva:AudioVisualPublication a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
-nva:Play a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:Artistic .
+
   
 nva:CinematicRelease a rdfs:Class ;
   rdfs:comment "" ;
@@ -441,14 +433,6 @@ nva:MusicalWorkPerformance a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-
-nva:Essay a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: .
-
-nva:AugmentedVirtualRealityFilm a rdfs:Class ;
- rdfs:comment "" ;
- rdfs:isDefinedBy nva: .
 
 nva:IndividualExhibition a rdfs:Class ;
   rdfs:comment "" ;
@@ -591,11 +575,6 @@ nva:Performance a rdfs:Class ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:VisualArts .
 
-nva:VisualArts a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:VisualArts .
-
 nva:AudioArt a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -689,10 +668,6 @@ nva:JournalCorrigendum a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Journal .
-  
-nva:Exhibition a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: .
 
 nva:Series a rdfs:Class ;
   rdfs:comment "" ;

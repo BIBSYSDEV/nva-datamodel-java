@@ -21,7 +21,9 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,7 +31,10 @@ import java.util.stream.Stream;
 
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
+import static nva.commons.core.ioutils.IoUtils.stringFromResources;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsIterableContaining.hasItems;
 
 class OntologyTest {
@@ -41,8 +46,27 @@ class OntologyTest {
     }
 
     @Test
+    void shouldContainDistinctDescriptions() {
+        var ontologyValues = stringFromResources(Path.of("publication-ontology.ttl")).lines()
+                .filter(line -> line.startsWith("nva:"))
+                .collect(Collectors.toList());
+        var distinctValues = ontologyValues.stream().distinct().collect(Collectors.toList());
+        String duplicatesMessage = ontologyValues.equals(distinctValues) ? null : getDuplicatesMessage(ontologyValues);
+        assertThat(duplicatesMessage, distinctValues, is(equalTo(ontologyValues)));
+    }
+
+    private static String getDuplicatesMessage(List<String> ontologyValues) {
+        // Not a performant solution, with Collections.frequency, but here it is not important
+        var duplicates = ontologyValues.stream()
+                .filter(e -> Collections.frequency(ontologyValues, e) > 1)
+                .distinct()
+                .collect(Collectors.joining(", "));
+        return "Duplicates found: " + duplicates;
+    }
+
+    @Test
     void shouldContainEveryVisibleClassOfModel() {
-        List<String> ontologyClasses = new ArrayList<>(extractClassesFromOntology());
+        var ontologyClasses = extractClassesFromOntology();
         var modelClasses = new ArrayList<>(getModelClasses()).toArray(String[]::new);
         assertThat(ontologyClasses, hasItems(modelClasses));
     }
@@ -50,8 +74,7 @@ class OntologyTest {
     private Set<String> getModelClasses() {
         var inputStreams = generateAllNvaTypes();
         var selector = new SimpleSelector(null, RDF.type, (RDFNode) null);
-        var v =  getModelFromJson(inputStreams);
-        return v.listStatements(selector).toSet().stream()
+        return getModelFromJson(inputStreams).listStatements(selector).toSet().stream()
                 .map(Statement::getObject)
                 .map(RDFNode::asResource)
                 .map(Resource::getLocalName)
@@ -83,14 +106,15 @@ class OntologyTest {
         return attempt(() -> MAPPER.writeValueAsString(object)).orElseThrow();
     }
 
-    private Set<String> extractClassesFromOntology() {
+    private List<String> extractClassesFromOntology() {
         var model = createModelOfFile(ontology());
         var selector = new SimpleSelector(null, RDF.type, RDFS.Class);
         return model.listStatements(selector).toSet().stream()
                 .map(Statement::getSubject)
                 .map(Resource::getLocalName)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
+
 
     private Model createModelOfFile(InputStream inputStream) {
         var model = ModelFactory.createDefaultModel();
