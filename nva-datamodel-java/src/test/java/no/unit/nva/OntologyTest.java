@@ -48,7 +48,6 @@ class OntologyTest {
     public static final SimpleSelector ANY_CLASS_SELECTOR = new SimpleSelector(null, RDF.type, (RDFNode) null);
     public static final SimpleSelector ANY_STATEMENT_SELECTOR = new SimpleSelector(null, null, (RDFNode) null);
     public static final SimpleSelector ONTOLOGY_CLASS_SELECTOR = new SimpleSelector(null, RDF.type, RDFS.Class);
-    public static final InputStream ONTOLOGY = inputStreamFromResources("publication-ontology.ttl");
     public static final SimpleSelector ONTOLOGY_PROPERTY_SELECTOR = new SimpleSelector(null, RDF.type, RDF.Property);
 
     public static Stream<Class<?>> publicationInstanceProvider() {
@@ -151,9 +150,10 @@ class OntologyTest {
                 .distinct()
                 .collect(Collectors.toList());
     }
+
     private Model getOntologyModel() {
         var model = ModelFactory.createDefaultModel();
-        RDFDataMgr.read(model, ONTOLOGY, Lang.TURTLE);
+        RDFDataMgr.read(model, inputStreamFromResources("publication-ontology.ttl"), Lang.TURTLE);
         return model;
     }
 }

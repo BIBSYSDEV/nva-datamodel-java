@@ -6,6 +6,57 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+
+nva:ClothingDesign a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:Exhibition a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:GraphicDesign a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:Illustration a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:InteractionDesign a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:InteriorDesign a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:LightDesign a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:ProductDesign a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:ServiceDesign a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
+nva:WebDesig a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:ArtisticDesignSubtype .
+  
 nva:UnconfirmedMediaContributionPeriodical a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -609,51 +660,6 @@ nva:Play a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:LiteraryArts .
-
-nva:ClothingDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:Exhibition a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:GraphicDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:Illustration a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:InteractionDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:LightDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:ProductDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:ServiceDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
-  
-nva:WebDesign a rdfs:Class ;
-  rdfs:comment "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:ArtisticDesign .
   
 nva:Film a rdfs:Class ;
   rdfs:comment "" ;
