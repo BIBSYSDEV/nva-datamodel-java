@@ -1,5 +1,6 @@
 package no.unit.nva;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import no.unit.nva.commons.json.JsonUtils;
@@ -8,6 +9,7 @@ import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.SimpleSelector;
@@ -40,6 +42,14 @@ import static org.hamcrest.core.IsIterableContaining.hasItems;
 class OntologyTest {
 
     public static final ObjectMapper MAPPER = JsonUtils.dtoObjectMapper;
+    public static final JsonNode JSON_LD_CONTEXT =
+            attempt(() -> MAPPER.readTree(inputStreamFromResources("publicationContext.json"))).orElseThrow();
+    public static final String ONTOLOGY_STRING = stringFromResources(Path.of("publication-ontology.ttl"));
+    public static final SimpleSelector ANY_CLASS_SELECTOR = new SimpleSelector(null, RDF.type, (RDFNode) null);
+    public static final SimpleSelector ANY_STATEMENT_SELECTOR = new SimpleSelector(null, null, (RDFNode) null);
+    public static final SimpleSelector ONTOLOGY_CLASS_SELECTOR = new SimpleSelector(null, RDF.type, RDFS.Class);
+    public static final InputStream ONTOLOGY = inputStreamFromResources("publication-ontology.ttl");
+    public static final SimpleSelector ONTOLOGY_PROPERTY_SELECTOR = new SimpleSelector(null, RDF.type, RDF.Property);
 
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
@@ -47,12 +57,26 @@ class OntologyTest {
 
     @Test
     void shouldContainDistinctDescriptions() {
-        var ontologyValues = stringFromResources(Path.of("publication-ontology.ttl")).lines()
+        var ontologyValues = ONTOLOGY_STRING.lines()
                 .filter(line -> line.startsWith("nva:"))
                 .collect(Collectors.toList());
         var distinctValues = ontologyValues.stream().distinct().collect(Collectors.toList());
         String duplicatesMessage = ontologyValues.equals(distinctValues) ? null : getDuplicatesMessage(ontologyValues);
         assertThat(duplicatesMessage, distinctValues, is(equalTo(ontologyValues)));
+    }
+
+    @Test
+    void shouldContainEveryVisibleClassOfModel() {
+        var ontologyClasses = extractClassesFromOntology();
+        var modelClasses = new ArrayList<>(getModelClasses()).toArray(String[]::new);
+        assertThat(ontologyClasses, hasItems(modelClasses));
+    }
+
+    @Test
+    void shouldContainEveryVisiblePropertyOfModel() {
+        var ontologyClasses = extractPropertiesFromOntology();
+        var modelClasses = new ArrayList<>(getModelProperties()).toArray(String[]::new);
+        assertThat(ontologyClasses, hasItems(modelClasses));
     }
 
     private static String getDuplicatesMessage(List<String> ontologyValues) {
@@ -64,39 +88,45 @@ class OntologyTest {
         return "Duplicates found: " + duplicates;
     }
 
-    @Test
-    void shouldContainEveryVisibleClassOfModel() {
-        var ontologyClasses = extractClassesFromOntology();
-        var modelClasses = new ArrayList<>(getModelClasses()).toArray(String[]::new);
-        assertThat(ontologyClasses, hasItems(modelClasses));
-    }
-
     private Set<String> getModelClasses() {
-        var inputStreams = generateAllNvaTypes();
-        var selector = new SimpleSelector(null, RDF.type, (RDFNode) null);
-        return getModelFromJson(inputStreams).listStatements(selector).toSet().stream()
+        return createModelFromJson(generateAllNvaTypes()).listStatements(ANY_CLASS_SELECTOR).toSet().stream()
                 .map(Statement::getObject)
                 .map(RDFNode::asResource)
                 .map(Resource::getLocalName)
                 .collect(Collectors.toSet());
     }
 
+    private Set<String> getModelProperties() {
+        return createModelFromJson(generateAllNvaTypes()).listStatements(ANY_STATEMENT_SELECTOR).toSet().stream()
+                .map(Statement::getPredicate)
+                .filter(OntologyTest::isNotRdfType)
+                .map(Resource::getURI)
+                .collect(Collectors.toSet());
+    }
+
+    private static boolean isNotRdfType(Property i) {
+        return !i.equals(RDF.type);
+    }
+
     private static List<InputStream> generateAllNvaTypes() {
         return publicationInstanceProvider().map(PublicationGenerator::randomPublication)
                 .map(OntologyTest::serializeToJson)
                 .map(OntologyTest::addContextObject)
-                .map(item -> new ByteArrayInputStream(item.getBytes(StandardCharsets.UTF_8)))
+                .map(OntologyTest::toByteArrayInputStream)
                 .collect(Collectors.toList());
+    }
+
+    private static ByteArrayInputStream toByteArrayInputStream(String item) {
+        return new ByteArrayInputStream(item.getBytes(StandardCharsets.UTF_8));
     }
 
     private static String addContextObject(String string) {
         var jsonNode = (ObjectNode) attempt(() -> MAPPER.readTree(string)).orElseThrow();
-        var context = attempt(() -> MAPPER.readTree(inputStreamFromResources("publicationContext.json"))).orElseThrow();
-        jsonNode.set("@context", context);
+        jsonNode.set("@context", JSON_LD_CONTEXT);
         return attempt(() -> MAPPER.writeValueAsString(jsonNode)).orElseThrow();
     }
 
-    private Model getModelFromJson(List<InputStream> inputStreams) {
+    private Model createModelFromJson(List<InputStream> inputStreams) {
         var model = ModelFactory.createDefaultModel();
         inputStreams.forEach(item -> RDFDataMgr.read(model, item, Lang.JSONLD11));
         return model;
@@ -107,22 +137,23 @@ class OntologyTest {
     }
 
     private List<String> extractClassesFromOntology() {
-        var model = createModelOfFile(ontology());
-        var selector = new SimpleSelector(null, RDF.type, RDFS.Class);
-        return model.listStatements(selector).toSet().stream()
+        var model = getOntologyModel();
+        return model.listStatements(ONTOLOGY_CLASS_SELECTOR).toSet().stream()
                 .map(Statement::getSubject)
                 .map(Resource::getLocalName)
                 .collect(Collectors.toList());
     }
 
-
-    private Model createModelOfFile(InputStream inputStream) {
-        var model = ModelFactory.createDefaultModel();
-        RDFDataMgr.read(model, inputStream, Lang.TURTLE);
-        return model;
+    private List<String> extractPropertiesFromOntology() {
+        return getOntologyModel().listStatements(ONTOLOGY_PROPERTY_SELECTOR).toSet().stream()
+                .map(Statement::getSubject)
+                .map(Resource::getURI)
+                .distinct()
+                .collect(Collectors.toList());
     }
-
-    private InputStream ontology() {
-        return inputStreamFromResources("publication-ontology.ttl");
+    private Model getOntologyModel() {
+        var model = ModelFactory.createDefaultModel();
+        RDFDataMgr.read(model, ONTOLOGY, Lang.TURTLE);
+        return model;
     }
 }
