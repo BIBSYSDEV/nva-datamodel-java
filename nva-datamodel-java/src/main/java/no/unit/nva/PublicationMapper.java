@@ -37,7 +37,7 @@ public final class PublicationMapper {
      */
     public static <R extends WithContext> R convertValue(
         Publication publication, Class<R> responseType) {
-        return convertValue(publication, getContext(), responseType);
+        return convertValue(publication, getContext(publication), responseType);
     }
 
 }
