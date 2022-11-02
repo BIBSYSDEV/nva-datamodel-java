@@ -73,9 +73,9 @@ class OntologyTest {
 
     @Test
     void shouldContainEveryVisiblePropertyOfModel() {
-        var ontologyClasses = extractPropertiesFromOntology();
-        var modelClasses = new ArrayList<>(getModelProperties()).toArray(String[]::new);
-        assertThat(ontologyClasses, hasItems(modelClasses));
+        var ontologyProperties = extractPropertiesFromOntology();
+        var modelProperties = new ArrayList<>(getModelProperties()).toArray(String[]::new);
+        assertThat(ontologyProperties, hasItems(modelProperties));
     }
 
     private static String getDuplicatesMessage(List<String> ontologyValues) {
