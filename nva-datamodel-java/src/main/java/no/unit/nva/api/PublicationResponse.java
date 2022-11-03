@@ -66,7 +66,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setDoi(publication.getDoi());
         response.setProjects(publication.getProjects());
         response.setSubjects(publication.getSubjects());
-        response.setContext(PublicationContext.getContext());
+        response.setContext(PublicationContext.getContext(publication));
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         return response;
     }

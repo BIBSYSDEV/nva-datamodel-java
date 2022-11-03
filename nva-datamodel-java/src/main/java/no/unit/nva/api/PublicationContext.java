@@ -1,20 +1,12 @@
 package no.unit.nva.api;
 
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
-import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.databind.JsonNode;
-import java.io.IOException;
+import no.unit.nva.model.Publication;
 
 public class PublicationContext {
-
-    public static final String CONTEXT_PATH = "publicationContext.json";
-    public static final String CONTEXT_ERROR_MESSAGE = "Error processing context: ";
-
-    public static JsonNode getContext() {
-        try {
-            return dataModelObjectMapper.readTree(inputStreamFromResources(CONTEXT_PATH));
-        } catch (IOException e) {
-            throw new IllegalStateException(CONTEXT_ERROR_MESSAGE + CONTEXT_PATH, e);
-        }
+    public static JsonNode getContext(Publication publication) {
+        return attempt(() -> dataModelObjectMapper.readTree(publication.getJsonLdContext())).orElseThrow();
     }
 }
