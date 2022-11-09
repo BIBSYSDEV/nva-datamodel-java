@@ -323,8 +323,8 @@ public class Publication
 
     @JsonIgnore
     public boolean isPublishable() {
-        return !DRAFT_FOR_DELETION.equals(status) && !isEmpty(entityDescription.getMainTitle())
-                && associatedArtifacts.isPublishable();
+        return !DRAFT_FOR_DELETION.equals(getStatus()) && nonNull(getEntityDescription()) &&
+                !isEmpty(getEntityDescription().getMainTitle()) && getAssociatedArtifacts().isPublishable();
 
     }
 

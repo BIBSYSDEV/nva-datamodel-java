@@ -56,9 +56,9 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        publishable:
-          type: boolean
         empty:
+          type: boolean
+        publishable:
           type: boolean
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
@@ -246,9 +246,9 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      publishable:
-        type: boolean
       empty:
+        type: boolean
+      publishable:
         type: boolean
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
@@ -2011,9 +2011,9 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          publishable:
-            type: boolean
           empty:
+            type: boolean
+          publishable:
             type: boolean
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
