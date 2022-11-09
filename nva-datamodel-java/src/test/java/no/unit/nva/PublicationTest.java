@@ -3,12 +3,13 @@ package no.unit.nva;
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
+import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.randomLegacyFile;
-import static no.unit.nva.model.testing.AssociatedArtifactsGenerator.randomAssociatedLink;
+import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -32,14 +33,19 @@ import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.testing.associatedartifacts.AdministrativeAgreementGenerator;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
+import no.unit.nva.model.testing.associatedartifacts.AssociatedLinkGenerator;
 import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
+import no.unit.nva.model.testing.associatedartifacts.PublishedFileGenerator;
+import no.unit.nva.model.testing.associatedartifacts.UnpublishedFileGenerator;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.LegacyFile;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
 import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
+import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
@@ -62,7 +68,27 @@ public class PublicationTest {
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
-    
+
+    public static Stream<AssociatedArtifactList> publishableAssociatedArtifactProvider() {
+        var administrativeAgreement = AdministrativeAgreementGenerator.random();
+        var unpublishedFile = UnpublishedFileGenerator.random();
+        var publishedFile = PublishedFileGenerator.random();
+        var link = AssociatedLinkGenerator.random();
+        return Stream.of(
+                new AssociatedArtifactList(List.of(administrativeAgreement, unpublishedFile)),
+                new AssociatedArtifactList(List.of(administrativeAgreement, publishedFile)),
+                new AssociatedArtifactList(List.of(administrativeAgreement, link))
+        );
+    }
+
+    public static Stream<Publication> unpublishablePublicationProvider() {
+        return Stream.of(
+                randomDraftForDeletion(),
+                publicationWithoutTitle(),
+                publicationWithOnlyAdministrativeAgreement()
+        );
+    }
+
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
     void publicationReturnsValidPublicationWhenInputIsValid(Class<?> instanceType) throws Exception {
@@ -181,6 +207,22 @@ public class PublicationTest {
             new NullAssociatedArtifact());
         assertThrows(InvalidAssociatedArtifactsException.class, executable);
     }
+
+    @ParameterizedTest(name = "Publication can be published when basic data is OK and associated files is OK")
+    @MethodSource("publishableAssociatedArtifactProvider")
+    void shouldMarkPublicationAsPublishableWhenPublicationHasRequiredData(AssociatedArtifactList artifacts) {
+        var publication = PublicationGenerator.randomPublication();
+        publication.setStatus(DRAFT);
+        publication.setAssociatedArtifacts(artifacts);
+        assertThat(publication.isPublishable(), is(equalTo(true)));
+    }
+
+    @ParameterizedTest(name = "Publication cannot be published when basic data is not in place")
+    @MethodSource("unpublishablePublicationProvider")
+    void shouldMarkPublicationAsWhenDataIsNotCompliantWithPublicationRequirements(Publication publication) {
+        assertThat(publication.isPublishable(), is(equalTo(false)));
+    }
+
     
     private Publication serializeDeserialize(Publication publication) throws JsonProcessingException {
         var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
@@ -204,5 +246,26 @@ public class PublicationTest {
         var publicationJson = dataModelObjectMapper.writeValueAsString(publication)
                                   .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
         Files.write(Paths.get(path), publicationJson.getBytes());
+    }
+
+
+    private static Publication publicationWithOnlyAdministrativeAgreement() {
+        var publication = PublicationGenerator.randomPublication();
+        publication.setStatus(DRAFT);
+        publication.setAssociatedArtifacts(new AssociatedArtifactList(AdministrativeAgreementGenerator.random()));
+        return publication;
+    }
+
+    private static Publication publicationWithoutTitle() {
+        var publication = PublicationGenerator.randomPublication();
+        publication.setStatus(DRAFT);
+        publication.getEntityDescription().setMainTitle(null);
+        return publication;
+    }
+
+    private static Publication randomDraftForDeletion() {
+        var publication = PublicationGenerator.randomPublication();
+        publication.setStatus(DRAFT_FOR_DELETION);
+        return publication;
     }
 }

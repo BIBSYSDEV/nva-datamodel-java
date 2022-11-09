@@ -24,6 +24,7 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
