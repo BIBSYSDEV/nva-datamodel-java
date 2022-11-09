@@ -1,4 +1,4 @@
-package no.unit.nva.model.associatedartifacts;
+package no.unit.nva.model.testing.associatedartifacts;
 
 import no.unit.nva.model.associatedartifacts.file.License;
 
@@ -6,12 +6,13 @@ import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 
-public class AssociatedFileGenerator {
+public final class LicenseGenerator {
 
-    public AssociatedFileGenerator() {
+    private LicenseGenerator() {
+        // NO-OP
     }
 
-    static License randomLicense() {
+    public static License random() {
         return new License.Builder()
                 .withIdentifier(randomString())
                 .withLabels(randomLabels())

@@ -1,4 +1,4 @@
-package no.unit.nva.model.associatedartifacts;
+package no.unit.nva.model.testing.associatedartifacts;
 
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 
@@ -7,7 +7,7 @@ import java.util.UUID;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 
-public final class AdministrativeAgreementGenerator extends AssociatedFileGenerator {
+public final class AdministrativeAgreementGenerator {
 
     private AdministrativeAgreementGenerator() {
         // NO-OP
@@ -15,6 +15,6 @@ public final class AdministrativeAgreementGenerator extends AssociatedFileGenera
 
     public static AdministrativeAgreement random() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-                randomInteger().longValue(), randomLicense(), true, false, null);
+                randomInteger().longValue(), LicenseGenerator.random(), true, false, null);
     }
 }
