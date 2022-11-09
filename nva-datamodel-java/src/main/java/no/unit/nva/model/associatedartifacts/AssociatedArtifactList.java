@@ -1,6 +1,7 @@
 package no.unit.nva.model.associatedartifacts;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.Arrays;
@@ -160,6 +161,10 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
         return associatedArtifacts.subList(fromIndex, toIndex);
     }
 
+    public boolean isPublishable() {
+        return !isEmpty() && associatedArtifactsAreNotOnlyAdministrativeAgreements();
+    }
+
     private void throwExceptionIfNullObjectIsNotOnlyElementInList(List<AssociatedArtifact> artifacts) {
         if (nonNull(artifacts) && containsNullObject(artifacts) && artifacts.size() > 1) {
             throw new InvalidAssociatedArtifactsException(NULL_OBJECT_MUST_BE_SINGLETON_IN_LIST);
@@ -168,5 +173,9 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
 
     private boolean containsNullObject(List<AssociatedArtifact> artifacts) {
         return artifacts.stream().anyMatch(NullAssociatedArtifact.class::isInstance);
+    }
+
+    private boolean associatedArtifactsAreNotOnlyAdministrativeAgreements() {
+        return associatedArtifacts.stream().anyMatch(item -> !(item instanceof AdministrativeAgreement));
     }
 }

@@ -2,6 +2,8 @@ package no.unit.nva.model;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.nonNull;
+import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
+import static nva.commons.core.StringUtils.isEmpty;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
 
@@ -35,7 +37,7 @@ public class Publication
     
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
-        PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, PublicationStatus.DRAFT_FOR_DELETION)
+        PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION)
     );
     
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
@@ -317,6 +319,13 @@ public class Publication
     @JsonIgnore
     public String getJsonLdContext() {
         return stringFromResources(Path.of("publicationContext.json"));
+    }
+
+    @JsonIgnore
+    public boolean isPublishable() {
+        return !DRAFT_FOR_DELETION.equals(status) && !isEmpty(entityDescription.getMainTitle())
+                && associatedArtifacts.isPublishable();
+
     }
 
     public static final class Builder {
