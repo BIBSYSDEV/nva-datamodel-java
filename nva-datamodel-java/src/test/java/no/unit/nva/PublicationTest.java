@@ -85,7 +85,9 @@ public class PublicationTest {
         return Stream.of(
                 randomDraftForDeletion(),
                 publicationWithoutTitle(),
-                publicationWithOnlyAdministrativeAgreement()
+                publicationWithOnlyAdministrativeAgreement(),
+                publicationWithoutEntityDescription(),
+                publicationWithNoAssociatedArtifacts()
         );
     }
 
@@ -266,6 +268,19 @@ public class PublicationTest {
     private static Publication randomDraftForDeletion() {
         var publication = PublicationGenerator.randomPublication();
         publication.setStatus(DRAFT_FOR_DELETION);
+        return publication;
+    }
+
+    private static Publication publicationWithoutEntityDescription() {
+        var publication = publicationWithoutTitle();
+        publication.setEntityDescription(null);
+        return publication;
+    }
+
+    private static Publication publicationWithNoAssociatedArtifacts() {
+        var publication = randomPublication();
+        publication.setStatus(DRAFT);
+        publication.setAssociatedArtifacts(null);
         return publication;
     }
 }
