@@ -12,7 +12,7 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Series implements BookSeries {
     public static final Pattern EXPECTED_SERIES_URI_PATTERN =
-            Pattern.compile("https://.*?nva\\.aws\\.unit\\.no/publication-channels/.*");
+            Pattern.compile("https://.*?nva(\\.aws)?\\.unit\\.no/publication-channels/.*");
 
     private final URI id;
 
