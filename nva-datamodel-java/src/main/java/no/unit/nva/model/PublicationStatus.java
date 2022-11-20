@@ -9,6 +9,7 @@ public enum PublicationStatus {
 
     NEW("NEW"),
     DRAFT("DRAFT"),
+    PUBLISHED_METADATA("PUBLISHED_METADATA"),
     PUBLISHED("PUBLISHED"),
     DRAFT_FOR_DELETION("DRAFT_FOR_DELETION");
 
