@@ -69,16 +69,18 @@ public class PublicationTest {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
-    public static Stream<AssociatedArtifactList> publishableAssociatedArtifactProvider() {
-        var administrativeAgreement = AdministrativeAgreementGenerator.random();
-        var unpublishedFile = UnpublishedFileGenerator.random();
-        var publishedFile = PublishedFileGenerator.random();
-        var link = AssociatedLinkGenerator.random();
+    public static Stream<Publication> publishablePublicationProvider() {
+
+        var publication = randomPublication();
+        publication.setStatus(DRAFT);
+
         return Stream.of(
-                new AssociatedArtifactList(List.of(administrativeAgreement, unpublishedFile)),
-                new AssociatedArtifactList(List.of(administrativeAgreement, publishedFile)),
-                new AssociatedArtifactList(List.of(administrativeAgreement, link))
+            publicationWithOriginalDoi(),
+            publicationWithAdministrativeAgreementAndUnpublishedFile(),
+            publicationWithAdministrativeAgreementAndPublishedFile(),
+            publicationWithAdministrativeAgreementAndLink()
         );
+
     }
 
     public static Stream<Publication> unpublishablePublicationProvider() {
@@ -87,7 +89,7 @@ public class PublicationTest {
                 publicationWithoutTitle(),
                 publicationWithOnlyAdministrativeAgreement(),
                 publicationWithoutEntityDescription(),
-                publicationWithNoAssociatedArtifacts()
+                publicationWithNoAssociatedArtifactsOrOriginalDoi()
         );
     }
 
@@ -211,11 +213,8 @@ public class PublicationTest {
     }
 
     @ParameterizedTest(name = "Publication can be published when basic data is OK and associated files is OK")
-    @MethodSource("publishableAssociatedArtifactProvider")
-    void shouldMarkPublicationAsPublishableWhenPublicationHasRequiredData(AssociatedArtifactList artifacts) {
-        var publication = PublicationGenerator.randomPublication();
-        publication.setStatus(DRAFT);
-        publication.setAssociatedArtifacts(artifacts);
+    @MethodSource("publishablePublicationProvider")
+    void shouldMarkPublicationAsPublishableWhenPublicationHasRequiredData(Publication publication) {
         assertThat(publication.isPublishable(), is(equalTo(true)));
     }
 
@@ -254,6 +253,7 @@ public class PublicationTest {
     private static Publication publicationWithOnlyAdministrativeAgreement() {
         var publication = PublicationGenerator.randomPublication();
         publication.setStatus(DRAFT);
+        publication.getEntityDescription().getReference().setDoi(null);
         publication.setAssociatedArtifacts(new AssociatedArtifactList(AdministrativeAgreementGenerator.random()));
         return publication;
     }
@@ -277,10 +277,47 @@ public class PublicationTest {
         return publication;
     }
 
-    private static Publication publicationWithNoAssociatedArtifacts() {
+    private static Publication publicationWithNoAssociatedArtifactsOrOriginalDoi() {
         var publication = randomPublication();
         publication.setStatus(DRAFT);
         publication.setAssociatedArtifacts(null);
+        publication.getEntityDescription().getReference().setDoi(null);
+        return publication;
+    }
+
+
+    private static Publication publicationWithAdministrativeAgreementAndLink() {
+        var administrativeAgreement = AdministrativeAgreementGenerator.random();
+        var link = AssociatedLinkGenerator.random();
+        return publicationWithAssociatedArtifact(new AssociatedArtifactList(List.of(administrativeAgreement, link)));
+    }
+
+    private static Publication publicationWithAdministrativeAgreementAndUnpublishedFile() {
+        var unpublishedFile = UnpublishedFileGenerator.random();
+        var administrativeAgreement = AdministrativeAgreementGenerator.random();
+        return publicationWithAssociatedArtifact(new AssociatedArtifactList(List.of(administrativeAgreement,
+                unpublishedFile)));
+    }
+
+    private static Publication publicationWithAdministrativeAgreementAndPublishedFile() {
+        var publishedFile = PublishedFileGenerator.random();
+        var administrativeAgreement = AdministrativeAgreementGenerator.random();
+        return publicationWithAssociatedArtifact(new AssociatedArtifactList(List.of(administrativeAgreement,
+                publishedFile)));
+    }
+
+    private static Publication publicationWithOriginalDoi() {
+        var publication = randomPublication();
+        publication.setStatus(DRAFT);
+        publication.setAssociatedArtifacts(null);
+        return publication;
+    }
+
+    private static Publication publicationWithAssociatedArtifact(AssociatedArtifactList associatedArtifacts) {
+        var publication = randomPublication();
+        publication.setStatus(DRAFT);
+        publication.getEntityDescription().getReference().setDoi(null);
+        publication.setAssociatedArtifacts(associatedArtifacts);
         return publication;
     }
 }

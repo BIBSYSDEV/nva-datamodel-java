@@ -3,7 +3,6 @@ package no.unit.nva.model;
 import static java.util.Objects.hash;
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
-import static nva.commons.core.StringUtils.isEmpty;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
 
@@ -18,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithIdentifier;
@@ -29,6 +29,7 @@ import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import nva.commons.core.JacocoGenerated;
+import nva.commons.core.StringUtils;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields", "PMD.GodClass"})
@@ -323,9 +324,26 @@ public class Publication
 
     @JsonIgnore
     public boolean isPublishable() {
-        return !DRAFT_FOR_DELETION.equals(getStatus()) && nonNull(getEntityDescription()) &&
-                !isEmpty(getEntityDescription().getMainTitle()) && getAssociatedArtifacts().isPublishable();
+        return !DRAFT_FOR_DELETION.equals(getStatus()) && hasMainTitle() && hasReferencedContent();
 
+    }
+
+    private boolean hasReferencedContent() {
+        return getAssociatedArtifacts().isPublishable() || hasOriginalDoi();
+    }
+
+    private boolean hasMainTitle() {
+        return Optional.ofNullable(getEntityDescription())
+                .map(EntityDescription::getMainTitle)
+                .filter(string -> !StringUtils.isEmpty(string))
+                .isPresent();
+    }
+
+    private boolean hasOriginalDoi() {
+        return Optional.ofNullable(getEntityDescription())
+                .map(EntityDescription::getReference)
+                .map(Reference::getDoi)
+                .isPresent();
     }
 
     public static final class Builder {
