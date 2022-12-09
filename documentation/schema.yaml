@@ -10,6 +10,7 @@ schema:
       enum:
       - NEW
       - DRAFT
+      - PUBLISHED_METADATA
       - PUBLISHED
       - DRAFT_FOR_DELETION
     resourceOwner:
@@ -43,6 +44,10 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/ResearchProject'
+    fundings:
+      type: array
+      items:
+        $ref: '#/components/schemas/Funding'
     additionalIdentifiers:
       uniqueItems: true
       type: array
@@ -56,9 +61,9 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        empty:
-          type: boolean
         publishable:
+          type: boolean
+        empty:
           type: boolean
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
@@ -246,9 +251,9 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      empty:
-        type: boolean
       publishable:
+        type: boolean
+      empty:
         type: boolean
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
@@ -968,6 +973,27 @@ referencedSchemas:
           type: boolean
         type:
           type: string
+  Funding:
+    required:
+    - type
+    type: object
+    properties:
+      source:
+        type: string
+        format: uri
+      title:
+        type: string
+      identifier:
+        type: string
+      currency:
+        type: string
+      amount:
+        type: integer
+        format: int64
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   GeographicalContent:
     required:
     - type
@@ -1965,6 +1991,7 @@ referencedSchemas:
         enum:
         - NEW
         - DRAFT
+        - PUBLISHED_METADATA
         - PUBLISHED
         - DRAFT_FOR_DELETION
       resourceOwner:
@@ -1998,6 +2025,10 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/ResearchProject'
+      fundings:
+        type: array
+        items:
+          $ref: '#/components/schemas/Funding'
       additionalIdentifiers:
         uniqueItems: true
         type: array
@@ -2011,9 +2042,9 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          empty:
-            type: boolean
           publishable:
+            type: boolean
+          empty:
             type: boolean
         items:
           $ref: '#/components/schemas/AssociatedArtifact'

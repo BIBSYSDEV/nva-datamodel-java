@@ -17,6 +17,10 @@ nva:Exhibition a rdfs:Class ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
   
+nva:Funding a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: .
+
 nva:GraphicDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -1268,6 +1272,27 @@ nva:project a rdf:Property ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication ;
   rdfs:range nva:ResearchProject .
+
+nva:funding a rdf:Property ;
+  rdfs:comment "" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Publication ;
+  rdfs:range nva:Funding .
+
+nva:amount a rdf:Property ;
+  rdfs:comment "" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Funding ;
+  rdfs:range xsd:long .
+
+nva:currency a rdf:Property ;
+  rdfs:comment "" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Funding ;
+  rdfs:range xsd:string .
 
 nva:administrativeAgreement a rdf:Property ;
   rdfs:comment "" ;

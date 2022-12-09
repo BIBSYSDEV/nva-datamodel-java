@@ -56,6 +56,7 @@ public class Publication
     private URI link;
     private EntityDescription entityDescription;
     private List<ResearchProject> projects;
+    private List<Funding> fundings;
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
@@ -201,7 +202,15 @@ public class Publication
     public void setProjects(List<ResearchProject> projects) {
         this.projects = projects;
     }
-    
+
+    public List<Funding> getFundings() {
+        return fundings;
+    }
+
+    public void setFundings(List<Funding> fundings) {
+        this.fundings = fundings;
+    }
+
     @Override
     public List<URI> getSubjects() {
         return nonNull(subjects) ? subjects : Collections.emptyList();
@@ -250,6 +259,7 @@ public class Publication
                    .withLink(getLink())
                    .withEntityDescription(getEntityDescription())
                    .withProjects(getProjects())
+                   .withFundings(getFundings())
                    .withAdditionalIdentifiers(getAdditionalIdentifiers())
                    .withAssociatedArtifacts(getAssociatedArtifacts())
                    .withSubjects(getSubjects());
@@ -271,7 +281,7 @@ public class Publication
     public int hashCode() {
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
             getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
-            getEntityDescription(), getProjects(), getAdditionalIdentifiers(), getSubjects(),
+            getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
             getAssociatedArtifacts());
     }
     
@@ -299,6 +309,7 @@ public class Publication
                              && Objects.equals(getEntityDescription(), that.getEntityDescription())
                              && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
                              && Objects.equals(getProjects(), that.getProjects())
+                             && Objects.equals(getFundings(), that.getFundings())
                              && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                              && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
@@ -418,7 +429,12 @@ public class Publication
             publication.setProjects(projects);
             return this;
         }
-        
+
+        public Builder withFundings(List<Funding> fundings) {
+            publication.setFundings(fundings);
+            return this;
+        }
+
         public Builder withAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
             publication.setAdditionalIdentifiers(additionalIdentifiers);
             return this;

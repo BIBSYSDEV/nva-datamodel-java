@@ -2,9 +2,11 @@ package no.unit.nva.model.testing;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
+import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import com.github.javafaker.Faker;
@@ -17,6 +19,7 @@ import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.Funding;
 import no.unit.nva.model.Grant;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
@@ -51,8 +54,6 @@ public final class PublicationGenerator {
         return publication;
     }
 
-
-
     public static URI randomUri() {
         String uriString = "https://www.example.org/" + randomWord() + randomWord();
         return URI.create(uriString);
@@ -82,13 +83,29 @@ public final class PublicationGenerator {
         return List.of(randomResearchProject());
     }
 
+    public static List<Funding> randomFundings() {
+        return List.of(randomFunding());
+    }
+
+    public static Funding randomFunding() {
+        var funding = new Funding();
+
+        funding.setSource(randomUri());
+        funding.setIdentifier(randomString());
+        funding.setTitle(randomString());
+        funding.setCurrency(randomCurrency());
+        funding.setAmount(randomInteger().longValue());
+
+        return funding;
+    }
+
     public static ResearchProject randomResearchProject() {
         return new ResearchProject.Builder()
-            .withId(randomUri())
-            .withName(randomString())
-            .withApprovals(randomApprovals())
-            .withGrants(randomGrants())
-            .build();
+                   .withId(randomUri())
+                   .withName(randomString())
+                   .withApprovals(randomApprovals())
+                   .withGrants(randomGrants())
+                   .build();
     }
 
     public static List<Grant> randomGrants() {
@@ -97,9 +114,9 @@ public final class PublicationGenerator {
 
     public static Grant randomGrant() {
         return new Grant.Builder()
-            .withId(randomString())
-            .withSource(randomString())
-            .build();
+                   .withId(randomString())
+                   .withSource(randomString())
+                   .build();
     }
 
     public static List<Approval> randomApprovals() {
@@ -109,11 +126,11 @@ public final class PublicationGenerator {
     public static Approval randomApproval() {
 
         return new Approval.Builder()
-            .withApprovalStatus(randomElement(ApprovalStatus.values()))
-            .withDate(randomInstant())
-            .withApplicationCode(randomString())
-            .withApprovedBy(randomElement(ApprovalsBody.values()))
-            .build();
+                   .withApprovalStatus(randomElement(ApprovalStatus.values()))
+                   .withDate(randomInstant())
+                   .withApplicationCode(randomString())
+                   .withApprovedBy(randomElement(ApprovalsBody.values()))
+                   .build();
     }
 
     public static AdditionalIdentifier randomAdditionalIdentifier() {
@@ -122,34 +139,35 @@ public final class PublicationGenerator {
 
     public static Organization randomOrganization() {
         return new Organization.Builder()
-            .withId(randomUri())
-            .withLabels(randomLabels())
-            .build();
+                   .withId(randomUri())
+                   .withLabels(randomLabels())
+                   .build();
     }
 
     private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
-                .withIdentifier(SortableIdentifier.next())
-                .withPublisher(randomOrganization())
-                .withSubjects(List.of(randomUri()))
-                .withStatus(randomElement(PublicationStatus.values()))
-                .withPublishedDate(randomInstant())
-                .withModifiedDate(randomInstant())
-                .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
-                .withProjects(randomProjects())
-                .withResourceOwner(randomResourceOwner())
-                .withLink(randomUri())
-                .withIndexedDate(randomInstant())
-                .withHandle(randomUri())
-                .withDoi(randomDoi())
-                .withCreatedDate(randomInstant())
-                .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-                .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                .build();
+                   .withIdentifier(SortableIdentifier.next())
+                   .withPublisher(randomOrganization())
+                   .withSubjects(List.of(randomUri()))
+                   .withStatus(randomElement(PublicationStatus.values()))
+                   .withPublishedDate(randomInstant())
+                   .withModifiedDate(randomInstant())
+                   .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
+                   .withProjects(randomProjects())
+                   .withFundings(randomFundings())
+                   .withResourceOwner(randomResourceOwner())
+                   .withLink(randomUri())
+                   .withIndexedDate(randomInstant())
+                   .withHandle(randomUri())
+                   .withDoi(randomDoi())
+                   .withCreatedDate(randomInstant())
+                   .withEntityDescription(randomEntityDescription(publicationInstanceClass))
+                   .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
+                   .build();
     }
 
     private static ResourceOwner randomResourceOwner() {
-        return new ResourceOwner(randomString(),randomUri());
+        return new ResourceOwner(randomString(), randomUri());
     }
 
     private static String randomWord() {

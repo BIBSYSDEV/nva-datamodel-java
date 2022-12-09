@@ -17,6 +17,7 @@ import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.Funding;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
@@ -29,7 +30,7 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId,
-        WithContext {
+                                            WithContext {
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -46,6 +47,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @JsonProperty("@context")
     private JsonNode context;
     private List<ResearchProject> projects;
+    private List<Funding> fundings;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
 
@@ -65,6 +67,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         response.setDoi(publication.getDoi());
         response.setProjects(publication.getProjects());
+        response.setFundings(publication.getFundings());
         response.setSubjects(publication.getSubjects());
         response.setContext(PublicationContext.getContext(publication));
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
@@ -180,7 +183,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public void setDoi(URI doi) {
         this.doi = doi;
     }
-    
 
     @Override
     public EntityDescription getEntityDescription() {
@@ -202,6 +204,14 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.projects = projects;
     }
 
+    public List<Funding> getFundings() {
+        return fundings;
+    }
+
+    public void setFundings(List<Funding> fundings) {
+        this.fundings = fundings;
+    }
+
     @Override
     public List<URI> getSubjects() {
         return Objects.nonNull(subjects) ? subjects : Collections.emptyList();
@@ -211,7 +221,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public void setSubjects(List<URI> subjects) {
         this.subjects = subjects;
     }
-    
+
     @Override
     public JsonNode getContext() {
         return context;
@@ -221,7 +231,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public void setContext(JsonNode context) {
         this.context = context;
     }
-
 
     @Override
     public AssociatedArtifactList getAssociatedArtifacts() {
@@ -244,28 +253,43 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         }
         PublicationResponse that = (PublicationResponse) o;
         return Objects.equals(getIdentifier(), that.getIdentifier())
-                && getStatus() == that.getStatus()
-                && Objects.equals(getResourceOwner(), that.getResourceOwner())
-                && Objects.equals(getPublisher(), that.getPublisher())
-                && Objects.equals(getCreatedDate(), that.getCreatedDate())
-                && Objects.equals(getModifiedDate(), that.getModifiedDate())
-                && Objects.equals(getPublishedDate(), that.getPublishedDate())
-                && Objects.equals(getIndexedDate(), that.getIndexedDate())
-                && Objects.equals(getHandle(), that.getHandle())
-                && Objects.equals(getLink(), that.getLink())
-                && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                && Objects.equals(getDoi(), that.getDoi())
-                && Objects.equals(getContext(), that.getContext())
-                && Objects.equals(getProjects(), that.getProjects())
-                && Objects.equals(getSubjects(), that.getSubjects())
-                && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts());
+               && getStatus() == that.getStatus()
+               && Objects.equals(getResourceOwner(), that.getResourceOwner())
+               && Objects.equals(getPublisher(), that.getPublisher())
+               && Objects.equals(getCreatedDate(), that.getCreatedDate())
+               && Objects.equals(getModifiedDate(), that.getModifiedDate())
+               && Objects.equals(getPublishedDate(), that.getPublishedDate())
+               && Objects.equals(getIndexedDate(), that.getIndexedDate())
+               && Objects.equals(getHandle(), that.getHandle())
+               && Objects.equals(getLink(), that.getLink())
+               && Objects.equals(getEntityDescription(), that.getEntityDescription())
+               && Objects.equals(getDoi(), that.getDoi())
+               && Objects.equals(getContext(), that.getContext())
+               && Objects.equals(getProjects(), that.getProjects())
+               && Objects.equals(getFundings(), that.getFundings())
+               && Objects.equals(getSubjects(), that.getSubjects())
+               && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts());
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(getIdentifier(), getStatus(), getResourceOwner(), getPublisher(), getCreatedDate(),
-                getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandle(), getLink(), getEntityDescription(),
-                getDoi(), getContext(), getProjects(), getSubjects(), getAssociatedArtifacts());
+        return Objects.hash(getIdentifier(),
+                            getStatus(),
+                            getResourceOwner(),
+                            getPublisher(),
+                            getCreatedDate(),
+                            getModifiedDate(),
+                            getPublishedDate(),
+                            getIndexedDate(),
+                            getHandle(),
+                            getLink(),
+                            getEntityDescription(),
+                            getDoi(),
+                            getContext(),
+                            getProjects(),
+                            getFundings(),
+                            getSubjects(),
+                            getAssociatedArtifacts());
     }
 }
