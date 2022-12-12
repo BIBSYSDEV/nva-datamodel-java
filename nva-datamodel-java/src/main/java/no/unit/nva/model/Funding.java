@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
+import java.util.Map;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
@@ -9,10 +10,10 @@ import nva.commons.core.JacocoGenerated;
 public class Funding {
 
     private URI source;
-    private String title;
     private String identifier;
-    private String currency;
-    private Long amount;
+    private String mainTitle;
+    private Map<String, String> alternativeTitles;
+    private MonetaryAmount amount;
 
     public Funding() {
     }
@@ -25,14 +26,6 @@ public class Funding {
         this.source = source;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getIdentifier() {
         return identifier;
     }
@@ -41,19 +34,27 @@ public class Funding {
         this.identifier = identifier;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getMainTitle() {
+        return mainTitle;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setMainTitle(String mainTitle) {
+        this.mainTitle = mainTitle;
     }
 
-    public Long getAmount() {
+    public Map<String, String> getAlternativeTitles() {
+        return alternativeTitles;
+    }
+
+    public void setAlternativeTitles(Map<String, String> alternativeTitles) {
+        this.alternativeTitles = alternativeTitles;
+    }
+
+    public MonetaryAmount getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(MonetaryAmount amount) {
         this.amount = amount;
     }
 
@@ -68,15 +69,15 @@ public class Funding {
         }
         Funding funding = (Funding) o;
         return source.equals(funding.source)
-               && title.equals(funding.title)
                && identifier.equals(funding.identifier)
-               && Objects.equals(currency, funding.currency)
+               && mainTitle.equals(funding.mainTitle)
+               && Objects.equals(alternativeTitles, funding.alternativeTitles)
                && Objects.equals(amount, funding.amount);
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(source, title, identifier, currency, amount);
+        return Objects.hash(source, identifier, mainTitle, alternativeTitles, amount);
     }
 }

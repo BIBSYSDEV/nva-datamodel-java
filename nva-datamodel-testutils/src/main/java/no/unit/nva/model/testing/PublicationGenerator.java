@@ -21,6 +21,7 @@ import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Funding;
 import no.unit.nva.model.Grant;
+import no.unit.nva.model.MonetaryAmount;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.Publication.Builder;
@@ -92,11 +93,20 @@ public final class PublicationGenerator {
 
         funding.setSource(randomUri());
         funding.setIdentifier(randomString());
-        funding.setTitle(randomString());
-        funding.setCurrency(randomCurrency());
-        funding.setAmount(randomInteger().longValue());
+        funding.setMainTitle(randomString());
+        funding.setAlternativeTitles(randomLabels());
+        funding.setAmount(randomMonetaryAmount());
 
         return funding;
+    }
+
+    private static MonetaryAmount randomMonetaryAmount() {
+        var monetaryAmount = new MonetaryAmount();
+
+        monetaryAmount.setCurrency(randomCurrency());
+        monetaryAmount.setAmount(randomInteger().longValue());
+
+        return monetaryAmount;
     }
 
     public static ResearchProject randomResearchProject() {
