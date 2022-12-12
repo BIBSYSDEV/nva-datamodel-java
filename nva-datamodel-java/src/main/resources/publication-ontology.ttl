@@ -17,6 +17,14 @@ nva:Exhibition a rdfs:Class ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
   
+nva:Funding a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: .
+
+nva:MonetaryAmount a rdfs:Class ;
+  rdfs:comment "" ;
+  rdfs:isDefinedBy nva: .
+
 nva:GraphicDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -1055,7 +1063,7 @@ nva:alternativeTitle a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:EntityDescription ;
+  rdfs:domain nva:Publication, nva:Funding ;
   rdfs:range rdf:langString .
 
 nva:orcId a rdf:Property ;
@@ -1158,7 +1166,7 @@ nva:mainTitle a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:EntityDescription ;
+  rdfs:domain nva:EntityDescription, nva:Funding ;
   rdfs:range xsd:string .
 
 # probably an issue that SeriesEpisode uses this property c.f. seriesNumber .
@@ -1268,6 +1276,27 @@ nva:project a rdf:Property ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication ;
   rdfs:range nva:ResearchProject .
+
+nva:funding a rdf:Property ;
+  rdfs:comment "" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Publication ;
+  rdfs:range nva:Funding .
+
+nva:amount a rdf:Property ;
+  rdfs:comment "" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:MonetaryAmount ;
+  rdfs:range xsd:long .
+
+nva:currency a rdf:Property ;
+  rdfs:comment "" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:MonetaryAmount ;
+  rdfs:range xsd:string .
 
 nva:administrativeAgreement a rdf:Property ;
   rdfs:comment "" ;
