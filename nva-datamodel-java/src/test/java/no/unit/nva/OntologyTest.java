@@ -1,8 +1,26 @@
 package no.unit.nva;
 
+import static nva.commons.core.attempt.Try.attempt;
+import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
+import static nva.commons.core.ioutils.IoUtils.stringFromResources;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsIterableContaining.hasItem;
+import static org.hamcrest.core.IsIterableContaining.hasItems;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.testing.PublicationGenerator;
@@ -19,25 +37,9 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static nva.commons.core.attempt.Try.attempt;
-import static nva.commons.core.ioutils.IoUtils.inputStreamFromResources;
-import static nva.commons.core.ioutils.IoUtils.stringFromResources;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsIterableContaining.hasItems;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class OntologyTest {
 
@@ -64,18 +66,27 @@ class OntologyTest {
         assertThat(duplicatesMessage, distinctValues, is(equalTo(ontologyValues)));
     }
 
-    @Test
-    void shouldContainEveryVisibleClassOfModel() {
+    @ParameterizedTest
+    @MethodSource("provideModelClassesArguments")
+    void shouldContainEveryVisibleClassOfModel(String modelClass) {
         var ontologyClasses = extractClassesFromOntology();
         var modelClasses = new ArrayList<>(getModelClasses()).toArray(String[]::new);
         assertThat(ontologyClasses, hasItems(modelClasses));
     }
 
-    @Test
-    void shouldContainEveryVisiblePropertyOfModel() {
+    @ParameterizedTest
+    @MethodSource("provideModelPropertiesArguments")
+    void shouldContainEveryVisiblePropertyOfModel(String modelProperty) {
         var ontologyProperties = extractPropertiesFromOntology();
-        var modelProperties = new ArrayList<>(getModelProperties()).toArray(String[]::new);
-        assertThat(ontologyProperties, hasItems(modelProperties));
+        assertThat(ontologyProperties, hasItem(modelProperty));
+    }
+
+    public static Stream<Arguments> provideModelPropertiesArguments() {
+        return Stream.of(Arguments.of(getModelProperties().toArray()));
+    }
+
+    public static Stream<Arguments> provideModelClassesArguments() {
+        return Stream.of(Arguments.of(getModelClasses().toArray()));
     }
 
     private static String getDuplicatesMessage(List<String> ontologyValues) {
@@ -87,7 +98,7 @@ class OntologyTest {
         return "Duplicates found: " + duplicates;
     }
 
-    private Set<String> getModelClasses() {
+    private static Set<String> getModelClasses() {
         return createModelFromJson(generateAllNvaTypes()).listStatements(ANY_CLASS_SELECTOR).toSet().stream()
                 .map(Statement::getObject)
                 .map(RDFNode::asResource)
@@ -95,7 +106,7 @@ class OntologyTest {
                 .collect(Collectors.toSet());
     }
 
-    private Set<String> getModelProperties() {
+    private static Set<String> getModelProperties() {
         return createModelFromJson(generateAllNvaTypes()).listStatements(ANY_STATEMENT_SELECTOR).toSet().stream()
                 .map(Statement::getPredicate)
                 .filter(OntologyTest::isNotRdfType)
@@ -125,7 +136,7 @@ class OntologyTest {
         return attempt(() -> MAPPER.writeValueAsString(jsonNode)).orElseThrow();
     }
 
-    private Model createModelFromJson(List<InputStream> inputStreams) {
+    private static Model createModelFromJson(List<InputStream> inputStreams) {
         var model = ModelFactory.createDefaultModel();
         inputStreams.forEach(item -> RDFDataMgr.read(model, item, Lang.JSONLD11));
         return model;

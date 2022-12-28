@@ -3,6 +3,7 @@ package no.unit.nva;
 import java.net.URI;
 import java.util.List;
 import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.Funding;
 import no.unit.nva.model.ResearchProject;
 
 public interface WithMetadata extends PublicationBase {
@@ -18,4 +19,8 @@ public interface WithMetadata extends PublicationBase {
     List<URI> getSubjects();
 
     void setSubjects(List<URI> subjects);
+
+    List<Funding> getFundings();
+
+    void setFundings(List<Funding> fundings);
 }

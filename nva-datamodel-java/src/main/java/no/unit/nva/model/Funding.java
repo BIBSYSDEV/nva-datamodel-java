@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
+import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
@@ -10,10 +11,13 @@ import nva.commons.core.JacocoGenerated;
 public class Funding {
 
     private URI source;
+    private URI id;
     private String identifier;
-    private String mainTitle;
-    private Map<String, String> alternativeTitles;
-    private MonetaryAmount amount;
+    private String name;
+    private Map<String, String> alternativeName;
+    private MonetaryAmount fundingAmount;
+    private Instant activeFrom;
+    private Instant activeTo;
 
     public Funding() {
     }
@@ -26,6 +30,14 @@ public class Funding {
         this.source = source;
     }
 
+    public URI getId() {
+        return id;
+    }
+
+    public void setId(URI id) {
+        this.id = id;
+    }
+
     public String getIdentifier() {
         return identifier;
     }
@@ -34,28 +46,44 @@ public class Funding {
         this.identifier = identifier;
     }
 
-    public String getMainTitle() {
-        return mainTitle;
+    public String getName() {
+        return name;
     }
 
-    public void setMainTitle(String mainTitle) {
-        this.mainTitle = mainTitle;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Map<String, String> getAlternativeTitles() {
-        return alternativeTitles;
+    public Map<String, String> getAlternativeName() {
+        return alternativeName;
     }
 
-    public void setAlternativeTitles(Map<String, String> alternativeTitles) {
-        this.alternativeTitles = alternativeTitles;
+    public void setAlternativeName(Map<String, String> alternativeName) {
+        this.alternativeName = alternativeName;
     }
 
-    public MonetaryAmount getAmount() {
-        return amount;
+    public MonetaryAmount getFundingAmount() {
+        return fundingAmount;
     }
 
-    public void setAmount(MonetaryAmount amount) {
-        this.amount = amount;
+    public void setFundingAmount(MonetaryAmount fundingAmount) {
+        this.fundingAmount = fundingAmount;
+    }
+
+    public Instant getActiveFrom() {
+        return activeFrom;
+    }
+
+    public void setActiveFrom(Instant activeFrom) {
+        this.activeFrom = activeFrom;
+    }
+
+    public Instant getActiveTo() {
+        return activeTo;
+    }
+
+    public void setActiveTo(Instant activeTo) {
+        this.activeTo = activeTo;
     }
 
     @JacocoGenerated
@@ -69,15 +97,18 @@ public class Funding {
         }
         Funding funding = (Funding) o;
         return source.equals(funding.source)
-               && identifier.equals(funding.identifier)
-               && mainTitle.equals(funding.mainTitle)
-               && Objects.equals(alternativeTitles, funding.alternativeTitles)
-               && Objects.equals(amount, funding.amount);
+               && Objects.equals(id, funding.id)
+               && Objects.equals(identifier, funding.identifier)
+               && name.equals(funding.name)
+               && alternativeName.equals(funding.alternativeName)
+               && Objects.equals(fundingAmount, funding.fundingAmount)
+               && Objects.equals(activeFrom, funding.activeFrom)
+               && Objects.equals(activeTo, funding.activeTo);
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(source, identifier, mainTitle, alternativeTitles, amount);
+        return Objects.hash(source, id, identifier, name, alternativeName, fundingAmount, activeFrom, activeTo);
     }
 }

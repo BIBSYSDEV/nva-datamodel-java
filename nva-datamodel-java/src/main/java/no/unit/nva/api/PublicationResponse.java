@@ -204,10 +204,12 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.projects = projects;
     }
 
+    @Override
     public List<Funding> getFundings() {
         return fundings;
     }
 
+    @Override
     public void setFundings(List<Funding> fundings) {
         this.fundings = fundings;
     }
