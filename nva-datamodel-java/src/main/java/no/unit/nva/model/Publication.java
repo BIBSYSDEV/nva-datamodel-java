@@ -205,7 +205,7 @@ public class Publication
 
     @Override
     public List<Funding> getFundings() {
-        return fundings;
+        return nonNull(fundings) ? fundings : Collections.emptyList();
     }
 
     @Override
