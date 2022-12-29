@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsIterableContaining.hasItem;
-import static org.hamcrest.core.IsIterableContaining.hasItems;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -15,7 +14,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +43,7 @@ class OntologyTest {
 
     public static final ObjectMapper MAPPER = JsonUtils.dtoObjectMapper;
     public static final JsonNode JSON_LD_CONTEXT =
-            attempt(() -> MAPPER.readTree(inputStreamFromResources("publicationContext.json"))).orElseThrow();
+        attempt(() -> MAPPER.readTree(inputStreamFromResources("publicationContext.json"))).orElseThrow();
     public static final String ONTOLOGY_STRING = stringFromResources(Path.of("publication-ontology.ttl"));
     public static final SimpleSelector ANY_CLASS_SELECTOR = new SimpleSelector(null, RDF.type, (RDFNode) null);
     public static final SimpleSelector ANY_STATEMENT_SELECTOR = new SimpleSelector(null, null, (RDFNode) null);
@@ -56,62 +54,61 @@ class OntologyTest {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
+    public static Stream<Arguments> modelPropertiesProvider() {
+        return Stream.of(Arguments.of(getModelProperties().toArray()));
+    }
+
+    public static Stream<Arguments> modelClassProvider() {
+        return Stream.of(Arguments.of(getModelClasses().toArray()));
+    }
+
     @Test
     void shouldContainDistinctDescriptions() {
         var ontologyValues = ONTOLOGY_STRING.lines()
-                .filter(line -> line.startsWith("nva:"))
-                .collect(Collectors.toList());
+                                 .filter(line -> line.startsWith("nva:"))
+                                 .collect(Collectors.toList());
         var distinctValues = ontologyValues.stream().distinct().collect(Collectors.toList());
         String duplicatesMessage = ontologyValues.equals(distinctValues) ? null : getDuplicatesMessage(ontologyValues);
         assertThat(duplicatesMessage, distinctValues, is(equalTo(ontologyValues)));
     }
 
     @ParameterizedTest
-    @MethodSource("provideModelClassesArguments")
+    @MethodSource("modelClassProvider")
     void shouldContainEveryVisibleClassOfModel(String modelClass) {
         var ontologyClasses = extractClassesFromOntology();
-        var modelClasses = new ArrayList<>(getModelClasses()).toArray(String[]::new);
-        assertThat(ontologyClasses, hasItems(modelClasses));
+        assertThat(ontologyClasses, hasItem(modelClass));
     }
 
     @ParameterizedTest
-    @MethodSource("provideModelPropertiesArguments")
+    @MethodSource("modelPropertiesProvider")
     void shouldContainEveryVisiblePropertyOfModel(String modelProperty) {
         var ontologyProperties = extractPropertiesFromOntology();
         assertThat(ontologyProperties, hasItem(modelProperty));
     }
 
-    public static Stream<Arguments> provideModelPropertiesArguments() {
-        return Stream.of(Arguments.of(getModelProperties().toArray()));
-    }
-
-    public static Stream<Arguments> provideModelClassesArguments() {
-        return Stream.of(Arguments.of(getModelClasses().toArray()));
-    }
-
     private static String getDuplicatesMessage(List<String> ontologyValues) {
         // Not a performant solution, with Collections.frequency, but here it is not important
         var duplicates = ontologyValues.stream()
-                .filter(e -> Collections.frequency(ontologyValues, e) > 1)
-                .distinct()
-                .collect(Collectors.joining(", "));
+                             .filter(e -> Collections.frequency(ontologyValues, e) > 1)
+                             .distinct()
+                             .collect(Collectors.joining(", "));
         return "Duplicates found: " + duplicates;
     }
 
     private static Set<String> getModelClasses() {
         return createModelFromJson(generateAllNvaTypes()).listStatements(ANY_CLASS_SELECTOR).toSet().stream()
-                .map(Statement::getObject)
-                .map(RDFNode::asResource)
-                .map(Resource::getLocalName)
-                .collect(Collectors.toSet());
+                   .map(Statement::getObject)
+                   .map(RDFNode::asResource)
+                   .map(Resource::getLocalName)
+                   .collect(Collectors.toSet());
     }
 
     private static Set<String> getModelProperties() {
         return createModelFromJson(generateAllNvaTypes()).listStatements(ANY_STATEMENT_SELECTOR).toSet().stream()
-                .map(Statement::getPredicate)
-                .filter(OntologyTest::isNotRdfType)
-                .map(Resource::getURI)
-                .collect(Collectors.toSet());
+                   .map(Statement::getPredicate)
+                   .filter(OntologyTest::isNotRdfType)
+                   .map(Resource::getURI)
+                   .collect(Collectors.toSet());
     }
 
     private static boolean isNotRdfType(Property i) {
@@ -120,10 +117,10 @@ class OntologyTest {
 
     private static List<InputStream> generateAllNvaTypes() {
         return publicationInstanceProvider().map(PublicationGenerator::randomPublication)
-                .map(OntologyTest::serializeToJson)
-                .map(OntologyTest::addContextObject)
-                .map(OntologyTest::toByteArrayInputStream)
-                .collect(Collectors.toList());
+                   .map(OntologyTest::serializeToJson)
+                   .map(OntologyTest::addContextObject)
+                   .map(OntologyTest::toByteArrayInputStream)
+                   .collect(Collectors.toList());
     }
 
     private static ByteArrayInputStream toByteArrayInputStream(String item) {
@@ -149,17 +146,17 @@ class OntologyTest {
     private List<String> extractClassesFromOntology() {
         var model = getOntologyModel();
         return model.listStatements(ONTOLOGY_CLASS_SELECTOR).toSet().stream()
-                .map(Statement::getSubject)
-                .map(Resource::getLocalName)
-                .collect(Collectors.toList());
+                   .map(Statement::getSubject)
+                   .map(Resource::getLocalName)
+                   .collect(Collectors.toList());
     }
 
     private List<String> extractPropertiesFromOntology() {
         return getOntologyModel().listStatements(ONTOLOGY_PROPERTY_SELECTOR).toSet().stream()
-                .map(Statement::getSubject)
-                .map(Resource::getURI)
-                .distinct()
-                .collect(Collectors.toList());
+                   .map(Statement::getSubject)
+                   .map(Resource::getURI)
+                   .distinct()
+                   .collect(Collectors.toList());
     }
 
     private Model getOntologyModel() {
