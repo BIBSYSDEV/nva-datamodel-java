@@ -92,10 +92,13 @@ public final class PublicationGenerator {
         var funding = new Funding();
 
         funding.setSource(randomUri());
+        funding.setId(randomUri());
         funding.setIdentifier(randomString());
-        funding.setMainTitle(randomString());
-        funding.setAlternativeTitles(randomLabels());
-        funding.setAmount(randomMonetaryAmount());
+        funding.setName(randomString());
+        funding.setAlternativeName(randomLabels());
+        funding.setFundingAmount(randomMonetaryAmount());
+        funding.setActiveFrom(randomInstant());
+        funding.setActiveTo(randomInstant(funding.getActiveFrom()));
 
         return funding;
     }

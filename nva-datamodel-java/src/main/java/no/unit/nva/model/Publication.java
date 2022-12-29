@@ -203,10 +203,12 @@ public class Publication
         this.projects = projects;
     }
 
+    @Override
     public List<Funding> getFundings() {
         return fundings;
     }
 
+    @Override
     public void setFundings(List<Funding> fundings) {
         this.fundings = fundings;
     }
@@ -262,7 +264,8 @@ public class Publication
                    .withFundings(getFundings())
                    .withAdditionalIdentifiers(getAdditionalIdentifiers())
                    .withAssociatedArtifacts(getAssociatedArtifacts())
-                   .withSubjects(getSubjects());
+                   .withSubjects(getSubjects())
+                   .withFundings(getFundings());
     }
     
     /**

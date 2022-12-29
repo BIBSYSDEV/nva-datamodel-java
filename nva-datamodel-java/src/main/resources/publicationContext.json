@@ -7,6 +7,12 @@
     "@id": "affiliation",
     "@container": "@set"
   },
+  "activeFrom": {
+    "@type": "xsd:dateTime"
+  },
+  "activeTo": {
+    "@type": "xsd:dateTime"
+  },
   "associatedArtifacts": {
     "@id": "associatedArtifact",
     "@container": "@set"
@@ -17,6 +23,10 @@
   },
   "alternativeTitles": {
     "@id": "alternativeTitle",
+    "@container": "@language"
+  },
+  "alternativeNames": {
+    "@id": "alternativeName",
     "@container": "@language"
   },
   "approvals": {
