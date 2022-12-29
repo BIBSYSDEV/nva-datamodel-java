@@ -264,7 +264,8 @@ public class Publication
                    .withFundings(getFundings())
                    .withAdditionalIdentifiers(getAdditionalIdentifiers())
                    .withAssociatedArtifacts(getAssociatedArtifacts())
-                   .withSubjects(getSubjects());
+                   .withSubjects(getSubjects())
+                   .withFundings(getFundings());
     }
     
     /**
