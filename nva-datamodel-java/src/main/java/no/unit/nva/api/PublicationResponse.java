@@ -9,6 +9,8 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import no.unit.nva.WithAdditionalIdentifiers;
 import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithContext;
 import no.unit.nva.WithId;
@@ -16,6 +18,7 @@ import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
+import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Funding;
 import no.unit.nva.model.Organization;
@@ -30,7 +33,7 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId,
-                                            WithContext {
+                                            WithContext, WithAdditionalIdentifiers {
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -50,6 +53,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private List<Funding> fundings;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
+
+    private Set<AdditionalIdentifier> additionalIdentifiers;
 
     public static PublicationResponse fromPublication(Publication publication) {
         var response = new PublicationResponse();
@@ -71,6 +76,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setSubjects(publication.getSubjects());
         response.setContext(PublicationContext.getContext(publication));
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
+        response.setAdditionalIdentifiers(publication.getAdditionalIdentifiers());
         return response;
     }
 
@@ -205,16 +211,6 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
-    public List<Funding> getFundings() {
-        return fundings;
-    }
-
-    @Override
-    public void setFundings(List<Funding> fundings) {
-        this.fundings = fundings;
-    }
-
-    @Override
     public List<URI> getSubjects() {
         return Objects.nonNull(subjects) ? subjects : Collections.emptyList();
     }
@@ -222,6 +218,16 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @Override
     public void setSubjects(List<URI> subjects) {
         this.subjects = subjects;
+    }
+
+    @Override
+    public List<Funding> getFundings() {
+        return fundings;
+    }
+
+    @Override
+    public void setFundings(List<Funding> fundings) {
+        this.fundings = fundings;
     }
 
     @Override
@@ -242,6 +248,39 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @Override
     public void setAssociatedArtifacts(AssociatedArtifactList associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
+    }
+
+    @Override
+    public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
+        return additionalIdentifiers;
+    }
+
+    @Override
+    public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
+        this.additionalIdentifiers = additionalIdentifiers;
+    }
+
+    @Override
+    @JacocoGenerated
+    public int hashCode() {
+        return Objects.hash(getIdentifier(),
+                            getStatus(),
+                            getResourceOwner(),
+                            getPublisher(),
+                            getCreatedDate(),
+                            getModifiedDate(),
+                            getPublishedDate(),
+                            getIndexedDate(),
+                            getHandle(),
+                            getLink(),
+                            getEntityDescription(),
+                            getDoi(),
+                            getContext(),
+                            getProjects(),
+                            getFundings(),
+                            getSubjects(),
+                            getAdditionalIdentifiers(),
+                            getAssociatedArtifacts());
     }
 
     @Override
@@ -270,28 +309,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                && Objects.equals(getProjects(), that.getProjects())
                && Objects.equals(getFundings(), that.getFundings())
                && Objects.equals(getSubjects(), that.getSubjects())
+               && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts());
-    }
-
-    @Override
-    @JacocoGenerated
-    public int hashCode() {
-        return Objects.hash(getIdentifier(),
-                            getStatus(),
-                            getResourceOwner(),
-                            getPublisher(),
-                            getCreatedDate(),
-                            getModifiedDate(),
-                            getPublishedDate(),
-                            getIndexedDate(),
-                            getHandle(),
-                            getLink(),
-                            getEntityDescription(),
-                            getDoi(),
-                            getContext(),
-                            getProjects(),
-                            getFundings(),
-                            getSubjects(),
-                            getAssociatedArtifacts());
     }
 }
