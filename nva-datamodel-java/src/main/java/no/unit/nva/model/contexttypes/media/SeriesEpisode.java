@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes.media;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -7,21 +8,22 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class SeriesEpisode {
-    private static final String SERIES = "series";
+    private static final String SERIES_NAME = "seriesName";
     private static final String SERIES_PART = "seriesPart";
-    @JsonProperty(SERIES)
-    private final String series;
+    @JsonProperty(SERIES_NAME)
+    @JsonAlias("series")
+    private final String seriesName;
     @JsonProperty(SERIES_PART)
     private final String seriesPart;
 
-    public SeriesEpisode(@JsonProperty(SERIES) String series,
+    public SeriesEpisode(@JsonProperty(SERIES_NAME) @JsonAlias("series") String seriesName,
                          @JsonProperty(SERIES_PART) String seriesPart) {
-        this.series = series;
+        this.seriesName = seriesName;
         this.seriesPart = seriesPart;
     }
 
-    public String getSeries() {
-        return series;
+    public String getSeriesName() {
+        return seriesName;
     }
 
     public String getSeriesPart() {
@@ -37,12 +39,12 @@ public class SeriesEpisode {
             return false;
         }
         SeriesEpisode that = (SeriesEpisode) o;
-        return Objects.equals(getSeries(), that.getSeries())
+        return Objects.equals(getSeriesName(), that.getSeriesName())
                 && Objects.equals(getSeriesPart(), that.getSeriesPart());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSeries(), getSeriesPart());
+        return Objects.hash(getSeriesName(), getSeriesPart());
     }
 }
