@@ -11,6 +11,7 @@ public enum PublicationStatus {
     DRAFT("DRAFT"),
     PUBLISHED_METADATA("PUBLISHED_METADATA"),
     PUBLISHED("PUBLISHED"),
+    DELETED("DELETED"),
     DRAFT_FOR_DELETION("DRAFT_FOR_DELETION");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid PublicationStatus, expected one of: %s";
