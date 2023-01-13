@@ -3,9 +3,7 @@ package no.unit.nva.model.time;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.time.LocalDateTime;
 import java.util.Objects;
-
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -13,21 +11,21 @@ public class Period implements Time {
     public static final String FROM = "from";
     public static final String TO = "to";
     @JsonProperty(FROM)
-    private final LocalDateTime from;
+    private final java.time.Instant from;
     @JsonProperty(TO)
-    private final LocalDateTime to;
+    private final java.time.Instant to;
 
     @JsonCreator
-    public Period(@JsonProperty(FROM) LocalDateTime from, @JsonProperty(TO) LocalDateTime to) {
+    public Period(@JsonProperty(FROM) java.time.Instant from, @JsonProperty(TO) java.time.Instant to) {
         this.from = from;
         this.to = to;
     }
 
-    public LocalDateTime getFrom() {
+    public java.time.Instant getFrom() {
         return from;
     }
 
-    public LocalDateTime getTo() {
+    public java.time.Instant getTo() {
         return to;
     }
 
