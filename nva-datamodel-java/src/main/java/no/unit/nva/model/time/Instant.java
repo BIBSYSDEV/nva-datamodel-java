@@ -3,20 +3,18 @@ package no.unit.nva.model.time;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
-import java.time.LocalDateTime;
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Instant implements Time {
     public static final String VALUE = "value";
 
     @JsonProperty(VALUE)
-    private final LocalDateTime value;
+    private final java.time.Instant value;
 
     @JsonCreator
-    public Instant(@JsonProperty(VALUE) LocalDateTime value) {
+    public Instant(@JsonProperty(VALUE) java.time.Instant value) {
         this.value = value;
     }
 

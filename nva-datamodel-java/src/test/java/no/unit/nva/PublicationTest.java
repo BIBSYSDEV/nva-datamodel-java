@@ -58,8 +58,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class PublicationTest {
     
-    public static final String TIMESTAMP_REGEX = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]+";
-    public static final String SOME_TIMESTAMP = "2020-09-23T09:51:23.044996Z";
     public static final String DOCUMENTATION_PATH_TEMPLATE = "../documentation/%s.json";
     public static final SortableIdentifier REPLACEMENT_IDENTIFIER_1 =
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
@@ -244,8 +242,7 @@ public class PublicationTest {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
         publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType.getSimpleName());
-        var publicationJson = dataModelObjectMapper.writeValueAsString(publication)
-                                  .replaceAll(TIMESTAMP_REGEX, SOME_TIMESTAMP);
+        var publicationJson = dataModelObjectMapper.writeValueAsString(publication);
         Files.write(Paths.get(path), publicationJson.getBytes());
     }
 

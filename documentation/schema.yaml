@@ -12,6 +12,7 @@ schema:
       - DRAFT
       - PUBLISHED_METADATA
       - PUBLISHED
+      - DELETED
       - DRAFT_FOR_DELETION
     resourceOwner:
       $ref: '#/components/schemas/ResourceOwner'
@@ -2016,6 +2017,7 @@ referencedSchemas:
         - DRAFT
         - PUBLISHED_METADATA
         - PUBLISHED
+        - DELETED
         - DRAFT_FOR_DELETION
       resourceOwner:
         $ref: '#/components/schemas/ResourceOwner'

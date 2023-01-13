@@ -12,8 +12,6 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import static nva.commons.core.attempt.Try.attempt;
 import java.net.URI;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Organization;
@@ -175,16 +173,15 @@ public class PublicationContextBuilder {
     }
 
     private static Time randomTime() {
-        Instant instant = randomInstant();
-        LocalDateTime from = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        Instant from = randomInstant();
 
         return Math.random() <= 0.5
                    ? new no.unit.nva.model.time.Instant(from)
-                   : randomPeriod(instant, from);
+                   : randomPeriod(from);
     }
 
-    private static Period randomPeriod(Instant fromInstant, LocalDateTime from) {
-        LocalDateTime to = LocalDateTime.ofInstant(randomInstant(fromInstant), ZoneId.systemDefault());
+    private static Period randomPeriod(Instant from) {
+        Instant to = randomInstant(from);
         return new Period(from, to);
     }
 

@@ -3,8 +3,8 @@ package no.unit.nva.model.testing;
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
-import static no.unit.nva.testutils.RandomDataGenerator.randomLocalDateTime;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import static nva.commons.core.attempt.Try.attempt;
@@ -51,7 +51,6 @@ import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.Liter
 import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsWeb;
 import no.unit.nva.model.instancetypes.artistic.music.AudioVisualPublication;
 import no.unit.nva.model.instancetypes.artistic.music.Concert;
-import no.unit.nva.model.instancetypes.artistic.music.MusicalWorkPerformance;
 import no.unit.nva.model.instancetypes.artistic.music.Ismn;
 import no.unit.nva.model.instancetypes.artistic.music.Isrc;
 import no.unit.nva.model.instancetypes.artistic.music.MusicMediaType;
@@ -60,6 +59,7 @@ import no.unit.nva.model.instancetypes.artistic.music.MusicPerformanceManifestat
 import no.unit.nva.model.instancetypes.artistic.music.MusicScore;
 import no.unit.nva.model.instancetypes.artistic.music.MusicTrack;
 import no.unit.nva.model.instancetypes.artistic.music.MusicalWork;
+import no.unit.nva.model.instancetypes.artistic.music.MusicalWorkPerformance;
 import no.unit.nva.model.instancetypes.artistic.music.OtherPerformance;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArtsSubtype;
@@ -775,11 +775,11 @@ public final class PublicationInstanceBuilder {
     }
 
     private static Instant randomNvaInstant() {
-        return new Instant(randomLocalDateTime());
+        return new Instant(randomInstant());
     }
 
     private static Period randomNvaPeriod() {
-        var localDateTime = randomLocalDateTime();
-        return new Period(localDateTime, randomLocalDateTime(localDateTime));
+        var from = randomInstant();
+        return new Period(from, randomInstant(from));
     }
 }
