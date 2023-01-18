@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import java.util.Objects;
-import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
+import no.unit.nva.model.contexttypes.PublishingHouse;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
@@ -25,7 +25,7 @@ public class MusicScore implements MusicPerformanceManifestation {
     @JsonProperty(EXTENT)
     private final String extent;
     @JsonProperty(PUBLISHER)
-    private final UnconfirmedPublisher publisher;
+    private final PublishingHouse publisher;
     @JsonProperty(ISMN)
     private final Ismn ismn;
     @JsonProperty(ISRC)
@@ -35,7 +35,7 @@ public class MusicScore implements MusicPerformanceManifestation {
     public MusicScore(@JsonProperty(ENSEMBLE) String ensemble,
                       @JsonProperty(MOVEMENTS) String movements,
                       @JsonProperty(EXTENT) String extent,
-                      @JsonProperty(PUBLISHER) UnconfirmedPublisher publisher,
+                      @JsonProperty(PUBLISHER) PublishingHouse publisher,
                       @JsonProperty(ISMN) Ismn ismn,
                       @JsonProperty(ISRC) Isrc isrc) {
 
@@ -83,7 +83,7 @@ public class MusicScore implements MusicPerformanceManifestation {
         return extent;
     }
 
-    public UnconfirmedPublisher getPublisher() {
+    public PublishingHouse getPublisher() {
         return publisher;
     }
 

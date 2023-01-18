@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
 import java.util.Objects;
+import no.unit.nva.model.contexttypes.PublishingHouse;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -19,7 +20,7 @@ public class AudioVisualPublication implements MusicPerformanceManifestation {
     @JsonProperty(MEDIA_TYPE)
     private final MusicMediaType mediaType;
     @JsonProperty(PUBLISHER)
-    private final String publisher;
+    private final PublishingHouse publisher;
     @JsonProperty(CATALOGUE_NUMBER)
     private final String catalogueNumber;
     @JsonProperty(TRACK_LIST)
@@ -27,7 +28,7 @@ public class AudioVisualPublication implements MusicPerformanceManifestation {
 
     @JsonCreator
     public AudioVisualPublication(@JsonProperty(MEDIA_TYPE) MusicMediaType mediaType,
-                                  @JsonProperty(PUBLISHER) String publisher,
+                                  @JsonProperty(PUBLISHER) PublishingHouse publisher,
                                   @JsonProperty(CATALOGUE_NUMBER) String catalogueNumber,
                                   @JsonProperty(TRACK_LIST) List<MusicTrack> trackList) {
 
@@ -63,7 +64,7 @@ public class AudioVisualPublication implements MusicPerformanceManifestation {
         return mediaType;
     }
 
-    public String getPublisher() {
+    public PublishingHouse getPublisher() {
         return publisher;
     }
 
