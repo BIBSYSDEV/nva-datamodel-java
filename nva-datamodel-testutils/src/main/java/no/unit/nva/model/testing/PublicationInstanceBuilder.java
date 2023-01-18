@@ -335,7 +335,7 @@ public final class PublicationInstanceBuilder {
 
     private static MusicPerformanceManifestation randomAudioVisualPublication() {
         return new AudioVisualPublication(randomElement(MusicMediaType.values()),
-                                          randomString(),
+                                          randomUnconfirmedPublisher(),
                                           randomString(),
                                           randomTrackList());
     }

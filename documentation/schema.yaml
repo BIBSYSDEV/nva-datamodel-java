@@ -297,7 +297,7 @@ referencedSchemas:
           - Vinyl
           - Other
         publisher:
-          type: string
+          $ref: '#/components/schemas/PublishingHouse'
         catalogueNumber:
           type: string
         trackList:
@@ -427,7 +427,7 @@ referencedSchemas:
     - type: object
       properties:
         publisher:
-          $ref: '#/components/schemas/UnconfirmedPublisher'
+          $ref: '#/components/schemas/PublishingHouse'
         date:
           $ref: '#/components/schemas/Instant'
         type:
@@ -1752,7 +1752,7 @@ referencedSchemas:
         extent:
           type: string
         publisher:
-          $ref: '#/components/schemas/UnconfirmedPublisher'
+          $ref: '#/components/schemas/PublishingHouse'
         ismn:
           $ref: '#/components/schemas/Ismn'
         isrc:
@@ -1887,7 +1887,7 @@ referencedSchemas:
         place:
           $ref: '#/components/schemas/UnconfirmedPlace'
         publisher:
-          $ref: '#/components/schemas/UnconfirmedPublisher'
+          $ref: '#/components/schemas/PublishingHouse'
         date:
           $ref: '#/components/schemas/Instant'
         type:
@@ -2414,13 +2414,16 @@ referencedSchemas:
     required:
     - type
     type: object
-    properties:
-      name:
-        type: string
-      type:
-        type: string
     discriminator:
       propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublishingHouse'
+    - type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
   UnconfirmedSeries:
     required:
     - type
