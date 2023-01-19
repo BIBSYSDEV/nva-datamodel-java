@@ -8,13 +8,18 @@ import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Instant implements Time {
-    public static final String VALUE = "value";
+    public static final String VALUE_FIELD = "value";
 
-    @JsonProperty(VALUE)
+    @JsonProperty(VALUE_FIELD)
     private final java.time.Instant value;
 
+    @Deprecated
     @JsonCreator
-    public Instant(@JsonProperty(VALUE) java.time.Instant value) {
+    public static Instant fromString(@JsonProperty(VALUE_FIELD) String value) {
+        return new Instant(Time.convertToInstant(value));
+    }
+
+    public Instant(@JsonProperty(VALUE_FIELD) java.time.Instant value) {
         this.value = value;
     }
 

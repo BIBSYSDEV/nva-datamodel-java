@@ -26,7 +26,7 @@ public class Exhibition implements ArchitectureOutput {
     private final Period date;
     @JsonProperty(OTHER_INFORMATION)
     private final String otherInformation;
-    @JsonProperty(SEQUENCE)
+    @JsonProperty(SEQUENCE_FIELD)
     private final int sequence;
 
     public Exhibition(@JsonProperty(NAME) String name,
@@ -34,7 +34,7 @@ public class Exhibition implements ArchitectureOutput {
                       @JsonProperty(ORGANIZER) String organizer,
                       @JsonProperty(DATE) Period date,
                       @JsonProperty(OTHER_INFORMATION) String otherInformation,
-                      @JsonProperty(SEQUENCE) int sequence) {
+                      @JsonProperty(SEQUENCE_FIELD) int sequence) {
         this.name = name;
         this.place = place;
         this.organizer = organizer;
