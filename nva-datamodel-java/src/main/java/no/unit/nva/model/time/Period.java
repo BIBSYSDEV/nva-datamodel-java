@@ -3,20 +3,29 @@ package no.unit.nva.model.time;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
+
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Period implements Time {
-    public static final String FROM = "from";
-    public static final String TO = "to";
-    @JsonProperty(FROM)
+    public static final String FROM_FIELD = "from";
+    public static final String TO_FIELD = "to";
+    @JsonProperty(FROM_FIELD)
     private final java.time.Instant from;
-    @JsonProperty(TO)
+    @JsonProperty(TO_FIELD)
     private final java.time.Instant to;
 
+    // The conversion methods should be removed following migration
+
+    @Deprecated
     @JsonCreator
-    public Period(@JsonProperty(FROM) java.time.Instant from, @JsonProperty(TO) java.time.Instant to) {
+    private static Period fromLegacy(@JsonProperty(FROM_FIELD) String from,
+                   @JsonProperty(TO_FIELD) String to) {
+        return new Period(Time.convertToInstant(from), Time.convertToInstant(to));
+    }
+
+    public Period(java.time.Instant from, java.time.Instant to) {
         this.from = from;
         this.to = to;
     }
