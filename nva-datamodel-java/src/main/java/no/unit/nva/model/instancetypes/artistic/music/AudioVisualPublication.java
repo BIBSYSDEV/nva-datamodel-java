@@ -7,30 +7,43 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
 import java.util.Objects;
 import no.unit.nva.model.contexttypes.PublishingHouse;
+import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
+import no.unit.nva.model.instancetypes.artistic.UnconfirmedPublisherMigrator;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class AudioVisualPublication implements MusicPerformanceManifestation {
+public class AudioVisualPublication implements MusicPerformanceManifestation, UnconfirmedPublisherMigrator {
 
-    public static final String MEDIA_TYPE = "mediaType";
-    public static final String PUBLISHER = "publisher";
-    public static final String CATALOGUE_NUMBER = "catalogueNumber";
-    public static final String TRACK_LIST = "trackList";
+    public static final String MEDIA_TYPE_FIELD = "mediaType";
+    public static final String PUBLISHER_FIELD = "publisher";
+    public static final String CATALOGUE_NUMBER_FIELD = "catalogueNumber";
+    public static final String TRACK_LIST_FIELD = "trackList";
 
-    @JsonProperty(MEDIA_TYPE)
+    @JsonProperty(MEDIA_TYPE_FIELD)
     private final MusicMediaType mediaType;
-    @JsonProperty(PUBLISHER)
+    @JsonProperty(PUBLISHER_FIELD)
     private final PublishingHouse publisher;
-    @JsonProperty(CATALOGUE_NUMBER)
+    @JsonProperty(CATALOGUE_NUMBER_FIELD)
     private final String catalogueNumber;
-    @JsonProperty(TRACK_LIST)
+    @JsonProperty(TRACK_LIST_FIELD)
     private final List<MusicTrack> trackList;
 
+    @Deprecated
     @JsonCreator
-    public AudioVisualPublication(@JsonProperty(MEDIA_TYPE) MusicMediaType mediaType,
-                                  @JsonProperty(PUBLISHER) PublishingHouse publisher,
-                                  @JsonProperty(CATALOGUE_NUMBER) String catalogueNumber,
-                                  @JsonProperty(TRACK_LIST) List<MusicTrack> trackList) {
+    public static AudioVisualPublication fromJson(@JsonProperty(MEDIA_TYPE_FIELD) MusicMediaType mediaType,
+                                                  @JsonProperty(PUBLISHER_FIELD) Object publisher,
+                                                  @JsonProperty(CATALOGUE_NUMBER_FIELD) String catalogueNumber,
+                                                  @JsonProperty(TRACK_LIST_FIELD) List<MusicTrack> trackList) {
+        var publishingHouse = publisher instanceof String
+                ? new UnconfirmedPublisher((String) publisher)
+                : UnconfirmedPublisherMigrator.toPublisher(publisher);
+        return new AudioVisualPublication(mediaType, publishingHouse, catalogueNumber, trackList);
+    }
+
+    public AudioVisualPublication(@JsonProperty(MEDIA_TYPE_FIELD) MusicMediaType mediaType,
+                                  @JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher,
+                                  @JsonProperty(CATALOGUE_NUMBER_FIELD) String catalogueNumber,
+                                  @JsonProperty(TRACK_LIST_FIELD) List<MusicTrack> trackList) {
 
         this.mediaType = mediaType;
         this.publisher = publisher;

@@ -18,12 +18,12 @@ public class CinematicRelease implements MovingPictureOutput {
     private final UnconfirmedPlace place;
     @JsonProperty(DATE)
     private final Instant date;
-    @JsonProperty(SEQUENCE)
+    @JsonProperty(SEQUENCE_FIELD)
     private final int sequence;
 
     public CinematicRelease(@JsonProperty(PLACE) UnconfirmedPlace place,
                             @JsonProperty(DATE) Instant date,
-                            @JsonProperty(SEQUENCE) int sequence) {
+                            @JsonProperty(SEQUENCE_FIELD) int sequence) {
         this.place = place;
         this.date = date;
         this.sequence = sequence;

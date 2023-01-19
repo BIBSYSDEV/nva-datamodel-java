@@ -25,14 +25,14 @@ public class MentionInPublication implements ArchitectureOutput {
     private final Time date;
     @JsonProperty(OTHER_INFORMATION)
     private final String otherInformation;
-    @JsonProperty(SEQUENCE)
+    @JsonProperty(SEQUENCE_FIELD)
     private final int sequence;
 
     public MentionInPublication(@JsonProperty(TITLE) String title,
                                 @JsonProperty(ISSUE) String issue,
                                 @JsonProperty(DATE) Instant date,
                                 @JsonProperty(OTHER_INFORMATION) String otherInformation,
-                                @JsonProperty(SEQUENCE) int sequence) {
+                                @JsonProperty(SEQUENCE_FIELD) int sequence) {
         this.title = title;
         this.issue = issue;
         this.date = date;
