@@ -9,10 +9,13 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.github.javafaker.Faker;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
@@ -114,11 +117,11 @@ public final class PublicationGenerator {
 
     public static ResearchProject randomResearchProject() {
         return new ResearchProject.Builder()
-                   .withId(randomUri())
-                   .withName(randomString())
-                   .withApprovals(randomApprovals())
-                   .withGrants(randomGrants())
-                   .build();
+                .withId(randomUri())
+                .withName(randomString())
+                .withApprovals(randomApprovals())
+                .withGrants(randomGrants())
+                .build();
     }
 
     public static List<Grant> randomGrants() {
@@ -127,9 +130,9 @@ public final class PublicationGenerator {
 
     public static Grant randomGrant() {
         return new Grant.Builder()
-                   .withId(randomString())
-                   .withSource(randomString())
-                   .build();
+                .withId(randomString())
+                .withSource(randomString())
+                .build();
     }
 
     public static List<Approval> randomApprovals() {
@@ -139,11 +142,11 @@ public final class PublicationGenerator {
     public static Approval randomApproval() {
 
         return new Approval.Builder()
-                   .withApprovalStatus(randomElement(ApprovalStatus.values()))
-                   .withDate(randomInstant())
-                   .withApplicationCode(randomString())
-                   .withApprovedBy(randomElement(ApprovalsBody.values()))
-                   .build();
+                .withApprovalStatus(randomElement(ApprovalStatus.values()))
+                .withDate(randomInstant())
+                .withApplicationCode(randomString())
+                .withApprovedBy(randomElement(ApprovalsBody.values()))
+                .build();
     }
 
     public static AdditionalIdentifier randomAdditionalIdentifier() {
@@ -151,32 +154,29 @@ public final class PublicationGenerator {
     }
 
     public static Organization randomOrganization() {
-        return new Organization.Builder()
-                   .withId(randomUri())
-                   .withLabels(randomLabels())
-                   .build();
+        return new Organization(randomUri(), randomLabels());
     }
 
     private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
-                   .withIdentifier(SortableIdentifier.next())
-                   .withPublisher(randomOrganization())
-                   .withSubjects(List.of(randomUri()))
-                   .withStatus(randomElement(PublicationStatus.values()))
-                   .withPublishedDate(randomInstant())
-                   .withModifiedDate(randomInstant())
-                   .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
-                   .withProjects(randomProjects())
-                   .withFundings(randomFundings())
-                   .withResourceOwner(randomResourceOwner())
-                   .withLink(randomUri())
-                   .withIndexedDate(randomInstant())
-                   .withHandle(randomUri())
-                   .withDoi(randomDoi())
-                   .withCreatedDate(randomInstant())
-                   .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-                   .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                   .build();
+                .withIdentifier(SortableIdentifier.next())
+                .withPublisher(randomOrganization())
+                .withSubjects(List.of(randomUri()))
+                .withStatus(randomElement(PublicationStatus.values()))
+                .withPublishedDate(randomInstant())
+                .withModifiedDate(randomInstant())
+                .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
+                .withProjects(randomProjects())
+                .withFundings(randomFundings())
+                .withResourceOwner(randomResourceOwner())
+                .withLink(randomUri())
+                .withIndexedDate(randomInstant())
+                .withHandle(randomUri())
+                .withDoi(randomDoi())
+                .withCreatedDate(randomInstant())
+                .withEntityDescription(randomEntityDescription(publicationInstanceClass))
+                .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
+                .build();
     }
 
     private static ResourceOwner randomResourceOwner() {
