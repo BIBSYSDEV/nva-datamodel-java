@@ -21,13 +21,13 @@ public class Competition implements ArchitectureOutput {
     private final String description;
     @JsonProperty(DATE)
     private final Time date;
-    @JsonProperty(SEQUENCE)
+    @JsonProperty(SEQUENCE_FIELD)
     private final int sequence;
 
     public Competition(@JsonProperty(NAME) String name,
                        @JsonProperty(DESCRIPTION) String description,
                        @JsonProperty(DATE) Time date,
-                       @JsonProperty(SEQUENCE) int sequence) {
+                       @JsonProperty(SEQUENCE_FIELD) int sequence) {
         this.name = name;
         this.description = description;
         this.date = date;

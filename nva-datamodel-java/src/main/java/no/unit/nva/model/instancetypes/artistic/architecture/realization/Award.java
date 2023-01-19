@@ -27,7 +27,7 @@ public class Award implements ArchitectureOutput {
     private final Integer ranking;
     @JsonProperty(OTHER_INFORMATION)
     private final String otherInformation;
-    @JsonProperty(SEQUENCE)
+    @JsonProperty(SEQUENCE_FIELD)
     private final int sequence;
 
     public Award(@JsonProperty(NAME) String name,
@@ -35,7 +35,7 @@ public class Award implements ArchitectureOutput {
                  @JsonProperty(DATE) Instant date,
                  @JsonProperty(RANKING) Integer ranking,
                  @JsonProperty(OTHER_INFORMATION) String otherInformation,
-                 @JsonProperty(SEQUENCE) int sequence) {
+                 @JsonProperty(SEQUENCE_FIELD) int sequence) {
         this.name = name;
         this.organizer = organizer;
         this.date = date;

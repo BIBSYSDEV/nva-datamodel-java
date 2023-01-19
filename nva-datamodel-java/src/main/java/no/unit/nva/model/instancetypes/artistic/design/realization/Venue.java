@@ -15,14 +15,14 @@ public class Venue implements WithSequence {
 
     @JsonProperty(PLACE)
     private final Place place;
-    @JsonProperty(SEQUENCE)
+    @JsonProperty(SEQUENCE_FIELD)
     private final int sequence;
     @JsonProperty(DATE)
     private final Time date;
 
     public Venue(@JsonProperty(PLACE) Place place,
                  @JsonProperty(DATE) Time date,
-                 @JsonProperty(SEQUENCE) int sequence) {
+                 @JsonProperty(SEQUENCE_FIELD) int sequence) {
         this.place = place;
         this.date = date;
         this.sequence = sequence;
