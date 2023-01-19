@@ -14,15 +14,15 @@ class MigrationTestingOrganizationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"{\"type\": \"Organization\"}",
-            "{\"type\": \"Organization\", \"labels\": {\"en\":\"A label\"}}"})
+       "{\"type\": \"Organization\", \"labels\": {\"en\":\"A label\"}}"})
     void shouldRemoveImperfectlyFormedOrganizations(String value) throws JsonProcessingException {
         assertNull(JsonUtils.dtoObjectMapper.readValue(value, Organization.class));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"{\"type\": \"Organization\", \"id\": \"https://example.org\", "
-            + "\"labels\": {\"en\":\"A label\"}}",
-            "{\"type\": \"Organization\", \"id\": \"https://example.org\"}"})
+       + "\"labels\": {\"en\":\"A label\"}}",
+       "{\"type\": \"Organization\", \"id\": \"https://example.org\"}"})
     void shouldRetainWellFormedOrganizations(String value) throws JsonProcessingException {
         assertNotNull(JsonUtils.dtoObjectMapper.readValue(value, Organization.class));
     }
