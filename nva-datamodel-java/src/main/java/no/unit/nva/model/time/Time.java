@@ -3,8 +3,9 @@ package no.unit.nva.model.time;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -19,7 +20,7 @@ public interface Time {
 
     @Deprecated
     static java.time.Instant parseLocalDate(String candidate) {
-        return LocalDate.parse(candidate).atStartOfDay(ZoneOffset.UTC).toInstant();
+        return LocalDateTime.parse(candidate).toInstant(ZoneOffset.UTC).plus(12, ChronoUnit.HOURS);
     }
 
     @Deprecated
