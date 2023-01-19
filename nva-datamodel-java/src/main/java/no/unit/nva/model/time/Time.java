@@ -20,7 +20,12 @@ public interface Time {
 
     @Deprecated
     static java.time.Instant parseLocalDate(String candidate) {
-        return LocalDateTime.parse(candidate).toInstant(ZoneOffset.UTC).plus(12, ChronoUnit.HOURS);
+        return LocalDateTime.parse(candidate)
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .toInstant(ZoneOffset.UTC)
+                .plus(12, ChronoUnit.HOURS);
     }
 
     @Deprecated
