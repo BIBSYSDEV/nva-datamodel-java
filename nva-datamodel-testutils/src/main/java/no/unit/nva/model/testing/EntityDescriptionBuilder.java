@@ -82,10 +82,7 @@ public final class EntityDescriptionBuilder {
     }
 
     private static Organization randomOrganization() {
-        return new Organization.Builder()
-            .withLabels(randomLabels())
-            .withId(randomUri())
-            .build();
+        return new Organization(randomUri(), randomLabels());
     }
 
     private static List<String> randomTags() {
