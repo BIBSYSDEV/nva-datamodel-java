@@ -7,8 +7,7 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Grant {
     private String source;
-    // TODO: Fix the id field here: it is either a URI, or the field must be renamed
-    private String id;
+    private String identifier;
 
     public Grant() {
 
@@ -16,7 +15,7 @@ public class Grant {
 
     private Grant(Builder builder) {
         setSource(builder.source);
-        setId(builder.id);
+        setIdentifier(builder.id);
     }
 
     public String getSource() {
@@ -27,12 +26,12 @@ public class Grant {
         this.source = source;
     }
 
-    public String getId() {
-        return id;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     @JacocoGenerated
@@ -46,13 +45,13 @@ public class Grant {
         }
         Grant grant = (Grant) o;
         return Objects.equals(getSource(), grant.getSource())
-                && Objects.equals(getId(), grant.getId());
+                && Objects.equals(getIdentifier(), grant.getIdentifier());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getSource(), getId());
+        return Objects.hash(getSource(), getIdentifier());
     }
 
     public static final class Builder {
