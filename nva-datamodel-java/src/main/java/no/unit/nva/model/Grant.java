@@ -1,14 +1,15 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.net.URI;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Grant {
     private String source;
-    // TODO: Fix the id field here: it is either a URI, or the field must be renamed
-    private String id;
+    private URI id;
 
     public Grant() {
 
@@ -27,11 +28,11 @@ public class Grant {
         this.source = source;
     }
 
-    public String getId() {
+    public URI getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(URI id) {
         this.id = id;
     }
 
@@ -57,7 +58,7 @@ public class Grant {
 
     public static final class Builder {
         private String source;
-        private String id;
+        private URI id;
 
         public Builder() {
         }
@@ -67,7 +68,7 @@ public class Grant {
             return this;
         }
 
-        public Builder withId(String id) {
+        public Builder withId(URI id) {
             this.id = id;
             return this;
         }

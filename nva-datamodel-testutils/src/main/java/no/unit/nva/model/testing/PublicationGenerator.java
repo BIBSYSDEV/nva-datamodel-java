@@ -127,7 +127,7 @@ public final class PublicationGenerator {
 
     public static Grant randomGrant() {
         return new Grant.Builder()
-                   .withId(randomString())
+                   .withId(randomUri())
                    .withSource(randomString())
                    .build();
     }
