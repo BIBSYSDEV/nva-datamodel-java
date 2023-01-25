@@ -20,7 +20,6 @@ import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Funding;
-import no.unit.nva.model.Grant;
 import no.unit.nva.model.MonetaryAmount;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
@@ -117,18 +116,6 @@ public final class PublicationGenerator {
                    .withId(randomUri())
                    .withName(randomString())
                    .withApprovals(randomApprovals())
-                   .withGrants(randomGrants())
-                   .build();
-    }
-
-    public static List<Grant> randomGrants() {
-        return List.of(randomGrant());
-    }
-
-    public static Grant randomGrant() {
-        return new Grant.Builder()
-                   .withId(randomString())
-                   .withSource(randomString())
                    .build();
     }
 

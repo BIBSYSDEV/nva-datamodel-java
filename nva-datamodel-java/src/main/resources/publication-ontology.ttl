@@ -1344,7 +1344,7 @@ nva:source a rdf:Property ;
   rdfs:comment "A description of the origin for a thing" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:Grant, nva:AdditionalIdentifier ;
+  rdfs:domain nva:AdditionalIdentifier ;
   rdfs:range xsd:string .
 
 nva:mimeType a rdf:Property ;
