@@ -72,7 +72,7 @@ class PublicationContextTest {
     void shouldDefineEveryArrayPropertyAsContainerSet() {
         var allNvaCollectionProperties = generateSetOfPropertiesThatHaveCollectionTypeForEveryNvaType();
         var contextContainerSets = getAllContextContainerSetTerms();
-        assertThat(contextContainerSets, is(equalTo(allNvaCollectionProperties)));
+        assertThat(allNvaCollectionProperties, is(equalTo(contextContainerSets)));
     }
 
     // TODO: test that every property and class is described in the ontology

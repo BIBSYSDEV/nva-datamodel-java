@@ -51,10 +51,6 @@
     "isAdministrativeAgreement": "administrativeAgreement",
     "hasProject": "project",
     "hasFunding": "funding",
-    "hasGrants": {
-      "@id": "grants",
-      "@container": "@set"
-    },
     "hasApprovals": {
       "@id": "approvals",
       "@container": "@set"

@@ -7,6 +7,7 @@ schema:
       $ref: '#/components/schemas/SortableIdentifier'
     status:
       type: string
+      example: null
       enum:
       - NEW
       - DRAFT
@@ -21,57 +22,75 @@ schema:
     createdDate:
       type: string
       format: date-time
+      example: null
     modifiedDate:
       type: string
       format: date-time
+      example: null
     publishedDate:
       type: string
       format: date-time
+      example: null
     indexedDate:
       type: string
       format: date-time
+      example: null
     handle:
       type: string
       format: uri
+      example: null
     doi:
       type: string
       format: uri
+      example: null
     link:
       type: string
       format: uri
+      example: null
     entityDescription:
       $ref: '#/components/schemas/EntityDescription'
     projects:
       type: array
+      example: null
       items:
         $ref: '#/components/schemas/ResearchProject'
     fundings:
       type: array
+      example: null
       items:
         $ref: '#/components/schemas/Funding'
     additionalIdentifiers:
       uniqueItems: true
       type: array
+      example: null
       items:
         $ref: '#/components/schemas/AdditionalIdentifier'
     subjects:
       type: array
+      example: null
       items:
         type: string
         format: uri
+        example: null
     associatedArtifacts:
       type: array
       properties:
         publishable:
           type: boolean
+          example: null
         empty:
           type: boolean
+          example: null
+      example: null
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     modelVersion:
       type: string
+      example: null
     type:
       type: string
+      example: null
+  example: null
   discriminator:
     propertyName: type
 referencedSchemas:
@@ -82,16 +101,21 @@ referencedSchemas:
     properties:
       source:
         type: string
+        example: null
       value:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   AdministrativeAgreement:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -100,6 +124,8 @@ referencedSchemas:
       properties:
         type:
           type: string
+          example: null
+      example: null
   Agent:
     required:
     - type
@@ -107,6 +133,8 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Approval:
@@ -117,8 +145,10 @@ referencedSchemas:
       date:
         type: string
         format: date-time
+        example: null
       approvedBy:
         type: string
+        example: null
         enum:
         - REK
         - NARA
@@ -126,6 +156,7 @@ referencedSchemas:
         - DIRHEALTH
       approvalStatus:
         type: string
+        example: null
         enum:
         - NOTAPPLIED
         - APPLIED
@@ -134,14 +165,18 @@ referencedSchemas:
         - REJECTION
       applicationCode:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Architecture:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -152,14 +187,18 @@ referencedSchemas:
           $ref: '#/components/schemas/ArchitectureSubtype'
         description:
           type: string
+          example: null
         architectureOutput:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/ArchitectureOutput'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   ArchitectureOutput:
     required:
     - type
@@ -168,8 +207,11 @@ referencedSchemas:
       sequence:
         type: integer
         format: int32
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   ArchitectureSubtype:
@@ -177,6 +219,7 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
         enum:
         - BUILDING
         - PLANNING_PROPOSAL
@@ -186,10 +229,13 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+        example: null
+    example: null
   Artistic:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -198,10 +244,13 @@ referencedSchemas:
       properties:
         type:
           type: string
+          example: null
+      example: null
   ArtisticDesign:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -212,19 +261,24 @@ referencedSchemas:
           $ref: '#/components/schemas/ArtisticDesignSubtype'
         description:
           type: string
+          example: null
         venues:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/Venue'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   ArtisticDesignSubtype:
     type: object
     properties:
       type:
         type: string
+        example: null
         enum:
         - CLOTHING_DESIGN
         - EXHIBITION
@@ -240,6 +294,8 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+        example: null
+    example: null
   AssociatedArtifact:
     required:
     - type
@@ -247,6 +303,8 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   AssociatedArtifactList:
@@ -254,14 +312,18 @@ referencedSchemas:
     properties:
       publishable:
         type: boolean
+        example: null
       empty:
         type: boolean
+        example: null
+    example: null
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -271,16 +333,22 @@ referencedSchemas:
         id:
           type: string
           format: uri
+          example: null
         name:
           type: string
+          example: null
         description:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   AudioVisualPublication:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -289,6 +357,7 @@ referencedSchemas:
       properties:
         mediaType:
           type: string
+          example: null
           enum:
           - CompactDisc
           - DVD
@@ -300,16 +369,21 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         catalogueNumber:
           type: string
+          example: null
         trackList:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/MusicTrack'
         type:
           type: string
+          example: null
+      example: null
   Award:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -318,21 +392,28 @@ referencedSchemas:
       properties:
         name:
           type: string
+          example: null
         organizer:
           type: string
+          example: null
         date:
           $ref: '#/components/schemas/Instant'
         ranking:
           type: integer
           format: int32
+          example: null
         otherInformation:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   Book:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -344,20 +425,27 @@ referencedSchemas:
         seriesTitle:
           type: string
           writeOnly: true
+          example: null
         seriesNumber:
           type: string
+          example: null
         publisher:
           $ref: '#/components/schemas/PublishingHouse'
         isbnList:
           type: array
+          example: null
           items:
             type: string
+            example: null
         type:
           type: string
+          example: null
+      example: null
   BookAbstracts:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -368,10 +456,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   BookAnthology:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -382,10 +473,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   BookMonograph:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -394,6 +488,7 @@ referencedSchemas:
       properties:
         contentType:
           type: string
+          example: null
           enum:
           - AcademicMonograph
           - NonFictionMonograph
@@ -403,10 +498,13 @@ referencedSchemas:
           - ExhibitionCatalog
         originalResearch:
           type: boolean
+          example: null
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   BookSeries:
     required:
     - type
@@ -414,12 +512,15 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Broadcast:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -432,10 +533,13 @@ referencedSchemas:
           $ref: '#/components/schemas/Instant'
         type:
           type: string
+          example: null
+      example: null
   Chapter:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -445,12 +549,16 @@ referencedSchemas:
         partOf:
           type: string
           format: uri
+          example: null
         type:
           type: string
+          example: null
+      example: null
   ChapterArticle:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -459,6 +567,7 @@ referencedSchemas:
       properties:
         contentType:
           type: string
+          example: null
           enum:
           - AcademicChapter
           - NonFictionChapter
@@ -469,14 +578,18 @@ referencedSchemas:
           - ExhibitionCatalogChapter
         originalResearch:
           type: boolean
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   ChapterConferenceAbstract:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -487,10 +600,13 @@ referencedSchemas:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   ChapterInReport:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -501,10 +617,13 @@ referencedSchemas:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   CinematicRelease:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -517,10 +636,13 @@ referencedSchemas:
           $ref: '#/components/schemas/Instant'
         type:
           type: string
+          example: null
+      example: null
   Competition:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -529,14 +651,19 @@ referencedSchemas:
       properties:
         name:
           type: string
+          example: null
         description:
           type: string
+          example: null
         date:
           $ref: '#/components/schemas/Time'
         type:
           type: string
+          example: null
+      example: null
   Concert:
     type: object
+    example: null
     allOf:
     - $ref: '#/components/schemas/MusicPerformanceManifestation'
     - type: object
@@ -547,18 +674,24 @@ referencedSchemas:
           $ref: '#/components/schemas/Time'
         extent:
           type: string
+          example: null
         description:
           type: string
+          example: null
         concertProgramme:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/MusicalWorkPerformance'
         partOfSeries:
           type: boolean
+          example: null
+      example: null
   ConferenceAbstract:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -567,18 +700,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   ConferenceLecture:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -589,10 +728,13 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   ConferencePoster:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -603,6 +745,8 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   Contributor:
     required:
     - type
@@ -612,10 +756,12 @@ referencedSchemas:
         $ref: '#/components/schemas/Identity'
       affiliations:
         type: array
+        example: null
         items:
           $ref: '#/components/schemas/Organization'
       role:
         type: string
+        example: null
         enum:
         - AcademicCoordinator
         - Actor
@@ -684,16 +830,21 @@ referencedSchemas:
       sequence:
         type: integer
         format: int32
+        example: null
       correspondingAuthor:
         type: boolean
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   DataManagementPlan:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -703,17 +854,22 @@ referencedSchemas:
         related:
           uniqueItems: true
           type: array
+          example: null
           items:
             type: string
             format: uri
+            example: null
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   DataSet:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -722,34 +878,44 @@ referencedSchemas:
       properties:
         userAgreesToTermsAndConditions:
           type: boolean
+          example: null
         geographicalCoverage:
           $ref: '#/components/schemas/GeographicalDescription'
         referencedBy:
           uniqueItems: true
           type: array
+          example: null
           items:
             type: string
             format: uri
+            example: null
         related:
           uniqueItems: true
           type: array
+          example: null
           items:
             type: string
             format: uri
+            example: null
         compliesWith:
           uniqueItems: true
           type: array
+          example: null
           items:
             type: string
             format: uri
+            example: null
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   Degree:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -761,20 +927,27 @@ referencedSchemas:
         seriesTitle:
           type: string
           writeOnly: true
+          example: null
         seriesNumber:
           type: string
+          example: null
         publisher:
           $ref: '#/components/schemas/PublishingHouse'
         isbnList:
           type: array
+          example: null
           items:
             type: string
+            example: null
         type:
           type: string
+          example: null
+      example: null
   DegreeBachelor:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -787,10 +960,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   DegreeLicentiate:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -803,10 +979,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   DegreeMaster:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -819,10 +998,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   DegreePhd:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -835,6 +1017,8 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   EntityDescription:
     required:
     - type
@@ -842,42 +1026,56 @@ referencedSchemas:
     properties:
       mainTitle:
         type: string
+        example: null
       alternativeTitles:
         type: object
         additionalProperties:
           type: string
+          example: null
+        example: null
       language:
         type: string
         format: uri
+        example: null
       date:
         $ref: '#/components/schemas/PublicationDate'
       contributors:
         type: array
+        example: null
         items:
           $ref: '#/components/schemas/Contributor'
       npiSubjectHeading:
         type: string
+        example: null
       tags:
         type: array
+        example: null
         items:
           type: string
+          example: null
       description:
         type: string
+        example: null
       reference:
         $ref: '#/components/schemas/Reference'
       metadataSource:
         type: string
         format: uri
+        example: null
       abstract:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Event:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -886,6 +1084,7 @@ referencedSchemas:
       properties:
         label:
           type: string
+          example: null
         place:
           $ref: '#/components/schemas/Place'
         time:
@@ -895,14 +1094,18 @@ referencedSchemas:
         product:
           type: string
           format: uri
+          example: null
         subEvent:
           $ref: '#/components/schemas/Event'
         type:
           type: string
+          example: null
+      example: null
   Exhibition:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -911,20 +1114,26 @@ referencedSchemas:
       properties:
         name:
           type: string
+          example: null
         place:
           $ref: '#/components/schemas/UnconfirmedPlace'
         organizer:
           type: string
+          example: null
         date:
           $ref: '#/components/schemas/Period'
         otherInformation:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   FeatureArticle:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -933,18 +1142,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   File:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -954,26 +1169,36 @@ referencedSchemas:
         identifier:
           type: string
           format: uuid
+          example: null
         name:
           type: string
+          example: null
         mimeType:
           type: string
+          example: null
         size:
           type: integer
           format: int64
+          example: null
         license:
           $ref: '#/components/schemas/License'
         administrativeAgreement:
           type: boolean
+          example: null
         publisherAuthority:
           type: boolean
+          example: null
         embargoDate:
           type: string
           format: date-time
+          example: null
         visibleForNonOwner:
           type: boolean
+          example: null
         type:
           type: string
+          example: null
+      example: null
   Funding:
     required:
     - type
@@ -982,33 +1207,44 @@ referencedSchemas:
       source:
         type: string
         format: uri
+        example: null
       id:
         type: string
         format: uri
+        example: null
       identifier:
         type: string
+        example: null
       name:
         type: string
+        example: null
       alternativeName:
         type: object
         additionalProperties:
           type: string
+          example: null
+        example: null
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
         type: string
         format: date-time
+        example: null
       activeTo:
         type: string
         format: date-time
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   GeographicalContent:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1019,6 +1255,8 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         type:
           type: string
+          example: null
+      example: null
   GeographicalDescription:
     required:
     - type
@@ -1026,21 +1264,11 @@ referencedSchemas:
     properties:
       description:
         type: string
+        example: null
       type:
         type: string
-    discriminator:
-      propertyName: type
-  Grant:
-    required:
-    - type
-    type: object
-    properties:
-      source:
-        type: string
-      id:
-        type: string
-      type:
-        type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Identity:
@@ -1051,17 +1279,23 @@ referencedSchemas:
       id:
         type: string
         format: uri
+        example: null
       name:
         type: string
+        example: null
       nameType:
         type: string
+        example: null
         enum:
         - Organizational
         - Personal
       orcId:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Instant:
@@ -1072,8 +1306,11 @@ referencedSchemas:
       value:
         type: string
         format: date-time
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Ismn:
@@ -1083,10 +1320,14 @@ referencedSchemas:
     properties:
       value:
         type: string
+        example: null
       formatted:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Isrc:
@@ -1096,14 +1337,18 @@ referencedSchemas:
     properties:
       value:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Journal:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1113,12 +1358,16 @@ referencedSchemas:
         id:
           type: string
           format: uri
+          example: null
         type:
           type: string
+          example: null
+      example: null
   JournalArticle:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1127,12 +1376,16 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         contentType:
           type: string
+          example: null
           enum:
           - AcademicArticle
           - AcademicLiteratureReview
@@ -1142,14 +1395,18 @@ referencedSchemas:
           - PopularScienceArticle
         originalResearch:
           type: boolean
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   JournalCorrigendum:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1158,21 +1415,28 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         corrigendumFor:
           type: string
           format: uri
+          example: null
         type:
           type: string
+          example: null
+      example: null
   JournalInterview:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1181,18 +1445,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   JournalIssue:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1201,18 +1471,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   JournalLeader:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1221,18 +1497,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   JournalLetter:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1241,18 +1523,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   JournalReview:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1261,18 +1549,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   Lecture:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1283,10 +1577,13 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   LegacyFile:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1295,6 +1592,8 @@ referencedSchemas:
       properties:
         type:
           type: string
+          example: null
+      example: null
   License:
     required:
     - type
@@ -1302,21 +1601,28 @@ referencedSchemas:
     properties:
       identifier:
         type: string
+        example: null
       labels:
         type: object
         additionalProperties:
           type: string
+          example: null
+        example: null
       link:
         type: string
         format: uri
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   LiteraryArts:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1327,18 +1633,23 @@ referencedSchemas:
           $ref: '#/components/schemas/LiteraryArtsSubtype'
         manifestations:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/LiteraryArtsManifestation'
         description:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   LiteraryArtsAudioVisual:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1347,6 +1658,7 @@ referencedSchemas:
       properties:
         subtype:
           type: string
+          example: null
           enum:
           - Audiobook
           - RadioPlay
@@ -1357,11 +1669,15 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         isbn:
           type: string
+          example: null
         extent:
           type: integer
           format: int32
+          example: null
         type:
           type: string
+          example: null
+      example: null
   LiteraryArtsManifestation:
     required:
     - type
@@ -1371,12 +1687,15 @@ referencedSchemas:
         $ref: '#/components/schemas/PublicationDate'
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   LiteraryArtsMonograph:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1387,14 +1706,18 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         isbn:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   LiteraryArtsPerformance:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1403,6 +1726,7 @@ referencedSchemas:
       properties:
         subtype:
           type: string
+          example: null
           enum:
           - Reading
           - Play
@@ -1411,11 +1735,14 @@ referencedSchemas:
           $ref: '#/components/schemas/UnconfirmedPlace'
         type:
           type: string
+          example: null
+      example: null
   LiteraryArtsSubtype:
     type: object
     properties:
       type:
         type: string
+        example: null
         enum:
         - Novel
         - Poetry
@@ -1429,10 +1756,13 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+        example: null
+    example: null
   LiteraryArtsWeb:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1442,14 +1772,18 @@ referencedSchemas:
         id:
           type: string
           format: uri
+          example: null
         publisher:
           $ref: '#/components/schemas/PublishingHouse'
         type:
           type: string
+          example: null
+      example: null
   Map:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1458,14 +1792,18 @@ referencedSchemas:
       properties:
         description:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   MediaBlogPost:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1476,10 +1814,13 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   MediaContribution:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1490,20 +1831,25 @@ referencedSchemas:
           $ref: '#/components/schemas/MediaSubType'
         format:
           type: string
+          example: null
           enum:
           - Text
           - Sound
           - Video
         disseminationChannel:
           type: string
+          example: null
         partOf:
           $ref: '#/components/schemas/SeriesEpisode'
         type:
           type: string
+          example: null
+      example: null
   MediaContributionPeriodical:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1513,12 +1859,16 @@ referencedSchemas:
         id:
           type: string
           format: uri
+          example: null
         type:
           type: string
+          example: null
+      example: null
   MediaFeatureArticle:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1527,18 +1877,24 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   MediaInterview:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1549,10 +1905,13 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   MediaParticipationInRadioOrTv:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1563,10 +1922,13 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   MediaPodcast:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1577,10 +1939,13 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   MediaReaderOpinion:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1589,19 +1954,25 @@ referencedSchemas:
       properties:
         volume:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         articleNumber:
           type: string
+          example: null
         pages:
           $ref: '#/components/schemas/Range'
         type:
           type: string
+          example: null
+      example: null
   MediaSubType:
     type: object
     properties:
       type:
         type: string
+        example: null
         enum:
         - Journal
         - Radio
@@ -1611,10 +1982,13 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+        example: null
+    example: null
   MentionInPublication:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1623,19 +1997,25 @@ referencedSchemas:
       properties:
         title:
           type: string
+          example: null
         issue:
           type: string
+          example: null
         date:
           $ref: '#/components/schemas/Time'
         otherInformation:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   MonetaryAmount:
     type: object
     properties:
       currency:
         type: string
+        example: null
         enum:
         - NOK
         - EUR
@@ -1644,6 +2024,8 @@ referencedSchemas:
       amount:
         type: integer
         format: int64
+        example: null
+    example: null
   MonographPages:
     required:
     - type
@@ -1653,16 +2035,21 @@ referencedSchemas:
         $ref: '#/components/schemas/Range'
       pages:
         type: string
+        example: null
       illustrated:
         type: boolean
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   MovingPicture:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1673,14 +2060,18 @@ referencedSchemas:
           $ref: '#/components/schemas/MovingPictureSubtype'
         description:
           type: string
+          example: null
         outputs:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/MovingPictureOutput'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   MovingPictureOutput:
     required:
     - type
@@ -1689,8 +2080,11 @@ referencedSchemas:
       sequence:
         type: integer
         format: int32
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   MovingPictureSubtype:
@@ -1698,6 +2092,7 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
         enum:
         - FILM
         - SHORT
@@ -1708,10 +2103,13 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+        example: null
+    example: null
   MusicPerformance:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1720,12 +2118,15 @@ referencedSchemas:
       properties:
         manifestations:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/MusicPerformanceManifestation'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   MusicPerformanceManifestation:
     required:
     - type
@@ -1733,12 +2134,15 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   MusicScore:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1747,10 +2151,13 @@ referencedSchemas:
       properties:
         ensemble:
           type: string
+          example: null
         movements:
           type: string
+          example: null
         extent:
           type: string
+          example: null
         publisher:
           $ref: '#/components/schemas/PublishingHouse'
         ismn:
@@ -1759,6 +2166,8 @@ referencedSchemas:
           $ref: '#/components/schemas/Isrc'
         type:
           type: string
+          example: null
+      example: null
   MusicTrack:
     required:
     - type
@@ -1766,12 +2175,17 @@ referencedSchemas:
     properties:
       title:
         type: string
+        example: null
       composer:
         type: string
+        example: null
       extent:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   MusicalWork:
@@ -1781,10 +2195,14 @@ referencedSchemas:
     properties:
       title:
         type: string
+        example: null
       composer:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   MusicalWorkPerformance:
@@ -1792,14 +2210,19 @@ referencedSchemas:
     properties:
       title:
         type: string
+        example: null
       composer:
         type: string
+        example: null
       premiere:
         type: boolean
+        example: null
+    example: null
   NullAssociatedArtifact:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1808,6 +2231,8 @@ referencedSchemas:
       properties:
         type:
           type: string
+          example: null
+      example: null
   NullPages:
     required:
     - type
@@ -1815,12 +2240,15 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Organization:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1830,16 +2258,22 @@ referencedSchemas:
         id:
           type: string
           format: uri
+          example: null
         labels:
           type: object
           additionalProperties:
             type: string
+            example: null
+          example: null
         type:
           type: string
+          example: null
+      example: null
   OtherPerformance:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1848,20 +2282,26 @@ referencedSchemas:
       properties:
         performanceType:
           type: string
+          example: null
         place:
           $ref: '#/components/schemas/UnconfirmedPlace'
         extent:
           type: string
+          example: null
         musicalWorks:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/MusicalWork'
         type:
           type: string
+          example: null
+      example: null
   OtherPresentation:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1872,10 +2312,13 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   OtherRelease:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1884,6 +2327,7 @@ referencedSchemas:
       properties:
         description:
           type: string
+          example: null
         place:
           $ref: '#/components/schemas/UnconfirmedPlace'
         publisher:
@@ -1892,10 +2336,13 @@ referencedSchemas:
           $ref: '#/components/schemas/Instant'
         type:
           type: string
+          example: null
+      example: null
   OtherStudentWork:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1908,6 +2355,8 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   Pages:
     required:
     - type
@@ -1915,12 +2364,15 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   PerformingArts:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1931,14 +2383,18 @@ referencedSchemas:
           $ref: '#/components/schemas/PerformingArtsSubtype'
         description:
           type: string
+          example: null
         outputs:
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/PerformingArtsOutput'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   PerformingArtsOutput:
     required:
     - type
@@ -1946,6 +2402,8 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   PerformingArtsSubtype:
@@ -1953,6 +2411,7 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
         enum:
         - THEATRICAL_PRODUCTION
         - BROADCAST
@@ -1960,10 +2419,13 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+        example: null
+    example: null
   PerformingArtsVenue:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -1977,8 +2439,11 @@ referencedSchemas:
         sequence:
           type: integer
           format: int32
+          example: null
         type:
           type: string
+          example: null
+      example: null
   Period:
     required:
     - type
@@ -1987,11 +2452,15 @@ referencedSchemas:
       from:
         type: string
         format: date-time
+        example: null
       to:
         type: string
         format: date-time
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Place:
@@ -2001,6 +2470,8 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Publication:
@@ -2012,6 +2483,7 @@ referencedSchemas:
         $ref: '#/components/schemas/SortableIdentifier'
       status:
         type: string
+        example: null
         enum:
         - NEW
         - DRAFT
@@ -2026,57 +2498,75 @@ referencedSchemas:
       createdDate:
         type: string
         format: date-time
+        example: null
       modifiedDate:
         type: string
         format: date-time
+        example: null
       publishedDate:
         type: string
         format: date-time
+        example: null
       indexedDate:
         type: string
         format: date-time
+        example: null
       handle:
         type: string
         format: uri
+        example: null
       doi:
         type: string
         format: uri
+        example: null
       link:
         type: string
         format: uri
+        example: null
       entityDescription:
         $ref: '#/components/schemas/EntityDescription'
       projects:
         type: array
+        example: null
         items:
           $ref: '#/components/schemas/ResearchProject'
       fundings:
         type: array
+        example: null
         items:
           $ref: '#/components/schemas/Funding'
       additionalIdentifiers:
         uniqueItems: true
         type: array
+        example: null
         items:
           $ref: '#/components/schemas/AdditionalIdentifier'
       subjects:
         type: array
+        example: null
         items:
           type: string
           format: uri
+          example: null
       associatedArtifacts:
         type: array
         properties:
           publishable:
             type: boolean
+            example: null
           empty:
             type: boolean
+            example: null
+        example: null
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       modelVersion:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   PublicationContext:
@@ -2086,6 +2576,8 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   PublicationDate:
@@ -2095,12 +2587,17 @@ referencedSchemas:
     properties:
       year:
         type: string
+        example: null
       month:
         type: string
+        example: null
       day:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   PublicationInstancePages:
@@ -2110,16 +2607,20 @@ referencedSchemas:
     properties:
       peerReviewed:
         type: boolean
+        example: null
       pages:
         $ref: '#/components/schemas/Pages'
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   PublishedFile:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2128,10 +2629,13 @@ referencedSchemas:
       properties:
         type:
           type: string
+          example: null
+      example: null
   Publisher:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2141,8 +2645,11 @@ referencedSchemas:
         id:
           type: string
           format: uri
+          example: null
         type:
           type: string
+          example: null
+      example: null
   PublishingHouse:
     required:
     - type
@@ -2150,6 +2657,8 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Range:
@@ -2159,10 +2668,14 @@ referencedSchemas:
     properties:
       begin:
         type: string
+        example: null
       end:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Reference:
@@ -2175,14 +2688,18 @@ referencedSchemas:
       doi:
         type: string
         format: uri
+        example: null
       publicationInstance:
         $ref: '#/components/schemas/PublicationInstancePages'
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   Report:
     type: object
+    example: null
     allOf:
     - $ref: '#/components/schemas/PublicationContext'
     - type: object
@@ -2192,18 +2709,24 @@ referencedSchemas:
         seriesTitle:
           type: string
           writeOnly: true
+          example: null
         seriesNumber:
           type: string
+          example: null
         publisher:
           $ref: '#/components/schemas/PublishingHouse'
         isbnList:
           type: array
+          example: null
           items:
             type: string
+            example: null
+      example: null
   ReportBasic:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2214,10 +2737,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   ReportBookOfAbstract:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2228,10 +2754,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   ReportPolicy:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2242,10 +2771,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   ReportResearch:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2256,10 +2788,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   ReportWorkingPaper:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2270,10 +2805,13 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+          example: null
+      example: null
   ResearchData:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2284,6 +2822,8 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         type:
           type: string
+          example: null
+      example: null
   ResearchProject:
     required:
     - type
@@ -2292,18 +2832,19 @@ referencedSchemas:
       id:
         type: string
         format: uri
+        example: null
       name:
         type: string
-      grants:
-        type: array
-        items:
-          $ref: '#/components/schemas/Grant'
+        example: null
       approvals:
         type: array
+        example: null
         items:
           $ref: '#/components/schemas/Approval'
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   ResourceOwner:
@@ -2311,13 +2852,17 @@ referencedSchemas:
     properties:
       owner:
         type: string
+        example: null
       ownerAffiliation:
         type: string
         format: uri
+        example: null
+    example: null
   Series:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2327,8 +2872,11 @@ referencedSchemas:
         id:
           type: string
           format: uri
+          example: null
         type:
           type: string
+          example: null
+      example: null
   SeriesEpisode:
     required:
     - type
@@ -2336,14 +2884,19 @@ referencedSchemas:
     properties:
       seriesName:
         type: string
+        example: null
       seriesPart:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   SortableIdentifier:
     type: object
+    example: null
   Time:
     required:
     - type
@@ -2351,12 +2904,15 @@ referencedSchemas:
     properties:
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   UnconfirmedJournal:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2365,16 +2921,22 @@ referencedSchemas:
       properties:
         title:
           type: string
+          example: null
         printIssn:
           type: string
+          example: null
         onlineIssn:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   UnconfirmedMediaContributionPeriodical:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2383,20 +2945,28 @@ referencedSchemas:
       properties:
         title:
           type: string
+          example: null
         printIssn:
           type: string
+          example: null
         onlineIssn:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   UnconfirmedOrganization:
     type: object
+    example: null
     allOf:
     - $ref: '#/components/schemas/Agent'
     - type: object
       properties:
         name:
           type: string
+          example: null
+      example: null
   UnconfirmedPlace:
     required:
     - type
@@ -2404,16 +2974,21 @@ referencedSchemas:
     properties:
       label:
         type: string
+        example: null
       country:
         type: string
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   UnconfirmedPublisher:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2422,12 +2997,16 @@ referencedSchemas:
       properties:
         name:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   UnconfirmedSeries:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2436,16 +3015,22 @@ referencedSchemas:
       properties:
         title:
           type: string
+          example: null
         issn:
           type: string
+          example: null
         onlineIssn:
           type: string
+          example: null
         type:
           type: string
+          example: null
+      example: null
   UnpublishedFile:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2454,6 +3039,8 @@ referencedSchemas:
       properties:
         type:
           type: string
+          example: null
+      example: null
   Venue:
     required:
     - type
@@ -2466,14 +3053,18 @@ referencedSchemas:
       sequence:
         type: integer
         format: int32
+        example: null
       type:
         type: string
+        example: null
+    example: null
     discriminator:
       propertyName: type
   VisualArts:
     required:
     - type
     type: object
+    example: null
     discriminator:
       propertyName: type
     allOf:
@@ -2484,20 +3075,25 @@ referencedSchemas:
           $ref: '#/components/schemas/VisualArtsSubtype'
         description:
           type: string
+          example: null
         venues:
           uniqueItems: true
           type: array
+          example: null
           items:
             $ref: '#/components/schemas/Venue'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+          example: null
+      example: null
   VisualArtsSubtype:
     type: object
     properties:
       type:
         type: string
+        example: null
         enum:
         - IndividualExhibition
         - CollectiveExhibition
@@ -2511,3 +3107,5 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
+        example: null
+    example: null

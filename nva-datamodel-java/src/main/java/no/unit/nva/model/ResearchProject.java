@@ -10,7 +10,6 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ResearchProject extends Project {
 
-    private List<Grant> grants;
     private List<Approval> approvals;
 
     public ResearchProject() {
@@ -21,16 +20,7 @@ public class ResearchProject extends Project {
         super();
         setId(builder.id);
         setName(builder.name);
-        setGrants(builder.grants);
         setApprovals(builder.approvals);
-    }
-
-    public List<Grant> getGrants() {
-        return Objects.nonNull(grants) ? grants : Collections.emptyList();
-    }
-
-    public void setGrants(List<Grant> grants) {
-        this.grants = grants;
     }
 
     public List<Approval> getApprovals() {
@@ -53,21 +43,19 @@ public class ResearchProject extends Project {
         ResearchProject researchProject = (ResearchProject) o;
         return Objects.equals(getId(), researchProject.getId())
                && Objects.equals(getName(), researchProject.getName())
-               && Objects.equals(getGrants(), researchProject.getGrants())
                && Objects.equals(getApprovals(), researchProject.getApprovals());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getGrants(), getApprovals());
+        return Objects.hash(getId(), getName(), getApprovals());
     }
 
     public static final class Builder {
 
         private URI id;
         private String name;
-        private List<Grant> grants;
         private List<Approval> approvals;
 
         public Builder() {
@@ -80,11 +68,6 @@ public class ResearchProject extends Project {
 
         public Builder withName(String name) {
             this.name = name;
-            return this;
-        }
-
-        public Builder withGrants(List<Grant> grants) {
-            this.grants = grants;
             return this;
         }
 
