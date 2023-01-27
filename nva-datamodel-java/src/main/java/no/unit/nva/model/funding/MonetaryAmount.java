@@ -1,4 +1,6 @@
-package no.unit.nva.model;
+package no.unit.nva.model.funding;
+
+import no.unit.nva.model.Currency;
 
 import java.util.Objects;
 
