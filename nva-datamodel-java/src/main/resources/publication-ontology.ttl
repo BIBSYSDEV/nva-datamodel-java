@@ -18,21 +18,21 @@ nva:Exhibition a rdfs:Class ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
   
 nva:Funding a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "A source of financial support" ;
   rdfs:isDefinedBy nva: .
 
 nva:ConfirmedFunding a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "A source of financial support that is confirmed by the funder" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Funding .
 
 nva:UnconfirmedFunding a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "A source of financial support that is reported, but not confirmed by the funder" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Funding .
 
 nva:MonetaryAmount a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "A sum of money in a given currency" ;
   rdfs:isDefinedBy nva: .
 
 nva:GraphicDesign a rdfs:Class ;

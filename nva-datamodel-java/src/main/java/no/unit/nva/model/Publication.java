@@ -28,6 +28,7 @@ import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
+import no.unit.nva.model.funding.Funding;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.StringUtils;
 
