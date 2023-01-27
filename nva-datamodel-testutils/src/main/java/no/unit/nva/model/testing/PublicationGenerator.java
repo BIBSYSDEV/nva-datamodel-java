@@ -19,6 +19,7 @@ import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.ConfirmedFunding;
 import no.unit.nva.model.Funding;
 import no.unit.nva.model.MonetaryAmount;
 import no.unit.nva.model.Organization;
@@ -27,6 +28,7 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.UnconfirmedFunding;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
 
@@ -84,17 +86,29 @@ public final class PublicationGenerator {
     }
 
     public static List<Funding> randomFundings() {
-        return List.of(randomFunding());
+        return List.of(randomUnconfirmedFunding(), randomConfirmedFunding());
     }
 
-    public static Funding randomFunding() {
-        var funding = new Funding();
+    public static Funding randomConfirmedFunding() {
+        var funding = new ConfirmedFunding();
+
+        funding.setId(randomUri());
+        funding.setSource(randomUri());
+        funding.setIdentifier(randomString());
+        funding.setLabels(randomLabels());
+        funding.setFundingAmount(randomMonetaryAmount());
+        funding.setActiveFrom(randomInstant());
+        funding.setActiveTo(randomInstant(funding.getActiveFrom()));
+
+        return funding;
+    }
+
+    public static Funding randomUnconfirmedFunding() {
+        var funding = new UnconfirmedFunding();
 
         funding.setSource(randomUri());
-        funding.setId(randomUri());
         funding.setIdentifier(randomString());
-        funding.setName(randomString());
-        funding.setAlternativeName(randomLabels());
+        funding.setLabels(randomLabels());
         funding.setFundingAmount(randomMonetaryAmount());
         funding.setActiveFrom(randomInstant());
         funding.setActiveTo(randomInstant(funding.getActiveFrom()));
