@@ -18,11 +18,21 @@ nva:Exhibition a rdfs:Class ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
   
 nva:Funding a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "A source of financial support" ;
   rdfs:isDefinedBy nva: .
 
+nva:ConfirmedFunding a rdfs:Class ;
+  rdfs:comment "A source of financial support that is confirmed by the funder" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:Funding .
+
+nva:UnconfirmedFunding a rdfs:Class ;
+  rdfs:comment "A source of financial support that is reported, but not confirmed by the funder" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:Funding .
+
 nva:MonetaryAmount a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "A sum of money in a given currency" ;
   rdfs:isDefinedBy nva: .
 
 nva:GraphicDesign a rdfs:Class ;
@@ -60,7 +70,7 @@ nva:ServiceDesign a rdfs:Class ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
   
-nva:WebDesig a rdfs:Class ;
+nva:WebDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
@@ -1066,13 +1076,6 @@ nva:alternativeTitle a rdf:Property ;
   rdfs:domain nva:Publication ;
   rdfs:range rdf:langString .
 
-nva:alternativeName a rdf:Property ;
-  rdfs:comment "" ;
-  rdfs:label "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:Funding ;
-  rdfs:range rdf:langString .
-
 nva:orcId a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
@@ -1295,7 +1298,7 @@ nva:fundingAmount a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:Funding ;
+  rdfs:domain nva:UnconfirmedFunding, nva:ConfirmedFunding ;
   rdfs:range nva:MonetaryAmount .
 
 nva:amount a rdf:Property ;
@@ -1316,14 +1319,14 @@ nva:activeFrom a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:Funding ;
+  rdfs:domain nva:UnconfirmedFunding, nva:ConfirmedFunding ;
   rdfs:range xsd:dateTime .
 
 nva:activeTo a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:Funding ;
+  rdfs:domain nva:UnconfirmedFunding, nva:ConfirmedFunding ;
   rdfs:range xsd:dateTime .
 
 nva:administrativeAgreement a rdf:Property ;
@@ -1510,7 +1513,7 @@ nva:name a rdf:Property ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Identity, nva:ResearchProject, nva:UnconfirmedOrganization,
               nva:UnconfirmedPublisher, nva:AssociatedLink, nva:Award, nva:Competition,
-              nva:Exhibition, nva:File, nva:Funding ;
+              nva:Exhibition, nva:File ;
   rdfs:range xsd:string .
 
 nva:modifiedDate a rdf:Property ;

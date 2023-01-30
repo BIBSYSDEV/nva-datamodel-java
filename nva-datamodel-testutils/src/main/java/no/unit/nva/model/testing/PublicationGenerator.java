@@ -1,5 +1,28 @@
 package no.unit.nva.model.testing;
 
+import com.github.javafaker.Faker;
+import no.unit.nva.identifiers.SortableIdentifier;
+import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.Approval;
+import no.unit.nva.model.ApprovalStatus;
+import no.unit.nva.model.ApprovalsBody;
+import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.Organization;
+import no.unit.nva.model.Publication;
+import no.unit.nva.model.Publication.Builder;
+import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.ResearchProject;
+import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.funding.Funding;
+import no.unit.nva.model.funding.FundingBuilder;
+import no.unit.nva.model.funding.MonetaryAmount;
+import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
+import nva.commons.core.JacocoGenerated;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Set;
+
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
@@ -9,26 +32,6 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import com.github.javafaker.Faker;
-import java.net.URI;
-import java.util.List;
-import java.util.Set;
-import no.unit.nva.identifiers.SortableIdentifier;
-import no.unit.nva.model.AdditionalIdentifier;
-import no.unit.nva.model.Approval;
-import no.unit.nva.model.ApprovalStatus;
-import no.unit.nva.model.ApprovalsBody;
-import no.unit.nva.model.EntityDescription;
-import no.unit.nva.model.Funding;
-import no.unit.nva.model.MonetaryAmount;
-import no.unit.nva.model.Organization;
-import no.unit.nva.model.Publication;
-import no.unit.nva.model.Publication.Builder;
-import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.ResearchProject;
-import no.unit.nva.model.ResourceOwner;
-import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
-import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
 public final class PublicationGenerator {
@@ -84,22 +87,34 @@ public final class PublicationGenerator {
     }
 
     public static List<Funding> randomFundings() {
-        return List.of(randomFunding());
+        return List.of(randomUnconfirmedFunding(), randomConfirmedFunding());
     }
 
-    public static Funding randomFunding() {
-        var funding = new Funding();
+    public static Funding randomConfirmedFunding() {
+        var activeFrom = randomInstant();
 
-        funding.setSource(randomUri());
-        funding.setId(randomUri());
-        funding.setIdentifier(randomString());
-        funding.setName(randomString());
-        funding.setAlternativeName(randomLabels());
-        funding.setFundingAmount(randomMonetaryAmount());
-        funding.setActiveFrom(randomInstant());
-        funding.setActiveTo(randomInstant(funding.getActiveFrom()));
+        return new FundingBuilder()
+                .withId(randomUri())
+                .withSource(randomUri())
+                .withIdentifier(randomString())
+                .withLabels(randomLabels())
+                .withFundingAmount(randomMonetaryAmount())
+                .withActiveFrom(activeFrom)
+                .withActiveTo(randomInstant(activeFrom))
+                .build();
+    }
 
-        return funding;
+    public static Funding randomUnconfirmedFunding() {
+        var activeFrom = randomInstant();
+
+        return new FundingBuilder()
+                .withSource(randomUri())
+                .withIdentifier(randomString())
+                .withLabels(randomLabels())
+                .withFundingAmount(randomMonetaryAmount())
+                .withActiveFrom(activeFrom)
+                .withActiveTo(randomInstant(activeFrom))
+                .build();
     }
 
     private static MonetaryAmount randomMonetaryAmount() {
@@ -113,10 +128,10 @@ public final class PublicationGenerator {
 
     public static ResearchProject randomResearchProject() {
         return new ResearchProject.Builder()
-                   .withId(randomUri())
-                   .withName(randomString())
-                   .withApprovals(randomApprovals())
-                   .build();
+                .withId(randomUri())
+                .withName(randomString())
+                .withApprovals(randomApprovals())
+                .build();
     }
 
     public static List<Approval> randomApprovals() {
@@ -126,11 +141,11 @@ public final class PublicationGenerator {
     public static Approval randomApproval() {
 
         return new Approval.Builder()
-                   .withApprovalStatus(randomElement(ApprovalStatus.values()))
-                   .withDate(randomInstant())
-                   .withApplicationCode(randomString())
-                   .withApprovedBy(randomElement(ApprovalsBody.values()))
-                   .build();
+                .withApprovalStatus(randomElement(ApprovalStatus.values()))
+                .withDate(randomInstant())
+                .withApplicationCode(randomString())
+                .withApprovedBy(randomElement(ApprovalsBody.values()))
+                .build();
     }
 
     public static AdditionalIdentifier randomAdditionalIdentifier() {
@@ -139,31 +154,31 @@ public final class PublicationGenerator {
 
     public static Organization randomOrganization() {
         return new Organization.Builder()
-                   .withId(randomUri())
-                   .withLabels(randomLabels())
-                   .build();
+                .withId(randomUri())
+                .withLabels(randomLabels())
+                .build();
     }
 
     private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
-                   .withIdentifier(SortableIdentifier.next())
-                   .withPublisher(randomOrganization())
-                   .withSubjects(List.of(randomUri()))
-                   .withStatus(randomElement(PublicationStatus.values()))
-                   .withPublishedDate(randomInstant())
-                   .withModifiedDate(randomInstant())
-                   .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
-                   .withProjects(randomProjects())
-                   .withFundings(randomFundings())
-                   .withResourceOwner(randomResourceOwner())
-                   .withLink(randomUri())
-                   .withIndexedDate(randomInstant())
-                   .withHandle(randomUri())
-                   .withDoi(randomDoi())
-                   .withCreatedDate(randomInstant())
-                   .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-                   .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                   .build();
+                .withIdentifier(SortableIdentifier.next())
+                .withPublisher(randomOrganization())
+                .withSubjects(List.of(randomUri()))
+                .withStatus(randomElement(PublicationStatus.values()))
+                .withPublishedDate(randomInstant())
+                .withModifiedDate(randomInstant())
+                .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
+                .withProjects(randomProjects())
+                .withFundings(randomFundings())
+                .withResourceOwner(randomResourceOwner())
+                .withLink(randomUri())
+                .withIndexedDate(randomInstant())
+                .withHandle(randomUri())
+                .withDoi(randomDoi())
+                .withCreatedDate(randomInstant())
+                .withEntityDescription(randomEntityDescription(publicationInstanceClass))
+                .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
+                .build();
     }
 
     private static ResourceOwner randomResourceOwner() {
