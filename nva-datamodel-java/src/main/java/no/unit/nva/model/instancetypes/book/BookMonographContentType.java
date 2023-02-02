@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Content Type options for "Monograph" subtype when the creator chooses the Resource type as "Book" while doing the
  * registration.
  */
+@Deprecated
 public enum BookMonographContentType {
     ACADEMIC_MONOGRAPH("AcademicMonograph", "Academic Monograph"),
     NON_FICTION_MONOGRAPH("NonFictionMonograph", "Non-fiction Monograph"),
