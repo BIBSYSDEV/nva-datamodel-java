@@ -25,7 +25,12 @@ public class JournalArticle extends PeerReviewedPaper {
     private String issue;
     private String articleNumber;
 
-    protected JournalArticle(Range pages, boolean peerReviewed, boolean originalResearch, String volume, String issue, String articleNumber) {
+    protected JournalArticle(Range pages,
+                             boolean peerReviewed,
+                             boolean originalResearch,
+                             String volume,
+                             String issue,
+                             String articleNumber) {
         super(pages, peerReviewed, originalResearch);
         this.volume = volume;
         this.issue = issue;
