@@ -1,20 +1,7 @@
 package no.unit.nva.model.testing;
 
-import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
-import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
-import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
-import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
-import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
@@ -87,16 +74,20 @@ import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
 import no.unit.nva.model.instancetypes.event.OtherPresentation;
+import no.unit.nva.model.instancetypes.journal.AcademicArticle;
+import no.unit.nva.model.instancetypes.journal.AcademicLiteratureReview;
+import no.unit.nva.model.instancetypes.journal.CaseReport;
 import no.unit.nva.model.instancetypes.journal.ConferenceAbstract;
 import no.unit.nva.model.instancetypes.journal.FeatureArticle;
-import no.unit.nva.model.instancetypes.journal.JournalArticle;
-import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
 import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalInterview;
 import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.journal.PopularScienceArticle;
+import no.unit.nva.model.instancetypes.journal.ProfessionalArticle;
+import no.unit.nva.model.instancetypes.journal.StudyProtocol;
 import no.unit.nva.model.instancetypes.media.MediaBlogPost;
 import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
 import no.unit.nva.model.instancetypes.media.MediaInterview;
@@ -122,6 +113,21 @@ import no.unit.nva.model.time.Period;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
+import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
+import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
+import static nva.commons.core.attempt.Try.attempt;
+
 @JacocoGenerated
 @SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.GodClass"})
 public final class PublicationInstanceBuilder {
@@ -139,7 +145,9 @@ public final class PublicationInstanceBuilder {
         return randomPublicationInstance(randomType);
     }
 
-    @SuppressWarnings("PMD.NcssCount")
+    // TODO: remove JournalArticle following migration
+
+    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public static PublicationInstance<? extends Pages> randomPublicationInstance(Class<?> randomType) {
         var typeName = randomType.getSimpleName();
 
@@ -161,7 +169,18 @@ public final class PublicationInstanceBuilder {
             case "JournalCorrigendum":
                 return generateJournalCorrigendum();
             case "JournalArticle":
-                return generateJournalArticle();
+            case "AcademicArticle":
+                return generateAcademicArticle();
+            case "AcademicLiteratureReview":
+                return generateAcademicLiteratureReview();
+            case "CaseReport":
+                return generateCaseReport();
+            case "StudyProtocol":
+                return generateStudyProtocol();
+            case "ProfessionalArticle":
+                return generateProfessionalArticle();
+            case "PopularScienceArticle":
+                return generatePopularScienceArticle();
             case "BookAnthology":
                 return generateBookAnthology();
             case "ChapterArticle":
@@ -577,16 +596,35 @@ public final class PublicationInstanceBuilder {
             .build();
     }
 
-    private static JournalArticle generateJournalArticle() {
-        return new JournalArticle.Builder()
-            .withContent(randomContent())
-            .withArticleNumber(randomArticleNumber())
-            .withPages(randomRange())
-            .withIssue(randomIssue())
-            .withVolume(randomVolume())
-            .withOriginalResearch(randomElement(true, false))
-            .withPeerReviewed(randomElement(true, false))
-            .build();
+    private static AcademicArticle generateAcademicArticle() {
+        return new AcademicArticle(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+                randomArticleNumber());
+    }
+
+    private static AcademicLiteratureReview generateAcademicLiteratureReview() {
+        return new AcademicLiteratureReview(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+                randomArticleNumber());
+    }
+
+
+    private static CaseReport generateCaseReport() {
+        return new CaseReport(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+                randomArticleNumber());
+    }
+
+    private static StudyProtocol generateStudyProtocol() {
+        return new StudyProtocol(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+                randomArticleNumber());
+    }
+
+    private static ProfessionalArticle generateProfessionalArticle() {
+        return new ProfessionalArticle(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+                randomArticleNumber());
+    }
+
+    private static PopularScienceArticle generatePopularScienceArticle() {
+        return new PopularScienceArticle(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+                randomArticleNumber());
     }
 
     private static String randomArticleNumber() {
@@ -595,10 +633,6 @@ public final class PublicationInstanceBuilder {
 
     private static String randomIssue() {
         return randomString();
-    }
-
-    private static JournalArticleContentType randomContent() {
-        return randomElement(JournalArticleContentType.values());
     }
 
     private static FeatureArticle generateFeatureArticle() {

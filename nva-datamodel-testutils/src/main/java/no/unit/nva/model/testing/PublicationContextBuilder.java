@@ -66,6 +66,12 @@ public class PublicationContextBuilder {
             case "FeatureArticle":
             case "JournalCorrigendum":
             case "JournalArticle":
+            case "AcademicArticle":
+            case "AcademicLiteratureReview":
+            case "CaseReport":
+            case "StudyProtocol":
+            case "ProfessionalArticle":
+            case "PopularScienceArticle":
             case "JournalInterview":
             case "JournalLetter":
             case "JournalLeader":

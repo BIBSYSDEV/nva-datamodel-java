@@ -33,6 +33,7 @@ import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.testing.associatedartifacts.AdministrativeAgreementGenerator;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedLinkGenerator;

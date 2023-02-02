@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+@Deprecated
 public enum JournalArticleContentType {
     ACADEMIC_ARTICLE("AcademicArticle", "Research article"),
     ACADEMIC_LITERATURE_REVIEW("AcademicLiteratureReview", "Review article"),
