@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import java.util.Objects;
 import no.unit.nva.model.contexttypes.PublishingHouse;
-import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
-import no.unit.nva.model.instancetypes.artistic.UnconfirmedPublisherMigrator;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.Objects;
+
 @JsonTypeInfo(use = Id.NAME, property = "type")
-public class MusicScore implements MusicPerformanceManifestation, UnconfirmedPublisherMigrator {
+public class MusicScore implements MusicPerformanceManifestation {
 
     public static final String ENSEMBLE_FIELD = "ensemble";
     public static final String MOVEMENTS_FIELD = "movements";
@@ -34,25 +33,12 @@ public class MusicScore implements MusicPerformanceManifestation, UnconfirmedPub
     private final Isrc isrc;
 
     @JsonCreator
-    public static MusicScore fromJson(@JsonProperty(ENSEMBLE_FIELD) String ensemble,
-                                      @JsonProperty(MOVEMENTS_FIELD) String movements,
-                                      @JsonProperty(EXTENT_FIELD) String extent,
-                                      @JsonProperty(PUBLISHER_FIELD) Object publisher,
-                                      @JsonProperty(ISMN_FIELD) Ismn ismn,
-                                      @JsonProperty(ISRC_FIELD) Isrc isrc) {
-        var publishingHouse = publisher instanceof String
-                ? new UnconfirmedPublisher((String) publisher)
-                : UnconfirmedPublisherMigrator.toPublisher(publisher);
-        return new MusicScore(ensemble, movements, extent, publishingHouse, ismn, isrc);
-    }
-
     public MusicScore(@JsonProperty(ENSEMBLE_FIELD) String ensemble,
                       @JsonProperty(MOVEMENTS_FIELD) String movements,
                       @JsonProperty(EXTENT_FIELD) String extent,
                       @JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher,
                       @JsonProperty(ISMN_FIELD) Ismn ismn,
                       @JsonProperty(ISRC_FIELD) Isrc isrc) {
-
         this.ensemble = ensemble;
         this.movements = movements;
         this.extent = extent;

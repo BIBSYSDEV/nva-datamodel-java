@@ -1,18 +1,18 @@
 package no.unit.nva.model.instancetypes.artistic.music;
 
-import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.List;
-import java.util.Objects;
 import no.unit.nva.model.contexttypes.PublishingHouse;
-import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
-import no.unit.nva.model.instancetypes.artistic.UnconfirmedPublisherMigrator;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.List;
+import java.util.Objects;
+
+import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class AudioVisualPublication implements MusicPerformanceManifestation, UnconfirmedPublisherMigrator {
+public class AudioVisualPublication implements MusicPerformanceManifestation {
 
     public static final String MEDIA_TYPE_FIELD = "mediaType";
     public static final String PUBLISHER_FIELD = "publisher";
@@ -28,18 +28,7 @@ public class AudioVisualPublication implements MusicPerformanceManifestation, Un
     @JsonProperty(TRACK_LIST_FIELD)
     private final List<MusicTrack> trackList;
 
-    @Deprecated
     @JsonCreator
-    public static AudioVisualPublication fromJson(@JsonProperty(MEDIA_TYPE_FIELD) MusicMediaType mediaType,
-                                                  @JsonProperty(PUBLISHER_FIELD) Object publisher,
-                                                  @JsonProperty(CATALOGUE_NUMBER_FIELD) String catalogueNumber,
-                                                  @JsonProperty(TRACK_LIST_FIELD) List<MusicTrack> trackList) {
-        var publishingHouse = publisher instanceof String
-                ? new UnconfirmedPublisher((String) publisher)
-                : UnconfirmedPublisherMigrator.toPublisher(publisher);
-        return new AudioVisualPublication(mediaType, publishingHouse, catalogueNumber, trackList);
-    }
-
     public AudioVisualPublication(@JsonProperty(MEDIA_TYPE_FIELD) MusicMediaType mediaType,
                                   @JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher,
                                   @JsonProperty(CATALOGUE_NUMBER_FIELD) String catalogueNumber,

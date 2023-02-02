@@ -65,7 +65,6 @@ public class PublicationContextBuilder {
             case "ConferenceAbstract":
             case "FeatureArticle":
             case "JournalCorrigendum":
-            case "JournalArticle":
             case "AcademicArticle":
             case "AcademicLiteratureReview":
             case "CaseReport":
@@ -85,7 +84,6 @@ public class PublicationContextBuilder {
             case "Textbook":
             case "BookAnthology":
             case "BookAbstracts":
-            case "BookMonograph":
             case "OtherStudentWork":
                 return attempt(PublicationContextBuilder::randomBook).orElseThrow();
             case "DegreeBachelor":
@@ -93,7 +91,6 @@ public class PublicationContextBuilder {
             case "DegreePhd":
             case "DegreeLicentiate":
                 return attempt(PublicationContextBuilder::randomDegree).orElseThrow();
-            case "ChapterArticle":
             case "AcademicChapter":
             case "NonFictionChapter":
             case "PopularScienceChapter":
