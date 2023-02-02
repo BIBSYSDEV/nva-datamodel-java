@@ -26,6 +26,9 @@ import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
 import no.unit.nva.model.instancetypes.event.OtherPresentation;
+import no.unit.nva.model.instancetypes.journal.AcademicArticle;
+import no.unit.nva.model.instancetypes.journal.AcademicLiteratureReview;
+import no.unit.nva.model.instancetypes.journal.CaseReport;
 import no.unit.nva.model.instancetypes.journal.ConferenceAbstract;
 import no.unit.nva.model.instancetypes.journal.FeatureArticle;
 import no.unit.nva.model.instancetypes.journal.JournalArticle;
@@ -35,6 +38,9 @@ import no.unit.nva.model.instancetypes.journal.JournalIssue;
 import no.unit.nva.model.instancetypes.journal.JournalLeader;
 import no.unit.nva.model.instancetypes.journal.JournalLetter;
 import no.unit.nva.model.instancetypes.journal.JournalReview;
+import no.unit.nva.model.instancetypes.journal.PopularScienceArticle;
+import no.unit.nva.model.instancetypes.journal.ProfessionalArticle;
+import no.unit.nva.model.instancetypes.journal.StudyProtocol;
 import no.unit.nva.model.instancetypes.media.MediaBlogPost;
 import no.unit.nva.model.instancetypes.media.MediaFeatureArticle;
 import no.unit.nva.model.instancetypes.media.MediaInterview;
@@ -60,6 +66,12 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "MovingPicture", value = MovingPicture.class),
     @JsonSubTypes.Type(name = "PerformingArts", value = PerformingArts.class),
     @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
+    @JsonSubTypes.Type(name = "AcademicArticle", value = AcademicArticle.class),
+    @JsonSubTypes.Type(name = "AcademicLiteratureReview", value = AcademicLiteratureReview.class),
+    @JsonSubTypes.Type(name = "CaseReport", value = CaseReport.class),
+    @JsonSubTypes.Type(name = "StudyProtocol", value = StudyProtocol.class),
+    @JsonSubTypes.Type(name = "ProfessionalArticle", value = ProfessionalArticle.class),
+    @JsonSubTypes.Type(name = "PopularScienceArticle", value = PopularScienceArticle.class),
     @JsonSubTypes.Type(name = "JournalCorrigendum", value = JournalCorrigendum.class),
     @JsonSubTypes.Type(name = "JournalInterview", value = JournalInterview.class),
     @JsonSubTypes.Type(name = "JournalLetter", value = JournalLetter.class),
