@@ -11,9 +11,14 @@ import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArts;
 import no.unit.nva.model.instancetypes.artistic.music.MusicPerformance;
 import no.unit.nva.model.instancetypes.artistic.performingarts.PerformingArts;
 import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArts;
+import no.unit.nva.model.instancetypes.book.AcademicMonograph;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.BookMonograph;
+import no.unit.nva.model.instancetypes.book.Encyclopedia;
+import no.unit.nva.model.instancetypes.book.ExhibitionCatalog;
+import no.unit.nva.model.instancetypes.book.NonFictionMonograph;
+import no.unit.nva.model.instancetypes.book.Textbook;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.chapter.ChapterConferenceAbstract;
 import no.unit.nva.model.instancetypes.chapter.ChapterInReport;
@@ -79,6 +84,12 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),
     @JsonSubTypes.Type(name = "BookAbstracts", value = BookAbstracts.class),
     @JsonSubTypes.Type(name = "BookMonograph", value = BookMonograph.class),
+    @JsonSubTypes.Type(name = "AcademicMonograph", value = AcademicMonograph.class),
+    @JsonSubTypes.Type(name = "Encyclopedia", value = Encyclopedia.class),
+    @JsonSubTypes.Type(name = "ExhibitionCatalog", value = ExhibitionCatalog.class),
+    @JsonSubTypes.Type(name = "NonFictionMonograph", value = NonFictionMonograph.class),
+    @JsonSubTypes.Type(name = "PopularScienceArticle", value = PopularScienceArticle.class),
+    @JsonSubTypes.Type(name = "Textbook", value = Textbook.class),
     @JsonSubTypes.Type(name = "BookAnthology", value = BookAnthology.class),
     @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),
     @JsonSubTypes.Type(name = "DegreeMaster", value = DegreeMaster.class),

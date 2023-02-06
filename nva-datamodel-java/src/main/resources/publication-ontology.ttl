@@ -417,7 +417,37 @@ nva:BookMonograph a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Book .
-  
+
+nva:AcademicMonograph a rdfs:Class ;
+  rdfs:comment "A long-form scholarly text" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:BookMonograph .
+
+nva:Encyclopedia a rdfs:Class ;
+  rdfs:comment "A collection of shorter articles typically on a single topic domain serving as a reference work" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:BookMonograph .
+
+nva:ExhibitionCatalog a rdfs:Class ;
+  rdfs:comment "A list of exhibits at an organized event" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:BookMonograph .
+
+nva:NonFictionMonograph a rdfs:Class ;
+  rdfs:comment "A long-form text on a real-world topic" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:BookMonograph .
+
+nva:PopularScienceMonograph a rdfs:Class ;
+  rdfs:comment "A long-form text on a scientific topic for a non-academic audience" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:BookMonograph .
+
+nva:Textbook a rdfs:Class ;
+  rdfs:comment "A long-form text on created for the purposes of education" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:BookMonograph .
+
 nva:DegreeMaster a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;

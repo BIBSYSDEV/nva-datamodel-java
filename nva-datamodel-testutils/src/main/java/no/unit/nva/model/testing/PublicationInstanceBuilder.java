@@ -57,10 +57,14 @@ import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArts;
 import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArtsSubtype;
 import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArtsSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArtsSubtypeOther;
+import no.unit.nva.model.instancetypes.book.AcademicMonograph;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
-import no.unit.nva.model.instancetypes.book.BookMonograph;
-import no.unit.nva.model.instancetypes.book.BookMonographContentType;
+import no.unit.nva.model.instancetypes.book.Encyclopedia;
+import no.unit.nva.model.instancetypes.book.ExhibitionCatalog;
+import no.unit.nva.model.instancetypes.book.NonFictionMonograph;
+import no.unit.nva.model.instancetypes.book.PopularScienceMonograph;
+import no.unit.nva.model.instancetypes.book.Textbook;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticleContentType;
 import no.unit.nva.model.instancetypes.chapter.ChapterConferenceAbstract;
@@ -200,7 +204,18 @@ public final class PublicationInstanceBuilder {
             case "BookAbstracts":
                 return generateBookAbstracts();
             case "BookMonograph":
-                return generateBookMonograph();
+            case "AcademicMonograph":
+                return generateAcademicMonograph();
+            case "NonFictionMonograph":
+                return generateNonFictionMonograph();
+            case "PopularScienceMonograph":
+                return generatePopularScienceMonograph();
+            case "Textbook":
+                return generateTextbook();
+            case "Encyclopedia":
+                return generateEncyclopedia();
+            case "ExhibitionCatalog":
+                return generateExhibitionCatalog();
             case "DegreeBachelor":
                 return generateDegreeBachelor();
             case "DegreeMaster":
@@ -491,13 +506,30 @@ public final class PublicationInstanceBuilder {
             .build();
     }
 
-    private static BookMonograph generateBookMonograph() {
-        return new BookMonograph.Builder()
-            .withPages(randomMonographPages())
-            .withContentType(randomElement(BookMonographContentType.values()))
-            .withOriginalResearch(randomBoolean())
-            .withPeerReviewed(randomBoolean())
-            .build();
+    private static AcademicMonograph generateAcademicMonograph() {
+        return new AcademicMonograph(randomMonographPages(), randomBoolean());
+    }
+
+
+    private static ExhibitionCatalog generateExhibitionCatalog() {
+        return new ExhibitionCatalog(randomMonographPages(), randomBoolean());
+    }
+
+    private static Encyclopedia generateEncyclopedia() {
+        return new Encyclopedia(randomMonographPages(), randomBoolean());
+
+    }
+
+    private static Textbook generateTextbook() {
+        return new Textbook(randomMonographPages(), randomBoolean());
+    }
+
+    private static PopularScienceMonograph generatePopularScienceMonograph() {
+        return new PopularScienceMonograph(randomMonographPages(), randomBoolean());
+    }
+
+    private static NonFictionMonograph generateNonFictionMonograph() {
+        return new NonFictionMonograph(randomMonographPages(), randomBoolean());
     }
 
     private static BookAbstracts generateBookAbstracts() {
