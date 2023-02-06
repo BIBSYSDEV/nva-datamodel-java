@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Content type for 'Chapter in Anthology' resource subtype when the creator chooses, 'Chapter' Resource type while
  * registering a publication.
  */
+@Deprecated
 public enum ChapterArticleContentType {
     ACADEMIC_CHAPTER("AcademicChapter", "Academic Chapter"),
     NON_FICTION_CHAPTER("NonFictionChapter", "Non-fiction Chapter"),

@@ -65,10 +65,15 @@ import no.unit.nva.model.instancetypes.book.ExhibitionCatalog;
 import no.unit.nva.model.instancetypes.book.NonFictionMonograph;
 import no.unit.nva.model.instancetypes.book.PopularScienceMonograph;
 import no.unit.nva.model.instancetypes.book.Textbook;
-import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
-import no.unit.nva.model.instancetypes.chapter.ChapterArticleContentType;
+import no.unit.nva.model.instancetypes.chapter.AcademicChapter;
 import no.unit.nva.model.instancetypes.chapter.ChapterConferenceAbstract;
 import no.unit.nva.model.instancetypes.chapter.ChapterInReport;
+import no.unit.nva.model.instancetypes.chapter.EncyclopediaChapter;
+import no.unit.nva.model.instancetypes.chapter.ExhibitionCatalogChapter;
+import no.unit.nva.model.instancetypes.chapter.Introduction;
+import no.unit.nva.model.instancetypes.chapter.NonFictionChapter;
+import no.unit.nva.model.instancetypes.chapter.PopularScienceChapter;
+import no.unit.nva.model.instancetypes.chapter.TextbookChapter;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
@@ -188,7 +193,20 @@ public final class PublicationInstanceBuilder {
             case "BookAnthology":
                 return generateBookAnthology();
             case "ChapterArticle":
-                return generateChapterArticle();
+            case "AcademicChapter":
+                return generateAcademicChapter();
+            case "NonFictionChapter":
+                return generateNonFictionChapter();
+            case "PopularScienceChapter":
+                return generatePopularScienceChapter();
+            case "TextbookChapter":
+                return generateTextbookChapter();
+            case "EncyclopediaChapter":
+                return generateEncyclopediaChapter();
+            case "Introduction":
+                return generateIntroduction();
+            case "ExhibitionCatalogChapter":
+                return generateExhibitionCatalogChapter();
             case "ChapterConferenceAbstract":
                 return generateChapterConferenceAbstract();
             case "ChapterInReport":
@@ -574,13 +592,33 @@ public final class PublicationInstanceBuilder {
             .build();
     }
 
-    private static ChapterArticle generateChapterArticle() {
-        return new ChapterArticle.Builder()
-            .withPages(randomRange())
-            .withPeerReviewed(randomBoolean())
-            .withOriginalResearch(randomBoolean())
-            .withContentType(randomElement(ChapterArticleContentType.values()))
-            .build();
+    private static AcademicChapter generateAcademicChapter() {
+        return new AcademicChapter(randomRange(), randomBoolean());
+    }
+
+
+    private static ExhibitionCatalogChapter generateExhibitionCatalogChapter() {
+        return new ExhibitionCatalogChapter(randomRange(), randomBoolean());
+    }
+
+    private static Introduction generateIntroduction() {
+        return new Introduction(randomRange(), randomBoolean());
+    }
+
+    private static EncyclopediaChapter generateEncyclopediaChapter() {
+        return new EncyclopediaChapter(randomRange(), randomBoolean());
+    }
+
+    private static TextbookChapter generateTextbookChapter() {
+        return new TextbookChapter(randomRange(), randomBoolean());
+    }
+
+    private static PopularScienceChapter generatePopularScienceChapter() {
+        return new PopularScienceChapter(randomRange(), randomBoolean());
+    }
+
+    private static NonFictionChapter generateNonFictionChapter() {
+        return new NonFictionChapter(randomRange(), randomBoolean());
     }
 
     private static ChapterConferenceAbstract generateChapterConferenceAbstract() {

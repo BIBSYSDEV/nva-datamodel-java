@@ -19,9 +19,16 @@ import no.unit.nva.model.instancetypes.book.Encyclopedia;
 import no.unit.nva.model.instancetypes.book.ExhibitionCatalog;
 import no.unit.nva.model.instancetypes.book.NonFictionMonograph;
 import no.unit.nva.model.instancetypes.book.Textbook;
+import no.unit.nva.model.instancetypes.chapter.AcademicChapter;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.chapter.ChapterConferenceAbstract;
 import no.unit.nva.model.instancetypes.chapter.ChapterInReport;
+import no.unit.nva.model.instancetypes.chapter.EncyclopediaChapter;
+import no.unit.nva.model.instancetypes.chapter.ExhibitionCatalogChapter;
+import no.unit.nva.model.instancetypes.chapter.Introduction;
+import no.unit.nva.model.instancetypes.chapter.NonFictionChapter;
+import no.unit.nva.model.instancetypes.chapter.PopularScienceChapter;
+import no.unit.nva.model.instancetypes.chapter.TextbookChapter;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
@@ -101,6 +108,13 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class),
     @JsonSubTypes.Type(name = "ReportBookOfAbstract", value = ReportBookOfAbstract.class),
     @JsonSubTypes.Type(name = "ChapterArticle", value = ChapterArticle.class),
+    @JsonSubTypes.Type(name = "AcademicChapter", value = AcademicChapter.class),
+    @JsonSubTypes.Type(name = "EncyclopediaChapter", value = EncyclopediaChapter.class),
+    @JsonSubTypes.Type(name = "ExhibitionCatalogChapter", value = ExhibitionCatalogChapter.class),
+    @JsonSubTypes.Type(name = "Introduction", value = Introduction.class),
+    @JsonSubTypes.Type(name = "NonFictionChapter", value = NonFictionChapter.class),
+    @JsonSubTypes.Type(name = "PopularScienceChapter", value = PopularScienceChapter.class),
+    @JsonSubTypes.Type(name = "TextbookChapter", value = TextbookChapter.class),
     @JsonSubTypes.Type(name = "ChapterConferenceAbstract", value = ChapterConferenceAbstract.class),
     @JsonSubTypes.Type(name = "ChapterInReport", value = ChapterInReport.class),
     @JsonSubTypes.Type(name = "OtherStudentWork", value = OtherStudentWork.class),
