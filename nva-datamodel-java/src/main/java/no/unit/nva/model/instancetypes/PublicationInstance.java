@@ -95,7 +95,6 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "Encyclopedia", value = Encyclopedia.class),
     @JsonSubTypes.Type(name = "ExhibitionCatalog", value = ExhibitionCatalog.class),
     @JsonSubTypes.Type(name = "NonFictionMonograph", value = NonFictionMonograph.class),
-    @JsonSubTypes.Type(name = "PopularScienceArticle", value = PopularScienceArticle.class),
     @JsonSubTypes.Type(name = "Textbook", value = Textbook.class),
     @JsonSubTypes.Type(name = "BookAnthology", value = BookAnthology.class),
     @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),
