@@ -1,38 +1,52 @@
 package no.unit.nva.model.instancetypes.chapter;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import no.unit.nva.model.instancetypes.NonPeerReviewedPaper;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
+import nva.commons.core.JacocoGenerated;
+
+import java.util.Objects;
+
+import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGES_FIELD;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
-public class ChapterConferenceAbstract extends NonPeerReviewedPaper {
+public class ChapterConferenceAbstract implements PublicationInstance<Range> {
+
+    private final Range pages;
 
     /**
      * Conference abstract as Chapter: an abstract of a presentation given at a conference and published as a Chapter.
+     *
+     * @param pages A description of the number of pages.
      */
-    public ChapterConferenceAbstract() {
-        super();
+    public ChapterConferenceAbstract(@JsonProperty(PAGES_FIELD) Range pages) {
+
+        this.pages = pages;
     }
 
-    private ChapterConferenceAbstract(Builder builder) {
-        super(builder.pages);
+    @Override
+    public Range getPages() {
+        return pages;
     }
 
-    public static final class Builder {
-        private Range pages;
-
-        public Builder() {
+    @Override
+    @JacocoGenerated
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-
-        public Builder withPages(Range pages) {
-            this.pages = pages;
-            return this;
+        if (!(o instanceof ChapterConferenceAbstract)) {
+            return false;
         }
+        ChapterConferenceAbstract that = (ChapterConferenceAbstract) o;
+        return Objects.equals(getPages(), that.getPages());
+    }
 
-        public ChapterConferenceAbstract build() {
-            return new ChapterConferenceAbstract(this);
-        }
-
+    @Override
+    @JacocoGenerated
+    public int hashCode() {
+        return Objects.hash(getPages());
     }
 }

@@ -7,13 +7,10 @@ import no.unit.nva.model.pages.Range;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "Type")
 public class CaseReport extends JournalArticle {
 
-    private static final boolean ORIGINAL_RESEARCH = false;
-
     public CaseReport(@JsonProperty(PAGES_FIELD) Range pages,
-                      @JsonProperty(PEER_REVIEWED_FIELD) boolean peerReviewed,
                       @JsonProperty(VOLUME_FIELD) String volume,
                       @JsonProperty(ISSUE_FIELD) String issue,
                       @JsonProperty(ARTICLE_NUMBER_FIELD) String articleNumber) {
-        super(pages, peerReviewed, ORIGINAL_RESEARCH, volume, issue, articleNumber);
+        super(pages, volume, issue, articleNumber);
     }
 }

@@ -2,10 +2,9 @@ package no.unit.nva.model.instancetypes.artistic.design;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.artistic.design.realization.Venue;
 import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.instancetypes.artistic.design.realization.Venue;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 
@@ -17,21 +16,21 @@ import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ArtisticDesign implements PublicationInstance<NullPages> {
 
-    public static final String SUBTYPE = "subtype";
-    public static final String DESCRIPTION = "description";
-    public static final String VENUES = "venues";
+    public static final String SUBTYPE_FIELD = "subtype";
+    public static final String DESCRIPTION_FIELD = "description";
+    public static final String VENUES_FIELD = "venues";
 
-    @JsonProperty(SUBTYPE)
+    @JsonProperty(SUBTYPE_FIELD)
     private final ArtisticDesignSubtype subtype;
-    @JsonProperty(DESCRIPTION)
+    @JsonProperty(DESCRIPTION_FIELD)
     private final String description;
-    @JsonProperty(VENUES)
+    @JsonProperty(VENUES_FIELD)
     private final List<Venue> venues;
 
 
-    public ArtisticDesign(@JsonProperty(SUBTYPE) ArtisticDesignSubtype subtype,
-                          @JsonProperty(DESCRIPTION) String description,
-                          @JsonProperty(VENUES) List<Venue> venues) {
+    public ArtisticDesign(@JsonProperty(SUBTYPE_FIELD) ArtisticDesignSubtype subtype,
+                          @JsonProperty(DESCRIPTION_FIELD) String description,
+                          @JsonProperty(VENUES_FIELD) List<Venue> venues) {
         this.subtype = subtype;
         this.description = description;
         this.venues = nullListAsEmpty(venues);
@@ -49,17 +48,6 @@ public class ArtisticDesign implements PublicationInstance<NullPages> {
     @Override
     public NullPages getPages() {
         return NullPages.NULL_PAGES;
-    }
-
-    @JsonSetter
-    @Override
-    public void setPages(NullPages pages) {
-    }
-
-    @JsonGetter
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
     }
 
     public List<Venue> getVenues() {

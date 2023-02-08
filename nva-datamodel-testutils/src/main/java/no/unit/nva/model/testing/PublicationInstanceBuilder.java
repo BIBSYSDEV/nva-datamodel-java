@@ -460,100 +460,73 @@ public final class PublicationInstanceBuilder {
     }
 
     private static OtherStudentWork generateOtherStudentWork() {
-        return new OtherStudentWork.Builder()
-            .withPages(randomMonographPages())
-            .withSubmittedDate(randomPublicationDate())
-            .build();
+        return new OtherStudentWork(randomMonographPages(), randomPublicationDate());
     }
 
     private static ReportWorkingPaper generateReportWorkingPaper() {
-        return new ReportWorkingPaper.Builder()
-            .withPages(randomMonographPages())
-            .build();
+        return new ReportWorkingPaper(randomMonographPages());
     }
 
     private static ReportBookOfAbstract generateReportBookOfAbstract() {
-        return new ReportBookOfAbstract.Builder()
-            .withPages(randomMonographPages())
-            .build();
+        return new ReportBookOfAbstract(randomMonographPages());
     }
 
     private static ReportResearch generateReportResearch() {
-        return new ReportResearch.Builder()
-            .withPages(randomMonographPages())
-            .build();
+        return new ReportResearch(randomMonographPages());
     }
 
     private static ReportPolicy generateReportPolicy() {
-        return new ReportPolicy.Builder()
-            .withPages(randomMonographPages())
-            .build();
+        return new ReportPolicy(randomMonographPages());
     }
 
     private static ReportBasic generateReportBasic() {
-        return new ReportBasic.Builder()
-            .withPages(randomMonographPages())
-            .build();
+        return new ReportBasic(randomMonographPages());
     }
 
     private static DegreePhd generateDegreePhd() {
-        return new DegreePhd.Builder()
-            .withPages(randomMonographPages())
-            .withSubmittedDate(randomPublicationDate())
-            .build();
+        return new DegreePhd(randomMonographPages(), randomPublicationDate());
     }
 
     private static DegreeLicentiate generateDegreeLicentiate() {
-        return new DegreeLicentiate.Builder()
-            .withPages(randomMonographPages())
-            .withSubmittedDate(randomPublicationDate())
-            .build();
+        return new DegreeLicentiate(randomMonographPages(), randomPublicationDate());
     }
 
     private static DegreeMaster generateDegreeMaster() {
-        return new DegreeMaster.Builder()
-            .withPages(randomMonographPages())
-            .withSubmittedDate(randomPublicationDate())
-            .build();
+        return new DegreeMaster(randomMonographPages(), randomPublicationDate());
     }
 
     private static DegreeBachelor generateDegreeBachelor() {
-        return new DegreeBachelor.Builder()
-            .withSubmittedDate(randomPublicationDate())
-            .withPages(randomMonographPages())
-            .build();
+        return new DegreeBachelor(randomMonographPages(), randomPublicationDate());
     }
 
     private static AcademicMonograph generateAcademicMonograph() {
-        return new AcademicMonograph(randomMonographPages(), randomBoolean());
+        return new AcademicMonograph(randomMonographPages());
     }
 
 
     private static ExhibitionCatalog generateExhibitionCatalog() {
-        return new ExhibitionCatalog(randomMonographPages(), randomBoolean());
+        return new ExhibitionCatalog(randomMonographPages());
     }
 
     private static Encyclopedia generateEncyclopedia() {
-        return new Encyclopedia(randomMonographPages(), randomBoolean());
+        return new Encyclopedia(randomMonographPages());
 
     }
 
     private static Textbook generateTextbook() {
-        return new Textbook(randomMonographPages(), randomBoolean());
+        return new Textbook(randomMonographPages());
     }
 
     private static PopularScienceMonograph generatePopularScienceMonograph() {
-        return new PopularScienceMonograph(randomMonographPages(), randomBoolean());
+        return new PopularScienceMonograph(randomMonographPages());
     }
 
     private static NonFictionMonograph generateNonFictionMonograph() {
-        return new NonFictionMonograph(randomMonographPages(), randomBoolean());
+        return new NonFictionMonograph(randomMonographPages());
     }
 
     private static BookAbstracts generateBookAbstracts() {
-        return new BookAbstracts.Builder()
-            .withPages(randomMonographPages())
-            .build();
+        return new BookAbstracts(randomMonographPages());
     }
 
     private static JournalReview generateJournalReview() {
@@ -593,38 +566,36 @@ public final class PublicationInstanceBuilder {
     }
 
     private static AcademicChapter generateAcademicChapter() {
-        return new AcademicChapter(randomRange(), randomBoolean());
+        return new AcademicChapter(randomRange());
     }
 
 
     private static ExhibitionCatalogChapter generateExhibitionCatalogChapter() {
-        return new ExhibitionCatalogChapter(randomRange(), randomBoolean());
+        return new ExhibitionCatalogChapter(randomRange());
     }
 
     private static Introduction generateIntroduction() {
-        return new Introduction(randomRange(), randomBoolean());
+        return new Introduction(randomRange());
     }
 
     private static EncyclopediaChapter generateEncyclopediaChapter() {
-        return new EncyclopediaChapter(randomRange(), randomBoolean());
+        return new EncyclopediaChapter(randomRange());
     }
 
     private static TextbookChapter generateTextbookChapter() {
-        return new TextbookChapter(randomRange(), randomBoolean());
+        return new TextbookChapter(randomRange());
     }
 
     private static PopularScienceChapter generatePopularScienceChapter() {
-        return new PopularScienceChapter(randomRange(), randomBoolean());
+        return new PopularScienceChapter(randomRange());
     }
 
     private static NonFictionChapter generateNonFictionChapter() {
-        return new NonFictionChapter(randomRange(), randomBoolean());
+        return new NonFictionChapter(randomRange());
     }
 
     private static ChapterConferenceAbstract generateChapterConferenceAbstract() {
-        return new ChapterConferenceAbstract.Builder()
-            .withPages(randomRange())
-            .build();
+        return new ChapterConferenceAbstract(randomRange());
     }
 
     private static ChapterInReport generateChapterInReport() {
@@ -634,10 +605,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static BookAnthology generateBookAnthology() {
-        return new BookAnthology.Builder()
-            .withPages(randomMonographPages())
-            .withPeerReviewed(randomBoolean())
-            .build();
+        return new BookAnthology(randomMonographPages());
     }
 
     private static MonographPages randomMonographPages() {
@@ -667,33 +635,31 @@ public final class PublicationInstanceBuilder {
     }
 
     private static AcademicArticle generateAcademicArticle() {
-        return new AcademicArticle(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
-                randomArticleNumber());
+        return new AcademicArticle(randomRange(), randomVolume(), randomIssue(), randomArticleNumber());
     }
 
     private static AcademicLiteratureReview generateAcademicLiteratureReview() {
-        return new AcademicLiteratureReview(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+        return new AcademicLiteratureReview(randomRange(), randomVolume(), randomIssue(),
                 randomArticleNumber());
     }
 
 
     private static CaseReport generateCaseReport() {
-        return new CaseReport(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+        return new CaseReport(randomRange(), randomVolume(), randomIssue(),
                 randomArticleNumber());
     }
 
     private static StudyProtocol generateStudyProtocol() {
-        return new StudyProtocol(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+        return new StudyProtocol(randomRange(), randomVolume(), randomIssue(),
                 randomArticleNumber());
     }
 
     private static ProfessionalArticle generateProfessionalArticle() {
-        return new ProfessionalArticle(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
-                randomArticleNumber());
+        return new ProfessionalArticle(randomRange(), randomVolume(), randomIssue(), randomArticleNumber());
     }
 
     private static PopularScienceArticle generatePopularScienceArticle() {
-        return new PopularScienceArticle(randomRange(), randomBoolean(), randomVolume(), randomIssue(),
+        return new PopularScienceArticle(randomRange(), randomVolume(), randomIssue(),
                 randomArticleNumber());
     }
 

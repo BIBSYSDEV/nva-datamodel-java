@@ -3,47 +3,69 @@ package no.unit.nva.model.instancetypes.chapter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.PeerReviewedPaper;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.Range;
+import nva.commons.core.JacocoGenerated;
+
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class ChapterArticle extends PeerReviewedPaper {
+public class ChapterArticle implements PublicationInstance<Range> {
 
     public static final String PAGES_FIELD = "pages";
-    public static final String PEER_REVIEWED_FIELD = "peerReviewed";
+    private final Range pages;
 
-    public ChapterArticle(Range pages,
-                          boolean peerReviewed,
-                          boolean originalResearch) {
-        super(pages, peerReviewed, originalResearch);
+    public ChapterArticle(Range pages) {
+        this.pages = pages;
     }
 
     @JsonCreator
     public static ChapterArticle fromJson(@JsonProperty(PAGES_FIELD) Range pages,
-                           @JsonProperty(PEER_REVIEWED_FIELD) boolean peerReviewed,
-                           @JsonProperty("originalResearch") boolean originalResearch,
-                           @JsonProperty("contentType") ChapterArticleContentType contentType) {
+                                          @JsonProperty("contentType") ChapterArticleContentType contentType) {
         if (ChapterArticleContentType.ACADEMIC_CHAPTER.equals(contentType)) {
-            return new AcademicChapter(pages, peerReviewed);
+            return new AcademicChapter(pages);
         } else if (ChapterArticleContentType.ENCYCLOPEDIA_CHAPTER.equals(contentType)) {
-            return new EncyclopediaChapter(pages, peerReviewed);
+            return new EncyclopediaChapter(pages);
         } else if (ChapterArticleContentType.EXHIBITION_CATALOG_CHAPTER.equals(contentType)) {
-            return new ExhibitionCatalogChapter(pages, peerReviewed);
+            return new ExhibitionCatalogChapter(pages);
         } else if (ChapterArticleContentType.INTRODUCTION.equals(contentType)) {
-            return new Introduction(pages, peerReviewed);
+            return new Introduction(pages);
         } else if (ChapterArticleContentType.NON_FICTION_CHAPTER.equals(contentType)) {
-            return new NonFictionChapter(pages, peerReviewed);
+            return new NonFictionChapter(pages);
         } else if (ChapterArticleContentType.POPULAR_SCIENCE_CHAPTER.equals(contentType)) {
-            return new PopularScienceChapter(pages, peerReviewed);
+            return new PopularScienceChapter(pages);
         } else if (ChapterArticleContentType.TEXTBOOK_CHAPTER.equals(contentType)) {
-            return new TextbookChapter(pages, peerReviewed);
+            return new TextbookChapter(pages);
         } else if (isNull(contentType)) {
-            return new AcademicChapter(pages, peerReviewed);
+            return new AcademicChapter(pages);
         } else {
             throw new UnsupportedOperationException("The Chapter article subtype is unknown");
         }
     }
 
+    @Override
+    public Range getPages() {
+        return pages;
+    }
+
+    @Override
+    @JacocoGenerated
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ChapterArticle)) {
+            return false;
+        }
+        ChapterArticle that = (ChapterArticle) o;
+        return Objects.equals(getPages(), that.getPages());
+    }
+
+    @Override
+    @JacocoGenerated
+    public int hashCode() {
+        return Objects.hash(getPages());
+    }
 }

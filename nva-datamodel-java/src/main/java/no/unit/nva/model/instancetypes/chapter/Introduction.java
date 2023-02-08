@@ -6,11 +6,7 @@ import no.unit.nva.model.pages.Range;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Introduction extends ChapterArticle {
-
-    private static final boolean ORIGINAL_RESEARCH = false;
-
-    public Introduction(@JsonProperty(PAGES_FIELD) Range pages,
-                        @JsonProperty(PEER_REVIEWED_FIELD) boolean peerReviewed) {
-        super(pages, peerReviewed, ORIGINAL_RESEARCH);
+    public Introduction(@JsonProperty(PAGES_FIELD) Range pages) {
+        super(pages);
     }
 }

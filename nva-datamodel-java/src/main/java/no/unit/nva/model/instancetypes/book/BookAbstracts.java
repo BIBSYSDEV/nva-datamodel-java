@@ -2,28 +2,41 @@ package no.unit.nva.model.instancetypes.book;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.NonPeerReviewedMonograph;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.MonographPages;
+import nva.commons.core.JacocoGenerated;
+
+import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class BookAbstracts extends NonPeerReviewedMonograph {
+public class BookAbstracts implements PublicationInstance<MonographPages> {
+    private final MonographPages pages;
+
     public BookAbstracts(@JsonProperty("pages") MonographPages pages) {
-        super(pages);
+        this.pages = pages;
     }
 
-    public static final class Builder {
-        private MonographPages pages;
+    @Override
+    public MonographPages getPages() {
+        return pages;
+    }
 
-        public Builder() {
+    @Override
+    @JacocoGenerated
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
+        if (!(o instanceof BookAbstracts)) {
+            return false;
+        }
+        BookAbstracts that = (BookAbstracts) o;
+        return Objects.equals(getPages(), that.getPages());
+    }
 
-        public Builder withPages(MonographPages pages) {
-            this.pages = pages;
-            return this;
-        }
-
-        public BookAbstracts build() {
-            return new BookAbstracts(pages);
-        }
+    @Override
+    @JacocoGenerated
+    public int hashCode() {
+        return Objects.hash(getPages());
     }
 }

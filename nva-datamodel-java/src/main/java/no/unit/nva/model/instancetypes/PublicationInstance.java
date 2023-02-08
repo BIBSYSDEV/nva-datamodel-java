@@ -142,10 +142,6 @@ public interface PublicationInstance<P extends Pages> {
     @JsonProperty(PAGES_FIELD)
     P getPages();
 
-    void setPages(P pages);
-
-    boolean isPeerReviewed();
-
     @JsonIgnore
     default String getInstanceType() {
         return this.getClass().getSimpleName();
