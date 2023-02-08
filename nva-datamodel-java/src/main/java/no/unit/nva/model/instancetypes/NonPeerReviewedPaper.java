@@ -4,7 +4,7 @@ import java.util.Objects;
 import no.unit.nva.model.pages.Range;
 import nva.commons.core.JacocoGenerated;
 
-public class NonPeerReviewedPaper extends NonPeerReviewed<Range> {
+public class NonPeerReviewedPaper implements PublicationInstance<Range> {
     private Range pages;
 
     protected NonPeerReviewedPaper() {
@@ -19,11 +19,6 @@ public class NonPeerReviewedPaper extends NonPeerReviewed<Range> {
     @Override
     public Range getPages() {
         return this.pages;
-    }
-
-    @Override
-    public void setPages(Range pages) {
-        this.pages = pages;
     }
 
     @JacocoGenerated

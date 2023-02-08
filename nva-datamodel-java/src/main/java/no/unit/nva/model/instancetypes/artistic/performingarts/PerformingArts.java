@@ -13,19 +13,19 @@ import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class PerformingArts implements PublicationInstance<NullPages> {
-    public static final String SUBTYPE = "subtype";
-    public static final String DESCRIPTION = "description";
-    public static final String OUTPUTS = "outputs";
-    @JsonProperty(SUBTYPE)
+    public static final String SUBTYPE_FIELD = "subtype";
+    public static final String DESCRIPTION_FIELD = "description";
+    public static final String OUTPUTS_FIELD = "outputs";
+    @JsonProperty(SUBTYPE_FIELD)
     private final PerformingArtsSubtype subtype;
-    @JsonProperty(DESCRIPTION)
+    @JsonProperty(DESCRIPTION_FIELD)
     private final String description;
-    @JsonProperty(OUTPUTS)
+    @JsonProperty(OUTPUTS_FIELD)
     private final List<PerformingArtsOutput> outputs;
 
-    public PerformingArts(@JsonProperty(SUBTYPE) PerformingArtsSubtype subtype,
-                          @JsonProperty(DESCRIPTION) String description,
-                          @JsonProperty(OUTPUTS) List<PerformingArtsOutput> outputs) {
+    public PerformingArts(@JsonProperty(SUBTYPE_FIELD) PerformingArtsSubtype subtype,
+                          @JsonProperty(DESCRIPTION_FIELD) String description,
+                          @JsonProperty(OUTPUTS_FIELD) List<PerformingArtsOutput> outputs) {
         this.subtype = subtype;
         this.description = description;
         this.outputs = nullListAsEmpty(outputs);
@@ -46,16 +46,6 @@ public class PerformingArts implements PublicationInstance<NullPages> {
     @Override
     public NullPages getPages() {
         return NullPages.NULL_PAGES;
-    }
-
-    @Override
-    public void setPages(NullPages pages) {
-
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
     }
 
     @JacocoGenerated

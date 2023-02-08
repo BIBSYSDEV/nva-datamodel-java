@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.researchdata;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.NonPeerReviewed;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 
@@ -15,7 +14,7 @@ import static java.util.Collections.emptySet;
 import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class DataSet extends NonPeerReviewed<NullPages> {
+public class DataSet implements no.unit.nva.model.instancetypes.PublicationInstance<NullPages> {
     public static final String USER_AGREES_TO_TERMS_AND_CONDITIONS_FIELD = "userAgreesToTermsAndConditions";
     public static final String GEOGRAPHICAL_COVERAGE_FIELD = "geographicalCoverage";
     public static final String REFERENCED_BY_FIELD = "referencedBy";
@@ -68,11 +67,6 @@ public class DataSet extends NonPeerReviewed<NullPages> {
     @Override
     public NullPages getPages() {
         return NullPages.NULL_PAGES;
-    }
-
-    @Override
-    public void setPages(NullPages pages) {
-        // NO-OP
     }
 
     @JacocoGenerated

@@ -36,16 +36,6 @@ public class LiteraryArts implements PublicationInstance<NullPages> {
         return NullPages.NULL_PAGES;
     }
 
-    @Override
-    public void setPages(NullPages pages) {
-        // NO-OP
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
-    }
-
     public LiteraryArtsSubtype getSubtype() {
         return subtype;
     }

@@ -15,7 +15,7 @@ public class Map implements PublicationInstance<MonographPages> {
     @JsonProperty(DESCRIPTION_FIELD)
     private final String description;
     @JsonProperty(PAGES_FIELD)
-    private MonographPages pages;
+    private final MonographPages pages;
 
     public Map(@JsonProperty(DESCRIPTION_FIELD) String description,
                @JsonProperty(PAGES_FIELD) MonographPages pages) {
@@ -26,16 +26,6 @@ public class Map implements PublicationInstance<MonographPages> {
     @Override
     public MonographPages getPages() {
         return pages;
-    }
-
-    @Override
-    public void setPages(MonographPages pages) {
-        this.pages = pages;
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
     }
 
     @JacocoGenerated
