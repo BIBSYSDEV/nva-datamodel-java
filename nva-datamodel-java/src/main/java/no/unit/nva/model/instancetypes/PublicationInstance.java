@@ -18,6 +18,7 @@ import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.instancetypes.book.Encyclopedia;
 import no.unit.nva.model.instancetypes.book.ExhibitionCatalog;
 import no.unit.nva.model.instancetypes.book.NonFictionMonograph;
+import no.unit.nva.model.instancetypes.book.PopularScienceMonograph;
 import no.unit.nva.model.instancetypes.book.Textbook;
 import no.unit.nva.model.instancetypes.chapter.AcademicChapter;
 import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
@@ -92,6 +93,7 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "BookAbstracts", value = BookAbstracts.class),
     @JsonSubTypes.Type(name = "BookMonograph", value = BookMonograph.class),
     @JsonSubTypes.Type(name = "AcademicMonograph", value = AcademicMonograph.class),
+    @JsonSubTypes.Type(name = "PopularScienceMonograph", value = PopularScienceMonograph.class),
     @JsonSubTypes.Type(name = "Encyclopedia", value = Encyclopedia.class),
     @JsonSubTypes.Type(name = "ExhibitionCatalog", value = ExhibitionCatalog.class),
     @JsonSubTypes.Type(name = "NonFictionMonograph", value = NonFictionMonograph.class),
