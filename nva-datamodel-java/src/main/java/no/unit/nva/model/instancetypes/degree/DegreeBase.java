@@ -1,18 +1,23 @@
 package no.unit.nva.model.instancetypes.degree;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import no.unit.nva.model.PublicationDate;
-import no.unit.nva.model.instancetypes.NonPeerReviewedMonograph;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.MonographPages;
+import nva.commons.core.JacocoGenerated;
 
-public class DegreeBase extends NonPeerReviewedMonograph {
-    private PublicationDate submittedDate;
+import java.util.Objects;
 
-    public DegreeBase() {
-        super();
-    }
+import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGES_FIELD;
 
-    public DegreeBase(MonographPages pages, PublicationDate submittedDate) {
-        super(pages);
+public class DegreeBase implements PublicationInstance<MonographPages> {
+    public static final String SUBMITTED_DATE_FIELD = "submittedDate";
+    private final MonographPages pages;
+    private final PublicationDate submittedDate;
+
+    public DegreeBase(@JsonProperty(PAGES_FIELD) MonographPages pages,
+                      @JsonProperty(SUBMITTED_DATE_FIELD) PublicationDate submittedDate) {
+        this.pages = pages;
         this.submittedDate = submittedDate;
     }
 
@@ -20,7 +25,28 @@ public class DegreeBase extends NonPeerReviewedMonograph {
         return submittedDate;
     }
 
-    public void setSubmittedDate(PublicationDate submittedDate) {
-        this.submittedDate = submittedDate;
+    @Override
+    public MonographPages getPages() {
+        return pages;
+    }
+
+    @Override
+    @JacocoGenerated
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DegreeBase)) {
+            return false;
+        }
+        DegreeBase that = (DegreeBase) o;
+        return Objects.equals(getPages(), that.getPages())
+                && Objects.equals(getSubmittedDate(), that.getSubmittedDate());
+    }
+
+    @Override
+    @JacocoGenerated
+    public int hashCode() {
+        return Objects.hash(getPages(), getSubmittedDate());
     }
 }

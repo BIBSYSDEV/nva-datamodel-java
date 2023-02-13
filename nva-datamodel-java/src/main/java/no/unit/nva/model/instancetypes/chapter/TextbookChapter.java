@@ -5,10 +5,7 @@ import no.unit.nva.model.pages.Range;
 
 public class TextbookChapter extends ChapterArticle {
 
-    private static final boolean ORIGINAL_RESEARCH = false;
-
-    public TextbookChapter(@JsonProperty(PAGES_FIELD) Range pages,
-                           @JsonProperty(PEER_REVIEWED_FIELD) boolean peerReviewed) {
-        super(pages, peerReviewed, ORIGINAL_RESEARCH);
+    public TextbookChapter(@JsonProperty(PAGES_FIELD) Range pages) {
+        super(pages);
     }
 }

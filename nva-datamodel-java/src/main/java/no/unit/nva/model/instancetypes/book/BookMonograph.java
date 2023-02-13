@@ -1,26 +1,23 @@
 package no.unit.nva.model.instancetypes.book;
 
-import no.unit.nva.model.instancetypes.PeerReviewedMonograph;
 import no.unit.nva.model.pages.MonographPages;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.Objects;
 
-public class BookMonograph extends PeerReviewedMonograph {
+public class BookMonograph implements PublicationInstance<MonographPages> {
 
     public static final String PAGES_FIELD = "pages";
-    public static final String PEER_REVIEWED_FIELD = "peerReviewed";
-    private final boolean originalResearch;
+    private final MonographPages pages;
 
-    public BookMonograph(MonographPages pages,
-                         boolean originalResearch,
-                         boolean peerReviewed) {
-        super(pages, peerReviewed);
-        this.originalResearch = originalResearch;
+    public BookMonograph(MonographPages pages) {
+        this.pages = pages;
     }
 
-    public boolean isOriginalResearch() {
-        return originalResearch;
+    @Override
+    public MonographPages getPages() {
+        return pages;
     }
 
     @Override
@@ -32,16 +29,13 @@ public class BookMonograph extends PeerReviewedMonograph {
         if (!(o instanceof BookMonograph)) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
         BookMonograph that = (BookMonograph) o;
-        return isOriginalResearch() == that.isOriginalResearch();
+        return Objects.equals(getPages(), that.getPages());
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), isOriginalResearch());
+        return Objects.hash(getPages());
     }
 }

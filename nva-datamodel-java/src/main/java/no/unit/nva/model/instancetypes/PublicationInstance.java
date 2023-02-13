@@ -17,6 +17,7 @@ import no.unit.nva.model.instancetypes.book.BookAnthology;
 import no.unit.nva.model.instancetypes.book.Encyclopedia;
 import no.unit.nva.model.instancetypes.book.ExhibitionCatalog;
 import no.unit.nva.model.instancetypes.book.NonFictionMonograph;
+import no.unit.nva.model.instancetypes.book.PopularScienceMonograph;
 import no.unit.nva.model.instancetypes.book.Textbook;
 import no.unit.nva.model.instancetypes.chapter.AcademicChapter;
 import no.unit.nva.model.instancetypes.chapter.ChapterConferenceAbstract;
@@ -87,10 +88,10 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),
     @JsonSubTypes.Type(name = "BookAbstracts", value = BookAbstracts.class),
     @JsonSubTypes.Type(name = "AcademicMonograph", value = AcademicMonograph.class),
+    @JsonSubTypes.Type(name = "PopularScienceMonograph", value = PopularScienceMonograph.class),
     @JsonSubTypes.Type(name = "Encyclopedia", value = Encyclopedia.class),
     @JsonSubTypes.Type(name = "ExhibitionCatalog", value = ExhibitionCatalog.class),
     @JsonSubTypes.Type(name = "NonFictionMonograph", value = NonFictionMonograph.class),
-    @JsonSubTypes.Type(name = "PopularScienceArticle", value = PopularScienceArticle.class),
     @JsonSubTypes.Type(name = "Textbook", value = Textbook.class),
     @JsonSubTypes.Type(name = "BookAnthology", value = BookAnthology.class),
     @JsonSubTypes.Type(name = "DegreeBachelor", value = DegreeBachelor.class),
@@ -136,10 +137,6 @@ public interface PublicationInstance<P extends Pages> {
 
     @JsonProperty(PAGES_FIELD)
     P getPages();
-
-    void setPages(P pages);
-
-    boolean isPeerReviewed();
 
     @JsonIgnore
     default String getInstanceType() {

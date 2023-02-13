@@ -2,10 +2,10 @@ package no.unit.nva.model.instancetypes.media;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import java.util.Objects;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.NullPages;
+
+import java.util.Objects;
 
 public class MediaBase implements PublicationInstance<NullPages> {
 
@@ -13,22 +13,13 @@ public class MediaBase implements PublicationInstance<NullPages> {
 
     @JsonCreator
     public MediaBase() {
+        // Since this class returns a null object for pages, the value is not set.
     }
 
     @JsonGetter(PAGES_FIELD)
     @Override
     public NullPages getPages() {
         return NullPages.NULL_PAGES;
-    }
-
-    @JsonSetter(PAGES_FIELD)
-    @Override
-    public void setPages(NullPages pages) {
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
     }
 
     @Override

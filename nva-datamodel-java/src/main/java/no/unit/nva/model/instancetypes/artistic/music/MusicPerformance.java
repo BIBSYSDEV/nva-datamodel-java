@@ -13,12 +13,12 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class MusicPerformance implements PublicationInstance<NullPages> {
 
-    public static final String MANIFESTATIONS = "manifestations";
-    @JsonProperty(MANIFESTATIONS)
+    public static final String MANIFESTATIONS_FIELD = "manifestations";
+    @JsonProperty(MANIFESTATIONS_FIELD)
     private final List<MusicPerformanceManifestation> manifestations;
 
     @JsonCreator
-    public MusicPerformance(@JsonProperty(MANIFESTATIONS) List<MusicPerformanceManifestation> manifestations) {
+    public MusicPerformance(@JsonProperty(MANIFESTATIONS_FIELD) List<MusicPerformanceManifestation> manifestations) {
         this.manifestations = nullListAsEmpty(manifestations);
     }
 
@@ -29,16 +29,6 @@ public class MusicPerformance implements PublicationInstance<NullPages> {
     @Override
     public NullPages getPages() {
         return NullPages.NULL_PAGES;
-    }
-
-    @Override
-    public void setPages(NullPages pages) {
-        // NO-OP
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
     }
 
     @Override

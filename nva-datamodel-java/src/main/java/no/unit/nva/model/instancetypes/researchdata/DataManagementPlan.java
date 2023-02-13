@@ -2,7 +2,7 @@ package no.unit.nva.model.instancetypes.researchdata;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.NonPeerReviewedMonograph;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.pages.MonographPages;
 import nva.commons.core.JacocoGenerated;
 
@@ -19,19 +19,21 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
  * A data management plan is a document that describes the administrative processes around data sets.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class DataManagementPlan extends NonPeerReviewedMonograph {
+public class DataManagementPlan implements PublicationInstance<MonographPages> {
     public static final String RELATED_FIELD = "related";
     @JsonProperty(RELATED_FIELD)
     private final Set<URI> related;
+    private final MonographPages pages;
 
     /**
      * Constructor for DataManagementPlan (DMP).
+     *
      * @param related A collection of URIs referencing things covered by the DMP.
-     * @param pages The pages description for the DMP document.
+     * @param pages   The pages description for the DMP document.
      */
     public DataManagementPlan(@JsonProperty(RELATED_FIELD) RelatedUris related,
                               @JsonProperty(PAGES_FIELD) MonographPages pages) {
-        super(pages);
+        this.pages = pages;
         this.related = nonNull(related) ? new HashSet<>(related) : Collections.emptySet();
     }
 
@@ -39,8 +41,13 @@ public class DataManagementPlan extends NonPeerReviewedMonograph {
         return related;
     }
 
-    @JacocoGenerated
     @Override
+    public MonographPages getPages() {
+        return pages;
+    }
+
+    @Override
+    @JacocoGenerated
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -48,16 +55,14 @@ public class DataManagementPlan extends NonPeerReviewedMonograph {
         if (!(o instanceof DataManagementPlan)) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
         DataManagementPlan that = (DataManagementPlan) o;
-        return Objects.equals(getRelated(), that.getRelated());
+        return Objects.equals(getRelated(), that.getRelated())
+                && Objects.equals(getPages(), that.getPages());
     }
 
-    @JacocoGenerated
     @Override
+    @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getRelated());
+        return Objects.hash(getRelated(), getPages());
     }
 }

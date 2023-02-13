@@ -7,10 +7,7 @@ import no.unit.nva.model.pages.MonographPages;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class AcademicMonograph extends BookMonograph {
 
-    private static final boolean ORIGINAL_RESEARCH = true;
-
-    public AcademicMonograph(@JsonProperty(PAGES_FIELD) MonographPages pages,
-                             @JsonProperty(PEER_REVIEWED_FIELD) boolean peerReviewed) {
-        super(pages, ORIGINAL_RESEARCH, peerReviewed);
+    public AcademicMonograph(@JsonProperty(PAGES_FIELD) MonographPages pages) {
+        super(pages);
     }
 }

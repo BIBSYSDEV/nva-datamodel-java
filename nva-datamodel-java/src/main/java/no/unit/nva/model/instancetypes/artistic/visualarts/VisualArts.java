@@ -69,14 +69,4 @@ public class VisualArts implements PublicationInstance<NullPages> {
     public NullPages getPages() {
         return NullPages.NULL_PAGES;
     }
-
-    @Override
-    public void setPages(NullPages pages) {
-        // NO-OP
-    }
-
-    @Override
-    public boolean isPeerReviewed() {
-        return false;
-    }
 }

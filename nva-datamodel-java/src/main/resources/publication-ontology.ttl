@@ -1680,13 +1680,6 @@ nva:subtype a rdf:Property ;
               nva:PerformingArts, nva:VisualArts ;
   rdfs:range rdf:Resource . # This is an issue — we have many, many types here .
 
-nva:peerReviewed a rdf:Property ;
-  rdfs:comment "" ;
-  rdfs:label "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:PublicationInstance ;
-  rdfs:range xsd:Boolean .
-
 nva:correspondingAuthor a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
@@ -1735,13 +1728,6 @@ nva:approvalStatus a rdf:Property ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Approval ;
   rdfs:range nva:NOTAPPLIED, nva:APPLIED, nva:APPROVED, nva:DECLINED, nva:REJECTION .
-
-nva:originalResearch a rdf:Property ;
-  rdfs:comment "" ;
-  rdfs:label "" ;
-  rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:BookMonograph, nva:ChapterArticle, nva:JournalArticle ;
-  rdfs:range xsd:boolean .
 
 nva:approval a rdf:Property ;
   rdfs:comment "" ;
