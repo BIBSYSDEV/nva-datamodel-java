@@ -14,14 +14,12 @@ import no.unit.nva.model.instancetypes.artistic.visualarts.VisualArts;
 import no.unit.nva.model.instancetypes.book.AcademicMonograph;
 import no.unit.nva.model.instancetypes.book.BookAbstracts;
 import no.unit.nva.model.instancetypes.book.BookAnthology;
-import no.unit.nva.model.instancetypes.book.BookMonograph;
 import no.unit.nva.model.instancetypes.book.Encyclopedia;
 import no.unit.nva.model.instancetypes.book.ExhibitionCatalog;
 import no.unit.nva.model.instancetypes.book.NonFictionMonograph;
 import no.unit.nva.model.instancetypes.book.PopularScienceMonograph;
 import no.unit.nva.model.instancetypes.book.Textbook;
 import no.unit.nva.model.instancetypes.chapter.AcademicChapter;
-import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
 import no.unit.nva.model.instancetypes.chapter.ChapterConferenceAbstract;
 import no.unit.nva.model.instancetypes.chapter.ChapterInReport;
 import no.unit.nva.model.instancetypes.chapter.EncyclopediaChapter;
@@ -44,7 +42,6 @@ import no.unit.nva.model.instancetypes.journal.AcademicLiteratureReview;
 import no.unit.nva.model.instancetypes.journal.CaseReport;
 import no.unit.nva.model.instancetypes.journal.ConferenceAbstract;
 import no.unit.nva.model.instancetypes.journal.FeatureArticle;
-import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import no.unit.nva.model.instancetypes.journal.JournalCorrigendum;
 import no.unit.nva.model.instancetypes.journal.JournalInterview;
 import no.unit.nva.model.instancetypes.journal.JournalIssue;
@@ -78,7 +75,6 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "FeatureArticle", value = FeatureArticle.class),
     @JsonSubTypes.Type(name = "MovingPicture", value = MovingPicture.class),
     @JsonSubTypes.Type(name = "PerformingArts", value = PerformingArts.class),
-    @JsonSubTypes.Type(name = "JournalArticle", value = JournalArticle.class),
     @JsonSubTypes.Type(name = "AcademicArticle", value = AcademicArticle.class),
     @JsonSubTypes.Type(name = "AcademicLiteratureReview", value = AcademicLiteratureReview.class),
     @JsonSubTypes.Type(name = "CaseReport", value = CaseReport.class),
@@ -91,7 +87,6 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "JournalLeader", value = JournalLeader.class),
     @JsonSubTypes.Type(name = "JournalReview", value = JournalReview.class),
     @JsonSubTypes.Type(name = "BookAbstracts", value = BookAbstracts.class),
-    @JsonSubTypes.Type(name = "BookMonograph", value = BookMonograph.class),
     @JsonSubTypes.Type(name = "AcademicMonograph", value = AcademicMonograph.class),
     @JsonSubTypes.Type(name = "PopularScienceMonograph", value = PopularScienceMonograph.class),
     @JsonSubTypes.Type(name = "Encyclopedia", value = Encyclopedia.class),
@@ -108,7 +103,6 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
     @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class),
     @JsonSubTypes.Type(name = "ReportBookOfAbstract", value = ReportBookOfAbstract.class),
-    @JsonSubTypes.Type(name = "ChapterArticle", value = ChapterArticle.class),
     @JsonSubTypes.Type(name = "AcademicChapter", value = AcademicChapter.class),
     @JsonSubTypes.Type(name = "EncyclopediaChapter", value = EncyclopediaChapter.class),
     @JsonSubTypes.Type(name = "ExhibitionCatalogChapter", value = ExhibitionCatalogChapter.class),

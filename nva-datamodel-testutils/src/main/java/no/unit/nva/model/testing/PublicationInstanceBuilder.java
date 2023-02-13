@@ -177,7 +177,6 @@ public final class PublicationInstanceBuilder {
                 return generateFeatureArticle();
             case "JournalCorrigendum":
                 return generateJournalCorrigendum();
-            case "JournalArticle":
             case "AcademicArticle":
                 return generateAcademicArticle();
             case "AcademicLiteratureReview":
@@ -192,7 +191,6 @@ public final class PublicationInstanceBuilder {
                 return generatePopularScienceArticle();
             case "BookAnthology":
                 return generateBookAnthology();
-            case "ChapterArticle":
             case "AcademicChapter":
                 return generateAcademicChapter();
             case "NonFictionChapter":
@@ -221,7 +219,6 @@ public final class PublicationInstanceBuilder {
                 return generateJournalReview();
             case "BookAbstracts":
                 return generateBookAbstracts();
-            case "BookMonograph":
             case "AcademicMonograph":
                 return generateAcademicMonograph();
             case "NonFictionMonograph":

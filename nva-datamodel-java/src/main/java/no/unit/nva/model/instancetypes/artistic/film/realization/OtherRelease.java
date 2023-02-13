@@ -3,16 +3,15 @@ package no.unit.nva.model.instancetypes.artistic.film.realization;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.Objects;
 import no.unit.nva.model.contexttypes.PublishingHouse;
-import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
-import no.unit.nva.model.instancetypes.artistic.UnconfirmedPublisherMigrator;
 import no.unit.nva.model.time.Instant;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.Objects;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class OtherRelease implements MovingPictureOutput, UnconfirmedPublisherMigrator {
+public class OtherRelease implements MovingPictureOutput {
     public static final String DESCRIPTION_FIELD = "description";
     public static final String PLACE_FIELD = "place";
     public static final String PUBLISHER_FIELD = "publisher";
@@ -29,19 +28,7 @@ public class OtherRelease implements MovingPictureOutput, UnconfirmedPublisherMi
     @JsonProperty(SEQUENCE_FIELD)
     private final int sequence;
 
-    @Deprecated
     @JsonCreator
-    public static OtherRelease fromJson(@JsonProperty(DESCRIPTION_FIELD) String description,
-                           @JsonProperty(PLACE_FIELD) UnconfirmedPlace place,
-                           @JsonProperty(PUBLISHER_FIELD) Object publisher,
-                           @JsonProperty(DATE_FIELD) Instant date,
-                           @JsonProperty(SEQUENCE_FIELD) int sequence) {
-        var publishingHouse = publisher instanceof String
-                ? new UnconfirmedPublisher((String) publisher)
-                : UnconfirmedPublisherMigrator.toPublisher(publisher);
-        return new OtherRelease(description, place, publishingHouse, date, sequence);
-    }
-
     public OtherRelease(@JsonProperty(DESCRIPTION_FIELD) String description,
                         @JsonProperty(PLACE_FIELD) UnconfirmedPlace place,
                         @JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher,
