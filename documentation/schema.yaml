@@ -94,6 +94,92 @@ schema:
   discriminator:
     propertyName: type
 referencedSchemas:
+  AcademicArticle:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        volume:
+          type: string
+          example: null
+        issue:
+          type: string
+          example: null
+        articleNumber:
+          type: string
+          example: null
+        type:
+          type: string
+          example: null
+      example: null
+  AcademicChapter:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+          example: null
+      example: null
+  AcademicLiteratureReview:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        volume:
+          type: string
+          example: null
+        issue:
+          type: string
+          example: null
+        articleNumber:
+          type: string
+          example: null
+        type:
+          type: string
+          example: null
+      example: null
+  AcademicMonograph:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+          example: null
+      example: null
   AdditionalIdentifier:
     required:
     - type
@@ -486,8 +572,11 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
         contentType:
           type: string
+          writeOnly: true
           example: null
           enum:
           - AcademicMonograph
@@ -496,11 +585,6 @@ referencedSchemas:
           - Textbook
           - Encyclopedia
           - ExhibitionCatalog
-        originalResearch:
-          type: boolean
-          example: null
-        pages:
-          $ref: '#/components/schemas/MonographPages'
         type:
           type: string
           example: null
@@ -535,6 +619,32 @@ referencedSchemas:
           type: string
           example: null
       example: null
+  CaseReport:
+    required:
+    - Type
+    type: object
+    example: null
+    discriminator:
+      propertyName: Type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        volume:
+          type: string
+          example: null
+        issue:
+          type: string
+          example: null
+        articleNumber:
+          type: string
+          example: null
+        Type:
+          type: string
+          example: null
+      example: null
   Chapter:
     required:
     - type
@@ -565,8 +675,11 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        pages:
+          $ref: '#/components/schemas/Range'
         contentType:
           type: string
+          writeOnly: true
           example: null
           enum:
           - AcademicChapter
@@ -576,11 +689,6 @@ referencedSchemas:
           - EncyclopediaChapter
           - Introduction
           - ExhibitionCatalogChapter
-        originalResearch:
-          type: boolean
-          example: null
-        pages:
-          $ref: '#/components/schemas/Range'
         type:
           type: string
           example: null
@@ -973,10 +1081,10 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        submittedDate:
-          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         type:
           type: string
           example: null
@@ -992,10 +1100,10 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        submittedDate:
-          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         type:
           type: string
           example: null
@@ -1011,10 +1119,10 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        submittedDate:
-          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         type:
           type: string
           example: null
@@ -1030,13 +1138,40 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
         submittedDate:
           $ref: '#/components/schemas/PublicationDate'
+        type:
+          type: string
+          example: null
+      example: null
+  Encyclopedia:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
           example: null
+      example: null
+  EncyclopediaChapter:
+    type: object
+    example: null
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
       example: null
   EntityDescription:
     required:
@@ -1063,6 +1198,12 @@ referencedSchemas:
         example: null
         items:
           $ref: '#/components/schemas/Contributor'
+      alternativeAbstracts:
+        type: object
+        additionalProperties:
+          type: string
+          example: null
+        example: null
       npiSubjectHeading:
         type: string
         example: null
@@ -1148,6 +1289,40 @@ referencedSchemas:
           type: string
           example: null
       example: null
+  ExhibitionCatalog:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+          example: null
+      example: null
+  ExhibitionCatalogChapter:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+          example: null
+      example: null
   FeatureArticle:
     required:
     - type
@@ -1223,6 +1398,16 @@ referencedSchemas:
     - type
     type: object
     properties:
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
+      activeFrom:
+        type: string
+        format: date-time
+        example: null
+      activeTo:
+        type: string
+        format: date-time
+        example: null
       labels:
         type: object
         additionalProperties:
@@ -1235,16 +1420,6 @@ referencedSchemas:
         example: null
       identifier:
         type: string
-        example: null
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
-      activeFrom:
-        type: string
-        format: date-time
-        example: null
-      activeTo:
-        type: string
-        format: date-time
         example: null
       type:
         type: string
@@ -1325,6 +1500,23 @@ referencedSchemas:
     example: null
     discriminator:
       propertyName: type
+  Introduction:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+          example: null
+      example: null
   Ismn:
     required:
     - type
@@ -1386,6 +1578,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
+        pages:
+          $ref: '#/components/schemas/Range'
         volume:
           type: string
           example: null
@@ -1397,6 +1591,7 @@ referencedSchemas:
           example: null
         contentType:
           type: string
+          writeOnly: true
           example: null
           enum:
           - AcademicArticle
@@ -1405,11 +1600,6 @@ referencedSchemas:
           - StudyProtocol
           - ProfessionalArticle
           - PopularScienceArticle
-        originalResearch:
-          type: boolean
-          example: null
-        pages:
-          $ref: '#/components/schemas/Range'
         type:
           type: string
           example: null
@@ -2230,6 +2420,40 @@ referencedSchemas:
         type: boolean
         example: null
     example: null
+  NonFictionChapter:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+          example: null
+      example: null
+  NonFictionMonograph:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+          example: null
+      example: null
   NullAssociatedArtifact:
     required:
     - type
@@ -2361,10 +2585,10 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationInstancePages'
     - type: object
       properties:
-        submittedDate:
-          $ref: '#/components/schemas/PublicationDate'
         pages:
           $ref: '#/components/schemas/MonographPages'
+        submittedDate:
+          $ref: '#/components/schemas/PublicationDate'
         type:
           type: string
           example: null
@@ -2486,6 +2710,92 @@ referencedSchemas:
     example: null
     discriminator:
       propertyName: type
+  PopularScienceArticle:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        volume:
+          type: string
+          example: null
+        issue:
+          type: string
+          example: null
+        articleNumber:
+          type: string
+          example: null
+        type:
+          type: string
+          example: null
+      example: null
+  PopularScienceChapter:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        type:
+          type: string
+          example: null
+      example: null
+  PopularScienceMonograph:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+          example: null
+      example: null
+  ProfessionalArticle:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        volume:
+          type: string
+          example: null
+        issue:
+          type: string
+          example: null
+        articleNumber:
+          type: string
+          example: null
+        type:
+          type: string
+          example: null
+      example: null
   Publication:
     required:
     - type
@@ -2617,9 +2927,6 @@ referencedSchemas:
     - type
     type: object
     properties:
-      peerReviewed:
-        type: boolean
-        example: null
       pages:
         $ref: '#/components/schemas/Pages'
       type:
@@ -2909,6 +3216,59 @@ referencedSchemas:
   SortableIdentifier:
     type: object
     example: null
+  StudyProtocol:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+        volume:
+          type: string
+          example: null
+        issue:
+          type: string
+          example: null
+        articleNumber:
+          type: string
+          example: null
+        type:
+          type: string
+          example: null
+      example: null
+  Textbook:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/MonographPages'
+        type:
+          type: string
+          example: null
+      example: null
+  TextbookChapter:
+    type: object
+    example: null
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Range'
+      example: null
   Time:
     required:
     - type

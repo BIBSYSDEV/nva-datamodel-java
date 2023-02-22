@@ -1,0 +1,170 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "NEW",
+  "resourceOwner" : {
+    "owner" : "shfeo6THdq5ODXPtCb",
+    "ownerAffiliation" : "https://www.example.org/doloresaepe"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/quasimaiores",
+    "labels" : {
+      "se" : "EgSIOzQrMOms"
+    }
+  },
+  "createdDate" : "1991-08-18T00:00:24.885Z",
+  "modifiedDate" : "1972-05-17T12:57:37.035Z",
+  "publishedDate" : "1990-04-19T13:08:10.237Z",
+  "indexedDate" : "2008-09-28T22:48:36.892Z",
+  "handle" : "https://www.example.org/occaecatiaut",
+  "doi" : "https://doi.org/10.1234/officiis",
+  "link" : "https://www.example.org/maioresmagni",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "Cikoo7YHUd",
+    "alternativeTitles" : {
+      "is" : "Vn1Spv89EvEBFVoj"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/und",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "yfBXp9tEmSps8C",
+      "month" : "tkfM8AwsHesKZ",
+      "day" : "CuHwDBTio1y3n"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/iNWDcY5JPBsOMk",
+        "name" : "WEk3fo9ZmT7Oe",
+        "nameType" : "Personal",
+        "orcId" : "AKxuVC2MySn"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/ZZYqsdQLe7X4QF0",
+        "labels" : {
+          "nn" : "2eYXKRNKi12aFep9mby"
+        }
+      } ],
+      "role" : "ProgrammeLeader",
+      "sequence" : 7,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/tX3a0sNaOkl",
+        "name" : "iM2k7WhSvV33UFFwdPC",
+        "nameType" : "Personal",
+        "orcId" : "xYkan8VWFCw2wNepD"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/fdTRLCaUWhqGx",
+        "labels" : {
+          "it" : "utpHVFoA0Li2yp2fN"
+        }
+      } ],
+      "role" : "ProjectMember",
+      "sequence" : 3,
+      "correspondingAuthor" : false
+    } ],
+    "alternativeAbstracts" : {
+      "el" : "RuZBhmnXYj5veN0t"
+    },
+    "npiSubjectHeading" : "mIR0fx1DcaW9P",
+    "tags" : [ "mwKqdRMIe1" ],
+    "description" : "igoRY115ffxlxh76BC",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Chapter",
+        "partOf" : "https://www.example.com/nlB4HXGs9nx1CHa718"
+      },
+      "doi" : "https://www.example.com/lxpOP8F2TJsOT",
+      "publicationInstance" : {
+        "type" : "Introduction",
+        "pages" : {
+          "type" : "Range",
+          "begin" : "032tDQ4B5qnTpCOZ",
+          "end" : "Gr3YsE98t23vp4e"
+        }
+      }
+    },
+    "metadataSource" : "https://www.example.com/3odok7wNYm7b6Gfsj",
+    "abstract" : "7bNwMekaKGfOj"
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/repudiandaeconsectetur",
+    "name" : "5rO2PUjVhaHXqkcowpi",
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "1971-03-30T17:42:03.370Z",
+      "approvedBy" : "NARA",
+      "approvalStatus" : "NOTAPPLIED",
+      "applicationCode" : "L4FNVeKdMsj"
+    } ]
+  } ],
+  "fundings" : [ {
+    "type" : "UnconfirmedFunding",
+    "source" : "https://www.example.org/iustoeveniet",
+    "identifier" : "2FGsNc6eoQ4qz",
+    "labels" : {
+      "bg" : "XGQHQ8RptEvv"
+    },
+    "fundingAmount" : {
+      "currency" : "EUR",
+      "amount" : 974764575
+    },
+    "activeFrom" : "1976-04-01T23:20:00.728Z",
+    "activeTo" : "2020-03-25T23:06:13.587Z"
+  }, {
+    "type" : "ConfirmedFunding",
+    "source" : "https://www.example.org/quoquod",
+    "id" : "https://www.example.org/quaeratlaudantium",
+    "identifier" : "T0Pvc3ix3vbQDip8",
+    "labels" : {
+      "da" : "QoLF0g0UONt5r6P"
+    },
+    "fundingAmount" : {
+      "currency" : "NOK",
+      "amount" : 420734323
+    },
+    "activeFrom" : "2008-09-04T00:04:47.044Z",
+    "activeTo" : "2020-07-04T21:33:46.075Z"
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/voluptasenim" ],
+  "associatedArtifacts" : [ {
+    "type" : "PublishedFile",
+    "identifier" : "227ec17b-0e00-4313-8ef4-1cad137650c9",
+    "name" : "qdodsC5oYTBlcEpBz9",
+    "mimeType" : "iP8IWPw1vlYi",
+    "size" : 1054202548,
+    "license" : {
+      "type" : "License",
+      "identifier" : "uFFqPpb7Cdf6or0WsHb",
+      "labels" : {
+        "pl" : "jafIzaNebrBOE"
+      },
+      "link" : "https://www.example.com/tv0BcnZMka"
+    },
+    "administrativeAgreement" : false,
+    "publisherAuthority" : true,
+    "visibleForNonOwner" : true
+  }, {
+    "type" : "AssociatedLink",
+    "id" : "https://www.example.com/eICSP5laEi4H13W",
+    "name" : "GuxHj2cRD3OaNq",
+    "description" : "rcHsJGCmzw2Az"
+  } ],
+  "modelVersion" : "0.19.34"
+}
