@@ -61,7 +61,8 @@ public class Publication
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
-    
+    private String rightsHolder;
+
     public Publication() {
         // Default constructor, use setters.
     }
@@ -266,7 +267,8 @@ public class Publication
                    .withAdditionalIdentifiers(getAdditionalIdentifiers())
                    .withAssociatedArtifacts(getAssociatedArtifacts())
                    .withSubjects(getSubjects())
-                   .withFundings(getFundings());
+                   .withFundings(getFundings())
+                   .withRightsHolder(getRightsHolder());
     }
     
     /**
@@ -286,7 +288,7 @@ public class Publication
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
             getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
             getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
-            getAssociatedArtifacts());
+            getAssociatedArtifacts(), getRightsHolder());
     }
     
     @JacocoGenerated
@@ -315,7 +317,8 @@ public class Publication
                              && Objects.equals(getProjects(), that.getProjects())
                              && Objects.equals(getFundings(), that.getFundings())
                              && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
-                             && Objects.equals(getSubjects(), that.getSubjects());
+                             && Objects.equals(getSubjects(), that.getSubjects())
+                             && Objects.equals(getRightsHolder(), that.getRightsHolder());
         return firstHalf && secondHalf;
     }
     
@@ -361,10 +364,18 @@ public class Publication
                 .isPresent();
     }
 
+    public void setRightsHolder(String rightsHolder) {
+        this.rightsHolder = rightsHolder;
+    }
+
+    public String getRightsHolder() {
+        return rightsHolder;
+    }
+
     public static final class Builder {
         
         private final Publication publication;
-        
+
         public Builder() {
             publication = new Publication();
         }
@@ -456,6 +467,11 @@ public class Publication
         
         public Publication build() {
             return publication;
+        }
+
+        public Builder withRightsHolder(String rightsHolder) {
+            this.publication.setRightsHolder(rightsHolder);
+            return this;
         }
     }
 }
