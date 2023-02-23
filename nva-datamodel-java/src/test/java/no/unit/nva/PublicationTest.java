@@ -9,8 +9,10 @@ import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.randomLegacyFile;
-import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
+import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
+import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,16 +33,12 @@ import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.instancetypes.journal.JournalArticle;
-import no.unit.nva.model.testing.associatedartifacts.AdministrativeAgreementGenerator;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
-import no.unit.nva.model.testing.associatedartifacts.AssociatedLinkGenerator;
 import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
-import no.unit.nva.model.testing.associatedartifacts.PublishedFileGenerator;
-import no.unit.nva.model.testing.associatedartifacts.UnpublishedFileGenerator;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.LegacyFile;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
@@ -48,6 +46,10 @@ import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
+import no.unit.nva.model.testing.associatedartifacts.AdministrativeAgreementGenerator;
+import no.unit.nva.model.testing.associatedartifacts.AssociatedLinkGenerator;
+import no.unit.nva.model.testing.associatedartifacts.PublishedFileGenerator;
+import no.unit.nva.model.testing.associatedartifacts.UnpublishedFileGenerator;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
@@ -58,12 +60,12 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class PublicationTest {
-    
+
     public static final String DOCUMENTATION_PATH_TEMPLATE = "../documentation/%s.json";
     public static final SortableIdentifier REPLACEMENT_IDENTIFIER_1 =
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final Javers JAVERS = JaversBuilder.javers().build();
-    
+
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
@@ -79,16 +81,15 @@ public class PublicationTest {
             publicationWithAdministrativeAgreementAndPublishedFile(),
             publicationWithAdministrativeAgreementAndLink()
         );
-
     }
 
     public static Stream<Publication> unpublishablePublicationProvider() {
         return Stream.of(
-                randomDraftForDeletion(),
-                publicationWithoutTitle(),
-                publicationWithOnlyAdministrativeAgreement(),
-                publicationWithoutEntityDescription(),
-                publicationWithNoAssociatedArtifactsOrOriginalDoi()
+            randomDraftForDeletion(),
+            publicationWithoutTitle(),
+            publicationWithOnlyAdministrativeAgreement(),
+            publicationWithoutEntityDescription(),
+            publicationWithNoAssociatedArtifactsOrOriginalDoi()
         );
     }
 
@@ -96,17 +97,17 @@ public class PublicationTest {
     @MethodSource("publicationInstanceProvider")
     void publicationReturnsValidPublicationWhenInputIsValid(Class<?> instanceType) throws Exception {
         Publication expected = randomPublication(instanceType);
-        
+
         String publication = dataModelObjectMapper.writeValueAsString(expected);
         Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThatPublicationDoesNotHaveEmptyFields(expected);
         assertEquals(expected, roundTripped);
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
-        
+
         writePublicationToFile(instanceType, expected);
     }
-    
+
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
     @MethodSource("publicationInstanceProvider")
     void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType) {
@@ -117,37 +118,48 @@ public class PublicationTest {
         assertThat(diff.prettyPrint(), copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));
     }
-    
+
+    @Test
+    void copyShouldCreateDeepCopyOfPublicationWithoutOverridingOriginalPublicationValuesWhenModifyingCopy() {
+        Publication publication = randomPublication();
+        Publication copy = new Publication().copy().build();
+        EntityDescription entityDescription = publication.getEntityDescription();
+        entityDescription.setDescription(randomString());
+        copy.setLink(randomUri());
+        copy.setEntityDescription(entityDescription);
+        assertThat(publication, not(is(equalTo(copy))));
+    }
+
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
     @MethodSource("publicationInstanceProvider")
     void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType) {
         Publication expected = randomPublication(instanceType);
         assertThat(expected.getProjects(), instanceOf(List.class));
     }
-    
+
     @ParameterizedTest
     @EnumSource(value = PublicationStatus.class, names = {"DRAFT_FOR_DELETION", "PUBLISHED"})
     void updateStatusForDraftPublication(PublicationStatus target) throws Exception {
         Publication publication = randomPublication();
         publication.setStatus(DRAFT);
         publication.updateStatus(target);
-        
+
         assertThat(publication.getStatus(), is(equalTo(target)));
     }
-    
+
     @Test
     void updateStatusThrowsExceptionForInvalidStatusTransition() {
         Publication publication = randomPublication();
         publication.setStatus(NEW);
-        
+
         InvalidPublicationStatusTransitionException exception =
             assertThrows(InvalidPublicationStatusTransitionException.class, () -> publication.updateStatus(PUBLISHED));
-        
+
         String expectedError = String.format(InvalidPublicationStatusTransitionException.ERROR_MSG_TEMPLATE,
-            NEW, PUBLISHED);
+                                             NEW, PUBLISHED);
         assertThat(exception.getMessage(), is(equalTo(expectedError)));
     }
-    
+
     //TODO: This is a temporary fix. type "File" for files should not be acceptable
     @Test
     void shouldReturnPublicationWithLegacyFileWhenInputIsPublicationWithLegacyFile()
@@ -160,7 +172,7 @@ public class PublicationTest {
         var deserialized = serializeDeserialize(publication);
         assertThat(deserialized.getAssociatedArtifacts().get(0), is(instanceOf(LegacyFile.class)));
     }
-    
+
     @Test
     void shouldConvertPublishableArtifactToPublishedUponRequest() {
         var legacyFile = buildNonAdministrativeAgreement().buildLegacyFile();
@@ -170,7 +182,7 @@ public class PublicationTest {
         assertThat(unpublishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
         assertThat(publishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
     }
-    
+
     @Test
     void shouldConvertPublishableArtifactToUnpublishedUponRequest() {
         var legacyFile = buildNonAdministrativeAgreement().buildLegacyFile();
@@ -180,16 +192,15 @@ public class PublicationTest {
         assertThat(unpublishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
         assertThat(publishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
     }
-    
+
     @Test
     void shouldConvertLegacyAndUnpublishableArtifactsToUnpublishableUponRequest() {
         var legacyFile = buildAdministrativeAgreement().buildLegacyFile();
         var unpublishableFile = buildAdministrativeAgreement().buildUnpublishableFile();
         assertThat(legacyFile.toUnpublishableFile(), is(instanceOf(AdministrativeAgreement.class)));
         assertThat(unpublishableFile.toUnpublishableFile(), is(instanceOf(AdministrativeAgreement.class)));
-        
     }
-    
+
     @Test
     void shouldNotConvertUnPublishableArtifactToPublishableArtifacts() {
         var unpublishableFile = buildAdministrativeAgreement().buildUnpublishableFile();
@@ -197,17 +208,17 @@ public class PublicationTest {
         assertThrows(IllegalStateException.class, unpublishableFile::toUnpublishedFile);
         assertThrows(IllegalStateException.class, unpublishableFile::toUnpublishedFile);
     }
-    
+
     // This test is included because of a bizarre error.
     @Test
     void initializingPublicationShouldNotThrowException() {
         assertDoesNotThrow(Publication::new);
     }
-    
+
     @Test
     void shouldThrowExceptionWhenCreatingAssociatedArtifactsWithNullArtifactsAndOtherArtifacts() {
         Executable executable = () -> new AssociatedArtifactList(randomAssociatedLink(),
-            new NullAssociatedArtifact());
+                                                                 new NullAssociatedArtifact());
         assertThrows(InvalidAssociatedArtifactsException.class, executable);
     }
 
@@ -222,31 +233,6 @@ public class PublicationTest {
     void shouldMarkPublicationAsWhenDataIsNotCompliantWithPublicationRequirements(Publication publication) {
         assertThat(publication.isPublishable(), is(equalTo(false)));
     }
-
-    
-    private Publication serializeDeserialize(Publication publication) throws JsonProcessingException {
-        var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
-        return JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
-    }
-    
-    private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
-        assertThat(expected, doesNotHaveEmptyValues());
-    }
-    
-    private Diff compareAsObjectNodes(Publication publication, Publication copy) {
-        var publicationObjectNode = dataModelObjectMapper.convertValue(publication, ObjectNode.class);
-        var copyObjectNode = dataModelObjectMapper.convertValue(copy, ObjectNode.class);
-        return JAVERS.compare(publicationObjectNode, copyObjectNode);
-    }
-    
-    private void writePublicationToFile(Class<?> instanceType, Publication publication) throws IOException {
-        publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
-        publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
-        String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType.getSimpleName());
-        var publicationJson = dataModelObjectMapper.writeValueAsString(publication);
-        Files.write(Paths.get(path), publicationJson.getBytes());
-    }
-
 
     private static Publication publicationWithOnlyAdministrativeAgreement() {
         var publication = PublicationGenerator.randomPublication();
@@ -283,7 +269,6 @@ public class PublicationTest {
         return publication;
     }
 
-
     private static Publication publicationWithAdministrativeAgreementAndLink() {
         var administrativeAgreement = AdministrativeAgreementGenerator.random();
         var link = AssociatedLinkGenerator.random();
@@ -294,14 +279,14 @@ public class PublicationTest {
         var unpublishedFile = UnpublishedFileGenerator.random();
         var administrativeAgreement = AdministrativeAgreementGenerator.random();
         return publicationWithAssociatedArtifact(new AssociatedArtifactList(List.of(administrativeAgreement,
-                unpublishedFile)));
+                                                                                    unpublishedFile)));
     }
 
     private static Publication publicationWithAdministrativeAgreementAndPublishedFile() {
         var publishedFile = PublishedFileGenerator.random();
         var administrativeAgreement = AdministrativeAgreementGenerator.random();
         return publicationWithAssociatedArtifact(new AssociatedArtifactList(List.of(administrativeAgreement,
-                publishedFile)));
+                                                                                    publishedFile)));
     }
 
     private static Publication publicationWithOriginalDoi() {
@@ -317,5 +302,28 @@ public class PublicationTest {
         publication.getEntityDescription().getReference().setDoi(null);
         publication.setAssociatedArtifacts(associatedArtifacts);
         return publication;
+    }
+
+    private Publication serializeDeserialize(Publication publication) throws JsonProcessingException {
+        var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
+        return JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
+    }
+
+    private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
+        assertThat(expected, doesNotHaveEmptyValues());
+    }
+
+    private Diff compareAsObjectNodes(Publication publication, Publication copy) {
+        var publicationObjectNode = dataModelObjectMapper.convertValue(publication, ObjectNode.class);
+        var copyObjectNode = dataModelObjectMapper.convertValue(copy, ObjectNode.class);
+        return JAVERS.compare(publicationObjectNode, copyObjectNode);
+    }
+
+    private void writePublicationToFile(Class<?> instanceType, Publication publication) throws IOException {
+        publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
+        publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
+        String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType.getSimpleName());
+        var publicationJson = dataModelObjectMapper.writeValueAsString(publication);
+        Files.write(Paths.get(path), publicationJson.getBytes());
     }
 }

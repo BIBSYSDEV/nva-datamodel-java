@@ -5,7 +5,6 @@ import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -36,14 +35,14 @@ import nva.commons.core.StringUtils;
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyFields", "PMD.GodClass"})
 public class Publication
     implements WithIdentifier, WithInternal, WithAssociatedArtifact, WithMetadata, WithCopy<Publication.Builder> {
-    
+
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
         PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION)
     );
-    
+
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
-    
+
     private SortableIdentifier identifier;
     private PublicationStatus status;
     private ResourceOwner resourceOwner;
@@ -61,147 +60,157 @@ public class Publication
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
-    
+
     public Publication() {
         // Default constructor, use setters.
     }
-    
+
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
         return nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
     }
-    
+
     public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
         this.additionalIdentifiers = additionalIdentifiers;
     }
-    
+
     @Override
     public Instant getCreatedDate() {
         return createdDate;
     }
-    
+
     @Override
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
     }
-    
+
     @Override
     public PublicationStatus getStatus() {
         return status;
     }
-    
+
     @Override
     public void setStatus(PublicationStatus status) {
         this.status = status;
     }
-    
+
     @Override
     public URI getHandle() {
         return handle;
     }
-    
+
     @Override
     public void setHandle(URI handle) {
         this.handle = handle;
     }
-    
+
     @Override
     public Instant getPublishedDate() {
         return publishedDate;
     }
-    
+
     @Override
     public void setPublishedDate(Instant publishedDate) {
         this.publishedDate = publishedDate;
     }
-    
+
     @Override
     public Instant getModifiedDate() {
         return modifiedDate;
     }
-    
+
     @Override
     public void setModifiedDate(Instant modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
-    
+
     @Override
     public ResourceOwner getResourceOwner() {
         return resourceOwner;
     }
-    
+
     @Override
     public void setResourceOwner(ResourceOwner resourceOwner) {
         this.resourceOwner = resourceOwner;
     }
-    
+
     @Override
     public Instant getIndexedDate() {
         return indexedDate;
     }
-    
+
     @Override
     public void setIndexedDate(Instant indexedDate) {
         this.indexedDate = indexedDate;
     }
-    
+
     @Override
     public URI getLink() {
         return link;
     }
-    
+
     @Override
     public void setLink(URI link) {
         this.link = link;
     }
-    
+
     @Override
     public Organization getPublisher() {
         return publisher;
     }
-    
+
     @Override
     public void setPublisher(Organization publisher) {
         this.publisher = publisher;
     }
-    
+
     @Override
     public URI getDoi() {
         return doi;
     }
-    
+
     @Override
     public void setDoi(URI doi) {
         this.doi = doi;
     }
-    
+
     @Override
     public SortableIdentifier getIdentifier() {
         return identifier;
     }
-    
+
     @Override
     public void setIdentifier(SortableIdentifier identifier) {
         this.identifier = identifier;
     }
-    
+
     @Override
     public EntityDescription getEntityDescription() {
         return entityDescription;
     }
-    
+
     @Override
     public void setEntityDescription(EntityDescription entityDescription) {
         this.entityDescription = entityDescription;
     }
-    
+
     @Override
     public List<ResearchProject> getProjects() {
         return nonNull(projects) ? projects : Collections.emptyList();
     }
-    
+
     @Override
     public void setProjects(List<ResearchProject> projects) {
         this.projects = projects;
+    }
+
+    @Override
+    public List<URI> getSubjects() {
+        return nonNull(subjects) ? subjects : Collections.emptyList();
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
     }
 
     @Override
@@ -214,21 +223,11 @@ public class Publication
         this.fundings = fundings;
     }
 
-    @Override
-    public List<URI> getSubjects() {
-        return nonNull(subjects) ? subjects : Collections.emptyList();
-    }
-    
-    @Override
-    public void setSubjects(List<URI> subjects) {
-        this.subjects = subjects;
-    }
-
     @JsonProperty("modelVersion")
     public String getModelVersion() {
         return MODEL_VERSION;
     }
-    
+
     @JsonProperty("modelVersion")
     public void setModelVersion() {
         // NO-OP
@@ -237,15 +236,15 @@ public class Publication
     @Override
     public AssociatedArtifactList getAssociatedArtifacts() {
         return nonNull(associatedArtifacts)
-                ? associatedArtifacts
-                : AssociatedArtifactList.empty();
+                   ? associatedArtifacts
+                   : AssociatedArtifactList.empty();
     }
 
     @Override
     public void setAssociatedArtifacts(AssociatedArtifactList associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
     }
-    
+
     @Override
     public Builder copy() {
         return new Builder()
@@ -268,7 +267,7 @@ public class Publication
                    .withSubjects(getSubjects())
                    .withFundings(getFundings());
     }
-    
+
     /**
      * Updates the status of the publication using rules for valid status transitions.
      *
@@ -279,16 +278,16 @@ public class Publication
         verifyStatusTransition(nextStatus);
         setStatus(nextStatus);
     }
-    
+
     @JacocoGenerated
     @Override
     public int hashCode() {
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
-            getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
-            getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
-            getAssociatedArtifacts());
+                    getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
+                    getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
+                    getAssociatedArtifacts());
     }
-    
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -318,18 +317,10 @@ public class Publication
                              && Objects.equals(getSubjects(), that.getSubjects());
         return firstHalf && secondHalf;
     }
-    
+
     @Override
     public String toString() {
-        return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElseThrow();
-    }
-    
-    private void verifyStatusTransition(PublicationStatus nextStatus)
-        throws InvalidPublicationStatusTransitionException {
-        final PublicationStatus currentStatus = getStatus();
-        if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
-            throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
-        }
+        return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElse(null);
     }
 
     @JsonIgnore
@@ -340,7 +331,14 @@ public class Publication
     @JsonIgnore
     public boolean isPublishable() {
         return !DRAFT_FOR_DELETION.equals(getStatus()) && hasMainTitle() && hasReferencedContent();
+    }
 
+    private void verifyStatusTransition(PublicationStatus nextStatus)
+        throws InvalidPublicationStatusTransitionException {
+        final PublicationStatus currentStatus = getStatus();
+        if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
+            throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
+        }
     }
 
     private boolean hasReferencedContent() {
@@ -349,112 +347,145 @@ public class Publication
 
     private boolean hasMainTitle() {
         return Optional.ofNullable(getEntityDescription())
-                .map(EntityDescription::getMainTitle)
-                .filter(string -> !StringUtils.isEmpty(string))
-                .isPresent();
+                   .map(EntityDescription::getMainTitle)
+                   .filter(string -> !StringUtils.isEmpty(string))
+                   .isPresent();
     }
 
     private boolean hasOriginalDoi() {
         return Optional.ofNullable(getEntityDescription())
-                .map(EntityDescription::getReference)
-                .map(Reference::getDoi)
-                .isPresent();
+                   .map(EntityDescription::getReference)
+                   .map(Reference::getDoi)
+                   .isPresent();
     }
 
     public static final class Builder {
-        
-        private final Publication publication;
-        
+
+        private SortableIdentifier identifier;
+        private PublicationStatus status;
+        private ResourceOwner resourceOwner;
+        private Organization publisher;
+        private Instant createdDate;
+        private Instant modifiedDate;
+        private Instant publishedDate;
+        private Instant indexedDate;
+        private URI handle;
+        private URI doi;
+        private URI link;
+        private EntityDescription entityDescription;
+        private List<ResearchProject> projects;
+        private List<Funding> fundings;
+        private Set<AdditionalIdentifier> additionalIdentifiers;
+        private List<URI> subjects;
+        private AssociatedArtifactList associatedArtifacts;
+
         public Builder() {
-            publication = new Publication();
         }
-        
+
         public Builder withIdentifier(SortableIdentifier identifier) {
-            publication.setIdentifier(identifier);
+            this.identifier = identifier;
             return this;
         }
-        
+
         public Builder withStatus(PublicationStatus status) {
-            publication.setStatus(status);
+            this.status = status;
             return this;
         }
-        
+
         public Builder withPublisher(Organization publisher) {
-            publication.setPublisher(publisher);
+            this.publisher = publisher;
             return this;
         }
-        
+
         public Builder withCreatedDate(Instant createdDate) {
-            publication.setCreatedDate(createdDate);
+            this.createdDate = createdDate;
             return this;
         }
-        
+
         public Builder withModifiedDate(Instant modifiedDate) {
-            publication.setModifiedDate(modifiedDate);
+            this.modifiedDate = modifiedDate;
             return this;
         }
-        
+
         public Builder withPublishedDate(Instant publishedDate) {
-            publication.setPublishedDate(publishedDate);
+            this.publishedDate = publishedDate;
             return this;
         }
-        
+
         public Builder withIndexedDate(Instant indexedDate) {
-            publication.setIndexedDate(indexedDate);
+            this.indexedDate = indexedDate;
             return this;
         }
-        
+
         public Builder withHandle(URI handle) {
-            publication.setHandle(handle);
+            this.handle = handle;
             return this;
         }
-        
+
         public Builder withDoi(URI doi) {
-            publication.setDoi(doi);
+            this.doi = doi;
             return this;
         }
-        
+
         public Builder withLink(URI link) {
-            publication.setLink(link);
+            this.link = link;
             return this;
         }
-        
+
         public Builder withEntityDescription(EntityDescription entityDescription) {
-            publication.setEntityDescription(entityDescription);
+            this.entityDescription = entityDescription;
             return this;
         }
-        
+
         public Builder withAssociatedArtifacts(List<AssociatedArtifact> associatedArtifacts) {
-            publication.setAssociatedArtifacts(new AssociatedArtifactList(associatedArtifacts));
+            this.associatedArtifacts = new AssociatedArtifactList(associatedArtifacts);
             return this;
         }
-        
+
         public Builder withProjects(List<ResearchProject> projects) {
-            publication.setProjects(projects);
+            this.projects = projects;
             return this;
         }
 
         public Builder withFundings(List<Funding> fundings) {
-            publication.setFundings(fundings);
+            this.fundings = fundings;
             return this;
         }
 
         public Builder withAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
-            publication.setAdditionalIdentifiers(additionalIdentifiers);
+            this.additionalIdentifiers = additionalIdentifiers;
             return this;
         }
-        
+
         public Builder withSubjects(List<URI> subjects) {
-            publication.setSubjects(subjects);
+            this.subjects = subjects;
             return this;
         }
-        
-        public Builder withResourceOwner(ResourceOwner randomResourceOwner) {
-            publication.setResourceOwner(randomResourceOwner);
+
+        public Builder withResourceOwner(ResourceOwner resourceOwner) {
+            this.resourceOwner = resourceOwner;
             return this;
         }
-        
+
         public Publication build() {
+            var publication = new Publication();
+            publication.setIdentifier(identifier);
+            publication.setStatus(status);
+            publication.setResourceOwner(resourceOwner);
+            publication.setPublisher(publisher);
+            publication.setCreatedDate(createdDate);
+            publication.setModifiedDate(modifiedDate);
+            publication.setPublishedDate(publishedDate);
+            publication.setIndexedDate(indexedDate);
+            publication.setHandle(handle);
+            publication.setDoi(doi);
+            publication.setLink(link);
+            publication.setEntityDescription(entityDescription);
+            publication.setProjects(projects);
+            publication.setFundings(fundings);
+            publication.setAdditionalIdentifiers(additionalIdentifiers);
+            publication.setSubjects(subjects);
+            publication.setAssociatedArtifacts(associatedArtifacts);
             return publication;
         }
     }
