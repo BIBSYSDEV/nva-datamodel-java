@@ -9,6 +9,7 @@ import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.randomLegacyFile;
+import static no.unit.nva.model.testing.PublicationGenerator.randomDoi;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
@@ -122,11 +123,12 @@ public class PublicationTest {
     @Test
     void copyShouldCreateDeepCopyOfPublicationWithoutOverridingOriginalPublicationValuesWhenModifyingCopy() {
         Publication publication = randomPublication();
-        Publication copy = new Publication().copy().build();
+        Publication copy = publication.copy().build();
         EntityDescription entityDescription = publication.getEntityDescription();
         entityDescription.setDescription(randomString());
         copy.setLink(randomUri());
         copy.setEntityDescription(entityDescription);
+        copy.getEntityDescription().getReference().setDoi(randomDoi());
         assertThat(publication, not(is(equalTo(copy))));
     }
 
