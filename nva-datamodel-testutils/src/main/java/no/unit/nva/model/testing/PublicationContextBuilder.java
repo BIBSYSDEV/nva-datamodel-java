@@ -109,6 +109,7 @@ public class PublicationContextBuilder {
             case "ReportResearch":
             case "ReportWorkingPaper":
             case "ReportBookOfAbstract":
+            case "ConferenceReport":
                 return attempt(PublicationContextBuilder::randomReport).orElseThrow();
             case "ConferenceLecture":
             case "ConferencePoster":

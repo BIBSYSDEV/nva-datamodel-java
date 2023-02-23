@@ -60,6 +60,7 @@ import no.unit.nva.model.instancetypes.media.MediaInterview;
 import no.unit.nva.model.instancetypes.media.MediaParticipationInRadioOrTv;
 import no.unit.nva.model.instancetypes.media.MediaPodcast;
 import no.unit.nva.model.instancetypes.media.MediaReaderOpinion;
+import no.unit.nva.model.instancetypes.report.ConferenceReport;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
@@ -107,6 +108,7 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "ReportPolicy", value = ReportPolicy.class),
     @JsonSubTypes.Type(name = "ReportResearch", value = ReportResearch.class),
     @JsonSubTypes.Type(name = "ReportWorkingPaper", value = ReportWorkingPaper.class),
+    @JsonSubTypes.Type(name = "ConferenceReport", value = ConferenceReport.class),
     @JsonSubTypes.Type(name = "ReportBookOfAbstract", value = ReportBookOfAbstract.class),
     @JsonSubTypes.Type(name = "ChapterArticle", value = ChapterArticle.class),
     @JsonSubTypes.Type(name = "AcademicChapter", value = AcademicChapter.class),
