@@ -9,11 +9,9 @@ import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.randomLegacyFile;
-import static no.unit.nva.model.testing.PublicationGenerator.randomDoi;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
-import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +32,6 @@ import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
-import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
@@ -124,12 +121,10 @@ public class PublicationTest {
     void copyShouldCreateDeepCopyOfPublicationWithoutOverridingOriginalPublicationValuesWhenModifyingCopy() {
         Publication publication = randomPublication();
         Publication copy = publication.copy().build();
-        EntityDescription entityDescription = publication.getEntityDescription();
-        entityDescription.setDescription(randomString());
         copy.setLink(randomUri());
-        copy.setEntityDescription(entityDescription);
-        copy.getEntityDescription().getReference().setDoi(randomDoi());
-        assertThat(publication, not(is(equalTo(copy))));
+        Diff diff = compareAsObjectNodes(publication, copy);
+        assertThat(diff.prettyPrint(), copy.getLink(), not(is(equalTo(publication.getLink()))));
+        assertThat(copy, is(not(sameInstance(publication))));
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
