@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
+import no.unit.nva.model.instancetypes.report.ConferenceReport;
 import no.unit.nva.model.instancetypes.Map;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
@@ -252,6 +253,8 @@ public final class PublicationInstanceBuilder {
                 return generateReportWorkingPaper();
             case "ReportBookOfAbstract":
                 return generateReportBookOfAbstract();
+            case "ConferenceReport":
+                return generateConferenceReport();
             case "OtherStudentWork":
                 return generateOtherStudentWork();
             case "ConferenceLecture":
@@ -469,6 +472,10 @@ public final class PublicationInstanceBuilder {
 
     private static ReportBookOfAbstract generateReportBookOfAbstract() {
         return new ReportBookOfAbstract(randomMonographPages());
+    }
+
+    private static ConferenceReport generateConferenceReport() {
+        return new ConferenceReport(randomMonographPages());
     }
 
     private static ReportResearch generateReportResearch() {
