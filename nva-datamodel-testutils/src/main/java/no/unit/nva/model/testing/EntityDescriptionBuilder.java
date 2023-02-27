@@ -39,11 +39,16 @@ public final class EntityDescriptionBuilder {
             .withDate(randomPublicationDate())
             .withContributors(randomContributors())
             .withAlternativeTitles(randomAlternativeTitles())
+            .withAlternativeAbstracts(randomAlternativeAbstracts())
             .withAbstract(randomString())
             .build();
     }
 
     private static Map<String, String> randomAlternativeTitles() {
+        return Map.of(RandomLanguageUtil.randomBcp47CompatibleLanguage(), randomString());
+    }
+
+    private static Map<String, String> randomAlternativeAbstracts() {
         return Map.of(RandomLanguageUtil.randomBcp47CompatibleLanguage(), randomString());
     }
 

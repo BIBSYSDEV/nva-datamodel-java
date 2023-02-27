@@ -1,0 +1,170 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "NEW",
+  "resourceOwner" : {
+    "owner" : "r4jyO2AbW4h",
+    "ownerAffiliation" : "https://www.example.org/nonvoluptatibus"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/utplaceat",
+    "labels" : {
+      "fi" : "mAm42BsrEYc5U"
+    }
+  },
+  "createdDate" : "2014-12-17T17:19:35.871Z",
+  "modifiedDate" : "2012-07-01T07:03:56.548Z",
+  "publishedDate" : "1991-06-20T08:29:24.817Z",
+  "indexedDate" : "2013-01-22T17:45:57.877Z",
+  "handle" : "https://www.example.org/fuganihil",
+  "doi" : "https://doi.org/10.1234/vel",
+  "link" : "https://www.example.org/utsint",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "lyJijgkUPtq1XBJB",
+    "alternativeTitles" : {
+      "es" : "9caZz2UG46qwev"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/und",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "7e3lHG4wwh",
+      "month" : "xsUJxKutZH6Wd77",
+      "day" : "Ye2ISfmUIjn7N0T0iT"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/ltARa51HGc0iw0",
+        "name" : "7qTupRqXqNQgaxT7JX7",
+        "nameType" : "Personal",
+        "orcId" : "zRoDDZ5QTQLoRXyNzid"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/fOqbrWUpLUn",
+        "labels" : {
+          "hu" : "uT3galO7u6h"
+        }
+      } ],
+      "role" : "Librettist",
+      "sequence" : 9,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/lIdYXygzmdN",
+        "name" : "bCga0CwE0DASlF",
+        "nameType" : "Personal",
+        "orcId" : "NT7eR9MOeV2IB"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/dFpNZxjtxmJLX2s72",
+        "labels" : {
+          "nb" : "OMvoExxVGhQ"
+        }
+      } ],
+      "role" : "TranslatorAdapter",
+      "sequence" : 1,
+      "correspondingAuthor" : false
+    } ],
+    "alternativeAbstracts" : {
+      "se" : "GGI2rQPO12r2Ge05T"
+    },
+    "npiSubjectHeading" : "FfaNi4Gr3pNV",
+    "tags" : [ "yBSb3hxDvQad88" ],
+    "description" : "Ev9TijMO9Uh0T1cuv",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Chapter",
+        "partOf" : "https://www.example.com/45FDViIn69P"
+      },
+      "doi" : "https://www.example.com/qFWQhsjbdhoHFMqg0",
+      "publicationInstance" : {
+        "type" : "PopularScienceChapter",
+        "pages" : {
+          "type" : "Range",
+          "begin" : "ql6SoOcHYg3rNj",
+          "end" : "fEwyUYZOgw5qYMJ3ky"
+        }
+      }
+    },
+    "metadataSource" : "https://www.example.com/41pake1WbNXitlzKt",
+    "abstract" : "bnv5X3XiWRVrO9Q"
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/autemexplicabo",
+    "name" : "JQB2Zis2MNb5ei",
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "1973-11-11T03:55:25.641Z",
+      "approvedBy" : "DIRHEALTH",
+      "approvalStatus" : "APPLIED",
+      "applicationCode" : "jgDQ2X9jjQuhjtx8J6V"
+    } ]
+  } ],
+  "fundings" : [ {
+    "type" : "UnconfirmedFunding",
+    "source" : "https://www.example.org/sitconsequatur",
+    "identifier" : "QJ2dFDjb6RmmI7yppsg",
+    "labels" : {
+      "bg" : "4KxFTtIpMP"
+    },
+    "fundingAmount" : {
+      "currency" : "NOK",
+      "amount" : 1308104947
+    },
+    "activeFrom" : "2007-12-09T14:47:51.788Z",
+    "activeTo" : "2018-01-20T00:54:12.795Z"
+  }, {
+    "type" : "ConfirmedFunding",
+    "source" : "https://www.example.org/dolorumrepellat",
+    "id" : "https://www.example.org/eumsaepe",
+    "identifier" : "hhLZxOzwtvj",
+    "labels" : {
+      "pl" : "ltKjFo7afcag5"
+    },
+    "fundingAmount" : {
+      "currency" : "USD",
+      "amount" : 487852626
+    },
+    "activeFrom" : "1976-06-16T05:35:30.247Z",
+    "activeTo" : "2004-09-09T04:41:32.999Z"
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/ametrepellat" ],
+  "associatedArtifacts" : [ {
+    "type" : "PublishedFile",
+    "identifier" : "f8e6951d-f243-4f0d-bb74-34a85e0fa10c",
+    "name" : "ED48bpk8lvMJIMOA",
+    "mimeType" : "YhkX1vkcuX3",
+    "size" : 949659344,
+    "license" : {
+      "type" : "License",
+      "identifier" : "ql3YfMmSm2rIRqQQ",
+      "labels" : {
+        "zh" : "XGxaDy7LeGbSfgvYR"
+      },
+      "link" : "https://www.example.com/mJMMux1acgvcRs"
+    },
+    "administrativeAgreement" : false,
+    "publisherAuthority" : true,
+    "visibleForNonOwner" : true
+  }, {
+    "type" : "AssociatedLink",
+    "id" : "https://www.example.com/KwRliVkVv6OtcY",
+    "name" : "opIeLnRtV2dwK",
+    "description" : "CkdZlNGgLLZQ7OlJ"
+  } ],
+  "modelVersion" : "0.19.34"
+}

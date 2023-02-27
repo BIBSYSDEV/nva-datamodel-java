@@ -1,0 +1,170 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "DRAFT",
+  "resourceOwner" : {
+    "owner" : "0g1m5KsPYjL4RP",
+    "ownerAffiliation" : "https://www.example.org/autdolorem"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/laudantiumeum",
+    "labels" : {
+      "pl" : "jPyMG9oByFXm78JQfP"
+    }
+  },
+  "createdDate" : "2002-02-04T04:51:47.433Z",
+  "modifiedDate" : "1989-05-07T04:56:18.400Z",
+  "publishedDate" : "1976-08-08T18:50:59.249Z",
+  "indexedDate" : "1987-12-31T01:34:22.757Z",
+  "handle" : "https://www.example.org/ipsumipsum",
+  "doi" : "https://doi.org/10.1234/autem",
+  "link" : "https://www.example.org/perferendisveniam",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "Mioe7aguvD8lJpUw",
+    "alternativeTitles" : {
+      "is" : "GYhGubqK4qicn2wddvz"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/und",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "t7FQVMhrbb",
+      "month" : "JXI4HBkJ8CWMMBo",
+      "day" : "Hz65PnrAtkh9"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/J6CbYFuVMM",
+        "name" : "uc3k7w5wUUxbhO",
+        "nameType" : "Personal",
+        "orcId" : "jsgNWhsOQ97Ki0zUZE"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/bw3JuDwGX3",
+        "labels" : {
+          "da" : "m8DWDstnGnBJQglCc9l"
+        }
+      } ],
+      "role" : "Soloist",
+      "sequence" : 5,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/2MUHnkRi54iFSi1lAp",
+        "name" : "y8Cm9te10kmvMJ7FI",
+        "nameType" : "Organizational",
+        "orcId" : "gYtVI8Xww2CBpORhQw3"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/0Vva9ESTi0H",
+        "labels" : {
+          "is" : "KlupioyWgJ7KOTO"
+        }
+      } ],
+      "role" : "Dramaturge",
+      "sequence" : 2,
+      "correspondingAuthor" : false
+    } ],
+    "alternativeAbstracts" : {
+      "pt" : "E2dqJXMRavlwb8Z"
+    },
+    "npiSubjectHeading" : "fNvloEXmBTY6iAYmDFi",
+    "tags" : [ "Ca6TO3ZDOCKj5N7y" ],
+    "description" : "gBUhFooY5gQPpqxE4rd",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "Chapter",
+        "partOf" : "https://www.example.com/44o1EAOoYQK"
+      },
+      "doi" : "https://www.example.com/FH727RLcQNNJqv3U3Pr",
+      "publicationInstance" : {
+        "type" : "TextbookChapter",
+        "pages" : {
+          "type" : "Range",
+          "begin" : "5K03cdEAbQHmqBnT",
+          "end" : "RSqJVKVCSj3GLlW"
+        }
+      }
+    },
+    "metadataSource" : "https://www.example.com/XpVdBlyH4tZpIlEpQ",
+    "abstract" : "ivKwPKsibveciEGl"
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/ipsanumquam",
+    "name" : "fUV08TWly1ewUi0yB",
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "1999-12-27T21:49:55.758Z",
+      "approvedBy" : "REK",
+      "approvalStatus" : "APPROVED",
+      "applicationCode" : "TSZPW31Ho8vYF7f4"
+    } ]
+  } ],
+  "fundings" : [ {
+    "type" : "UnconfirmedFunding",
+    "source" : "https://www.example.org/laborumaliquam",
+    "identifier" : "bKC9ffll8jDhWSI0nHJ",
+    "labels" : {
+      "es" : "ezdkmBx8LoBQBlV"
+    },
+    "fundingAmount" : {
+      "currency" : "EUR",
+      "amount" : 356690937
+    },
+    "activeFrom" : "1996-10-26T05:22:04.623Z",
+    "activeTo" : "2021-08-29T16:17:51.518Z"
+  }, {
+    "type" : "ConfirmedFunding",
+    "source" : "https://www.example.org/idquae",
+    "id" : "https://www.example.org/veldistinctio",
+    "identifier" : "lf8P4jQGk8NRb1n",
+    "labels" : {
+      "is" : "U3s0mm1BkiYwDXRz"
+    },
+    "fundingAmount" : {
+      "currency" : "GBP",
+      "amount" : 1521607552
+    },
+    "activeFrom" : "1971-02-04T15:34:36.071Z",
+    "activeTo" : "2016-04-08T07:43:15.468Z"
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/quiminima" ],
+  "associatedArtifacts" : [ {
+    "type" : "PublishedFile",
+    "identifier" : "ad9dbb8e-7ed0-4a9b-8723-3819db7a96b0",
+    "name" : "7tV5KoWoSD0A2",
+    "mimeType" : "q7bFBEUs0g5gHC",
+    "size" : 780538355,
+    "license" : {
+      "type" : "License",
+      "identifier" : "Rq1XFLtiWYfpPu3l",
+      "labels" : {
+        "is" : "FLAgNc5jz96Cfvdlp"
+      },
+      "link" : "https://www.example.com/iSkgGK4UhH1OWgRgPH"
+    },
+    "administrativeAgreement" : false,
+    "publisherAuthority" : true,
+    "visibleForNonOwner" : true
+  }, {
+    "type" : "AssociatedLink",
+    "id" : "https://www.example.com/epm2xMDjwN3sK",
+    "name" : "2flSp3GqjHzxH",
+    "description" : "jlcW5gDjjZDpD"
+  } ],
+  "modelVersion" : "0.19.34"
+}

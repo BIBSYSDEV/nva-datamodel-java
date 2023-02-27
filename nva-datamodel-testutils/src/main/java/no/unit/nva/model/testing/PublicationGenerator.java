@@ -162,6 +162,7 @@ public final class PublicationGenerator {
     private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
                 .withIdentifier(SortableIdentifier.next())
+                .withRightsHolder(randomString())
                 .withPublisher(randomOrganization())
                 .withSubjects(List.of(randomUri()))
                 .withStatus(randomElement(PublicationStatus.values()))

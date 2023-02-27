@@ -2,11 +2,13 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -19,6 +21,8 @@ public class EntityDescription {
     private List<Contributor> contributors;
     @JsonSetter("abstract")
     private String mainLanguageAbstract;
+
+    private Map<String, String> alternativeAbstracts;
     private String npiSubjectHeading;
     private List<String> tags;
     private String description;
@@ -29,6 +33,7 @@ public class EntityDescription {
         contributors = Collections.emptyList();
         tags = Collections.emptyList();
         alternativeTitles = Collections.emptyMap();
+        alternativeAbstracts = Collections.emptyMap();
     }
 
     private EntityDescription(Builder builder) {
@@ -43,6 +48,7 @@ public class EntityDescription {
         setDescription(builder.description);
         setReference(builder.reference);
         setMetadataSource(builder.metadataSource);
+        setAlternativeAbstracts(builder.alternativeAbstracts);
     }
 
     public String getMainTitle() {
@@ -55,6 +61,14 @@ public class EntityDescription {
 
     public Map<String, String> getAlternativeTitles() {
         return Objects.nonNull(alternativeTitles) ? alternativeTitles : Collections.emptyMap();
+    }
+
+    public Map<String, String> getAlternativeAbstracts() {
+        return alternativeAbstracts;
+    }
+
+    public void setAlternativeAbstracts(Map<String, String> alternativeAbstracts) {
+        this.alternativeAbstracts = alternativeAbstracts;
     }
 
     public void setAlternativeTitles(Map<String, String> alternativeTitles) {
@@ -137,16 +151,17 @@ public class EntityDescription {
     @Override
     public int hashCode() {
         return Objects.hash(getMainTitle(),
-                            getAlternativeTitles(),
-                            getLanguage(),
-                            getDate(),
-                            getContributors(),
-                            getAbstract(),
-                            getNpiSubjectHeading(),
-                            getTags(),
-                            getDescription(),
-                            getReference(),
-                            getMetadataSource());
+                getAlternativeTitles(),
+                getLanguage(),
+                getDate(),
+                getContributors(),
+                getAbstract(),
+                getNpiSubjectHeading(),
+                getTags(),
+                getDescription(),
+                getReference(),
+                getMetadataSource(),
+                getAlternativeAbstracts());
     }
 
     @JacocoGenerated
@@ -160,16 +175,17 @@ public class EntityDescription {
         }
         EntityDescription that = (EntityDescription) o;
         return Objects.equals(getMainTitle(), that.getMainTitle())
-               && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
-               && Objects.equals(getLanguage(), that.getLanguage())
-               && Objects.equals(getDate(), that.getDate())
-               && Objects.equals(getContributors(), that.getContributors())
-               && Objects.equals(getAbstract(), that.getAbstract())
-               && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
-               && Objects.equals(getTags(), that.getTags())
-               && Objects.equals(getDescription(), that.getDescription())
-               && Objects.equals(getReference(), that.getReference())
-               && Objects.equals(getMetadataSource(), that.getMetadataSource());
+                && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
+                && Objects.equals(getLanguage(), that.getLanguage())
+                && Objects.equals(getDate(), that.getDate())
+                && Objects.equals(getContributors(), that.getContributors())
+                && Objects.equals(getAbstract(), that.getAbstract())
+                && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
+                && Objects.equals(getTags(), that.getTags())
+                && Objects.equals(getDescription(), that.getDescription())
+                && Objects.equals(getReference(), that.getReference())
+                && Objects.equals(getMetadataSource(), that.getMetadataSource())
+                && Objects.equals(getAlternativeAbstracts(), that.getAlternativeAbstracts());
     }
 
     public static final class Builder {
@@ -180,6 +196,7 @@ public class EntityDescription {
         private PublicationDate date;
         private List<Contributor> contributors;
         private String mainLanguageAbstract;
+        private Map<String, String> alternativeAbstracts;
         private String npiSubjectHeading;
         private List<String> tags;
         private String description;
@@ -216,6 +233,11 @@ public class EntityDescription {
 
         public Builder withAbstract(String mainLanguageAbstract) {
             this.mainLanguageAbstract = mainLanguageAbstract;
+            return this;
+        }
+
+        public Builder withAlternativeAbstracts(Map<String, String> alternativeAbstracts) {
+            this.alternativeAbstracts = alternativeAbstracts;
             return this;
         }
 
