@@ -1,9 +1,13 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.net.URI;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
+@JsonSubTypes(
+    @JsonSubTypes.Type(value = ResearchProject.class, name="ResearchProject")
+)
 public class Project {
     private URI id;
     private String name;
