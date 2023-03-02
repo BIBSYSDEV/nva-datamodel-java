@@ -3,12 +3,14 @@ package no.unit.nva.model.instancetypes.exhibition.manifestations;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import nva.commons.core.JacocoGenerated;
 
 import java.net.URI;
 import java.util.Objects;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonTypeName("ExhibitionCatalog")
 public class ExhibitionCatalogReference implements ExhibitionProductionManifestation {
 
     private static final String ID_FIELD = "id";
