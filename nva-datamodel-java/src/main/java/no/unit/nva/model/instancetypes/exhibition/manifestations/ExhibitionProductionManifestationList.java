@@ -51,8 +51,18 @@ public class ExhibitionProductionManifestationList implements List<ExhibitionPro
     }
 
     @Override
+    public void add(int index, ExhibitionProductionManifestation element) {
+        manifestations.add(index, element);
+    }
+
+    @Override
     public boolean remove(Object o) {
         return manifestations.remove(o);
+    }
+
+    @Override
+    public ExhibitionProductionManifestation remove(int index) {
+        return manifestations.remove(index);
     }
 
     @Override
@@ -93,16 +103,6 @@ public class ExhibitionProductionManifestationList implements List<ExhibitionPro
     @Override
     public ExhibitionProductionManifestation set(int index, ExhibitionProductionManifestation element) {
         return manifestations.set(index, element);
-    }
-
-    @Override
-    public void add(int index, ExhibitionProductionManifestation element) {
-        manifestations.add(index, element);
-    }
-
-    @Override
-    public ExhibitionProductionManifestation remove(int index) {
-        return manifestations.remove(index);
     }
 
     @Override

@@ -328,7 +328,8 @@ public final class PublicationInstanceBuilder {
     }
 
     private static ExhibitionOtherPresentation randomExhibitionOtherPresentation() {
-        return new ExhibitionOtherPresentation(randomString(), randomString(), randomUnconfirmedPlace(), randomUnconfirmedPublisher(), randomNvaInstant());
+        return new ExhibitionOtherPresentation(randomString(), randomString(), randomUnconfirmedPlace(),
+                randomUnconfirmedPublisher(), randomNvaInstant());
     }
 
     private static ExhibitionMentionInPublication randomExhibitionMentionInPublication() {

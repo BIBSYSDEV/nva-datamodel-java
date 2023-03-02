@@ -23,8 +23,9 @@ public class ExhibitionProduction implements PublicationInstance<NullPages> {
     private final ExhibitionProductionManifestationList manifestations;
 
     @JsonCreator
-    public ExhibitionProduction(@JsonProperty(SUBTYPE_FIELD) ExhibitionProductionSubtype subtype,
-                                @JsonProperty(MANIFESTATIONS_FIELD) List<ExhibitionProductionManifestation> manifestations) {
+    public ExhibitionProduction(
+            @JsonProperty(SUBTYPE_FIELD) ExhibitionProductionSubtype subtype,
+            @JsonProperty(MANIFESTATIONS_FIELD) List<ExhibitionProductionManifestation> manifestations) {
         this.subtype = subtype;
         this.manifestations = new ExhibitionProductionManifestationList(manifestations);
     }
