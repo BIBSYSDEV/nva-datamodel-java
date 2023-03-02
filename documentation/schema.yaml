@@ -1418,15 +1418,15 @@ referencedSchemas:
     - type
     type: object
     properties:
-      source:
-        type: string
-        format: uri
-        example: null
       labels:
         type: object
         additionalProperties:
           type: string
           example: null
+        example: null
+      source:
+        type: string
+        format: uri
         example: null
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'

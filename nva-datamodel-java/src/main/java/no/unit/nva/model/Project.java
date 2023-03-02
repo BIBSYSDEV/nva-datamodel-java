@@ -1,14 +1,11 @@
 package no.unit.nva.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.net.URI;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
-@JsonSubTypes(
-    @JsonSubTypes.Type(value = ResearchProject.class, name="ResearchProject")
-)
-public class Project {
+class Project {
+
     private URI id;
     private String name;
 
@@ -42,7 +39,7 @@ public class Project {
         }
         Project project = (Project) o;
         return Objects.equals(getId(), project.getId())
-                && Objects.equals(getName(), project.getName());
+               && Objects.equals(getName(), project.getName());
     }
 
     @JacocoGenerated

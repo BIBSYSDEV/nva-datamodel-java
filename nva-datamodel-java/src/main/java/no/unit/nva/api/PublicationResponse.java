@@ -55,6 +55,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private AssociatedArtifactList associatedArtifacts;
 
     private Set<AdditionalIdentifier> additionalIdentifiers;
+    private String rightsHolder;
 
     public static PublicationResponse fromPublication(Publication publication) {
         var response = new PublicationResponse();
@@ -77,6 +78,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setContext(PublicationContext.getContext(publication));
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         response.setAdditionalIdentifiers(publication.getAdditionalIdentifiers());
+        response.setRightsHolder(publication.getRightsHolder());
         return response;
     }
 
@@ -231,6 +233,16 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
+    public String getRightsHolder() {
+        return rightsHolder;
+    }
+
+    @Override
+    public void setRightsHolder(String rightsHolder) {
+        this.rightsHolder = rightsHolder;
+    }
+
+    @Override
     public JsonNode getContext() {
         return context;
     }
@@ -280,7 +292,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                             getFundings(),
                             getSubjects(),
                             getAdditionalIdentifiers(),
-                            getAssociatedArtifacts());
+                            getAssociatedArtifacts(),
+                            getRightsHolder());
     }
 
     @Override
@@ -310,6 +323,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                && Objects.equals(getFundings(), that.getFundings())
                && Objects.equals(getSubjects(), that.getSubjects())
                && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
-               && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts());
+               && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
+               && Objects.equals(getRightsHolder(), that.getRightsHolder());
     }
 }

@@ -23,4 +23,8 @@ public interface WithMetadata extends PublicationBase {
     List<Funding> getFundings();
 
     void setFundings(List<Funding> fundings);
+
+    String getRightsHolder();
+
+    void setRightsHolder(String rightsHolder);
 }
