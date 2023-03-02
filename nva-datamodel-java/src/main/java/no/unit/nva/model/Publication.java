@@ -29,6 +29,7 @@ import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.funding.Funding;
+import no.unit.nva.model.funding.FundingList;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.StringUtils;
 
@@ -57,7 +58,7 @@ public class Publication
     private URI link;
     private EntityDescription entityDescription;
     private List<ResearchProject> projects;
-    private List<Funding> fundings;
+    private FundingList fundings;
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
@@ -212,7 +213,7 @@ public class Publication
 
     @Override
     public void setFundings(List<Funding> fundings) {
-        this.fundings = fundings;
+        this.fundings = new FundingList(fundings);
     }
 
     @Override
