@@ -2,10 +2,10 @@ package no.unit.nva.model.testing;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import no.unit.nva.model.UnconfirmedOrganization;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
-import no.unit.nva.model.instancetypes.report.ConferenceReport;
 import no.unit.nva.model.instancetypes.Map;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.architecture.Architecture;
@@ -84,6 +84,15 @@ import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
 import no.unit.nva.model.instancetypes.event.OtherPresentation;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProduction;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProductionSubtype;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProductionSubtypeEnum;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProductionSubtypeOther;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionBasic;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionCatalogReference;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionMentionInPublication;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionOtherPresentation;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionProductionManifestation;
 import no.unit.nva.model.instancetypes.journal.AcademicArticle;
 import no.unit.nva.model.instancetypes.journal.AcademicLiteratureReview;
 import no.unit.nva.model.instancetypes.journal.CaseReport;
@@ -104,6 +113,7 @@ import no.unit.nva.model.instancetypes.media.MediaInterview;
 import no.unit.nva.model.instancetypes.media.MediaParticipationInRadioOrTv;
 import no.unit.nva.model.instancetypes.media.MediaPodcast;
 import no.unit.nva.model.instancetypes.media.MediaReaderOpinion;
+import no.unit.nva.model.instancetypes.report.ConferenceReport;
 import no.unit.nva.model.instancetypes.report.ReportBasic;
 import no.unit.nva.model.instancetypes.report.ReportBookOfAbstract;
 import no.unit.nva.model.instancetypes.report.ReportPolicy;
@@ -289,10 +299,54 @@ public final class PublicationInstanceBuilder {
                 return generateDataSet();
             case "Map":
                 return generateMap();
+            case "ExhibitionProduction":
+                return generateExhibitionProduction();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
     }
+
+    private static ExhibitionProduction generateExhibitionProduction() {
+        var subtype = generateRandomExhibitionProductionSubtype();
+        return new ExhibitionProduction(subtype, generateRandomExhibitionThings());
+    }
+
+    private static ExhibitionProductionSubtype generateRandomExhibitionProductionSubtype() {
+        var subtype = randomElement(ExhibitionProductionSubtypeEnum.values());
+        return ExhibitionProductionSubtypeEnum.OTHER.equals(subtype)
+                ? new ExhibitionProductionSubtypeOther(subtype, randomString())
+                : new ExhibitionProductionSubtype(subtype);
+    }
+
+    private static List<ExhibitionProductionManifestation> generateRandomExhibitionThings() {
+        return List.of(
+                randomExhibitionCatalogReference(),
+                randomExhibitionBasic(),
+                randomExhibitionMentionInPublication(),
+                randomExhibitionOtherPresentation()
+        );
+    }
+
+    private static ExhibitionOtherPresentation randomExhibitionOtherPresentation() {
+        return new ExhibitionOtherPresentation(randomString(), randomString(), randomUnconfirmedPlace(), randomUnconfirmedPublisher(), randomNvaInstant());
+    }
+
+    private static ExhibitionMentionInPublication randomExhibitionMentionInPublication() {
+        return new ExhibitionMentionInPublication(randomString(), randomString(), randomNvaInstant(), randomString());
+    }
+
+    private static ExhibitionBasic randomExhibitionBasic() {
+        return new ExhibitionBasic(randomUnconfirmedOrganization(), randomUnconfirmedPlace(), randomNvaPeriod());
+    }
+
+    private static ExhibitionCatalogReference randomExhibitionCatalogReference() {
+        return new ExhibitionCatalogReference(randomUri());
+    }
+
+    private static UnconfirmedOrganization randomUnconfirmedOrganization() {
+        return new UnconfirmedOrganization(randomString());
+    }
+
 
     public static Class<?> randomPublicationInstanceType() {
         List<Class<?>> publicationInstanceClasses = listPublicationInstanceTypes();
@@ -301,9 +355,9 @@ public final class PublicationInstanceBuilder {
 
     public static Stream<Class<?>> journalArticleInstanceTypes() {
         return listPublicationInstanceTypes().stream()
-            .map(PublicationInstanceBuilder::getPublicationContext)
-            .filter(contextAndInstanceTuple -> contextAndInstanceTuple.getContext() instanceof Journal)
-            .map(ContextAndInstanceTuple::getInstanceType);
+                .map(PublicationInstanceBuilder::getPublicationContext)
+                .filter(contextAndInstanceTuple -> contextAndInstanceTuple.getContext() instanceof Journal)
+                .map(ContextAndInstanceTuple::getInstanceType);
     }
 
     public static List<Class<?>> listPublicationInstanceTypes() {
@@ -332,15 +386,15 @@ public final class PublicationInstanceBuilder {
 
     private static MusicPerformance generateMusicPerformance() {
         return new MusicPerformance(List.of(randomAudioVisualPublication(),
-                                            randomConcert(),
-                                            randomMusicScore(),
-                                            randomOtherPerformance()));
+                randomConcert(),
+                randomMusicScore(),
+                randomOtherPerformance()));
     }
 
     private static MusicPerformanceManifestation randomOtherPerformance() {
         //performanceType, place, extent
-        return new OtherPerformance(randomString(),randomUnconfirmedPlace(),randomString(),
-                                    List.of(randomWork()));
+        return new OtherPerformance(randomString(), randomUnconfirmedPlace(), randomString(),
+                List.of(randomWork()));
     }
 
     private static MusicalWork randomWork() {
@@ -350,11 +404,11 @@ public final class PublicationInstanceBuilder {
     private static MusicPerformanceManifestation randomMusicScore() {
         //ensemble movements extent, publisher,
         return new MusicScore(randomString(),
-                              randomString(),
-                              randomString(),
-                              randomUnconfirmedPublisher(),
-                              randomIsmn(),
-                              randomIsrc());
+                randomString(),
+                randomString(),
+                randomUnconfirmedPublisher(),
+                randomIsmn(),
+                randomIsrc());
     }
 
     private static Isrc randomIsrc() {
@@ -371,11 +425,11 @@ public final class PublicationInstanceBuilder {
 
     private static Concert randomConcert() {
         return new Concert(randomUnconfirmedPlace(),
-                           randomTime(),
-                           randomString(),
-                           randomString(),
-                           randomConcertProgramme(),
-                           randomBoolean());
+                randomTime(),
+                randomString(),
+                randomString(),
+                randomConcertProgramme(),
+                randomBoolean());
     }
 
     private static List<MusicalWorkPerformance> randomConcertProgramme() {
@@ -390,9 +444,9 @@ public final class PublicationInstanceBuilder {
 
     private static MusicPerformanceManifestation randomAudioVisualPublication() {
         return new AudioVisualPublication(randomElement(MusicMediaType.values()),
-                                          randomUnconfirmedPublisher(),
-                                          randomString(),
-                                          randomTrackList());
+                randomUnconfirmedPublisher(),
+                randomString(),
+                randomTrackList());
     }
 
     private static List<MusicTrack> randomTrackList() {
@@ -425,20 +479,20 @@ public final class PublicationInstanceBuilder {
 
     private static JournalIssue generateJournalIssue() {
         return new JournalIssue.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withPages(randomRange())
+                .withVolume(randomVolume())
+                .build();
     }
 
     private static ConferenceAbstract generateConferenceAbstract() {
         return new ConferenceAbstract.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withPages(randomRange())
+                .withVolume(randomVolume())
+                .build();
     }
 
     private static ContextAndInstanceTuple getPublicationContext(Class<?> instanceType) {
@@ -538,38 +592,38 @@ public final class PublicationInstanceBuilder {
 
     private static JournalReview generateJournalReview() {
         return new JournalReview.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withPages(randomRange())
+                .withVolume(randomVolume())
+                .build();
     }
 
     private static JournalLeader generateJournalLeader() {
         return new JournalLeader.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withPages(randomRange())
+                .withVolume(randomVolume())
+                .build();
     }
 
     private static JournalLetter generateJournalLetter() {
         return new JournalLetter.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withPages(randomRange())
+                .withVolume(randomVolume())
+                .build();
     }
 
     private static JournalInterview generateJournalInterview() {
         return new JournalInterview.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withPages(randomRange())
+                .withVolume(randomVolume())
+                .build();
     }
 
     private static AcademicChapter generateAcademicChapter() {
@@ -607,8 +661,8 @@ public final class PublicationInstanceBuilder {
 
     private static ChapterInReport generateChapterInReport() {
         return new ChapterInReport.Builder()
-            .withPages(randomRange())
-            .build();
+                .withPages(randomRange())
+                .build();
     }
 
     private static BookAnthology generateBookAnthology() {
@@ -617,10 +671,10 @@ public final class PublicationInstanceBuilder {
 
     private static MonographPages randomMonographPages() {
         return new MonographPages.Builder()
-            .withPages(randomPagesString())
-            .withIllustrated(randomBoolean())
-            .withIntroduction(randomRange())
-            .build();
+                .withPages(randomPagesString())
+                .withIllustrated(randomBoolean())
+                .withIntroduction(randomRange())
+                .build();
     }
 
     private static Range randomRange() {
@@ -633,12 +687,12 @@ public final class PublicationInstanceBuilder {
 
     private static JournalCorrigendum generateJournalCorrigendum() {
         return new JournalCorrigendum.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withVolume(randomVolume())
-            .withPages(randomRange())
-            .withCorrigendumFor(randomUri())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withVolume(randomVolume())
+                .withPages(randomRange())
+                .withCorrigendumFor(randomUri())
+                .build();
     }
 
     private static AcademicArticle generateAcademicArticle() {
@@ -680,11 +734,11 @@ public final class PublicationInstanceBuilder {
 
     private static FeatureArticle generateFeatureArticle() {
         return new FeatureArticle.Builder()
-            .withArticleNumber(randomArticleNumber())
-            .withIssue(randomIssue())
-            .withPages(randomRange())
-            .withVolume(randomVolume())
-            .build();
+                .withArticleNumber(randomArticleNumber())
+                .withIssue(randomIssue())
+                .withPages(randomRange())
+                .withVolume(randomVolume())
+                .build();
     }
 
     private static String randomVolume() {
@@ -741,8 +795,8 @@ public final class PublicationInstanceBuilder {
 
     private static PerformingArtsSubtype performingArtsSubtype(PerformingArtsSubtypeEnum subtype) {
         return OTHER.equals(subtype.getType())
-                   ? PerformingArtsSubtype.createOther(randomString())
-                   : PerformingArtsSubtype.create(subtype);
+                ? PerformingArtsSubtype.createOther(randomString())
+                : PerformingArtsSubtype.create(subtype);
     }
 
     private static List<PerformingArtsOutput> randomPerformingArtsOutputs() {
@@ -759,8 +813,8 @@ public final class PublicationInstanceBuilder {
 
     private static MovingPictureSubtype getMovingPictureSubtype(MovingPictureSubtypeEnum subtype) {
         return OTHER.equals(subtype.getType())
-                   ? MovingPictureSubtype.createOther(randomString())
-                   : MovingPictureSubtype.create(subtype);
+                ? MovingPictureSubtype.createOther(randomString())
+                : MovingPictureSubtype.create(subtype);
     }
 
     private static List<MovingPictureOutput> randomMovingPictureOutputs() {
@@ -769,7 +823,7 @@ public final class PublicationInstanceBuilder {
 
     private static OtherRelease otherRelease() {
         return new OtherRelease(randomString(), randomUnconfirmedPlace(), new UnconfirmedPublisher(randomString()),
-                                randomNvaInstant(), randomInteger());
+                randomNvaInstant(), randomInteger());
     }
 
     private static CinematicRelease cinematicRelease() {
@@ -786,8 +840,8 @@ public final class PublicationInstanceBuilder {
 
     private static ArchitectureSubtype architectureSubtype(ArchitectureSubtypeEnum subtype) {
         return OTHER.equals(subtype.getType())
-                   ? ArchitectureSubtype.createOther(randomString())
-                   : ArchitectureSubtype.create(subtype);
+                ? ArchitectureSubtype.createOther(randomString())
+                : ArchitectureSubtype.create(subtype);
     }
 
     private static List<ArchitectureOutput> randomArchitectureOutputs() {
@@ -796,7 +850,7 @@ public final class PublicationInstanceBuilder {
 
     private static ArchitectureOutput randomAward() {
         return new Award(randomString(), randomString(), randomNvaInstant(), randomInteger(),
-                         randomString(), randomInteger());
+                randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomCompetition() {
@@ -805,12 +859,12 @@ public final class PublicationInstanceBuilder {
 
     private static Exhibition randomExhibition() {
         return new Exhibition(randomString(), randomUnconfirmedPlace(), randomString(), randomNvaPeriod(),
-                              randomString(), randomInteger());
+                randomString(), randomInteger());
     }
 
     private static ArchitectureOutput randomMentionInPublication() {
         return new MentionInPublication(randomString(), randomIssue(), randomNvaInstant(),
-                                        randomString(), randomInteger());
+                randomString(), randomInteger());
     }
 
     private static VisualArts generateVisualArts() {
@@ -834,8 +888,8 @@ public final class PublicationInstanceBuilder {
 
     private static ArtisticDesign artisticDesign(ArtisticDesignSubtypeEnum subtype) {
         var materializedSubtype = ArtisticDesignSubtypeEnum.OTHER.equals(subtype)
-                                      ? ArtisticDesignSubtype.createOther(randomString())
-                                      : ArtisticDesignSubtype.create(subtype);
+                ? ArtisticDesignSubtype.createOther(randomString())
+                : ArtisticDesignSubtype.create(subtype);
         return new ArtisticDesign(materializedSubtype, randomString(), randomVenues());
     }
 

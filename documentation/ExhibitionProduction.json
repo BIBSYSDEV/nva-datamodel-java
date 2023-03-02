@@ -1,0 +1,217 @@
+{
+  "type" : "Publication",
+  "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+  "status" : "PUBLISHED",
+  "resourceOwner" : {
+    "owner" : "eOx8QHsvAuj1X6jQS",
+    "ownerAffiliation" : "https://www.example.org/nemoet"
+  },
+  "publisher" : {
+    "type" : "Organization",
+    "id" : "https://www.example.org/facilisvoluptatem",
+    "labels" : {
+      "fr" : "di7ZRQ9Kaa2X"
+    }
+  },
+  "createdDate" : "1975-10-08T13:50:49.262Z",
+  "modifiedDate" : "2015-01-12T08:56:15.155Z",
+  "publishedDate" : "1982-05-17T06:03:49.628Z",
+  "indexedDate" : "2014-08-07T05:07:21.290Z",
+  "handle" : "https://www.example.org/innumquam",
+  "doi" : "https://doi.org/10.1234/mollitia",
+  "link" : "https://www.example.org/avoluptatibus",
+  "entityDescription" : {
+    "type" : "EntityDescription",
+    "mainTitle" : "OvMiSU5DeVJhq",
+    "alternativeTitles" : {
+      "nl" : "bTvOhYoJtoW8m6kMi"
+    },
+    "language" : "http://lexvo.org/id/iso639-3/und",
+    "date" : {
+      "type" : "PublicationDate",
+      "year" : "vsEplnJI2f",
+      "month" : "A02WBpVtWFBJd",
+      "day" : "PLcUAbiGw4mE"
+    },
+    "contributors" : [ {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/IvDL2FIYOO",
+        "name" : "4B7VAoSPgCC30C5QCB",
+        "nameType" : "Organizational",
+        "orcId" : "O7AJD1z2vC"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/XXqQSXlKUhXj",
+        "labels" : {
+          "de" : "27YJCH3Pgyh"
+        }
+      } ],
+      "role" : "Consultant",
+      "sequence" : 6,
+      "correspondingAuthor" : false
+    }, {
+      "type" : "Contributor",
+      "identity" : {
+        "type" : "Identity",
+        "id" : "https://www.example.com/YFcxsh6tOIJ3uyRr7",
+        "name" : "mM48bq2Iqq",
+        "nameType" : "Personal",
+        "orcId" : "CEZTnWB5JTmQWxeqolR"
+      },
+      "affiliations" : [ {
+        "type" : "Organization",
+        "id" : "https://www.example.com/4eR692Hbgn",
+        "labels" : {
+          "bg" : "6yg9Jzx3hENTjoPRAe"
+        }
+      } ],
+      "role" : "Artist",
+      "sequence" : 9,
+      "correspondingAuthor" : false
+    } ],
+    "alternativeAbstracts" : {
+      "it" : "JRAlpmJ6bsJTR"
+    },
+    "npiSubjectHeading" : "qUOhONCbwc",
+    "tags" : [ "b3tyEhNfF98ZQ" ],
+    "description" : "k4CnpZ32Rq2",
+    "reference" : {
+      "type" : "Reference",
+      "publicationContext" : {
+        "type" : "ExhibitionContent"
+      },
+      "doi" : "https://www.example.com/1JQxD5f36J",
+      "publicationInstance" : {
+        "type" : "ExhibitionProduction",
+        "subtype" : {
+          "type" : "PopupExhibition"
+        },
+        "manifestations" : [ {
+          "type" : "ExhibitionCatalogReference",
+          "id" : "https://www.example.com/B5leoq7tAWL"
+        }, {
+          "type" : "ExhibitionBasic",
+          "organization" : {
+            "type" : "UnconfirmedOrganization",
+            "name" : "8jjs4rx7rhe98"
+          },
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "bgFUZbtHf02xz",
+            "country" : "R8S0ePPs34oIL"
+          },
+          "date" : {
+            "type" : "Period",
+            "from" : "2007-05-04T03:37:16.161Z",
+            "to" : "2014-09-13T18:09:18.371Z"
+          }
+        }, {
+          "type" : "ExhibitionMentionInPublication",
+          "title" : "lO2dwb3akuhMNsGYBQ",
+          "issue" : "hkz69dxqv7L4WUl4lA",
+          "date" : {
+            "type" : "Instant",
+            "value" : "2007-04-20T09:41:49.550Z"
+          },
+          "otherInformation" : "1Alq48n3Xpsp"
+        }, {
+          "type" : "ExhibitionOtherPresentation",
+          "typeDescription" : "6LRFgCu8bjkOmtl",
+          "description" : "chEomMWozAAn",
+          "place" : {
+            "type" : "UnconfirmedPlace",
+            "label" : "ofX0AjjNBj0CR9K7z",
+            "country" : "Mm3sOYynydUQX"
+          },
+          "publisher" : {
+            "type" : "UnconfirmedPublisher",
+            "name" : "qaSxQbdSsQy3W9"
+          },
+          "date" : {
+            "type" : "Instant",
+            "value" : "1986-07-24T09:47:07.618Z"
+          }
+        } ],
+        "pages" : {
+          "type" : "NullPages"
+        }
+      }
+    },
+    "metadataSource" : "https://www.example.com/h2bZsgB7NwYFIkgT4",
+    "abstract" : "zWQyGApoA9YNdpEyzQL"
+  },
+  "projects" : [ {
+    "type" : "ResearchProject",
+    "id" : "https://www.example.org/aliquideos",
+    "name" : "bAylDimhEDvBOjw9MF",
+    "approvals" : [ {
+      "type" : "Approval",
+      "date" : "1995-02-15T10:03:49.181Z",
+      "approvedBy" : "NMA",
+      "approvalStatus" : "APPROVED",
+      "applicationCode" : "nOEhSp9wcD4MqH"
+    } ]
+  } ],
+  "fundings" : [ {
+    "type" : "UnconfirmedFunding",
+    "source" : "https://www.example.org/repellatat",
+    "identifier" : "Z8G2r7tjeKNb8P",
+    "labels" : {
+      "pl" : "eHRzxRQZhZzNYadGT"
+    },
+    "fundingAmount" : {
+      "currency" : "NOK",
+      "amount" : 1642525300
+    },
+    "activeFrom" : "1979-11-21T15:24:42.519Z",
+    "activeTo" : "1991-04-14T21:07:06.978Z"
+  }, {
+    "type" : "ConfirmedFunding",
+    "source" : "https://www.example.org/debitisin",
+    "id" : "https://www.example.org/magnamut",
+    "identifier" : "0scdWYft6WjCBV8Do",
+    "labels" : {
+      "hu" : "uo5fkSbJ0YPs1RI4u"
+    },
+    "fundingAmount" : {
+      "currency" : "EUR",
+      "amount" : 1578091731
+    },
+    "activeFrom" : "1987-01-31T03:00:50.160Z",
+    "activeTo" : "2014-06-01T14:43:23.629Z"
+  } ],
+  "additionalIdentifiers" : [ {
+    "type" : "AdditionalIdentifier",
+    "source" : "fakesource",
+    "value" : "1234"
+  } ],
+  "subjects" : [ "https://www.example.org/optionisi" ],
+  "associatedArtifacts" : [ {
+    "type" : "PublishedFile",
+    "identifier" : "f307c5df-e8c2-4d99-8fe0-433bbd1bd71e",
+    "name" : "8xHscqUFT531at2X",
+    "mimeType" : "e5gQP5YBW8W",
+    "size" : 1847469668,
+    "license" : {
+      "type" : "License",
+      "identifier" : "rePP7oOAs87c",
+      "labels" : {
+        "el" : "dUgnwOKfmExLucV1C7J"
+      },
+      "link" : "https://www.example.com/mqDSxGDTq2yOrEs"
+    },
+    "administrativeAgreement" : false,
+    "publisherAuthority" : true,
+    "visibleForNonOwner" : true
+  }, {
+    "type" : "AssociatedLink",
+    "id" : "https://www.example.com/YmwZMfg4moVEaVmuz",
+    "name" : "KUVywktbwTH",
+    "description" : "DocDdF9bRK"
+  } ],
+  "rightsHolder" : "5Wu1hpb3M2",
+  "modelVersion" : "0.19.34"
+}
