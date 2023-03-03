@@ -1,10 +1,12 @@
 package no.unit.nva.model.funding;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
@@ -17,7 +19,7 @@ public class FundingList implements List<Funding> {
     private final List<Funding> fundings;
 
     public FundingList(List<Funding> fundings) {
-        this.fundings = fundings;
+        this.fundings = Objects.nonNull(fundings) ? fundings : Collections.emptyList();
     }
 
     @Override
