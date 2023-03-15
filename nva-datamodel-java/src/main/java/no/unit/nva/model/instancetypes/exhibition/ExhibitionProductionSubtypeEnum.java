@@ -11,7 +11,7 @@ public enum ExhibitionProductionSubtypeEnum {
     BASIC_EXHIBITION("BasicExhibition"),
     TEMPORARY_EXHIBITION("TemporaryExhibition"),
     POPUP_EXHIBITION("PopupExhibition"),
-    AMBULATING_EXHIBITION("AmbulatingExhibbition"),
+    AMBULATING_EXHIBITION("AmbulatingExhibition"),
     DIGITAL_EXHIBITION("DigitalExhibition"),
     HISTORICAL_INTERIOR("HistoricalInterior"),
     OTHER("Other");
