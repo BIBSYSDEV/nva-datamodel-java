@@ -64,7 +64,7 @@ public class EntityDescription {
     }
 
     public Map<String, String> getAlternativeAbstracts() {
-        return alternativeAbstracts;
+        return Objects.nonNull(alternativeAbstracts) ? alternativeAbstracts : Collections.emptyMap();
     }
 
     public void setAlternativeAbstracts(Map<String, String> alternativeAbstracts) {
