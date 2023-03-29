@@ -9,8 +9,9 @@ import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.randomLegacyFile;
-import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
+import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
+import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,21 +26,19 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.testing.associatedartifacts.AdministrativeAgreementGenerator;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
-import no.unit.nva.model.testing.associatedartifacts.AssociatedLinkGenerator;
 import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
 import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
-import no.unit.nva.model.testing.associatedartifacts.PublishedFileGenerator;
-import no.unit.nva.model.testing.associatedartifacts.UnpublishedFileGenerator;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.LegacyFile;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
@@ -47,6 +46,11 @@ import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.testing.PublicationInstanceBuilder;
+import no.unit.nva.model.testing.associatedartifacts.AdministrativeAgreementGenerator;
+import no.unit.nva.model.testing.associatedartifacts.AssociatedLinkGenerator;
+import no.unit.nva.model.testing.associatedartifacts.PublishedFileGenerator;
+import no.unit.nva.model.testing.associatedartifacts.UnpublishedFileGenerator;
+import org.hamcrest.Matchers;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
@@ -220,6 +224,91 @@ public class PublicationTest {
     @MethodSource("unpublishablePublicationProvider")
     void shouldMarkPublicationAsWhenDataIsNotCompliantWithPublicationRequirements(Publication publication) {
         assertThat(publication.isPublishable(), is(equalTo(false)));
+    }
+
+    @Test
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForPublicationMissingYear() {
+        var publication = createSamplePublication();
+        publication.getEntityDescription().getDate().setYear(null);
+        var expectedResult = false;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+    }
+
+    @Test
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForPublicationMissingTitle() {
+        var publication = createSamplePublication();
+        publication.getEntityDescription().setMainTitle(null);
+        var expectedResult = false;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+    }
+
+    @Test
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForPublicationMissingPublisherId() {
+        var publication = createSamplePublication();
+        publication.getPublisher().setId(null);
+        var expectedResult = false;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+    }
+
+    @Test
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForDraftPublication() {
+        var publication = createSamplePublication();
+        publication.setStatus(PublicationStatus.DRAFT);
+        var expectedResult = false;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+    }
+
+    @Test
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForPublicationMissingPublicationIdentifier() {
+        var publication = createSamplePublication();
+        publication.setIdentifier(null);
+        var expectedResult = false;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+    }
+
+    @Test
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForPublicationMissingModifiedDate() {
+        var publication = createSamplePublication();
+        publication.setModifiedDate(null);
+        var expectedResult = false;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+    }
+
+    @Test
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForPublicationMissingInstanceType() {
+        var publication = createSamplePublication();
+        publication.getEntityDescription().getReference().setPublicationInstance(null);
+        var expectedResult = false;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+    }
+
+    @ParameterizedTest(name = "should return true for satisfiesFindable doi requirements for publication with all "
+                              + "mandatory fields present")
+    @EnumSource(value = PublicationStatus.class,  names = {"PUBLISHED_METADATA", "PUBLISHED"})
+    void shouldReturnTrueIfMandatoryFieldsArePresent(PublicationStatus validPublicationStatus) {
+        var publication = createSamplePublication();
+        publication.setStatus(validPublicationStatus);
+        publication.setPublisher(
+            new Organization.Builder().withId(randomUri()).build());
+        publication.getEntityDescription().getDate().setYear("2014");
+        publication.getEntityDescription().setMainTitle("some title");
+        publication.setIdentifier(SortableIdentifier.next());
+        publication.setModifiedDate(Instant.now());
+        var expectedResult = true;
+        assertThat(publication.satisfiesFindableDoiRequirements(),
+                   is(Matchers.equalTo(expectedResult)));
+
+    }
+
+    private Publication createSamplePublication() {
+        return PublicationGenerator.publicationWithIdentifier();
     }
 
     

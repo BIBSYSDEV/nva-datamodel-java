@@ -3,6 +3,7 @@ package no.unit.nva.model;
 import static java.util.Objects.hash;
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
+import static no.unit.nva.model.PublicationStatus.PUBLISHED_METADATA;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,6 +30,7 @@ import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingList;
+import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.StringUtils;
 
@@ -41,6 +43,9 @@ public class Publication
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
         PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION)
     );
+
+    private static final Set<PublicationStatus> VALID_PUBLICATION_STATUS_FOR_FINDABLE_DOI =
+        Set.of(PublicationStatus.PUBLISHED, PUBLISHED_METADATA);
 
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
 
@@ -206,6 +211,16 @@ public class Publication
     }
 
     @Override
+    public List<URI> getSubjects() {
+        return nonNull(subjects) ? subjects : Collections.emptyList();
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
+    }
+
+    @Override
     public List<Funding> getFundings() {
         return nonNull(fundings) ? fundings : Collections.emptyList();
     }
@@ -216,13 +231,13 @@ public class Publication
     }
 
     @Override
-    public List<URI> getSubjects() {
-        return nonNull(subjects) ? subjects : Collections.emptyList();
+    public String getRightsHolder() {
+        return rightsHolder;
     }
 
     @Override
-    public void setSubjects(List<URI> subjects) {
-        this.subjects = subjects;
+    public void setRightsHolder(String rightsHolder) {
+        this.rightsHolder = rightsHolder;
     }
 
     @JsonProperty("modelVersion")
@@ -245,16 +260,6 @@ public class Publication
     @Override
     public void setAssociatedArtifacts(AssociatedArtifactList associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
-    }
-
-    @Override
-    public void setRightsHolder(String rightsHolder) {
-        this.rightsHolder = rightsHolder;
-    }
-
-    @Override
-    public String getRightsHolder() {
-        return rightsHolder;
     }
 
     @Override
@@ -337,14 +342,6 @@ public class Publication
         return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElseThrow();
     }
 
-    private void verifyStatusTransition(PublicationStatus nextStatus)
-        throws InvalidPublicationStatusTransitionException {
-        final PublicationStatus currentStatus = getStatus();
-        if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
-            throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
-        }
-    }
-
     @JsonIgnore
     public String getJsonLdContext() {
         return stringFromResources(Path.of("publicationContext.json"));
@@ -353,6 +350,14 @@ public class Publication
     @JsonIgnore
     public boolean isPublishable() {
         return !DRAFT_FOR_DELETION.equals(getStatus()) && hasMainTitle() && hasReferencedContent();
+    }
+
+    private void verifyStatusTransition(PublicationStatus nextStatus)
+        throws InvalidPublicationStatusTransitionException {
+        final PublicationStatus currentStatus = getStatus();
+        if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
+            throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
+        }
     }
 
     private boolean hasReferencedContent() {
@@ -371,6 +376,46 @@ public class Publication
                    .map(EntityDescription::getReference)
                    .map(Reference::getDoi)
                    .isPresent();
+    }
+
+    public boolean satisfiesFindableDoiRequirements() {
+        return hasCorrectPublishedStatus() && mandatoryFieldsAreNotNull();
+    }
+
+    private boolean hasCorrectPublishedStatus() {
+        return VALID_PUBLICATION_STATUS_FOR_FINDABLE_DOI.contains(getStatus());
+    }
+
+    private boolean mandatoryFieldsAreNotNull() {
+        return nonNull(getIdentifier())
+               && nonNull(getPublisher())
+               && nonNull(getPublisher().getId())
+               && nonNull(getModifiedDate())
+               && hasAMainTitle()
+               && hasAnInstanceType()
+               && hasADate();
+    }
+
+    private boolean hasADate() {
+        return Optional.ofNullable(getEntityDescription())
+                   .map(EntityDescription::getDate)
+                   .map(PublicationDate::getYear)
+                   .isPresent();
+    }
+
+    private boolean hasAnInstanceType() {
+        return Optional.ofNullable(getEntityDescription())
+                   .map(EntityDescription::getReference)
+                   .map(Reference::getPublicationInstance)
+                   .map(PublicationInstance::getInstanceType)
+                   .isPresent();
+    }
+
+    private boolean hasAMainTitle() {
+        return Optional.ofNullable(getEntityDescription())
+                   .map(EntityDescription::getMainTitle)
+                   .map(StringUtils::isNotEmpty)
+                   .orElse(false);
     }
 
     public static final class Builder {
