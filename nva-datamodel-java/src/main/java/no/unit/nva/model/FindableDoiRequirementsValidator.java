@@ -19,7 +19,7 @@ final class FindableDoiRequirementsValidator {
 
     }
 
-    static boolean meetsFindableDoiRequirements(Publication publication) {
+    /* default */ static boolean meetsFindableDoiRequirements(Publication publication) {
         return hasCorrectPublishedStatus(publication) && mandatoryFieldsAreNotNull(publication);
     }
 
