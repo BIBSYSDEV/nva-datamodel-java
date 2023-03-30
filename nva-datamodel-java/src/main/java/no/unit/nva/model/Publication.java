@@ -3,7 +3,6 @@ package no.unit.nva.model;
 import static java.util.Objects.hash;
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
-import static no.unit.nva.model.PublicationStatus.PUBLISHED_METADATA;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +29,6 @@ import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.exceptions.InvalidPublicationStatusTransitionException;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingList;
-import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.StringUtils;
 
@@ -43,9 +41,6 @@ public class Publication
         PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
         PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION)
     );
-
-    private static final Set<PublicationStatus> VALID_PUBLICATION_STATUS_FOR_FINDABLE_DOI =
-        Set.of(PublicationStatus.PUBLISHED, PUBLISHED_METADATA);
 
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
 
@@ -379,43 +374,7 @@ public class Publication
     }
 
     public boolean satisfiesFindableDoiRequirements() {
-        return hasCorrectPublishedStatus() && mandatoryFieldsAreNotNull();
-    }
-
-    private boolean hasCorrectPublishedStatus() {
-        return VALID_PUBLICATION_STATUS_FOR_FINDABLE_DOI.contains(getStatus());
-    }
-
-    private boolean mandatoryFieldsAreNotNull() {
-        return nonNull(getIdentifier())
-               && nonNull(getPublisher())
-               && nonNull(getPublisher().getId())
-               && nonNull(getModifiedDate())
-               && hasAMainTitle()
-               && hasAnInstanceType()
-               && hasADate();
-    }
-
-    private boolean hasADate() {
-        return Optional.ofNullable(getEntityDescription())
-                   .map(EntityDescription::getDate)
-                   .map(PublicationDate::getYear)
-                   .isPresent();
-    }
-
-    private boolean hasAnInstanceType() {
-        return Optional.ofNullable(getEntityDescription())
-                   .map(EntityDescription::getReference)
-                   .map(Reference::getPublicationInstance)
-                   .map(PublicationInstance::getInstanceType)
-                   .isPresent();
-    }
-
-    private boolean hasAMainTitle() {
-        return Optional.ofNullable(getEntityDescription())
-                   .map(EntityDescription::getMainTitle)
-                   .map(StringUtils::isNotEmpty)
-                   .orElse(false);
+        return FindableDoiRequirementsValidator.meetsFindableDoiRequirements(this);
     }
 
     public static final class Builder {
