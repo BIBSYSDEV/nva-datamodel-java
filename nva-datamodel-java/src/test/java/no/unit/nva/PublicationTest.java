@@ -256,7 +256,7 @@ public class PublicationTest {
     @Test
     void shouldReturnFalseForSatisfiesFindableDoiRequirementForDraftPublication() {
         var publication = createSamplePublication();
-        publication.setStatus(PublicationStatus.DRAFT);
+        publication.setStatus(DRAFT);
         var expectedResult = false;
         assertThat(publication.satisfiesFindableDoiRequirements(),
                    is(Matchers.equalTo(expectedResult)));
