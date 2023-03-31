@@ -9,7 +9,7 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.StringUtils;
 
-final class FindableDoiRequirementsValidator {
+/* default */ final class FindableDoiRequirementsValidator {
 
     private static final Set<PublicationStatus> VALID_PUBLICATION_STATUS_FOR_FINDABLE_DOI =
         Set.of(PUBLISHED, PUBLISHED_METADATA);

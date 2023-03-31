@@ -347,6 +347,10 @@ public class Publication
         return !DRAFT_FOR_DELETION.equals(getStatus()) && hasMainTitle() && hasReferencedContent();
     }
 
+    public boolean satisfiesFindableDoiRequirements() {
+        return FindableDoiRequirementsValidator.meetsFindableDoiRequirements(this);
+    }
+
     private void verifyStatusTransition(PublicationStatus nextStatus)
         throws InvalidPublicationStatusTransitionException {
         final PublicationStatus currentStatus = getStatus();
@@ -371,10 +375,6 @@ public class Publication
                    .map(EntityDescription::getReference)
                    .map(Reference::getDoi)
                    .isPresent();
-    }
-
-    public boolean satisfiesFindableDoiRequirements() {
-        return FindableDoiRequirementsValidator.meetsFindableDoiRequirements(this);
     }
 
     public static final class Builder {
