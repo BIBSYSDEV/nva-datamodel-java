@@ -206,6 +206,16 @@ public class Publication
     }
 
     @Override
+    public List<URI> getSubjects() {
+        return nonNull(subjects) ? subjects : Collections.emptyList();
+    }
+
+    @Override
+    public void setSubjects(List<URI> subjects) {
+        this.subjects = subjects;
+    }
+
+    @Override
     public List<Funding> getFundings() {
         return nonNull(fundings) ? fundings : Collections.emptyList();
     }
@@ -216,13 +226,13 @@ public class Publication
     }
 
     @Override
-    public List<URI> getSubjects() {
-        return nonNull(subjects) ? subjects : Collections.emptyList();
+    public String getRightsHolder() {
+        return rightsHolder;
     }
 
     @Override
-    public void setSubjects(List<URI> subjects) {
-        this.subjects = subjects;
+    public void setRightsHolder(String rightsHolder) {
+        this.rightsHolder = rightsHolder;
     }
 
     @JsonProperty("modelVersion")
@@ -245,16 +255,6 @@ public class Publication
     @Override
     public void setAssociatedArtifacts(AssociatedArtifactList associatedArtifacts) {
         this.associatedArtifacts = associatedArtifacts;
-    }
-
-    @Override
-    public void setRightsHolder(String rightsHolder) {
-        this.rightsHolder = rightsHolder;
-    }
-
-    @Override
-    public String getRightsHolder() {
-        return rightsHolder;
     }
 
     @Override
@@ -337,14 +337,6 @@ public class Publication
         return attempt(() -> JsonUtils.dtoObjectMapper.writeValueAsString(this)).orElseThrow();
     }
 
-    private void verifyStatusTransition(PublicationStatus nextStatus)
-        throws InvalidPublicationStatusTransitionException {
-        final PublicationStatus currentStatus = getStatus();
-        if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
-            throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
-        }
-    }
-
     @JsonIgnore
     public String getJsonLdContext() {
         return stringFromResources(Path.of("publicationContext.json"));
@@ -353,6 +345,18 @@ public class Publication
     @JsonIgnore
     public boolean isPublishable() {
         return !DRAFT_FOR_DELETION.equals(getStatus()) && hasMainTitle() && hasReferencedContent();
+    }
+
+    public boolean satisfiesFindableDoiRequirements() {
+        return FindableDoiRequirementsValidator.meetsFindableDoiRequirements(this);
+    }
+
+    private void verifyStatusTransition(PublicationStatus nextStatus)
+        throws InvalidPublicationStatusTransitionException {
+        final PublicationStatus currentStatus = getStatus();
+        if (!validStatusTransitionsMap.get(currentStatus).contains(nextStatus)) {
+            throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
+        }
     }
 
     private boolean hasReferencedContent() {
