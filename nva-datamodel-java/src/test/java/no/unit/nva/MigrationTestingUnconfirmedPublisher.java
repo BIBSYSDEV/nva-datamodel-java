@@ -25,17 +25,17 @@ public class MigrationTestingUnconfirmedPublisher {
             + "  \"sequence\": \"1\"\n"
             + "}",
             "{\n"
-                    + "  \"type\": \"Broadcast\",\n"
-                    + "  \"publisher\": {\n"
-                    + "    \"type\": \"UnconfirmedPublisher\",\n"
-                    + "    \"name\": \"My publisher\"\n"
-                    + "  },\n"
-                    + "  \"date\": {\n"
-                    + "    \"type\": \"Instant\",\n"
-                    + "    \"value\": \"2022-03-23T00:00:00.000000Z\"\n"
-                    + "  },\n"
-                    + "  \"sequence\": \"1\"\n"
-                    + "}"})
+            + "  \"type\": \"Broadcast\",\n"
+            + "  \"publisher\": {\n"
+            + "    \"type\": \"UnconfirmedPublisher\",\n"
+            + "    \"name\": \"My publisher\"\n"
+            + "  },\n"
+            + "  \"date\": {\n"
+            + "    \"type\": \"Instant\",\n"
+            + "    \"value\": \"2022-03-23T00:00:00.000000Z\"\n"
+            + "  },\n"
+            + "  \"sequence\": \"1\"\n"
+            + "}"})
     void shouldMigrateBroadcastPublishers(String value) {
         assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(value, Broadcast.class));
 
@@ -59,22 +59,21 @@ public class MigrationTestingUnconfirmedPublisher {
             + "    \"value\" : \"2016-01-09T00:59:20.264Z\"\n"
             + "  },\n"
             + "  \"sequence\" : 191312365\n"
-            + "}",
-            "{\n"
-                    + "  \"type\" : \"OtherRelease\",\n"
-                    + "  \"description\" : \"SmM4g4sYfz\",\n"
-                    + "  \"place\" : {\n"
-                    + "    \"type\" : \"UnconfirmedPlace\",\n"
-                    + "    \"label\" : \"dc6zWFBfBcmnzlwN1z\",\n"
-                    + "    \"country\" : \"LEQElC2GRpVi75IbqI\"\n"
-                    + "  },\n"
-                    + "  \"publisher\" : \"o3XnSxNZkyprTM7DWoQ\",\n"
-                    + "  \"date\" : {\n"
-                    + "    \"type\" : \"Instant\",\n"
-                    + "    \"value\" : \"2016-01-09T00:59:20.264Z\"\n"
-                    + "  },\n"
-                    + "  \"sequence\" : 191312365\n"
-                    + "}"})
+            + "}", "{\n"
+            + "  \"type\" : \"OtherRelease\",\n"
+            + "  \"description\" : \"SmM4g4sYfz\",\n"
+            + "  \"place\" : {\n"
+            + "    \"type\" : \"UnconfirmedPlace\",\n"
+            + "    \"label\" : \"dc6zWFBfBcmnzlwN1z\",\n"
+            + "    \"country\" : \"LEQElC2GRpVi75IbqI\"\n"
+            + "  },\n"
+            + "  \"publisher\" : \"o3XnSxNZkyprTM7DWoQ\",\n"
+            + "  \"date\" : {\n"
+            + "    \"type\" : \"Instant\",\n"
+            + "    \"value\" : \"2016-01-09T00:59:20.264Z\"\n"
+            + "  },\n"
+            + "  \"sequence\" : 191312365\n"
+            + "}"})
     void shouldMigrateOtherRelease(String value) {
         assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(value, OtherRelease.class));
     }
