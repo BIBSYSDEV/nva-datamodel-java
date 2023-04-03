@@ -18,7 +18,6 @@ public class MusicScore implements MusicPerformanceManifestation, UnconfirmedPub
     public static final String EXTENT_FIELD = "extent";
     public static final String PUBLISHER_FIELD = "publisher";
     public static final String ISMN_FIELD = "ismn";
-    public static final String ISRC_FIELD = "isrc";
 
     @JsonProperty(ENSEMBLE_FIELD)
     private final String ensemble;
@@ -30,41 +29,36 @@ public class MusicScore implements MusicPerformanceManifestation, UnconfirmedPub
     private final PublishingHouse publisher;
     @JsonProperty(ISMN_FIELD)
     private final Ismn ismn;
-    @JsonProperty(ISRC_FIELD)
-    private final Isrc isrc;
-
-    @JsonCreator
-    public static MusicScore fromJson(@JsonProperty(ENSEMBLE_FIELD) String ensemble,
-                                      @JsonProperty(MOVEMENTS_FIELD) String movements,
-                                      @JsonProperty(EXTENT_FIELD) String extent,
-                                      @JsonProperty(PUBLISHER_FIELD) Object publisher,
-                                      @JsonProperty(ISMN_FIELD) Ismn ismn,
-                                      @JsonProperty(ISRC_FIELD) Isrc isrc) {
-        var publishingHouse = publisher instanceof String
-                ? new UnconfirmedPublisher((String) publisher)
-                : UnconfirmedPublisherMigrator.toPublisher(publisher);
-        return new MusicScore(ensemble, movements, extent, publishingHouse, ismn, isrc);
-    }
 
     public MusicScore(@JsonProperty(ENSEMBLE_FIELD) String ensemble,
                       @JsonProperty(MOVEMENTS_FIELD) String movements,
                       @JsonProperty(EXTENT_FIELD) String extent,
                       @JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher,
-                      @JsonProperty(ISMN_FIELD) Ismn ismn,
-                      @JsonProperty(ISRC_FIELD) Isrc isrc) {
+                      @JsonProperty(ISMN_FIELD) Ismn ismn) {
 
         this.ensemble = ensemble;
         this.movements = movements;
         this.extent = extent;
         this.publisher = publisher;
         this.ismn = ismn;
-        this.isrc = isrc;
+    }
+
+    @JsonCreator
+    public static MusicScore fromJson(@JsonProperty(ENSEMBLE_FIELD) String ensemble,
+                                      @JsonProperty(MOVEMENTS_FIELD) String movements,
+                                      @JsonProperty(EXTENT_FIELD) String extent,
+                                      @JsonProperty(PUBLISHER_FIELD) Object publisher,
+                                      @JsonProperty(ISMN_FIELD) Ismn ismn) {
+        var publishingHouse = publisher instanceof String
+                                  ? new UnconfirmedPublisher((String) publisher)
+                                  : UnconfirmedPublisherMigrator.toPublisher(publisher);
+        return new MusicScore(ensemble, movements, extent, publishingHouse, ismn);
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(getEnsemble(), getMovements(), getExtent(), getPublisher(), getIsmn(), getIsrc());
+        return Objects.hash(getEnsemble(), getMovements(), getExtent(), getPublisher(), getIsmn());
     }
 
     @Override
@@ -81,8 +75,7 @@ public class MusicScore implements MusicPerformanceManifestation, UnconfirmedPub
                && Objects.equals(getMovements(), that.getMovements())
                && Objects.equals(getExtent(), that.getExtent())
                && Objects.equals(getPublisher(), that.getPublisher())
-               && Objects.equals(getIsmn(), that.getIsmn())
-               && Objects.equals(getIsrc(), that.getIsrc());
+               && Objects.equals(getIsmn(), that.getIsmn());
     }
 
     public String getEnsemble() {
@@ -103,9 +96,5 @@ public class MusicScore implements MusicPerformanceManifestation, UnconfirmedPub
 
     public Ismn getIsmn() {
         return ismn;
-    }
-
-    public Isrc getIsrc() {
-        return isrc;
     }
 }
