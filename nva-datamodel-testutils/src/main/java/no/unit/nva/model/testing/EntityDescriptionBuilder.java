@@ -17,7 +17,9 @@ import no.unit.nva.model.Identity;
 import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Reference;
-import no.unit.nva.model.Role;
+import no.unit.nva.model.role.Role;
+import no.unit.nva.model.role.RoleType;
+import no.unit.nva.model.role.RoleTypeOther;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -78,8 +80,13 @@ public final class EntityDescriptionBuilder {
         return randomElement(NameType.values());
     }
 
-    private static Role randomRole() {
-        return randomElement(Role.values());
+    private static RoleType randomRole() {
+        var role = randomElement(Role.values());
+        return Role.OTHER.equals(role) ? randomOtherRole() : new RoleType(role);
+    }
+
+    private static RoleType randomOtherRole() {
+        return new RoleTypeOther(Role.OTHER, randomString());
     }
 
     private static List<Organization> randomOrganizations() {

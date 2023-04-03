@@ -1,4 +1,4 @@
-package no.unit.nva.model;
+package no.unit.nva.model.role;
 
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
