@@ -353,8 +353,7 @@ public final class PublicationInstanceBuilder {
                               randomString(),
                               randomString(),
                               randomUnconfirmedPublisher(),
-                              randomIsmn(),
-                              randomIsrc());
+                              randomIsmn());
     }
 
     private static Isrc randomIsrc() {
@@ -392,7 +391,8 @@ public final class PublicationInstanceBuilder {
         return new AudioVisualPublication(randomElement(MusicMediaType.values()),
                                           randomUnconfirmedPublisher(),
                                           randomString(),
-                                          randomTrackList());
+                                          randomTrackList(),
+                                          randomIsrc());
     }
 
     private static List<MusicTrack> randomTrackList() {

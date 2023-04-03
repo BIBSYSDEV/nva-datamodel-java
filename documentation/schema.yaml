@@ -75,10 +75,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        publishable:
+        empty:
           type: boolean
           example: null
-        empty:
+        publishable:
           type: boolean
           example: null
       example: null
@@ -399,10 +399,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      publishable:
+      empty:
         type: boolean
         example: null
-      empty:
+      publishable:
         type: boolean
         example: null
     example: null
@@ -464,6 +464,8 @@ referencedSchemas:
           example: null
           items:
             $ref: '#/components/schemas/MusicTrack'
+        isrc:
+          $ref: '#/components/schemas/Isrc'
         type:
           type: string
           example: null
@@ -1421,15 +1423,15 @@ referencedSchemas:
       identifier:
         type: string
         example: null
+      source:
+        type: string
+        format: uri
+        example: null
       labels:
         type: object
         additionalProperties:
           type: string
           example: null
-        example: null
-      source:
-        type: string
-        format: uri
         example: null
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
@@ -2384,8 +2386,6 @@ referencedSchemas:
           $ref: '#/components/schemas/PublishingHouse'
         ismn:
           $ref: '#/components/schemas/Ismn'
-        isrc:
-          $ref: '#/components/schemas/Isrc'
         type:
           type: string
           example: null
@@ -2893,10 +2893,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          publishable:
+          empty:
             type: boolean
             example: null
-          empty:
+          publishable:
             type: boolean
             example: null
         example: null
