@@ -91,6 +91,7 @@ public class Concert implements MusicPerformanceManifestation {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getPlace(), getTime(), getExtent(), getDescription(), getConcertProgramme(), getConcertSeries());
+        return Objects.hash(getPlace(), getTime(), getExtent(),
+                            getDescription(), getConcertProgramme(), getConcertSeries());
     }
 }
