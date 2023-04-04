@@ -21,7 +21,7 @@ class ConcertTest {
                 randomString(),
                 randomString(),
                 null,
-                randomBoolean());
+                randomString());
         var serialized = JsonUtils.dtoObjectMapper.writeValueAsString(concert);
         var json = JsonUtils.dtoObjectMapper.readTree(serialized);
         assertThat(json.get(CONCERT_PROGRAMME_FIELD).isArray(), is(true));
