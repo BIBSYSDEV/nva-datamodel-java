@@ -384,7 +384,7 @@ public final class PublicationInstanceBuilder {
                            randomString(),
                            randomString(),
                            randomConcertProgramme(),
-                           randomBoolean());
+                           randomString());
     }
 
     private static List<MusicalWorkPerformance> randomConcertProgramme() {
