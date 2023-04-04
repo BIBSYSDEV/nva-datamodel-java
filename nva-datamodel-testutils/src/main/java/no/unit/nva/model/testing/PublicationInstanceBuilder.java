@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import no.unit.nva.model.UnconfirmedOrganization;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
 import no.unit.nva.model.contexttypes.place.UnconfirmedPlace;
@@ -98,6 +100,15 @@ import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
 import no.unit.nva.model.instancetypes.event.OtherPresentation;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProduction;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProductionSubtype;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProductionSubtypeEnum;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProductionSubtypeOther;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionBasic;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionCatalogReference;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionMentionInPublication;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionOtherPresentation;
+import no.unit.nva.model.instancetypes.exhibition.manifestations.ExhibitionProductionManifestation;
 import no.unit.nva.model.instancetypes.journal.AcademicArticle;
 import no.unit.nva.model.instancetypes.journal.AcademicLiteratureReview;
 import no.unit.nva.model.instancetypes.journal.CaseReport;
@@ -289,6 +300,8 @@ public final class PublicationInstanceBuilder {
                 return generateDataSet();
             case "Map":
                 return generateMap();
+            case "ExhibitionProduction":
+                return generateExhibitionProduction();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + typeName);
         }
@@ -320,6 +333,49 @@ public final class PublicationInstanceBuilder {
 
     public static UnconfirmedPlace randomUnconfirmedPlace() {
         return new UnconfirmedPlace(randomString(), randomString());
+    }
+
+    private static ExhibitionProduction generateExhibitionProduction() {
+        var subtype = generateRandomExhibitionProductionSubtype();
+        return new ExhibitionProduction(subtype, generateRandomExhibitionThings());
+    }
+
+    private static ExhibitionProductionSubtype generateRandomExhibitionProductionSubtype() {
+        var subtype = randomElement(ExhibitionProductionSubtypeEnum.values());
+        return ExhibitionProductionSubtypeEnum.OTHER.equals(subtype)
+                   ? new ExhibitionProductionSubtypeOther(subtype, randomString())
+                   : new ExhibitionProductionSubtype(subtype);
+    }
+
+    private static List<ExhibitionProductionManifestation> generateRandomExhibitionThings() {
+        return List.of(
+            randomExhibitionCatalogReference(),
+            randomExhibitionBasic(),
+            randomExhibitionMentionInPublication(),
+            randomExhibitionOtherPresentation()
+        );
+    }
+
+    private static ExhibitionOtherPresentation randomExhibitionOtherPresentation() {
+        return new ExhibitionOtherPresentation(randomString(), randomString(), randomUnconfirmedPlace(),
+                                               randomUnconfirmedPublisher(), randomNvaInstant());
+    }
+
+    private static ExhibitionMentionInPublication randomExhibitionMentionInPublication() {
+        return new ExhibitionMentionInPublication(randomString(), randomString(), randomString(), randomNvaInstant(),
+                                                  randomString());
+    }
+
+    private static ExhibitionBasic randomExhibitionBasic() {
+        return new ExhibitionBasic(randomUnconfirmedOrganization(), randomUnconfirmedPlace(), randomNvaPeriod());
+    }
+
+    private static ExhibitionCatalogReference randomExhibitionCatalogReference() {
+        return new ExhibitionCatalogReference(randomUri());
+    }
+
+    private static UnconfirmedOrganization randomUnconfirmedOrganization() {
+        return new UnconfirmedOrganization(randomString());
     }
 
     private static DataSet generateDataSet() {

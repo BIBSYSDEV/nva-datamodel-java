@@ -1,18 +1,5 @@
 package no.unit.nva.model.testing;
 
-import static no.unit.nva.model.testing.RandomUtils.randomLabel;
-import static no.unit.nva.model.testing.RandomUtils.randomLabels;
-import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
-import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
-import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
-import static no.unit.nva.testutils.RandomDataGenerator.randomIssn;
-import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
-import static nva.commons.core.attempt.Try.attempt;
-import java.net.URI;
-import java.time.Instant;
-import java.util.List;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.contexttypes.Artistic;
@@ -20,6 +7,7 @@ import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Event;
+import no.unit.nva.model.contexttypes.ExhibitionContent;
 import no.unit.nva.model.contexttypes.GeographicalContent;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.MediaContribution;
@@ -44,6 +32,21 @@ import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import no.unit.nva.model.time.Period;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
+
+import java.net.URI;
+import java.time.Instant;
+import java.util.List;
+
+import static no.unit.nva.model.testing.RandomUtils.randomLabel;
+import static no.unit.nva.model.testing.RandomUtils.randomLabels;
+import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
+import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
+import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
+import static no.unit.nva.testutils.RandomDataGenerator.randomIssn;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
+import static nva.commons.core.attempt.Try.attempt;
 
 @SuppressWarnings("PMD.CouplingBetweenObjects")
 @JacocoGenerated
@@ -129,9 +132,15 @@ public class PublicationContextBuilder {
                 return randomResearchData();
             case "Map":
                 return randomGeographicalContent();
+            case "ExhibitionProduction":
+                return randomExhibition();
             default:
                 throw new UnsupportedOperationException("Publication instance not supported: " + className);
         }
+    }
+
+    private static ExhibitionContent randomExhibition() {
+        return new ExhibitionContent();
     }
 
     private static GeographicalContent randomGeographicalContent() {

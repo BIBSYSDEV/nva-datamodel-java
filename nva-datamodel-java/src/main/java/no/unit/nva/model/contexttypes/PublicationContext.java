@@ -22,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(name = "UnconfirmedMediaContributionPeriodical",
         value = UnconfirmedMediaContributionPeriodical.class),
     @JsonSubTypes.Type(name = "ResearchData", value = ResearchData.class),
-    @JsonSubTypes.Type(name = "GeographicalContent", value = GeographicalContent.class)
+    @JsonSubTypes.Type(name = "GeographicalContent", value = GeographicalContent.class),
+    @JsonSubTypes.Type(name = "ExhibitionContent", value = ExhibitionContent.class)
 })
 public interface PublicationContext {
 
