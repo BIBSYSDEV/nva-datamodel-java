@@ -445,15 +445,7 @@ referencedSchemas:
     - type: object
       properties:
         mediaType:
-          type: string
-          example: null
-          enum:
-          - CompactDisc
-          - DVD
-          - Streaming
-          - DigitalFile
-          - Vinyl
-          - Other
+          $ref: '#/components/schemas/MusicMediaSubtype'
         publisher:
           $ref: '#/components/schemas/PublishingHouse'
         catalogueNumber:
@@ -796,8 +788,8 @@ referencedSchemas:
           example: null
           items:
             $ref: '#/components/schemas/MusicalWorkPerformance'
-        partOfSeries:
-          type: boolean
+        concertSeries:
+          type: string
           example: null
       example: null
   ConferenceAbstract:
@@ -1311,6 +1303,20 @@ referencedSchemas:
           type: string
           example: null
       example: null
+  ExhibitionBasic:
+    type: object
+    example: null
+    allOf:
+    - $ref: '#/components/schemas/ExhibitionProductionManifestation'
+    - type: object
+      properties:
+        organization:
+          $ref: '#/components/schemas/UnconfirmedOrganization'
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        date:
+          $ref: '#/components/schemas/Period'
+      example: null
   ExhibitionCatalog:
     required:
     - type
@@ -1345,6 +1351,143 @@ referencedSchemas:
           type: string
           example: null
       example: null
+  ExhibitionCatalogReference:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/ExhibitionProductionManifestation'
+    - type: object
+      properties:
+        id:
+          type: string
+          format: uri
+          example: null
+        type:
+          type: string
+          example: null
+      example: null
+  ExhibitionContent:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationContext'
+    - type: object
+      properties:
+        type:
+          type: string
+          example: null
+      example: null
+  ExhibitionMentionInPublication:
+    type: object
+    example: null
+    allOf:
+    - $ref: '#/components/schemas/ExhibitionProductionManifestation'
+    - type: object
+      properties:
+        title:
+          type: string
+          example: null
+        issue:
+          type: string
+          example: null
+        pages:
+          type: string
+          example: null
+        date:
+          $ref: '#/components/schemas/Time'
+        otherInformation:
+          type: string
+          example: null
+      example: null
+  ExhibitionOtherPresentation:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/ExhibitionProductionManifestation'
+    - type: object
+      properties:
+        typeDescription:
+          type: string
+          example: null
+        description:
+          type: string
+          example: null
+        place:
+          $ref: '#/components/schemas/UnconfirmedPlace'
+        publisher:
+          $ref: '#/components/schemas/PublishingHouse'
+        date:
+          $ref: '#/components/schemas/Instant'
+        type:
+          type: string
+          example: null
+      example: null
+  ExhibitionProduction:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublicationInstancePages'
+    - type: object
+      properties:
+        subtype:
+          $ref: '#/components/schemas/ExhibitionProductionSubtype'
+        manifestations:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/ExhibitionProductionManifestation'
+        pages:
+          $ref: '#/components/schemas/NullPages'
+        type:
+          type: string
+          example: null
+      example: null
+  ExhibitionProductionManifestation:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+        example: null
+    example: null
+    discriminator:
+      propertyName: type
+  ExhibitionProductionSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        example: null
+        enum:
+        - BasicExhibition
+        - TemporaryExhibition
+        - PopupExhibition
+        - AmbulatingExhibition
+        - DigitalExhibition
+        - HistoricalInterior
+        - Other
+      description:
+        type: string
+        writeOnly: true
+        example: null
+    example: null
   FeatureArticle:
     required:
     - type
@@ -1423,9 +1566,15 @@ referencedSchemas:
       identifier:
         type: string
         example: null
-      source:
+      activeFrom:
         type: string
-        format: uri
+        format: date-time
+        example: null
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
+      activeTo:
+        type: string
+        format: date-time
         example: null
       labels:
         type: object
@@ -1433,15 +1582,9 @@ referencedSchemas:
           type: string
           example: null
         example: null
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
-      activeFrom:
+      source:
         type: string
-        format: date-time
-        example: null
-      activeTo:
-        type: string
-        format: date-time
+        format: uri
         example: null
       type:
         type: string
@@ -2324,6 +2467,24 @@ referencedSchemas:
         - INTERACTIVE
         - AUGMENTED_VIRTUAL_REALITY
         - OTHER
+      description:
+        type: string
+        writeOnly: true
+        example: null
+    example: null
+  MusicMediaSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        example: null
+        enum:
+        - CompactDisc
+        - DVD
+        - Streaming
+        - DigitalFile
+        - Vinyl
+        - Other
       description:
         type: string
         writeOnly: true
@@ -3368,15 +3529,11 @@ referencedSchemas:
       example: null
   UnconfirmedOrganization:
     type: object
+    properties:
+      name:
+        type: string
+        example: null
     example: null
-    allOf:
-    - $ref: '#/components/schemas/Agent'
-    - type: object
-      properties:
-        name:
-          type: string
-          example: null
-      example: null
   UnconfirmedPlace:
     required:
     - type

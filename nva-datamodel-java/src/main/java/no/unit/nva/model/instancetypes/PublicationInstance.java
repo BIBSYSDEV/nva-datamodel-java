@@ -39,6 +39,7 @@ import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
 import no.unit.nva.model.instancetypes.event.OtherPresentation;
+import no.unit.nva.model.instancetypes.exhibition.ExhibitionProduction;
 import no.unit.nva.model.instancetypes.journal.AcademicArticle;
 import no.unit.nva.model.instancetypes.journal.AcademicLiteratureReview;
 import no.unit.nva.model.instancetypes.journal.CaseReport;
@@ -138,7 +139,8 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
     @JsonSubTypes.Type(name = "DataSet", value = DataSet.class),
     @JsonSubTypes.Type(name = "VisualArts", value = VisualArts.class),
     @JsonSubTypes.Type(name = "Map", value = Map.class),
-    @JsonSubTypes.Type(name = "LiteraryArts", value = LiteraryArts.class)
+    @JsonSubTypes.Type(name = "LiteraryArts", value = LiteraryArts.class),
+    @JsonSubTypes.Type(name = "ExhibitionProduction", value = ExhibitionProduction.class)
 })
 public interface PublicationInstance<P extends Pages> {
 
