@@ -1092,6 +1092,71 @@ nva:role a rdf:Property ;
              nva:WorkPackageLeader,
              nva:Writer .
 
+nva:AcademicCoordinator a rdfs:Class .
+nva:Actor a rdfs:Class .
+nva:Advisor a rdfs:Class .
+nva:Architect a rdfs:Class .
+nva:ArchitecturalPlanner a rdfs:Class .
+nva:Artist a rdfs:Class .
+nva:ArtisticDirector a rdfs:Class .
+nva:Choreographer a rdfs:Class .
+nva:Composer a rdfs:Class .
+nva:Conductor a rdfs:Class .
+nva:Consultant a rdfs:Class .
+nva:ContactPerson a rdfs:Class .
+nva:CostumeDesigner a rdfs:Class .
+nva:Creator a rdfs:Class .
+nva:Curator a rdfs:Class .
+nva:CuratorOrganizer a rdfs:Class .
+nva:Dancer a rdfs:Class .
+nva:DataCollector a rdfs:Class .
+nva:DataCurator a rdfs:Class .
+nva:DataManager a rdfs:Class .
+nva:Designer a rdfs:Class .
+nva:Director a rdfs:Class .
+nva:Distributor a rdfs:Class .
+nva:Dramatist a rdfs:Class .
+nva:Dramaturge a rdfs:Class .
+nva:Editor a rdfs:Class .
+nva:EditorialBoardMember a rdfs:Class .
+nva:Funder a rdfs:Class .
+nva:HostingInstitution a rdfs:Class .
+nva:Illustrator a rdfs:Class .
+nva:InteriorArchitect a rdfs:Class .
+nva:InterviewSubject a rdfs:Class .
+nva:Journalist a rdfs:Class .
+nva:LandscapeArchitect a rdfs:Class .
+nva:Librettist a rdfs:Class .
+nva:LightDesigner a rdfs:Class .
+nva:Musician a rdfs:Class .
+nva:Organizer a rdfs:Class .
+nva:Other a rdfs:Class .
+nva:Producer a rdfs:Class .
+nva:Photographer a rdfs:Class .
+nva:ProductionDesigner a rdfs:Class .
+nva:ProgrammeLeader a rdfs:Class .
+nva:ProgrammeParticipant a rdfs:Class .
+nva:ProjectLeader a rdfs:Class .
+nva:ProjectManager a rdfs:Class .
+nva:ProjectMember a rdfs:Class .
+nva:RegistrationAgency a rdfs:Class .
+nva:RegistrationAuthority a rdfs:Class .
+nva:RelatedPerson a rdfs:Class .
+nva:Researcher a rdfs:Class .
+nva:ResearchGroup a rdfs:Class .
+nva:RightsHolder a rdfs:Class .
+nva:Scenographer a rdfs:Class .
+nva:Screenwriter a rdfs:Class .
+nva:Soloist a rdfs:Class .
+nva:SoundDesigner a rdfs:Class .
+nva:Sponsor a rdfs:Class .
+nva:Supervisor a rdfs:Class .
+nva:TranslatorAdapter a rdfs:Class .
+nva:VfxSupervisor a rdfs:Class .
+nva:VideoEditor a rdfs:Class .
+nva:WorkPackageLeader a rdfs:Class .
+nva:Writer a rdfs:Class .
+
 nva:formatted a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;

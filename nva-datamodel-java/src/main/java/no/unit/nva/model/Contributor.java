@@ -4,8 +4,13 @@ import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import no.unit.nva.model.role.Role;
+import no.unit.nva.model.role.RoleType;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -13,19 +18,19 @@ public class Contributor {
 
     private final Identity identity;
     private final List<Organization> affiliations;
-    private final Role role;
+    private final RoleType role;
     private final Integer sequence;
     private final boolean correspondingAuthor;
 
     @JsonCreator
     public Contributor(@JsonProperty("identity") Identity identity,
                        @JsonProperty("affiliations") List<Organization> affiliations,
-                       @JsonProperty("role") Role role,
+                       @JsonProperty("role") Object role,
                        @JsonProperty("sequence") Integer sequence,
                        @JsonProperty("correspondingAuthor") boolean correspondingAuthor) {
         this.identity = identity;
         this.affiliations = nullListAsEmpty(affiliations);
-        this.role = role;
+        this.role = roleFromJson(role);
         this.sequence = sequence;
         this.correspondingAuthor = correspondingAuthor;
     }
@@ -52,7 +57,7 @@ public class Contributor {
         return sequence;
     }
 
-    public Role getRole() {
+    public RoleType getRole() {
         return role;
     }
 
@@ -72,23 +77,48 @@ public class Contributor {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Contributor)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Contributor that = (Contributor) o;
         return isCorrespondingAuthor() == that.isCorrespondingAuthor()
                && Objects.equals(getIdentity(), that.getIdentity())
                && Objects.equals(getAffiliations(), that.getAffiliations())
-               && getRole() == that.getRole()
+               && Objects.equals(getRole(), that.getRole())
                && Objects.equals(getSequence(), that.getSequence());
+    }
+
+    @Deprecated
+    private static RoleType getRoleFromString(Object role) {
+        return role instanceof String
+                   ? new RoleType(Role.lookup(role.toString()))
+                   : (RoleType) role;
+    }
+
+    @Deprecated
+    private static RoleType getType(Map<?, ?> role) {
+        var tap = (String) role.get("type");
+        var type = Role.lookup(tap);
+        var description = Optional.ofNullable(role.get("description"));
+        var roleType = new RoleType(type);
+        return description.isEmpty()
+                   ? roleType
+                   : roleType.createOther((String) description.get());
+    }
+
+    @Deprecated
+    private RoleType roleFromJson(Object role) {
+        return role instanceof LinkedHashMap
+                   ? getType((LinkedHashMap<?, ?>) role)
+                   : getRoleFromString(role);
     }
 
     public static final class Builder {
 
         private Identity identity;
         private List<Organization> affiliations;
-        private Role role;
         private Integer sequence;
+        private RoleType role;
         private boolean correspondingAuthor;
 
         public Builder() {
@@ -104,8 +134,8 @@ public class Contributor {
             return this;
         }
 
-        public Builder withRole(Role role) {
-            this.role = role;
+        public Builder withRole(RoleType type) {
+            this.role = type;
             return this;
         }
 
