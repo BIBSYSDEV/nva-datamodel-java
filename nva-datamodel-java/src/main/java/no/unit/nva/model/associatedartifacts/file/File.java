@@ -18,7 +18,6 @@ import nva.commons.core.JacocoGenerated;
  */
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(name = LegacyFile.TYPE, value = LegacyFile.class),
     @JsonSubTypes.Type(name = PublishedFile.TYPE, value = PublishedFile.class),
     @JsonSubTypes.Type(name = UnpublishedFile.TYPE, value = UnpublishedFile.class),
     @JsonSubTypes.Type(name = AdministrativeAgreement.TYPE, value = AdministrativeAgreement.class)
@@ -245,12 +244,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         public Builder withEmbargoDate(Instant embargoDate) {
             this.embargoDate = embargoDate;
             return this;
-        }
-        
-        public File buildLegacyFile() {
-            return new LegacyFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                publisherAuthority,
-                embargoDate);
         }
         
         public File buildPublishedFile() {

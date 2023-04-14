@@ -44,15 +44,14 @@ public class FileModelTest {
     private static final boolean ADMINISTRATIVE_AGREEMENT = true;
     
     public static Stream<File> fileProvider() {
-        var legacyFile = randomLegacyFile();
         var publishedFile = randomPublishedFile();
         var unpublishedFile = randomUnpublishedFile();
         var unpublishableFile = randomUnpublishableFile();
-        return Stream.of(legacyFile, publishedFile, unpublishedFile, unpublishableFile);
+        return Stream.of(publishedFile, unpublishedFile, unpublishableFile);
     }
     
     public static Stream<File> notAdministrativeAgreements() {
-        return Stream.of(randomLegacyFile(), randomPublishedFile(), randomUnpublishedFile(),
+        return Stream.of(randomPublishedFile(), randomUnpublishedFile(),
             unpublishableNotAdministrativeAgreement());
     }
     
@@ -155,10 +154,6 @@ public class FileModelTest {
     
     public static File randomPublishedFile() {
         return buildNonAdministrativeAgreement().buildPublishedFile();
-    }
-    
-    public static File randomLegacyFile() {
-        return buildNonAdministrativeAgreement().buildLegacyFile();
     }
     
     public static File.Builder buildNonAdministrativeAgreement() {
