@@ -350,11 +350,6 @@ public class PublicationTest {
         return PublicationGenerator.publicationWithIdentifier();
     }
 
-    private Publication serializeDeserialize(Publication publication) throws JsonProcessingException {
-        var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
-        return JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
-    }
-
     private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
         assertThat(expected, doesNotHaveEmptyValues());
     }
