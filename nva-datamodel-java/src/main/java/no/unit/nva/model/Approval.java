@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.time.Instant;
 import java.util.Objects;
@@ -7,7 +8,9 @@ import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Approval {
-    private Instant date;
+
+    @JsonAlias("date")
+    private Instant approvalDate;
     private ApprovalsBody approvedBy;
     private ApprovalStatus approvalStatus;
     private String applicationCode;
@@ -17,18 +20,18 @@ public class Approval {
     }
 
     private Approval(Builder builder) {
-        setDate(builder.date);
+        setApprovalDate(builder.date);
         setApprovedBy(builder.approvedBy);
         setApprovalStatus(builder.approvalStatus);
         setApplicationCode(builder.applicationCode);
     }
 
-    public Instant getDate() {
-        return date;
+    public Instant getApprovalDate() {
+        return approvalDate;
     }
 
-    public void setDate(Instant date) {
-        this.date = date;
+    public void setApprovalDate(Instant approvalDate) {
+        this.approvalDate = approvalDate;
     }
 
     public ApprovalsBody getApprovedBy() {
@@ -65,7 +68,7 @@ public class Approval {
             return false;
         }
         Approval approval = (Approval) o;
-        return Objects.equals(getDate(), approval.getDate())
+        return Objects.equals(getApprovalDate(), approval.getApprovalDate())
                 && Objects.equals(getApprovedBy(), approval.getApprovedBy())
                 && Objects.equals(getApprovalStatus(), approval.getApprovalStatus())
                 && Objects.equals(getApplicationCode(), approval.getApplicationCode());
@@ -74,7 +77,7 @@ public class Approval {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getDate(), getApprovedBy(), getApprovalStatus(), getApplicationCode());
+        return Objects.hash(getApprovalDate(), getApprovedBy(), getApprovalStatus(), getApplicationCode());
     }
 
     public static final class Builder {
@@ -86,8 +89,8 @@ public class Approval {
         public Builder() {
         }
 
-        public Builder withDate(Instant date) {
-            this.date = date;
+        public Builder withApprovalDate(Instant approvalDate) {
+            this.date = approvalDate;
             return this;
         }
 
