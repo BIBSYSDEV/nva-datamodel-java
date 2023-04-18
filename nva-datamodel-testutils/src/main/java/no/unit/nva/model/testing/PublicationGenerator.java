@@ -142,7 +142,7 @@ public final class PublicationGenerator {
 
         return new Approval.Builder()
                 .withApprovalStatus(randomElement(ApprovalStatus.values()))
-                .withDate(randomInstant())
+                .withApprovalDate(randomInstant())
                 .withApplicationCode(randomString())
                 .withApprovedBy(randomElement(ApprovalsBody.values()))
                 .build();
