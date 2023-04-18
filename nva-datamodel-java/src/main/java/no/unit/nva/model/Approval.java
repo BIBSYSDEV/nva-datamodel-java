@@ -20,7 +20,7 @@ public class Approval {
     }
 
     private Approval(Builder builder) {
-        setApprovalDate(builder.date);
+        setApprovalDate(builder.approvalDate);
         setApprovedBy(builder.approvedBy);
         setApprovalStatus(builder.approvalStatus);
         setApplicationCode(builder.applicationCode);
@@ -81,7 +81,7 @@ public class Approval {
     }
 
     public static final class Builder {
-        private Instant date;
+        private Instant approvalDate;
         private ApprovalsBody approvedBy;
         private ApprovalStatus approvalStatus;
         private String applicationCode;
@@ -90,7 +90,7 @@ public class Approval {
         }
 
         public Builder withApprovalDate(Instant approvalDate) {
-            this.date = approvalDate;
+            this.approvalDate = approvalDate;
             return this;
         }
 
