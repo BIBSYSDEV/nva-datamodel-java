@@ -1,9 +1,11 @@
 package no.unit.nva.model.instancetypes.artistic.music;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum MusicMediaType {
 
@@ -12,7 +14,7 @@ public enum MusicMediaType {
     STREAMING("Streaming"),
     DIGITAL_FILE("DigitalFile"),
     VINYL("Vinyl"),
-    OTHER("Other");
+    OTHER("MusicMediaOther");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid MusicMediaType, expected one of: %s";
     public static final String DELIMITER = ", ";
@@ -22,7 +24,17 @@ public enum MusicMediaType {
         this.value = value;
     }
 
-    public static MusicMediaType lookup(String candidate) {
+    // TODO: Remove following migration
+    @Deprecated
+    @JsonCreator
+    public static MusicMediaType parseWithDeprecated(String candidate) {
+        return "Other".equalsIgnoreCase(candidate)
+                ? MusicMediaType.OTHER
+                : parse(candidate);
+    }
+
+    // @JsonCreator
+    public static MusicMediaType parse(String candidate) {
         return stream(values())
                    .filter(value -> value.getValue().equalsIgnoreCase(candidate))
                    .findAny()

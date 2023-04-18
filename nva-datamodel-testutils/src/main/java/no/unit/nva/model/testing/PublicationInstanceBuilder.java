@@ -153,7 +153,6 @@ import nva.commons.core.JacocoGenerated;
 @SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.GodClass"})
 public final class PublicationInstanceBuilder {
 
-    public static final String OTHER = "Other";
     private static final String VALID_ISMN_10 = "M-2306-7118-7";
     private static final String VALID_ISMN_13 = "979-0-9016791-7-7";
 
@@ -804,7 +803,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static PerformingArtsSubtype performingArtsSubtype(PerformingArtsSubtypeEnum subtype) {
-        return OTHER.equals(subtype.getType())
+        return PerformingArtsSubtypeEnum.OTHER == subtype
                    ? PerformingArtsSubtype.createOther(randomString())
                    : PerformingArtsSubtype.create(subtype);
     }
@@ -822,7 +821,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static MovingPictureSubtype getMovingPictureSubtype(MovingPictureSubtypeEnum subtype) {
-        return OTHER.equals(subtype.getType())
+        return MovingPictureSubtypeEnum.OTHER == subtype
                    ? MovingPictureSubtype.createOther(randomString())
                    : MovingPictureSubtype.create(subtype);
     }
@@ -849,7 +848,7 @@ public final class PublicationInstanceBuilder {
     }
 
     private static ArchitectureSubtype architectureSubtype(ArchitectureSubtypeEnum subtype) {
-        return OTHER.equals(subtype.getType())
+        return ArchitectureSubtypeEnum.OTHER == subtype
                    ? ArchitectureSubtype.createOther(randomString())
                    : ArchitectureSubtype.create(subtype);
     }

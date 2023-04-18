@@ -20,7 +20,7 @@ public class PerformingArtsSubtype {
     @JsonCreator
     public static PerformingArtsSubtype fromJson(@JsonProperty(TYPE) PerformingArtsSubtypeEnum type,
                                                  @JsonProperty(DESCRIPTION) String description) {
-        if (PerformingArtsSubtypeEnum.OTHER.equals(type)) {
+        if (PerformingArtsSubtypeEnum.OTHER == type) {
             return createOther(description);
         }
         return new PerformingArtsSubtype(type);

@@ -2,6 +2,7 @@ package no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import no.unit.nva.model.instancetypes.artistic.film.MovingPictureSubtypeEnum;
 import nva.commons.core.SingletonCollector;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ public enum LiteraryArtsAudioVisualSubtype {
     RADIO_PLAY("RadioPlay"),
     SHORT_FILM("ShortFilm"),
     PODCAST("Podcast"),
-    OTHER("Other");
+    OTHER("LiteraryArtsAudioVisualOther");
 
     private final String name;
 
@@ -24,10 +25,19 @@ public enum LiteraryArtsAudioVisualSubtype {
         return name;
     }
 
+    // TODO: Remove following migration
+    @Deprecated
     @JsonCreator
-    public LiteraryArtsAudioVisualSubtype lookup(String candidate) {
-        return Arrays.stream(LiteraryArtsAudioVisualSubtype.values())
-                .filter(value -> value.getName().equalsIgnoreCase(candidate))
+    public static MovingPictureSubtypeEnum parseWithDeprecated(String candidate) {
+        return "Other".equalsIgnoreCase(candidate)
+                ? MovingPictureSubtypeEnum.OTHER
+                : parse(candidate);
+    }
+
+//    @JsonCreator
+    public static MovingPictureSubtypeEnum parse(String candidate) {
+        return Arrays.stream(MovingPictureSubtypeEnum.values())
+                .filter(value -> value.getType().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());
     }
 }

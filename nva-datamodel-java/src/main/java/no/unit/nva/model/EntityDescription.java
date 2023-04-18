@@ -1,5 +1,6 @@
 package no.unit.nva.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -17,7 +18,9 @@ public class EntityDescription {
     private String mainTitle;
     private Map<String, String> alternativeTitles;
     private URI language;
-    private PublicationDate date;
+
+    @JsonAlias("date")
+    private PublicationDate publicationDate;
     private List<Contributor> contributors;
     @JsonSetter("abstract")
     private String mainLanguageAbstract;
@@ -40,7 +43,7 @@ public class EntityDescription {
         setMainTitle(builder.mainTitle);
         setAlternativeTitles(builder.alternativeTitles);
         setLanguage(builder.language);
-        setDate(builder.date);
+        setPublicationDate(builder.publicationDate);
         setContributors(builder.contributors);
         setAbstract(builder.mainLanguageAbstract);
         setNpiSubjectHeading(builder.npiSubjectHeading);
@@ -83,12 +86,12 @@ public class EntityDescription {
         this.language = language;
     }
 
-    public PublicationDate getDate() {
-        return date;
+    public PublicationDate getPublicationDate() {
+        return publicationDate;
     }
 
-    public void setDate(PublicationDate date) {
-        this.date = date;
+    public void setPublicationDate(PublicationDate publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public List<Contributor> getContributors() {
@@ -153,7 +156,7 @@ public class EntityDescription {
         return Objects.hash(getMainTitle(),
                 getAlternativeTitles(),
                 getLanguage(),
-                getDate(),
+                getPublicationDate(),
                 getContributors(),
                 getAbstract(),
                 getNpiSubjectHeading(),
@@ -177,7 +180,7 @@ public class EntityDescription {
         return Objects.equals(getMainTitle(), that.getMainTitle())
                 && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
                 && Objects.equals(getLanguage(), that.getLanguage())
-                && Objects.equals(getDate(), that.getDate())
+                && Objects.equals(getPublicationDate(), that.getPublicationDate())
                 && Objects.equals(getContributors(), that.getContributors())
                 && Objects.equals(getAbstract(), that.getAbstract())
                 && Objects.equals(getNpiSubjectHeading(), that.getNpiSubjectHeading())
@@ -193,7 +196,7 @@ public class EntityDescription {
         private String mainTitle;
         private Map<String, String> alternativeTitles;
         private URI language;
-        private PublicationDate date;
+        private PublicationDate publicationDate;
         private List<Contributor> contributors;
         private String mainLanguageAbstract;
         private Map<String, String> alternativeAbstracts;
@@ -221,8 +224,8 @@ public class EntityDescription {
             return this;
         }
 
-        public Builder withDate(PublicationDate date) {
-            this.date = date;
+        public Builder withPublicationDate(PublicationDate date) {
+            this.publicationDate = date;
             return this;
         }
 
