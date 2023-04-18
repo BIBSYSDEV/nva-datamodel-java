@@ -22,7 +22,7 @@ public class MovingPictureSubtype {
     @JsonCreator
     public static MovingPictureSubtype fromJson(@JsonProperty(TYPE) MovingPictureSubtypeEnum type,
                                                 @JsonProperty("description") String description) {
-        if (MovingPictureSubtypeEnum.OTHER.equals(type)) {
+        if (MovingPictureSubtypeEnum.OTHER == type) {
             return createOther(description);
         }
         return new MovingPictureSubtype(type);

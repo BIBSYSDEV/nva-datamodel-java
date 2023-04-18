@@ -2,6 +2,9 @@ package no.unit.nva.model.instancetypes.artistic.visualarts;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import nva.commons.core.SingletonCollector;
+
+import java.util.Arrays;
 
 public enum VisualArtsSubtypeEnum {
     INDIVIDUAL_EXHIBITION("IndividualExhibition"),
@@ -12,11 +15,10 @@ public enum VisualArtsSubtypeEnum {
     VISUAL_ARTS("VisualArts"),
     AUDIO_ART("AudioArt"),
     ARTIST_BOOK("ArtistBook"),
-    OTHER("Other");
+    OTHER("VisualArtsOther");
 
     private final String type;
 
-    @JsonCreator
     VisualArtsSubtypeEnum(String type) {
         this.type = type;
     }
@@ -24,5 +26,21 @@ public enum VisualArtsSubtypeEnum {
     @JsonValue
     public String getType() {
         return type;
+    }
+
+    // TODO: Remove following migration
+    @Deprecated
+    @JsonCreator
+    public static VisualArtsSubtypeEnum parseWithDeprecated(String candidate) {
+        return "Other".equalsIgnoreCase(candidate)
+                ? VisualArtsSubtypeEnum.OTHER
+                : parse(candidate);
+    }
+
+    // @JsonCreator
+    public static VisualArtsSubtypeEnum parse(String candidate) {
+        return Arrays.stream(VisualArtsSubtypeEnum.values())
+                .filter(value -> value.getType().equals(candidate))
+                .collect(SingletonCollector.collect());
     }
 }

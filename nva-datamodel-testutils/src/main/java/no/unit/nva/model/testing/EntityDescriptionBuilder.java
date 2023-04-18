@@ -38,7 +38,7 @@ public final class EntityDescriptionBuilder {
             .withLanguage(RandomLanguageUtil.randomLexvoUri())
             .withTags(randomTags())
             .withMetadataSource(randomUri())
-            .withDate(randomPublicationDate())
+            .withPublicationDate(randomPublicationDate())
             .withContributors(randomContributors())
             .withAlternativeTitles(randomAlternativeTitles())
             .withAlternativeAbstracts(randomAlternativeAbstracts())

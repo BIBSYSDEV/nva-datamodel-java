@@ -20,7 +20,7 @@ import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,7 +29,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
-import no.unit.nva.commons.json.JsonUtils;
+
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Organization;
@@ -117,7 +117,7 @@ public class PublicationTest {
         assertThat(copy, is(not(sameInstance(publication))));
     }
 
-    @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
+    @ParameterizedTest(name = "Test projects are always lists when input is single element")
     @MethodSource("publicationInstanceProvider")
     void projectsAreSetAsListsWhenInputIsSingleProject(Class<?> instanceType) {
         Publication expected = randomPublication(instanceType);
@@ -199,7 +199,7 @@ public class PublicationTest {
     @Test
     void shouldReturnFalseForSatisfiesFindableDoiRequirementForPublicationMissingYear() {
         var publication = createSamplePublication();
-        publication.getEntityDescription().getDate().setYear(null);
+        publication.getEntityDescription().getPublicationDate().setYear(null);
         var expectedResult = false;
         assertThat(publication.satisfiesFindableDoiRequirements(),
                    is(Matchers.equalTo(expectedResult)));
@@ -267,7 +267,7 @@ public class PublicationTest {
         publication.setStatus(validPublicationStatus);
         publication.setPublisher(
             new Organization.Builder().withId(randomUri()).build());
-        publication.getEntityDescription().getDate().setYear("2014");
+        publication.getEntityDescription().getPublicationDate().setYear("2014");
         publication.getEntityDescription().setMainTitle("some title");
         publication.setIdentifier(SortableIdentifier.next());
         publication.setModifiedDate(Instant.now());

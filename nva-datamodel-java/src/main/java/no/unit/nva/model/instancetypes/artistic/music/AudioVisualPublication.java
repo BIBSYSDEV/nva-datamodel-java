@@ -107,13 +107,13 @@ public class AudioVisualPublication implements MusicPerformanceManifestation, Un
     private static MusicMediaSubtype mapMediaType(Object mediaType) {
         return mediaType instanceof Map
                    ? mapFromObject((Map<?, ?>) mediaType)
-                   : new MusicMediaSubtype(MusicMediaType.lookup((String) mediaType));
+                   : new MusicMediaSubtype(MusicMediaType.parse((String) mediaType));
     }
 
     @Deprecated
     private static MusicMediaSubtype mapFromObject(Map<?, ?> map) {
         var type = (String) map.get("type");
-        var mediaType = MusicMediaType.lookup(type);
+        var mediaType = MusicMediaType.parse(type);
         var description = Optional.ofNullable(map.get("description"));
         var mediaSubtype = new MusicMediaSubtype(mediaType);
         return description.map(subType -> MusicMediaSubtype.createOther((String) subType)).orElse(mediaSubtype);

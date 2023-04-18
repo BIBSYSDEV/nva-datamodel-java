@@ -91,14 +91,14 @@ public class Contributor {
     @Deprecated
     private static RoleType getRoleFromString(Object role) {
         return role instanceof String
-                   ? new RoleType(Role.lookup(role.toString()))
+                   ? new RoleType(Role.parse(role.toString()))
                    : (RoleType) role;
     }
 
     @Deprecated
     private static RoleType getType(Map<?, ?> role) {
         var tap = (String) role.get("type");
-        var type = Role.lookup(tap);
+        var type = Role.parse(tap);
         var description = Optional.ofNullable(role.get("description"));
         var roleType = new RoleType(type);
         return description.isEmpty()

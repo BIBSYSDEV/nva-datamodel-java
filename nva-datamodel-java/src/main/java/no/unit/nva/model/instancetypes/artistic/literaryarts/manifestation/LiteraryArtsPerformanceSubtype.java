@@ -9,7 +9,7 @@ import java.util.Arrays;
 public enum LiteraryArtsPerformanceSubtype {
     READING("Reading"),
     PLAY("Play"),
-    OTHER("Other");
+    OTHER("LiteraryArtsPerformanceOther");
 
     private final String name;
 
@@ -22,8 +22,17 @@ public enum LiteraryArtsPerformanceSubtype {
         return name;
     }
 
+    // TODO: Remove following migration
+    @Deprecated
     @JsonCreator
-    public LiteraryArtsPerformanceSubtype lookup(String candidate) {
+    public static LiteraryArtsPerformanceSubtype parseWithDeprecated(String candidate) {
+        return "Other".equalsIgnoreCase(candidate)
+                ? LiteraryArtsPerformanceSubtype.OTHER
+                : parse(candidate);
+    }
+
+    // @JsonCreator
+    public static LiteraryArtsPerformanceSubtype parse(String candidate) {
         return Arrays.stream(LiteraryArtsPerformanceSubtype.values())
                 .filter(value -> value.getName().equals(candidate))
                 .collect(SingletonCollector.collect());

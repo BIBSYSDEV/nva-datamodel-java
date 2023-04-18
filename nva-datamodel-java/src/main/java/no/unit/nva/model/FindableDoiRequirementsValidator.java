@@ -40,7 +40,7 @@ import nva.commons.core.StringUtils;
 
     private static boolean hasPublicationYear(Publication publication) {
         return Optional.ofNullable(publication.getEntityDescription())
-                   .map(EntityDescription::getDate)
+                   .map(EntityDescription::getPublicationDate)
                    .map(PublicationDate::getYear)
                    .isPresent();
     }

@@ -15,7 +15,7 @@ public enum LiteraryArtsSubtypeEnum {
     TRANSLATION("Translation"),
     RETELLING("Retelling"),
     PLAY("Play"),
-    OTHER("Other");
+    OTHER("LiteraryArtsOther");
 
     private final String name;
 
@@ -28,8 +28,18 @@ public enum LiteraryArtsSubtypeEnum {
         return name;
     }
 
+
+    // TODO: Remove following migration
+    @Deprecated
     @JsonCreator
-    public LiteraryArtsSubtypeEnum lookup(String candidate) {
+    public static LiteraryArtsSubtypeEnum parseWithDeprecated(String candidate) {
+        return "Other".equalsIgnoreCase(candidate)
+                ? LiteraryArtsSubtypeEnum.OTHER
+                : parse(candidate);
+    }
+
+    //  @JsonCreator
+    public static LiteraryArtsSubtypeEnum parse(String candidate) {
         return Arrays.stream(LiteraryArtsSubtypeEnum.values())
                 .filter(value -> value.getName().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());

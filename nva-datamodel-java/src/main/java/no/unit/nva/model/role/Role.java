@@ -1,9 +1,11 @@
 package no.unit.nva.model.role;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Role {
     ACADEMIC_COORDINATOR("AcademicCoordinator"),
@@ -44,7 +46,7 @@ public enum Role {
     LIGHT_DESIGNER("LightDesigner"),
     MUSICIAN("Musician"),
     ORGANIZER("Organizer"),
-    OTHER("Other"),
+    OTHER("RoleOther"),
     PRODUCER("Producer"),
     PHOTOGRAPHER("Photographer"),
     PRODUCTION_DESIGNER("ProductionDesigner"),
@@ -84,13 +86,22 @@ public enum Role {
         return value;
     }
 
+    // TODO: Remove following migration
+    @Deprecated
+    @JsonCreator
+    public static Role parseWithDeprecated(String candidate) {
+        return "Other".equalsIgnoreCase(candidate)
+                ? Role.OTHER
+                : parse(candidate);
+    }
+
     /**
      * Lookup enum by value.
      *
      * @param value value
      * @return enum
      */
-    public static Role lookup(String value) {
+    public static Role parse(String value) {
         return stream(values())
                 .filter(nameType -> nameType.getValue().equalsIgnoreCase(value))
                 .findAny()

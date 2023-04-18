@@ -14,7 +14,7 @@ public enum ExhibitionProductionSubtypeEnum {
     AMBULATING_EXHIBITION("AmbulatingExhibition"),
     DIGITAL_EXHIBITION("DigitalExhibition"),
     HISTORICAL_INTERIOR("HistoricalInterior"),
-    OTHER("Other");
+    OTHER("ExhibitionProductionOther");
 
     private final String type;
 
@@ -27,20 +27,31 @@ public enum ExhibitionProductionSubtypeEnum {
         return type;
     }
 
+
+
+    // TODO: Remove following migration
+    @Deprecated
     @JsonCreator
-    public ExhibitionProductionSubtypeEnum lookup(String candidate) {
+    public static ExhibitionProductionSubtypeEnum parseWithDeprecated(String candidate) {
+        return "Other".equalsIgnoreCase(candidate)
+                ? ExhibitionProductionSubtypeEnum.OTHER
+                : parse(candidate);
+    }
+
+    // @JsonCreator
+    public static ExhibitionProductionSubtypeEnum parse(String candidate) {
         return Arrays.stream(values())
                 .filter(item -> item.getType().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.tryCollect())
                 .orElseThrow(failure -> getFailure());
     }
 
-    private RuntimeException getFailure() {
+    private static RuntimeException getFailure() {
         return new RuntimeException("Could not parse ExhibitionProductionSubtype, allowed values: "
                 + getValuesString());
     }
 
-    private String getValuesString() {
+    private static String getValuesString() {
         return Arrays.stream(values())
                 .map(ExhibitionProductionSubtypeEnum::getType)
                 .collect(Collectors.joining(", "));
