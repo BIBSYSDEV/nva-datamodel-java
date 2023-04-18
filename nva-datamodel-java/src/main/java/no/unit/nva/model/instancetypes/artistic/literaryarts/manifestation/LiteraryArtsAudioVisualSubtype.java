@@ -34,7 +34,7 @@ public enum LiteraryArtsAudioVisualSubtype {
                 : parse(candidate);
     }
 
-//    @JsonCreator
+    //  @JsonCreator
     public static MovingPictureSubtypeEnum parse(String candidate) {
         return Arrays.stream(MovingPictureSubtypeEnum.values())
                 .filter(value -> value.getType().equalsIgnoreCase(candidate))

@@ -38,7 +38,7 @@ public enum LiteraryArtsSubtypeEnum {
                 : parse(candidate);
     }
 
-//    @JsonCreator
+    //  @JsonCreator
     public static LiteraryArtsSubtypeEnum parse(String candidate) {
         return Arrays.stream(LiteraryArtsSubtypeEnum.values())
                 .filter(value -> value.getName().equalsIgnoreCase(candidate))
