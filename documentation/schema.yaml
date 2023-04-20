@@ -3049,10 +3049,10 @@ referencedSchemas:
     - $ref: '#/components/schemas/File'
     - type: object
       properties:
-        publishedBy:
+        approvedBy:
           type: string
           example: null
-        publishedDate:
+        approvedDate:
           type: string
           format: date-time
           example: null
