@@ -52,7 +52,7 @@ public class LiteraryArtsAudioVisual implements LiteraryArtsManifestation {
         } else if (isbnList instanceof List) {
             return (List<String>) isbnList;
         } else {
-            throw new RuntimeException("ISBN List could not be parsed");
+            throw new IllegalArgumentException("ISBN List could not be parsed");
         }
     }
 
