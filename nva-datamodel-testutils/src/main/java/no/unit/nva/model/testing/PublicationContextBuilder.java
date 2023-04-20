@@ -254,7 +254,7 @@ public class PublicationContextBuilder {
         return new Series(randomPublicationChannelsUri());
     }
 
-    private static PublishingHouse randomPublishingHouse() {
+    public static PublishingHouse randomPublishingHouse() {
         return new Publisher(randomPublicationChannelsUri());
     }
 

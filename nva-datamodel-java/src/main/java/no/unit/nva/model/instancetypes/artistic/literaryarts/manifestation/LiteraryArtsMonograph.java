@@ -8,36 +8,52 @@ import no.unit.nva.model.contexttypes.PublishingHouse;
 import no.unit.nva.model.pages.MonographPages;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+
+import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class LiteraryArtsMonograph implements LiteraryArtsManifestation {
     public static final String PUBLISHER_FIELD = "publisher";
     public static final String DATE_FIELD = "publicationDate";
-    public static final String ISBN_FIELD = "isbn";
+    public static final String ISBN_LIST_FIELD = "isbnList";
     public static final String PAGES_FIELD = "pages";
     @JsonProperty(PUBLISHER_FIELD) private final PublishingHouse publisher;
     @JsonProperty(DATE_FIELD) private final PublicationDate publicationDate;
-    @JsonProperty(ISBN_FIELD) private final String isbn;
+    @JsonProperty(ISBN_LIST_FIELD) private final List<String> isbnList;
     @JsonProperty(PAGES_FIELD) private final MonographPages pages;
 
+    // TODO: Remove flipping of String to List
     @JsonCreator
     public LiteraryArtsMonograph(@JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher,
                                  @JsonProperty(DATE_FIELD) PublicationDate publicationDate,
-                                 @JsonProperty(ISBN_FIELD) String isbn,
+                                 @JsonProperty(ISBN_LIST_FIELD) Object isbnList,
                                  @JsonProperty(PAGES_FIELD) MonographPages pages) {
         this.publisher = publisher;
         this.publicationDate = publicationDate;
-        this.isbn = isbn;
+        this.isbnList = migrateToList(isbnList);
         this.pages = pages;
+    }
+
+    @Deprecated
+    private List<String> migrateToList(Object isbnList) {
+        if (isbnList instanceof String) {
+            return List.of((String) isbnList);
+        } else if (isbnList instanceof List) {
+            return (List<String>) isbnList;
+        } else {
+            throw new RuntimeException("ISBN List could not be parsed");
+        }
     }
 
     public PublishingHouse getPublisher() {
         return publisher;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public List<String> getIsbnList() {
+        return nonNull(isbnList) ? isbnList : Collections.emptyList();
     }
 
     public MonographPages getPages() {
@@ -61,13 +77,13 @@ public class LiteraryArtsMonograph implements LiteraryArtsManifestation {
         LiteraryArtsMonograph that = (LiteraryArtsMonograph) o;
         return Objects.equals(getPublisher(), that.getPublisher())
                 && Objects.equals(getPublicationDate(), that.getPublicationDate())
-                && Objects.equals(getIsbn(), that.getIsbn())
+                && Objects.equals(getIsbnList(), that.getIsbnList())
                 && Objects.equals(getPages(), that.getPages());
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(getPublisher(), getPublicationDate(), getIsbn(), getPages());
+        return Objects.hash(getPublisher(), getPublicationDate(), getIsbnList(), getPages());
     }
 }

@@ -7,33 +7,53 @@ import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.contexttypes.PublishingHouse;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.List;
 import java.util.Objects;
+
+import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class LiteraryArtsAudioVisual implements LiteraryArtsManifestation {
     public static final String SUBTYPE_FIELD = "subtype";
     public static final String PUBLISHER_FIELD = "publisher";
     public static final String EXTENT_FIELD = "extent";
-    public static final String ISBN_FIELD = "isbn";
+    public static final String ISBN_LIST_FIELD = "isbnList";
     public static final String PUBLICATION_DATE_FIELD = "publicationDate";
-    @JsonProperty(SUBTYPE_FIELD) private final LiteraryArtsAudioVisualSubtype subtype;
-    @JsonProperty(PUBLISHER_FIELD) private final PublishingHouse publisher;
-    @JsonProperty(PUBLICATION_DATE_FIELD) private final PublicationDate publicationDate;
-    @JsonProperty(ISBN_FIELD) private final String isbn;
-    @JsonProperty(EXTENT_FIELD) private final Integer extent;
+    @JsonProperty(SUBTYPE_FIELD)
+    private final LiteraryArtsAudioVisualSubtype subtype;
+    @JsonProperty(PUBLISHER_FIELD)
+    private final PublishingHouse publisher;
+    @JsonProperty(PUBLICATION_DATE_FIELD)
+    private final PublicationDate publicationDate;
+    @JsonProperty(ISBN_LIST_FIELD)
+    private final List<String> isbnList;
+    @JsonProperty(EXTENT_FIELD)
+    private final Integer extent;
 
     @JsonCreator
     public LiteraryArtsAudioVisual(@JsonProperty(SUBTYPE_FIELD) LiteraryArtsAudioVisualSubtype subtype,
                                    @JsonProperty(PUBLISHER_FIELD) PublishingHouse publisher,
                                    @JsonProperty(PUBLICATION_DATE_FIELD) PublicationDate publicationDate,
-                                   @JsonProperty(ISBN_FIELD) String isbn,
+                                   @JsonProperty(ISBN_LIST_FIELD) Object isbnList,
                                    @JsonProperty(EXTENT_FIELD) Integer extent) {
 
         this.subtype = subtype;
         this.publisher = publisher;
         this.publicationDate = publicationDate;
-        this.isbn = isbn;
+        this.isbnList = migrateToList(isbnList);
         this.extent = extent;
+    }
+
+    @Deprecated
+    private List<String> migrateToList(Object isbnList) {
+        if (isbnList instanceof String) {
+            return List.of((String) isbnList);
+        } else if (isbnList instanceof List) {
+            return (List<String>) isbnList;
+        } else {
+            throw new RuntimeException("ISBN List could not be parsed");
+        }
     }
 
     public LiteraryArtsAudioVisualSubtype getSubtype() {
@@ -49,8 +69,8 @@ public class LiteraryArtsAudioVisual implements LiteraryArtsManifestation {
         return publicationDate;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public List<String> getIsbnList() {
+        return nonNull(isbnList) ? isbnList : emptyList();
     }
 
     public Integer getExtent() {
@@ -70,13 +90,13 @@ public class LiteraryArtsAudioVisual implements LiteraryArtsManifestation {
         return getSubtype() == that.getSubtype()
                 && Objects.equals(getPublisher(), that.getPublisher())
                 && Objects.equals(getPublicationDate(), that.getPublicationDate())
-                && Objects.equals(getIsbn(), that.getIsbn())
+                && Objects.equals(getIsbnList(), that.getIsbnList())
                 && Objects.equals(getExtent(), that.getExtent());
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(getSubtype(), getPublisher(), getPublicationDate(), getIsbn(), getExtent());
+        return Objects.hash(getSubtype(), getPublisher(), getPublicationDate(), getIsbnList(), getExtent());
     }
 }

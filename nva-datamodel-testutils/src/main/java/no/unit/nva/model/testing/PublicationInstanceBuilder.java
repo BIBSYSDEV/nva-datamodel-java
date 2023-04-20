@@ -678,7 +678,7 @@ public final class PublicationInstanceBuilder {
         return new BookAnthology(randomMonographPages());
     }
 
-    private static MonographPages randomMonographPages() {
+    public static MonographPages randomMonographPages() {
         return new MonographPages.Builder()
                    .withPages(randomPagesString())
                    .withIllustrated(randomBoolean())
@@ -765,11 +765,11 @@ public final class PublicationInstanceBuilder {
 
     private static List<LiteraryArtsManifestation> randomLiteraryArtsManifestationList() {
         var isbn = "9780099470434";
-        var monograph = new LiteraryArtsMonograph(randomUnconfirmedPublisher(), randomPublicationDate(), isbn,
+        var monograph = new LiteraryArtsMonograph(randomUnconfirmedPublisher(), randomPublicationDate(), List.of(isbn),
                                                   randomMonographPages());
         var audioVisual = new LiteraryArtsAudioVisual(randomElement(LiteraryArtsAudioVisualSubtype.values()),
-                                                      randomUnconfirmedPublisher(), randomPublicationDate(), isbn,
-                                                      randomInteger());
+                                                      randomUnconfirmedPublisher(), randomPublicationDate(),
+                                                      List.of(isbn), randomInteger());
         var performance = new LiteraryArtsPerformance(randomElement(LiteraryArtsPerformanceSubtype.values()),
                                                       randomUnconfirmedPlace(), randomPublicationDate());
         var web = new LiteraryArtsWeb(randomUri(), randomUnconfirmedPublisher(), randomPublicationDate());
