@@ -16,10 +16,12 @@ import nva.commons.core.JacocoGenerated;
 /**
  * An object that represents the description of a file.
  */
+
+// TODO: Remove File annotation once all data has been migrated
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(name = PublishedFile.TYPE, value = PublishedFile.class),
-    @JsonSubTypes.Type(name = UnpublishedFile.TYPE, value = UnpublishedFile.class),
+    @JsonSubTypes.Type(names = {UnpublishedFile.TYPE, "File"}, value = UnpublishedFile.class),
     @JsonSubTypes.Type(name = AdministrativeAgreement.TYPE, value = AdministrativeAgreement.class)
 })
 public abstract class File implements JsonSerializable, AssociatedArtifact {
