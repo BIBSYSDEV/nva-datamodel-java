@@ -1497,12 +1497,6 @@ referencedSchemas:
     - type
     type: object
     properties:
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-          example: null
-        example: null
       identifier:
         type: string
         example: null
@@ -1510,12 +1504,18 @@ referencedSchemas:
         type: string
         format: uri
         example: null
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
+      labels:
+        type: object
+        additionalProperties:
+          type: string
+          example: null
+        example: null
       activeFrom:
         type: string
         format: date-time
         example: null
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
       activeTo:
         type: string
         format: date-time

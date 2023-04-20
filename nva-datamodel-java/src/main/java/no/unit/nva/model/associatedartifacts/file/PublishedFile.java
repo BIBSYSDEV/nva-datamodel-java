@@ -30,7 +30,7 @@ public class PublishedFile extends File {
      * @param administrativeAgreement True if the file is an administrative agreement
      * @param publisherAuthority      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
-     * @param approvedBy              The username of the person who approves the PublishingRequestCase
+     * @param approvedBy              The username of the person who approves the file
      * @param publishedDate           The date when file has been published
      */
     @JsonProperty(APPROVED_BY)
