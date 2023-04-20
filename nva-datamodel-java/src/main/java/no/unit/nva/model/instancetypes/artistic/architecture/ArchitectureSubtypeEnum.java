@@ -36,6 +36,7 @@ public enum ArchitectureSubtypeEnum {
                 .filter(subType -> subType.getType().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());
     }
+
     public String getType() {
         return type;
     }

@@ -9,6 +9,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -26,6 +27,7 @@ import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
+import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -246,5 +248,29 @@ public class FileModelTest {
                    .withPublisherAuthority(true)
                    .withSize(SIZE)
                    .buildPublishedFile();
+    }
+
+    @Deprecated
+    @Test
+    void shouldMigrateLegacyFileToUnpublishedFile() throws JsonProcessingException {
+        var fileJson = "{\n"
+                       + "    \"type\" : \"File\",\n"
+                       + "    \"identifier\" : \"df2be965-f628-43fb-914b-e16d6f136e05\",\n"
+                       + "    \"name\" : \"2-s2.0-85143901828.xml\",\n"
+                       + "    \"mimeType\" : \"text/xml\",\n"
+                       + "    \"size\" : 180088,\n"
+                       + "    \"license\" : {\n"
+                       + "      \"type\" : \"License\",\n"
+                       + "      \"identifier\" : \"RightsReserved\",\n"
+                       + "      \"labels\" : {\n"
+                       + "        \"nb\" : \"RightsReserved\"\n"
+                       + "      }\n"
+                       + "    },\n"
+                       + "    \"administrativeAgreement\" : false,\n"
+                       + "    \"publisherAuthority\" : false,\n"
+                       + "    \"visibleForNonOwner\" : true\n"
+                       + "  }";
+        var file = JsonUtils.dtoObjectMapper.readValue(fileJson, File.class);;
+        assertThat(file, instanceOf(UnpublishedFile.class));
     }
 }
