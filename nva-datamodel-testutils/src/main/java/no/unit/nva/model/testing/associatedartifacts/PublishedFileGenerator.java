@@ -4,6 +4,7 @@ import no.unit.nva.model.associatedartifacts.file.PublishedFile;
 
 import java.util.UUID;
 
+import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 
@@ -14,6 +15,6 @@ public final class PublishedFileGenerator {
 
     public static PublishedFile random() {
         return new PublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
-                LicenseGenerator.random(), false, true, null);
+                LicenseGenerator.random(), false, true, null, randomString(), randomInstant());
     }
 }

@@ -145,8 +145,13 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     }
     
     public PublishedFile toPublishedFile() {
+        return toPublishedFile(null);
+    }
+
+    public PublishedFile toPublishedFile(String publishedBy) {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-            isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
+                                 isAdministrativeAgreement(), isPublisherAuthority(),
+                                 getEmbargoDate().orElse(null), publishedBy, Instant.now());
     }
     
     public final AdministrativeAgreement toUnpublishableFile() {
@@ -248,10 +253,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return this;
         }
         
-        public File buildPublishedFile() {
+        public File buildPublishedFile(String publishedBy) {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                publisherAuthority,
-                embargoDate);
+                publisherAuthority, embargoDate, publishedBy, Instant.now());
         }
         
         public File buildUnpublishedFile() {

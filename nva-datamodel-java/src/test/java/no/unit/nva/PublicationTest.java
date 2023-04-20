@@ -11,6 +11,7 @@ import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreeme
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -150,7 +151,7 @@ public class PublicationTest {
     @Test
     void shouldConvertPublishableArtifactToPublishedUponRequest() {
         var unpublishedFile = buildNonAdministrativeAgreement().buildUnpublishedFile();
-        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile();
+        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile(randomString());
         assertThat(unpublishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
         assertThat(publishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
     }
@@ -158,7 +159,7 @@ public class PublicationTest {
     @Test
     void shouldConvertPublishableArtifactToUnpublishedUponRequest() {
         var unpublishedFile = buildNonAdministrativeAgreement().buildUnpublishedFile();
-        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile();
+        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile(randomString());
         assertThat(unpublishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
         assertThat(publishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
     }

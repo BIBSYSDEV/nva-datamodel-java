@@ -8,12 +8,15 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
 
+@SuppressWarnings("PMD.ExcessiveParameterList")
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(PublishedFile.TYPE)
 public class PublishedFile extends File {
     
     public static final String TYPE = "PublishedFile";
-    
+    public static final String PUBLISHED_BY = "publishedBy";
+    public static final String PUBLISHED_DATE = "publishedDate";
+
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
      * marked as an administrative agreement.
@@ -28,6 +31,11 @@ public class PublishedFile extends File {
      * @param publisherAuthority      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
      */
+    @JsonProperty(PUBLISHED_BY)
+    private final String publishedBy;
+    @JsonProperty(PUBLISHED_DATE)
+    private final Instant publishedDate;
+
     @JsonCreator
     public PublishedFile(
         @JsonProperty(IDENTIFIER_FIELD) UUID identifier,
@@ -37,8 +45,12 @@ public class PublishedFile extends File {
         @JsonProperty(LICENSE_FIELD) License license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
-        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
+        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
+        @JsonProperty(PUBLISHED_BY) String publishedBy,
+        @JsonProperty(PUBLISHED_DATE) Instant publishedDate) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate);
+        this.publishedBy = publishedBy;
+        this.publishedDate = publishedDate;
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
         }
@@ -54,6 +66,12 @@ public class PublishedFile extends File {
     public PublishedFile toPublishedFile() {
         return this;
     }
-    
-   
+
+    public Instant getPublishedDate() {
+        return publishedDate;
+    }
+
+    public String getPublishedBy() {
+        return publishedBy;
+    }
 }
