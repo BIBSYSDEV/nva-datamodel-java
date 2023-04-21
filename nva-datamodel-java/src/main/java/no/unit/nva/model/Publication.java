@@ -62,17 +62,17 @@ public class Publication
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
     private String rightsHolder;
-    private User approvedBy;
+    private Approver approvedBy;
 
     public Publication() {
         // Default constructor, use setters.
     }
 
-    public User getApprovedBy() {
+    public Approver getApprovedBy() {
         return approvedBy;
     }
 
-    public void setApprovedBy(User approvedBy) {
+    public void setApprovedBy(Approver approvedBy) {
         this.approvedBy = approvedBy;
     }
 
@@ -489,7 +489,7 @@ public class Publication
             return this;
         }
 
-        public Builder withApprovedBy(User approvedBy) {
+        public Builder withApprovedBy(Approver approvedBy) {
             this.publication.setApprovedBy(approvedBy);
             return this;
         }

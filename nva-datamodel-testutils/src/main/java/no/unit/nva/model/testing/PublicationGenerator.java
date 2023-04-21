@@ -13,7 +13,7 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
-import no.unit.nva.model.User;
+import no.unit.nva.model.Approver;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
@@ -180,12 +180,12 @@ public final class PublicationGenerator {
                 .withCreatedDate(randomInstant())
                 .withEntityDescription(randomEntityDescription(publicationInstanceClass))
                 .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                .withApprovedBy(randomUser())
+                .withApprovedBy(randomApprover())
                 .build();
     }
 
-    private static User randomUser() {
-        return new User(randomString());
+    private static Approver randomApprover() {
+        return new Approver(randomString());
     }
 
     private static ResourceOwner randomResourceOwner() {

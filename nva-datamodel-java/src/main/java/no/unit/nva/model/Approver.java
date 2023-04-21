@@ -9,8 +9,8 @@ import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
-@JsonTypeName(User.TYPE)
-public class User {
+@JsonTypeName(Approver.TYPE)
+public class Approver {
 
     public static final String TYPE = "User";
     public static final String USERNAME = "username";
@@ -18,12 +18,8 @@ public class User {
     private final String username;
 
     @JsonCreator
-    public User(@JsonProperty(USERNAME) String username) {
+    public Approver(@JsonProperty(USERNAME) String username) {
         this.username = username;
-    }
-
-    public static User fromPublication(Publication publication) {
-        return new User(publication.getResourceOwner().getOwner());
     }
 
     @Override
@@ -38,10 +34,10 @@ public class User {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof User)) {
+        if (!(o instanceof Approver)) {
             return false;
         }
-        User user = (User) o;
+        Approver user = (Approver) o;
         return Objects.equals(username, user.username);
     }
 }
