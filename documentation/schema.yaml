@@ -75,10 +75,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        publishable:
+        empty:
           type: boolean
           example: null
-        empty:
+        publishable:
           type: boolean
           example: null
       example: null
@@ -261,6 +261,20 @@ referencedSchemas:
     example: null
     discriminator:
       propertyName: type
+  Approver:
+    required:
+    - type
+    type: object
+    properties:
+      username:
+        type: string
+        example: null
+      type:
+        type: string
+        example: null
+    example: null
+    discriminator:
+      propertyName: type
   Architecture:
     required:
     - type
@@ -399,10 +413,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      publishable:
+      empty:
         type: boolean
         example: null
-      empty:
+      publishable:
         type: boolean
         example: null
     example: null
@@ -1497,15 +1511,18 @@ referencedSchemas:
     - type
     type: object
     properties:
-      source:
+      identifier:
         type: string
-        format: uri
         example: null
       labels:
         type: object
         additionalProperties:
           type: string
           example: null
+        example: null
+      source:
+        type: string
+        format: uri
         example: null
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
@@ -1516,9 +1533,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-        example: null
-      identifier:
-        type: string
         example: null
       type:
         type: string
@@ -2979,10 +2993,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          publishable:
+          empty:
             type: boolean
             example: null
-          empty:
+          publishable:
             type: boolean
             example: null
         example: null
@@ -3055,6 +3069,12 @@ referencedSchemas:
     - $ref: '#/components/schemas/File'
     - type: object
       properties:
+        approvedBy:
+          $ref: '#/components/schemas/Approver'
+        publishedDate:
+          type: string
+          format: date-time
+          example: null
         type:
           type: string
           example: null

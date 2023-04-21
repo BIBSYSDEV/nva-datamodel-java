@@ -32,8 +32,8 @@ import java.util.stream.StreamSupport;
 import static java.util.Collections.emptyList;
 import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -72,7 +72,7 @@ class PublicationContextTest {
     void shouldDefineEveryArrayPropertyAsContainerSet() {
         var allNvaCollectionProperties = generateSetOfPropertiesThatHaveCollectionTypeForEveryNvaType();
         var contextContainerSets = getAllContextContainerSetTerms();
-        assertThat(allNvaCollectionProperties, is(equalTo(contextContainerSets)));
+        assertThat(allNvaCollectionProperties, containsInAnyOrder(contextContainerSets.toArray()));
     }
 
     // TODO: test that every property and class is described in the ontology
