@@ -3,7 +3,6 @@ package no.unit.nva.model.testing;
 import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicationContext;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
-
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
@@ -11,6 +10,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.List;
 import java.util.Map;
+import no.unit.nva.model.Approver;
 import no.unit.nva.model.Contributor;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Identity;
@@ -43,7 +43,12 @@ public final class EntityDescriptionBuilder {
             .withAlternativeTitles(randomAlternativeTitles())
             .withAlternativeAbstracts(randomAlternativeAbstracts())
             .withAbstract(randomString())
+            .withApprovedBy(randomApprover())
             .build();
+    }
+
+    private static Approver randomApprover() {
+        return new Approver(randomString());
     }
 
     private static Map<String, String> randomAlternativeTitles() {

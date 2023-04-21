@@ -31,6 +31,7 @@ public class EntityDescription {
     private String description;
     private Reference reference;
     private URI metadataSource;
+    private Approver approvedBy;
 
     public EntityDescription() {
         contributors = Collections.emptyList();
@@ -52,6 +53,15 @@ public class EntityDescription {
         setReference(builder.reference);
         setMetadataSource(builder.metadataSource);
         setAlternativeAbstracts(builder.alternativeAbstracts);
+        setApprovedBy(builder.approvedBy);
+    }
+
+    public Approver getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(Approver approvedBy) {
+        this.approvedBy = approvedBy;
     }
 
     public String getMainTitle() {
@@ -164,6 +174,7 @@ public class EntityDescription {
                 getDescription(),
                 getReference(),
                 getMetadataSource(),
+                getApprovedBy(),
                 getAlternativeAbstracts());
     }
 
@@ -188,6 +199,7 @@ public class EntityDescription {
                 && Objects.equals(getDescription(), that.getDescription())
                 && Objects.equals(getReference(), that.getReference())
                 && Objects.equals(getMetadataSource(), that.getMetadataSource())
+                && Objects.equals(getApprovedBy(), that.getApprovedBy())
                 && Objects.equals(getAlternativeAbstracts(), that.getAlternativeAbstracts());
     }
 
@@ -204,6 +216,7 @@ public class EntityDescription {
         private List<String> tags;
         private String description;
         private Reference reference;
+        private Approver approvedBy;
         private URI metadataSource;
 
         public Builder() {
@@ -266,6 +279,11 @@ public class EntityDescription {
 
         public Builder withMetadataSource(URI metadataSource) {
             this.metadataSource = metadataSource;
+            return this;
+        }
+
+        public Builder withApprovedBy(Approver approvedBy) {
+            this.approvedBy = approvedBy;
             return this;
         }
 

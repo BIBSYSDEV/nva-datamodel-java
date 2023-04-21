@@ -87,8 +87,6 @@ schema:
     rightsHolder:
       type: string
       example: null
-    approvedBy:
-      $ref: '#/components/schemas/User'
     modelVersion:
       type: string
       example: null
@@ -255,6 +253,20 @@ referencedSchemas:
         - DECLINED
         - REJECTION
       applicationCode:
+        type: string
+        example: null
+      type:
+        type: string
+        example: null
+    example: null
+    discriminator:
+      propertyName: type
+  Approver:
+    required:
+    - type
+    type: object
+    properties:
+      username:
         type: string
         example: null
       type:
@@ -1172,6 +1184,8 @@ referencedSchemas:
         type: string
         format: uri
         example: null
+      approvedBy:
+        $ref: '#/components/schemas/Approver'
       abstract:
         type: string
         example: null
@@ -2993,8 +3007,6 @@ referencedSchemas:
       rightsHolder:
         type: string
         example: null
-      approvedBy:
-        $ref: '#/components/schemas/User'
       modelVersion:
         type: string
         example: null
@@ -3609,20 +3621,6 @@ referencedSchemas:
           type: string
           example: null
       example: null
-  User:
-    required:
-    - type
-    type: object
-    properties:
-      username:
-        type: string
-        example: null
-      type:
-        type: string
-        example: null
-    example: null
-    discriminator:
-      propertyName: type
   Venue:
     required:
     - type

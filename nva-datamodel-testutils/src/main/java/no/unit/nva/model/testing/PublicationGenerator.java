@@ -13,17 +13,14 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
-import no.unit.nva.model.Approver;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
-
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
@@ -180,12 +177,7 @@ public final class PublicationGenerator {
                 .withCreatedDate(randomInstant())
                 .withEntityDescription(randomEntityDescription(publicationInstanceClass))
                 .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                .withApprovedBy(randomApprover())
                 .build();
-    }
-
-    private static Approver randomApprover() {
-        return new Approver(randomString());
     }
 
     private static ResourceOwner randomResourceOwner() {
