@@ -2,7 +2,6 @@ package no.unit.nva.model.file;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
-import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
@@ -23,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
-import no.unit.nva.model.User;
+import no.unit.nva.model.Approver;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
@@ -157,11 +156,11 @@ public class FileModelTest {
     }
 
     public static File randomPublishedFile() {
-        return buildNonAdministrativeAgreement().buildPublishedFile(randomUser());
+        return buildNonAdministrativeAgreement().buildPublishedFile((randomApprover()));
     }
 
-    public static User randomUser() {
-        return new User(randomString());
+    public static Approver randomApprover() {
+        return new Approver(randomString());
     }
 
     public static File.Builder buildNonAdministrativeAgreement() {
@@ -229,12 +228,12 @@ public class FileModelTest {
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
-                                 randomUser(),
+                                 randomApprover(),
                                  randomInstant());
     }
 
     private void illegalPublishedFile() {
-        admAgreementBuilder().buildPublishedFile(randomUser());
+        admAgreementBuilder().buildPublishedFile(randomApprover());
     }
 
     private void illegalUnPublishedFile() {
@@ -255,7 +254,7 @@ public class FileModelTest {
                    .withName(FIRST_FILE_TXT)
                    .withPublisherAuthority(true)
                    .withSize(SIZE)
-                   .buildPublishedFile(randomUser());
+                   .buildPublishedFile(randomApprover());
     }
 
     @Deprecated

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
-import no.unit.nva.model.User;
+import no.unit.nva.model.Approver;
 
 @SuppressWarnings("PMD.ExcessiveParameterList")
 @JsonTypeInfo(use = Id.NAME, property = "type")
@@ -35,7 +35,7 @@ public class PublishedFile extends File {
      * @param publishedDate           The date when file has been published
      */
     @JsonProperty(APPROVED_BY)
-    private final User approvedBy;
+    private final Approver approvedBy;
     @JsonProperty(PUBLISHED_DATE)
     private final Instant publishedDate;
 
@@ -49,7 +49,7 @@ public class PublishedFile extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(APPROVED_BY) User approvedBy,
+        @JsonProperty(APPROVED_BY) Approver approvedBy,
         @JsonProperty(PUBLISHED_DATE) Instant publishedDate) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate);
         this.approvedBy = approvedBy;
@@ -74,7 +74,7 @@ public class PublishedFile extends File {
         return publishedDate;
     }
 
-    public User getApprovedBy() {
+    public Approver getApprovedBy() {
         return approvedBy;
     }
 }

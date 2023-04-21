@@ -1373,7 +1373,7 @@ nva:approvedBy a rdf:Property ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Approval ;
-  rdfs:range nva:REK, nva:NARA, nva:NMA, nva:DIRHEALTH .
+  rdfs:range rdf:Resource .
 
 nva:project a rdf:Property ;
   rdfs:comment "" ;
