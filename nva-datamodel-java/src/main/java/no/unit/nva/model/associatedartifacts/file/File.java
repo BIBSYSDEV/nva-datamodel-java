@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import no.unit.nva.commons.json.JsonSerializable;
+import no.unit.nva.model.User;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import nva.commons.core.JacocoGenerated;
 
@@ -148,7 +149,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         return toPublishedFile(null);
     }
 
-    public PublishedFile toPublishedFile(String approvedBy) {
+    public PublishedFile toPublishedFile(User approvedBy) {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                  isAdministrativeAgreement(), isPublisherAuthority(),
                                  getEmbargoDate().orElse(null), approvedBy, Instant.now());
@@ -253,7 +254,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return this;
         }
         
-        public File buildPublishedFile(String approvedBy) {
+        public File buildPublishedFile(User approvedBy) {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
                 publisherAuthority, embargoDate, approvedBy, Instant.now());
         }

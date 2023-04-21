@@ -3056,8 +3056,7 @@ referencedSchemas:
     - type: object
       properties:
         approvedBy:
-          type: string
-          example: null
+          $ref: '#/components/schemas/User'
         publishedDate:
           type: string
           format: date-time
@@ -3612,6 +3611,20 @@ referencedSchemas:
           type: string
           example: null
       example: null
+  User:
+    required:
+    - type
+    type: object
+    properties:
+      username:
+        type: string
+        example: null
+      type:
+        type: string
+        example: null
+    example: null
+    discriminator:
+      propertyName: type
   Venue:
     required:
     - type

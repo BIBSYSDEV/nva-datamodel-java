@@ -8,6 +8,7 @@ import static no.unit.nva.model.PublicationStatus.NEW;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.file.FileModelTest.buildAdministrativeAgreement;
 import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreement;
+import static no.unit.nva.model.file.FileModelTest.randomUser;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
@@ -151,7 +152,7 @@ public class PublicationTest {
     @Test
     void shouldConvertPublishableArtifactToPublishedUponRequest() {
         var unpublishedFile = buildNonAdministrativeAgreement().buildUnpublishedFile();
-        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile(randomString());
+        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile(randomUser());
         assertThat(unpublishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
         assertThat(publishedFile.toPublishedFile(), is(instanceOf(PublishedFile.class)));
     }
@@ -159,7 +160,7 @@ public class PublicationTest {
     @Test
     void shouldConvertPublishableArtifactToUnpublishedUponRequest() {
         var unpublishedFile = buildNonAdministrativeAgreement().buildUnpublishedFile();
-        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile(randomString());
+        var publishedFile = buildNonAdministrativeAgreement().buildPublishedFile(randomUser());
         assertThat(unpublishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
         assertThat(publishedFile.toUnpublishedFile(), is(instanceOf(UnpublishedFile.class)));
     }

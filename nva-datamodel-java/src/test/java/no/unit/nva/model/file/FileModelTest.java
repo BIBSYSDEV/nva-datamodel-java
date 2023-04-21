@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
+import no.unit.nva.model.User;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
@@ -156,7 +157,11 @@ public class FileModelTest {
     }
 
     public static File randomPublishedFile() {
-        return buildNonAdministrativeAgreement().buildPublishedFile(randomString());
+        return buildNonAdministrativeAgreement().buildPublishedFile(randomUser());
+    }
+
+    public static User randomUser() {
+        return new User(randomString());
     }
 
     public static File.Builder buildNonAdministrativeAgreement() {
@@ -217,19 +222,19 @@ public class FileModelTest {
 
     private PublishedFile publishedFileWithActiveEmbargo() {
         return new PublishedFile(UUID.randomUUID(),
-            randomString(),
-            randomString(),
-            randomInteger().longValue(),
-            getCcByLicense(),
-            NOT_ADMINISTRATIVE_AGREEMENT,
-            randomBoolean(),
-            Instant.now().plus(1, DAYS),
                                  randomString(),
+                                 randomString(),
+                                 randomInteger().longValue(),
+                                 getCcByLicense(),
+                                 NOT_ADMINISTRATIVE_AGREEMENT,
+                                 randomBoolean(),
+                                 Instant.now().plus(1, DAYS),
+                                 randomUser(),
                                  randomInstant());
     }
 
     private void illegalPublishedFile() {
-        admAgreementBuilder().buildPublishedFile(randomString());
+        admAgreementBuilder().buildPublishedFile(randomUser());
     }
 
     private void illegalUnPublishedFile() {
@@ -250,7 +255,7 @@ public class FileModelTest {
                    .withName(FIRST_FILE_TXT)
                    .withPublisherAuthority(true)
                    .withSize(SIZE)
-                   .buildPublishedFile(randomString());
+                   .buildPublishedFile(randomUser());
     }
 
     @Deprecated
