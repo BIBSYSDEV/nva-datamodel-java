@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import no.unit.nva.commons.json.JsonSerializable;
+import no.unit.nva.model.Approver;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import nva.commons.core.JacocoGenerated;
 
@@ -145,8 +146,13 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     }
     
     public PublishedFile toPublishedFile() {
+        return toPublishedFile(null);
+    }
+
+    public PublishedFile toPublishedFile(Approver approvedBy) {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-            isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
+                                 isAdministrativeAgreement(), isPublisherAuthority(),
+                                 getEmbargoDate().orElse(null), approvedBy, Instant.now());
     }
     
     public final AdministrativeAgreement toUnpublishableFile() {
@@ -248,10 +254,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return this;
         }
         
-        public File buildPublishedFile() {
+        public File buildPublishedFile(Approver approvedBy) {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                publisherAuthority,
-                embargoDate);
+                publisherAuthority, embargoDate, approvedBy, Instant.now());
         }
         
         public File buildUnpublishedFile() {

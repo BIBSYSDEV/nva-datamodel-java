@@ -10,7 +10,7 @@ import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(Approver.TYPE)
-public class Approver {
+public class Approver implements Agent {
 
     public static final String TYPE = "User";
     public static final String USERNAME = "username";
@@ -41,3 +41,5 @@ public class Approver {
         return Objects.equals(username, user.username);
     }
 }
+
+
