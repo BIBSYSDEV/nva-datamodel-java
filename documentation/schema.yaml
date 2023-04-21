@@ -75,10 +75,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        publishable:
+        empty:
           type: boolean
           example: null
-        empty:
+        publishable:
           type: boolean
           example: null
       example: null
@@ -87,6 +87,8 @@ schema:
     rightsHolder:
       type: string
       example: null
+    approvedBy:
+      $ref: '#/components/schemas/User'
     modelVersion:
       type: string
       example: null
@@ -399,10 +401,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      publishable:
+      empty:
         type: boolean
         example: null
-      empty:
+      publishable:
         type: boolean
         example: null
     example: null
@@ -1497,15 +1499,8 @@ referencedSchemas:
     - type
     type: object
     properties:
-      source:
+      identifier:
         type: string
-        format: uri
-        example: null
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-          example: null
         example: null
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
@@ -1517,8 +1512,15 @@ referencedSchemas:
         type: string
         format: date-time
         example: null
-      identifier:
+      source:
         type: string
+        format: uri
+        example: null
+      labels:
+        type: object
+        additionalProperties:
+          type: string
+          example: null
         example: null
       type:
         type: string
@@ -2979,10 +2981,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          publishable:
+          empty:
             type: boolean
             example: null
-          empty:
+          publishable:
             type: boolean
             example: null
         example: null
@@ -2991,6 +2993,8 @@ referencedSchemas:
       rightsHolder:
         type: string
         example: null
+      approvedBy:
+        $ref: '#/components/schemas/User'
       modelVersion:
         type: string
         example: null
@@ -3605,6 +3609,20 @@ referencedSchemas:
           type: string
           example: null
       example: null
+  User:
+    required:
+    - type
+    type: object
+    properties:
+      username:
+        type: string
+        example: null
+      type:
+        type: string
+        example: null
+    example: null
+    discriminator:
+      propertyName: type
   Venue:
     required:
     - type

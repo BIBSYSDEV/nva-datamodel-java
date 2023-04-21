@@ -62,9 +62,18 @@ public class Publication
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
     private String rightsHolder;
+    private User approvedBy;
 
     public Publication() {
         // Default constructor, use setters.
+    }
+
+    public User getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(User approvedBy) {
+        this.approvedBy = approvedBy;
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
@@ -278,7 +287,8 @@ public class Publication
                    .withAssociatedArtifacts(getAssociatedArtifacts())
                    .withSubjects(getSubjects())
                    .withFundings(getFundings())
-                   .withRightsHolder(getRightsHolder());
+                   .withRightsHolder(getRightsHolder())
+                   .withApprovedBy(getApprovedBy());
     }
 
     /**
@@ -476,6 +486,11 @@ public class Publication
 
         public Builder withRightsHolder(String rightsHolder) {
             this.publication.setRightsHolder(rightsHolder);
+            return this;
+        }
+
+        public Builder withApprovedBy(User approvedBy) {
+            this.publication.setApprovedBy(approvedBy);
             return this;
         }
     }
