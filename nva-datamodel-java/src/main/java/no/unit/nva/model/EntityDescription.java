@@ -31,7 +31,7 @@ public class EntityDescription {
     private String description;
     private Reference reference;
     private URI metadataSource;
-    private Approver approvedBy;
+    private Username approvedBy;
 
     public EntityDescription() {
         contributors = Collections.emptyList();
@@ -56,11 +56,11 @@ public class EntityDescription {
         setApprovedBy(builder.approvedBy);
     }
 
-    public Approver getApprovedBy() {
+    public Username getApprovedBy() {
         return approvedBy;
     }
 
-    public void setApprovedBy(Approver approvedBy) {
+    public void setApprovedBy(Username approvedBy) {
         this.approvedBy = approvedBy;
     }
 
@@ -216,7 +216,7 @@ public class EntityDescription {
         private List<String> tags;
         private String description;
         private Reference reference;
-        private Approver approvedBy;
+        private Username approvedBy;
         private URI metadataSource;
 
         public Builder() {
@@ -282,7 +282,7 @@ public class EntityDescription {
             return this;
         }
 
-        public Builder withApprovedBy(Approver approvedBy) {
+        public Builder withApprovedBy(Username approvedBy) {
             this.approvedBy = approvedBy;
             return this;
         }

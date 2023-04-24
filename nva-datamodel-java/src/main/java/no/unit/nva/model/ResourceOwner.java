@@ -12,12 +12,12 @@ public class ResourceOwner {
     public static final String OWNER = "owner";
 
     @JsonProperty(OWNER)
-    private final String owner;
+    private final Username owner;
     @JsonProperty(OWNER_AFFILIATION)
     private final URI ownerAffiliation;
 
     @JsonCreator
-    public ResourceOwner(@JsonProperty(OWNER) String owner,
+    public ResourceOwner(@JsonProperty(OWNER) Username owner,
                          @JsonProperty(OWNER_AFFILIATION) URI ownerAffiliation) {
         this.owner = owner;
         this.ownerAffiliation = ownerAffiliation;
@@ -42,7 +42,7 @@ public class ResourceOwner {
     }
 
     @JacocoGenerated
-    public String getOwner() {
+    public Username getOwner() {
         return owner;
     }
 

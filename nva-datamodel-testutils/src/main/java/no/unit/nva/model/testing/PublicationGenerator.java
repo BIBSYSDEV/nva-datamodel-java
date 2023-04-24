@@ -13,6 +13,7 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.Username;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
@@ -181,7 +182,7 @@ public final class PublicationGenerator {
     }
 
     private static ResourceOwner randomResourceOwner() {
-        return new ResourceOwner(randomString(), randomUri());
+        return new ResourceOwner(new Username(randomString()), randomUri());
     }
 
     private static String randomWord() {

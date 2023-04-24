@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
-import no.unit.nva.model.Approver;
+import no.unit.nva.model.Username;
 
 @SuppressWarnings("PMD.ExcessiveParameterList")
 @JsonTypeInfo(use = Id.NAME, property = "type")
@@ -17,6 +17,11 @@ public class PublishedFile extends File {
     public static final String TYPE = "PublishedFile";
     public static final String APPROVED_BY = "approvedBy";
     public static final String PUBLISHED_DATE = "publishedDate";
+
+    @JsonProperty(APPROVED_BY)
+    private final Username approvedBy;
+    @JsonProperty(PUBLISHED_DATE)
+    private final Instant publishedDate;
 
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
@@ -34,10 +39,6 @@ public class PublishedFile extends File {
      * @param approvedBy              The username of the person who approves the file
      * @param publishedDate           The date when file has been published
      */
-    @JsonProperty(APPROVED_BY)
-    private final Approver approvedBy;
-    @JsonProperty(PUBLISHED_DATE)
-    private final Instant publishedDate;
 
     @JsonCreator
     public PublishedFile(
@@ -49,7 +50,7 @@ public class PublishedFile extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(APPROVED_BY) Approver approvedBy,
+        @JsonProperty(APPROVED_BY) Username approvedBy,
         @JsonProperty(PUBLISHED_DATE) Instant publishedDate) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate);
         this.approvedBy = approvedBy;
@@ -74,7 +75,7 @@ public class PublishedFile extends File {
         return publishedDate;
     }
 
-    public Approver getApprovedBy() {
+    public Username getApprovedBy() {
         return approvedBy;
     }
 }

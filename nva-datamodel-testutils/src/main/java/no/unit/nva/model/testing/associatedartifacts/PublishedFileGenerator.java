@@ -4,7 +4,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.util.UUID;
-import no.unit.nva.model.Approver;
+import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
 
 public final class PublishedFileGenerator {
@@ -15,11 +15,11 @@ public final class PublishedFileGenerator {
 
     public static PublishedFile random() {
         return new PublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
-                                 LicenseGenerator.random(), false, true, null, randomApprover(),
+                                 LicenseGenerator.random(), false, true, null, randomUsername(),
                                  randomInstant());
     }
 
-    private static Approver randomApprover() {
-        return new Approver(randomString());
+    private static Username randomUsername() {
+        return new Username(randomString());
     }
 }

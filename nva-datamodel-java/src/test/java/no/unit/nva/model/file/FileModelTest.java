@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
-import no.unit.nva.model.Approver;
+import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
@@ -156,11 +156,7 @@ public class FileModelTest {
     }
 
     public static File randomPublishedFile() {
-        return buildNonAdministrativeAgreement().buildPublishedFile((randomApprover()));
-    }
-
-    public static Approver randomApprover() {
-        return new Approver(randomString());
+        return buildNonAdministrativeAgreement().buildPublishedFile((randomUsername()));
     }
 
     public static File.Builder buildNonAdministrativeAgreement() {
@@ -228,12 +224,16 @@ public class FileModelTest {
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
-                                 randomApprover(),
+                                 randomUsername(),
                                  randomInstant());
     }
 
+    public static Username randomUsername() {
+        return new Username(randomString());
+    }
+
     private void illegalPublishedFile() {
-        admAgreementBuilder().buildPublishedFile(randomApprover());
+        admAgreementBuilder().buildPublishedFile(randomUsername());
     }
 
     private void illegalUnPublishedFile() {
@@ -254,7 +254,7 @@ public class FileModelTest {
                    .withName(FIRST_FILE_TXT)
                    .withPublisherAuthority(true)
                    .withSize(SIZE)
-                   .buildPublishedFile(randomApprover());
+                   .buildPublishedFile(randomUsername());
     }
 
     @Deprecated
