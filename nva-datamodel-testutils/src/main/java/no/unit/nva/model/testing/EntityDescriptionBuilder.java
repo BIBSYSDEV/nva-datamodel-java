@@ -3,7 +3,6 @@ package no.unit.nva.model.testing;
 import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicationContext;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
-
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
@@ -17,6 +16,7 @@ import no.unit.nva.model.Identity;
 import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Reference;
+import no.unit.nva.model.Username;
 import no.unit.nva.model.role.Role;
 import no.unit.nva.model.role.RoleType;
 import no.unit.nva.model.role.RoleTypeOther;
@@ -31,19 +31,24 @@ public final class EntityDescriptionBuilder {
 
     public static EntityDescription randomEntityDescription(Class<?> publicationInstanceClass) {
         return new EntityDescription.Builder()
-            .withReference(randomReference(publicationInstanceClass))
-            .withNpiSubjectHeading(randomNpiSubjectHeading())
-            .withDescription(randomString())
-            .withMainTitle(randomString())
-            .withLanguage(RandomLanguageUtil.randomLexvoUri())
-            .withTags(randomTags())
-            .withMetadataSource(randomUri())
-            .withPublicationDate(randomPublicationDate())
-            .withContributors(randomContributors())
-            .withAlternativeTitles(randomAlternativeTitles())
-            .withAlternativeAbstracts(randomAlternativeAbstracts())
-            .withAbstract(randomString())
-            .build();
+                   .withReference(randomReference(publicationInstanceClass))
+                   .withNpiSubjectHeading(randomNpiSubjectHeading())
+                   .withDescription(randomString())
+                   .withMainTitle(randomString())
+                   .withLanguage(RandomLanguageUtil.randomLexvoUri())
+                   .withTags(randomTags())
+                   .withMetadataSource(randomUri())
+                   .withPublicationDate(randomPublicationDate())
+                   .withContributors(randomContributors())
+                   .withAlternativeTitles(randomAlternativeTitles())
+                   .withAlternativeAbstracts(randomAlternativeAbstracts())
+                   .withAbstract(randomString())
+                   .withApprovedBy(randomUsername())
+                   .build();
+    }
+
+    private static Username randomUsername() {
+        return new Username(randomString());
     }
 
     private static Map<String, String> randomAlternativeTitles() {
@@ -60,11 +65,11 @@ public final class EntityDescriptionBuilder {
 
     private static Contributor randomContributor() {
         return new Contributor.Builder()
-            .withAffiliations(randomOrganizations())
-            .withSequence(randomInteger(10))
-            .withRole(randomRole())
-            .withIdentity(randomIdentity())
-            .build();
+                   .withAffiliations(randomOrganizations())
+                   .withSequence(randomInteger(10))
+                   .withRole(randomRole())
+                   .withIdentity(randomIdentity())
+                   .build();
     }
 
     private static Identity randomIdentity() {
@@ -95,9 +100,9 @@ public final class EntityDescriptionBuilder {
 
     private static Organization randomOrganization() {
         return new Organization.Builder()
-            .withLabels(randomLabels())
-            .withId(randomUri())
-            .build();
+                   .withLabels(randomLabels())
+                   .withId(randomUri())
+                   .build();
     }
 
     private static List<String> randomTags() {
@@ -110,9 +115,9 @@ public final class EntityDescriptionBuilder {
 
     private static Reference randomReference(Class<?> publicationInstanceClass) {
         return new Reference.Builder()
-            .withPublicationInstance(randomPublicationInstance(publicationInstanceClass))
-            .withPublishingContext(randomPublicationContext(publicationInstanceClass))
-            .withDoi(randomUri())
-            .build();
+                   .withPublicationInstance(randomPublicationInstance(publicationInstanceClass))
+                   .withPublishingContext(randomPublicationContext(publicationInstanceClass))
+                   .withDoi(randomUri())
+                   .build();
     }
 }

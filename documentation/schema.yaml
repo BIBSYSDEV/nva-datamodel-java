@@ -261,20 +261,6 @@ referencedSchemas:
     example: null
     discriminator:
       propertyName: type
-  Approver:
-    required:
-    - type
-    type: object
-    properties:
-      username:
-        type: string
-        example: null
-      type:
-        type: string
-        example: null
-    example: null
-    discriminator:
-      propertyName: type
   Architecture:
     required:
     - type
@@ -1184,6 +1170,9 @@ referencedSchemas:
         type: string
         format: uri
         example: null
+      approvedBy:
+        type: string
+        example: null
       abstract:
         type: string
         example: null
@@ -1514,18 +1503,6 @@ referencedSchemas:
       identifier:
         type: string
         example: null
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-          example: null
-        example: null
-      source:
-        type: string
-        format: uri
-        example: null
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
         type: string
         format: date-time
@@ -1533,6 +1510,18 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
+        example: null
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
+      source:
+        type: string
+        format: uri
+        example: null
+      labels:
+        type: object
+        additionalProperties:
+          type: string
+          example: null
         example: null
       type:
         type: string
@@ -3070,7 +3059,8 @@ referencedSchemas:
     - type: object
       properties:
         approvedBy:
-          $ref: '#/components/schemas/Approver'
+          type: string
+          example: null
         publishedDate:
           type: string
           format: date-time
