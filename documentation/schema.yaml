@@ -1170,7 +1170,7 @@ referencedSchemas:
         type: string
         format: uri
         example: null
-      approvedBy:
+      approvedByUser:
         type: string
         example: null
       abstract:
@@ -3058,7 +3058,7 @@ referencedSchemas:
     - $ref: '#/components/schemas/File'
     - type: object
       properties:
-        approvedBy:
+        approvedByUser:
           type: string
           example: null
         publishedDate:

@@ -31,7 +31,7 @@ public class EntityDescription {
     private String description;
     private Reference reference;
     private URI metadataSource;
-    private Username approvedBy;
+    private Username approvedByUser;
 
     public EntityDescription() {
         contributors = Collections.emptyList();
@@ -53,15 +53,15 @@ public class EntityDescription {
         setReference(builder.reference);
         setMetadataSource(builder.metadataSource);
         setAlternativeAbstracts(builder.alternativeAbstracts);
-        setApprovedBy(builder.approvedBy);
+        setApprovedByUser(builder.approvedBy);
     }
 
-    public Username getApprovedBy() {
-        return approvedBy;
+    public Username getApprovedByUser() {
+        return approvedByUser;
     }
 
-    public void setApprovedBy(Username approvedBy) {
-        this.approvedBy = approvedBy;
+    public void setApprovedByUser(Username approvedByUser) {
+        this.approvedByUser = approvedByUser;
     }
 
     public String getMainTitle() {
@@ -164,18 +164,18 @@ public class EntityDescription {
     @Override
     public int hashCode() {
         return Objects.hash(getMainTitle(),
-                getAlternativeTitles(),
-                getLanguage(),
-                getPublicationDate(),
-                getContributors(),
-                getAbstract(),
-                getNpiSubjectHeading(),
-                getTags(),
-                getDescription(),
-                getReference(),
-                getMetadataSource(),
-                getApprovedBy(),
-                getAlternativeAbstracts());
+                            getAlternativeTitles(),
+                            getLanguage(),
+                            getPublicationDate(),
+                            getContributors(),
+                            getAbstract(),
+                            getNpiSubjectHeading(),
+                            getTags(),
+                            getDescription(),
+                            getReference(),
+                            getMetadataSource(),
+                            getApprovedByUser(),
+                            getAlternativeAbstracts());
     }
 
     @JacocoGenerated
@@ -199,7 +199,7 @@ public class EntityDescription {
                 && Objects.equals(getDescription(), that.getDescription())
                 && Objects.equals(getReference(), that.getReference())
                 && Objects.equals(getMetadataSource(), that.getMetadataSource())
-                && Objects.equals(getApprovedBy(), that.getApprovedBy())
+                && Objects.equals(getApprovedByUser(), that.getApprovedByUser())
                 && Objects.equals(getAlternativeAbstracts(), that.getAlternativeAbstracts());
     }
 
