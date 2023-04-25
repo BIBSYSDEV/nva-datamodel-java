@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 
 class PublicationTest {
 
-    public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContext.json";
+    public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContextDeprecated.json";
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final String DOI_REQUEST_FIELD = "doiRequest";
