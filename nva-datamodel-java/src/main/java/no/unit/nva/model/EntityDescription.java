@@ -31,7 +31,6 @@ public class EntityDescription {
     private String description;
     private Reference reference;
     private URI metadataSource;
-    private Username approvedByUser;
 
     public EntityDescription() {
         contributors = Collections.emptyList();
@@ -53,16 +52,9 @@ public class EntityDescription {
         setReference(builder.reference);
         setMetadataSource(builder.metadataSource);
         setAlternativeAbstracts(builder.alternativeAbstracts);
-        setApprovedByUser(builder.approvedBy);
     }
 
-    public Username getApprovedByUser() {
-        return approvedByUser;
-    }
 
-    public void setApprovedByUser(Username approvedByUser) {
-        this.approvedByUser = approvedByUser;
-    }
 
     public String getMainTitle() {
         return mainTitle;
@@ -174,7 +166,6 @@ public class EntityDescription {
                             getDescription(),
                             getReference(),
                             getMetadataSource(),
-                            getApprovedByUser(),
                             getAlternativeAbstracts());
     }
 
@@ -199,7 +190,6 @@ public class EntityDescription {
                 && Objects.equals(getDescription(), that.getDescription())
                 && Objects.equals(getReference(), that.getReference())
                 && Objects.equals(getMetadataSource(), that.getMetadataSource())
-                && Objects.equals(getApprovedByUser(), that.getApprovedByUser())
                 && Objects.equals(getAlternativeAbstracts(), that.getAlternativeAbstracts());
     }
 
@@ -216,7 +206,6 @@ public class EntityDescription {
         private List<String> tags;
         private String description;
         private Reference reference;
-        private Username approvedBy;
         private URI metadataSource;
 
         public Builder() {
@@ -279,11 +268,6 @@ public class EntityDescription {
 
         public Builder withMetadataSource(URI metadataSource) {
             this.metadataSource = metadataSource;
-            return this;
-        }
-
-        public Builder withApprovedBy(Username approvedBy) {
-            this.approvedBy = approvedBy;
             return this;
         }
 

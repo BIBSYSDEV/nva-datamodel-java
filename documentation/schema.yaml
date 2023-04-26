@@ -1170,9 +1170,6 @@ referencedSchemas:
         type: string
         format: uri
         example: null
-      approvedByUser:
-        type: string
-        example: null
       abstract:
         type: string
         example: null
@@ -1503,16 +1500,6 @@ referencedSchemas:
       identifier:
         type: string
         example: null
-      source:
-        type: string
-        format: uri
-        example: null
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-          example: null
-        example: null
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
@@ -1522,6 +1509,16 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
+        example: null
+      labels:
+        type: object
+        additionalProperties:
+          type: string
+          example: null
+        example: null
+      source:
+        type: string
+        format: uri
         example: null
       type:
         type: string
@@ -3058,13 +3055,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/File'
     - type: object
       properties:
-        approvedByUser:
-          type: string
-          example: null
-        publishedDate:
-          type: string
-          format: date-time
-          example: null
         type:
           type: string
           example: null
