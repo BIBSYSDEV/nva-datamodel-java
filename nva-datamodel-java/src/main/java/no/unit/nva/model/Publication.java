@@ -43,6 +43,9 @@ public class Publication
     );
 
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
+    private static final String BASE_URI = "__BASE_URI__";
+    private static final String PUBLICATION_CONTEXT = stringFromResources(Path.of("publicationContext.json"));
+    private static final String ONTOLOGY = stringFromResources(Path.of("publication-ontology.ttl"));
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -338,8 +341,19 @@ public class Publication
     }
 
     @JsonIgnore
+    @Deprecated
     public String getJsonLdContext() {
-        return stringFromResources(Path.of("publicationContext.json"));
+        return stringFromResources(Path.of("publicationContextDeprecated.json"));
+    }
+
+    @JsonIgnore
+    public static String getJsonLdContext(URI baseUri) {
+        return PUBLICATION_CONTEXT.replace(BASE_URI, baseUri.toString());
+    }
+
+    @JsonIgnore
+    public static String getOntology(URI baseUri) {
+        return ONTOLOGY.replace(BASE_URI, baseUri.toString());
     }
 
     @JsonIgnore

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -42,9 +43,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 class OntologyTest {
 
     public static final ObjectMapper MAPPER = JsonUtils.dtoObjectMapper;
+    private static final URI BASE_URI = URI.create("https://localhost");
     public static final JsonNode JSON_LD_CONTEXT =
-        attempt(() -> MAPPER.readTree(inputStreamFromResources("publicationContext.json"))).orElseThrow();
-    public static final String ONTOLOGY_STRING = stringFromResources(Path.of("publication-ontology.ttl"));
+        attempt(() -> MAPPER.readTree(Publication.getJsonLdContext(BASE_URI))).orElseThrow();
+    public static final String ONTOLOGY_STRING = Publication.getOntology(BASE_URI);
     public static final SimpleSelector ANY_CLASS_SELECTOR = new SimpleSelector(null, RDF.type, (RDFNode) null);
     public static final SimpleSelector ANY_STATEMENT_SELECTOR = new SimpleSelector(null, null, (RDFNode) null);
     public static final SimpleSelector ONTOLOGY_CLASS_SELECTOR = new SimpleSelector(null, RDF.type, RDFS.Class);
@@ -161,7 +163,7 @@ class OntologyTest {
 
     private Model getOntologyModel() {
         var model = ModelFactory.createDefaultModel();
-        RDFDataMgr.read(model, inputStreamFromResources("publication-ontology.ttl"), Lang.TURTLE);
+        RDFDataMgr.read(model, new ByteArrayInputStream(ONTOLOGY_STRING.getBytes(StandardCharsets.UTF_8)), Lang.TURTLE);
         return model;
     }
 }
