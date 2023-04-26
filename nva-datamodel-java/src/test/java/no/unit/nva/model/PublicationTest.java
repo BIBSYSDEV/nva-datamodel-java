@@ -15,6 +15,7 @@ import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Set;
 
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
@@ -28,7 +29,7 @@ import org.junit.jupiter.api.Test;
 
 class PublicationTest {
 
-    public static final String PUBLICATION_CONTEXT_JSON = "src/main/resources/publicationContextDeprecated.json";
+    public static final String PUBLICATION_CONTEXT_JSON = Publication.getJsonLdContext(URI.create("https://localhost"));
     public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final String DOI_REQUEST_FIELD = "doiRequest";
@@ -72,7 +73,7 @@ class PublicationTest {
 
     protected JsonNode toPublicationWithContext(Publication publication) throws IOException {
         JsonNode document = dataModelObjectMapper.readTree(dataModelObjectMapper.writeValueAsString(publication));
-        JsonNode context = dataModelObjectMapper.readTree(new FileInputStream(PUBLICATION_CONTEXT_JSON));
+        JsonNode context = dataModelObjectMapper.readTree(PUBLICATION_CONTEXT_JSON);
         ContextUtil.injectContext(document, context);
         return document;
     }
