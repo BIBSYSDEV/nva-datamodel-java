@@ -223,7 +223,8 @@ public class FileModelTest {
                                  getCcByLicense(),
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
-                                 Instant.now().plus(1, DAYS));
+                                 Instant.now().plus(1, DAYS),
+                                 randomInstant());
     }
 
     public static Username randomUsername() {

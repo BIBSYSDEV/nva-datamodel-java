@@ -12,8 +12,11 @@ import java.util.UUID;
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(PublishedFile.TYPE)
 public class PublishedFile extends File {
-    
+
     public static final String TYPE = "PublishedFile";
+    public static final String PUBLISHED_DATE = "publishedDate";
+    @JsonProperty(PUBLISHED_DATE)
+    private final Instant publishedDate;
 
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
@@ -39,22 +42,26 @@ public class PublishedFile extends File {
         @JsonProperty(LICENSE_FIELD) License license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
-        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
+        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
+        @JsonProperty(PUBLISHED_DATE) Instant publishedDate) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate);
-
+        this.publishedDate = publishedDate;
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
         }
     }
-    
-    @Override
-    public boolean isVisibleForNonOwner() {
-        return !isAdministrativeAgreement() && fileDoesNotHaveActiveEmbargo();
+
+    public Instant getPublishedDate() {
+        return publishedDate;
     }
-    
-    
+
     @Override
     public PublishedFile toPublishedFile() {
         return this;
+    }
+
+    @Override
+    public boolean isVisibleForNonOwner() {
+        return !isAdministrativeAgreement() && fileDoesNotHaveActiveEmbargo();
     }
 }
