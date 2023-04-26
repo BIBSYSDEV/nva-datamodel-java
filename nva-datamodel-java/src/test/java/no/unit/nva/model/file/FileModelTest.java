@@ -156,7 +156,7 @@ public class FileModelTest {
     }
 
     public static File randomPublishedFile() {
-        return buildNonAdministrativeAgreement().buildPublishedFile((randomUsername()));
+        return buildNonAdministrativeAgreement().buildPublishedFile();
     }
 
     public static File.Builder buildNonAdministrativeAgreement() {
@@ -224,7 +224,6 @@ public class FileModelTest {
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
-                                 randomUsername(),
                                  randomInstant());
     }
 
@@ -233,7 +232,7 @@ public class FileModelTest {
     }
 
     private void illegalPublishedFile() {
-        admAgreementBuilder().buildPublishedFile(randomUsername());
+        admAgreementBuilder().buildPublishedFile();
     }
 
     private void illegalUnPublishedFile() {
@@ -254,7 +253,7 @@ public class FileModelTest {
                    .withName(FIRST_FILE_TXT)
                    .withPublisherAuthority(true)
                    .withSize(SIZE)
-                   .buildPublishedFile(randomUsername());
+                   .buildPublishedFile();
     }
 
     @Deprecated

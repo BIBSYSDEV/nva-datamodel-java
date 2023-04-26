@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import no.unit.nva.commons.json.JsonSerializable;
-import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import nva.commons.core.JacocoGenerated;
 
@@ -26,7 +25,7 @@ import nva.commons.core.JacocoGenerated;
     @JsonSubTypes.Type(name = AdministrativeAgreement.TYPE, value = AdministrativeAgreement.class)
 })
 public abstract class File implements JsonSerializable, AssociatedArtifact {
-    
+
     public static final String IDENTIFIER_FIELD = "identifier";
     public static final String NAME_FIELD = "name";
     public static final String MIME_TYPE_FIELD = "mimeType";
@@ -35,10 +34,10 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String ADMINISTRATIVE_AGREEMENT_FIELD = "administrativeAgreement";
     public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
-    
+
     public static final String MISSING_LICENSE =
         "The file is not annotated as an administrative agreement and should have a license";
-    
+
     @JsonProperty(IDENTIFIER_FIELD)
     private final UUID identifier;
     @JsonProperty(NAME_FIELD)
@@ -55,7 +54,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     private final boolean publisherAuthority;
     @JsonProperty(EMBARGO_DATE_FIELD)
     private final Instant embargoDate;
-    
+
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
      * marked as an administrative agreement.
@@ -70,7 +69,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @param publisherAuthority      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
      */
-    
+
     protected File(
         @JsonProperty(IDENTIFIER_FIELD) UUID identifier,
         @JsonProperty(NAME_FIELD) String name,
@@ -80,7 +79,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
-        
+
         this.identifier = identifier;
         this.name = name;
         this.mimeType = mimeType;
@@ -90,11 +89,11 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.publisherAuthority = publisherAuthority;
         this.embargoDate = embargoDate;
     }
-    
+
     public static Builder builder() {
         return new Builder();
     }
-    
+
     /**
      * Validate the file.
      */
@@ -103,58 +102,54 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             throw new MissingLicenseException(MISSING_LICENSE);
         }
     }
-    
+
     public UUID getIdentifier() {
         return identifier;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public String getMimeType() {
         return mimeType;
     }
-    
+
     public Long getSize() {
         return size;
     }
-    
+
     public License getLicense() {
         return license;
     }
-    
+
     public boolean isAdministrativeAgreement() {
         return administrativeAgreement;
     }
-    
+
     public boolean isPublisherAuthority() {
         return publisherAuthority;
     }
-    
+
     public Optional<Instant> getEmbargoDate() {
         return Optional.ofNullable(embargoDate);
     }
-    
+
     public boolean fileDoesNotHaveActiveEmbargo() {
         return getEmbargoDate().map(date -> Instant.now().isAfter(date)).orElse(true);
     }
-    
+
     public UnpublishedFile toUnpublishedFile() {
         return new UnpublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
             isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
     }
-    
-    public PublishedFile toPublishedFile() {
-        return toPublishedFile(null);
-    }
 
-    public PublishedFile toPublishedFile(Username approvedByUser) {
+    public PublishedFile toPublishedFile() {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                  isAdministrativeAgreement(), isPublisherAuthority(),
-                                 getEmbargoDate().orElse(null), approvedByUser, Instant.now());
+                                 getEmbargoDate().orElse(null), Instant.now());
     }
-    
+
     public final AdministrativeAgreement toUnpublishableFile() {
         if (isAdministrativeAgreement()) {
             return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
@@ -162,9 +157,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         }
         throw new IllegalStateException("Cannot make unpublishable a non-administrative agreement");
     }
-    
+
     public abstract boolean isVisibleForNonOwner();
-    
+
     @Override
     @JacocoGenerated
     public int hashCode() {
@@ -172,7 +167,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             isAdministrativeAgreement(),
             isPublisherAuthority(), getEmbargoDate());
     }
-    
+
     @Override
     @JacocoGenerated
     public boolean equals(Object o) {
@@ -192,16 +187,16 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
                && Objects.equals(getLicense(), file.getLicense())
                && Objects.equals(getEmbargoDate(), file.getEmbargoDate());
     }
-    
+
     @Override
     public String toString() {
         return toJsonString();
     }
-    
-  
-    
+
+
+
     public static final class Builder {
-        
+
         private UUID identifier;
         private String name;
         private String mimeType;
@@ -210,61 +205,61 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         private boolean administrativeAgreement;
         private boolean publisherAuthority;
         private Instant embargoDate;
-        
+
         private Builder() {
         }
-        
+
         public Builder withIdentifier(UUID identifier) {
             this.identifier = identifier;
             return this;
         }
-        
+
         public Builder withName(String name) {
             this.name = name;
             return this;
         }
-        
+
         public Builder withMimeType(String mimeType) {
             this.mimeType = mimeType;
             return this;
         }
-        
+
         public Builder withSize(Long size) {
             this.size = size;
             return this;
         }
-        
+
         public Builder withLicense(License license) {
             this.license = license;
             return this;
         }
-        
+
         public Builder withAdministrativeAgreement(boolean administrativeAgreement) {
             this.administrativeAgreement = administrativeAgreement;
             return this;
         }
-        
+
         public Builder withPublisherAuthority(boolean publisherAuthority) {
             this.publisherAuthority = publisherAuthority;
             return this;
         }
-        
+
         public Builder withEmbargoDate(Instant embargoDate) {
             this.embargoDate = embargoDate;
             return this;
         }
-        
-        public File buildPublishedFile(Username approvedByUser) {
+
+        public File buildPublishedFile() {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                publisherAuthority, embargoDate, approvedByUser, Instant.now());
+                publisherAuthority, embargoDate, Instant.now());
         }
-        
+
         public File buildUnpublishedFile() {
             return new UnpublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
                 publisherAuthority,
                 embargoDate);
         }
-        
+
         public File buildUnpublishableFile() {
             return new AdministrativeAgreement(identifier, name, mimeType, size, license, administrativeAgreement,
                 publisherAuthority,

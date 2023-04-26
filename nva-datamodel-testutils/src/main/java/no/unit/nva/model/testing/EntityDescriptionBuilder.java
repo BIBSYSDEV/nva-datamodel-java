@@ -16,7 +16,6 @@ import no.unit.nva.model.Identity;
 import no.unit.nva.model.NameType;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Reference;
-import no.unit.nva.model.Username;
 import no.unit.nva.model.role.Role;
 import no.unit.nva.model.role.RoleType;
 import no.unit.nva.model.role.RoleTypeOther;
@@ -43,12 +42,7 @@ public final class EntityDescriptionBuilder {
                    .withAlternativeTitles(randomAlternativeTitles())
                    .withAlternativeAbstracts(randomAlternativeAbstracts())
                    .withAbstract(randomString())
-                   .withApprovedBy(randomUsername())
                    .build();
-    }
-
-    private static Username randomUsername() {
-        return new Username(randomString());
     }
 
     private static Map<String, String> randomAlternativeTitles() {
