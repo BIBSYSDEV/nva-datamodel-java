@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -26,6 +27,7 @@ public class LiteraryArtsAudioVisual implements LiteraryArtsManifestation {
     private final PublishingHouse publisher;
     @JsonProperty(PUBLICATION_DATE_FIELD)
     private final PublicationDate publicationDate;
+    @JsonAlias("isbn")
     @JsonProperty(ISBN_LIST_FIELD)
     private final List<String> isbnList;
     @JsonProperty(EXTENT_FIELD)
