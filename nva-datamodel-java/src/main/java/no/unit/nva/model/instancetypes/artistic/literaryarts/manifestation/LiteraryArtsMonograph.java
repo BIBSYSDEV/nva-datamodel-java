@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -8,6 +9,7 @@ import no.unit.nva.model.contexttypes.PublishingHouse;
 import no.unit.nva.model.pages.MonographPages;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +24,7 @@ public class LiteraryArtsMonograph implements LiteraryArtsManifestation {
     public static final String PAGES_FIELD = "pages";
     @JsonProperty(PUBLISHER_FIELD) private final PublishingHouse publisher;
     @JsonProperty(DATE_FIELD) private final PublicationDate publicationDate;
+    @JsonAlias("isbn")
     @JsonProperty(ISBN_LIST_FIELD) private final List<String> isbnList;
     @JsonProperty(PAGES_FIELD) private final MonographPages pages;
 
@@ -41,7 +44,7 @@ public class LiteraryArtsMonograph implements LiteraryArtsManifestation {
     private List<String> migrateToList(Object isbnList) {
         if (isbnList instanceof String) {
             return List.of((String) isbnList);
-        } else if (isbnList instanceof List) {
+        } else if (isbnList.getClass().isArray() || isbnList instanceof Collection) {
             return (List<String>) isbnList;
         } else {
             throw new IllegalArgumentException("ISBN List could not be parsed");
