@@ -20,41 +20,41 @@ public class LiteraryArtsAudioVisualMigrationTest {
     }
 
     private static String generateNew() {
-        return "{\n" +
-                "          \"type\" : \"LiteraryArtsAudioVisual\",\n" +
-                "          \"subtype\" : \"RadioPlay\",\n" +
-                "          \"publisher\" : {\n" +
-                "            \"type\" : \"UnconfirmedPublisher\",\n" +
-                "            \"name\" : \"rYgvX1EuiAFLb\"\n" +
-                "          },\n" +
-                "          \"publicationDate\" : {\n" +
-                "            \"type\" : \"PublicationDate\",\n" +
-                "            \"year\" : \"hJ9lbyvYn0VvE5oYHw\",\n" +
-                "            \"month\" : \"agqDekENHtR2Gy\",\n" +
-                "            \"day\" : \"rPHYfsH5VIzz\"\n" +
-                "          },\n" +
-                "          \"isbnList\" : [ \"9780099470434\" ],\n" +
-                "          \"extent\" : 1040853105\n" +
-                "        }";
+        return "{\n"
+                + "          \"type\" : \"LiteraryArtsAudioVisual\",\n"
+                + "          \"subtype\" : \"RadioPlay\",\n"
+                + "          \"publisher\" : {\n"
+                + "            \"type\" : \"UnconfirmedPublisher\",\n"
+                + "            \"name\" : \"rYgvX1EuiAFLb\"\n"
+                + "          },\n"
+                + "          \"publicationDate\" : {\n"
+                + "            \"type\" : \"PublicationDate\",\n"
+                + "            \"year\" : \"hJ9lbyvYn0VvE5oYHw\",\n"
+                + "            \"month\" : \"agqDekENHtR2Gy\",\n"
+                + "            \"day\" : \"rPHYfsH5VIzz\"\n"
+                + "          },\n"
+                + "          \"isbnList\" : [ \"9780099470434\" ],\n"
+                + "          \"extent\" : 1040853105\n"
+                + "        }";
     }
 
     private static String generateOld() {
-        return "{\n" +
-                "          \"type\" : \"LiteraryArtsAudioVisual\",\n" +
-                "          \"subtype\" : \"RadioPlay\",\n" +
-                "          \"publisher\" : {\n" +
-                "            \"type\" : \"UnconfirmedPublisher\",\n" +
-                "            \"name\" : \"rYgvX1EuiAFLb\"\n" +
-                "          },\n" +
-                "          \"publicationDate\" : {\n" +
-                "            \"type\" : \"PublicationDate\",\n" +
-                "            \"year\" : \"hJ9lbyvYn0VvE5oYHw\",\n" +
-                "            \"month\" : \"agqDekENHtR2Gy\",\n" +
-                "            \"day\" : \"rPHYfsH5VIzz\"\n" +
-                "          },\n" +
-                "          \"isbn\" : \"9780099470434\",\n" +
-                "          \"extent\" : 1040853105\n" +
-                "        }";
+        return "{\n"
+                + "          \"type\" : \"LiteraryArtsAudioVisual\",\n"
+                + "          \"subtype\" : \"RadioPlay\",\n"
+                + "          \"publisher\" : {\n"
+                + "            \"type\" : \"UnconfirmedPublisher\",\n"
+                + "            \"name\" : \"rYgvX1EuiAFLb\"\n"
+                + "          },\n"
+                + "          \"publicationDate\" : {\n"
+                + "            \"type\" : \"PublicationDate\",\n"
+                + "            \"year\" : \"hJ9lbyvYn0VvE5oYHw\",\n"
+                + "            \"month\" : \"agqDekENHtR2Gy\",\n"
+                + "            \"day\" : \"rPHYfsH5VIzz\"\n"
+                + "          },\n"
+                + "          \"isbn\" : \"9780099470434\",\n"
+                + "          \"extent\" : 1040853105\n"
+                + "        }";
     }
 
     @ParameterizedTest
