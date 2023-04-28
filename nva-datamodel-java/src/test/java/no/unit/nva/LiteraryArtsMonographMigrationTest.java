@@ -1,7 +1,6 @@
 package no.unit.nva;
 
 import no.unit.nva.commons.json.JsonUtils;
-import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsAudioVisual;
 import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsMonograph;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,7 +16,8 @@ public class LiteraryArtsMonographMigrationTest {
         return Stream.of(
                 generateOld(),
                 generateNew(),
-                regressed()
+                regressed(),
+                nullIsnbList()
         );
     }
 
@@ -80,6 +80,24 @@ public class LiteraryArtsMonographMigrationTest {
                 + "       \"isbnList\": [\n"
                 + "        \"9788234709159\"\n"
                 + "       ],\n"
+                + "       \"pages\": {\n"
+                + "        \"illustrated\": false,\n"
+                + "        \"type\": \"MonographPages\"\n"
+                + "       },\n"
+                + "       \"publicationDate\": {\n"
+                + "        \"type\": \"PublicationDate\",\n"
+                + "        \"year\": \"2020\"\n"
+                + "       },\n"
+                + "       \"publisher\": {\n"
+                + "        \"name\": \"Utgiver\",\n"
+                + "        \"type\": \"UnconfirmedPublisher\"\n"
+                + "       },\n"
+                + "       \"type\": \"LiteraryArtsMonograph\"\n"
+                + "      }";
+    }
+
+    private static String nullIsnbList() {
+        return "{\n"
                 + "       \"pages\": {\n"
                 + "        \"illustrated\": false,\n"
                 + "        \"type\": \"MonographPages\"\n"
