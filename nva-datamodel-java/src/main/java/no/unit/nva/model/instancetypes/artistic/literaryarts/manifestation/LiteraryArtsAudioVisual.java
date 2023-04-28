@@ -8,6 +8,7 @@ import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.contexttypes.PublishingHouse;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,7 +52,7 @@ public class LiteraryArtsAudioVisual implements LiteraryArtsManifestation {
     private List<String> migrateToList(Object isbnList) {
         if (isbnList instanceof String) {
             return List.of((String) isbnList);
-        } else if (isbnList instanceof List) {
+        } else if (isbnList.getClass().isArray() || isbnList instanceof Collection) {
             return (List<String>) isbnList;
         } else {
             throw new IllegalArgumentException("ISBN List could not be parsed");
