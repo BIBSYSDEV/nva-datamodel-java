@@ -76,24 +76,24 @@ public class LiteraryArtsMonographMigrationTest {
     }
 
     private static String regressed() {
-        return "{\n" +
-                "       \"isbnList\": [\n" +
-                "        \"9788234709159\"\n" +
-                "       ],\n" +
-                "       \"pages\": {\n" +
-                "        \"illustrated\": false,\n" +
-                "        \"type\": \"MonographPages\"\n" +
-                "       },\n" +
-                "       \"publicationDate\": {\n" +
-                "        \"type\": \"PublicationDate\",\n" +
-                "        \"year\": \"2020\"\n" +
-                "       },\n" +
-                "       \"publisher\": {\n" +
-                "        \"name\": \"Utgiver\",\n" +
-                "        \"type\": \"UnconfirmedPublisher\"\n" +
-                "       },\n" +
-                "       \"type\": \"LiteraryArtsMonograph\"\n" +
-                "      }";
+        return "{\n"
+                + "       \"isbnList\": [\n"
+                + "        \"9788234709159\"\n"
+                + "       ],\n"
+                + "       \"pages\": {\n"
+                + "        \"illustrated\": false,\n"
+                + "        \"type\": \"MonographPages\"\n"
+                + "       },\n"
+                + "       \"publicationDate\": {\n"
+                + "        \"type\": \"PublicationDate\",\n"
+                + "        \"year\": \"2020\"\n"
+                + "       },\n"
+                + "       \"publisher\": {\n"
+                + "        \"name\": \"Utgiver\",\n"
+                + "        \"type\": \"UnconfirmedPublisher\"\n"
+                + "       },\n"
+                + "       \"type\": \"LiteraryArtsMonograph\"\n"
+                + "      }";
     }
 
     @ParameterizedTest
