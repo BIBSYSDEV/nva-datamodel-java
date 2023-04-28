@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -42,7 +43,9 @@ public class LiteraryArtsMonograph implements LiteraryArtsManifestation {
 
     @Deprecated
     private List<String> migrateToList(Object isbnList) {
-        if (isbnList instanceof String) {
+        if (isNull(isbnList)) {
+            return Collections.emptyList();
+        } else if (isbnList instanceof String) {
             return List.of((String) isbnList);
         } else if (isbnList.getClass().isArray() || isbnList instanceof Collection) {
             return (List<String>) isbnList;
