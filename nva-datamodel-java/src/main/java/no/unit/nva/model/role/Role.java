@@ -83,17 +83,11 @@ public enum Role {
 
     @JsonValue
     public String getValue() {
+
         return value;
     }
 
-    // TODO: Remove following migration
-    @Deprecated
-    @JsonCreator
-    public static Role parseWithDeprecated(String candidate) {
-        return "Other".equalsIgnoreCase(candidate)
-                ? Role.OTHER
-                : parse(candidate);
-    }
+
 
     /**
      * Lookup enum by value.
@@ -101,7 +95,15 @@ public enum Role {
      * @param value value
      * @return enum
      */
+    @JsonCreator
     public static Role parse(String value) {
+        // TODO: inline "else" method following migration
+        return "Other".equalsIgnoreCase(value)
+                ? Role.OTHER
+                : inlineableParseMethod(value);
+    }
+
+    private static Role inlineableParseMethod(String value) {
         return stream(values())
                 .filter(nameType -> nameType.getValue().equalsIgnoreCase(value))
                 .findAny()
