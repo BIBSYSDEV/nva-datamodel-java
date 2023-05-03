@@ -2,9 +2,9 @@ package no.unit.nva.model.testing;
 
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Organization;
+import no.unit.nva.model.contexttypes.Anthology;
 import no.unit.nva.model.contexttypes.Artistic;
 import no.unit.nva.model.contexttypes.Book;
-import no.unit.nva.model.contexttypes.Chapter;
 import no.unit.nva.model.contexttypes.Degree;
 import no.unit.nva.model.contexttypes.Event;
 import no.unit.nva.model.contexttypes.ExhibitionContent;
@@ -235,9 +235,9 @@ public class PublicationContextBuilder {
         return randomString();
     }
 
-    private static Chapter randomChapter() {
-        return new Chapter.Builder()
-            .withPartOf(randomUri())
+    private static Anthology randomChapter() {
+        return new Anthology.Builder()
+            .withId(randomUri())
             .build();
     }
 

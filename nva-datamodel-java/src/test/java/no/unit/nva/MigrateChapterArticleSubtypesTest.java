@@ -105,7 +105,7 @@ class MigrateChapterArticleSubtypesTest {
                 + "    \"reference\" : {\n"
                 + "      \"type\" : \"Reference\",\n"
                 + "      \"publicationContext\" : {\n"
-                + "        \"type\" : \"Chapter\",\n"
+                + "        \"type\" : \"Anthology\",\n"
                 + "        \"partOf\" : \"https://www.example.com/8Fj6K3c2Eyx\"\n"
                 + "      },\n"
                 + "      \"doi\" : \"https://www.example.com/TVeL0ieitk1mLBbMH\",\n"

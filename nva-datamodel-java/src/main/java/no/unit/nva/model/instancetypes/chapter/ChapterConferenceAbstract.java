@@ -17,7 +17,7 @@ public class ChapterConferenceAbstract implements PublicationInstance<Range> {
     private final Range pages;
 
     /**
-     * Conference abstract as Chapter: an abstract of a presentation given at a conference and published as a Chapter.
+     * Conference abstract as Anthology: an abstract of a presentation given at a conference and published as a Anthology.
      *
      * @param pages A description of the number of pages.
      */

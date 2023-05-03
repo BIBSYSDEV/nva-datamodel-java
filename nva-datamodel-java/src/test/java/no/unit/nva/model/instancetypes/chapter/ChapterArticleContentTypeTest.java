@@ -32,13 +32,13 @@ class ChapterArticleContentTypeTest {
 
     public static Stream<Arguments> deprecatedValuesProvider() {
         return Stream.of(
-            Arguments.of(ACADEMIC_CHAPTER, "Academic Chapter"),
-            Arguments.of(NON_FICTION_CHAPTER, "Non-fiction Chapter"),
-            Arguments.of(POPULAR_SCIENCE_CHAPTER, "Popular Science Chapter"),
-            Arguments.of(TEXTBOOK_CHAPTER, "Textbook Chapter"),
-            Arguments.of(ENCYCLOPEDIA_CHAPTER, "Encyclopedia Chapter"),
+            Arguments.of(ACADEMIC_CHAPTER, "Academic Anthology"),
+            Arguments.of(NON_FICTION_CHAPTER, "Non-fiction Anthology"),
+            Arguments.of(POPULAR_SCIENCE_CHAPTER, "Popular Science Anthology"),
+            Arguments.of(TEXTBOOK_CHAPTER, "Textbook Anthology"),
+            Arguments.of(ENCYCLOPEDIA_CHAPTER, "Encyclopedia Anthology"),
             Arguments.of(INTRODUCTION, "Introduction"),
-            Arguments.of(EXHIBITION_CATALOG_CHAPTER, "Exhibition Catalog Chapter")
+            Arguments.of(EXHIBITION_CATALOG_CHAPTER, "Exhibition Catalog Anthology")
         );
     }
 
