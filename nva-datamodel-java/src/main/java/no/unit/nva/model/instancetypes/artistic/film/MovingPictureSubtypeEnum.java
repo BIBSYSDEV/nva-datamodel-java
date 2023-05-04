@@ -29,14 +29,14 @@ public enum MovingPictureSubtypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static MovingPictureSubtypeEnum parseWithDeprecated(String candidate) {
+    public static MovingPictureSubtypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? MovingPictureSubtypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
     //    @JsonCreator
-    public static MovingPictureSubtypeEnum parse(String candidate) {
+    public static MovingPictureSubtypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(MovingPictureSubtypeEnum.values())
                 .filter(value -> value.getType().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());

@@ -32,14 +32,14 @@ public enum LiteraryArtsSubtypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static LiteraryArtsSubtypeEnum parseWithDeprecated(String candidate) {
+    public static LiteraryArtsSubtypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? LiteraryArtsSubtypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
     //  @JsonCreator
-    public static LiteraryArtsSubtypeEnum parse(String candidate) {
+    public static LiteraryArtsSubtypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(LiteraryArtsSubtypeEnum.values())
                 .filter(value -> value.getName().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());

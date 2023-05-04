@@ -25,14 +25,13 @@ public enum LiteraryArtsPerformanceSubtype {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static LiteraryArtsPerformanceSubtype parseWithDeprecated(String candidate) {
+    public static LiteraryArtsPerformanceSubtype parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? LiteraryArtsPerformanceSubtype.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
-    // @JsonCreator
-    public static LiteraryArtsPerformanceSubtype parse(String candidate) {
+    public static LiteraryArtsPerformanceSubtype inlineableParseMethod(String candidate) {
         return Arrays.stream(LiteraryArtsPerformanceSubtype.values())
                 .filter(value -> value.getName().equals(candidate))
                 .collect(SingletonCollector.collect());

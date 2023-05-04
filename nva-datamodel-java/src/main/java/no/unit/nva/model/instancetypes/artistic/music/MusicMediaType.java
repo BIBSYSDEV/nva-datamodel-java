@@ -27,14 +27,13 @@ public enum MusicMediaType {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static MusicMediaType parseWithDeprecated(String candidate) {
+    public static MusicMediaType parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? MusicMediaType.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
-    // @JsonCreator
-    public static MusicMediaType parse(String candidate) {
+    public static MusicMediaType inlineableParseMethod(String candidate) {
         return stream(values())
                    .filter(value -> value.getValue().equalsIgnoreCase(candidate))
                    .findAny()

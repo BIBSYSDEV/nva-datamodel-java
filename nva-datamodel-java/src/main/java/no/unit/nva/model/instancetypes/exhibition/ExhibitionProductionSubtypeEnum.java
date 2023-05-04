@@ -32,14 +32,13 @@ public enum ExhibitionProductionSubtypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static ExhibitionProductionSubtypeEnum parseWithDeprecated(String candidate) {
+    public static ExhibitionProductionSubtypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? ExhibitionProductionSubtypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
-    // @JsonCreator
-    public static ExhibitionProductionSubtypeEnum parse(String candidate) {
+    public static ExhibitionProductionSubtypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(values())
                 .filter(item -> item.getType().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.tryCollect())

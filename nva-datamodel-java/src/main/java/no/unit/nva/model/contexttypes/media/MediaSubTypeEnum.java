@@ -24,14 +24,13 @@ public enum MediaSubTypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static MediaSubTypeEnum parseWithDeprecated(String candidate) {
+    public static MediaSubTypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? MediaSubTypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
-    //@JsonCreator
-    public static MediaSubTypeEnum parse(String candidate) {
+    public static MediaSubTypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(MediaSubTypeEnum.values())
                 .filter(subType -> subType.value.equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());

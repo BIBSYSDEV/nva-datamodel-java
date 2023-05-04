@@ -24,14 +24,13 @@ public enum ArchitectureSubtypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static ArchitectureSubtypeEnum parseWithDeprecated(String candidate) {
+    public static ArchitectureSubtypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? ArchitectureSubtypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
-    //@JsonCreator
-    public static ArchitectureSubtypeEnum parse(String candidate) {
+    public static ArchitectureSubtypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(ArchitectureSubtypeEnum.values())
                 .filter(subType -> subType.getType().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());

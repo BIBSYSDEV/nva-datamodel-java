@@ -25,14 +25,13 @@ public enum PerformingArtsSubtypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static PerformingArtsSubtypeEnum parseWithDeprecated(String candidate) {
+    public static PerformingArtsSubtypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? PerformingArtsSubtypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
-    // @JsonCreator
-    public static PerformingArtsSubtypeEnum parse(String candidate) {
+    public static PerformingArtsSubtypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(PerformingArtsSubtypeEnum.values())
                 .filter(value -> value.getType().equals(candidate))
                 .collect(SingletonCollector.collect());

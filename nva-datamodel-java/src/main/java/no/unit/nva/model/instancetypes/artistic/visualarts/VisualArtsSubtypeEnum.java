@@ -31,14 +31,13 @@ public enum VisualArtsSubtypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static VisualArtsSubtypeEnum parseWithDeprecated(String candidate) {
+    public static VisualArtsSubtypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? VisualArtsSubtypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
-    // @JsonCreator
-    public static VisualArtsSubtypeEnum parse(String candidate) {
+    public static VisualArtsSubtypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(VisualArtsSubtypeEnum.values())
                 .filter(value -> value.getType().equals(candidate))
                 .collect(SingletonCollector.collect());

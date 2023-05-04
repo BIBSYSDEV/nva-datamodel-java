@@ -29,14 +29,14 @@ public enum ArtisticDesignSubtypeEnum {
     // TODO: Remove following migration
     @Deprecated
     @JsonCreator
-    public static ArtisticDesignSubtypeEnum parseWithDeprecated(String candidate) {
+    public static ArtisticDesignSubtypeEnum parse(String candidate) {
         return "Other".equalsIgnoreCase(candidate)
                 ? ArtisticDesignSubtypeEnum.OTHER
-                : parse(candidate);
+                : inlineableParseMethod(candidate);
     }
 
     //@JsonCreator
-    public static ArtisticDesignSubtypeEnum parse(String candidate) {
+    public static ArtisticDesignSubtypeEnum inlineableParseMethod(String candidate) {
         return Arrays.stream(ArtisticDesignSubtypeEnum.values())
                 .filter(subType -> subType.getType().equalsIgnoreCase(candidate))
                 .collect(SingletonCollector.collect());
