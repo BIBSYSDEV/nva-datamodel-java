@@ -4,11 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
-import no.unit.nva.model.instancetypes.chapter.ChapterArticle;
-import no.unit.nva.model.testing.PublicationGenerator;
 import org.junit.jupiter.api.Test;
 
-import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
@@ -123,7 +120,7 @@ class ChapterToAnthologyMigrationTest {
                 + "    \"reference\" : {\n"
                 + "      \"type\" : \"Reference\",\n"
                 + "      \"publicationContext\" : {\n"
-                + "        \"type\" : \"Anthology\",\n"
+                + "        \"type\" : \"Chapter\",\n"
                 + "        \"partOf\" : \"https://www.example.com/Uid7iMyjiPz\"\n"
                 + "      },\n"
                 + "      \"doi\" : \"https://www.example.com/n2xcJHD9cE39S\",\n"
