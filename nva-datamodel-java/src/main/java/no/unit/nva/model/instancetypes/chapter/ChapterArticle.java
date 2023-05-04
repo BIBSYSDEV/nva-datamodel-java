@@ -41,7 +41,7 @@ public class ChapterArticle implements PublicationInstance<Range> {
         } else if (isNull(contentType)) {
             return new AcademicChapter(pages);
         } else {
-            throw new UnsupportedOperationException("The Anthology article subtype is unknown");
+            throw new UnsupportedOperationException("The Chapter article subtype is unknown");
         }
     }
 

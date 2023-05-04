@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(name = "Report", value = Report.class),
     @JsonSubTypes.Type(name = "Degree", value = Degree.class),
     @JsonSubTypes.Type(name = "Anthology", value = Anthology.class),
-    @JsonSubTypes.Type(name = "Anthology", value = Anthology.class),
+    @JsonSubTypes.Type(name = "Chapter", value = Anthology.class),
     @JsonSubTypes.Type(name = "Journal", value = Journal.class),
     @JsonSubTypes.Type(name = "UnconfirmedJournal", value = UnconfirmedJournal.class),
     @JsonSubTypes.Type(name = "Event", value = Event.class),

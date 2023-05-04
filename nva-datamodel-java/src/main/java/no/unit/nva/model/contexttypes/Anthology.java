@@ -49,9 +49,6 @@ public class Anthology implements PublicationContext {
     public static final class Builder {
         private URI id;
 
-        public Builder() {
-        }
-
         public Builder withId(URI id) {
             this.id = id;
             return this;
