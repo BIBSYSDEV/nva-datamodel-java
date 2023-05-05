@@ -12,7 +12,7 @@ class MusicPerformanceMedtiaTypeOtherMigrationTest {
 
     @Test
     void shouldNotThrowWhenInputIsOldStyleMusicPerformance() {
-        assertDoesNotThrow(() ->JsonUtils.dtoObjectMapper.readValue(getPublicationJson(), Publication.class));
+        assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(getPublicationJson(), Publication.class));
     }
 
     private String getPublicationJson() {
