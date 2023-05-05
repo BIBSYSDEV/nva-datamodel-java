@@ -1,6 +1,5 @@
 package no.unit.nva;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
 import org.junit.jupiter.api.Test;
