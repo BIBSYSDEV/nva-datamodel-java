@@ -9,6 +9,8 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import nva.commons.core.JacocoGenerated;
 
+import static java.util.Objects.nonNull;
+
 @JsonTypeInfo(use = Id.NAME, property = "type")
 public class Isrc {
 
@@ -48,7 +50,7 @@ public class Isrc {
     }
 
     private String validate(String isrc) throws InvalidIsrcException {
-        if (notValid(isrc)) {
+        if (nonNull(isrc) && notValid(isrc)) {
             throw new InvalidIsrcException(isrc);
         }
         return isrc;

@@ -1,21 +1,19 @@
 package no.unit.nva;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 @Deprecated
-class MusicPerformanceMedtiaTypeOtherMigrationTest {
+class MusicPerformanceMediaTypeOtherMigrationTest {
 
     @Test
-    void test() throws JsonProcessingException {
-        var json = getPublicationJson();
-
-        var publication = JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
-
-
+    void shouldNotThrowWhenInputIsOldStyleMusicPerformance() {
+        assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(getPublicationJson(), Publication.class));
     }
+
     private String getPublicationJson() {
         return "{\n"
                + "  \"type\" : \"Publication\",\n"
