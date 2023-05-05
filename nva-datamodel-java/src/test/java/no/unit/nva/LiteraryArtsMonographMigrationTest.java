@@ -23,7 +23,7 @@ public class LiteraryArtsMonographMigrationTest {
 
     private static String generateNew() {
         return "{\n"
-        +         "          \"type\" : \"LiteraryArtsMonograph\",\n"
+                + "          \"type\" : \"LiteraryArtsMonograph\",\n"
                 + "          \"publisher\" : {\n"
                 + "            \"type\" : \"UnconfirmedPublisher\",\n"
                 + "            \"name\" : \"rCmadtTtK1WQtRkPEA\"\n"
