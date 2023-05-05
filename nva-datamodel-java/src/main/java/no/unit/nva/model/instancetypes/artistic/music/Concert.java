@@ -14,7 +14,6 @@ public class Concert implements MusicPerformanceManifestation {
     public static final String PLACE_FIELD = "place";
     public static final String TIME_FIELD = "time";
     public static final String EXTENT_FIELD = "extent";
-    public static final String DESCRIPTION_FIELD = "description";
     public static final String CONCERT_PROGRAMME_FIELD = "concertProgramme";
     public static final String CONCERT_SERIES_FIELD = "concertSeries";
 
@@ -24,8 +23,6 @@ public class Concert implements MusicPerformanceManifestation {
     private final Time time;
     @JsonProperty(EXTENT_FIELD)
     private final String extent;
-    @JsonProperty(DESCRIPTION_FIELD)
-    private final String description;
     @JsonProperty(CONCERT_PROGRAMME_FIELD)
     private final List<MusicalWorkPerformance> concertProgramme;
     @JsonProperty(CONCERT_SERIES_FIELD)
@@ -35,13 +32,11 @@ public class Concert implements MusicPerformanceManifestation {
     public Concert(@JsonProperty(PLACE_FIELD) UnconfirmedPlace place,
                    @JsonProperty(TIME_FIELD) Time time,
                    @JsonProperty(EXTENT_FIELD) String extent,
-                   @JsonProperty(DESCRIPTION_FIELD) String description,
                    @JsonProperty(CONCERT_PROGRAMME_FIELD) List<MusicalWorkPerformance> concertProgramme,
                    @JsonProperty(CONCERT_SERIES_FIELD) String concertSeries) {
         this.place = place;
         this.time = time;
         this.extent = extent;
-        this.description = description;
         this.concertProgramme = nullListAsEmpty(concertProgramme);
         this.concertSeries = concertSeries;
     }
@@ -56,10 +51,6 @@ public class Concert implements MusicPerformanceManifestation {
 
     public String getExtent() {
         return extent;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public List<MusicalWorkPerformance> getConcertProgramme() {
@@ -83,7 +74,6 @@ public class Concert implements MusicPerformanceManifestation {
         return Objects.equals(getPlace(), concert.getPlace())
                && Objects.equals(getTime(), concert.getTime())
                && Objects.equals(getExtent(), concert.getExtent())
-               && Objects.equals(getDescription(), concert.getDescription())
                && Objects.equals(getConcertProgramme(), concert.getConcertProgramme())
                && Objects.equals(getConcertSeries(), concert.getConcertSeries());
     }
@@ -91,7 +81,6 @@ public class Concert implements MusicPerformanceManifestation {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getPlace(), getTime(), getExtent(),
-                            getDescription(), getConcertProgramme(), getConcertSeries());
+        return Objects.hash(getPlace(), getTime(), getExtent(), getConcertProgramme(), getConcertSeries());
     }
 }
