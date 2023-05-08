@@ -67,16 +67,16 @@ public final class PublicationGenerator {
         return randomPublication(randomPublicationInstanceType());
     }
 
-    public static ImportCandidate randomImportCandidate() {
-        return randomImportCandidate(randomPublicationInstanceType());
-    }
-
     public static Publication randomPublication(Class<?> publicationInstanceClass) {
 
         var publication = buildRandomPublicationFromInstance(publicationInstanceClass);
 
         assertThat(publication, doesNotHaveEmptyValues());
         return publication;
+    }
+
+    public static ImportCandidate randomImportCandidate() {
+        return randomImportCandidate(randomPublicationInstanceType());
     }
 
     public static ImportCandidate randomImportCandidate(Class<?> publicationInstanceClass) {
