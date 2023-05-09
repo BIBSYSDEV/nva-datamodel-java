@@ -10,9 +10,7 @@ import nva.commons.core.paths.UriWrapper;
 public final class MigrateChannelIdUtil {
 
     private static final String BASE_PATH = "publication-channels";
-    private static final String JOURNAL_PATH_ELEMENT = "journal";
-    private static final String JOURNAL_MIGRATION_EXAMPLE_CSV = "journal_migration_example.csv";
-    private static final String CSV_SEPERATOR = ";";
+    private static final String CSV_SEPARATOR = ";";
     private static final int NUMBER_OF_COLUMNS = 2;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
@@ -20,35 +18,38 @@ public final class MigrateChannelIdUtil {
     private MigrateChannelIdUtil() {
     }
 
-    public static URI migrateToNewIdIfFound(URI id) {
-        var newIdentifier = getNewIdentifier(id);
+    public static URI migrateToNewIdIfFound(URI id, ChannelType type) {
+        var newIdentifier = getNewIdentifier(id, type);
         var year = UriWrapper.fromUri(id).getPath().getLastPathElement();
-        return nonNull(newIdentifier) ? constructNewPublicationChannelId(id, year, newIdentifier) : id;
+        return nonNull(newIdentifier)
+                   ? constructNewPublicationChannelId(id, year, newIdentifier, type.pathElement)
+                   : id;
     }
 
-    private static String getNewIdentifier(URI id) {
-        var oldIdentifier = UriWrapper.fromUri(id)
-            .getPath()
-            .getLastPathElement(); //TODO: replace with UnixPath.getPathElementByIndexFromEnd(2)
-        return getIdentifierMap().get(oldIdentifier);
+    private static String getNewIdentifier(URI id, ChannelType type) {
+        var oldIdentifier = "28102";
+//        UriWrapper.fromUri(id)
+//            .getPath()
+//            .getLastPathElement(); //TODO: replace with UnixPath.getPathElementByIndexFromEnd(2)
+        return getIdentifierMap(type.migrationFileName).get(oldIdentifier);
     }
 
-    private static HashMap<String, String> getIdentifierMap() {
+    private static HashMap<String, String> getIdentifierMap(String file) {
         var identifierMap = new HashMap<String, String>();
-        var lines = linesfromResource(Path.of(JOURNAL_MIGRATION_EXAMPLE_CSV));
+        var lines = linesfromResource(Path.of(file));
         lines.stream()
-            .filter(line -> line.contains(CSV_SEPERATOR))
+            .filter(line -> line.contains(CSV_SEPARATOR))
             .forEach(line -> {
-                var idMapping = line.split(CSV_SEPERATOR, NUMBER_OF_COLUMNS);
+                var idMapping = line.split(CSV_SEPARATOR, NUMBER_OF_COLUMNS);
                 identifierMap.putIfAbsent(idMapping[OLD_ID_COLUMN_NUMBER], idMapping[NEW_ID_COLUMN_NUMBER]);
             });
         return identifierMap;
     }
 
-    private static URI constructNewPublicationChannelId(URI id, String year, String newIdentifier) {
+    private static URI constructNewPublicationChannelId(URI id, String year, String newIdentifier, String pathElement) {
         return UriWrapper.fromHost(id.getHost())
             .addChild(BASE_PATH)
-            .addChild(JOURNAL_PATH_ELEMENT)
+            .addChild(pathElement)
             .addChild(newIdentifier)
             .addChild(year)
             .getUri();

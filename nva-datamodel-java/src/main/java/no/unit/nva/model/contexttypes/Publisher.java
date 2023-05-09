@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.util.Objects;
+import no.unit.nva.model.contexttypes.utils.ChannelType;
+import no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -13,7 +15,7 @@ public class Publisher implements PublishingHouse {
 
     @JsonCreator
     public Publisher(@JsonProperty("id") URI id) {
-        this.id = id;
+        this.id = MigrateChannelIdUtil.migrateToNewIdIfFound(id, ChannelType.PUBLISHER);
     }
 
     public URI getId() {
