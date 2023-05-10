@@ -15,6 +15,7 @@ public final class MigrateChannelIdUtil {
     private static final int NUMBER_OF_COLUMNS = 2;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
+    public static final int IDENTIFIER_PATH_INDEX_FROM_END = 1;
 
     private MigrateChannelIdUtil() {
     }
@@ -27,10 +28,8 @@ public final class MigrateChannelIdUtil {
     }
 
     private static String getNewIdentifier(URI id, ChannelType type) {
-        var oldIdentifier = "28102";
-        //        UriWrapper.fromUri(id)
-        //            .getPath()
-        //            .getLastPathElement(); //TODO: replace with UnixPath.getPathElementByIndexFromEnd(2)
+        var oldIdentifier =
+            UriWrapper.fromUri(id).getPath().getPathElementByIndexFromEnd(IDENTIFIER_PATH_INDEX_FROM_END);
         return getIdentifierMap(type.migrationFileName).get(oldIdentifier);
     }
 
