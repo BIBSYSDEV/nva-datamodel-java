@@ -127,9 +127,7 @@ public class MigrateAcademicArticleJournalIdTest {
                + "      \"type\" : \"Reference\",\n"
                + "      \"publicationContext\" : {\n"
                + "        \"type\" : \"Journal\",\n"
-               + "        \"id\" : \""
-               + id.toString()
-               + "\"\n"
+               + "        \"id\" : \"" + id.toString() + "\"\n"
                + "      },\n"
                + "      \"doi\" : \"https://www.example.com/TVZipj6JuYUA\",\n"
                + "      \"publicationInstance\" : {\n"
