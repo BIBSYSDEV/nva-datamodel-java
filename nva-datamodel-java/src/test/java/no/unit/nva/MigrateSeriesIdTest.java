@@ -2,7 +2,7 @@ package no.unit.nva;
 
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructPublicationChannelId;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.getNewIdentifierByOldIdentifier;
-import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldIdentifier;
+import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldSeriesIdentifier;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomYear;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -19,7 +19,7 @@ class MigrateSeriesIdTest {
     @Test
     void shouldReplaceOldSeriesIdWithNewId() {
         var year = randomYear();
-        var oldIdentifier = randomOldIdentifier(SERIES);
+        var oldIdentifier = randomOldSeriesIdentifier();
         var newIdentifier = getNewIdentifierByOldIdentifier(oldIdentifier, SERIES);
         var oldId = constructPublicationChannelId(year, oldIdentifier,
                                                   MigratePublicationChannelIdTestUtils.SERIES_PATH_ELEMENT);

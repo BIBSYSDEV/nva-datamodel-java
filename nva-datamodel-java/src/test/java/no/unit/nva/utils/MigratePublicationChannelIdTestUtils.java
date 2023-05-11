@@ -6,8 +6,10 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import no.unit.nva.model.contexttypes.utils.ChannelType;
 import nva.commons.core.paths.UriWrapper;
 
@@ -23,6 +25,31 @@ public class MigratePublicationChannelIdTestUtils {
     private static final int NUMBER_OF_COLUMNS = 2;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
+
+    private static final Map<String, String> journalIdMapping = linesfromResource(
+        Path.of(ChannelType.JOURNAL.migrationFileName)).stream()
+                                                                    .filter(getSeparatorPredicate())
+                                                                    .map(getLineSplitFunction())
+                                                                    .collect(Collectors.toMap(
+                                                                        identifierMap -> identifierMap[OLD_ID_COLUMN_NUMBER],
+                                                                        identifierMap -> identifierMap[NEW_ID_COLUMN_NUMBER]));
+    public static final ArrayList<String> OLD_JOURNAL_IDENTIFIERS = new ArrayList<>(journalIdMapping.keySet());
+    private static final Map<String, String> seriesIdMapping = linesfromResource(
+        Path.of(ChannelType.SERIES.migrationFileName)).stream()
+                                                                   .filter(getSeparatorPredicate())
+                                                                   .map(getLineSplitFunction())
+                                                                   .collect(Collectors.toMap(
+                                                                       identifierMap -> identifierMap[OLD_ID_COLUMN_NUMBER],
+                                                                       identifierMap -> identifierMap[NEW_ID_COLUMN_NUMBER]));
+    public static final ArrayList<String> OLD_SERIES_IDENTIFIERS = new ArrayList<>(seriesIdMapping.keySet());
+    private static final Map<String, String> publisherIdMapping = linesfromResource(
+        Path.of(ChannelType.PUBLISHER.migrationFileName)).stream()
+                                                                      .filter(getSeparatorPredicate())
+                                                                      .map(getLineSplitFunction())
+                                                                      .collect(Collectors.toMap(
+                                                                          identifierMap -> identifierMap[OLD_ID_COLUMN_NUMBER],
+                                                                          identifierMap -> identifierMap[NEW_ID_COLUMN_NUMBER]));
+    public static final ArrayList<String> OLD_PUBLISHER_IDENTIFIERS = new ArrayList<>(publisherIdMapping.keySet());
 
     private MigratePublicationChannelIdTestUtils() {
     }
@@ -41,24 +68,38 @@ public class MigratePublicationChannelIdTestUtils {
         return Integer.toString(YEAR_START + randomInteger(bound));
     }
 
-    public static String randomOldIdentifier(ChannelType type) {
-        var identifierMap = getIdentifierMap(type.migrationFileName);
-        var oldIdentifiers = new ArrayList<String>(identifierMap.keySet());
-        return oldIdentifiers.get(randomInteger(identifierMap.size() - 1));
+    public static String randomOldJournalIdentifier() {
+        return OLD_JOURNAL_IDENTIFIERS.get(randomInteger(journalIdMapping.size() - 1));
+    }
+
+    public static String randomOldSeriesIdentifier() {
+        return OLD_SERIES_IDENTIFIERS.get(randomInteger(seriesIdMapping.size() - 1));
+    }
+
+    public static String randomOldPublisherIdentifier() {
+        return OLD_PUBLISHER_IDENTIFIERS.get(randomInteger(publisherIdMapping.size() - 1));
     }
 
     public static String getNewIdentifierByOldIdentifier(String oldIdentifier, ChannelType type) {
-        var identifierMap = getIdentifierMap(type.migrationFileName);
-        return identifierMap.get(oldIdentifier);
+        switch (type) {
+            case PUBLISHER -> {
+                return publisherIdMapping.get(oldIdentifier);
+            }
+            case SERIES -> {
+                return seriesIdMapping.get(oldIdentifier);
+            }
+            case JOURNAL -> {
+                return journalIdMapping.get(oldIdentifier);
+            }
+        }
+        throw new IllegalArgumentException("Invalid channel type");
     }
 
-    private static Map<String, String> getIdentifierMap(String file) {
-        var identifierMap = new HashMap<String, String>();
-        var lines = linesfromResource(Path.of(file));
-        lines.stream().filter(line -> line.contains(CSV_SEPARATOR)).forEach(line -> {
-            var idMapping = line.split(CSV_SEPARATOR, NUMBER_OF_COLUMNS);
-            identifierMap.putIfAbsent(idMapping[OLD_ID_COLUMN_NUMBER], idMapping[NEW_ID_COLUMN_NUMBER]);
-        });
-        return identifierMap;
+    private static Function<String, String[]> getLineSplitFunction() {
+        return line -> line.split(CSV_SEPARATOR, NUMBER_OF_COLUMNS);
+    }
+
+    private static Predicate<String> getSeparatorPredicate() {
+        return line -> line.contains(CSV_SEPARATOR);
     }
 }

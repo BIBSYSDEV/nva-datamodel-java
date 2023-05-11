@@ -3,7 +3,7 @@ package no.unit.nva.model.instancetypes.journal;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.JOURNAL_PATH_ELEMENT;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructPublicationChannelId;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.getNewIdentifierByOldIdentifier;
-import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldIdentifier;
+import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldJournalIdentifier;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomYear;
 import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,7 +23,7 @@ public class MigrateAcademicArticleJournalIdTest {
     @Test
     void shouldReplaceOldJournalIdWithNewIdInAcademicArticle() {
         var year = randomYear();
-        var oldIdentifier = randomOldIdentifier(ChannelType.JOURNAL);
+        var oldIdentifier = randomOldJournalIdentifier();
         var newIdentifier = getNewIdentifierByOldIdentifier(oldIdentifier, JOURNAL);
         var oldId = constructPublicationChannelId(year, oldIdentifier, JOURNAL_PATH_ELEMENT);
         var expectedNewId = constructPublicationChannelId(year, newIdentifier, JOURNAL_PATH_ELEMENT);
