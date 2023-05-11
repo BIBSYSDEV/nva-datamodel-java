@@ -88,17 +88,15 @@ public class MigratePublicationChannelIdTestUtils {
 
     public static String getNewIdentifierByOldIdentifier(String oldIdentifier, ChannelType type) {
         switch (type) {
-            case PUBLISHER -> {
+            case PUBLISHER:
                 return publisherIdMapping.get(oldIdentifier);
-            }
-            case SERIES -> {
+            case SERIES:
                 return seriesIdMapping.get(oldIdentifier);
-            }
-            case JOURNAL -> {
+            case JOURNAL:
                 return journalIdMapping.get(oldIdentifier);
-            }
+            default:
+                throw new IllegalArgumentException("Invalid channel type");
         }
-        throw new IllegalArgumentException("Invalid channel type");
     }
 
     private static boolean containsCsvSeparator(String line1) {
