@@ -1,5 +1,6 @@
 package no.unit.nva;
 
+import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.SERIES_PATH_ELEMENT;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructPublicationChannelId;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.getNewIdentifierByOldIdentifier;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldSeriesIdentifier;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 class MigrateSeriesIdTest {
 
     private static final ChannelType SERIES = ChannelType.SERIES;
+    private static final String OLD_IDENTIFIER_WITHOUT_MAPPING = "111111";
 
     @Test
     void shouldReplaceOldSeriesIdWithNewId() {
@@ -27,5 +29,13 @@ class MigrateSeriesIdTest {
                                                   MigratePublicationChannelIdTestUtils.SERIES_PATH_ELEMENT);
         var series = new Series(oldId);
         assertThat(series.getId(), is(equalTo(newId)));
+    }
+
+    @Test
+    void shouldNotReplaceOldSeriesIdIfNotFound() {
+        var year = randomYear();
+        var oldId = constructPublicationChannelId(year, OLD_IDENTIFIER_WITHOUT_MAPPING, SERIES_PATH_ELEMENT);
+        var series = new Series(oldId);
+        assertThat(series.getId(), is(equalTo(oldId)));
     }
 }

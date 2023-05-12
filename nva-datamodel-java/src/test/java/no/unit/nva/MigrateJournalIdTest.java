@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 class MigrateJournalIdTest {
 
     public static final ChannelType JOURNAL = ChannelType.JOURNAL;
+    private static final String OLD_IDENTIFIER_WITHOUT_MAPPING = "111111";
 
     @Test
     void shouldReplaceOldJournalIdWithNewId() {
@@ -25,5 +26,13 @@ class MigrateJournalIdTest {
         var expectedNewId = constructPublicationChannelId(year, newIdentifier, JOURNAL_PATH_ELEMENT);
         var journal = new Journal(oldId);
         assertThat(journal.getId(), is(equalTo(expectedNewId)));
+    }
+
+    @Test
+    void shouldNotReplaceOldJournalIdIfNotFound() {
+        var year = randomYear();
+        var oldId = constructPublicationChannelId(year, OLD_IDENTIFIER_WITHOUT_MAPPING, JOURNAL_PATH_ELEMENT);
+        var journal = new Journal(oldId);
+        assertThat(journal.getId(), is(equalTo(oldId)));
     }
 }
