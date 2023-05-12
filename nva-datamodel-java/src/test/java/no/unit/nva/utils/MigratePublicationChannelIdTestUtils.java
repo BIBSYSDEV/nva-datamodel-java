@@ -27,35 +27,29 @@ public class MigratePublicationChannelIdTestUtils {
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
     private static final Map<String, String> journalIdMapping = linesfromResource(
-        Path.of(JOURNAL_ID_MAPPING_FILE)).stream()
-                                                                    .filter(
-                                                                        MigratePublicationChannelIdTestUtils::containsCsvSeparator)
-                                                                    .map(
-                                                                        MigratePublicationChannelIdTestUtils::splitLineBySeparator)
-                                                                    .collect(Collectors.toMap(
-                                                                        identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                                                                        identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
-    public static final ArrayList<String> OLD_JOURNAL_IDENTIFIERS = new ArrayList<>(journalIdMapping.keySet());
+            Path.of(JOURNAL_ID_MAPPING_FILE)).stream()
+            .filter(MigratePublicationChannelIdTestUtils::containsCsvSeparator)
+            .map(MigratePublicationChannelIdTestUtils::splitLineBySeparator)
+            .collect(Collectors.toMap(
+                    identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                    identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
     private static final Map<String, String> seriesIdMapping = linesfromResource(
-        Path.of(SERIES_ID_MAPPING_FILE)).stream()
-                                                                   .filter(
-                                                                       MigratePublicationChannelIdTestUtils::containsCsvSeparator)
-                                                                   .map(
-                                                                       MigratePublicationChannelIdTestUtils::splitLineBySeparator)
-                                                                   .collect(Collectors.toMap(
-                                                                       identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                                                                       identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
-    public static final ArrayList<String> OLD_SERIES_IDENTIFIERS = new ArrayList<>(seriesIdMapping.keySet());
+            Path.of(SERIES_ID_MAPPING_FILE)).stream()
+            .filter(MigratePublicationChannelIdTestUtils::containsCsvSeparator)
+            .map(MigratePublicationChannelIdTestUtils::splitLineBySeparator)
+            .collect(Collectors.toMap(
+                    identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                    identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
     private static final Map<String, String> publisherIdMapping = linesfromResource(
-        Path.of(PUBLISHER_ID_MAPPING_FILE)).stream()
-                                                                      .filter(
-                                                                          MigratePublicationChannelIdTestUtils::containsCsvSeparator)
-                                                                      .map(
-                                                                          MigratePublicationChannelIdTestUtils::splitLineBySeparator)
-                                                                      .collect(Collectors.toMap(
-                                                                          identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                                                                          identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+            Path.of(PUBLISHER_ID_MAPPING_FILE)).stream()
+            .filter(MigratePublicationChannelIdTestUtils::containsCsvSeparator)
+            .map(MigratePublicationChannelIdTestUtils::splitLineBySeparator)
+            .collect(Collectors.toMap(
+                    identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                    identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+    public static final ArrayList<String> OLD_SERIES_IDENTIFIERS = new ArrayList<>(seriesIdMapping.keySet());
     public static final ArrayList<String> OLD_PUBLISHER_IDENTIFIERS = new ArrayList<>(publisherIdMapping.keySet());
+    public static final ArrayList<String> OLD_JOURNAL_IDENTIFIERS = new ArrayList<>(journalIdMapping.keySet());
 
     private MigratePublicationChannelIdTestUtils() {
     }
