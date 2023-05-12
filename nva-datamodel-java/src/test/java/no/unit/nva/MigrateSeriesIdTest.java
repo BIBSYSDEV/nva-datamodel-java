@@ -10,7 +10,6 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import no.unit.nva.model.contexttypes.Series;
 import no.unit.nva.model.contexttypes.utils.ChannelType;
-import no.unit.nva.utils.MigratePublicationChannelIdTestUtils;
 import org.junit.jupiter.api.Test;
 
 class MigrateSeriesIdTest {
@@ -23,10 +22,8 @@ class MigrateSeriesIdTest {
         var year = randomYear();
         var oldIdentifier = randomOldSeriesIdentifier();
         var newIdentifier = getNewIdentifierByOldIdentifier(oldIdentifier, SERIES);
-        var oldId = constructPublicationChannelId(year, oldIdentifier,
-                                                  MigratePublicationChannelIdTestUtils.SERIES_PATH_ELEMENT);
-        var newId = constructPublicationChannelId(year, newIdentifier,
-                                                  MigratePublicationChannelIdTestUtils.SERIES_PATH_ELEMENT);
+        var oldId = constructPublicationChannelId(year, oldIdentifier, SERIES_PATH_ELEMENT);
+        var newId = constructPublicationChannelId(year, newIdentifier, SERIES_PATH_ELEMENT);
         var series = new Series(oldId);
         assertThat(series.getId(), is(equalTo(newId)));
     }
