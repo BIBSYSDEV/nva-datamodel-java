@@ -909,6 +909,9 @@ referencedSchemas:
       correspondingAuthor:
         type: boolean
         example: null
+      verified:
+        type: boolean
+        example: null
       type:
         type: string
         example: null
@@ -1497,6 +1500,9 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
+        example: null
       labels:
         type: object
         additionalProperties:
@@ -1516,9 +1522,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-        example: null
-      identifier:
-        type: string
         example: null
       type:
         type: string

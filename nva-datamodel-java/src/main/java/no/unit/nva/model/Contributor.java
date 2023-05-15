@@ -22,26 +22,31 @@ public class Contributor {
     private final Integer sequence;
     private final boolean correspondingAuthor;
 
+    private final boolean verified;
+
     @JsonCreator
     public Contributor(@JsonProperty("identity") Identity identity,
                        @JsonProperty("affiliations") List<Organization> affiliations,
                        @JsonProperty("role") Object role,
                        @JsonProperty("sequence") Integer sequence,
-                       @JsonProperty("correspondingAuthor") boolean correspondingAuthor) {
+                       @JsonProperty("correspondingAuthor") boolean correspondingAuthor,
+                       @JsonProperty("verified") boolean verified) {
         this.identity = identity;
         this.affiliations = nullListAsEmpty(affiliations);
         this.role = roleFromJson(role);
         this.sequence = sequence;
         this.correspondingAuthor = correspondingAuthor;
+        this.verified = verified;
     }
 
     private Contributor(Builder builder) {
         this(
-            builder.identity,
-            builder.affiliations,
-            builder.role,
-            builder.sequence,
-            builder.correspondingAuthor
+                builder.identity,
+                builder.affiliations,
+                builder.role,
+                builder.sequence,
+                builder.correspondingAuthor,
+                builder.verified
         );
     }
 
@@ -65,10 +70,19 @@ public class Contributor {
         return correspondingAuthor;
     }
 
+    public boolean isVerified() {
+        return verified;
+    }
+
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentity(), getAffiliations(), getRole(), getSequence(), isCorrespondingAuthor());
+        return Objects.hash(getIdentity(),
+                getAffiliations(),
+                getRole(),
+                getSequence(),
+                isCorrespondingAuthor(),
+                isVerified());
     }
 
     @JacocoGenerated
@@ -82,10 +96,11 @@ public class Contributor {
         }
         Contributor that = (Contributor) o;
         return isCorrespondingAuthor() == that.isCorrespondingAuthor()
-               && Objects.equals(getIdentity(), that.getIdentity())
-               && Objects.equals(getAffiliations(), that.getAffiliations())
-               && Objects.equals(getRole(), that.getRole())
-               && Objects.equals(getSequence(), that.getSequence());
+                && Objects.equals(getIdentity(), that.getIdentity())
+                && Objects.equals(getAffiliations(), that.getAffiliations())
+                && Objects.equals(getRole(), that.getRole())
+                && Objects.equals(isVerified(), that.isVerified())
+                && Objects.equals(getSequence(), that.getSequence());
     }
 
     @Deprecated
@@ -121,6 +136,8 @@ public class Contributor {
         private RoleType role;
         private boolean correspondingAuthor;
 
+        private boolean verified;
+
         public Builder() {
         }
 
@@ -146,6 +163,11 @@ public class Contributor {
 
         public Builder withCorrespondingAuthor(boolean correspondingAuthor) {
             this.correspondingAuthor = correspondingAuthor;
+            return this;
+        }
+
+        public Builder withVerified(boolean verified) {
+            this.verified = verified;
             return this;
         }
 

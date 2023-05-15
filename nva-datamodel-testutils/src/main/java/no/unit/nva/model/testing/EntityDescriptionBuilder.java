@@ -4,12 +4,11 @@ import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicat
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
-import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
-import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
+import static no.unit.nva.testutils.RandomDataGenerator.*;
+
 import java.util.List;
 import java.util.Map;
+
 import no.unit.nva.model.Contributor;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Identity;
@@ -59,11 +58,12 @@ public final class EntityDescriptionBuilder {
 
     private static Contributor randomContributor() {
         return new Contributor.Builder()
-                   .withAffiliations(randomOrganizations())
-                   .withSequence(randomInteger(10))
-                   .withRole(randomRole())
-                   .withIdentity(randomIdentity())
-                   .build();
+                .withAffiliations(randomOrganizations())
+                .withSequence(randomInteger(10))
+                .withRole(randomRole())
+                .withVerified(randomBoolean())
+                .withIdentity(randomIdentity())
+                .build();
     }
 
     private static Identity randomIdentity() {
