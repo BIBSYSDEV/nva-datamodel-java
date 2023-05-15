@@ -1,10 +1,15 @@
 package no.unit.nva.model.testing;
 
 import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicationContext;
+import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
-import static no.unit.nva.testutils.RandomDataGenerator.*;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
+import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
+
 
 import java.util.List;
 import java.util.Map;
