@@ -22,7 +22,7 @@ public class Contributor {
     private final Integer sequence;
     private final boolean correspondingAuthor;
 
-    private final boolean verified;
+    private final ContributorVerificationStatus contributorVerificationStatus;
 
     @JsonCreator
     public Contributor(@JsonProperty("identity") Identity identity,
@@ -30,13 +30,13 @@ public class Contributor {
                        @JsonProperty("role") Object role,
                        @JsonProperty("sequence") Integer sequence,
                        @JsonProperty("correspondingAuthor") boolean correspondingAuthor,
-                       @JsonProperty("verified") boolean verified) {
+                       @JsonProperty("verified") ContributorVerificationStatus contributorVerificationStatus) {
         this.identity = identity;
         this.affiliations = nullListAsEmpty(affiliations);
         this.role = roleFromJson(role);
         this.sequence = sequence;
         this.correspondingAuthor = correspondingAuthor;
-        this.verified = verified;
+        this.contributorVerificationStatus = contributorVerificationStatus;
     }
 
     private Contributor(Builder builder) {
@@ -70,19 +70,19 @@ public class Contributor {
         return correspondingAuthor;
     }
 
-    public boolean isVerified() {
-        return verified;
+    public ContributorVerificationStatus getContributorVerificationStatus() {
+        return contributorVerificationStatus;
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getIdentity(),
-                getAffiliations(),
-                getRole(),
-                getSequence(),
-                isCorrespondingAuthor(),
-                isVerified());
+                            getAffiliations(),
+                            getRole(),
+                            getSequence(),
+                            isCorrespondingAuthor(),
+                            getContributorVerificationStatus());
     }
 
     @JacocoGenerated
@@ -96,11 +96,11 @@ public class Contributor {
         }
         Contributor that = (Contributor) o;
         return isCorrespondingAuthor() == that.isCorrespondingAuthor()
-                && Objects.equals(getIdentity(), that.getIdentity())
-                && Objects.equals(getAffiliations(), that.getAffiliations())
-                && Objects.equals(getRole(), that.getRole())
-                && Objects.equals(isVerified(), that.isVerified())
-                && Objects.equals(getSequence(), that.getSequence());
+               && Objects.equals(getIdentity(), that.getIdentity())
+               && Objects.equals(getAffiliations(), that.getAffiliations())
+               && Objects.equals(getRole(), that.getRole())
+               && Objects.equals(getContributorVerificationStatus(), that.getContributorVerificationStatus())
+               && Objects.equals(getSequence(), that.getSequence());
     }
 
     @Deprecated
@@ -136,7 +136,7 @@ public class Contributor {
         private RoleType role;
         private boolean correspondingAuthor;
 
-        private boolean verified;
+        private ContributorVerificationStatus verified;
 
         public Builder() {
         }
@@ -166,7 +166,7 @@ public class Contributor {
             return this;
         }
 
-        public Builder withVerified(boolean verified) {
+        public Builder withContributorVerificationStatus(ContributorVerificationStatus verified) {
             this.verified = verified;
             return this;
         }
