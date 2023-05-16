@@ -5,7 +5,6 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import no.unit.nva.model.role.Role;
 
 public enum ContributorVerificationStatus {
 
@@ -29,17 +28,17 @@ public enum ContributorVerificationStatus {
     /**
      * Lookup enum by value.
      *
-     * @param value value
+     * @param candidate value
      * @return enum
      */
     @JsonCreator
-    public static ContributorVerificationStatus parse(String value) {
+    public static ContributorVerificationStatus parse(String candidate) {
         return stream(values())
-                   .filter(nameType -> nameType.getValue().equalsIgnoreCase(value))
+                   .filter(nameType -> nameType.getValue().equalsIgnoreCase(candidate))
                    .findAny()
                    .orElseThrow(() -> new IllegalArgumentException(
-                       format(ERROR_MESSAGE_TEMPLATE, value, stream(Role.values())
-                                                                 .map(Role::toString).collect(joining(DELIMITER)))));
+                       format(ERROR_MESSAGE_TEMPLATE, candidate, stream(ContributorVerificationStatus.values())
+                                                                 .map(ContributorVerificationStatus::toString).collect(joining(DELIMITER)))));
     }
 
     @JsonValue
