@@ -38,7 +38,8 @@ public enum ContributorVerificationStatus {
                    .findAny()
                    .orElseThrow(() -> new IllegalArgumentException(
                        format(ERROR_MESSAGE_TEMPLATE, candidate, stream(ContributorVerificationStatus.values())
-                                                                 .map(ContributorVerificationStatus::toString).collect(joining(DELIMITER)))));
+                                                                     .map(ContributorVerificationStatus::toString)
+                                                                     .collect(joining(DELIMITER)))));
     }
 
     @JsonValue
