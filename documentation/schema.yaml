@@ -75,10 +75,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        empty:
+        publishable:
           type: boolean
           example: null
-        publishable:
+        empty:
           type: boolean
           example: null
       example: null
@@ -418,10 +418,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      empty:
+      publishable:
         type: boolean
         example: null
-      publishable:
+      empty:
         type: boolean
         example: null
     example: null
@@ -909,6 +909,21 @@ referencedSchemas:
       correspondingAuthor:
         type: boolean
         example: null
+      verified:
+        type: string
+        writeOnly: true
+        example: null
+        enum:
+        - Verified
+        - CannotBeEstablished
+        - NotVerified
+      contributorVerificationStatus:
+        type: string
+        example: null
+        enum:
+        - Verified
+        - CannotBeEstablished
+        - NotVerified
       type:
         type: string
         example: null
@@ -1497,6 +1512,9 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
+        example: null
       source:
         type: string
         format: uri
@@ -1516,9 +1534,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-        example: null
-      identifier:
-        type: string
         example: null
       type:
         type: string
@@ -2979,10 +2994,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          empty:
+          publishable:
             type: boolean
             example: null
-          publishable:
+          empty:
             type: boolean
             example: null
         example: null
