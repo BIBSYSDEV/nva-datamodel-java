@@ -1,16 +1,17 @@
 package no.unit.nva.model.testing;
 
 import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicationContext;
+import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.List;
 import java.util.Map;
 import no.unit.nva.model.Contributor;
+import no.unit.nva.model.ContributorVerificationStatus;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Identity;
 import no.unit.nva.model.NameType;
@@ -62,6 +63,7 @@ public final class EntityDescriptionBuilder {
                    .withAffiliations(randomOrganizations())
                    .withSequence(randomInteger(10))
                    .withRole(randomRole())
+                   .withContributorVerificationStatus(randomElement(ContributorVerificationStatus.values()))
                    .withIdentity(randomIdentity())
                    .build();
     }

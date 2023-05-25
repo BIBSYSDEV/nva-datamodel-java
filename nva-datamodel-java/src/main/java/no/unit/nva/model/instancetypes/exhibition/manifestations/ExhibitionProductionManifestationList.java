@@ -3,16 +3,19 @@ package no.unit.nva.model.instancetypes.exhibition.manifestations;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
+import static java.util.Objects.nonNull;
+
 public class ExhibitionProductionManifestationList implements List<ExhibitionProductionManifestation> {
     private final List<ExhibitionProductionManifestation> manifestations;
 
     public ExhibitionProductionManifestationList(List<ExhibitionProductionManifestation> manifestations) {
-        this.manifestations = manifestations;
+        this.manifestations = nonNull(manifestations) ? manifestations : Collections.emptyList();
     }
 
     @Override
