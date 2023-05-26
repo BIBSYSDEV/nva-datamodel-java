@@ -437,7 +437,6 @@ public final class PublicationInstanceBuilder {
         return new Concert(randomUnconfirmedPlace(),
                            randomTime(),
                            randomString(),
-                           randomString(),
                            randomConcertProgramme(),
                            randomString());
     }

@@ -19,7 +19,6 @@ class ConcertTest {
         var concert = new Concert(randomUnconfirmedPlace(),
                 randomTime(),
                 randomString(),
-                randomString(),
                 null,
                 randomString());
         var serialized = JsonUtils.dtoObjectMapper.writeValueAsString(concert);
