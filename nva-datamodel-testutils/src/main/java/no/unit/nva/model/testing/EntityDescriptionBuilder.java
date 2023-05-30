@@ -59,13 +59,13 @@ public final class EntityDescriptionBuilder {
     }
 
     private static Contributor randomContributor() {
-        return new Contributor.Builder()
+        var randomcontributor = new Contributor.Builder()
                    .withAffiliations(randomOrganizations())
                    .withSequence(randomInteger(10))
                    .withRole(randomRole())
-                   .withContributorVerificationStatus(randomElement(ContributorVerificationStatus.values()))
                    .withIdentity(randomIdentity())
                    .build();
+        return randomcontributor;
     }
 
     private static Identity randomIdentity() {
@@ -74,6 +74,7 @@ public final class EntityDescriptionBuilder {
                    .withName(randomString())
                    .withOrcId(randomString())
                    .withNameType(randomNameType())
+                   .withVerificationStatus(randomElement(ContributorVerificationStatus.values()))
                    .build();
     }
 

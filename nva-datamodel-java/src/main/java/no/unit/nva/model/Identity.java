@@ -13,6 +13,8 @@ public class Identity {
     private NameType nameType;
     private String orcId;
 
+    private ContributorVerificationStatus verificationStatus;
+
     public Identity() {
     }
 
@@ -21,6 +23,7 @@ public class Identity {
         setName(builder.name);
         setNameType(builder.nameType);
         setOrcId(builder.orcId);
+        setVerificationStatus(builder.verificationStatus);
     }
 
     public URI getId() {
@@ -55,6 +58,20 @@ public class Identity {
         this.orcId = orcId;
     }
 
+    public ContributorVerificationStatus getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(ContributorVerificationStatus verificationStatus) {
+        this.verificationStatus = verificationStatus;
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getNameType(), getOrcId(), getVerificationStatus());
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -68,20 +85,18 @@ public class Identity {
         return Objects.equals(getId(), identity.getId())
                && Objects.equals(getName(), identity.getName())
                && getNameType() == identity.getNameType()
-               && Objects.equals(getOrcId(), identity.getOrcId());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getNameType(), getOrcId());
+               && Objects.equals(getOrcId(), identity.getOrcId())
+               && Objects.equals(getVerificationStatus(), identity.getVerificationStatus());
     }
 
     public static final class Builder {
+
         private URI id;
         private String name;
         private NameType nameType;
         private String orcId;
+
+        private ContributorVerificationStatus verificationStatus;
 
         public Builder() {
         }
@@ -103,6 +118,11 @@ public class Identity {
 
         public Builder withOrcId(String orcId) {
             this.orcId = orcId;
+            return this;
+        }
+
+        public Builder withVerificationStatus(ContributorVerificationStatus verificationStatus) {
+            this.verificationStatus = verificationStatus;
             return this;
         }
 

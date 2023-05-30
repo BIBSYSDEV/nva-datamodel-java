@@ -75,10 +75,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        publishable:
+        empty:
           type: boolean
           example: null
-        empty:
+        publishable:
           type: boolean
           example: null
       example: null
@@ -418,10 +418,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      publishable:
+      empty:
         type: boolean
         example: null
-      empty:
+      publishable:
         type: boolean
         example: null
     example: null
@@ -780,9 +780,6 @@ referencedSchemas:
         extent:
           type: string
           example: null
-        description:
-          type: string
-          example: null
         concertProgramme:
           type: array
           example: null
@@ -909,21 +906,6 @@ referencedSchemas:
       correspondingAuthor:
         type: boolean
         example: null
-      verified:
-        type: string
-        writeOnly: true
-        example: null
-        enum:
-        - Verified
-        - CannotBeEstablished
-        - NotVerified
-      contributorVerificationStatus:
-        type: string
-        example: null
-        enum:
-        - Verified
-        - CannotBeEstablished
-        - NotVerified
       type:
         type: string
         example: null
@@ -1593,6 +1575,13 @@ referencedSchemas:
       orcId:
         type: string
         example: null
+      verificationStatus:
+        type: string
+        example: null
+        enum:
+        - Verified
+        - CannotBeEstablished
+        - NotVerified
       type:
         type: string
         example: null
@@ -2994,10 +2983,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          publishable:
+          empty:
             type: boolean
             example: null
-          empty:
+          publishable:
             type: boolean
             example: null
         example: null
