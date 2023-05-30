@@ -59,13 +59,12 @@ public final class EntityDescriptionBuilder {
     }
 
     private static Contributor randomContributor() {
-        var randomcontributor = new Contributor.Builder()
+        return new Contributor.Builder()
                    .withAffiliations(randomOrganizations())
                    .withSequence(randomInteger(10))
                    .withRole(randomRole())
                    .withIdentity(randomIdentity())
                    .build();
-        return randomcontributor;
     }
 
     private static Identity randomIdentity() {
