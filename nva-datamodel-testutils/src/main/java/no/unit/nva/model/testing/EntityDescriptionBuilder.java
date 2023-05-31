@@ -63,7 +63,6 @@ public final class EntityDescriptionBuilder {
                    .withAffiliations(randomOrganizations())
                    .withSequence(randomInteger(10))
                    .withRole(randomRole())
-                   .withContributorVerificationStatus(randomElement(ContributorVerificationStatus.values()))
                    .withIdentity(randomIdentity())
                    .build();
     }
@@ -74,6 +73,7 @@ public final class EntityDescriptionBuilder {
                    .withName(randomString())
                    .withOrcId(randomString())
                    .withNameType(randomNameType())
+                   .withVerificationStatus(randomElement(ContributorVerificationStatus.values()))
                    .build();
     }
 
