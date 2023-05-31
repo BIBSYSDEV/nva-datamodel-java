@@ -12,7 +12,6 @@ public class Identity {
     private String name;
     private NameType nameType;
     private String orcId;
-
     private ContributorVerificationStatus verificationStatus;
 
     public Identity() {
