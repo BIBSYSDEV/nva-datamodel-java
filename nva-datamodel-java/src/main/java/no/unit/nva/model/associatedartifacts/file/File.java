@@ -39,7 +39,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String ADMINISTRATIVE_AGREEMENT_FIELD = "administrativeAgreement";
     public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
-    public final static Map<String, URI> LICENSE_MAP = Map.of(
+    public static final Map<String, URI> LICENSE_MAP = Map.of(
         "CC BY", URI.create("https://creativecommons.org/licenses/by/4.0"),
         "CC BY-NC", URI.create("https://creativecommons.org/licenses/by-nc/4.0"),
         "CC BY-NC-ND", URI.create("https://creativecommons.org/licenses/by-nc-nd/4.0"),

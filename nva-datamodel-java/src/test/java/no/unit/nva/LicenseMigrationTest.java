@@ -1,9 +1,6 @@
 package no.unit.nva;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.net.URI;
-import java.util.Map;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.associatedartifacts.file.File;
@@ -14,6 +11,12 @@ public class LicenseMigrationTest {
 
     public static Stream<String> licenseProvider() {
         return Stream.of(generateOldFile(), generateNewFile());
+    }
+
+    @ParameterizedTest(name = "should accept legacy and current formatting for License")
+    @MethodSource("licenseProvider")
+    void shouldMigrateLicense(String license) {
+        assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(license, File.class));
     }
 
     private static String generateNewFile() {
@@ -51,11 +54,4 @@ public class LicenseMigrationTest {
                + "    \"visibleForNonOwner\" : true\n"
                + "  }";
     }
-
-    @ParameterizedTest(name = "should accept legacy and current formatting for Licese")
-    @MethodSource("licenseProvider")
-    void shouldMigrateLicense(String license) {
-       assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(license, File.class));
-    }
-
 }
