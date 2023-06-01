@@ -1471,7 +1471,9 @@ referencedSchemas:
           format: int64
           example: null
         license:
-          $ref: '#/components/schemas/License'
+          type: string
+          format: uri
+          example: null
         administrativeAgreement:
           type: boolean
           example: null
@@ -1884,30 +1886,6 @@ referencedSchemas:
           type: string
           example: null
       example: null
-  License:
-    required:
-    - type
-    type: object
-    properties:
-      identifier:
-        type: string
-        example: null
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-          example: null
-        example: null
-      link:
-        type: string
-        format: uri
-        example: null
-      type:
-        type: string
-        example: null
-    example: null
-    discriminator:
-      propertyName: type
   LiteraryArts:
     required:
     - type

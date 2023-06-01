@@ -35,7 +35,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class FileModelTest {
 
-    public static final URI CC_BY_URI = URI.create("https://creativecommons.org/licenses/by/4.0/");
+    public static final URI LICENSE_URI = URI.create("http://creativecommons.org/licenses/by/4.0/");
     public static final String APPLICATION_PDF = "application/pdf";
     public static final String FIRST_FILE_TXT = "First_file.txt";
     public static final String CC_BY = "CC-BY";
@@ -62,7 +62,7 @@ public class FileModelTest {
         return new License.Builder()
                    .withIdentifier(CC_BY)
                    .withLabels(Map.of(EN, CC_BY_4_0))
-                   .withLink(CC_BY_URI)
+                   .withLink(LICENSE_URI)
                    .build();
     }
 
@@ -89,7 +89,7 @@ public class FileModelTest {
 
     @Test
     void shouldNotThrowMissingLicenseExceptionWhenFileIsAdministrativeAgreementAndLicenseIsPresent() {
-        var file = getAdministrativeAgreement(getCcByLicense());
+        var file = getAdministrativeAgreement(LICENSE_URI);
         assertDoesNotThrow(file::validate);
     }
 
@@ -103,7 +103,7 @@ public class FileModelTest {
     void shouldReturnEmptySetWhenLicenseLabelsAreNull() {
         var license = new License.Builder()
                           .withIdentifier(CC_BY)
-                          .withLink(CC_BY_URI)
+                          .withLink(LICENSE_URI)
                           .build();
         assertThat(license.getLabels(), is(anEmptyMap()));
     }
@@ -148,7 +148,7 @@ public class FileModelTest {
     public static File randomUnpublishableFile() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            getCcByLicense(), randomBoolean(), randomBoolean(), randomInstant());
+            LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant());
     }
 
     public static File randomUnpublishedFile() {
@@ -166,7 +166,7 @@ public class FileModelTest {
                    .withMimeType(randomString())
                    .withSize(randomInteger().longValue())
                    .withEmbargoDate(randomInstant())
-                   .withLicense(getCcByLicense())
+                   .withLicense(LICENSE_URI)
                    .withIdentifier(UUID.randomUUID())
                    .withPublisherAuthority(randomBoolean());
     }
@@ -178,7 +178,7 @@ public class FileModelTest {
                    .withMimeType(randomString())
                    .withSize(randomInteger().longValue())
                    .withEmbargoDate(randomInstant())
-                   .withLicense(getCcByLicense())
+                   .withLicense(LICENSE_URI)
                    .withIdentifier(UUID.randomUUID())
                    .withPublisherAuthority(randomBoolean());
     }
@@ -188,7 +188,7 @@ public class FileModelTest {
             randomString(),
             randomString(),
             randomInteger().longValue(),
-            getCcByLicense(),
+            LICENSE_URI,
             NOT_ADMINISTRATIVE_AGREEMENT,
             randomBoolean(),
             randomInstant());
@@ -200,7 +200,7 @@ public class FileModelTest {
                    .withName(randomString());
     }
 
-    private File getAdministrativeAgreement(License license) {
+    private File getAdministrativeAgreement(URI license) {
         return File.builder()
                    .withIdentifier(UUID.randomUUID())
                    .withLicense(license)
@@ -212,7 +212,7 @@ public class FileModelTest {
     private AdministrativeAgreement randomAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            getCcByLicense(), ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant());
+            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant());
     }
 
     private PublishedFile publishedFileWithActiveEmbargo() {
@@ -220,7 +220,7 @@ public class FileModelTest {
                                  randomString(),
                                  randomString(),
                                  randomInteger().longValue(),
-                                 getCcByLicense(),
+                                 LICENSE_URI,
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
@@ -270,7 +270,8 @@ public class FileModelTest {
                        + "      \"identifier\" : \"RightsReserved\",\n"
                        + "      \"labels\" : {\n"
                        + "        \"nb\" : \"RightsReserved\"\n"
-                       + "      }\n"
+                       + "      },\n"
+                       + "      \"link\" : \"https://www.example.com/roOE79baBYiyT6yn\"\n"
                        + "    },\n"
                        + "    \"administrativeAgreement\" : false,\n"
                        + "    \"publisherAuthority\" : false,\n"
