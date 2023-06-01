@@ -12,8 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class LicenseMigrationTest {
 
-    private final static Map<String, URI> LICENSE_MAP = Map.of("CC BY-NC", URI.create("https://creativecommons.org/licenses/by-nc/2.0/"));
-
     public static Stream<String> licenseProvider() {
         return Stream.of(generateOldFile(), generateNewFile());
     }
