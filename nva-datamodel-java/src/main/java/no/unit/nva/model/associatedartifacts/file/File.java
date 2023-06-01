@@ -39,6 +39,14 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String ADMINISTRATIVE_AGREEMENT_FIELD = "administrativeAgreement";
     public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
+    public final static Map<String, URI> LICENSE_MAP = Map.of(
+        "CC BY", URI.create("https://creativecommons.org/licenses/by/4.0"),
+        "CC BY-NC", URI.create("https://creativecommons.org/licenses/by-nc/4.0"),
+        "CC BY-NC-ND", URI.create("https://creativecommons.org/licenses/by-nc-nd/4.0"),
+        "CC BY-NC-SA", URI.create("https://creativecommons.org/licenses/by-nc-sa/4.0"),
+        "CC BY-ND", URI.create("https://creativecommons.org/licenses/by-nd/4.0"),
+        "CC BY-SA", URI.create("https://creativecommons.org/licenses/by-sa/4.0"),
+        "CC0", URI.create("https://creativecommons.org/publicdomain/zero/1.0"));
 
     public static final String MISSING_LICENSE =
         "The file is not annotated as an administrative agreement and should have a license";
@@ -205,14 +213,14 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         }
         if (license instanceof LinkedHashMap) {
             var licenseName = getLicenseValue((LinkedHashMap<?, ?>) license);
-            return URI.create(licenseName);
+            return LICENSE_MAP.get(licenseName);
         } else {
             return URI.create(license.toString());
         }
     }
 
     private String getLicenseValue(Map<?, ?> license) {
-        return (String) license.get("link");
+        return (String) license.get("identifier");
     }
 
     /**

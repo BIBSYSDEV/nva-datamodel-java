@@ -43,8 +43,7 @@ public class LicenseMigrationTest {
                + "      \"identifier\" : \"CC BY-NC\",\n"
                + "      \"labels\" : {\n"
                + "        \"nb\" : \"CC BY-NC\"\n"
-               + "      },\n"
-               + "      \"link\" : \"https://www.example.com/roOE79baBYiyT6yn\"\n"
+               + "      }\n"
                + "    },\n"
                + "    \"administrativeAgreement\" : false,\n"
                + "    \"publisherAuthority\" : false,\n"
@@ -55,8 +54,9 @@ public class LicenseMigrationTest {
 
     @ParameterizedTest(name = "should accept legacy and current formatting for Licese")
     @MethodSource("licenseProvider")
-    void shouldMigrateLicense(String license) {
-        assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(license, File.class));
+    void shouldMigrateLicense(String license) throws JsonProcessingException {
+        var file = JsonUtils.dtoObjectMapper.readValue(license, File.class);
+       assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(license, File.class));
     }
 
 }
