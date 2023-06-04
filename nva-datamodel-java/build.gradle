@@ -9,6 +9,7 @@ dependencies {
     implementation libs.apache.commons.validator
     compileOnly libs.nva.commons.core
     implementation libs.nva.commons.json
+    implementation libs.bundles.logging
 
     testImplementation libs.nva.commons.core
     testImplementation libs.nva.commons.json

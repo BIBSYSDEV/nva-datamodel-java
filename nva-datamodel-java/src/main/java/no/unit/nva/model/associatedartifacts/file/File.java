@@ -1,6 +1,7 @@
 package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -13,10 +14,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
+import java.util.regex.Pattern;
 import no.unit.nva.commons.json.JsonSerializable;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
-import no.unit.nva.model.exceptions.InvalidLicenseException;
 import nva.commons.core.JacocoGenerated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An object that represents the description of a file.
@@ -51,6 +55,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public static final String MISSING_LICENSE =
         "The file is not annotated as an administrative agreement and should have a license";
+    public static final Logger logger = LoggerFactory.getLogger(File.class);
+    private static final Supplier<Pattern> LICENSE_VALIDATION_PATTERN =
+        () -> Pattern.compile("^(http|https)://.*$");
 
     @JsonProperty(IDENTIFIER_FIELD)
     private final UUID identifier;
@@ -98,7 +105,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.name = name;
         this.mimeType = mimeType;
         this.size = size;
-        this.license = validateLicenseUri(parseLicense(license));
+        this.license = validateUriLicense(parseLicense(license));
         this.administrativeAgreement = administrativeAgreement;
         this.publisherAuthority = publisherAuthority;
         this.embargoDate = embargoDate;
@@ -227,15 +234,26 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     /**
      * Validate license.
      */
-    private URI validateLicenseUri(URI license) {
-        if (isNull(license)) {
-            return null;
+    private URI validateUriLicense(URI license) {
+        if(nonNull(license) && isValidUriLicense(license)){
+            return formatValidUriLicense(license);
         }
-        if (!license.toString().matches("^(http|https)://.*$")) {
-            throw new InvalidLicenseException(license.toString());
+        else{
+            logger.info("The specified license can not be converted into valid URI license: {}", license);
+            return license;
         }
-        String licenseAsString = license.toString().replaceFirst(license.getScheme(), "https").replaceAll("/$", "");
-        return URI.create(licenseAsString.toLowerCase(Locale.getDefault()));
+    }
+
+    private boolean isValidUriLicense(URI license) {
+        var matcher = LICENSE_VALIDATION_PATTERN.get().matcher(license.toString());
+        return matcher.matches();
+    }
+
+    private  URI formatValidUriLicense(URI license) {
+        String formatedLicenseURL = license.toString().replaceFirst(license.getScheme(), "https")
+            .replaceAll("/$", "")
+            .toLowerCase(Locale.ROOT);
+        return URI.create(formatedLicenseURL);
     }
 
     public static final class Builder {
