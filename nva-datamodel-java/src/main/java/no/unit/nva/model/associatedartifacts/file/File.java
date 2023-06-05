@@ -235,10 +235,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * Validate license.
      */
     private URI validateUriLicense(URI license) {
-        if(nonNull(license) && isValidUriLicense(license)){
+        if (nonNull(license) && isValidUriLicense(license)) {
             return formatValidUriLicense(license);
-        }
-        else{
+        } else {
             logger.info("The specified license can not be converted into valid URI license: {}", license);
             return license;
         }
@@ -249,7 +248,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         return matcher.matches();
     }
 
-    private  URI formatValidUriLicense(URI license) {
+    private URI formatValidUriLicense(URI license) {
         String formatedLicenseURL = license.toString().replaceFirst(license.getScheme(), "https")
             .replaceAll("/$", "")
             .toLowerCase(Locale.ROOT);
