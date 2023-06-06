@@ -22,6 +22,8 @@ import nva.commons.core.JacocoGenerated;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
@@ -57,7 +59,7 @@ public final class PublicationGenerator {
     }
 
     public static URI randomUri() {
-        String uriString = "https://www.example.org/" + randomWord() + randomWord();
+        String uriString = "https://www.example.org/" + UUID.randomUUID();
         return URI.create(uriString);
     }
 
