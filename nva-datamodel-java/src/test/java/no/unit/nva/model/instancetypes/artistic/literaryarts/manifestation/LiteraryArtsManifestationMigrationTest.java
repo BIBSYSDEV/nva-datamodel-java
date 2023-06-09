@@ -23,8 +23,12 @@ class LiteraryArtsManifestationMigrationTest {
 
     @Test
     void shouldCreateLiteraryArtsAudioVisualWhenIsbnIsString() {
-        var literaryArtsAudioVisual = new LiteraryArtsAudioVisual(LiteraryArtsAudioVisualSubtype.PODCAST,
+        var literaryArtsAudioVisual = new LiteraryArtsAudioVisual(randomLiteraryArtsAudioVisualSubtype(),
                 randomPublishingHouse(), randomPublicationDate(), randomIsbn13(), randomInteger());
         assertThat(literaryArtsAudioVisual.getIsbnList(), hasSize(1));
+    }
+
+    private LiteraryArtsAudioVisualSubtype randomLiteraryArtsAudioVisualSubtype() {
+        return new LiteraryArtsAudioVisualSubtype(LiteraryArtsAudioVisualSubtypeEnum.PODCAST);
     }
 }
