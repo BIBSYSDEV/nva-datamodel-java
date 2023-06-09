@@ -28,8 +28,7 @@ public class LiteraryArtsAudioVisualSubtype {
             return fromJson((LiteraryArtsAudioVisualSubtypeEnum) subtype, null);
         } else if (subtype instanceof Map) {
             return parseCurrentImplementation((LinkedHashMap<String, String>) subtype);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid subtype");
         }
     }
