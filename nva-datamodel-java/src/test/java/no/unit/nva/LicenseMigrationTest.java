@@ -9,13 +9,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class LicenseMigrationTest {
 
-    public static Stream<String> licenseProvider() {
+    public static Stream<String> fileWithLicenseProvider() {
         return Stream.of(generateOldPublishedFile(),generateOldUnpublishedFile(),
                          generateOldUnpublishableFile(),  generateNewFile());
     }
 
     @ParameterizedTest(name = "should accept legacy and current formatting for License")
-    @MethodSource("licenseProvider")
+    @MethodSource("fileWithLicenseProvider")
     void shouldMigrateLicense(String file) {
         assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(file, File.class));
     }
