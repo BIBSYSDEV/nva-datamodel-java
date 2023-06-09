@@ -24,8 +24,7 @@ public class LiteraryArtsAudioVisualSubtype {
     public static LiteraryArtsAudioVisualSubtype create(Object subtype) {
         if (subtype instanceof String) {
             return fromJson(LiteraryArtsAudioVisualSubtypeEnum.parse((String) subtype), null);
-        }
-        else if (subtype instanceof LiteraryArtsAudioVisualSubtypeEnum) {
+        } else if (subtype instanceof LiteraryArtsAudioVisualSubtypeEnum) {
             return fromJson((LiteraryArtsAudioVisualSubtypeEnum) subtype, null);
         } else if (subtype instanceof Map) {
             return parseCurrentImplementation((LinkedHashMap<String, String>) subtype);
@@ -35,22 +34,22 @@ public class LiteraryArtsAudioVisualSubtype {
         }
     }
 
+    public static LiteraryArtsAudioVisualSubtype create(LiteraryArtsAudioVisualSubtypeEnum type) {
+        return new LiteraryArtsAudioVisualSubtype(type);
+    }
+
     private static LiteraryArtsAudioVisualSubtype parseCurrentImplementation(Map<String, String> subtype) {
         var type = LiteraryArtsAudioVisualSubtypeEnum.parse(subtype.get(TYPE_FIELD));
         return fromJson(type, subtype.get(DESCRIPTION_FIELD));
     }
 
-
     @JacocoGenerated
-    public static LiteraryArtsAudioVisualSubtype fromJson(@JsonProperty(TYPE_FIELD) LiteraryArtsAudioVisualSubtypeEnum type,
-                                                          @JsonProperty(DESCRIPTION_FIELD) String description) {
+    public static LiteraryArtsAudioVisualSubtype fromJson(
+            @JsonProperty(TYPE_FIELD) LiteraryArtsAudioVisualSubtypeEnum type,
+            @JsonProperty(DESCRIPTION_FIELD) String description) {
         if (LiteraryArtsAudioVisualSubtypeEnum.OTHER.equals(type)) {
             return createOther(description);
         }
-        return new LiteraryArtsAudioVisualSubtype(type);
-    }
-
-    public static LiteraryArtsAudioVisualSubtype create(LiteraryArtsAudioVisualSubtypeEnum type) {
         return new LiteraryArtsAudioVisualSubtype(type);
     }
 
