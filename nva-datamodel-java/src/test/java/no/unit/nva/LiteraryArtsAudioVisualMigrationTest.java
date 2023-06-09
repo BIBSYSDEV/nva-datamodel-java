@@ -101,8 +101,8 @@ public class LiteraryArtsAudioVisualMigrationTest {
     private static String otherWithoutDescription() {
         return "{\n"
                 + "          \"type\" : \"LiteraryArtsAudioVisual\",\n"
-                + "          \"subtype\" : {"
-                + "            \"type\" : \"Other\",\n"
+                + "          \"subtype\" : {\n"
+                + "            \"type\" : \"Other\"\n"
                 + "          },\n"
                 + "          \"publisher\" : {\n"
                 + "            \"type\" : \"UnconfirmedPublisher\",\n"

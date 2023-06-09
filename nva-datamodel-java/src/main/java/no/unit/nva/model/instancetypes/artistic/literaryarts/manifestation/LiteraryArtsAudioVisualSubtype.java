@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import nva.commons.core.JacocoGenerated;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class LiteraryArtsAudioVisualSubtype {
@@ -19,6 +21,27 @@ public class LiteraryArtsAudioVisualSubtype {
 
     @JacocoGenerated
     @JsonCreator
+    public static LiteraryArtsAudioVisualSubtype create(Object subtype) {
+        if (subtype instanceof String) {
+            return fromJson(LiteraryArtsAudioVisualSubtypeEnum.parse((String) subtype), null);
+        }
+        else if (subtype instanceof LiteraryArtsAudioVisualSubtypeEnum) {
+            return fromJson((LiteraryArtsAudioVisualSubtypeEnum) subtype, null);
+        } else if (subtype instanceof Map) {
+            return parseCurrentImplementation((LinkedHashMap<String, String>) subtype);
+        }
+        else {
+            throw new IllegalArgumentException("Invalid subtype");
+        }
+    }
+
+    private static LiteraryArtsAudioVisualSubtype parseCurrentImplementation(Map<String, String> subtype) {
+        var type = LiteraryArtsAudioVisualSubtypeEnum.parse(subtype.get(TYPE_FIELD));
+        return fromJson(type, subtype.get(DESCRIPTION_FIELD));
+    }
+
+
+    @JacocoGenerated
     public static LiteraryArtsAudioVisualSubtype fromJson(@JsonProperty(TYPE_FIELD) LiteraryArtsAudioVisualSubtypeEnum type,
                                                           @JsonProperty(DESCRIPTION_FIELD) String description) {
         if (LiteraryArtsAudioVisualSubtypeEnum.OTHER.equals(type)) {
@@ -45,9 +68,10 @@ public class LiteraryArtsAudioVisualSubtype {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof LiteraryArtsAudioVisualSubtype that)) {
+        if (!(o instanceof LiteraryArtsAudioVisualSubtype)) {
             return false;
         }
+        LiteraryArtsAudioVisualSubtype that = (LiteraryArtsAudioVisualSubtype) o;
         return getType() == that.getType();
     }
 

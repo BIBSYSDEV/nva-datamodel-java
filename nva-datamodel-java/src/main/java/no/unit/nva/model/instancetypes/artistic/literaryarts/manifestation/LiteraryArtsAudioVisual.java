@@ -93,7 +93,7 @@ public class LiteraryArtsAudioVisual implements LiteraryArtsManifestation {
             return false;
         }
         LiteraryArtsAudioVisual that = (LiteraryArtsAudioVisual) o;
-        return getSubtype() == that.getSubtype()
+        return Objects.equals(getSubtype(), that.getSubtype())
                 && Objects.equals(getPublisher(), that.getPublisher())
                 && Objects.equals(getPublicationDate(), that.getPublicationDate())
                 && Objects.equals(getIsbnList(), that.getIsbnList())

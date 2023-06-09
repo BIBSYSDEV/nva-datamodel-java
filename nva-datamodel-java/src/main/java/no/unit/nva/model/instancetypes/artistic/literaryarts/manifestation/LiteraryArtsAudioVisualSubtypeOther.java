@@ -19,21 +19,29 @@ public class LiteraryArtsAudioVisualSubtypeOther extends LiteraryArtsAudioVisual
         this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     @JacocoGenerated
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof LiteraryArtsAudioVisualSubtypeOther that)) {
+        if (!(o instanceof LiteraryArtsAudioVisualSubtypeOther)) {
             return false;
         }
-        return Objects.equals(description, that.description);
+        if (!super.equals(o)) {
+            return false;
+        }
+        LiteraryArtsAudioVisualSubtypeOther that = (LiteraryArtsAudioVisualSubtypeOther) o;
+        return Objects.equals(getDescription(), that.getDescription());
     }
 
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(description);
+        return Objects.hash(super.hashCode(), getDescription());
     }
 }
