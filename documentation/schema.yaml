@@ -2009,18 +2009,28 @@ referencedSchemas:
     - type: object
       properties:
         subtype:
-          type: string
-          example: null
-          enum:
-          - Reading
-          - Play
-          - LiteraryArtsPerformanceOther
+          $ref: '#/components/schemas/LiteraryArtsPerformanceSubtype'
         place:
           $ref: '#/components/schemas/UnconfirmedPlace'
         type:
           type: string
           example: null
       example: null
+  LiteraryArtsPerformanceSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        example: null
+        enum:
+        - Reading
+        - Play
+        - LiteraryArtsPerformanceOther
+      description:
+        type: string
+        writeOnly: true
+        example: null
+    example: null
   LiteraryArtsSubtype:
     type: object
     properties:
