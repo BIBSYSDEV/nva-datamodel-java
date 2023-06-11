@@ -27,7 +27,7 @@ public class LiteraryArtsPerformanceOtherMigrationTest {
             + "\"description\": \"Some description\"}";
     public static final String READING_OBJECT = "{ \"type\": \"Reading\" }";
 
-    public static Stream<Named<String>> LiteraryArtsPerformanceProvider() {
+    public static Stream<Named<String>> literaryArtsPerformanceProvider() {
         return Stream.of(otherString(),
                 nonOtherString(),
                 otherObject(),
@@ -299,7 +299,7 @@ public class LiteraryArtsPerformanceOtherMigrationTest {
     }
 
     @ParameterizedTest
-    @MethodSource("LiteraryArtsPerformanceProvider")
+    @MethodSource("literaryArtsPerformanceProvider")
     void shouldMigrateKnowOtherTypes(String json) throws JsonProcessingException {
         var publication = JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
         var subtype = extractLiteraryArtsPerformance(publication);

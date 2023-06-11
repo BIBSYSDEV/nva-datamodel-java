@@ -10,6 +10,7 @@ public class LiteraryArtsPerformanceSubtypeOther extends LiteraryArtsPerformance
     @JsonProperty(DESCRIPTION_FIELD)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final String description;
+    
     public LiteraryArtsPerformanceSubtypeOther(@JsonProperty(TYPE_FIELD) LiteraryArtsPerformanceSubtypeEnum type,
                                                @JsonProperty(DESCRIPTION_FIELD)String description) {
         super(type);
