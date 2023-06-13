@@ -46,6 +46,7 @@ public final class MigrateChannelIdUtil {
                                                                       .collect(Collectors.toMap(
                                                                           identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
                                                                           identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+    private static final int IDENTIFIER_PATH_ELEMENT_INDEX_FROM_END = 1;
 
     private MigrateChannelIdUtil() {
     }
@@ -60,7 +61,9 @@ public final class MigrateChannelIdUtil {
 
     @Deprecated
     public static boolean checkIfIsNewStyleIdentifier(URI id) {
-        return UUID_PATTERN.matcher(UriWrapper.fromUri(id).getPath().getPathElementByIndexFromEnd(1)).matches();
+        var identifier = UriWrapper.fromUri(id).getPath().getPathElementByIndexFromEnd(
+            IDENTIFIER_PATH_ELEMENT_INDEX_FROM_END);
+        return UUID_PATTERN.matcher(identifier).matches();
     }
 
     private static boolean containsCsvSeparator(String line1) {
