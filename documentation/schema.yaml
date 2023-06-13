@@ -1496,8 +1496,9 @@ referencedSchemas:
     - type
     type: object
     properties:
-      identifier:
+      source:
         type: string
+        format: uri
         example: null
       labels:
         type: object
@@ -1505,20 +1506,19 @@ referencedSchemas:
           type: string
           example: null
         example: null
-      source:
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
+      activeFrom:
         type: string
-        format: uri
+        format: date-time
         example: null
       activeTo:
         type: string
         format: date-time
         example: null
-      activeFrom:
+      identifier:
         type: string
-        format: date-time
         example: null
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
       type:
         type: string
         example: null
@@ -1925,14 +1925,7 @@ referencedSchemas:
     - type: object
       properties:
         subtype:
-          type: string
-          example: null
-          enum:
-          - Audiobook
-          - RadioPlay
-          - ShortFilm
-          - Podcast
-          - LiteraryArtsAudioVisualOther
+          $ref: '#/components/schemas/LiteraryArtsAudioVisualSubtype'
         publisher:
           $ref: '#/components/schemas/PublishingHouse'
         isbnList:
@@ -1949,6 +1942,23 @@ referencedSchemas:
           type: string
           example: null
       example: null
+  LiteraryArtsAudioVisualSubtype:
+    type: object
+    properties:
+      type:
+        type: string
+        example: null
+        enum:
+        - Audiobook
+        - RadioPlay
+        - ShortFilm
+        - Podcast
+        - LiteraryArtsAudioVisualOther
+      description:
+        type: string
+        writeOnly: true
+        example: null
+    example: null
   LiteraryArtsManifestation:
     required:
     - type

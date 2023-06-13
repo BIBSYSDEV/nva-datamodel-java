@@ -36,6 +36,7 @@ import nva.commons.core.JacocoGenerated;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 import static no.unit.nva.model.testing.RandomUtils.randomLabel;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
@@ -267,7 +268,7 @@ public class PublicationContextBuilder {
     }
 
     private static URI randomPublicationChannelsUri() {
-        return URI.create("https://api.dev.nva.aws.unit.no/publication-channels/" + randomString());
+        return URI.create("https://api.dev.nva.aws.unit.no/publication-channels/" + UUID.randomUUID());
     }
 
     private static Artistic randomArtistic() {

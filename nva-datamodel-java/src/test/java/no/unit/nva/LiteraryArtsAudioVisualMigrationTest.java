@@ -15,7 +15,9 @@ public class LiteraryArtsAudioVisualMigrationTest {
         return Stream.of(
                 generateOld(),
                 generateNew(),
-                nullIsbns()
+                nullIsbns(),
+                otherWithDescription(),
+                otherWithoutDescription()
         );
     }
 
@@ -61,6 +63,47 @@ public class LiteraryArtsAudioVisualMigrationTest {
         return "{\n"
                 + "          \"type\" : \"LiteraryArtsAudioVisual\",\n"
                 + "          \"subtype\" : \"RadioPlay\",\n"
+                + "          \"publisher\" : {\n"
+                + "            \"type\" : \"UnconfirmedPublisher\",\n"
+                + "            \"name\" : \"rYgvX1EuiAFLb\"\n"
+                + "          },\n"
+                + "          \"publicationDate\" : {\n"
+                + "            \"type\" : \"PublicationDate\",\n"
+                + "            \"year\" : \"hJ9lbyvYn0VvE5oYHw\",\n"
+                + "            \"month\" : \"agqDekENHtR2Gy\",\n"
+                + "            \"day\" : \"rPHYfsH5VIzz\"\n"
+                + "          },\n"
+                + "          \"extent\" : 1040853105\n"
+                + "        }";
+    }
+
+    private static String otherWithDescription() {
+        return "{\n"
+                + "          \"type\" : \"LiteraryArtsAudioVisual\",\n"
+                + "          \"subtype\" : {"
+                + "            \"type\" : \"Other\",\n"
+                + "            \"description\" : \"Some description\"\n"
+                + "          },\n"
+                + "          \"publisher\" : {\n"
+                + "            \"type\" : \"UnconfirmedPublisher\",\n"
+                + "            \"name\" : \"rYgvX1EuiAFLb\"\n"
+                + "          },\n"
+                + "          \"publicationDate\" : {\n"
+                + "            \"type\" : \"PublicationDate\",\n"
+                + "            \"year\" : \"hJ9lbyvYn0VvE5oYHw\",\n"
+                + "            \"month\" : \"agqDekENHtR2Gy\",\n"
+                + "            \"day\" : \"rPHYfsH5VIzz\"\n"
+                + "          },\n"
+                + "          \"extent\" : 1040853105\n"
+                + "        }";
+    }
+
+    private static String otherWithoutDescription() {
+        return "{\n"
+                + "          \"type\" : \"LiteraryArtsAudioVisual\",\n"
+                + "          \"subtype\" : {\n"
+                + "            \"type\" : \"Other\"\n"
+                + "          },\n"
                 + "          \"publisher\" : {\n"
                 + "            \"type\" : \"UnconfirmedPublisher\",\n"
                 + "            \"name\" : \"rYgvX1EuiAFLb\"\n"

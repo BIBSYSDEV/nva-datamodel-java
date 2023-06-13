@@ -46,6 +46,7 @@ import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArtsSubtype
 import no.unit.nva.model.instancetypes.artistic.literaryarts.LiteraryArtsSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsAudioVisual;
 import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsAudioVisualSubtype;
+import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsAudioVisualSubtypeEnum;
 import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsManifestation;
 import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsMonograph;
 import no.unit.nva.model.instancetypes.artistic.literaryarts.manifestation.LiteraryArtsPerformance;
@@ -766,13 +767,21 @@ public final class PublicationInstanceBuilder {
         var isbn = "9780099470434";
         var monograph = new LiteraryArtsMonograph(randomUnconfirmedPublisher(), randomPublicationDate(), List.of(isbn),
                                                   randomMonographPages());
-        var audioVisual = new LiteraryArtsAudioVisual(randomElement(LiteraryArtsAudioVisualSubtype.values()),
+        var audioVisual = new LiteraryArtsAudioVisual(randomLiteraryArtsAudioVisualSubtype(),
                                                       randomUnconfirmedPublisher(), randomPublicationDate(),
                                                       List.of(isbn), randomInteger());
         var performance = new LiteraryArtsPerformance(randomElement(LiteraryArtsPerformanceSubtype.values()),
                                                       randomUnconfirmedPlace(), randomPublicationDate());
         var web = new LiteraryArtsWeb(randomUri(), randomUnconfirmedPublisher(), randomPublicationDate());
         return List.of(monograph, audioVisual, performance, web);
+    }
+
+    public static LiteraryArtsAudioVisualSubtype randomLiteraryArtsAudioVisualSubtype() {
+        var subtype = randomElement(LiteraryArtsAudioVisualSubtypeEnum.values());
+
+        return LiteraryArtsAudioVisualSubtypeEnum.OTHER.equals(subtype)
+                ? LiteraryArtsAudioVisualSubtype.createOther(randomString())
+                : LiteraryArtsAudioVisualSubtype.create(subtype);
     }
 
     private static LiteraryArtsSubtype literaryArtsSubtype(LiteraryArtsSubtypeEnum subtype) {
