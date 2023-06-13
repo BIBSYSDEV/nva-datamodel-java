@@ -909,6 +909,21 @@ referencedSchemas:
       correspondingAuthor:
         type: boolean
         example: null
+      verified:
+        type: string
+        writeOnly: true
+        example: null
+        enum:
+        - Verified
+        - CannotBeEstablished
+        - NotVerified
+      contributorVerificationStatus:
+        type: string
+        example: null
+        enum:
+        - Verified
+        - CannotBeEstablished
+        - NotVerified
       type:
         type: string
         example: null
