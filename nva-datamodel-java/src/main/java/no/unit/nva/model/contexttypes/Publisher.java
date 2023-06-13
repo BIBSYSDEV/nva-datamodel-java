@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.checkIfIsNewStyleIdentifier;
 import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.migrateToNewIdIfFound;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +17,7 @@ public class Publisher implements PublishingHouse {
 
     @JsonCreator
     public Publisher(@JsonProperty("id") URI id) {
-        this.id = migrateToNewIdIfFound(id, ChannelType.PUBLISHER);
+        this.id = checkIfIsNewStyleIdentifier(id) ? id : migrateToNewIdIfFound(id, ChannelType.PUBLISHER);
     }
 
     public URI getId() {

@@ -1,6 +1,7 @@
 package no.unit.nva.model.contexttypes;
 
 import static java.util.Objects.isNull;
+import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.checkIfIsNewStyleIdentifier;
 import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.migrateToNewIdIfFound;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,7 +20,7 @@ public class Journal implements Periodical {
     @JsonCreator
     public Journal(@JsonProperty("id") URI id) {
         validate(id);
-        this.id = migrateToNewIdIfFound(id, ChannelType.JOURNAL);
+        this.id = checkIfIsNewStyleIdentifier(id) ? id : migrateToNewIdIfFound(id, ChannelType.JOURNAL);
     }
 
     public URI getId() {

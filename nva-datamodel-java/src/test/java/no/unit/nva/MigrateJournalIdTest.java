@@ -12,6 +12,7 @@ import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.utils.ChannelType;
 import org.junit.jupiter.api.Test;
 
+@Deprecated
 class MigrateJournalIdTest {
 
     public static final ChannelType JOURNAL = ChannelType.JOURNAL;

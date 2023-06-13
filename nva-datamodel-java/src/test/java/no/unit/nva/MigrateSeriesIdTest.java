@@ -12,6 +12,7 @@ import no.unit.nva.model.contexttypes.Series;
 import no.unit.nva.model.contexttypes.utils.ChannelType;
 import org.junit.jupiter.api.Test;
 
+@Deprecated
 class MigrateSeriesIdTest {
 
     private static final ChannelType SERIES = ChannelType.SERIES;

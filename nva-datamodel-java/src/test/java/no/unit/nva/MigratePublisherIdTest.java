@@ -12,6 +12,7 @@ import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.utils.ChannelType;
 import org.junit.jupiter.api.Test;
 
+@Deprecated
 class MigratePublisherIdTest {
 
     private static final ChannelType PUBLISHER = ChannelType.PUBLISHER;

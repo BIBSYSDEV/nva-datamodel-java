@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import no.unit.nva.model.contexttypes.utils.ChannelType;
 import nva.commons.core.paths.UriWrapper;
 
+@Deprecated
 public class MigratePublicationChannelIdTestUtils {
 
     public static final String JOURNAL_PATH_ELEMENT = "journal";
@@ -69,15 +70,15 @@ public class MigratePublicationChannelIdTestUtils {
     }
 
     public static String randomOldJournalIdentifier() {
-        return OLD_JOURNAL_IDENTIFIERS.get(randomInteger(journalIdMapping.size() - 1));
+        return OLD_JOURNAL_IDENTIFIERS.get(randomInteger(journalIdMapping.size()));
     }
 
     public static String randomOldSeriesIdentifier() {
-        return OLD_SERIES_IDENTIFIERS.get(randomInteger(seriesIdMapping.size() - 1));
+        return OLD_SERIES_IDENTIFIERS.get(randomInteger(seriesIdMapping.size()));
     }
 
     public static String randomOldPublisherIdentifier() {
-        return OLD_PUBLISHER_IDENTIFIERS.get(randomInteger(publisherIdMapping.size() - 1));
+        return OLD_PUBLISHER_IDENTIFIERS.get(randomInteger(publisherIdMapping.size()));
     }
 
     public static String getNewIdentifierByOldIdentifier(String oldIdentifier, ChannelType type) {
