@@ -776,7 +776,7 @@ public final class PublicationInstanceBuilder {
         return List.of(monograph, audioVisual, performance, web);
     }
 
-    private static LiteraryArtsAudioVisualSubtype randomLiteraryArtsAudioVisualSubtype() {
+    public static LiteraryArtsAudioVisualSubtype randomLiteraryArtsAudioVisualSubtype() {
         var subtype = randomElement(LiteraryArtsAudioVisualSubtypeEnum.values());
 
         return LiteraryArtsAudioVisualSubtypeEnum.OTHER.equals(subtype)
