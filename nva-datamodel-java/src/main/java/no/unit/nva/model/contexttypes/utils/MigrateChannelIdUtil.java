@@ -1,11 +1,12 @@
 package no.unit.nva.model.contexttypes.utils;
 
 import static java.util.Objects.nonNull;
+import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.linesfromResource;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.regex.Pattern;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import nva.commons.core.paths.UriWrapper;
 
@@ -21,31 +22,29 @@ public final class MigrateChannelIdUtil {
     private static final int NUMBER_OF_COLUMNS = 2;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
-    private static final Pattern UUID_PATTERN = Pattern.compile(
-        "^[A-F0-9]{8}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{12}$");
 
     private static final Map<String, String> journalIdMapping = linesfromResource(
         Path.of(JOURNAL_ID_MAPPING_FILE)).stream()
-                                                            .filter(MigrateChannelIdUtil::containsCsvSeparator)
-                                                            .map(MigrateChannelIdUtil::splitLineBySeparator)
-                                                            .collect(Collectors.toMap(
-                                                                identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                                                                identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+                                                        .filter(MigrateChannelIdUtil::containsCsvSeparator)
+                                                        .map(MigrateChannelIdUtil::splitLineBySeparator)
+                                                        .collect(Collectors.toMap(
+                                                            identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                                                            identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
     private static final Map<String, String> seriesIdMapping = linesfromResource(
         Path.of(SERIES_ID_MAPPING_FILE)).stream()
-                                                           .filter(MigrateChannelIdUtil::containsCsvSeparator)
-                                                           .map(MigrateChannelIdUtil::splitLineBySeparator)
-                                                           .collect(Collectors.toMap(
-                                                               identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                                                               identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+                                                       .filter(MigrateChannelIdUtil::containsCsvSeparator)
+                                                       .map(MigrateChannelIdUtil::splitLineBySeparator)
+                                                       .collect(Collectors.toMap(
+                                                           identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                                                           identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
     private static final Map<String, String> publisherIdMapping = linesfromResource(
         Path.of(PUBLISHER_ID_MAPPING_FILE)).stream()
-                                                              .filter(
-                                                                  MigrateChannelIdUtil::containsCsvSeparator)
-                                                              .map(MigrateChannelIdUtil::splitLineBySeparator)
-                                                              .collect(Collectors.toMap(
-                                                                  identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                                                                  identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+                                                          .filter(
+                                                              MigrateChannelIdUtil::containsCsvSeparator)
+                                                          .map(MigrateChannelIdUtil::splitLineBySeparator)
+                                                          .collect(Collectors.toMap(
+                                                              identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                                                              identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
     private static final int IDENTIFIER_PATH_ELEMENT_INDEX_FROM_END = 1;
 
     private MigrateChannelIdUtil() {
@@ -64,7 +63,7 @@ public final class MigrateChannelIdUtil {
         var identifier = UriWrapper.fromUri(id)
                              .getPath()
                              .getPathElementByIndexFromEnd(IDENTIFIER_PATH_ELEMENT_INDEX_FROM_END);
-        return UUID_PATTERN.matcher(identifier).matches();
+        return attempt(() -> UUID.fromString(identifier)).isSuccess();
     }
 
     private static boolean containsCsvSeparator(String line1) {
