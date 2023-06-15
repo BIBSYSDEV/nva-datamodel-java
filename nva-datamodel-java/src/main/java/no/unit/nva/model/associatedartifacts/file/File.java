@@ -235,7 +235,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * Validate license.
      */
     private URI validateUriLicense(URI license) {
-        if (nonNull(license) && isValidUriLicense(license)) {
+        if (nonNull(license) && isValidUriLicense(license) && !license.equals(LICENSE_MAP.get("RightsReserved"))) {
             return formatValidUriLicense(license);
         } else {
             logger.info("The specified license can not be converted into valid URI license: {}", license);
