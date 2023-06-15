@@ -177,7 +177,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
                                                isAdministrativeAgreement(), isPublisherAuthority(),
                                                getEmbargoDate().orElse(null));
         }
-        throw new IllegalStateException("Cannot make unpublishable a non-administrative agreement");
+        throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
     }
 
     public abstract boolean isVisibleForNonOwner();
