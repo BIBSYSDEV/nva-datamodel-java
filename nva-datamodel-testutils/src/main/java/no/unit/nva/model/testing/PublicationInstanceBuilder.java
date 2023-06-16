@@ -769,24 +769,24 @@ public final class PublicationInstanceBuilder {
     private static List<LiteraryArtsManifestation> randomLiteraryArtsManifestationList() {
         var isbn = "9780099470434";
         var monograph = new LiteraryArtsMonograph(randomUnconfirmedPublisher(), randomPublicationDate(), List.of(isbn),
-                randomMonographPages());
+                                                  randomMonographPages());
         var audioVisual = new LiteraryArtsAudioVisual(randomLiteraryArtsAudioVisualSubtype(),
-                randomUnconfirmedPublisher(), randomPublicationDate(),
-                List.of(isbn), randomInteger());
+                                                      randomUnconfirmedPublisher(), randomPublicationDate(),
+                                                      List.of(isbn), randomInteger());
         var performance = new LiteraryArtsPerformance(randomLiteraryArtsPerformanceSubtype(),
-                randomUnconfirmedPlace(), randomPublicationDate());
+                                                      randomUnconfirmedPlace(), randomPublicationDate());
         var web = new LiteraryArtsWeb(randomUri(), randomUnconfirmedPublisher(), randomPublicationDate());
         return List.of(monograph, audioVisual, performance, web);
     }
 
     private static LiteraryArtsPerformanceSubtype randomLiteraryArtsPerformanceSubtype() {
-        var type = randomElement(LiteraryArtsPerformanceSubtypeEnum.values());
-        return LiteraryArtsPerformanceSubtypeEnum.OTHER == type
-                ? LiteraryArtsPerformanceSubtype.createOther(randomString())
-                : LiteraryArtsPerformanceSubtype.create(type);
+        var subtype = randomElement(LiteraryArtsPerformanceSubtypeEnum.values());
+        return LiteraryArtsPerformanceSubtypeEnum.OTHER.equals(subtype)
+            ? LiteraryArtsPerformanceSubtype.createOther(randomString())
+            : LiteraryArtsPerformanceSubtype.create(subtype);
     }
 
-    private static LiteraryArtsAudioVisualSubtype randomLiteraryArtsAudioVisualSubtype() {
+    public static LiteraryArtsAudioVisualSubtype randomLiteraryArtsAudioVisualSubtype() {
         var subtype = randomElement(LiteraryArtsAudioVisualSubtypeEnum.values());
 
         return LiteraryArtsAudioVisualSubtypeEnum.OTHER.equals(subtype)
