@@ -23,9 +23,9 @@ public class LiteraryArtsPerformanceSubtype {
     @JsonCreator
     public static LiteraryArtsPerformanceSubtype create(Object subtype) {
         if (subtype instanceof String) {
-            return fromJson(LiteraryArtsPerformanceSubtypeEnum.parse((String) subtype), null);
+            return create(LiteraryArtsPerformanceSubtypeEnum.parse((String) subtype));
         } else if (subtype instanceof LiteraryArtsPerformanceSubtypeEnum) {
-            return fromJson((LiteraryArtsPerformanceSubtypeEnum) subtype, null);
+            return create((LiteraryArtsPerformanceSubtypeEnum) subtype);
         } else if (subtype instanceof Map) {
             return parseCurrentImplementation((LinkedHashMap<String, String>) subtype);
         } else {
