@@ -23,9 +23,9 @@ public class LiteraryArtsAudioVisualSubtype {
     @JsonCreator
     public static LiteraryArtsAudioVisualSubtype create(Object subtype) {
         if (subtype instanceof String) {
-            return fromJson(LiteraryArtsAudioVisualSubtypeEnum.parse((String) subtype), null);
+            return new LiteraryArtsAudioVisualSubtype(LiteraryArtsAudioVisualSubtypeEnum.parse((String) subtype));
         } else if (subtype instanceof LiteraryArtsAudioVisualSubtypeEnum) {
-            return fromJson((LiteraryArtsAudioVisualSubtypeEnum) subtype, null);
+            return new LiteraryArtsAudioVisualSubtype((LiteraryArtsAudioVisualSubtypeEnum) subtype);
         } else if (subtype instanceof Map) {
             return parseCurrentImplementation((LinkedHashMap<String, String>) subtype);
         } else {
