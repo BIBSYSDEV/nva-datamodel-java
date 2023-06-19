@@ -53,7 +53,7 @@ public class Series implements BookSeries {
 
     private static void validate(URI id) {
         var stringOfUri = id.toString();
-        if (isNull(stringOfUri) || stringOfUri.isEmpty()) {
+        if (isNull(stringOfUri) || stringOfUri.isBlank()) {
             throw new InvalidSeriesException(stringOfUri);
         }
     }
