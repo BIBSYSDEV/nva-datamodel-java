@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 
 public final class AdministrativeAgreementGenerator {
 
@@ -15,6 +16,6 @@ public final class AdministrativeAgreementGenerator {
 
     public static AdministrativeAgreement random() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-                randomInteger().longValue(), LicenseGenerator.random(), true, false, null);
+                randomInteger().longValue(), randomUri(), true, false, null);
     }
 }

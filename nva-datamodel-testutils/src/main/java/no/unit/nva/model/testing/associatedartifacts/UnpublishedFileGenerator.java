@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 
 public final class UnpublishedFileGenerator {
 
@@ -15,6 +16,6 @@ public final class UnpublishedFileGenerator {
 
     public static UnpublishedFile random() {
         return new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
-        LicenseGenerator.random(), false, true, null);
+        randomUri(), false, true, null);
     }
 }

@@ -40,7 +40,7 @@ public class PublishedFile extends File {
         @JsonProperty(NAME_FIELD) String name,
         @JsonProperty(MIME_TYPE_FIELD) String mimeType,
         @JsonProperty(SIZE_FIELD) Long size,
-        @JsonProperty(LICENSE_FIELD) License license,
+        @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,

@@ -1,17 +1,26 @@
 package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import java.net.URI;
 import java.time.Instant;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
+import java.util.regex.Pattern;
 import no.unit.nva.commons.json.JsonSerializable;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import nva.commons.core.JacocoGenerated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An object that represents the description of a file.
@@ -34,9 +43,21 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String ADMINISTRATIVE_AGREEMENT_FIELD = "administrativeAgreement";
     public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
+    public static final Map<String, URI> LICENSE_MAP = Map.of(
+        "CC BY", URI.create("https://creativecommons.org/licenses/by/4.0"),
+        "CC BY-NC", URI.create("https://creativecommons.org/licenses/by-nc/4.0"),
+        "CC BY-NC-ND", URI.create("https://creativecommons.org/licenses/by-nc-nd/4.0"),
+        "CC BY-NC-SA", URI.create("https://creativecommons.org/licenses/by-nc-sa/4.0"),
+        "CC BY-ND", URI.create("https://creativecommons.org/licenses/by-nd/4.0"),
+        "CC BY-SA", URI.create("https://creativecommons.org/licenses/by-sa/4.0"),
+        "CC0", URI.create("https://creativecommons.org/publicdomain/zero/1.0"),
+        "RightsReserved", URI.create("http://rightsstatements.org/vocab/InC/1.0/"));
 
     public static final String MISSING_LICENSE =
         "The file is not annotated as an administrative agreement and should have a license";
+    public static final Logger logger = LoggerFactory.getLogger(File.class);
+    private static final Supplier<Pattern> LICENSE_VALIDATION_PATTERN =
+        () -> Pattern.compile("^(http|https)://.*$");
 
     @JsonProperty(IDENTIFIER_FIELD)
     private final UUID identifier;
@@ -47,7 +68,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     @JsonProperty(SIZE_FIELD)
     private final Long size;
     @JsonProperty(LICENSE_FIELD)
-    private final License license;
+    private final URI license;
     @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD)
     private final boolean administrativeAgreement;
     @JsonProperty(PUBLISHER_AUTHORITY_FIELD)
@@ -75,7 +96,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(NAME_FIELD) String name,
         @JsonProperty(MIME_TYPE_FIELD) String mimeType,
         @JsonProperty(SIZE_FIELD) Long size,
-        @JsonProperty(LICENSE_FIELD) License license,
+        @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
@@ -84,7 +105,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.name = name;
         this.mimeType = mimeType;
         this.size = size;
-        this.license = license;
+        this.license = validateUriLicense(parseLicense(license));
         this.administrativeAgreement = administrativeAgreement;
         this.publisherAuthority = publisherAuthority;
         this.embargoDate = embargoDate;
@@ -119,7 +140,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         return size;
     }
 
-    public License getLicense() {
+    public URI getLicense() {
         return license;
     }
 
@@ -141,7 +162,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public UnpublishedFile toUnpublishedFile() {
         return new UnpublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-            isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
+                                   isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
     }
 
     public PublishedFile toPublishedFile() {
@@ -153,9 +174,10 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public final AdministrativeAgreement toUnpublishableFile() {
         if (isAdministrativeAgreement()) {
             return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-                isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null));
+                                               isAdministrativeAgreement(), isPublisherAuthority(),
+                                               getEmbargoDate().orElse(null));
         }
-        throw new IllegalStateException("Cannot make unpublishable a non-administrative agreement");
+        throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
     }
 
     public abstract boolean isVisibleForNonOwner();
@@ -164,8 +186,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     @JacocoGenerated
     public int hashCode() {
         return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-            isAdministrativeAgreement(),
-            isPublisherAuthority(), getEmbargoDate());
+                            isAdministrativeAgreement(),
+                            isPublisherAuthority(), getEmbargoDate());
     }
 
     @Override
@@ -193,7 +215,45 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         return toJsonString();
     }
 
+    private URI parseLicense(Object license) {
+        if (isNull(license)) {
+            return null;
+        }
+        if (license instanceof LinkedHashMap) {
+            var licenseName = getLicenseValue((LinkedHashMap<?, ?>) license);
+            return LICENSE_MAP.get(licenseName);
+        } else {
+            return URI.create(license.toString());
+        }
+    }
 
+    private String getLicenseValue(Map<?, ?> license) {
+        return (String) license.get("identifier");
+    }
+
+    /**
+     * Validate license.
+     */
+    private URI validateUriLicense(URI license) {
+        if (nonNull(license) && isValidUriLicense(license) && !license.equals(LICENSE_MAP.get("RightsReserved"))) {
+            return formatValidUriLicense(license);
+        } else {
+            logger.info("The specified license can not be converted into valid URI license: {}", license);
+            return license;
+        }
+    }
+
+    private boolean isValidUriLicense(URI license) {
+        var matcher = LICENSE_VALIDATION_PATTERN.get().matcher(license.toString());
+        return matcher.matches();
+    }
+
+    private URI formatValidUriLicense(URI license) {
+        String formatedLicenseURL = license.toString().replaceFirst(license.getScheme(), "https")
+            .replaceAll("/$", "")
+            .toLowerCase(Locale.ROOT);
+        return URI.create(formatedLicenseURL);
+    }
 
     public static final class Builder {
 
@@ -201,7 +261,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         private String name;
         private String mimeType;
         private Long size;
-        private License license;
+        private URI license;
         private boolean administrativeAgreement;
         private boolean publisherAuthority;
         private Instant embargoDate;
@@ -229,7 +289,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return this;
         }
 
-        public Builder withLicense(License license) {
+        public Builder withLicense(URI license) {
             this.license = license;
             return this;
         }
@@ -251,19 +311,19 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
         public File buildPublishedFile() {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                publisherAuthority, embargoDate, Instant.now());
+                                     publisherAuthority, embargoDate, Instant.now());
         }
 
         public File buildUnpublishedFile() {
             return new UnpublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                publisherAuthority,
-                embargoDate);
+                                       publisherAuthority,
+                                       embargoDate);
         }
 
         public File buildUnpublishableFile() {
             return new AdministrativeAgreement(identifier, name, mimeType, size, license, administrativeAgreement,
-                publisherAuthority,
-                embargoDate);
+                                               publisherAuthority,
+                                               embargoDate);
         }
     }
 }

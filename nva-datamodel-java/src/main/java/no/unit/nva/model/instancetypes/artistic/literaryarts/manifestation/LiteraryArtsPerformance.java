@@ -51,7 +51,7 @@ public class LiteraryArtsPerformance implements LiteraryArtsManifestation {
             return false;
         }
         LiteraryArtsPerformance that = (LiteraryArtsPerformance) o;
-        return getSubtype() == that.getSubtype()
+        return Objects.equals(getSubtype(), that.getSubtype())
                 && Objects.equals(getPlace(), that.getPlace())
                 && Objects.equals(getPublicationDate(), that.getPublicationDate());
     }

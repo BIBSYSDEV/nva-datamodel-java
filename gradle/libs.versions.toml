@@ -14,6 +14,7 @@ nva-language = { strictly = '1.0' }
 snakeyaml = { strictly = '1.29' }
 zalandoVersion = { strictly = '0.27.1'}
 jena = { strictly = '4.6.1'}
+log4j = { strictly = '2.17.2' }
 
 
 [libraries]
@@ -53,8 +54,12 @@ snakeyaml = { group = 'org.yaml', name = 'snakeyaml', version.ref = 'snakeyaml' 
 jena-core = { group = 'org.apache.jena', name = 'jena-core', version.ref = 'jena' }
 jena-arq = { group = 'org.apache.jena', name = 'jena-arq', version.ref = 'jena' }
 
+log4j-core = { group = 'org.apache.logging.log4j', name = 'log4j-core', version.ref = 'log4j' }
+log4j-api = { group = 'org.apache.logging.log4j', name = 'log4j-api', version.ref = 'log4j' }
+log4j-slf4j18-impl = { group = 'org.apache.logging.log4j', name = 'log4j-slf4j18-impl', version.ref = 'log4j' }
 
 [bundles]
 unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest","javafaker", "javers-core", "nva-commons-testutils","nva-commons-identifiers", "nva-commons-core"]
 jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
+logging = ['log4j-core', 'log4j-api', 'log4j-slf4j18-impl']
 
