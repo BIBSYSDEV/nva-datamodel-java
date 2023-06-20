@@ -51,7 +51,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         "CC BY-ND", URI.create("https://creativecommons.org/licenses/by-nd/4.0"),
         "CC BY-SA", URI.create("https://creativecommons.org/licenses/by-sa/4.0"),
         "CC0", URI.create("https://creativecommons.org/publicdomain/zero/1.0"),
-        "RightsReserved", URI.create("https://rightsstatements.org/page/InC/1.0"));
+        "RightsReserved", URI.create("http://rightsstatements.org/vocab/InC/1.0/"));
 
     public static final String MISSING_LICENSE =
         "The file is not annotated as an administrative agreement and should have a license";
