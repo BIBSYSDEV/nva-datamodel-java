@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import no.unit.nva.model.Publication.Builder;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class EntityDescription {
+public class EntityDescription implements WithCopy<EntityDescription.Builder> {
 
     private String mainTitle;
     private Map<String, String> alternativeTitles;
@@ -191,6 +192,23 @@ public class EntityDescription {
                 && Objects.equals(getReference(), that.getReference())
                 && Objects.equals(getMetadataSource(), that.getMetadataSource())
                 && Objects.equals(getAlternativeAbstracts(), that.getAlternativeAbstracts());
+    }
+
+    @Override
+    public Builder copy() {
+        return new Builder()
+                   .withMainTitle(getMainTitle())
+                   .withAlternativeTitles(getAlternativeTitles())
+                   .withLanguage(getLanguage())
+                   .withPublicationDate(getPublicationDate())
+                   .withContributors(getContributors())
+                   .withAbstract(getAbstract())
+                   .withAlternativeAbstracts(getAlternativeAbstracts())
+                   .withNpiSubjectHeading(getNpiSubjectHeading())
+                   .withTags(getTags())
+                   .withDescription(getDescription())
+                   .withReference(getReference())
+                   .withMetadataSource(getMetadataSource());
     }
 
     public static final class Builder {
