@@ -2,6 +2,7 @@ package no.unit.nva.model;
 
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static nva.commons.core.attempt.Try.attempt;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
@@ -10,8 +11,11 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class AdditionalIdentifier {
 
-    @JsonProperty("source")
-    private String source;
+    // TODO: Remove alias when data has been migrated
+    @Deprecated
+    @JsonAlias("source")
+    @JsonProperty("sourceName")
+    private String sourceName;
     @JsonProperty("value")
     private String value;
 
@@ -20,19 +24,19 @@ public class AdditionalIdentifier {
 
     }
 
-    public AdditionalIdentifier(String source, String value) {
+    public AdditionalIdentifier(String sourceName, String value) {
         this.value = value;
-        this.source = source;
+        this.sourceName = sourceName;
     }
 
     @JacocoGenerated
-    public String getSource() {
-        return source;
+    public String getSourceName() {
+        return sourceName;
     }
 
     @JacocoGenerated
-    public void setSource(String source) {
-        this.source = source;
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
     }
 
     @JacocoGenerated
@@ -48,7 +52,7 @@ public class AdditionalIdentifier {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getSource(), getValue());
+        return Objects.hash(getSourceName(), getValue());
     }
 
     @JacocoGenerated
@@ -62,8 +66,8 @@ public class AdditionalIdentifier {
             return false;
         }
         AdditionalIdentifier that = (AdditionalIdentifier) o;
-        return Objects.equals(getSource(), that.getSource()) && Objects.equals(getValue(),
-                                                                               that.getValue());
+        return Objects.equals(getSourceName(), that.getSourceName()) && Objects.equals(getValue(),
+                                                                                       that.getValue());
     }
 
     @Override
