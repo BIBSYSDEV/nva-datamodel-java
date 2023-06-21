@@ -1,33 +1,36 @@
 package no.unit.nva.model.contexttypes;
 
 import static java.util.Objects.isNull;
+import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.checkIfIsNewStyleIdentifier;
+import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.migrateToNewIdIfFound;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.util.Objects;
+import no.unit.nva.model.contexttypes.utils.ChannelType;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Journal implements Periodical {
+
     private final URI id;
 
     @JsonCreator
     public Journal(@JsonProperty("id") URI id) {
         validate(id);
-        this.id = id;
-    }
-
-    private static void validate(URI id) {
-        var stringOfUri = id.toString();
-        if (isNull(stringOfUri) || stringOfUri.isEmpty()) {
-            throw new InvalidSeriesException(stringOfUri);
-        }
+        this.id = checkIfIsNewStyleIdentifier(id) ? id : migrateToNewIdIfFound(id, ChannelType.JOURNAL);
     }
 
     public URI getId() {
         return id;
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
     @JacocoGenerated
@@ -43,9 +46,10 @@ public class Journal implements Periodical {
         return Objects.equals(getId(), journal.getId());
     }
 
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
+    private static void validate(URI id) {
+        var stringOfUri = id.toString();
+        if (isNull(stringOfUri) || stringOfUri.isBlank()) {
+            throw new InvalidSeriesException(stringOfUri);
+        }
     }
 }
