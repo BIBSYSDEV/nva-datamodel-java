@@ -46,6 +46,15 @@ public final class EntityDescriptionBuilder {
                    .build();
     }
 
+    public static Contributor randomContributorWithSequence(int sequence) {
+        return new Contributor.Builder()
+                   .withAffiliations(randomOrganizations())
+                   .withSequence(randomInteger(sequence))
+                   .withRole(randomRole())
+                   .withIdentity(randomIdentity())
+                   .build();
+    }
+
     private static Map<String, String> randomAlternativeTitles() {
         return Map.of(RandomLanguageUtil.randomBcp47CompatibleLanguage(), randomString());
     }

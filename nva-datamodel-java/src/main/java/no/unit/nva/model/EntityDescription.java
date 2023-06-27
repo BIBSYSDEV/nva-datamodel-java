@@ -3,14 +3,12 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import no.unit.nva.model.Publication.Builder;
+import java.util.stream.Collectors;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -102,7 +100,15 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     }
 
     public void setContributors(List<Contributor> contributors) {
-        this.contributors = contributors;
+        this.contributors = Objects.nonNull(contributors) ?
+            contributors.stream().sorted(this::compareContributors).collect(Collectors.toList()) : contributors;
+    }
+
+    private int compareContributors(Contributor contributor, Contributor otherContributor) {
+        if (contributor.getSequence().equals(otherContributor.getSequence())) {
+            return Integer.compare(contributor.hashCode(), otherContributor.hashCode());
+        }
+        return contributor.getSequence().compareTo(otherContributor.getSequence());
     }
 
     public URI getMetadataSource() {
