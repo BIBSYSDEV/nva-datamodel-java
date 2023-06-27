@@ -105,10 +105,13 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     }
 
     private int compareContributors(Contributor contributor, Contributor otherContributor) {
-        if (contributor.getSequence().equals(otherContributor.getSequence())) {
+        var sequence = contributor.getSequence();
+        var otherSequence = otherContributor.getSequence();
+
+        if (sequence == null ||otherSequence == null || sequence.equals(otherSequence)) {
             return Integer.compare(contributor.hashCode(), otherContributor.hashCode());
         }
-        return contributor.getSequence().compareTo(otherContributor.getSequence());
+        return sequence.compareTo(otherSequence);
     }
 
     public URI getMetadataSource() {
