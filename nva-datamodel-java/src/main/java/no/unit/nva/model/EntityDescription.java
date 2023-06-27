@@ -100,15 +100,16 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     }
 
     public void setContributors(List<Contributor> contributors) {
-        this.contributors = Objects.nonNull(contributors) ?
-            contributors.stream().sorted(this::compareContributors).collect(Collectors.toList()) : contributors;
+        this.contributors = Objects.nonNull(contributors)
+                                ? contributors.stream().sorted(this::compareContributors).collect(Collectors.toList())
+                                : contributors;
     }
 
     private int compareContributors(Contributor contributor, Contributor otherContributor) {
         var sequence = contributor.getSequence();
         var otherSequence = otherContributor.getSequence();
 
-        if (Objects.isNull(contributor) || Objects.isNull(otherContributor)  || sequence.equals(otherSequence)) {
+        if (Objects.isNull(sequence) || Objects.isNull(otherSequence)  || sequence.equals(otherSequence)) {
             return Integer.compare(contributor.hashCode(), otherContributor.hashCode());
         }
         return sequence.compareTo(otherSequence);
