@@ -39,7 +39,7 @@ class EntityDescriptionTest {
         var contributor2 = EntityDescriptionBuilder.randomContributorWithSequence(1);
         entityDescription.setContributors(List.of(contributor1, contributor2));
 
-        assertThat(entityDescription.getContributors().get(0) , is(equalTo(contributor2)));
+        assertThat(entityDescription.getContributors().get(0), is(equalTo(contributor2)));
     }
 
     @Test
@@ -54,7 +54,22 @@ class EntityDescriptionTest {
         entityDescription1.setContributors(List.of(contributor1, contributor2, contributor3));
         entityDescription2.setContributors(List.of(contributor3, contributor2, contributor1));
 
-        assertThat(entityDescription1.getContributors() , is(equalTo(entityDescription2.getContributors())));
+        assertThat(entityDescription1.getContributors(), is(equalTo(entityDescription2.getContributors())));
+    }
+
+    @Test
+    void shouldSortContributorsInTheSameOrderIgnoringTheInputedOrderWhenSequencesAreNull() {
+        var entityDescription1 = randomEntityDescription(JournalReview.class);
+        var entityDescription2 = randomEntityDescription(JournalReview.class);
+
+        var contributor1 = EntityDescriptionBuilder.randomContributorWithSequence(null);
+        var contributor2 = EntityDescriptionBuilder.randomContributorWithSequence(null);
+        var contributor3 = EntityDescriptionBuilder.randomContributorWithSequence(null);
+
+        entityDescription1.setContributors(List.of(contributor1, contributor2, contributor3));
+        entityDescription2.setContributors(List.of(contributor3, contributor2, contributor1));
+
+        assertThat(entityDescription1.getContributors(), is(equalTo(entityDescription2.getContributors())));
     }
 
     private Diff compareAsObjectNodes(EntityDescription original, EntityDescription copy) {

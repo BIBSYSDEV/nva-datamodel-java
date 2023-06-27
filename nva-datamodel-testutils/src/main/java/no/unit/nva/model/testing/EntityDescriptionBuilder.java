@@ -46,10 +46,10 @@ public final class EntityDescriptionBuilder {
                    .build();
     }
 
-    public static Contributor randomContributorWithSequence(int sequence) {
+    public static Contributor randomContributorWithSequence(Integer sequence) {
         return new Contributor.Builder()
                    .withAffiliations(randomOrganizations())
-                   .withSequence(randomInteger(sequence))
+                   .withSequence(sequence)
                    .withRole(randomRole())
                    .withIdentity(randomIdentity())
                    .build();
