@@ -108,7 +108,7 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
         var sequence = contributor.getSequence();
         var otherSequence = otherContributor.getSequence();
 
-        if (sequence == null ||otherSequence == null || sequence.equals(otherSequence)) {
+        if (Objects.isNull(contributor) || Objects.isNull(otherContributor)  || sequence.equals(otherSequence)) {
             return Integer.compare(contributor.hashCode(), otherContributor.hashCode());
         }
         return sequence.compareTo(otherSequence);
