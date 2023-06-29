@@ -1,10 +1,10 @@
 package no.unit.nva.model.contexttypes;
 
+import static java.util.Objects.isNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ResearchData implements PublicationContext {
@@ -18,7 +18,11 @@ public class ResearchData implements PublicationContext {
     }
 
     public PublishingHouse getPublisher() {
-        return publisher;
+        return isEffectivelyNullPublisher() ? new NullPublisher() : publisher;
+    }
+
+    private boolean isEffectivelyNullPublisher() {
+        return isNull(publisher) || !publisher.isValid();
     }
 
     @JacocoGenerated

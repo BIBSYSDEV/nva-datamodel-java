@@ -75,10 +75,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        empty:
+        publishable:
           type: boolean
           example: null
-        publishable:
+        empty:
           type: boolean
           example: null
       example: null
@@ -418,10 +418,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      empty:
+      publishable:
         type: boolean
         example: null
-      publishable:
+      empty:
         type: boolean
         example: null
     example: null
@@ -1496,16 +1496,6 @@ referencedSchemas:
     - type
     type: object
     properties:
-      source:
-        type: string
-        format: uri
-        example: null
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-          example: null
-        example: null
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
@@ -1515,6 +1505,16 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
+        example: null
+      source:
+        type: string
+        format: uri
+        example: null
+      labels:
+        type: object
+        additionalProperties:
+          type: string
+          example: null
         example: null
       identifier:
         type: string
@@ -2588,6 +2588,21 @@ referencedSchemas:
     example: null
     discriminator:
       propertyName: type
+  NullPublisher:
+    required:
+    - type
+    type: object
+    example: null
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/PublishingHouse'
+    - type: object
+      properties:
+        type:
+          type: string
+          example: null
+      example: null
   Organization:
     required:
     - type
@@ -2981,10 +2996,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          empty:
+          publishable:
             type: boolean
             example: null
-          publishable:
+          empty:
             type: boolean
             example: null
         example: null
@@ -3089,6 +3104,9 @@ referencedSchemas:
     - type
     type: object
     properties:
+      valid:
+        type: boolean
+        example: null
       type:
         type: string
         example: null

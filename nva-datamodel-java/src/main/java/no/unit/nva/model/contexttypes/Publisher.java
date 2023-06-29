@@ -1,6 +1,8 @@
 package no.unit.nva.model.contexttypes;
 
-import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.checkIfIsNewStyleIdentifier;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNewStyleIdentifier;
 import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.migrateToNewIdIfFound;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,7 +19,8 @@ public class Publisher implements PublishingHouse {
 
     @JsonCreator
     public Publisher(@JsonProperty("id") URI id) {
-        this.id = checkIfIsNewStyleIdentifier(id) ? id : migrateToNewIdIfFound(id, ChannelType.PUBLISHER);
+        this.id = isNull(id) || isNewStyleIdentifier(id) ? id : migrateToNewIdIfFound(id,
+                                                                                      ChannelType.PUBLISHER);
     }
 
     public URI getId() {
@@ -41,5 +44,10 @@ public class Publisher implements PublishingHouse {
         }
         Publisher publisher = (Publisher) o;
         return Objects.equals(getId(), publisher.getId());
+    }
+
+    @Override
+    public boolean isValid() {
+        return nonNull(id);
     }
 }

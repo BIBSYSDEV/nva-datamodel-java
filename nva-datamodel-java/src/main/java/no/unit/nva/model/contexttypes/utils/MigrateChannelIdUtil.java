@@ -59,7 +59,7 @@ public final class MigrateChannelIdUtil {
     }
 
     @Deprecated
-    public static boolean checkIfIsNewStyleIdentifier(URI id) {
+    public static boolean isNewStyleIdentifier(URI id) {
         var identifier = UriWrapper.fromUri(id)
                              .getPath()
                              .getPathElementByIndexFromEnd(IDENTIFIER_PATH_ELEMENT_INDEX_FROM_END);

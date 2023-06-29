@@ -1,5 +1,6 @@
 package no.unit.nva.model.contexttypes;
 
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -36,5 +37,10 @@ public class UnconfirmedPublisher implements PublishingHouse {
     @Override
     public int hashCode() {
         return Objects.hash(getName());
+    }
+
+    @Override
+    public boolean isValid() {
+        return nonNull(name);
     }
 }
