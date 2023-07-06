@@ -13,16 +13,16 @@ import nva.commons.core.paths.UriWrapper;
 @Deprecated
 public final class MigrateChannelIdUtil {
 
+    public static final String API_HOST_DEV = "api.dev.nva.aws.unit.no";
     private static final int IDENTIFIER_PATH_INDEX_FROM_END = 1;
     private static final String JOURNAL_ID_MAPPING_FILE = ChannelType.JOURNAL.migrationFileName;
     private static final String SERIES_ID_MAPPING_FILE = ChannelType.SERIES.migrationFileName;
     private static final String PUBLISHER_ID_MAPPING_FILE = ChannelType.PUBLISHER.migrationFileName;
-    private static final String BASE_PATH = "publication-channels";
+    private static final String BASE_PATH = "publication-channels-v2";
     private static final String CSV_SEPARATOR = ";";
     private static final int NUMBER_OF_COLUMNS = 2;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
-
     private static final Map<String, String> journalIdMapping = linesfromResource(
         Path.of(JOURNAL_ID_MAPPING_FILE)).stream()
                                                         .filter(MigrateChannelIdUtil::containsCsvSeparator)
@@ -64,6 +64,16 @@ public final class MigrateChannelIdUtil {
                              .getPath()
                              .getPathElementByIndexFromEnd(IDENTIFIER_PATH_ELEMENT_INDEX_FROM_END);
         return attempt(() -> UUID.fromString(identifier)).isSuccess();
+    }
+
+    @Deprecated
+    public static boolean isNotHostedInDev(URI id) {
+        return !isHostedInDev(id);
+    }
+
+    @Deprecated
+    private static boolean isHostedInDev(URI id) {
+        return API_HOST_DEV.equals(id.getHost());
     }
 
     private static boolean containsCsvSeparator(String line1) {

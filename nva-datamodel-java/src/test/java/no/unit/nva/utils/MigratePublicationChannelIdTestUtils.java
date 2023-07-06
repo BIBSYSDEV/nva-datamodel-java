@@ -17,47 +17,64 @@ public class MigratePublicationChannelIdTestUtils {
     public static final String JOURNAL_PATH_ELEMENT = "journal";
     public static final String SERIES_PATH_ELEMENT = "series";
     public static final String PUBLISHER_PATH_ELEMENT = "publisher";
+    public static final String API_HOST_DEV = "api.dev.nva.aws.unit.no";
+    public static final String EXAMPLE_COM = "example.com";
+    public static final String BASE_PATH_V1 = "publication-channels";
+    public static final String BASE_PATH_V2 = "publication-channels-v2";
     private static final String JOURNAL_ID_MAPPING_FILE = ChannelType.JOURNAL.migrationFileName;
     private static final String SERIES_ID_MAPPING_FILE = ChannelType.SERIES.migrationFileName;
     private static final String PUBLISHER_ID_MAPPING_FILE = ChannelType.PUBLISHER.migrationFileName;
-    private static final String API_HOST = "localhost";
-    private static final String BASE_PATH = "publication-channels";
     private static final int YEAR_START = 1900;
     private static final String CSV_SEPARATOR = ";";
     private static final int NUMBER_OF_COLUMNS = 2;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
     private static final Map<String, String> journalIdMapping = linesfromResource(
-            Path.of(JOURNAL_ID_MAPPING_FILE)).stream()
-            .filter(MigratePublicationChannelIdTestUtils::containsCsvSeparator)
-            .map(MigratePublicationChannelIdTestUtils::splitLineBySeparator)
-            .collect(Collectors.toMap(
-                    identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                    identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
-    private static final Map<String, String> seriesIdMapping = linesfromResource(
-            Path.of(SERIES_ID_MAPPING_FILE)).stream()
-            .filter(MigratePublicationChannelIdTestUtils::containsCsvSeparator)
-            .map(MigratePublicationChannelIdTestUtils::splitLineBySeparator)
-            .collect(Collectors.toMap(
-                    identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                    identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
-    private static final Map<String, String> publisherIdMapping = linesfromResource(
-            Path.of(PUBLISHER_ID_MAPPING_FILE)).stream()
-            .filter(MigratePublicationChannelIdTestUtils::containsCsvSeparator)
-            .map(MigratePublicationChannelIdTestUtils::splitLineBySeparator)
-            .collect(Collectors.toMap(
-                    identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
-                    identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
-    public static final ArrayList<String> OLD_SERIES_IDENTIFIERS = new ArrayList<>(seriesIdMapping.keySet());
-    public static final ArrayList<String> OLD_PUBLISHER_IDENTIFIERS = new ArrayList<>(publisherIdMapping.keySet());
+        Path.of(JOURNAL_ID_MAPPING_FILE)).stream()
+                                                    .filter(
+                                                        MigratePublicationChannelIdTestUtils::containsCsvSeparator)
+                                                    .map(
+                                                        MigratePublicationChannelIdTestUtils::splitLineBySeparator)
+                                                    .collect(Collectors.toMap(
+                                                        identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                                                        identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
     public static final ArrayList<String> OLD_JOURNAL_IDENTIFIERS = new ArrayList<>(journalIdMapping.keySet());
+    private static final Map<String, String> seriesIdMapping = linesfromResource(
+        Path.of(SERIES_ID_MAPPING_FILE)).stream()
+                                                   .filter(
+                                                       MigratePublicationChannelIdTestUtils::containsCsvSeparator)
+                                                   .map(
+                                                       MigratePublicationChannelIdTestUtils::splitLineBySeparator)
+                                                   .collect(Collectors.toMap(
+                                                       identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                                                       identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+    public static final ArrayList<String> OLD_SERIES_IDENTIFIERS = new ArrayList<>(seriesIdMapping.keySet());
+    private static final Map<String, String> publisherIdMapping = linesfromResource(
+        Path.of(PUBLISHER_ID_MAPPING_FILE)).stream()
+                                                      .filter(
+                                                          MigratePublicationChannelIdTestUtils::containsCsvSeparator)
+                                                      .map(
+                                                          MigratePublicationChannelIdTestUtils::splitLineBySeparator)
+                                                      .collect(Collectors.toMap(
+                                                          identifierList -> identifierList[OLD_ID_COLUMN_NUMBER],
+                                                          identifierList -> identifierList[NEW_ID_COLUMN_NUMBER]));
+    public static final ArrayList<String> OLD_PUBLISHER_IDENTIFIERS = new ArrayList<>(publisherIdMapping.keySet());
 
     private MigratePublicationChannelIdTestUtils() {
     }
 
-    public static URI constructPublicationChannelId(String year, String identifier, String pathElement) {
-        return UriWrapper.fromHost(API_HOST)
-                   .addChild(BASE_PATH)
+    public static URI constructNewStyleId(String year, String newIdentifier, String pathElement) {
+        return constructPublicationChannelId(year, newIdentifier, pathElement, API_HOST_DEV, BASE_PATH_V2);
+    }
+
+    public static URI constructOldStyleId(String year, String oldIdentifier, String pathElement) {
+        return constructPublicationChannelId(year, oldIdentifier, pathElement, API_HOST_DEV, BASE_PATH_V1);
+    }
+
+    public static URI constructPublicationChannelId(String year, String identifier, String pathElement, String apiHost,
+                                                    String basePath) {
+        return UriWrapper.fromHost(apiHost)
+                   .addChild(basePath)
                    .addChild(pathElement)
                    .addChild(identifier)
                    .addChild(year)
