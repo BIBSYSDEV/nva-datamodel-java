@@ -2,7 +2,8 @@ package no.unit.nva.model.instancetypes.book;
 
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.PUBLISHER_PATH_ELEMENT;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.SERIES_PATH_ELEMENT;
-import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructPublicationChannelId;
+import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructNewStyleId;
+import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructOldStyleId;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.getNewIdentifierByOldIdentifier;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldPublisherIdentifier;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldSeriesIdentifier;
@@ -27,8 +28,8 @@ public class MigrateBookMonographPublicationChannelIdTest {
         var year = randomYear();
         var oldIdentifier = randomOldSeriesIdentifier();
         var newIdentifier = getNewIdentifierByOldIdentifier(oldIdentifier, ChannelType.SERIES);
-        var oldId = constructPublicationChannelId(year, oldIdentifier, SERIES_PATH_ELEMENT);
-        var expectedNewId = constructPublicationChannelId(year, newIdentifier, SERIES_PATH_ELEMENT);
+        var oldId = constructOldStyleId(year, oldIdentifier, SERIES_PATH_ELEMENT);
+        var expectedNewId = constructNewStyleId(year, newIdentifier, SERIES_PATH_ELEMENT);
         var json = generateFullBookMonographWithSeriesId(oldId);
         var actualBookMonograph = attempt(
             () -> JsonUtils.dtoObjectMapper.readValue(json, Publication.class)).orElseThrow();
@@ -42,8 +43,8 @@ public class MigrateBookMonographPublicationChannelIdTest {
         var year = randomYear();
         var oldIdentifier = randomOldPublisherIdentifier();
         var newIdentifier = getNewIdentifierByOldIdentifier(oldIdentifier, ChannelType.PUBLISHER);
-        var oldId = constructPublicationChannelId(year, oldIdentifier, PUBLISHER_PATH_ELEMENT);
-        var expectedNewId = constructPublicationChannelId(year, newIdentifier, PUBLISHER_PATH_ELEMENT);
+        var oldId = constructOldStyleId(year, oldIdentifier, PUBLISHER_PATH_ELEMENT);
+        var expectedNewId = constructNewStyleId(year, newIdentifier, PUBLISHER_PATH_ELEMENT);
         var json = generateFullBookMonographWithPublisherId(oldId);
         var actualBookMonograph = attempt(
             () -> JsonUtils.dtoObjectMapper.readValue(json, Publication.class)).orElseThrow();

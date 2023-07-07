@@ -1,7 +1,8 @@
 package no.unit.nva.model.instancetypes.journal;
 
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.JOURNAL_PATH_ELEMENT;
-import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructPublicationChannelId;
+import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructNewStyleId;
+import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.constructOldStyleId;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.getNewIdentifierByOldIdentifier;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomOldJournalIdentifier;
 import static no.unit.nva.utils.MigratePublicationChannelIdTestUtils.randomYear;
@@ -25,8 +26,8 @@ public class MigrateAcademicArticleJournalIdTest {
         var year = randomYear();
         var oldIdentifier = randomOldJournalIdentifier();
         var newIdentifier = getNewIdentifierByOldIdentifier(oldIdentifier, JOURNAL);
-        var oldId = constructPublicationChannelId(year, oldIdentifier, JOURNAL_PATH_ELEMENT);
-        var expectedNewId = constructPublicationChannelId(year, newIdentifier, JOURNAL_PATH_ELEMENT);
+        var oldId = constructOldStyleId(year, oldIdentifier, JOURNAL_PATH_ELEMENT);
+        var expectedNewId = constructNewStyleId(year, newIdentifier, JOURNAL_PATH_ELEMENT);
         var json = generateFullAcademicArticleWithId(oldId);
         var actualAcademicArticle = attempt(
             () -> JsonUtils.dtoObjectMapper.readValue(json, Publication.class)).orElseThrow();

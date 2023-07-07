@@ -2,6 +2,7 @@ package no.unit.nva.model.contexttypes;
 
 import static java.util.Objects.isNull;
 import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNewStyleIdentifier;
+import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNotHostedInDev;
 import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.migrateToNewIdIfFound;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +21,9 @@ public class Series implements BookSeries {
     @JsonCreator
     public Series(@JsonProperty("id") URI id) {
         validate(id);
-        this.id = isNewStyleIdentifier(id) ? id : migrateToNewIdIfFound(id, ChannelType.SERIES);
+        this.id = isNewStyleIdentifier(id) || isNotHostedInDev(id)
+                      ? id
+                      : migrateToNewIdIfFound(id, ChannelType.SERIES);
     }
 
     public URI getId() {
