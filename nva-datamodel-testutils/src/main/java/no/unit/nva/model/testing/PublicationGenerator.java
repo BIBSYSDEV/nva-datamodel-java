@@ -1,6 +1,5 @@
 package no.unit.nva.model.testing;
 
-import java.util.Locale;
 import net.datafaker.Faker;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;

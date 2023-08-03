@@ -31,7 +31,7 @@ import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.funding.Funding;
 import nva.commons.core.JacocoGenerated;
 
-@SuppressWarnings("PMD.TooManyFields")
+@SuppressWarnings({"PMD.TooManyFields", "PMD.GodClass"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
 public class PublicationResponse
@@ -46,7 +46,7 @@ public class PublicationResponse
     private Instant modifiedDate;
     private Instant publishedDate;
     private Instant indexedDate;
-    private List<URI> handle;
+    private Set<URI> handles;
     private URI link;
     private EntityDescription entityDescription;
     private URI doi;
@@ -70,7 +70,7 @@ public class PublicationResponse
         response.setModifiedDate(publication.getModifiedDate());
         response.setPublishedDate(publication.getPublishedDate());
         response.setIndexedDate(publication.getIndexedDate());
-        response.setHandle(publication.getHandles());
+        response.setHandles(publication.getHandles());
         response.setLink(publication.getLink());
         response.setEntityDescription(publication.getEntityDescription());
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
@@ -116,21 +116,21 @@ public class PublicationResponse
     }
 
     @Override
-    public List<URI> getHandles() {
-        return handle;
+    public Set<URI> getHandles() {
+        return handles;
     }
 
     @Override
-    public void setHandle(Object handle) {
+    public void setHandles(Object handle) {
+        if (handle instanceof String) {
+            this.handles = Set.of(URI.create(handle.toString()));
+        }
         if (handle instanceof Collection<?>) {
             var list = (Collection<?>) handle;
-            this.handle = list.stream()
-                              .map(String.class::cast)
+            this.handles = list.stream()
+                              .map(Object::toString)
                               .map(URI::create)
-                              .collect(Collectors.toList());
-        }
-        if (handle instanceof String) {
-            this.handle = List.of( URI.create(handle.toString()));
+                              .collect(Collectors.toSet());
         }
     }
 

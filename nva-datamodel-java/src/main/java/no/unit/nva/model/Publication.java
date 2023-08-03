@@ -56,7 +56,7 @@ public class Publication
     private Instant modifiedDate;
     private Instant publishedDate;
     private Instant indexedDate;
-    private List<URI> handle;
+    private Set<URI> handles;
     private URI doi;
     private URI link;
     private EntityDescription entityDescription;
@@ -110,21 +110,21 @@ public class Publication
     }
 
     @Override
-    public List<URI> getHandles() {
-        return handle;
+    public Set<URI> getHandles() {
+        return handles;
     }
 
     @Override
-    public void setHandle(Object handle) {
+    public void setHandles(Object handle) {
+        if (handle instanceof String) {
+            this.handles = Set.of(URI.create(handle.toString()));
+        }
         if (handle instanceof Collection<?>) {
             var list = (Collection<?>) handle;
-            this.handle = list.stream()
-                              .map(String.class::cast)
+            this.handles = list.stream()
+                              .map(Object::toString)
                               .map(URI::create)
-                              .collect(Collectors.toList());
-        }
-        if (handle instanceof String) {
-            this.handle = List.of( URI.create(handle.toString()));
+                              .collect(Collectors.toSet());
         }
     }
 
@@ -445,11 +445,11 @@ public class Publication
             if (handle instanceof Collection<?>) {
                 var list = (Collection<?>) handle;
                 var handles = list.stream().map(item -> (URI) item).collect(Collectors.toList());
-                publication.setHandle(handles);
+                publication.setHandles(handles);
             }
             if (handle instanceof URI) {
                 var handles = List.of((URI) handle);
-                publication.setHandle(handles);
+                publication.setHandles(handles);
             }
             return this;
         }

@@ -35,10 +35,14 @@ schema:
       type: string
       format: date-time
       example: null
-    handle:
-      type: string
-      format: uri
+    handles:
+      uniqueItems: true
+      type: array
       example: null
+      items:
+        type: string
+        format: uri
+        example: null
     doi:
       type: string
       format: uri
@@ -2956,10 +2960,14 @@ referencedSchemas:
         type: string
         format: date-time
         example: null
-      handle:
-        type: string
-        format: uri
+      handles:
+        uniqueItems: true
+        type: array
         example: null
+        items:
+          type: string
+          format: uri
+          example: null
       doi:
         type: string
         format: uri
