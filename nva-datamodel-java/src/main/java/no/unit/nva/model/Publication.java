@@ -288,7 +288,7 @@ public class Publication
                    .withModifiedDate(getModifiedDate())
                    .withPublishedDate(getPublishedDate())
                    .withIndexedDate(getIndexedDate())
-                   .withHandle(getHandles())
+                   .withHandles(getHandles())
                    .withDoi(getDoi())
                    .withLink(getLink())
                    .withEntityDescription(getEntityDescription())
@@ -441,7 +441,7 @@ public class Publication
             return this;
         }
 
-        public Builder withHandle(Object handle) {
+        public Builder withHandles(Object handle) {
             if (handle instanceof Collection<?>) {
                 var list = (Collection<?>) handle;
                 var handles = list.stream().map(item -> (URI) item).collect(Collectors.toList());

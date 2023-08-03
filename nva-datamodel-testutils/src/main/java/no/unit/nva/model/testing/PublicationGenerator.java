@@ -1,6 +1,6 @@
 package no.unit.nva.model.testing;
 
-import net.datafaker.Faker;
+import com.github.javafaker.Faker;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
@@ -175,7 +175,7 @@ public final class PublicationGenerator {
                    .withResourceOwner(randomResourceOwner())
                    .withLink(randomUri())
                    .withIndexedDate(randomInstant())
-                   .withHandle(randomUri())
+                   .withHandles(randomUri())
                    .withDoi(randomDoi())
                    .withCreatedDate(randomInstant())
                    .withEntityDescription(randomEntityDescription(publicationInstanceClass))
