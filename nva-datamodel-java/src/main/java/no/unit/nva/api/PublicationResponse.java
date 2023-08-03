@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import no.unit.nva.WithAdditionalIdentifiers;
 import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithContext;
@@ -20,20 +22,21 @@ import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.EntityDescription;
-import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
+import no.unit.nva.model.funding.Funding;
 import nva.commons.core.JacocoGenerated;
 
 @SuppressWarnings("PMD.TooManyFields")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
-public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId,
-                                            WithContext, WithAdditionalIdentifiers {
+public class PublicationResponse
+    implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId, WithContext,
+               WithAdditionalIdentifiers {
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -43,7 +46,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private Instant modifiedDate;
     private Instant publishedDate;
     private Instant indexedDate;
-    private URI handle;
+    private List<URI> handle;
     private URI link;
     private EntityDescription entityDescription;
     private URI doi;
@@ -67,7 +70,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setModifiedDate(publication.getModifiedDate());
         response.setPublishedDate(publication.getPublishedDate());
         response.setIndexedDate(publication.getIndexedDate());
-        response.setHandle(publication.getHandle());
+        response.setHandle(publication.getHandles());
         response.setLink(publication.getLink());
         response.setEntityDescription(publication.getEntityDescription());
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
@@ -113,13 +116,22 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
-    public URI getHandle() {
+    public List<URI> getHandles() {
         return handle;
     }
 
     @Override
-    public void setHandle(URI handle) {
-        this.handle = handle;
+    public void setHandle(Object handle) {
+        if (handle instanceof Collection<?>) {
+            var list = (Collection<?>) handle;
+            this.handle = list.stream()
+                              .map(String.class::cast)
+                              .map(URI::create)
+                              .collect(Collectors.toList());
+        }
+        if (handle instanceof String) {
+            this.handle = List.of( URI.create(handle.toString()));
+        }
     }
 
     @Override
@@ -275,25 +287,10 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     @Override
     @JacocoGenerated
     public int hashCode() {
-        return Objects.hash(getIdentifier(),
-                            getStatus(),
-                            getResourceOwner(),
-                            getPublisher(),
-                            getCreatedDate(),
-                            getModifiedDate(),
-                            getPublishedDate(),
-                            getIndexedDate(),
-                            getHandle(),
-                            getLink(),
-                            getEntityDescription(),
-                            getDoi(),
-                            getContext(),
-                            getProjects(),
-                            getFundings(),
-                            getSubjects(),
-                            getAdditionalIdentifiers(),
-                            getAssociatedArtifacts(),
-                            getRightsHolder());
+        return Objects.hash(getIdentifier(), getStatus(), getResourceOwner(), getPublisher(), getCreatedDate(),
+                            getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandles(), getLink(),
+                            getEntityDescription(), getDoi(), getContext(), getProjects(), getFundings(), getSubjects(),
+                            getAdditionalIdentifiers(), getAssociatedArtifacts(), getRightsHolder());
     }
 
     @Override
@@ -314,7 +311,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                && Objects.equals(getModifiedDate(), that.getModifiedDate())
                && Objects.equals(getPublishedDate(), that.getPublishedDate())
                && Objects.equals(getIndexedDate(), that.getIndexedDate())
-               && Objects.equals(getHandle(), that.getHandle())
+               && Objects.equals(getHandles(), that.getHandles())
                && Objects.equals(getLink(), that.getLink())
                && Objects.equals(getEntityDescription(), that.getEntityDescription())
                && Objects.equals(getDoi(), that.getDoi())

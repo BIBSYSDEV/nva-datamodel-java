@@ -12,12 +12,14 @@ import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
@@ -38,9 +40,8 @@ public class Publication
     implements WithIdentifier, WithInternal, WithAssociatedArtifact, WithMetadata, WithCopy<Publication.Builder> {
 
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
-        PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
-        PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION)
-    );
+        PublicationStatus.NEW, List.of(PublicationStatus.DRAFT), PublicationStatus.DRAFT,
+        List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION));
 
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private static final String BASE_URI = "__BASE_URI__";
@@ -55,7 +56,7 @@ public class Publication
     private Instant modifiedDate;
     private Instant publishedDate;
     private Instant indexedDate;
-    private URI handle;
+    private List<URI> handle;
     private URI doi;
     private URI link;
     private EntityDescription entityDescription;
@@ -68,6 +69,16 @@ public class Publication
 
     public Publication() {
         // Default constructor, use setters.
+    }
+
+    @JsonIgnore
+    public static String getJsonLdContext(URI baseUri) {
+        return PUBLICATION_CONTEXT.replace(BASE_URI, baseUri.toString());
+    }
+
+    @JsonIgnore
+    public static String getOntology(URI baseUri) {
+        return ONTOLOGY.replace(BASE_URI, baseUri.toString());
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
@@ -99,13 +110,22 @@ public class Publication
     }
 
     @Override
-    public URI getHandle() {
+    public List<URI> getHandles() {
         return handle;
     }
 
     @Override
-    public void setHandle(URI handle) {
-        this.handle = handle;
+    public void setHandle(Object handle) {
+        if (handle instanceof Collection<?>) {
+            var list = (Collection<?>) handle;
+            this.handle = list.stream()
+                              .map(String.class::cast)
+                              .map(URI::create)
+                              .collect(Collectors.toList());
+        }
+        if (handle instanceof String) {
+            this.handle = List.of( URI.create(handle.toString()));
+        }
     }
 
     @Override
@@ -250,9 +270,7 @@ public class Publication
 
     @Override
     public AssociatedArtifactList getAssociatedArtifacts() {
-        return nonNull(associatedArtifacts)
-                   ? associatedArtifacts
-                   : AssociatedArtifactList.empty();
+        return nonNull(associatedArtifacts) ? associatedArtifacts : AssociatedArtifactList.empty();
     }
 
     @Override
@@ -262,8 +280,7 @@ public class Publication
 
     @Override
     public Builder copy() {
-        return new Builder()
-                   .withIdentifier(getIdentifier())
+        return new Builder().withIdentifier(getIdentifier())
                    .withStatus(getStatus())
                    .withResourceOwner(getResourceOwner())
                    .withPublisher(getPublisher())
@@ -271,7 +288,7 @@ public class Publication
                    .withModifiedDate(getModifiedDate())
                    .withPublishedDate(getPublishedDate())
                    .withIndexedDate(getIndexedDate())
-                   .withHandle(getHandle())
+                   .withHandle(getHandles())
                    .withDoi(getDoi())
                    .withLink(getLink())
                    .withEntityDescription(getEntityDescription())
@@ -299,9 +316,9 @@ public class Publication
     @Override
     public int hashCode() {
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
-                    getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
-                    getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
-                    getAssociatedArtifacts(), getRightsHolder());
+                    getPublishedDate(), getIndexedDate(), getHandles(), getDoi(), getLink(), getEntityDescription(),
+                    getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(), getAssociatedArtifacts(),
+                    getRightsHolder());
     }
 
     @JacocoGenerated
@@ -322,7 +339,7 @@ public class Publication
                             && Objects.equals(getModifiedDate(), that.getModifiedDate())
                             && Objects.equals(getPublishedDate(), that.getPublishedDate());
         boolean secondHalf = Objects.equals(getIndexedDate(), that.getIndexedDate())
-                             && Objects.equals(getHandle(), that.getHandle())
+                             && Objects.equals(getHandles(), that.getHandles())
                              && Objects.equals(getDoi(), that.getDoi())
                              && Objects.equals(getLink(), that.getLink())
                              && Objects.equals(getEntityDescription(), that.getEntityDescription())
@@ -344,16 +361,6 @@ public class Publication
     @Deprecated
     public String getJsonLdContext() {
         return stringFromResources(Path.of("publicationContextDeprecated.json"));
-    }
-
-    @JsonIgnore
-    public static String getJsonLdContext(URI baseUri) {
-        return PUBLICATION_CONTEXT.replace(BASE_URI, baseUri.toString());
-    }
-
-    @JsonIgnore
-    public static String getOntology(URI baseUri) {
-        return ONTOLOGY.replace(BASE_URI, baseUri.toString());
     }
 
     @JsonIgnore
@@ -434,8 +441,16 @@ public class Publication
             return this;
         }
 
-        public Builder withHandle(URI handle) {
-            publication.setHandle(handle);
+        public Builder withHandle(Object handle) {
+            if (handle instanceof Collection<?>) {
+                var list = (Collection<?>) handle;
+                var handles = list.stream().map(item -> (URI) item).collect(Collectors.toList());
+                publication.setHandle(handles);
+            }
+            if (handle instanceof URI) {
+                var handles = List.of((URI) handle);
+                publication.setHandle(handles);
+            }
             return this;
         }
 

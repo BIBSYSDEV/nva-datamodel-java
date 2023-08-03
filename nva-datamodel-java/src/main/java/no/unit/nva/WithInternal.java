@@ -2,6 +2,7 @@ package no.unit.nva;
 
 import java.net.URI;
 import java.time.Instant;
+import java.util.List;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.PublicationStatus;
@@ -17,9 +18,9 @@ public interface WithInternal extends PublicationBase {
 
     void setStatus(PublicationStatus status);
 
-    URI getHandle();
+    List<URI> getHandles();
 
-    void setHandle(URI handle);
+    void setHandle(Object handle);
 
     Instant getPublishedDate();
 

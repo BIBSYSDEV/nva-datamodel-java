@@ -1,6 +1,7 @@
 package no.unit.nva.model.testing;
 
-import com.github.javafaker.Faker;
+import java.util.Locale;
+import net.datafaker.Faker;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
@@ -95,27 +96,60 @@ public final class PublicationGenerator {
         var activeFrom = randomInstant();
 
         return new FundingBuilder()
-                .withId(randomUri())
-                .withSource(randomUri())
-                .withIdentifier(randomString())
-                .withLabels(randomLabels())
-                .withFundingAmount(randomMonetaryAmount())
-                .withActiveFrom(activeFrom)
-                .withActiveTo(randomInstant(activeFrom))
-                .build();
+                   .withId(randomUri())
+                   .withSource(randomUri())
+                   .withIdentifier(randomString())
+                   .withLabels(randomLabels())
+                   .withFundingAmount(randomMonetaryAmount())
+                   .withActiveFrom(activeFrom)
+                   .withActiveTo(randomInstant(activeFrom))
+                   .build();
     }
 
     public static Funding randomUnconfirmedFunding() {
         var activeFrom = randomInstant();
 
         return new FundingBuilder()
-                .withSource(randomUri())
-                .withIdentifier(randomString())
-                .withLabels(randomLabels())
-                .withFundingAmount(randomMonetaryAmount())
-                .withActiveFrom(activeFrom)
-                .withActiveTo(randomInstant(activeFrom))
-                .build();
+                   .withSource(randomUri())
+                   .withIdentifier(randomString())
+                   .withLabels(randomLabels())
+                   .withFundingAmount(randomMonetaryAmount())
+                   .withActiveFrom(activeFrom)
+                   .withActiveTo(randomInstant(activeFrom))
+                   .build();
+    }
+
+    public static ResearchProject randomResearchProject() {
+        return new ResearchProject.Builder()
+                   .withId(randomUri())
+                   .withName(randomString())
+                   .withApprovals(randomApprovals())
+                   .build();
+    }
+
+    public static List<Approval> randomApprovals() {
+        return List.of(randomApproval());
+    }
+
+    public static Approval randomApproval() {
+
+        return new Approval.Builder()
+                   .withApprovalStatus(randomElement(ApprovalStatus.values()))
+                   .withApprovalDate(randomInstant())
+                   .withApplicationCode(randomString())
+                   .withApprovedBy(randomElement(ApprovalsBody.values()))
+                   .build();
+    }
+
+    public static AdditionalIdentifier randomAdditionalIdentifier() {
+        return new AdditionalIdentifier(randomString(), randomString());
+    }
+
+    public static Organization randomOrganization() {
+        return new Organization.Builder()
+                   .withId(randomUri())
+                   .withLabels(randomLabels())
+                   .build();
     }
 
     private static MonetaryAmount randomMonetaryAmount() {
@@ -127,60 +161,27 @@ public final class PublicationGenerator {
         return monetaryAmount;
     }
 
-    public static ResearchProject randomResearchProject() {
-        return new ResearchProject.Builder()
-                .withId(randomUri())
-                .withName(randomString())
-                .withApprovals(randomApprovals())
-                .build();
-    }
-
-    public static List<Approval> randomApprovals() {
-        return List.of(randomApproval());
-    }
-
-    public static Approval randomApproval() {
-
-        return new Approval.Builder()
-                .withApprovalStatus(randomElement(ApprovalStatus.values()))
-                .withApprovalDate(randomInstant())
-                .withApplicationCode(randomString())
-                .withApprovedBy(randomElement(ApprovalsBody.values()))
-                .build();
-    }
-
-    public static AdditionalIdentifier randomAdditionalIdentifier() {
-        return new AdditionalIdentifier(randomString(), randomString());
-    }
-
-    public static Organization randomOrganization() {
-        return new Organization.Builder()
-                .withId(randomUri())
-                .withLabels(randomLabels())
-                .build();
-    }
-
     private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
-                .withIdentifier(SortableIdentifier.next())
-                .withRightsHolder(randomString())
-                .withPublisher(randomOrganization())
-                .withSubjects(List.of(randomUri()))
-                .withStatus(randomElement(PublicationStatus.values()))
-                .withPublishedDate(randomInstant())
-                .withModifiedDate(randomInstant())
-                .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
-                .withProjects(randomProjects())
-                .withFundings(randomFundings())
-                .withResourceOwner(randomResourceOwner())
-                .withLink(randomUri())
-                .withIndexedDate(randomInstant())
-                .withHandle(randomUri())
-                .withDoi(randomDoi())
-                .withCreatedDate(randomInstant())
-                .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-                .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                .build();
+                   .withIdentifier(SortableIdentifier.next())
+                   .withRightsHolder(randomString())
+                   .withPublisher(randomOrganization())
+                   .withSubjects(List.of(randomUri()))
+                   .withStatus(randomElement(PublicationStatus.values()))
+                   .withPublishedDate(randomInstant())
+                   .withModifiedDate(randomInstant())
+                   .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
+                   .withProjects(randomProjects())
+                   .withFundings(randomFundings())
+                   .withResourceOwner(randomResourceOwner())
+                   .withLink(randomUri())
+                   .withIndexedDate(randomInstant())
+                   .withHandle(randomUri())
+                   .withDoi(randomDoi())
+                   .withCreatedDate(randomInstant())
+                   .withEntityDescription(randomEntityDescription(publicationInstanceClass))
+                   .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
+                   .build();
     }
 
     private static ResourceOwner randomResourceOwner() {
