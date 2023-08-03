@@ -57,7 +57,7 @@ log4j-api = { group = 'org.apache.logging.log4j', name = 'log4j-api', version.re
 log4j-slf4j18-impl = { group = 'org.apache.logging.log4j', name = 'log4j-slf4j18-impl', version.ref = 'log4j' }
 
 [bundles]
-unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest", "javers-core", "javafaker", "nva-commons-testutils"]
+unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest","javafaker", "javers-core", "nva-commons-testutils","nva-commons-identifiers", "nva-commons-core"]
 jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
 logging = ['log4j-core', 'log4j-api', 'log4j-slf4j18-impl']
 

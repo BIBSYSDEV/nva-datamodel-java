@@ -1513,8 +1513,6 @@ referencedSchemas:
           type: string
           example: null
         example: null
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
         type: string
         format: date-time
@@ -1523,6 +1521,8 @@ referencedSchemas:
         type: string
         format: date-time
         example: null
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
       type:
         type: string
         example: null
