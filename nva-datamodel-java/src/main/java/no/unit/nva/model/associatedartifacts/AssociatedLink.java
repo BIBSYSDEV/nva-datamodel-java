@@ -5,12 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
-import nva.commons.core.SingletonCollector;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(AssociatedLink.TYPE_NAME)
@@ -69,28 +66,5 @@ public class AssociatedLink implements AssociatedArtifact {
     @JacocoGenerated
     public int hashCode() {
         return Objects.hash(getId(), getName(), getDescription());
-    }
-
-    public enum RelationType {
-        GENERIC_LINKED_RESOURCE("GenericLinkedResource");
-
-        private final String type;
-
-        RelationType(String type) {
-
-            this.type = type;
-        }
-
-        @JsonValue
-        public String getType() {
-            return type;
-        }
-
-        @JsonCreator
-        public RelationType lookup(String candidate) {
-            return Arrays.stream(RelationType.values())
-                .filter(item -> item.getType().equals(candidate))
-                .collect(SingletonCollector.collect());
-        }
     }
 }

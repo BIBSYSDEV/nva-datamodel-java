@@ -1506,6 +1506,9 @@ referencedSchemas:
         type: string
         format: date-time
         example: null
+      identifier:
+        type: string
+        example: null
       source:
         type: string
         format: uri
@@ -1515,9 +1518,6 @@ referencedSchemas:
         additionalProperties:
           type: string
           example: null
-        example: null
-      identifier:
-        type: string
         example: null
       type:
         type: string

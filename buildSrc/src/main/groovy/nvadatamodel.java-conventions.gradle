@@ -2,9 +2,11 @@ plugins {
     id 'java'
     id 'checkstyle'
     id 'pmd'
+    id 'jacoco-report-aggregation'
+    id 'test-report-aggregation'
     id "com.github.gmazzo.buildconfig"
     id 'nebula.lint'
-    id 'jacoco-report-aggregation'
+    id 'idea'
 }
 
 group 'com.github.bibsysdev'

@@ -202,6 +202,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.entityDescription = entityDescription;
     }
 
+    @JacocoGenerated
     @Override
     public List<ResearchProject> getProjects() {
         return Objects.nonNull(projects) ? projects : Collections.emptyList();
@@ -212,6 +213,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.projects = projects;
     }
 
+    @JacocoGenerated
     @Override
     public List<URI> getSubjects() {
         return Objects.nonNull(subjects) ? subjects : Collections.emptyList();

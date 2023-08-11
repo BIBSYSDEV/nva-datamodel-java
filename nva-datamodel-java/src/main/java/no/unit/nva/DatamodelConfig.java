@@ -6,4 +6,7 @@ import no.unit.nva.commons.json.JsonUtils;
 public class DatamodelConfig {
 
     public static final ObjectMapper dataModelObjectMapper = JsonUtils.dtoObjectMapper;
+
+    private DatamodelConfig() {
+    }
 }
