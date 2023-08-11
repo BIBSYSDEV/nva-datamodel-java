@@ -1,11 +1,10 @@
 plugins {
-    id 'java-library'
-    id 'jacoco'
+    id 'java'
     id 'checkstyle'
     id 'pmd'
     id "com.github.gmazzo.buildconfig"
-    id 'idea'
     id 'nebula.lint'
+    id 'jacoco-report-aggregation'
 }
 
 group 'com.github.bibsysdev'
