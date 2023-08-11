@@ -247,8 +247,7 @@
         <td nowrap="nowrap">
           <a>
             <xsl:attribute name="href">
-              <xsl:text>files/</xsl:text><xsl:text>.html</xsl:text><xsl:value-of
-              select="$new-name"/>
+              <xsl:text>files/</xsl:text><xsl:text>.html</xsl:text><xsl:value-of select="$new-name"/>
             </xsl:attribute>
             <xsl:value-of select="@name"/>
           </a>
@@ -279,8 +278,7 @@
         <td nowrap="nowrap">
           <a target="fileFrame">
             <xsl:attribute name="href">
-              <xsl:text>files/</xsl:text><xsl:text>.html</xsl:text><xsl:value-of
-              select="$new-name"/>
+              <xsl:text>files/</xsl:text><xsl:text>.html</xsl:text><xsl:value-of select="$new-name"/>
             </xsl:attribute>
             <xsl:value-of select="@name"/>
           </a>

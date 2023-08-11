@@ -1,7 +1,9 @@
 package no.unit.nva.model.testing;
 
 import no.unit.nva.model.contexttypes.PublicationContext;
+import nva.commons.core.JacocoGenerated;
 
+@JacocoGenerated
 public class ContextAndInstanceTuple implements PublicationContext {
 
     private final PublicationContext context;

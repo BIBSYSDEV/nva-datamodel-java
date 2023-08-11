@@ -18,6 +18,8 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+sourceCompatibility = JavaVersion.VERSION_17  // source-code version and must be <= targetCompatibility
+targetCompatibility = JavaVersion.VERSION_17 // bytecode target version
 
 test {
     useJUnitPlatform{
@@ -42,10 +44,34 @@ tasks.register('migrationTesting',Test) {
 
 migrationTesting.enabled = false
 
+check.dependsOn jacocoTestCoverageVerification
+jacocoTestCoverageVerification.dependsOn(jacocoTestReport)
+
+jacocoTestCoverageVerification {
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 1.000
+            }
+        }
+
+        rule {
+            limit {
+                counter = 'CLASS'
+                value = 'COVEREDRATIO'
+                minimum = 1.000
+            }
+        }
+    }
+}
+
 jacocoTestReport {
     dependsOn(test)
     reports {
-        xml.enabled true
+        xml.required
     }
 }
 
@@ -65,13 +91,12 @@ checkstyle {
     showViolations = true
 }
 
-tasks.withType(Checkstyle) {
+tasks.withType(Checkstyle) .configureEach{
     reports {
-        xml.enabled false
-        html.enabled true
+        xml.required
+        html.required
         html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
     }
-    exclude '**/ResourcesBuildConfig*'
 }
 
 buildConfig {

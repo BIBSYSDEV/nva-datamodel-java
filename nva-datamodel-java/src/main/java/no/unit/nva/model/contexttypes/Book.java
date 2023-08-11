@@ -96,15 +96,6 @@ public class Book implements BasicContext {
         return validIsbns;
     }
 
-
-    public BookBuilder copy() throws InvalidIsbnException {
-        return new BookBuilder()
-            .withSeriesNumber(getSeriesNumber())
-            .withSeries(getSeries())
-            .withPublisher(getPublisher())
-            .withIsbnList(getIsbnList());
-    }
-
     public static final class BookBuilder {
         private BookSeries series;
         private String seriesNumber;

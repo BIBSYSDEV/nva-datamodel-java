@@ -2,6 +2,7 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class NullPublisher implements PublishingHouse {
@@ -11,11 +12,13 @@ public class NullPublisher implements PublishingHouse {
     public NullPublisher() {
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return STATIC_VALUE_FOR_HASH_CODE;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {

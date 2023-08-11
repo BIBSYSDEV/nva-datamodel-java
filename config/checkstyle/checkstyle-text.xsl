@@ -18,8 +18,7 @@
 
   <xsl:template match="file[error]">
     File:
-    <xsl:apply-templates select="error"/>
-    <xsl:text>
+    <xsl:apply-templates select="error"/><xsl:text>
 </xsl:text>
     <xsl:value-of select="@name"/>
   </xsl:template>

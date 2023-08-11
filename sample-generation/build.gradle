@@ -12,4 +12,7 @@ dependencies {
     implementation libs.nva.commons.identifiers
     implementation libs.nva.commons.json
     implementation libs.bundles.jackson
+
+    implementation("io.netty:netty-transport-native-epoll:4.1.84.Final")
+
 }
