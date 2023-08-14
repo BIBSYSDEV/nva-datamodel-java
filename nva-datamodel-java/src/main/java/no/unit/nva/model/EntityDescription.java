@@ -63,10 +63,11 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
         this.mainTitle = mainTitle;
     }
 
+    @JacocoGenerated
     public Map<String, String> getAlternativeTitles() {
         return Objects.nonNull(alternativeTitles) ? alternativeTitles : Collections.emptyMap();
     }
-
+    @JacocoGenerated
     public Map<String, String> getAlternativeAbstracts() {
         return Objects.nonNull(alternativeAbstracts) ? alternativeAbstracts : Collections.emptyMap();
     }
@@ -94,7 +95,7 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     public void setPublicationDate(PublicationDate publicationDate) {
         this.publicationDate = publicationDate;
     }
-
+    @JacocoGenerated
     public List<Contributor> getContributors() {
         return Objects.nonNull(contributors) ? contributors : Collections.emptyList();
     }

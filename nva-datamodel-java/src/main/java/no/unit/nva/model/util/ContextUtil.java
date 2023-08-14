@@ -3,7 +3,7 @@ package no.unit.nva.model.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class ContextUtil {
+public final class ContextUtil {
 
     public static final String ERROR_MESSAGE = "JsonNode is not an object";
     public static final String CONTEXT = "@context";

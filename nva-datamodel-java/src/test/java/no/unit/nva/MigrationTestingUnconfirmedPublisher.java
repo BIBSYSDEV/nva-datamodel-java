@@ -1,6 +1,5 @@
 package no.unit.nva;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.instancetypes.artistic.film.realization.Broadcast;
 import no.unit.nva.model.instancetypes.artistic.film.realization.OtherRelease;
@@ -23,9 +22,7 @@ public class MigrationTestingUnconfirmedPublisher {
             + "    \"value\": \"2022-03-23T00:00:00.000000Z\"\n"
             + "  },\n"
             + "  \"sequence\": \"1\"\n"
-            + "}",
-            "{\n"
-            + "  \"type\": \"Broadcast\",\n"
+            + "}{\n\"type\": \"Broadcast\",\n"
             + "  \"publisher\": {\n"
             + "    \"type\": \"UnconfirmedPublisher\",\n"
             + "    \"name\": \"My publisher\"\n"
