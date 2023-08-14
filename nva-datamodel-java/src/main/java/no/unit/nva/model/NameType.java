@@ -19,6 +19,7 @@ public enum NameType {
     public String getValue() {
         return value;
     }
+
     @JacocoGenerated
     public void setValue(String value) {
         this.value = value;

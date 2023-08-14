@@ -8,13 +8,14 @@ public final class ContextUtil {
     public static final String ERROR_MESSAGE = "JsonNode is not an object";
     public static final String CONTEXT = "@context";
 
-    private ContextUtil(){}
+    private ContextUtil() {
+    }
 
     /**
      * Inject a context json object into a json object.
      *
      * @param jsonNode json object to inject context into
-     * @param context context as json
+     * @param context  context as json
      */
     public static void injectContext(JsonNode jsonNode, JsonNode context) {
         if (jsonNode.isObject()) {

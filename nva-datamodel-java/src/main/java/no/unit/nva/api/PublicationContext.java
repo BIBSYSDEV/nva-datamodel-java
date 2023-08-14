@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import no.unit.nva.model.Publication;
 
 public final class PublicationContext {
+
+    private PublicationContext() {
+    }
+
     public static JsonNode getContext(Publication publication) {
         return attempt(() -> dataModelObjectMapper.readTree(publication.getJsonLdContext())).orElseThrow();
     }
-
-    private PublicationContext(){}
 }

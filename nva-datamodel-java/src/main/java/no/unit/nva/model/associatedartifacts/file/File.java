@@ -170,6 +170,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
                                  isAdministrativeAgreement(), isPublisherAuthority(),
                                  getEmbargoDate().orElse(null), Instant.now());
     }
+
     @JacocoGenerated
     public final AdministrativeAgreement toUnpublishableFile() {
         if (isAdministrativeAgreement()) {
