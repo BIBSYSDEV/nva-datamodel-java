@@ -1,8 +1,7 @@
-plugins{
+plugins {
     id 'nvadatamodel.java-conventions'
     id 'nvadatamodel.publish-maven'
 }
-
 
 dependencies {
 
@@ -23,22 +22,12 @@ dependencies {
     compileOnly libs.bundles.jackson
     testImplementation libs.bundles.jackson
 
-    testImplementation project (":nva-datamodel-testutils")
+    testImplementation project(":nva-datamodel-testutils")
     testImplementation libs.bundles.unittesting
-
 
     testImplementation libs.jsonld.java
     testImplementation libs.swagger.core
 
     testImplementation libs.jena.core
     testImplementation libs.jena.arq
-
-
-    testImplementation (libs.bundles.unittesting){
-        exclude group: 'org.yaml', module: 'snakeyaml'
-    }
-    // snakeyaml dependency is messed up and requires exclusion and re-import
-    testImplementation libs.snakeyaml
-
-
 }

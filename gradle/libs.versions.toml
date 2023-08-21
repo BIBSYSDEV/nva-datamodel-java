@@ -11,9 +11,8 @@ javaFakerVersion = { strictly = '1.0.2' }
 slf4jVersion = { strictly = '1.8.0-beta4' }
 apacheCommonsIo = { strictly = '2.11.0' }
 nva-language = { strictly = '1.0' }
-snakeyaml = { strictly = '1.29' }
-zalandoVersion = { strictly = '0.27.1'}
-jena = { strictly = '4.6.1'}
+zalandoVersion = { strictly = '0.27.1' }
+jena = { strictly = '4.6.1' }
 log4j = { strictly = '2.17.2' }
 
 
@@ -25,7 +24,7 @@ nva-commons-core = { group = 'com.github.bibsysdev', name = 'core', version.ref 
 nva-commons-json = { group = 'com.github.bibsysdev', name = 'json', version.ref = 'nvaCommonsVersion' }
 nva-commons-identifiers = { group = 'com.github.bibsysdev', name = 'identifiers', version.ref = 'nvaCommonsVersion' }
 nva-commons-testutils = { group = 'com.github.bibsysdev', name = 'nvatestutils', version.ref = 'nvaCommonsVersion' }
-nva-language = {group = 'com.github.bibsysdev', name = 'nva-language', version.ref = 'nva-language' }
+nva-language = { group = 'com.github.bibsysdev', name = 'nva-language', version.ref = 'nva-language' }
 
 jackson-databind = { group = 'com.fasterxml.jackson.core', name = 'jackson-databind', version.ref = 'jacksonVersion' }
 jackson-annotations = { group = 'com.fasterxml.jackson.core', name = 'jackson-annotations', version.ref = 'jacksonVersion' }
@@ -49,7 +48,6 @@ javers-core = { group = 'org.javers', name = 'javers-core', version.ref = 'javer
 
 javafaker = { group = 'com.github.javafaker', name = 'javafaker', version.ref = 'javaFakerVersion' }
 slf4j = { group = 'org.slf4j', name = 'slf4j-simple', version.ref = 'slf4jVersion' }
-snakeyaml = { group = 'org.yaml', name = 'snakeyaml', version.ref = 'snakeyaml' }
 
 jena-core = { group = 'org.apache.jena', name = 'jena-core', version.ref = 'jena' }
 jena-arq = { group = 'org.apache.jena', name = 'jena-arq', version.ref = 'jena' }

@@ -12,7 +12,9 @@ import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -38,9 +40,8 @@ public class Publication
     implements WithIdentifier, WithInternal, WithAssociatedArtifact, WithMetadata, WithCopy<Publication.Builder> {
 
     public static final Map<PublicationStatus, List<PublicationStatus>> validStatusTransitionsMap = Map.of(
-        PublicationStatus.NEW, List.of(PublicationStatus.DRAFT),
-        PublicationStatus.DRAFT, List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION)
-    );
+        PublicationStatus.NEW, List.of(PublicationStatus.DRAFT), PublicationStatus.DRAFT,
+        List.of(PublicationStatus.PUBLISHED, DRAFT_FOR_DELETION));
 
     private static final String MODEL_VERSION = ResourcesBuildConfig.RESOURCES_MODEL_VERSION;
     private static final String BASE_URI = "__BASE_URI__";
@@ -55,7 +56,7 @@ public class Publication
     private Instant modifiedDate;
     private Instant publishedDate;
     private Instant indexedDate;
-    private URI handle;
+    private final Set<URI> handles = new HashSet<>();
     private URI doi;
     private URI link;
     private EntityDescription entityDescription;
@@ -68,6 +69,16 @@ public class Publication
 
     public Publication() {
         // Default constructor, use setters.
+    }
+
+    @JsonIgnore
+    public static String getJsonLdContext(URI baseUri) {
+        return PUBLICATION_CONTEXT.replace(BASE_URI, baseUri.toString());
+    }
+
+    @JsonIgnore
+    public static String getOntology(URI baseUri) {
+        return ONTOLOGY.replace(BASE_URI, baseUri.toString());
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
@@ -99,13 +110,13 @@ public class Publication
     }
 
     @Override
-    public URI getHandle() {
-        return handle;
+    public Set<URI> getHandles() {
+        return handles;
     }
 
     @Override
-    public void setHandle(URI handle) {
-        this.handle = handle;
+    public void setHandles(Collection<URI> handles) {
+        this.handles.addAll(handles);
     }
 
     @Override
@@ -250,9 +261,7 @@ public class Publication
 
     @Override
     public AssociatedArtifactList getAssociatedArtifacts() {
-        return nonNull(associatedArtifacts)
-                   ? associatedArtifacts
-                   : AssociatedArtifactList.empty();
+        return nonNull(associatedArtifacts) ? associatedArtifacts : AssociatedArtifactList.empty();
     }
 
     @Override
@@ -262,8 +271,7 @@ public class Publication
 
     @Override
     public Builder copy() {
-        return new Builder()
-                   .withIdentifier(getIdentifier())
+        return new Builder().withIdentifier(getIdentifier())
                    .withStatus(getStatus())
                    .withResourceOwner(getResourceOwner())
                    .withPublisher(getPublisher())
@@ -271,7 +279,7 @@ public class Publication
                    .withModifiedDate(getModifiedDate())
                    .withPublishedDate(getPublishedDate())
                    .withIndexedDate(getIndexedDate())
-                   .withHandle(getHandle())
+                   .withHandles(getHandles())
                    .withDoi(getDoi())
                    .withLink(getLink())
                    .withEntityDescription(getEntityDescription())
@@ -297,42 +305,41 @@ public class Publication
 
     @JacocoGenerated
     @Override
-    public int hashCode() {
-        return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
-                    getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
-                    getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
-                    getAssociatedArtifacts(), getRightsHolder());
-    }
-
-    @JacocoGenerated
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Publication)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Publication that = (Publication) o;
-        boolean firstHalf = Objects.equals(getIdentifier(), that.getIdentifier())
-                            && getStatus() == that.getStatus()
-                            && Objects.equals(getResourceOwner(), that.getResourceOwner())
-                            && Objects.equals(getPublisher(), that.getPublisher())
-                            && Objects.equals(getCreatedDate(), that.getCreatedDate())
-                            && Objects.equals(getModifiedDate(), that.getModifiedDate())
-                            && Objects.equals(getPublishedDate(), that.getPublishedDate());
-        boolean secondHalf = Objects.equals(getIndexedDate(), that.getIndexedDate())
-                             && Objects.equals(getHandle(), that.getHandle())
-                             && Objects.equals(getDoi(), that.getDoi())
-                             && Objects.equals(getLink(), that.getLink())
-                             && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                             && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
-                             && Objects.equals(getProjects(), that.getProjects())
-                             && Objects.equals(getFundings(), that.getFundings())
-                             && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
-                             && Objects.equals(getSubjects(), that.getSubjects())
-                             && Objects.equals(getRightsHolder(), that.getRightsHolder());
-        return firstHalf && secondHalf;
+        return Objects.equals(getIdentifier(), that.getIdentifier())
+               && getStatus() == that.getStatus()
+               && Objects.equals(getResourceOwner(), that.getResourceOwner())
+               && Objects.equals(getPublisher(), that.getPublisher())
+               && Objects.equals(getCreatedDate(), that.getCreatedDate())
+               && Objects.equals(getModifiedDate(), that.getModifiedDate())
+               && Objects.equals(getPublishedDate(), that.getPublishedDate())
+               && Objects.equals(getIndexedDate(), that.getIndexedDate())
+               && Objects.equals(getHandles(), that.getHandles())
+               && Objects.equals(getDoi(), that.getDoi())
+               && Objects.equals(getLink(), that.getLink())
+               && Objects.equals(getEntityDescription(), that.getEntityDescription())
+               && Objects.equals(getProjects(), that.getProjects())
+               && Objects.equals(getFundings(), that.getFundings())
+               && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
+               && Objects.equals(getSubjects(), that.getSubjects())
+               && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
+               && Objects.equals(getRightsHolder(), that.getRightsHolder());
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return hash(getIdentifier(), getStatus(), getResourceOwner(), getPublisher(), getCreatedDate(),
+                    getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandles(), getDoi(), getLink(),
+                    getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
+                    getAssociatedArtifacts(), getRightsHolder());
     }
 
     @Override
@@ -344,16 +351,6 @@ public class Publication
     @Deprecated
     public String getJsonLdContext() {
         return stringFromResources(Path.of("publicationContextDeprecated.json"));
-    }
-
-    @JsonIgnore
-    public static String getJsonLdContext(URI baseUri) {
-        return PUBLICATION_CONTEXT.replace(BASE_URI, baseUri.toString());
-    }
-
-    @JsonIgnore
-    public static String getOntology(URI baseUri) {
-        return ONTOLOGY.replace(BASE_URI, baseUri.toString());
     }
 
     @JsonIgnore
@@ -434,8 +431,14 @@ public class Publication
             return this;
         }
 
-        public Builder withHandle(URI handle) {
-            publication.setHandle(handle);
+        public Builder withHandles(Collection<URI> handles) {
+            this.publication.handles.addAll(handles);
+            return this;
+        }
+
+        @Deprecated
+        public Builder withHandles(URI handle) {
+            this.publication.handles.add(handle);
             return this;
         }
 

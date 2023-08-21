@@ -75,6 +75,11 @@
   "handle": {
     "@type": "@id"
   },
+  "handles": {
+    "@type": "@id",
+    "@id": "handle",
+    "@container": "@set"
+  },
   "indexedDate": {
     "@type": "xsd:dateTime"
   },

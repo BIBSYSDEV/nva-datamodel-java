@@ -35,10 +35,14 @@ schema:
       type: string
       format: date-time
       example: null
-    handle:
-      type: string
-      format: uri
+    handles:
+      uniqueItems: true
+      type: array
       example: null
+      items:
+        type: string
+        format: uri
+        example: null
     doi:
       type: string
       format: uri
@@ -75,10 +79,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        publishable:
+        empty:
           type: boolean
           example: null
-        empty:
+        publishable:
           type: boolean
           example: null
       example: null
@@ -418,10 +422,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      publishable:
+      empty:
         type: boolean
         example: null
-      empty:
+      publishable:
         type: boolean
         example: null
     example: null
@@ -1496,15 +1500,8 @@ referencedSchemas:
     - type
     type: object
     properties:
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
-      activeFrom:
+      identifier:
         type: string
-        format: date-time
-        example: null
-      activeTo:
-        type: string
-        format: date-time
         example: null
       source:
         type: string
@@ -1516,8 +1513,15 @@ referencedSchemas:
           type: string
           example: null
         example: null
-      identifier:
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
+      activeFrom:
         type: string
+        format: date-time
+        example: null
+      activeTo:
+        type: string
+        format: date-time
         example: null
       type:
         type: string
@@ -2956,10 +2960,14 @@ referencedSchemas:
         type: string
         format: date-time
         example: null
-      handle:
-        type: string
-        format: uri
+      handles:
+        uniqueItems: true
+        type: array
         example: null
+        items:
+          type: string
+          format: uri
+          example: null
       doi:
         type: string
         format: uri
@@ -2996,10 +3004,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          publishable:
+          empty:
             type: boolean
             example: null
-          empty:
+          publishable:
             type: boolean
             example: null
         example: null
