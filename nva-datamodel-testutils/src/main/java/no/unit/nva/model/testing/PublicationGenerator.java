@@ -72,6 +72,7 @@ public final class PublicationGenerator {
         var publication = buildRandomPublicationFromInstance(publicationInstanceClass);
 
         assertThat(publication, doesNotHaveEmptyValues());
+
         return publication;
     }
 
@@ -175,7 +176,7 @@ public final class PublicationGenerator {
                    .withResourceOwner(randomResourceOwner())
                    .withLink(randomUri())
                    .withIndexedDate(randomInstant())
-                   .withHandles(randomUri())
+                   .withHandles(Set.of(randomUri()))
                    .withDoi(randomDoi())
                    .withCreatedDate(randomInstant())
                    .withEntityDescription(randomEntityDescription(publicationInstanceClass))

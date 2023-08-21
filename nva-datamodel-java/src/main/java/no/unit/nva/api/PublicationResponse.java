@@ -8,10 +8,10 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import no.unit.nva.WithAdditionalIdentifiers;
 import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithContext;
@@ -46,7 +46,7 @@ public class PublicationResponse
     private Instant modifiedDate;
     private Instant publishedDate;
     private Instant indexedDate;
-    private Set<URI> handles;
+    private final Set<URI> handles = new HashSet<>();
     private URI link;
     private EntityDescription entityDescription;
     private URI doi;
@@ -121,17 +121,8 @@ public class PublicationResponse
     }
 
     @Override
-    public void setHandles(Object handle) {
-        if (handle instanceof String) {
-            this.handles = Set.of(URI.create(handle.toString()));
-        }
-        if (handle instanceof Collection<?>) {
-            var list = (Collection<?>) handle;
-            this.handles = list.stream()
-                              .map(Object::toString)
-                              .map(URI::create)
-                              .collect(Collectors.toSet());
-        }
+    public void setHandles(Collection<URI> handles) {
+        this.handles.addAll(handles);
     }
 
     @Override

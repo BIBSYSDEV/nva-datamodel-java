@@ -2,6 +2,7 @@ package no.unit.nva;
 
 import java.net.URI;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Set;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.Organization;
@@ -20,7 +21,7 @@ public interface WithInternal extends PublicationBase {
 
     Set<URI> getHandles();
 
-    void setHandles(Object handle);
+    void setHandles(Collection<URI> handle);
 
     Instant getPublishedDate();
 

@@ -72,7 +72,11 @@
   "from": {
     "@type": "xsd:dateTime"
   },
+  "handle": {
+    "@type": "@id"
+  },
   "handles": {
+    "@type": "@id",
     "@id": "handle",
     "@container": "@set"
   },

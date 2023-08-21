@@ -14,12 +14,12 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import no.unit.nva.WithAssociatedArtifact;
 import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
@@ -56,7 +56,7 @@ public class Publication
     private Instant modifiedDate;
     private Instant publishedDate;
     private Instant indexedDate;
-    private Set<URI> handles;
+    private final Set<URI> handles = new HashSet<>();
     private URI doi;
     private URI link;
     private EntityDescription entityDescription;
@@ -115,17 +115,8 @@ public class Publication
     }
 
     @Override
-    public void setHandles(Object handle) {
-        if (handle instanceof String) {
-            this.handles = Set.of(URI.create(handle.toString()));
-        }
-        if (handle instanceof Collection<?>) {
-            var list = (Collection<?>) handle;
-            this.handles = list.stream()
-                              .map(Object::toString)
-                              .map(URI::create)
-                              .collect(Collectors.toSet());
-        }
+    public void setHandles(Collection<URI> handles) {
+        this.handles.addAll(handles);
     }
 
     @Override
@@ -314,42 +305,41 @@ public class Publication
 
     @JacocoGenerated
     @Override
-    public int hashCode() {
-        return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
-                    getPublishedDate(), getIndexedDate(), getHandles(), getDoi(), getLink(), getEntityDescription(),
-                    getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(), getAssociatedArtifacts(),
-                    getRightsHolder());
-    }
-
-    @JacocoGenerated
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Publication)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Publication that = (Publication) o;
-        boolean firstHalf = Objects.equals(getIdentifier(), that.getIdentifier())
-                            && getStatus() == that.getStatus()
-                            && Objects.equals(getResourceOwner(), that.getResourceOwner())
-                            && Objects.equals(getPublisher(), that.getPublisher())
-                            && Objects.equals(getCreatedDate(), that.getCreatedDate())
-                            && Objects.equals(getModifiedDate(), that.getModifiedDate())
-                            && Objects.equals(getPublishedDate(), that.getPublishedDate());
-        boolean secondHalf = Objects.equals(getIndexedDate(), that.getIndexedDate())
-                             && Objects.equals(getHandles(), that.getHandles())
-                             && Objects.equals(getDoi(), that.getDoi())
-                             && Objects.equals(getLink(), that.getLink())
-                             && Objects.equals(getEntityDescription(), that.getEntityDescription())
-                             && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
-                             && Objects.equals(getProjects(), that.getProjects())
-                             && Objects.equals(getFundings(), that.getFundings())
-                             && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
-                             && Objects.equals(getSubjects(), that.getSubjects())
-                             && Objects.equals(getRightsHolder(), that.getRightsHolder());
-        return firstHalf && secondHalf;
+        return Objects.equals(getIdentifier(), that.getIdentifier())
+               && getStatus() == that.getStatus()
+               && Objects.equals(getResourceOwner(), that.getResourceOwner())
+               && Objects.equals(getPublisher(), that.getPublisher())
+               && Objects.equals(getCreatedDate(), that.getCreatedDate())
+               && Objects.equals(getModifiedDate(), that.getModifiedDate())
+               && Objects.equals(getPublishedDate(), that.getPublishedDate())
+               && Objects.equals(getIndexedDate(), that.getIndexedDate())
+               && Objects.equals(getHandles(), that.getHandles())
+               && Objects.equals(getDoi(), that.getDoi())
+               && Objects.equals(getLink(), that.getLink())
+               && Objects.equals(getEntityDescription(), that.getEntityDescription())
+               && Objects.equals(getProjects(), that.getProjects())
+               && Objects.equals(getFundings(), that.getFundings())
+               && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
+               && Objects.equals(getSubjects(), that.getSubjects())
+               && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
+               && Objects.equals(getRightsHolder(), that.getRightsHolder());
+    }
+
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return hash(getIdentifier(), getStatus(), getResourceOwner(), getPublisher(), getCreatedDate(),
+                    getModifiedDate(), getPublishedDate(), getIndexedDate(), getHandles(), getDoi(), getLink(),
+                    getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
+                    getAssociatedArtifacts(), getRightsHolder());
     }
 
     @Override
@@ -441,16 +431,14 @@ public class Publication
             return this;
         }
 
-        public Builder withHandles(Object handle) {
-            if (handle instanceof Collection<?>) {
-                var list = (Collection<?>) handle;
-                var handles = list.stream().map(item -> (URI) item).collect(Collectors.toList());
-                publication.setHandles(handles);
-            }
-            if (handle instanceof URI) {
-                var handles = List.of((URI) handle);
-                publication.setHandles(handles);
-            }
+        public Builder withHandles(Collection<URI> handles) {
+            this.publication.handles.addAll(handles);
+            return this;
+        }
+
+        @Deprecated
+        public Builder withHandles(URI handle) {
+            this.publication.handles.add(handle);
             return this;
         }
 

@@ -4,18 +4,23 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+@Deprecated
 public class MigrateHandleToHandleListTest {
 
-    public static Stream<String> publicationWithHandles() {
-        return Stream.of(generatePublicationWithHandle(), generatePublicationWithListOfHandles());
+    public static Stream<Named<String>> publicationWithHandles() {
+        return Stream.of(Named.of("Single handle", generatePublicationWithHandle()),
+                                  Named.of("List of handles", generatePublicationWithListOfHandles()));
     }
 
-    @ParameterizedTest(name = "should accept handle and handle list")
+    @DisplayName("Should accept handles")
+    @ParameterizedTest()
     @MethodSource("publicationWithHandles")
-    void shouldMigrateLicense(String publication) {
+    void shouldMigrateHandle(String publication) {
         assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(publication, Publication.class));
     }
 
@@ -384,7 +389,7 @@ public class MigrateHandleToHandleListTest {
                + "  \"createdDate\" : \"2022-03-21T14:54:39Z\",\n"
                + "  \"modifiedDate\" : \"2023-07-27T08:03:28.781096Z\",\n"
                + "  \"publishedDate\" : \"2022-03-21T14:54:39Z\",\n"
-               + "  \"handle\" : [\"https://hdl.handle.net/11250/3008547\", \"https://hdl.handle.net/11250/12345\"],\n"
+               + "  \"handles\" : [\"https://hdl.handle.net/11250/3008547\", \"https://hdl.handle.net/11250/12345\"],\n"
                + "  \"entityDescription\" : {\n"
                + "    \"type\" : \"EntityDescription\",\n"
                + "    \"mainTitle\" : \"Tracking of cardiometabolic risk in a Brazilian schoolchildren cohort: A "
