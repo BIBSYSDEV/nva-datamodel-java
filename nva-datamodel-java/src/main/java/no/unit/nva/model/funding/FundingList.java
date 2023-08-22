@@ -13,9 +13,7 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
-import nva.commons.core.JacocoGenerated;
 
-@JacocoGenerated
 public class FundingList implements List<Funding> {
 
     private final List<Funding> fundings;

@@ -1,7 +1,6 @@
 package no.unit.nva.model.contexttypes.media;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import nva.commons.core.JacocoGenerated;
 
 public enum MediaFormat {
     TEXT("Text"),
@@ -19,7 +18,6 @@ public enum MediaFormat {
         return value;
     }
 
-    @JacocoGenerated
     public void setValue(String value) {
         this.value = value;
     }

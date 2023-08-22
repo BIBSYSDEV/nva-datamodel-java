@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 
-import nva.commons.core.JacocoGenerated;
 import nva.commons.core.SingletonCollector;
 
 public enum MediaSubTypeEnum {
@@ -42,7 +41,6 @@ public enum MediaSubTypeEnum {
         return value;
     }
 
-    @JacocoGenerated
     public void setValue(String value) {
         this.value = value;
     }

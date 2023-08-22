@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -19,7 +18,6 @@ public interface Time {
     String UNIVERSAL_TIMEZONE = "Z";
     String ZEROED_MILLISECONDS_IN_TZ = ".000000Z";
 
-    @JacocoGenerated
     @Deprecated
     static java.time.Instant parseLocalDate(String candidate) {
         return LocalDateTime.parse(candidate)

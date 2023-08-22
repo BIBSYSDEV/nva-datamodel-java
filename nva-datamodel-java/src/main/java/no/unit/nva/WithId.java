@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import no.unit.nva.identifiers.SortableIdentifier;
 import nva.commons.core.Environment;
-import nva.commons.core.JacocoGenerated;
 import nva.commons.core.paths.UriWrapper;
 
 public interface WithId {
@@ -17,7 +16,6 @@ public interface WithId {
         return toId(getIdentifier());
     }
 
-    @JacocoGenerated
     default void setId(URI id) {
         // do nothing
     }

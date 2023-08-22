@@ -44,85 +44,71 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
         return associatedArtifacts.isEmpty();
     }
 
-    @JacocoGenerated
     @Override
     public boolean contains(Object o) {
         return associatedArtifacts.contains(o);
     }
 
-    @JacocoGenerated
     @Override
     public Iterator<AssociatedArtifact> iterator() {
         return associatedArtifacts.iterator();
     }
 
-    @JacocoGenerated
     @Override
     public Object[] toArray() {
         return associatedArtifacts.toArray();
     }
 
-    @JacocoGenerated
     @Override
     public <T> T[] toArray(T[] a) {
         return associatedArtifacts.toArray(a);
     }
 
-    @JacocoGenerated
     @Override
     public boolean add(AssociatedArtifact associatedArtifact) {
         return associatedArtifacts.add(associatedArtifact);
     }
 
-    @JacocoGenerated
     @Override
     public void add(int index, AssociatedArtifact element) {
         associatedArtifacts.add(index, element);
     }
 
-    @JacocoGenerated
     @Override
     public boolean remove(Object o) {
         return associatedArtifacts.remove(o);
     }
 
-    @JacocoGenerated
     @Override
     public AssociatedArtifact remove(int index) {
         return associatedArtifacts.remove(index);
     }
 
-    @JacocoGenerated
     @Override
     public boolean containsAll(Collection<?> c) {
         return associatedArtifacts.containsAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean addAll(Collection<? extends AssociatedArtifact> c) {
         return associatedArtifacts.addAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean addAll(int index, Collection<? extends AssociatedArtifact> c) {
         return associatedArtifacts.addAll(index, c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean removeAll(Collection<?> c) {
         return associatedArtifacts.removeAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean retainAll(Collection<?> c) {
         return associatedArtifacts.retainAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public void clear() {
         associatedArtifacts.clear();
@@ -140,25 +126,21 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
         return Objects.hash(associatedArtifacts);
     }
 
-    @JacocoGenerated
     @Override
     public AssociatedArtifact get(int index) {
         return associatedArtifacts.get(index);
     }
 
-    @JacocoGenerated
     @Override
     public AssociatedArtifact set(int index, AssociatedArtifact element) {
         return associatedArtifacts.set(index, element);
     }
 
-    @JacocoGenerated
     @Override
     public int indexOf(Object o) {
         return associatedArtifacts.indexOf(o);
     }
 
-    @JacocoGenerated
     @Override
     public int lastIndexOf(Object o) {
         return associatedArtifacts.lastIndexOf(o);
@@ -169,13 +151,11 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
         return associatedArtifacts.listIterator();
     }
 
-    @JacocoGenerated
     @Override
     public ListIterator<AssociatedArtifact> listIterator(int index) {
         return associatedArtifacts.listIterator(index);
     }
 
-    @JacocoGenerated
     @Override
     public List<AssociatedArtifact> subList(int fromIndex, int toIndex) {
         return associatedArtifacts.subList(fromIndex, toIndex);

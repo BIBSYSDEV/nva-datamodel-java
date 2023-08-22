@@ -6,9 +6,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.UUID;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
-import nva.commons.core.JacocoGenerated;
 
-@JacocoGenerated
 public final class PublishedFileGenerator {
 
     private PublishedFileGenerator() {

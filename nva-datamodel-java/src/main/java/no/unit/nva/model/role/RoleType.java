@@ -21,14 +21,12 @@ public class RoleType {
         return new RoleTypeOther(Role.OTHER, description);
     }
 
-    @JacocoGenerated
     @JsonCreator
     public RoleType fromJson(@JsonProperty(TYPE_FIELD) Role type,
                              @JsonProperty(DESCRIPTION_FIELD) String description) {
         return Role.OTHER.equals(type) ? createOther(description) : new RoleType(type);
     }
 
-    @JacocoGenerated
     @Deprecated
     @JsonCreator
     public RoleType create(Role type) {

@@ -10,7 +10,6 @@ import no.unit.nva.model.exceptions.InvalidIssnException;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.StringUtils;
 
-@JacocoGenerated
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class UnconfirmedSeries implements BookSeries {
 

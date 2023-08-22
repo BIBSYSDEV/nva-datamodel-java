@@ -11,7 +11,6 @@ public class ExhibitionProductionSubtypeOther extends ExhibitionProductionSubtyp
     public static final String DESCRIPTION_FIELD = "description";
     private final String description;
 
-    @JacocoGenerated
     @JsonCreator
     public ExhibitionProductionSubtypeOther(@JsonProperty(TYPE_FIELD) ExhibitionProductionSubtypeEnum type,
                                             @JsonProperty(DESCRIPTION_FIELD) String description) {
@@ -19,7 +18,6 @@ public class ExhibitionProductionSubtypeOther extends ExhibitionProductionSubtyp
         this.description = description;
     }
 
-    @JacocoGenerated
     public String getDescription() {
         return description;
     }

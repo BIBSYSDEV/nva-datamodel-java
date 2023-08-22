@@ -2,7 +2,6 @@ package no.unit.nva.model.instancetypes.exhibition;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import nva.commons.core.JacocoGenerated;
 import nva.commons.core.SingletonCollector;
 
 import java.util.Arrays;
@@ -46,13 +45,11 @@ public enum ExhibitionProductionSubtypeEnum {
                 .orElseThrow(failure -> getFailure());
     }
 
-    @JacocoGenerated
     private static RuntimeException getFailure() {
         return new RuntimeException("Could not parse ExhibitionProductionSubtype, allowed values: "
                 + getValuesString());
     }
 
-    @JacocoGenerated
     private static String getValuesString() {
         return Arrays.stream(values())
                 .map(ExhibitionProductionSubtypeEnum::getType)

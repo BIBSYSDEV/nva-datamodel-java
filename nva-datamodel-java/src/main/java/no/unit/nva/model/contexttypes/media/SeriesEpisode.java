@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.util.Objects;
-import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class SeriesEpisode {
@@ -31,7 +30,6 @@ public class SeriesEpisode {
         return seriesPart;
     }
 
-    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -45,7 +43,6 @@ public class SeriesEpisode {
                 && Objects.equals(getSeriesPart(), that.getSeriesPart());
     }
 
-    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getSeriesName(), getSeriesPart());

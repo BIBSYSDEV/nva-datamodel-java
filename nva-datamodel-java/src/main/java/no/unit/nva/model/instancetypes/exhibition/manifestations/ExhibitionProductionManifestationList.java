@@ -28,7 +28,6 @@ public class ExhibitionProductionManifestationList implements List<ExhibitionPro
         return manifestations.isEmpty();
     }
 
-    @JacocoGenerated
     @Override
     public boolean contains(Object o) {
         return manifestations.contains(o);
@@ -39,115 +38,96 @@ public class ExhibitionProductionManifestationList implements List<ExhibitionPro
         return manifestations.iterator();
     }
 
-    @JacocoGenerated
     @Override
     public Object[] toArray() {
         return manifestations.toArray();
     }
 
-    @JacocoGenerated
     @Override
     public <T> T[] toArray(T[] a) {
         return manifestations.toArray(a);
     }
 
-    @JacocoGenerated
     @Override
     public boolean add(ExhibitionProductionManifestation manifestation) {
         return manifestations.add(manifestation);
     }
 
-    @JacocoGenerated
     @Override
     public void add(int index, ExhibitionProductionManifestation element) {
         manifestations.add(index, element);
     }
 
-    @JacocoGenerated
     @Override
     public boolean remove(Object o) {
         return manifestations.remove(o);
     }
 
-    @JacocoGenerated
     @Override
     public ExhibitionProductionManifestation remove(int index) {
         return manifestations.remove(index);
     }
 
-    @JacocoGenerated
     @Override
     public boolean containsAll(Collection<?> c) {
         return manifestations.containsAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean addAll(Collection<? extends ExhibitionProductionManifestation> c) {
         return manifestations.addAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean addAll(int index, Collection<? extends ExhibitionProductionManifestation> c) {
         return manifestations.addAll(index, c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean removeAll(Collection<?> c) {
         return manifestations.removeAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean retainAll(Collection<?> c) {
         return manifestations.retainAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public void clear() {
         manifestations.clear();
     }
 
-    @JacocoGenerated
     @Override
     public ExhibitionProductionManifestation get(int index) {
         return manifestations.get(index);
     }
 
-    @JacocoGenerated
     @Override
     public ExhibitionProductionManifestation set(int index, ExhibitionProductionManifestation element) {
         return manifestations.set(index, element);
     }
 
-    @JacocoGenerated
     @Override
     public int indexOf(Object o) {
         return manifestations.indexOf(o);
     }
 
-    @JacocoGenerated
     @Override
     public int lastIndexOf(Object o) {
         return manifestations.lastIndexOf(o);
     }
 
-    @JacocoGenerated
     @Override
     public ListIterator<ExhibitionProductionManifestation> listIterator() {
         return manifestations.listIterator();
     }
 
-    @JacocoGenerated
     @Override
     public ListIterator<ExhibitionProductionManifestation> listIterator(int index) {
         return manifestations.listIterator(index);
     }
 
-    @JacocoGenerated
     @Override
     public List<ExhibitionProductionManifestation> subList(int fromIndex, int toIndex) {
         return manifestations.subList(fromIndex, toIndex);

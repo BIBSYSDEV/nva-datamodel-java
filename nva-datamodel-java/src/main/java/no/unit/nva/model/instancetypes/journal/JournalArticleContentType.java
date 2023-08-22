@@ -5,7 +5,6 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import nva.commons.core.JacocoGenerated;
 
 @Deprecated
 public enum JournalArticleContentType {
@@ -50,7 +49,6 @@ public enum JournalArticleContentType {
                || nameType.getDeprecatedValue().equalsIgnoreCase(value);
     }
 
-    @JacocoGenerated
     private static String createErrorMessage(String value) {
         return format(ERROR_MESSAGE_TEMPLATE, value, stream(JournalArticleContentType.values())
             .map(JournalArticleContentType::toString).collect(joining(DELIMITER)));

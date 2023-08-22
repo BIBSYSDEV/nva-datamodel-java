@@ -25,7 +25,6 @@ public class License {
         setLink(builder.link);
     }
 
-    @JacocoGenerated
     public String getIdentifier() {
         return identifier;
     }

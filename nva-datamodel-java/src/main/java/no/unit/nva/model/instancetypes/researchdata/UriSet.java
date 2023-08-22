@@ -16,19 +16,16 @@ public abstract class UriSet implements Set<URI> {
         this.uris = uris;
     }
 
-    @JacocoGenerated
     @Override
     public int size() {
         return uris.size();
     }
 
-    @JacocoGenerated
     @Override
     public boolean isEmpty() {
         return uris.isEmpty();
     }
 
-    @JacocoGenerated
     @Override
     public boolean contains(Object o) {
         return uris.contains(o);
@@ -39,55 +36,46 @@ public abstract class UriSet implements Set<URI> {
         return uris.iterator();
     }
 
-    @JacocoGenerated
     @Override
     public Object[] toArray() {
         return uris.toArray();
     }
 
-    @JacocoGenerated
     @Override
     public <T> T[] toArray(T[] a) {
         return uris.toArray(a);
     }
 
-    @JacocoGenerated
     @Override
     public boolean add(URI uri) {
         return uris.add(uri);
     }
 
-    @JacocoGenerated
     @Override
     public boolean remove(Object o) {
         return uris.remove(o);
     }
 
-    @JacocoGenerated
     @Override
     public boolean containsAll(Collection<?> c) {
         return uris.containsAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean addAll(Collection<? extends URI> c) {
         return uris.addAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean retainAll(Collection<?> c) {
         return uris.retainAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public boolean removeAll(Collection<?> c) {
         return uris.removeAll(c);
     }
 
-    @JacocoGenerated
     @Override
     public void clear() {
         uris.clear();
