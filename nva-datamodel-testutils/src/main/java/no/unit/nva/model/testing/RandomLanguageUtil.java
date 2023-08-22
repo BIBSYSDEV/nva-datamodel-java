@@ -14,25 +14,23 @@ public final class RandomLanguageUtil {
 
     public static final Set<Language> unused = Set.of(LanguageConstants.NORWEGIAN, LanguageConstants.MISCELLANEOUS);
 
+    private RandomLanguageUtil() {
+    }
+
     public static String randomBcp47CompatibleLanguage() {
         var languages = getLanguageStream()
-                .map(Language::getIso6391Code)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                            .map(Language::getIso6391Code)
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toList());
         return randomElement(languages);
     }
 
     public static URI randomLexvoUri() {
-        return getLanguageStream()
-                .map(Language::getLexvoUri)
-                .filter(Objects::nonNull)
-                .findAny()
-                .orElseThrow();
+        return getLanguageStream().map(Language::getLexvoUri).filter(Objects::nonNull).findAny().orElseThrow();
     }
 
     private static Stream<Language> getLanguageStream() {
-        return LanguageConstants.ALL_LANGUAGES.stream()
-                .filter(RandomLanguageUtil::isUsedLanguageInNva);
+        return LanguageConstants.ALL_LANGUAGES.stream().filter(RandomLanguageUtil::isUsedLanguageInNva);
     }
 
     private static boolean isUsedLanguageInNva(Language f) {

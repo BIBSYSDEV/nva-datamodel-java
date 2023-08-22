@@ -23,11 +23,13 @@ public class ResourceOwner {
         this.ownerAffiliation = ownerAffiliation;
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(getOwner(), getOwnerAffiliation());
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -1,5 +1,6 @@
 package no.unit.nva.model.exceptions;
 
+
 public class InvalidUnconfirmedSeriesException extends Exception {
 
     public static final String ERROR_MESSAGE = "The series defines a seriesTitle string and an unconfirmed "

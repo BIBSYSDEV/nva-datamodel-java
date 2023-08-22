@@ -4,6 +4,7 @@ import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import com.fasterxml.jackson.annotation.JsonValue;
+import nva.commons.core.JacocoGenerated;
 
 public enum PublicationStatus {
 
@@ -27,6 +28,7 @@ public enum PublicationStatus {
         return value;
     }
 
+    @JacocoGenerated
     public void setValue(String value) {
         this.value = value;
     }
@@ -39,11 +41,11 @@ public enum PublicationStatus {
      */
     public static PublicationStatus lookup(String value) {
         return stream(values())
-                .filter(publicationStatus -> publicationStatus.getValue().equalsIgnoreCase(value))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        format(ERROR_MESSAGE_TEMPLATE, value, stream(PublicationStatus.values())
-                                .map(PublicationStatus::toString).collect(joining(DELIMITER)))));
+                   .filter(publicationStatus -> publicationStatus.getValue().equalsIgnoreCase(value))
+                   .findAny()
+                   .orElseThrow(() -> new IllegalArgumentException(
+                       format(ERROR_MESSAGE_TEMPLATE, value,
+                              stream(PublicationStatus.values())
+                                  .map(PublicationStatus::toString).collect(joining(DELIMITER)))));
     }
-
 }

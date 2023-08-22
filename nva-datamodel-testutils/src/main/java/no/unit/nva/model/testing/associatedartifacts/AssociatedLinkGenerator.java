@@ -6,6 +6,7 @@ import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 
 public final class AssociatedLinkGenerator {
+
     private AssociatedLinkGenerator() {
         super();
     }

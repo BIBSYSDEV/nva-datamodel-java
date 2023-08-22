@@ -35,10 +35,11 @@ public enum NameType {
      */
     public static NameType lookup(String value) {
         return stream(values())
-                .filter(nameType -> nameType.getValue().equalsIgnoreCase(value))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        format(ERROR_MESSAGE_TEMPLATE, value, stream(NameType.values())
-                                .map(NameType::toString).collect(joining(DELIMITER)))));
+                   .filter(nameType -> nameType.getValue().equalsIgnoreCase(value))
+                   .findAny()
+                   .orElseThrow(() -> new IllegalArgumentException(
+                       format(ERROR_MESSAGE_TEMPLATE, value,
+                              stream(NameType.values())
+                                  .map(NameType::toString).collect(joining(DELIMITER)))));
     }
 }

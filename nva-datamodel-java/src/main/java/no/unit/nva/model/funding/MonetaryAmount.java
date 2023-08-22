@@ -3,6 +3,7 @@ package no.unit.nva.model.funding;
 import no.unit.nva.model.Currency;
 
 import java.util.Objects;
+import nva.commons.core.JacocoGenerated;
 
 public class MonetaryAmount {
     private Currency currency;
@@ -27,6 +28,7 @@ public class MonetaryAmount {
         this.amount = amount;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -39,6 +41,7 @@ public class MonetaryAmount {
         return amount == that.amount && currency == that.currency;
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return Objects.hash(currency, amount);

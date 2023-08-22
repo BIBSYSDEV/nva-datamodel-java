@@ -43,27 +43,27 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public boolean isEmpty() {
         return associatedArtifacts.isEmpty();
     }
-    
+
     @Override
     public boolean contains(Object o) {
         return associatedArtifacts.contains(o);
     }
-    
+
     @Override
     public Iterator<AssociatedArtifact> iterator() {
         return associatedArtifacts.iterator();
     }
-    
+
     @Override
     public Object[] toArray() {
         return associatedArtifacts.toArray();
     }
-    
+
     @Override
     public <T> T[] toArray(T[] a) {
         return associatedArtifacts.toArray(a);
     }
-    
+
     @Override
     public boolean add(AssociatedArtifact associatedArtifact) {
         return associatedArtifacts.add(associatedArtifact);
@@ -88,27 +88,27 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public boolean containsAll(Collection<?> c) {
         return associatedArtifacts.containsAll(c);
     }
-    
+
     @Override
     public boolean addAll(Collection<? extends AssociatedArtifact> c) {
         return associatedArtifacts.addAll(c);
     }
-    
+
     @Override
     public boolean addAll(int index, Collection<? extends AssociatedArtifact> c) {
         return associatedArtifacts.addAll(index, c);
     }
-    
+
     @Override
     public boolean removeAll(Collection<?> c) {
         return associatedArtifacts.removeAll(c);
     }
-    
+
     @Override
     public boolean retainAll(Collection<?> c) {
         return associatedArtifacts.retainAll(c);
     }
-    
+
     @Override
     public void clear() {
         associatedArtifacts.clear();
@@ -130,7 +130,7 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public AssociatedArtifact get(int index) {
         return associatedArtifacts.get(index);
     }
-    
+
     @Override
     public AssociatedArtifact set(int index, AssociatedArtifact element) {
         return associatedArtifacts.set(index, element);
@@ -140,7 +140,7 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public int indexOf(Object o) {
         return associatedArtifacts.indexOf(o);
     }
-    
+
     @Override
     public int lastIndexOf(Object o) {
         return associatedArtifacts.lastIndexOf(o);
@@ -150,12 +150,12 @@ public class AssociatedArtifactList implements List<AssociatedArtifact> {
     public ListIterator<AssociatedArtifact> listIterator() {
         return associatedArtifacts.listIterator();
     }
-    
+
     @Override
     public ListIterator<AssociatedArtifact> listIterator(int index) {
         return associatedArtifacts.listIterator(index);
     }
-    
+
     @Override
     public List<AssociatedArtifact> subList(int fromIndex, int toIndex) {
         return associatedArtifacts.subList(fromIndex, toIndex);

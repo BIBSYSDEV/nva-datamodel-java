@@ -3,6 +3,7 @@ package no.unit.nva.model.associatedartifacts;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import nva.commons.core.JacocoGenerated;
 
 /**
  * This class represents a state for publications that do not and cannot have
@@ -19,11 +20,13 @@ public class NullAssociatedArtifact implements AssociatedArtifact {
         // NO-OP
     }
 
+    @JacocoGenerated
     @Override
     public int hashCode() {
         return STATIC_VALUE_FOR_HASH_CODE;
     }
 
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {

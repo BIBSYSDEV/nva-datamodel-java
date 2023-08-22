@@ -89,8 +89,8 @@ public class AssociatedLink implements AssociatedArtifact {
         @JsonCreator
         public RelationType lookup(String candidate) {
             return Arrays.stream(RelationType.values())
-                .filter(item -> item.getType().equals(candidate))
-                .collect(SingletonCollector.collect());
+                       .filter(item -> item.getType().equals(candidate))
+                       .collect(SingletonCollector.collect());
         }
     }
 }
