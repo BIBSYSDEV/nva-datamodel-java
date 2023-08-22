@@ -44,7 +44,8 @@ public enum PublicationStatus {
                    .filter(publicationStatus -> publicationStatus.getValue().equalsIgnoreCase(value))
                    .findAny()
                    .orElseThrow(() -> new IllegalArgumentException(
-                       format(ERROR_MESSAGE_TEMPLATE, value, stream(PublicationStatus.values())
-                                                                 .map(PublicationStatus::toString).collect(joining(DELIMITER)))));
+                       format(ERROR_MESSAGE_TEMPLATE, value,
+                              stream(PublicationStatus.values())
+                                  .map(PublicationStatus::toString).collect(joining(DELIMITER)))));
     }
 }
