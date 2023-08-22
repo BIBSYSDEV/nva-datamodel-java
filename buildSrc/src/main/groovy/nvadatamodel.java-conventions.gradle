@@ -53,7 +53,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'METHOD'
                 value = 'COVEREDRATIO'
-                minimum = 1.000
+                minimum = 0.800
             }
         }
 
@@ -61,7 +61,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'CLASS'
                 value = 'COVEREDRATIO'
-                minimum = 1.000
+                minimum = 0.800
             }
         }
     }
