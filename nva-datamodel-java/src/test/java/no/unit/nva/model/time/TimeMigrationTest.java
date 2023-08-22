@@ -7,19 +7,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
+@SuppressWarnings({"checkstyle:*"})
 @Deprecated
 class TimeMigrationTest {
 
     @ParameterizedTest(name = "Should accept value {0}")
-    @ValueSource(strings = {"{\"type\": \"Instant\", \"value\": \"2022-03-23T00:00:00\"}",
-            "{\n"
+    @ValueSource(strings = {"{\"type\": \"Instant\", \"value\": \"2022-03-23T00:00:00\"}{\n"
                     + "  \"type\": \"Period\",\n"
                     + "  \"from\": \"2022-03-23T00:00:00\",\n"
                     + "  \"to\": \"2022-03-23T00:00:00\"\n"
-                    + "}",
-            "{\"type\": \"Instant\", \"value\": \"2022-03-23T00:00:00.000000Z\"}",
-            "{\n"
-                    + "  \"type\": \"Period\",\n"
+                    + "}", "{\"type\": \"Instant\", \"value\": \"2022-03-23T00:00:00.000000Z\"}"
+                    + "{\n\"type\": \"Period\",\n"
                     + "  \"from\": \"2022-03-23T00:00:00.000000Z\",\n"
                     + "  \"to\": \"2022-03-23T00:00:00.000000Z\"\n"
                     + "}"

@@ -19,6 +19,7 @@ public class MusicMediaSubtype {
         return new MusicMediaSubtypeOther(MusicMediaType.OTHER, description);
     }
 
+    @JacocoGenerated
     @JsonCreator
     public static MusicMediaSubtype fromJson(@JsonProperty(TYPE_FIELD) MusicMediaType type,
                                              @JsonProperty(DESCRIPTION_FIELD) String description) {

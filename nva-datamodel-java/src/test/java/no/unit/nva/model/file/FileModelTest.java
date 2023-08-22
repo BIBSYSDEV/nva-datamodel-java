@@ -58,14 +58,6 @@ public class FileModelTest {
             unpublishableNotAdministrativeAgreement());
     }
 
-    public static License getCcByLicense() {
-        return new License.Builder()
-                   .withIdentifier(CC_BY)
-                   .withLabels(Map.of(EN, CC_BY_4_0))
-                   .withLink(LICENSE_URI)
-                   .build();
-    }
-
     @ParameterizedTest
     @MethodSource("fileProvider")
     void shouldRoundTripAllFileTypes(File file) throws JsonProcessingException {
@@ -104,6 +96,7 @@ public class FileModelTest {
         var license = new License.Builder()
                           .withIdentifier(CC_BY)
                           .withLink(LICENSE_URI)
+                          .withLabels(null)
                           .build();
         assertThat(license.getLabels(), is(anEmptyMap()));
     }
