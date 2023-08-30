@@ -1,6 +1,7 @@
 package no.unit.nva.model.testing;
 
-import com.github.javafaker.Faker;
+
+import net.datafaker.providers.base.BaseFaker;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Approval;
@@ -37,7 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @JacocoGenerated
 public final class PublicationGenerator {
 
-    private static final Faker FAKER = Faker.instance();
+    private static final BaseFaker FAKER = new BaseFaker();
 
     @JacocoGenerated
     private PublicationGenerator() {
