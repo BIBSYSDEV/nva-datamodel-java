@@ -1,13 +1,13 @@
 [versions]
-junitVersion = { strictly = '5.8.2' }
-jacksonVersion = { strictly = '2.14.1' }
-nvaCommonsVersion = { strictly = '1.28.5' }
+junitVersion = { strictly = '5.9.3' }
+jacksonVersion = { strictly = '2.15.2' }
+nvaCommonsVersion = { strictly = '1.31.7' }
 apacheCommonsValidator = { strictly = '1.7' }
 hamcrestVersion = { strictly = '2.2' }
 jsonldJavaVersion = { strictly = '0.13.0' }
 swaggerCoreVersion = { strictly = '2.1.4' }
 javersVersion = { strictly = '6.2.4' }
-javaFakerVersion = { strictly = '1.0.2' }
+datafaker = { strictly = '1.9.0' }
 slf4jVersion = { strictly = '1.8.0-beta4' }
 apacheCommonsIo = { strictly = '2.11.0' }
 nva-language = { strictly = '1.0' }
@@ -47,7 +47,7 @@ jsonld-java = { group = 'com.github.jsonld-java', name = 'jsonld-java', version.
 swagger-core = { group = 'io.swagger.core.v3', name = 'swagger-core', version.ref = 'swaggerCoreVersion' }
 javers-core = { group = 'org.javers', name = 'javers-core', version.ref = 'javersVersion' }
 
-javafaker = { group = 'com.github.javafaker', name = 'javafaker', version.ref = 'javaFakerVersion' }
+datafaker = { group = 'net.datafaker', name = 'datafaker', version.ref = 'datafaker' }
 slf4j = { group = 'org.slf4j', name = 'slf4j-simple', version.ref = 'slf4jVersion' }
 snakeyaml = { group = 'org.yaml', name = 'snakeyaml', version.ref = 'snakeyaml' }
 
@@ -59,7 +59,7 @@ log4j-api = { group = 'org.apache.logging.log4j', name = 'log4j-api', version.re
 log4j-slf4j18-impl = { group = 'org.apache.logging.log4j', name = 'log4j-slf4j18-impl', version.ref = 'log4j' }
 
 [bundles]
-unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest","javafaker", "javers-core", "nva-commons-testutils","nva-commons-identifiers", "nva-commons-core"]
+unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest","datafaker", "javers-core", "nva-commons-testutils","nva-commons-identifiers", "nva-commons-core"]
 jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
 logging = ['log4j-core', 'log4j-api', 'log4j-slf4j18-impl']
 
