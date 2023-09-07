@@ -157,6 +157,24 @@ class EntityDescriptionTest {
     }
 
     @Test
+    void shouldMaintainContributorSequence() {
+        var entityDescription = randomEntityDescription(JournalReview.class);
+        entityDescription.setContributors(Collections.emptyList());
+
+        var contributor1 = createRandomContributorWithSequence(1);
+        var contributor2 = createRandomContributorWithSequence(2);
+        var contributor3 = createRandomContributorWithSequence(3);
+        var contributor4 = createRandomContributorWithSequence(4);
+
+        entityDescription.setContributors(List.of(contributor1, contributor2, contributor3, contributor4));
+
+        var actual = entityDescription.getContributors();
+        var expected = List.of(contributor1, contributor2, contributor3, contributor4);
+
+        assertThat(actual, is(equalTo(expected)));
+    }
+
+    @Test
     void shouldProvideContributorSequenceAndKeepStableSorting() {
         var entityDescription = randomEntityDescription(JournalReview.class);
         entityDescription.setContributors(Collections.emptyList());
