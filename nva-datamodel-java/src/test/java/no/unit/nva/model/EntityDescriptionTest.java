@@ -102,7 +102,8 @@ class EntityDescriptionTest {
         entityDescription.setContributors(contributors);
 
         var expectedEntityDescription = entityDescription.copy().build();
-        expectedEntityDescription.setContributors(List.of(contributor2, contributor3, contributor4, contributor1expected));
+        var expectedContributors = List.of(contributor2, contributor3, contributor4, contributor1expected);
+        expectedEntityDescription.setContributors(expectedContributors);
 
         assertThat(entityDescription, is(equalTo(expectedEntityDescription)));
     }
