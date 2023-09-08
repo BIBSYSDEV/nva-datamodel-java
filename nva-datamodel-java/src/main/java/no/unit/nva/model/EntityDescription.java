@@ -3,16 +3,14 @@ package no.unit.nva.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import nva.commons.core.JacocoGenerated;
-
 import java.net.URI;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class EntityDescription implements WithCopy<EntityDescription.Builder> {
@@ -104,13 +102,13 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     public void setContributors(List<Contributor> contributors) {
         this.contributors = Objects.nonNull(contributors)
                 ? extractContributors(contributors)
-                : contributors;
+                : List.of();
     }
 
     private List<Contributor> extractContributors(List<Contributor> contributors) {
         var contributorList = contributors.stream()
                 .sorted(Comparator.comparing(Contributor::getSequence, Comparator.nullsLast(Comparator.naturalOrder())))
-                .collect(Collectors.toList());
+                .toList();
 
         updateContributorSequence(contributorList);
 
