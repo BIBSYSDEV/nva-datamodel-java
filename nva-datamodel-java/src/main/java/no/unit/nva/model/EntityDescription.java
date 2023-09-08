@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nva.commons.core.JacocoGenerated;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class EntityDescription implements WithCopy<EntityDescription.Builder> {
@@ -118,14 +118,10 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     }
 
     private void updateContributorSequence(List<Contributor> contributorList) {
-        var updatedContributors = new ArrayList<Contributor>();
-
-        for (var sequenceCounter = 0; sequenceCounter < contributorList.size(); sequenceCounter++) {
-            var contributor = contributorList.get(sequenceCounter);
-            var updatedContributor = updateContributorWithSequence(contributor, sequenceCounter);
-
-            updatedContributors.add(updatedContributor);
-        }
+        List<Contributor> updatedContributors = IntStream.range(0, contributorList.size())
+                .mapToObj(sequenceCounter ->
+                        updateContributorWithSequence(contributorList.get(sequenceCounter), sequenceCounter))
+                .toList();
 
         contributorList.clear();
         contributorList.addAll(updatedContributors);
