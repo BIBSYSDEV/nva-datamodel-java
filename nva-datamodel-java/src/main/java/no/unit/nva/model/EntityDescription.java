@@ -118,7 +118,7 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     }
 
     private void updateContributorSequence(List<Contributor> contributorList) {
-        List<Contributor> updatedContributors = IntStream.range(0, contributorList.size())
+        var updatedContributors = IntStream.range(0, contributorList.size())
                 .mapToObj(sequenceCounter ->
                         updateContributorWithSequence(contributorList.get(sequenceCounter), sequenceCounter))
                 .toList();
