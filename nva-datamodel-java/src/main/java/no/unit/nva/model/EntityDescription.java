@@ -108,7 +108,7 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     private List<Contributor> extractContributors(List<Contributor> contributors) {
         var contributorList = contributors.stream()
               .sorted(Comparator.comparing(Contributor::getSequence, Comparator.nullsLast(Comparator.naturalOrder())))
-              .toList();
+                                  .toList();
 
         return updatedContributorSequence(contributorList);
     }
@@ -198,10 +198,9 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof EntityDescription)) {
+        if (!(o instanceof EntityDescription that)) {
             return false;
         }
-        EntityDescription that = (EntityDescription) o;
         return Objects.equals(getMainTitle(), that.getMainTitle())
                 && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
                 && Objects.equals(getLanguage(), that.getLanguage())
