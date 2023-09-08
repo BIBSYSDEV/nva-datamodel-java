@@ -107,22 +107,17 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
 
     private List<Contributor> extractContributors(List<Contributor> contributors) {
         var contributorList = contributors.stream()
-                .sorted(Comparator.comparing(Contributor::getSequence, Comparator.nullsLast(Comparator.naturalOrder())))
-                .toList();
+              .sorted(Comparator.comparing(Contributor::getSequence, Comparator.nullsLast(Comparator.naturalOrder())))
+              .toList();
 
-        updateContributorSequence(contributorList);
-
-        return contributorList;
+        return updatedContributorSequence(contributorList);
     }
 
-    private void updateContributorSequence(List<Contributor> contributorList) {
-        var updatedContributors = IntStream.range(0, contributorList.size())
+    private List<Contributor> updatedContributorSequence(List<Contributor> contributorList) {
+        return IntStream.range(0, contributorList.size())
                 .mapToObj(sequenceCounter ->
                         updateContributorWithSequence(contributorList.get(sequenceCounter), sequenceCounter))
                 .toList();
-
-        contributorList.clear();
-        contributorList.addAll(updatedContributors);
     }
 
     private static Contributor updateContributorWithSequence(Contributor contributor, int sequenceCounter) {
