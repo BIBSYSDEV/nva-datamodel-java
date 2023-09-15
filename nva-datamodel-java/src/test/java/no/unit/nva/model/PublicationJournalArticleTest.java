@@ -22,8 +22,6 @@ import static org.hamcrest.Matchers.is;
 
 public class PublicationJournalArticleTest extends PublicationTest {
 
-    public static final String HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE = "https://nva.unit.no/publication#mainTitle";
-
     /**
      * Constructor for PublicationJournalArticleTest.
      */
@@ -40,12 +38,13 @@ public class PublicationJournalArticleTest extends PublicationTest {
     void objectMappingOfPublicationClassReturnsSerializedJsonWithJsonLdFrame() throws IOException {
 
         Publication publication = PublicationGenerator.randomPublication();
+        var title = publication.getEntityDescription().getMainTitle();
 
         JsonNode publicationWithContext = toPublicationWithContext(publication);
 
         Object framedPublication = produceFramedPublication(publicationWithContext);
 
-        Assertions.assertTrue(JsonUtils.toString(framedPublication).contains(HTTPS_NVA_UNIT_NO_PUBLICATION_MAIN_TITLE));
+        Assertions.assertTrue(JsonUtils.toString(framedPublication).contains(title));
     }
 
     @DisplayName("Test publications can be serialized/deserialized")
