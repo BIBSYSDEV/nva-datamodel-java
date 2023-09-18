@@ -35,7 +35,7 @@ public class Contributor {
         this.correspondingAuthor = correspondingAuthor;
     }
 
-    private Contributor(Builder builder) {
+    protected Contributor(Builder builder) {
         this(
             builder.identity,
             builder.affiliations,
@@ -156,5 +156,14 @@ public class Contributor {
         public Contributor build() {
             return new Contributor(this);
         }
+    }
+
+    public Builder copy() {
+        return new Builder()
+                .withAffiliations(this.getAffiliations())
+                .withSequence(this.getSequence())
+                .withCorrespondingAuthor(this.isCorrespondingAuthor())
+                .withRole(this.getRole())
+                .withIdentity(this.getIdentity());
     }
 }

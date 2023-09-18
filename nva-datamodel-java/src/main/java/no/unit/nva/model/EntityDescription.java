@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -52,7 +53,6 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
         setMetadataSource(builder.metadataSource);
         setAlternativeAbstracts(builder.alternativeAbstracts);
     }
-
 
 
     public String getMainTitle() {
@@ -101,18 +101,30 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
 
     public void setContributors(List<Contributor> contributors) {
         this.contributors = Objects.nonNull(contributors)
-                                ? contributors.stream().sorted(this::compareContributors).collect(Collectors.toList())
-                                : contributors;
+                ? extractContributors(contributors)
+                : List.of();
     }
 
-    private int compareContributors(Contributor contributor, Contributor otherContributor) {
-        var sequence = contributor.getSequence();
-        var otherSequence = otherContributor.getSequence();
+    private List<Contributor> extractContributors(List<Contributor> contributors) {
+        var contributorList = contributors.stream()
+              .sorted(Comparator.comparing(Contributor::getSequence, Comparator.nullsLast(Comparator.naturalOrder())))
+                                  .toList();
 
-        if (Objects.isNull(sequence) || Objects.isNull(otherSequence)  || sequence.equals(otherSequence)) {
-            return Integer.compare(contributor.hashCode(), otherContributor.hashCode());
-        }
-        return sequence.compareTo(otherSequence);
+        return updatedContributorSequence(contributorList);
+    }
+
+    private List<Contributor> updatedContributorSequence(List<Contributor> contributorList) {
+        return IntStream.range(0, contributorList.size())
+                .mapToObj(sequenceCounter ->
+                        updateContributorWithSequence(contributorList.get(sequenceCounter), sequenceCounter))
+                .toList();
+    }
+
+    private static Contributor updateContributorWithSequence(Contributor contributor, int sequenceCounter) {
+        return contributor
+                .copy()
+                .withSequence(sequenceCounter + 1)
+                .build();
     }
 
     public URI getMetadataSource() {
@@ -167,17 +179,17 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     @Override
     public int hashCode() {
         return Objects.hash(getMainTitle(),
-                            getAlternativeTitles(),
-                            getLanguage(),
-                            getPublicationDate(),
-                            getContributors(),
-                            getAbstract(),
-                            getNpiSubjectHeading(),
-                            getTags(),
-                            getDescription(),
-                            getReference(),
-                            getMetadataSource(),
-                            getAlternativeAbstracts());
+                getAlternativeTitles(),
+                getLanguage(),
+                getPublicationDate(),
+                getContributors(),
+                getAbstract(),
+                getNpiSubjectHeading(),
+                getTags(),
+                getDescription(),
+                getReference(),
+                getMetadataSource(),
+                getAlternativeAbstracts());
     }
 
     @JacocoGenerated
@@ -186,10 +198,9 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof EntityDescription)) {
+        if (!(o instanceof EntityDescription that)) {
             return false;
         }
-        EntityDescription that = (EntityDescription) o;
         return Objects.equals(getMainTitle(), that.getMainTitle())
                 && Objects.equals(getAlternativeTitles(), that.getAlternativeTitles())
                 && Objects.equals(getLanguage(), that.getLanguage())
@@ -207,18 +218,18 @@ public class EntityDescription implements WithCopy<EntityDescription.Builder> {
     @Override
     public Builder copy() {
         return new Builder()
-                   .withMainTitle(getMainTitle())
-                   .withAlternativeTitles(getAlternativeTitles())
-                   .withLanguage(getLanguage())
-                   .withPublicationDate(getPublicationDate())
-                   .withContributors(getContributors())
-                   .withAbstract(getAbstract())
-                   .withAlternativeAbstracts(getAlternativeAbstracts())
-                   .withNpiSubjectHeading(getNpiSubjectHeading())
-                   .withTags(getTags())
-                   .withDescription(getDescription())
-                   .withReference(getReference())
-                   .withMetadataSource(getMetadataSource());
+                .withMainTitle(getMainTitle())
+                .withAlternativeTitles(getAlternativeTitles())
+                .withLanguage(getLanguage())
+                .withPublicationDate(getPublicationDate())
+                .withContributors(getContributors())
+                .withAbstract(getAbstract())
+                .withAlternativeAbstracts(getAlternativeAbstracts())
+                .withNpiSubjectHeading(getNpiSubjectHeading())
+                .withTags(getTags())
+                .withDescription(getDescription())
+                .withReference(getReference())
+                .withMetadataSource(getMetadataSource());
     }
 
     public static final class Builder {
