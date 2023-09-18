@@ -13,15 +13,16 @@ import com.github.bibsysdev.ResourcesBuildConfig;
 import com.github.jsonldjava.core.JsonLdOptions;
 import com.github.jsonldjava.core.JsonLdProcessor;
 import com.github.jsonldjava.utils.JsonUtils;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Path;
 import java.util.Set;
 
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.NullAssociatedArtifact;
 import no.unit.nva.model.testing.PublicationGenerator;
 import no.unit.nva.model.util.ContextUtil;
+import nva.commons.core.ioutils.IoUtils;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
@@ -30,11 +31,11 @@ import org.junit.jupiter.api.Test;
 class PublicationTest {
 
     public static final String PUBLICATION_CONTEXT_JSON = Publication.getJsonLdContext(URI.create("https://localhost"));
-    public static final String PUBLICATION_FRAME_JSON = "src/main/resources/publicationFrame.json";
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final String DOI_REQUEST_FIELD = "doiRequest";
+    public static final String FRAME = IoUtils.stringFromResources(Path.of("publicationFrame.json")).replace(
+        "__REPLACE__", "https://localhost");
 
-    
     @Test
     void getModelVersionReturnsModelVersionDefinedByGradle() {
         Publication samplePublication = PublicationGenerator.randomPublication();
@@ -79,9 +80,9 @@ class PublicationTest {
     }
 
     protected Object produceFramedPublication(JsonNode publicationWithContext) throws IOException {
-        Object input = JsonUtils.fromString(dataModelObjectMapper.writeValueAsString(publicationWithContext));
-        Object frame = JsonUtils.fromInputStream(new FileInputStream(PUBLICATION_FRAME_JSON));
-        JsonLdOptions options = new JsonLdOptions();
+        var input = JsonUtils.fromString(dataModelObjectMapper.writeValueAsString(publicationWithContext));
+        var frame = JsonUtils.fromString(FRAME);
+        var options = new JsonLdOptions();
         options.setOmitGraph(true);
         options.setPruneBlankNodeIdentifiers(true);
         return JsonLdProcessor.frame(input, frame, options);

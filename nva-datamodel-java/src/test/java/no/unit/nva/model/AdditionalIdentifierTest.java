@@ -9,11 +9,12 @@ class AdditionalIdentifierTest {
 
     @Test
     void shouldMigrateSourceStringToSourceName() {
-        var oldStyle = "{\n"
-                       + "  \"type\": \"AdditionalIdentifier\",\n"
-                       + "  \"source\": \"someString\",\n"
-                       + "  \"value\": \"some value\"\n"
-                       + "}";
+        var oldStyle = """
+            {
+              "type": "AdditionalIdentifier",
+              "source": "someString",
+              "value": "some value"
+            }""";
         assertDoesNotThrow(() -> JsonUtils.dtoObjectMapper.readValue(oldStyle, AdditionalIdentifier.class));
     }
 
