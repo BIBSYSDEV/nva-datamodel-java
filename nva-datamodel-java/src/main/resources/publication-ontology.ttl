@@ -402,7 +402,12 @@ nva:AdditionalIdentifier a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Identifier .
-  
+
+nva:PublicationNote a rdfs:Class ;
+  rdfs:comment     "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Publication .
+
 nva:Broadcast a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;

@@ -5,6 +5,8 @@ import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -65,6 +67,8 @@ public class Publication
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
     private String rightsHolder;
+
+    private List<PublicationNote> publicationNotes;
 
     public Publication() {
         // Default constructor, use setters.
@@ -248,6 +252,14 @@ public class Publication
         // NO-OP
     }
 
+    @JsonGetter
+    public List<PublicationNote> getPublicationNotes() {
+        return nonNull(publicationNotes) ? publicationNotes : Collections.emptyList();
+    }
+    public void setPublicationNotes(List<PublicationNote> publicationNotes) {
+        this.publicationNotes = publicationNotes;
+    }
+
     @Override
     public AssociatedArtifactList getAssociatedArtifacts() {
         return nonNull(associatedArtifacts)
@@ -281,7 +293,8 @@ public class Publication
                    .withAssociatedArtifacts(getAssociatedArtifacts())
                    .withSubjects(getSubjects())
                    .withFundings(getFundings())
-                   .withRightsHolder(getRightsHolder());
+                   .withRightsHolder(getRightsHolder())
+                   .withPublicationNotes(getPublicationNotes());
     }
 
     /**
@@ -301,7 +314,7 @@ public class Publication
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
                     getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
-                    getAssociatedArtifacts(), getRightsHolder());
+                    getAssociatedArtifacts(), getRightsHolder(), getPublicationNotes());
     }
 
     @JacocoGenerated
@@ -331,7 +344,8 @@ public class Publication
                              && Objects.equals(getFundings(), that.getFundings())
                              && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                              && Objects.equals(getSubjects(), that.getSubjects())
-                             && Objects.equals(getRightsHolder(), that.getRightsHolder());
+                             && Objects.equals(getRightsHolder(), that.getRightsHolder())
+                             && Objects.equals(getPublicationNotes(), that.getPublicationNotes());
         return firstHalf && secondHalf;
     }
 
@@ -490,6 +504,11 @@ public class Publication
 
         public Builder withRightsHolder(String rightsHolder) {
             this.publication.setRightsHolder(rightsHolder);
+            return this;
+        }
+
+        public Builder withPublicationNotes(List<PublicationNote> publicationNotes) {
+            publication.setPublicationNotes(publicationNotes);
             return this;
         }
     }
