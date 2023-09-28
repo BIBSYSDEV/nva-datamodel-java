@@ -402,7 +402,14 @@ nva:AdditionalIdentifier a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Identifier .
-  
+
+nva:PublicationNote a rdfs:Class ;
+  rdfs:comment     "An historical string containing information pertaining to the Cristin verification process" ;
+  rdfs:isDefinedBy nva: ;
+  rdf:type owl:DeprecatedClass ;
+  owl:deprecated "true"^^xsd:boolean ;
+  rdfs:domain nva:Publication .
+
 nva:Broadcast a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
