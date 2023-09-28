@@ -256,6 +256,7 @@ public class Publication
     public List<PublicationNote> getPublicationNotes() {
         return nonNull(publicationNotes) ? publicationNotes : Collections.emptyList();
     }
+
     public void setPublicationNotes(List<PublicationNote> publicationNotes) {
         this.publicationNotes = publicationNotes;
     }
