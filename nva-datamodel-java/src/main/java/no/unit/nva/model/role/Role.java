@@ -15,10 +15,13 @@ public enum Role {
     ARCHITECTURAL_PLANNER("ArchitecturalPlanner"),
     ARTIST("Artist"),
     ARTISTIC_DIRECTOR("ArtisticDirector"),
+    AUDIO_VISUAL_CONTRIBUTOR("AudioVisualContributor"),
     CHOREOGRAPHER("Choreographer"),
+    COLLABORATION_PARTNER("CollaborationPartner"),
     COMPOSER("Composer"),
     CONDUCTOR("Conductor"),
     CONSULTANT("Consultant"),
+    CONSERVATOR("Conservator"),
     CONTACT_PERSON("ContactPerson"),
     COSTUME_DESIGNER("CostumeDesigner"),
     CREATOR("Creator"),
@@ -35,6 +38,7 @@ public enum Role {
     DRAMATURGE("Dramaturge"),
     EDITOR("Editor"),
     EDITORIAL_BOARD_MEMBER("EditorialBoardMember"),
+    EXHIBITION_DESIGNER("ExhibitionDesigner"),
     FUNDER("Funder"),
     HOSTING_INSTITUTION("HostingInstitution"),
     ILLUSTRATOR("Illustrator"),
@@ -45,6 +49,7 @@ public enum Role {
     LIBRETTIST("Librettist"),
     LIGHT_DESIGNER("LightDesigner"),
     MUSICIAN("Musician"),
+    MUSEUM_EDUCATOR("MuseumEducator"),
     ORGANIZER("Organizer"),
     OTHER("RoleOther"),
     PRODUCER("Producer"),
@@ -55,6 +60,7 @@ public enum Role {
     PROJECT_LEADER("ProjectLeader"),
     PROJECT_MANAGER("ProjectManager"),
     PROJECT_MEMBER("ProjectMember"),
+    REGISTRAR("Registrar"),
     REGISTRATION_AGENCY("RegistrationAgency"),
     REGISTRATION_AUTHORITY("RegistrationAuthority"),
     RELATED_PERSON("RelatedPerson"),
@@ -65,7 +71,6 @@ public enum Role {
     SCREENWRITER("Screenwriter"),
     SOLOIST("Soloist"),
     SOUND_DESIGNER("SoundDesigner"),
-    SPONSOR("Sponsor"),
     SUPERVISOR("Supervisor"),
     TRANSLATOR_ADAPTER("TranslatorAdapter"),
     VFX_SUPERVISOR("VfxSupervisor"),
@@ -98,9 +103,14 @@ public enum Role {
     @JsonCreator
     public static Role parse(String value) {
         // TODO: inline "else" method following migration
-        return "Other".equalsIgnoreCase(value)
+        return isDeprecatedRole(value)
                 ? Role.OTHER
                 : inlineableParseMethod(value);
+    }
+
+    private static boolean isDeprecatedRole(String value) {
+        return "Other".equalsIgnoreCase(value)
+               || "Sponsor".equalsIgnoreCase(value);
     }
 
     private static Role inlineableParseMethod(String value) {
