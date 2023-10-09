@@ -3,7 +3,6 @@ package no.unit.nva.model.contexttypes;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Collections;
@@ -12,7 +11,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import no.unit.nva.model.AdditionalIdentifier;
-import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
@@ -28,6 +26,7 @@ public class Book implements BasicContext {
     public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
     public static final String JSON_PROPERTY_ADDITIONAL_IDENTIFIERS = "additionalIdentifiers";
     public static final String SPACES_AND_HYPHENS_REGEX = "[ -]";
+    public static final String ISBN_SOURCE = "ISBN";
 
     @JsonProperty(JSON_PROPERTY_SERIES)
     private final BookSeries series;
@@ -52,10 +51,10 @@ public class Book implements BasicContext {
         this.series = series;
         this.seriesNumber = seriesNumber;
         this.publisher = publisher;
-        this.isbnList = attempt(() -> extractValidIsbnList(isbnList)).orElse(failure -> List.<String>of());
+        this.isbnList = extractValidIsbnList(isbnList);
         this.additionalIdentifiers = isbnList.stream()
                                          .filter(isbn -> !this.isbnList.contains(isbn))
-                                         .map(isbn -> new AdditionalIdentifier("ISBN", isbn))
+                                         .map(isbn -> new AdditionalIdentifier(ISBN_SOURCE, isbn))
                                          .collect(Collectors.toSet());
     }
 
@@ -114,7 +113,6 @@ public class Book implements BasicContext {
      *
      * @param isbnList List of ISBN candidates.
      * @return List of valid ISBN strings.
-     * @throws InvalidIsbnException If one of the ISBNs is found to be invalid.
      */
     private List<String> extractValidIsbnList(List<String> isbnList) {
         if (isNull(isbnList) || isbnList.isEmpty()) {
@@ -124,7 +122,7 @@ public class Book implements BasicContext {
                    .map(isbn -> isbn.replaceAll(SPACES_AND_HYPHENS_REGEX, ""))
                    .map(ISBN_VALIDATOR::validate)
                    .filter(Objects::nonNull)
-                   .collect(Collectors.toList());
+                   .toList();
     }
 
     public static final class BookBuilder {
