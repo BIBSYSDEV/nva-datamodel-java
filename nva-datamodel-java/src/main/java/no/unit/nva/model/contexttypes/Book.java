@@ -52,10 +52,14 @@ public class Book implements BasicContext {
         this.seriesNumber = seriesNumber;
         this.publisher = publisher;
         this.isbnList = extractValidIsbnList(isbnList);
-        this.additionalIdentifiers = isbnList.stream()
-                                         .filter(isbn -> !this.isbnList.contains(isbn))
-                                         .map(isbn -> new AdditionalIdentifier(ISBN_SOURCE, isbn))
-                                         .collect(Collectors.toSet());
+        this.additionalIdentifiers = nonNull(isbnList) ? extractInvalidIsbn(isbnList) : Set.of();
+    }
+
+    private Set<AdditionalIdentifier> extractInvalidIsbn(List<String> isbnList) {
+        return isbnList.stream()
+                   .filter(isbn -> !this.isbnList.contains(isbn))
+                   .map(isbn -> new AdditionalIdentifier(ISBN_SOURCE, isbn))
+                   .collect(Collectors.toSet());
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
