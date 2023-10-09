@@ -17,15 +17,16 @@ public class Degree extends Book {
                   @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
                   @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                   @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList)
-            throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
+            throws InvalidUnconfirmedSeriesException {
         super(series, unconfirmedSeriesTitle, seriesNumber, publisher, isbnList);
     }
 
-    private Degree(Builder builder) throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
+    private Degree(Builder builder) throws InvalidUnconfirmedSeriesException {
         super(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList);
     }
 
     public static final class Builder {
+
         private BookSeries series;
         private String seriesNumber;
         private PublishingHouse publisher;

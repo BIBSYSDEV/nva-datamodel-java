@@ -1,5 +1,19 @@
 package no.unit.nva.model.testing;
 
+import static no.unit.nva.model.testing.RandomUtils.randomLabel;
+import static no.unit.nva.model.testing.RandomUtils.randomLabels;
+import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
+import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
+import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
+import static no.unit.nva.testutils.RandomDataGenerator.randomIssn;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
+import static nva.commons.core.attempt.Try.attempt;
+import java.net.URI;
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.contexttypes.Anthology;
@@ -32,22 +46,6 @@ import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import no.unit.nva.model.time.Period;
 import no.unit.nva.model.time.Time;
 import nva.commons.core.JacocoGenerated;
-
-import java.net.URI;
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
-
-import static no.unit.nva.model.testing.RandomUtils.randomLabel;
-import static no.unit.nva.model.testing.RandomUtils.randomLabels;
-import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
-import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
-import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
-import static no.unit.nva.testutils.RandomDataGenerator.randomIssn;
-import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
-import static nva.commons.core.attempt.Try.attempt;
 
 @SuppressWarnings("PMD.CouplingBetweenObjects")
 @JacocoGenerated
@@ -242,7 +240,7 @@ public class PublicationContextBuilder {
             .build();
     }
 
-    private static Book randomBook() throws InvalidIsbnException {
+    private static Book randomBook() {
         return new Book.BookBuilder()
             .withIsbnList(randomIsbnList())
             .withPublisher(randomPublishingHouse())
@@ -260,7 +258,7 @@ public class PublicationContextBuilder {
     }
 
     private static List<String> randomIsbnList() {
-        return List.of(randomIsbn13());
+        return List.of(randomIsbn13(), randomString());
     }
 
     private static Journal randomJournal() {

@@ -3,7 +3,6 @@ package no.unit.nva.model.contexttypes;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidIssnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 
@@ -15,15 +14,16 @@ public class Report extends Book implements BasicContext {
                   @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
                   @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                   @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList)
-            throws InvalidIsbnException, InvalidUnconfirmedSeriesException  {
+            throws InvalidUnconfirmedSeriesException  {
         super(series, seriesTitle, seriesNumber, publisher, isbnList);
     }
 
-    private Report(Builder builder) throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
+    private Report(Builder builder) throws InvalidUnconfirmedSeriesException {
         this(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList);
     }
 
     public static final class Builder {
+
         private BookSeries series;
         private String seriesNumber;
         private PublishingHouse publisher;
@@ -52,7 +52,7 @@ public class Report extends Book implements BasicContext {
             return this;
         }
 
-        public Report build() throws InvalidIssnException, InvalidIsbnException, InvalidUnconfirmedSeriesException {
+        public Report build() throws InvalidIssnException, InvalidUnconfirmedSeriesException {
             return new Report(this);
         }
     }
