@@ -5,12 +5,12 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
-import no.unit.nva.model.exceptions.InvalidIsbnException;
+import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
@@ -24,7 +24,9 @@ public class Book implements BasicContext {
     public static final String JSON_PROPERTY_SERIES_NUMBER = "seriesNumber";
     public static final String JSON_PROPERTY_PUBLISHER = "publisher";
     public static final String JSON_PROPERTY_ISBN_LIST = "isbnList";
+    public static final String JSON_PROPERTY_ADDITIONAL_IDENTIFIERS = "additionalIdentifiers";
     public static final String SPACES_AND_HYPHENS_REGEX = "[ -]";
+    public static final String ISBN_SOURCE = "ISBN";
 
     @JsonProperty(JSON_PROPERTY_SERIES)
     private final BookSeries series;
@@ -34,25 +36,30 @@ public class Book implements BasicContext {
     private final PublishingHouse publisher;
     @JsonProperty(JSON_PROPERTY_ISBN_LIST)
     private final List<String> isbnList;
+    @JsonProperty(JSON_PROPERTY_ADDITIONAL_IDENTIFIERS)
+    private final Set<AdditionalIdentifier> additionalIdentifiers;
 
     public Book(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
                 @JsonProperty(value = JSON_PROPERTY_SERIES_TITLE, access = WRITE_ONLY) String unconfirmedSeriesTitle,
                 @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
                 @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
-                @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidIsbnException,
-            InvalidUnconfirmedSeriesException {
-        this(BookSeries.extractSeriesInformation(series, unconfirmedSeriesTitle),
-                seriesNumber,
-                publisher,
-                isbnList);
+                @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidUnconfirmedSeriesException {
+        this(BookSeries.extractSeriesInformation(series, unconfirmedSeriesTitle), seriesNumber, publisher, isbnList);
     }
 
-    public Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList)
-            throws InvalidIsbnException {
+    public Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList) {
         this.series = series;
         this.seriesNumber = seriesNumber;
         this.publisher = publisher;
         this.isbnList = extractValidIsbnList(isbnList);
+        this.additionalIdentifiers = isbnList.stream()
+                                         .filter(isbn -> !this.isbnList.contains(isbn))
+                                         .map(isbn -> new AdditionalIdentifier(ISBN_SOURCE, isbn))
+                                         .collect(Collectors.toSet());
+    }
+
+    public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
+        return additionalIdentifiers;
     }
 
     public BookSeries getSeries() {
@@ -71,40 +78,55 @@ public class Book implements BasicContext {
         return nonNull(isbnList) ? isbnList : Collections.emptyList();
     }
 
-    /**
-     * Returns the ISBN list to the object after checking that the ISBNs are valid and removing ISBN-punctuation.
-     *
-     * @param isbnList List of ISBN candidates.
-     * @return List of valid ISBN strings.
-     * @throws InvalidIsbnException If one of the ISBNs is found to be invalid.
-     */
-    private List<String> extractValidIsbnList(List<String> isbnList) throws InvalidIsbnException {
-        if (isNull(isbnList) || isbnList.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<String> validIsbns = isbnList.stream()
-            .map(isbn -> isbn.replaceAll(SPACES_AND_HYPHENS_REGEX, ""))
-            .map(ISBN_VALIDATOR::validate)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
-
-        if (isbnList.size() != validIsbns.size()) {
-            List<String> errors = new ArrayList<>(isbnList);
-            errors.removeAll(validIsbns);
-            throw new InvalidIsbnException(errors);
-        }
-        return validIsbns;
-    }
-
-    public BookBuilder copy() throws InvalidIsbnException {
-        return new BookBuilder()
-                   .withSeriesNumber(getSeriesNumber())
+    public BookBuilder copy() {
+        return new BookBuilder().withSeriesNumber(getSeriesNumber())
                    .withSeries(getSeries())
                    .withPublisher(getPublisher())
                    .withIsbnList(getIsbnList());
     }
 
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSeries(), getSeriesNumber(), getPublisher(), getIsbnList(), additionalIdentifiers);
+    }
+
+    @JacocoGenerated
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Book book = (Book) o;
+        return Objects.equals(getSeries(), book.getSeries())
+               && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
+               && Objects.equals(getPublisher(), book.getPublisher())
+               && Objects.equals(getIsbnList(), book.getIsbnList())
+               && Objects.equals(additionalIdentifiers, book.additionalIdentifiers);
+    }
+
+    /**
+     * Returns the ISBN list to the object after checking that the ISBNs are valid and removing ISBN-punctuation.
+     *
+     * @param isbnList List of ISBN candidates.
+     * @return List of valid ISBN strings.
+     */
+    private List<String> extractValidIsbnList(List<String> isbnList) {
+        if (isNull(isbnList) || isbnList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return isbnList.stream()
+                   .map(isbn -> isbn.replaceAll(SPACES_AND_HYPHENS_REGEX, ""))
+                   .map(ISBN_VALIDATOR::validate)
+                   .filter(Objects::nonNull)
+                   .toList();
+    }
+
     public static final class BookBuilder {
+
         private BookSeries series;
         private String seriesNumber;
         private PublishingHouse publisher;
@@ -133,30 +155,8 @@ public class Book implements BasicContext {
             return this;
         }
 
-        public Book build() throws InvalidIsbnException {
+        public Book build() {
             return new Book(series, seriesNumber, publisher, isbnList);
         }
-    }
-
-    @JacocoGenerated
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Book)) {
-            return false;
-        }
-        Book book = (Book) o;
-        return Objects.equals(getSeries(), book.getSeries())
-                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
-                && Objects.equals(getPublisher(), book.getPublisher())
-                && Objects.equals(getIsbnList(), book.getIsbnList());
-    }
-
-    @JacocoGenerated
-    @Override
-    public int hashCode() {
-        return Objects.hash(getSeries(), getSeriesNumber(), getPublisher(), getIsbnList());
     }
 }

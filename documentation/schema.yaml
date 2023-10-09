@@ -436,6 +436,11 @@ referencedSchemas:
           type: array
           items:
             type: string
+        additionalIdentifiers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalIdentifier'
         type:
           type: string
   BookAbstracts:
@@ -818,6 +823,11 @@ referencedSchemas:
           type: array
           items:
             type: string
+        additionalIdentifiers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalIdentifier'
         type:
           type: string
   DegreeBachelor:
@@ -1205,6 +1215,8 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
       source:
         type: string
         format: uri
@@ -1220,8 +1232,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-      identifier:
-        type: string
       type:
         type: string
     discriminator:
@@ -2558,6 +2568,11 @@ referencedSchemas:
           type: array
           items:
             type: string
+        additionalIdentifiers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalIdentifier'
   ReportBasic:
     required:
     - type

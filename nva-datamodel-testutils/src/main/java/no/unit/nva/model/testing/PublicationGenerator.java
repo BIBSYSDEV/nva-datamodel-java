@@ -77,6 +77,10 @@ public final class PublicationGenerator {
         return publication;
     }
 
+    public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {
+        return buildRandomPublicationFromInstance(publicationInstanceClass);
+    }
+
     public static EntityDescription randomEntityDescription(Class<?> publicationInstanceClass) {
         return EntityDescriptionBuilder.randomEntityDescription(publicationInstanceClass);
     }
