@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.Objects;
+import nva.commons.core.StringUtils;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class Period implements Time {
+
     public static final String FROM_FIELD = "from";
     public static final String TO_FIELD = "to";
     @JsonProperty(FROM_FIELD)
@@ -17,13 +19,6 @@ public class Period implements Time {
     private final java.time.Instant to;
 
     // The conversion methods should be removed following migration
-
-    @Deprecated
-    @JsonCreator
-    private static Period fromLegacy(@JsonProperty(FROM_FIELD) String from,
-                   @JsonProperty(TO_FIELD) String to) {
-        return new Period(Time.convertToInstant(from), Time.convertToInstant(to));
-    }
 
     public Period(java.time.Instant from, java.time.Instant to) {
         this.from = from;
@@ -40,21 +35,35 @@ public class Period implements Time {
 
     @JacocoGenerated
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Period)) {
-            return false;
-        }
-        Period that = (Period) o;
-        return Objects.equals(getFrom(), that.getFrom())
-                && Objects.equals(getTo(), that.getTo());
+    public int hashCode() {
+        return Objects.hash(getFrom(), getTo());
     }
 
     @JacocoGenerated
     @Override
-    public int hashCode() {
-        return Objects.hash(getFrom(), getTo());
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Period that)) {
+            return false;
+        }
+        return Objects.equals(getFrom(), that.getFrom())
+               && Objects.equals(getTo(), that.getTo());
+    }
+
+    @Deprecated
+    @JsonCreator
+    private static Period fromLegacy(@JsonProperty(FROM_FIELD) String from,
+                                     @JsonProperty(TO_FIELD) String to) {
+        return new Period(Time.convertToInstant(from), extractToDate(to));
+    }
+
+    private static java.time.Instant extractToDate(String to) {
+        return shouldBeNullToTime(to) ? null : Time.convertToInstant(to);
+    }
+
+    private static boolean shouldBeNullToTime(String to) {
+        return StringUtils.isBlank(to);
     }
 }
