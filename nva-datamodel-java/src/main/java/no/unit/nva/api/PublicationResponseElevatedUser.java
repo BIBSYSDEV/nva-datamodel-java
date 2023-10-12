@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationNote;
-
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
@@ -14,7 +14,7 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
 
     private List<PublicationNote> publicationNotes;
 
-    public static PublicationResponseElevatedUser fromPublication(Publication publication){
+    public static PublicationResponseElevatedUser fromPublication(Publication publication) {
         var response = new PublicationResponseElevatedUser();
         response.setIdentifier(publication.getIdentifier());
         response.setStatus(publication.getStatus());
@@ -48,6 +48,13 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
         this.publicationNotes = publicationNotes;
     }
 
+    @JacocoGenerated
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), publicationNotes);
+    }
+
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -60,11 +67,6 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
             return false;
         }
         PublicationResponseElevatedUser that = (PublicationResponseElevatedUser) o;
-        return  Objects.equals(publicationNotes, that.publicationNotes);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), publicationNotes);
+        return Objects.equals(publicationNotes, that.publicationNotes);
     }
 }
