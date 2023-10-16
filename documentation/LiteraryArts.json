@@ -1,57 +1,58 @@
 {
   "type" : "Publication",
   "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
-  "status" : "DRAFT",
+  "status" : "PUBLISHED",
   "resourceOwner" : {
-    "owner" : "6neO1VWdZthE",
-    "ownerAffiliation" : "https://www.example.org/7b6ecf5d-4e8b-4383-bb5e-47b1f5bc6c6c"
+    "owner" : "4BLp9XOcc16e",
+    "ownerAffiliation" : "https://www.example.org/c74c4972-6ed4-4bc0-9dc6-499b4b50493f"
   },
   "publisher" : {
     "type" : "Organization",
-    "id" : "https://www.example.org/647c43f0-7923-442b-a2e1-682fedbcded4",
+    "id" : "https://www.example.org/413a406f-1d0e-4943-9be6-0943f33b5a59",
     "labels" : {
-      "el" : "u4iVKFzgjY"
+      "el" : "DsYrlx5MXb"
     }
   },
-  "createdDate" : "2003-01-12T03:38:51.839Z",
-  "modifiedDate" : "1976-12-29T22:23:27.712Z",
-  "publishedDate" : "1973-06-29T00:35:15.380Z",
-  "indexedDate" : "1992-09-28T15:25:19.413Z",
-  "handle" : "https://www.example.org/12b41d2c-1fec-4db6-af48-a11687d8d5ef",
-  "doi" : "https://doi.org/10.1234/odit",
-  "link" : "https://www.example.org/dda8dec0-6af1-4b27-abab-cd0b35ca82ee",
+  "createdDate" : "2008-12-13T00:55:29.062Z",
+  "modifiedDate" : "2023-05-25T22:30:16.434Z",
+  "publishedDate" : "2008-03-18T00:48:50.802Z",
+  "indexedDate" : "1997-12-25T15:31:44.153Z",
+  "handle" : "https://www.example.org/ac587c4c-0a18-4945-a327-e09b87659b29",
+  "doi" : "https://doi.org/10.1234/accusantium",
+  "link" : "https://www.example.org/5058afac-0136-4fca-9016-bbca6c6a4992",
   "entityDescription" : {
     "type" : "EntityDescription",
-    "mainTitle" : "8LzEfURTHnZZmDFcR",
+    "mainTitle" : "cn7489kueoZXTdx",
     "alternativeTitles" : {
-      "nl" : "6GzwR96uC1swYZk6Pt"
+      "se" : "CTNWeyKEwHep"
     },
     "language" : "http://lexvo.org/id/iso639-3/und",
     "publicationDate" : {
       "type" : "PublicationDate",
-      "year" : "pJ0LHgSD3gVDPsl",
-      "month" : "ZiCdflBFBLxwXQjgs8N",
-      "day" : "vuNmzvArRMGH"
+      "year" : "t2GWv0SFmzIA",
+      "month" : "hskKPINyyHbau",
+      "day" : "Nxf59J9UPAu"
     },
     "contributors" : [ {
       "type" : "Contributor",
       "identity" : {
         "type" : "Identity",
-        "id" : "https://www.example.org/a96f9512-f89c-4bc0-af81-db6714489ad2",
-        "name" : "uAB2GydgVe71",
+        "id" : "https://www.example.org/9dbd787f-3cae-4b14-bb2f-823893a3c9ab",
+        "name" : "e7IdW5pEBSgNJK3va8",
         "nameType" : "Organizational",
-        "orcId" : "xrIVkjShkxFQBWlHOq",
+        "orcId" : "SGzahNtpyKM1iTCb8F",
         "verificationStatus" : "Verified"
       },
       "affiliations" : [ {
         "type" : "Organization",
-        "id" : "https://www.example.org/e076abe4-4044-43c7-9a99-01f554772b58",
+        "id" : "https://www.example.org/e0360681-3fe6-489f-a6fd-fdb9de6c2255",
         "labels" : {
-          "zh" : "0bPnD9FiWL2"
+          "nl" : "GRr10F6GLkloMY2tN2"
         }
       } ],
       "role" : {
-        "type" : "WorkPackageLeader"
+        "type" : "RoleOther",
+        "description" : "uf21fmJhD2"
       },
       "sequence" : 1,
       "correspondingAuthor" : false
@@ -59,191 +60,192 @@
       "type" : "Contributor",
       "identity" : {
         "type" : "Identity",
-        "id" : "https://www.example.org/54e2305b-ab54-4eec-bb76-239e830c37f2",
-        "name" : "RhXhLDWU9M0PPkaB",
-        "nameType" : "Organizational",
-        "orcId" : "0liG8pOu3xp3QR",
-        "verificationStatus" : "NotVerified"
+        "id" : "https://www.example.org/3f28b2de-d32e-4da5-914a-a58e8f4ec83d",
+        "name" : "36b1MnoW86",
+        "nameType" : "Personal",
+        "orcId" : "noUQbeFxsswfxX8",
+        "verificationStatus" : "Verified"
       },
       "affiliations" : [ {
         "type" : "Organization",
-        "id" : "https://www.example.org/2a3a189e-2254-4a5c-b066-a24fb2da4648",
+        "id" : "https://www.example.org/5b8a9362-6db1-44e5-8910-05f244fc1cc5",
         "labels" : {
-          "bg" : "WDCAa1o27wQM8"
+          "nn" : "HkvYuSbU2qMo"
         }
       } ],
       "role" : {
-        "type" : "VfxSupervisor"
+        "type" : "RegistrationAuthority"
       },
       "sequence" : 2,
       "correspondingAuthor" : false
     } ],
     "alternativeAbstracts" : {
-      "en" : "2MzTEeqEmU"
+      "da" : "U5QObtnzDk7gYARP"
     },
-    "npiSubjectHeading" : "Y6obzJFHLLHmIA0",
-    "tags" : [ "1jD5hfEeXUeS" ],
-    "description" : "oJLCQFfY4hQPkjwe0",
+    "npiSubjectHeading" : "7HUbsyEy6LP",
+    "tags" : [ "DF8oeHTvav" ],
+    "description" : "fDK3EjpkogvV26g",
     "reference" : {
       "type" : "Reference",
       "publicationContext" : {
         "type" : "Artistic"
       },
-      "doi" : "https://www.example.org/6ed9b655-99bd-4f3f-a8ff-97cf86a580a0",
+      "doi" : "https://www.example.org/27e2abd9-2059-430f-85e1-ba5ad13aa0b0",
       "publicationInstance" : {
         "type" : "LiteraryArts",
         "subtype" : {
-          "type" : "Novella"
+          "type" : "Retelling"
         },
         "manifestations" : [ {
           "type" : "LiteraryArtsMonograph",
           "publisher" : {
             "type" : "UnconfirmedPublisher",
-            "name" : "poAHHcvoTY",
+            "name" : "yYI1s5ugBquBC",
             "valid" : true
           },
           "publicationDate" : {
             "type" : "PublicationDate",
-            "year" : "jUdOzkgfxNU",
-            "month" : "HjVRnPpTClSh",
-            "day" : "mfrRmxpj7f9"
+            "year" : "M6YU0N50rvZs",
+            "month" : "6spnp7EGehY",
+            "day" : "Pmbss2RCzCTSVK8k"
           },
           "isbnList" : [ "9780099470434" ],
           "pages" : {
             "type" : "MonographPages",
             "introduction" : {
               "type" : "Range",
-              "begin" : "5VwjIXmZjRHzSKMF",
-              "end" : "QHOF5cXVUu3RJq"
+              "begin" : "xQZWkqeh9xu0n",
+              "end" : "BrI15jBBBHWO5vdfS"
             },
-            "pages" : "FBVFJ616InUoaEFb",
+            "pages" : "OajaeA6YnbPnC",
             "illustrated" : false
           }
         }, {
           "type" : "LiteraryArtsAudioVisual",
           "subtype" : {
-            "type" : "Audiobook"
+            "type" : "LiteraryArtsAudioVisualOther",
+            "description" : "ikYz5Dd5s8Vb3X"
           },
           "publisher" : {
             "type" : "UnconfirmedPublisher",
-            "name" : "9XJNaTwlIC1JjcIU5",
+            "name" : "f0alqIaXtu",
             "valid" : true
           },
           "publicationDate" : {
             "type" : "PublicationDate",
-            "year" : "HxwqDj7t7ALOKH",
-            "month" : "JGgGOsZxEcjFefcY0",
-            "day" : "nvhWpQJK5BnOqyJ6qn"
+            "year" : "3JQQcZi04lkdYMzG1P",
+            "month" : "fvxJTpau19vS",
+            "day" : "sn8CWEpslbaHf7p"
           },
           "isbnList" : [ "9780099470434" ],
-          "extent" : 926221197
+          "extent" : 721803550
         }, {
           "type" : "LiteraryArtsPerformance",
           "subtype" : {
-            "type" : "Play"
+            "type" : "Reading"
           },
           "place" : {
             "type" : "UnconfirmedPlace",
-            "label" : "icAjezOo3SX",
-            "country" : "17xmR0NEek"
+            "label" : "iIOT5Duaax",
+            "country" : "GUNiXgtrQbXDcSVgZ5"
           },
           "publicationDate" : {
             "type" : "PublicationDate",
-            "year" : "yLCnVwZDTk8St",
-            "month" : "t0SBrKNi9dhjp",
-            "day" : "OCmbpeyjHb"
+            "year" : "18C1CrCYBy2vyaX9",
+            "month" : "fMWdb7ulsTLirpke",
+            "day" : "SdmrPG5qCEVtUxYn"
           }
         }, {
           "type" : "LiteraryArtsWeb",
-          "id" : "https://www.example.com/Iou9nQRnuX1vg",
+          "id" : "https://www.example.com/4gmEzmdLRvqgbE5WAy",
           "publisher" : {
             "type" : "UnconfirmedPublisher",
-            "name" : "5IJf01dMsNAVK",
+            "name" : "RPJ8tk3M65",
             "valid" : true
           },
           "publicationDate" : {
             "type" : "PublicationDate",
-            "year" : "XDolRHJoqAVXqu9fWIP",
-            "month" : "6n4jiimn2XpAUnFyml",
-            "day" : "A1vdo58lyC"
+            "year" : "OIKl8l6LaUWVSr59O",
+            "month" : "l2s6oUJozIONf4h",
+            "day" : "T9hMZeEvzu"
           }
         } ],
-        "description" : "NsgWN9FGEwwvDyY",
+        "description" : "x8vengeRkD0xA",
         "pages" : {
           "type" : "NullPages"
         }
       }
     },
-    "metadataSource" : "https://www.example.org/478f9a16-143e-40f9-98be-2a851d85a7a9",
-    "abstract" : "xKIBYdQHUJUCBeJrZBJ"
+    "metadataSource" : "https://www.example.org/8805d0be-415f-4c86-81bf-f22fc5f03fbe",
+    "abstract" : "vxKIDgwg8WQtVus"
   },
   "projects" : [ {
     "type" : "ResearchProject",
-    "id" : "https://www.example.org/fcdde33d-67aa-486c-8fd1-e51335f8f8ff",
-    "name" : "E3JyndL6hfU9Ms",
+    "id" : "https://www.example.org/241df945-80c6-4195-99b5-87c832d30f0d",
+    "name" : "eMZdqvxPGXc",
     "approvals" : [ {
       "type" : "Approval",
-      "approvalDate" : "1979-03-22T15:41:10.286Z",
+      "approvalDate" : "1986-09-26T16:24:17.257Z",
       "approvedBy" : "DIRHEALTH",
       "approvalStatus" : "NOTAPPLIED",
-      "applicationCode" : "gUs29XfUOh"
+      "applicationCode" : "nvqUWR7eEM"
     } ]
   } ],
   "fundings" : [ {
     "type" : "UnconfirmedFunding",
-    "source" : "https://www.example.org/78bf1b4e-f9e9-4fc2-97a6-4e885e57e6b5",
-    "identifier" : "OMGm5eNNKu",
+    "source" : "https://www.example.org/fc375a51-77f4-403c-9da0-22b1f2ca14ee",
+    "identifier" : "oytMs9i1Wk",
     "labels" : {
-      "es" : "P2YygEC2xTZ"
+      "bg" : "CarW4WPX1pgn"
     },
     "fundingAmount" : {
       "currency" : "NOK",
-      "amount" : 186890382
+      "amount" : 1039246985
     },
-    "activeFrom" : "2015-07-14T19:09:53.553Z",
-    "activeTo" : "2016-07-16T08:32:41.635Z"
+    "activeFrom" : "1973-12-05T05:10:15.522Z",
+    "activeTo" : "1999-08-26T02:06:22.216Z"
   }, {
     "type" : "ConfirmedFunding",
-    "source" : "https://www.example.org/ec36448f-a07f-469b-a7ea-7f5ecdaba9c6",
-    "id" : "https://www.example.org/0bf5ef29-fe40-461b-b9d9-7a208c73a0f2",
-    "identifier" : "pVpJnl8oXDim1",
+    "source" : "https://www.example.org/56db643b-edac-4c91-a309-e12a8e03293d",
+    "id" : "https://www.example.org/be067d60-d611-44a8-bb2f-e90470ee92b2",
+    "identifier" : "0tWGlU1dcczE",
     "labels" : {
-      "fr" : "dfehMvah1keACR"
+      "el" : "XQeef17JHmhOj5E6X"
     },
     "fundingAmount" : {
-      "currency" : "NOK",
-      "amount" : 896133334
+      "currency" : "GBP",
+      "amount" : 252982734
     },
-    "activeFrom" : "1985-11-09T06:56:55.376Z",
-    "activeTo" : "2013-08-02T19:15:14.111Z"
+    "activeFrom" : "2009-03-27T23:55:06.672Z",
+    "activeTo" : "2012-08-18T17:39:20.656Z"
   } ],
   "additionalIdentifiers" : [ {
     "type" : "AdditionalIdentifier",
     "sourceName" : "fakesource",
     "value" : "1234"
   } ],
-  "subjects" : [ "https://www.example.org/8633005b-6d5f-4d8f-abd2-9bd46877480b" ],
+  "subjects" : [ "https://www.example.org/db5d084d-72d9-403c-813c-7208a0b2023d" ],
   "associatedArtifacts" : [ {
     "type" : "PublishedFile",
-    "identifier" : "9914f751-82ad-40d6-b53b-4a4bb5641a13",
-    "name" : "ifMWawiQfpqq3Sx",
-    "mimeType" : "rxhFefwjjYEhNNLM",
-    "size" : 1604355932,
-    "license" : "https://www.example.com/rtinpggi1hrtskuo",
+    "identifier" : "02625f5a-9137-47a2-8495-b2a0dc92d0a9",
+    "name" : "CiES7Xefo2g8BXz",
+    "mimeType" : "GgrwMweqVCGB",
+    "size" : 582915978,
+    "license" : "https://www.example.com/jcdscksofucwku26h",
     "administrativeAgreement" : false,
     "publisherAuthority" : true,
-    "publishedDate" : "1999-05-20T03:45:48.615Z",
+    "publishedDate" : "1988-11-16T09:09:58.147Z",
     "visibleForNonOwner" : true
   }, {
     "type" : "AssociatedLink",
-    "id" : "https://www.example.com/btBnIWP3PWiqBY",
-    "name" : "iRkC81papaNioPG3q1r",
-    "description" : "U2Pqq6V4axj"
+    "id" : "https://www.example.com/eMS8S8ZoTzswkkIOq5q",
+    "name" : "tDvR0OCeJoqdsN",
+    "description" : "4SArJzJo3g2NTw3wvP"
   } ],
-  "rightsHolder" : "QX2QHwPoS8G1ftj7",
+  "rightsHolder" : "aosM6xlBmbY",
   "publicationNotes" : [ {
     "type" : "PublicationNote",
-    "publicationNoteMessage" : "W7hzpopYTqEq6"
+    "publicationNoteMessage" : "82tesx3Vrlh9hq6rtpy"
   } ],
-  "modelVersion" : "0.20.47"
+  "modelVersion" : "0.20.48"
 }
