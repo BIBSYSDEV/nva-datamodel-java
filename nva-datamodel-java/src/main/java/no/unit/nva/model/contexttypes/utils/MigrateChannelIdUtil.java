@@ -13,7 +13,7 @@ import nva.commons.core.paths.UriWrapper;
 @Deprecated
 public final class MigrateChannelIdUtil {
 
-    public static final String API_HOST_DEV = "api.dev.nva.aws.unit.no";
+    public static final String API_HOST_DEV = "api.sandbox.nva.aws.unit.no";
     private static final int IDENTIFIER_PATH_INDEX_FROM_END = 1;
     private static final String JOURNAL_ID_MAPPING_FILE = ChannelType.JOURNAL.migrationFileName;
     private static final String SERIES_ID_MAPPING_FILE = ChannelType.SERIES.migrationFileName;

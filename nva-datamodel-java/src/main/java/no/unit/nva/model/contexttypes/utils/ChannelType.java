@@ -2,9 +2,9 @@ package no.unit.nva.model.contexttypes.utils;
 
 public enum ChannelType {
 
-    JOURNAL("journal", "2023-05-11-NVA-PID-Tidsskrift.csv"),
-    PUBLISHER("publisher", "2023-05-11-NVA-PID-Utgiver.csv"),
-    SERIES("series", "2023-05-11-NVA-PID-Serie.csv");
+    JOURNAL("journal", "journal_series_id_mapping_251023.csv"),
+    PUBLISHER("publisher", "publisher_id_mapping.csv"),
+    SERIES("series", "journal_series_id_mapping_251023.csv");
 
     public final String pathElement;
     public final String migrationFileName;
