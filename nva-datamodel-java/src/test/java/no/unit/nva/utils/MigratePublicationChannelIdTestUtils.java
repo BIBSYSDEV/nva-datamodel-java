@@ -26,7 +26,7 @@ public class MigratePublicationChannelIdTestUtils {
     private static final String PUBLISHER_ID_MAPPING_FILE = ChannelType.PUBLISHER.migrationFileName;
     private static final int YEAR_START = 1900;
     private static final String CSV_SEPARATOR = ";";
-    private static final int NUMBER_OF_COLUMNS = 3;
+    private static final int NUMBER_OF_COLUMNS = 2;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
     private static final Map<String, String> journalIdMapping = linesfromResource(
