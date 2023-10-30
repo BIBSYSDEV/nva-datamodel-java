@@ -17,7 +17,7 @@ public class MigratePublicationChannelIdTestUtils {
     public static final String JOURNAL_PATH_ELEMENT = "journal";
     public static final String SERIES_PATH_ELEMENT = "series";
     public static final String PUBLISHER_PATH_ELEMENT = "publisher";
-    public static final String API_HOST_DEV = "api.sandbox.nva.aws.unit.no";
+    public static final String API_HOST_DEV = "api.dev.nva.aws.unit.no";
     public static final String EXAMPLE_COM = "example.com";
     public static final String BASE_PATH_V1 = "publication-channels";
     public static final String BASE_PATH_V2 = "publication-channels-v2";
@@ -26,7 +26,7 @@ public class MigratePublicationChannelIdTestUtils {
     private static final String PUBLISHER_ID_MAPPING_FILE = ChannelType.PUBLISHER.migrationFileName;
     private static final int YEAR_START = 1900;
     private static final String CSV_SEPARATOR = ";";
-    private static final int NUMBER_OF_COLUMNS = 2;
+    private static final int NUMBER_OF_COLUMNS = 3;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
     private static final Map<String, String> journalIdMapping = linesfromResource(

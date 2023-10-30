@@ -13,14 +13,14 @@ import nva.commons.core.paths.UriWrapper;
 @Deprecated
 public final class MigrateChannelIdUtil {
 
-    public static final String API_HOST_DEV = "api.sandbox.nva.aws.unit.no";
+    public static final String API_HOST_DEV = "api.dev.nva.aws.unit.no";
     private static final int IDENTIFIER_PATH_INDEX_FROM_END = 1;
     private static final String JOURNAL_ID_MAPPING_FILE = ChannelType.JOURNAL.migrationFileName;
     private static final String SERIES_ID_MAPPING_FILE = ChannelType.SERIES.migrationFileName;
     private static final String PUBLISHER_ID_MAPPING_FILE = ChannelType.PUBLISHER.migrationFileName;
     private static final String BASE_PATH = "publication-channels-v2";
     private static final String CSV_SEPARATOR = ";";
-    private static final int NUMBER_OF_COLUMNS = 2;
+    private static final int NUMBER_OF_COLUMNS = 3;
     private static final int OLD_ID_COLUMN_NUMBER = 0;
     private static final int NEW_ID_COLUMN_NUMBER = 1;
     private static final Map<String, String> journalIdMapping = linesfromResource(
