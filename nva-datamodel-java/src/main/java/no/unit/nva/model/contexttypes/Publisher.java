@@ -3,7 +3,7 @@ package no.unit.nva.model.contexttypes;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNewStyleIdentifier;
-import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNotHostedInTest;
+import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNotHostedInProd;
 import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.migrateToNewIdIfFound;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +20,7 @@ public class Publisher implements PublishingHouse {
 
     @JsonCreator
     public Publisher(@JsonProperty("id") URI id) {
-        this.id = isNull(id) || isNewStyleIdentifier(id) || isNotHostedInTest(id)
+        this.id = isNull(id) || isNewStyleIdentifier(id) || isNotHostedInProd(id)
                       ? id
                       : migrateToNewIdIfFound(id, ChannelType.PUBLISHER);
     }
