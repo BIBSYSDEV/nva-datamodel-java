@@ -17,7 +17,7 @@ public class MigratePublicationChannelIdTestUtils {
     public static final String JOURNAL_PATH_ELEMENT = "journal";
     public static final String SERIES_PATH_ELEMENT = "series";
     public static final String PUBLISHER_PATH_ELEMENT = "publisher";
-    public static final String API_HOST_PROD = "api.nva.aws.unit.no";
+    public static final String API_HOST_PROD = "api.nva.unit.no";
     public static final String EXAMPLE_COM = "example.com";
     public static final String BASE_PATH_V1 = "publication-channels";
     public static final String BASE_PATH_V2 = "publication-channels-v2";
