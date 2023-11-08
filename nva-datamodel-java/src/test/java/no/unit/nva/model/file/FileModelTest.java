@@ -19,11 +19,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Username;
+import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.OverriddenRightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
+import no.unit.nva.model.associatedartifacts.file.CCBYLicenseException;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
@@ -36,6 +42,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class FileModelTest {
 
     public static final URI LICENSE_URI = URI.create("http://creativecommons.org/licenses/by/4.0/");
+    public static final URI CC_BY_NC_LICENSE_URI = URI.create("https://creativecommons.org/licenses/by-nc/4.0");
     public static final String APPLICATION_PDF = "application/pdf";
     public static final String FIRST_FILE_TXT = "First_file.txt";
     public static final String CC_BY = "CC-BY";
@@ -45,6 +52,7 @@ public class FileModelTest {
     public static final ObjectMapper dataModelObjectMapper = JsonUtils.dtoObjectMapper;
     public static final boolean NOT_ADMINISTRATIVE_AGREEMENT = false;
     private static final boolean ADMINISTRATIVE_AGREEMENT = true;
+    private static final int STRATEGY_COUNT = 3;
 
     public static Stream<File> fileProvider() {
         var publishedFile = randomPublishedFile();
@@ -81,6 +89,18 @@ public class FileModelTest {
 
     @Test
     void shouldNotThrowMissingLicenseExceptionWhenFileIsAdministrativeAgreementAndLicenseIsPresent() {
+        var file = getAdministrativeAgreement(LICENSE_URI);
+        assertDoesNotThrow(file::validate);
+    }
+
+    @Test
+    void shouldThrowCCBYLicenseExceptionWhenCustomerRRSWithoutPublisherAuthorityAndNonCCBYLicense() {
+        var file = getPublishedFileWithCustomRRS();
+        assertThrows(CCBYLicenseException.class, file::validate);
+    }
+
+    @Test
+    void shouldNotThrowCCBYLicenseExceptionWhenNotCustomerRRS() {
         var file = getAdministrativeAgreement(LICENSE_URI);
         assertDoesNotThrow(file::validate);
     }
@@ -141,7 +161,7 @@ public class FileModelTest {
     public static File randomUnpublishableFile() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant());
+            LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant(), randomRightsRetentionStrategy());
     }
 
     public static File randomUnpublishedFile() {
@@ -171,6 +191,7 @@ public class FileModelTest {
                    .withMimeType(randomString())
                    .withSize(randomInteger().longValue())
                    .withEmbargoDate(randomInstant())
+                   .withRightsRetentionStrategy(randomRightsRetentionStrategy())
                    .withLicense(LICENSE_URI)
                    .withIdentifier(UUID.randomUUID())
                    .withPublisherAuthority(randomBoolean());
@@ -184,7 +205,8 @@ public class FileModelTest {
             LICENSE_URI,
             NOT_ADMINISTRATIVE_AGREEMENT,
             randomBoolean(),
-            randomInstant());
+            randomInstant(),
+            randomRightsRetentionStrategy());
     }
 
     private static File.Builder admAgreementBuilder() {
@@ -199,13 +221,14 @@ public class FileModelTest {
                    .withLicense(license)
                    .withName(FileModelTest.FIRST_FILE_TXT)
                    .withAdministrativeAgreement(true)
+                   .withRightsRetentionStrategy(new NullRightsRetentionStrategy(null))
                    .buildUnpublishableFile();
     }
 
     private AdministrativeAgreement randomAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant());
+            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant(), randomRightsRetentionStrategy());
     }
 
     private PublishedFile publishedFileWithActiveEmbargo() {
@@ -217,6 +240,7 @@ public class FileModelTest {
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
+                                 randomRightsRetentionStrategy(),
                                  randomInstant());
     }
 
@@ -249,6 +273,24 @@ public class FileModelTest {
                    .buildPublishedFile();
     }
 
+    private File getPublishedFileWithCustomRRS() {
+        return getPublishedFileWithCustomRRS(UUID.randomUUID());
+    }
+
+    private File getPublishedFileWithCustomRRS(UUID identifier) {
+        return File.builder()
+            .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
+            .withEmbargoDate(null)
+            .withIdentifier(identifier)
+            .withLicense(CC_BY_NC_LICENSE_URI)
+            .withMimeType(APPLICATION_PDF)
+            .withName(FIRST_FILE_TXT)
+            .withPublisherAuthority(false)
+            .withSize(SIZE)
+            .withRightsRetentionStrategy(new CustomerRightsRetentionStrategy())
+            .buildPublishedFile();
+    }
+
     @Deprecated
     @Test
     void shouldMigrateLegacyFileToUnpublishedFile() throws JsonProcessingException {
@@ -271,5 +313,13 @@ public class FileModelTest {
                        + "  }";
         var file = JsonUtils.dtoObjectMapper.readValue(fileJson, File.class);;
         assertThat(file, instanceOf(UnpublishedFile.class));
+    }
+
+    public static RightsRetentionStrategy randomRightsRetentionStrategy() {
+        switch (new Random().nextInt(STRATEGY_COUNT)) {
+            case 0: return new CustomerRightsRetentionStrategy();
+            case 1: return new OverriddenRightsRetentionStrategy();
+            default: return new NullRightsRetentionStrategy(null);
+        }
     }
 }

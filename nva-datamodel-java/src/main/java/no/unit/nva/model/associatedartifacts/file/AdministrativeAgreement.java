@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
+import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(AdministrativeAgreement.TYPE)
@@ -37,8 +38,9 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
-        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
-        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate);
+        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
+        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy) {
+        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate, rightsRetentionStrategy);
     }
     
     @Override

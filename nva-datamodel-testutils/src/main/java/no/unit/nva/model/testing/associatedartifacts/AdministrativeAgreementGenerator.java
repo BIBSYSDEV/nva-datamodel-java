@@ -3,6 +3,7 @@ package no.unit.nva.model.testing.associatedartifacts;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 
 import java.util.UUID;
+import no.unit.nva.model.testing.associatedartifacts.util.RightsRetentionStrategyGenerator;
 
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
@@ -16,6 +17,7 @@ public final class AdministrativeAgreementGenerator {
 
     public static AdministrativeAgreement random() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-                randomInteger().longValue(), randomUri(), true, false, null);
+                                           randomInteger().longValue(), randomUri(), true, false, null,
+                                           RightsRetentionStrategyGenerator.randomRightsRetentionStrategy());
     }
 }
