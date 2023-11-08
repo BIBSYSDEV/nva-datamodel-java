@@ -8,16 +8,13 @@ import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 
 public class RightsRetentionStrategyGenerator {
 
-    static final int STRATEGY_COUNT = 3;
-
     public static RightsRetentionStrategy randomRightsRetentionStrategy() {
-        switch (new Random().nextInt(STRATEGY_COUNT)) {
-            case 0:
-                return new CustomerRightsRetentionStrategy();
-            case 1:
-                return new OverriddenRightsRetentionStrategy();
-            default:
-                return new NullRightsRetentionStrategy(null);
-        }
+        RightsRetentionStrategy[] strategies = {
+            new CustomerRightsRetentionStrategy(),
+            new OverriddenRightsRetentionStrategy(),
+            new NullRightsRetentionStrategy(null)
+        };
+
+        return strategies[new Random().nextInt(strategies.length)];
     }
 }

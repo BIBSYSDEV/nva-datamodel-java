@@ -52,7 +52,6 @@ public class FileModelTest {
     public static final ObjectMapper dataModelObjectMapper = JsonUtils.dtoObjectMapper;
     public static final boolean NOT_ADMINISTRATIVE_AGREEMENT = false;
     private static final boolean ADMINISTRATIVE_AGREEMENT = true;
-    private static final int STRATEGY_COUNT = 3;
 
     public static Stream<File> fileProvider() {
         var publishedFile = randomPublishedFile();
@@ -316,10 +315,12 @@ public class FileModelTest {
     }
 
     public static RightsRetentionStrategy randomRightsRetentionStrategy() {
-        switch (new Random().nextInt(STRATEGY_COUNT)) {
-            case 0: return new CustomerRightsRetentionStrategy();
-            case 1: return new OverriddenRightsRetentionStrategy();
-            default: return new NullRightsRetentionStrategy(null);
-        }
+        RightsRetentionStrategy[] strategies = {
+            new CustomerRightsRetentionStrategy(),
+            new OverriddenRightsRetentionStrategy(),
+            new NullRightsRetentionStrategy(null)
+        };
+
+        return strategies[new Random().nextInt(strategies.length)];
     }
 }
