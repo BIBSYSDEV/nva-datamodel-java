@@ -47,7 +47,8 @@ public class PublishedFile extends File {
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(PUBLISHED_DATE) Instant publishedDate) {
-        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate, rightsRetentionStrategy);
+        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority,
+              embargoDate, rightsRetentionStrategy);
         this.publishedDate = publishedDate;
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");

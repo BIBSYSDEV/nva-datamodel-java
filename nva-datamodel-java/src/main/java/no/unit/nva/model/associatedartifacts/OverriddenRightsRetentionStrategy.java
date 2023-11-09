@@ -11,10 +11,6 @@ public class OverriddenRightsRetentionStrategy implements RightsRetentionStrateg
     private static final int STATIC_VALUE_FOR_HASH_CODE = 88_961;
     public static final String TYPE_NAME = "OverriddenRightsRetentionStrategy";
 
-    public OverriddenRightsRetentionStrategy() {
-        // NO-OP
-    }
-
     @JacocoGenerated
     @Override
     public int hashCode() {

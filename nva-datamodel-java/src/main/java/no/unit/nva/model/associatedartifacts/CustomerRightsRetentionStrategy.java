@@ -11,10 +11,6 @@ public class CustomerRightsRetentionStrategy implements RightsRetentionStrategy 
     private static final int STATIC_VALUE_FOR_HASH_CODE = 88_961;
     public static final String TYPE_NAME = "CustomerRightsRetentionStrategy";
 
-    public CustomerRightsRetentionStrategy() {
-        // NO-OP
-    }
-
     @JacocoGenerated
     @Override
     public int hashCode() {

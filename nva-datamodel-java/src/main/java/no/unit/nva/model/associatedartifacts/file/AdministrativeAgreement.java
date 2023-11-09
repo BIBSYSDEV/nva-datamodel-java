@@ -40,7 +40,8 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy) {
-        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate, rightsRetentionStrategy);
+        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority,
+              embargoDate, rightsRetentionStrategy);
     }
     
     @Override

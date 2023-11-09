@@ -133,7 +133,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         if (!publisherAuthority
             && rightsRetentionStrategy instanceof CustomerRightsRetentionStrategy
             && !license.equals(LICENSE_MAP.get("CC BY"))) {
-            throw new CCBYLicenseException(CCBY_LICENSE);
+            throw new CCByLicenseException(CCBY_LICENSE);
         }
     }
 

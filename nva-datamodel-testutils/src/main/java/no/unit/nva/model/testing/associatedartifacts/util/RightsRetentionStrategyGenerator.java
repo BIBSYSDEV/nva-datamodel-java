@@ -10,7 +10,6 @@ public class RightsRetentionStrategyGenerator {
 
     /**
      * Generates and returns a random RightsRetentionStrategy.
-     *
      * The method randomly selects one of the three implemented types of
      * RightsRetentionStrategy: CustomerRightsRetentionStrategy,
      * OverriddenRightsRetentionStrategy, or NullRightsRetentionStrategy.

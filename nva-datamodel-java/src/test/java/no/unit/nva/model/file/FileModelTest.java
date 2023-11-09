@@ -18,7 +18,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -29,7 +28,7 @@ import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.OverriddenRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
-import no.unit.nva.model.associatedartifacts.file.CCBYLicenseException;
+import no.unit.nva.model.associatedartifacts.file.CCByLicenseException;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
@@ -93,13 +92,13 @@ public class FileModelTest {
     }
 
     @Test
-    void shouldThrowCCBYLicenseExceptionWhenCustomerRRSWithoutPublisherAuthorityAndNonCCBYLicense() {
+    void shouldThrowCcbyLicenseExceptionWhenCustomerRrsWithoutPublisherAuthorityAndNonCcbyLicense() {
         var file = getPublishedFileWithCustomRRS();
-        assertThrows(CCBYLicenseException.class, file::validate);
+        assertThrows(CCByLicenseException.class, file::validate);
     }
 
     @Test
-    void shouldNotThrowCCBYLicenseExceptionWhenNotCustomerRRS() throws JsonProcessingException {
+    void shouldNotThrowCcbyLicenseExceptionWhenNotCustomerRrs() throws JsonProcessingException {
         var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
         assertDoesNotThrow(file::validate);
     }
