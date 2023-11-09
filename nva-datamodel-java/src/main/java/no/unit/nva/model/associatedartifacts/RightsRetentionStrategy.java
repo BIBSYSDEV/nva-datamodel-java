@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
     @JsonSubTypes.Type(name = CustomerRightsRetentionStrategy.TYPE_NAME, value = CustomerRightsRetentionStrategy.class),
     @JsonSubTypes.Type(
-        name = NullRightsRetentionStrategy.TYPE_NAME,
-        value = NullRightsRetentionStrategy.class),
+        name = OverriddenRightsRetentionStrategy.TYPE_NAME,
+        value = OverriddenRightsRetentionStrategy.class),
     @JsonSubTypes.Type(name = NullRightsRetentionStrategy.TYPE_NAME, value = NullRightsRetentionStrategy.class),
 })
 public interface RightsRetentionStrategy {
