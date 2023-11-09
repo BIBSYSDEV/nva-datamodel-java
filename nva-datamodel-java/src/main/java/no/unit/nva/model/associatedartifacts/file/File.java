@@ -1,7 +1,6 @@
 package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -22,8 +21,6 @@ import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 import nva.commons.core.JacocoGenerated;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An object that represents the description of a file.
@@ -61,7 +58,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         "The file is not annotated as an administrative agreement and should have a license";
     public static final String CCBY_LICENSE =
         "Files with the CustomerRightsRetentionStrategy must have the CC BY license if publisherAuthority is false.";
-    public static final Logger logger = LoggerFactory.getLogger(File.class);
+    public static final String ERROR_MESSAGE = "The specified license cannot be converted into a valid URI license: ";
     private static final Supplier<Pattern> LICENSE_VALIDATION_PATTERN =
         () -> Pattern.compile("^(http|https)://.*$");
 
@@ -97,6 +94,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @param administrativeAgreement True if the file is an administrative agreement
      * @param publisherAuthority      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
+     * @param rightsRetentionStrategy The rights retention strategy for the file
      */
 
     protected File(
@@ -118,7 +116,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.administrativeAgreement = administrativeAgreement;
         this.publisherAuthority = publisherAuthority;
         this.embargoDate = embargoDate;
-        this.rightsRetentionStrategy = Optional.ofNullable(rightsRetentionStrategy).orElse(new NullRightsRetentionStrategy(null));
+        this.rightsRetentionStrategy = assignDefaultStrategyIfNull(rightsRetentionStrategy);
     }
 
     public static Builder builder() {
@@ -237,6 +235,17 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         return toJsonString();
     }
 
+    /**
+     * Assigns a default RightsRetentionStrategy if the provided strategy is null. The default strategy is an instance
+     * of NullRightsRetentionStrategy.
+     *
+     * @param strategy The RightsRetentionStrategy to be checked.
+     * @return The provided strategy if it's not null, or a new NullRightsRetentionStrategy otherwise.
+     */
+    private RightsRetentionStrategy assignDefaultStrategyIfNull(RightsRetentionStrategy strategy) {
+        return strategy != null ? strategy : new NullRightsRetentionStrategy(null);
+    }
+
     private URI parseLicense(Object license) {
         if (isNull(license)) {
             return null;
@@ -254,15 +263,18 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     }
 
     /**
-     * Validate license.
+     * Validates and formats a provided URI license.
+     *
+     * @param license the URI license to be validated
+     * @return the formatted license if the provided license is valid and not a "RightsReserved" license, or the
+     *     original license if it's valid and a "RightsReserved" license
+     * @throws IllegalArgumentException if the license is null or not valid
      */
     private URI validateUriLicense(URI license) {
-        if (nonNull(license) && isValidUriLicense(license) && !license.equals(LICENSE_MAP.get("RightsReserved"))) {
-            return formatValidUriLicense(license);
-        } else {
-            logger.info("The specified license can not be converted into valid URI license: {}", license);
+        if (license == null || !isValidUriLicense(license) || license.equals(LICENSE_MAP.get("RightsReserved"))) {
             return license;
         }
+        return formatValidUriLicense(license);
     }
 
     private boolean isValidUriLicense(URI license) {

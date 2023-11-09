@@ -99,9 +99,15 @@ public class FileModelTest {
     }
 
     @Test
-    void shouldNotThrowCCBYLicenseExceptionWhenNotCustomerRRS() {
-        var file = getAdministrativeAgreement(LICENSE_URI);
+    void shouldNotThrowCCBYLicenseExceptionWhenNotCustomerRRS() throws JsonProcessingException {
+        var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
         assertDoesNotThrow(file::validate);
+    }
+
+    @Test
+    public void shouldAssignDefaultStrategyWhenNoneProvided() throws JsonProcessingException {
+        var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
+        assertThat(file.getRightsRetentionStrategy(), instanceOf(NullRightsRetentionStrategy.class));
     }
 
     @ParameterizedTest(name = "should not throw MissingLicenseException when not administrative agreement")
@@ -220,7 +226,6 @@ public class FileModelTest {
                    .withLicense(license)
                    .withName(FileModelTest.FIRST_FILE_TXT)
                    .withAdministrativeAgreement(true)
-                   .withRightsRetentionStrategy(new NullRightsRetentionStrategy(null))
                    .buildUnpublishableFile();
     }
 
@@ -312,6 +317,21 @@ public class FileModelTest {
                        + "  }";
         var file = JsonUtils.dtoObjectMapper.readValue(fileJson, File.class);;
         assertThat(file, instanceOf(UnpublishedFile.class));
+    }
+
+    private static String generateNewFile() {
+        return "{\n"
+               + "    \"type\" : \"PublishedFile\",\n"
+               + "    \"identifier\" : \"d9fc5844-f1a3-491b-825a-5a4cabc12aa2\",\n"
+               + "    \"name\" : \"Per Magne Østertun.pdf\",\n"
+               + "    \"mimeType\" : \"application/pdf\",\n"
+               + "    \"size\" : 1025817,\n"
+               + "    \"license\" : \"https://creativecommons.org/licenses/by-nc/2.0/\",\n"
+               + "    \"administrativeAgreement\" : false,\n"
+               + "    \"publisherAuthority\" : false,\n"
+               + "    \"publishedDate\" : \"2023-05-25T19:31:17.302914Z\",\n"
+               + "    \"visibleForNonOwner\" : true\n"
+               + "  }";
     }
 
     public static RightsRetentionStrategy randomRightsRetentionStrategy() {

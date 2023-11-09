@@ -8,6 +8,15 @@ import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 
 public class RightsRetentionStrategyGenerator {
 
+    /**
+     * Generates and returns a random RightsRetentionStrategy.
+     *
+     * The method randomly selects one of the three implemented types of
+     * RightsRetentionStrategy: CustomerRightsRetentionStrategy,
+     * OverriddenRightsRetentionStrategy, or NullRightsRetentionStrategy.
+     *
+     * @return A randomly selected RightsRetentionStrategy object.
+     */
     public static RightsRetentionStrategy randomRightsRetentionStrategy() {
         RightsRetentionStrategy[] strategies = {
             new CustomerRightsRetentionStrategy(),
