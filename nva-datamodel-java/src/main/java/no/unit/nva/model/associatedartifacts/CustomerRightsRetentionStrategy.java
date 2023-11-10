@@ -8,8 +8,9 @@ import nva.commons.core.JacocoGenerated;
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(CustomerRightsRetentionStrategy.TYPE_NAME)
 public class CustomerRightsRetentionStrategy implements RightsRetentionStrategy {
-    private static final int STATIC_VALUE_FOR_HASH_CODE = 88_961;
+
     public static final String TYPE_NAME = "CustomerRightsRetentionStrategy";
+    private static final int STATIC_VALUE_FOR_HASH_CODE = 982_114;
 
     @JacocoGenerated
     @Override
@@ -25,6 +26,4 @@ public class CustomerRightsRetentionStrategy implements RightsRetentionStrategy 
         }
         return o instanceof CustomerRightsRetentionStrategy;
     }
-
-
 }

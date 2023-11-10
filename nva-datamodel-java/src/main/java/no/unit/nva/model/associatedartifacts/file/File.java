@@ -271,7 +271,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @throws IllegalArgumentException if the license is null or not valid
      */
     private URI validateUriLicense(URI license) {
-        if (license == null || !isValidUriLicense(license) || license.equals(LICENSE_MAP.get("RightsReserved"))) {
+        if (isNull(license) || !isValidUriLicense(license) || license.equals(LICENSE_MAP.get("RightsReserved"))) {
             return license;
         }
         return formatValidUriLicense(license);

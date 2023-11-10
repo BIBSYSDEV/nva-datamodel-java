@@ -18,7 +18,6 @@ public class AdministrativeAgreement extends File {
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
      * marked as an administrative agreement.
-     *
      * @param identifier              A UUID that identifies the file in storage
      * @param name                    The original name of the file
      * @param mimeType                The mimetype of the file
@@ -28,6 +27,7 @@ public class AdministrativeAgreement extends File {
      * @param administrativeAgreement True if the file is an administrative agreement
      * @param publisherAuthority      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
+     * @param rightsRetentionStrategy The rights retention strategy for the file
      */
     @JsonCreator
     public AdministrativeAgreement(
