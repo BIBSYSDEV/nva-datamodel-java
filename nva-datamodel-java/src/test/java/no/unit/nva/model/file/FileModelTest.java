@@ -18,12 +18,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Username;
+import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.OverriddenRightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
+import no.unit.nva.model.associatedartifacts.file.CCByLicenseException;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
@@ -36,6 +41,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class FileModelTest {
 
     public static final URI LICENSE_URI = URI.create("http://creativecommons.org/licenses/by/4.0/");
+    public static final URI CC_BY_NC_LICENSE_URI = URI.create("https://creativecommons.org/licenses/by-nc/4.0");
     public static final String APPLICATION_PDF = "application/pdf";
     public static final String FIRST_FILE_TXT = "First_file.txt";
     public static final String CC_BY = "CC-BY";
@@ -83,6 +89,24 @@ public class FileModelTest {
     void shouldNotThrowMissingLicenseExceptionWhenFileIsAdministrativeAgreementAndLicenseIsPresent() {
         var file = getAdministrativeAgreement(LICENSE_URI);
         assertDoesNotThrow(file::validate);
+    }
+
+    @Test
+    void shouldThrowCcbyLicenseExceptionWhenCustomerRrsWithoutPublisherAuthorityAndNonCcbyLicense() {
+        var file = getPublishedFileWithCustomRRS();
+        assertThrows(CCByLicenseException.class, file::validate);
+    }
+
+    @Test
+    void shouldNotThrowCcbyLicenseExceptionWhenNotCustomerRrs() throws JsonProcessingException {
+        var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
+        assertDoesNotThrow(file::validate);
+    }
+
+    @Test
+    public void shouldAssignDefaultStrategyWhenNoneProvided() throws JsonProcessingException {
+        var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
+        assertThat(file.getRightsRetentionStrategy(), instanceOf(NullRightsRetentionStrategy.class));
     }
 
     @ParameterizedTest(name = "should not throw MissingLicenseException when not administrative agreement")
@@ -141,7 +165,7 @@ public class FileModelTest {
     public static File randomUnpublishableFile() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant());
+            LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant(), randomRightsRetentionStrategy());
     }
 
     public static File randomUnpublishedFile() {
@@ -171,6 +195,7 @@ public class FileModelTest {
                    .withMimeType(randomString())
                    .withSize(randomInteger().longValue())
                    .withEmbargoDate(randomInstant())
+                   .withRightsRetentionStrategy(randomRightsRetentionStrategy())
                    .withLicense(LICENSE_URI)
                    .withIdentifier(UUID.randomUUID())
                    .withPublisherAuthority(randomBoolean());
@@ -184,7 +209,8 @@ public class FileModelTest {
             LICENSE_URI,
             NOT_ADMINISTRATIVE_AGREEMENT,
             randomBoolean(),
-            randomInstant());
+            randomInstant(),
+            randomRightsRetentionStrategy());
     }
 
     private static File.Builder admAgreementBuilder() {
@@ -205,7 +231,7 @@ public class FileModelTest {
     private AdministrativeAgreement randomAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant());
+            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant(), randomRightsRetentionStrategy());
     }
 
     private PublishedFile publishedFileWithActiveEmbargo() {
@@ -217,6 +243,7 @@ public class FileModelTest {
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
+                                 randomRightsRetentionStrategy(),
                                  randomInstant());
     }
 
@@ -249,6 +276,24 @@ public class FileModelTest {
                    .buildPublishedFile();
     }
 
+    private File getPublishedFileWithCustomRRS() {
+        return getPublishedFileWithCustomRRS(UUID.randomUUID());
+    }
+
+    private File getPublishedFileWithCustomRRS(UUID identifier) {
+        return File.builder()
+            .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
+            .withEmbargoDate(null)
+            .withIdentifier(identifier)
+            .withLicense(CC_BY_NC_LICENSE_URI)
+            .withMimeType(APPLICATION_PDF)
+            .withName(FIRST_FILE_TXT)
+            .withPublisherAuthority(false)
+            .withSize(SIZE)
+            .withRightsRetentionStrategy(new CustomerRightsRetentionStrategy())
+            .buildPublishedFile();
+    }
+
     @Deprecated
     @Test
     void shouldMigrateLegacyFileToUnpublishedFile() throws JsonProcessingException {
@@ -271,5 +316,30 @@ public class FileModelTest {
                        + "  }";
         var file = JsonUtils.dtoObjectMapper.readValue(fileJson, File.class);;
         assertThat(file, instanceOf(UnpublishedFile.class));
+    }
+
+    private static String generateNewFile() {
+        return "{\n"
+               + "    \"type\" : \"PublishedFile\",\n"
+               + "    \"identifier\" : \"d9fc5844-f1a3-491b-825a-5a4cabc12aa2\",\n"
+               + "    \"name\" : \"Per Magne Østertun.pdf\",\n"
+               + "    \"mimeType\" : \"application/pdf\",\n"
+               + "    \"size\" : 1025817,\n"
+               + "    \"license\" : \"https://creativecommons.org/licenses/by-nc/2.0/\",\n"
+               + "    \"administrativeAgreement\" : false,\n"
+               + "    \"publisherAuthority\" : false,\n"
+               + "    \"publishedDate\" : \"2023-05-25T19:31:17.302914Z\",\n"
+               + "    \"visibleForNonOwner\" : true\n"
+               + "  }";
+    }
+
+    public static RightsRetentionStrategy randomRightsRetentionStrategy() {
+        RightsRetentionStrategy[] strategies = {
+            new CustomerRightsRetentionStrategy(),
+            new OverriddenRightsRetentionStrategy(),
+            new NullRightsRetentionStrategy(null)
+        };
+
+        return strategies[new Random().nextInt(strategies.length)];
     }
 }

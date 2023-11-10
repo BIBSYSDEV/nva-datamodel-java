@@ -744,6 +744,18 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  CustomerRightsRetentionStrategy:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/RightsRetentionStrategy'
+    - type: object
+      properties:
+        type:
+          type: string
   DataManagementPlan:
     required:
     - type
@@ -1206,6 +1218,8 @@ referencedSchemas:
         embargoDate:
           type: string
           format: date-time
+        rightsRetentionStrategy:
+          $ref: '#/components/schemas/RightsRetentionStrategy'
         visibleForNonOwner:
           type: boolean
         type:
@@ -1222,16 +1236,16 @@ referencedSchemas:
         type: object
         additionalProperties:
           type: string
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
+      identifier:
+        type: string
       activeFrom:
         type: string
         format: date-time
       activeTo:
         type: string
         format: date-time
-      identifier:
-        type: string
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
       type:
         type: string
     discriminator:
@@ -2097,6 +2111,20 @@ referencedSchemas:
       properties:
         type:
           type: string
+  NullRightsRetentionStrategy:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/RightsRetentionStrategy'
+    - type: object
+      properties:
+        legalNote:
+          type: string
+        type:
+          type: string
   Organization:
     required:
     - type
@@ -2186,6 +2214,18 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         submittedDate:
           $ref: '#/components/schemas/PublicationDate'
+        type:
+          type: string
+  OverriddenRightsRetentionStrategy:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/RightsRetentionStrategy'
+    - type: object
+      properties:
         type:
           type: string
   Pages:
@@ -2683,6 +2723,15 @@ referencedSchemas:
       ownerAffiliation:
         type: string
         format: uri
+  RightsRetentionStrategy:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   RoleType:
     type: object
     properties:
