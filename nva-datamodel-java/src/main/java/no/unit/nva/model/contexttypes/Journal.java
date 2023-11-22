@@ -1,15 +1,11 @@
 package no.unit.nva.model.contexttypes;
 
 import static java.util.Objects.isNull;
-import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNotHostedInProd;
-import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.isNewStyleIdentifier;
-import static no.unit.nva.model.contexttypes.utils.MigrateChannelIdUtil.migrateToNewIdIfFound;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.util.Objects;
-import no.unit.nva.model.contexttypes.utils.ChannelType;
 import no.unit.nva.model.exceptions.InvalidSeriesException;
 import nva.commons.core.JacocoGenerated;
 
@@ -21,9 +17,7 @@ public class Journal implements Periodical {
     @JsonCreator
     public Journal(@JsonProperty("id") URI id) {
         validate(id);
-        this.id = isNewStyleIdentifier(id) || isNotHostedInProd(id)
-                      ? id
-                      : migrateToNewIdIfFound(id, ChannelType.JOURNAL);
+        this.id = id;
     }
 
     public URI getId() {
