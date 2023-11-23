@@ -1215,6 +1215,8 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
       source:
         type: string
         format: uri
@@ -1230,8 +1232,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-      identifier:
-        type: string
       type:
         type: string
     discriminator:
@@ -1284,6 +1284,10 @@ referencedSchemas:
         - Verified
         - CannotBeEstablished
         - NotVerified
+      additionalIdentifiers:
+        type: array
+        items:
+          $ref: '#/components/schemas/AdditionalIdentifier'
       type:
         type: string
     discriminator:

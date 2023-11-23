@@ -1,6 +1,7 @@
 package no.unit.nva.model.testing;
 
 import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicationContext;
+import static no.unit.nva.model.testing.PublicationGenerator.randomAdditionalIdentifier;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
@@ -10,6 +11,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.util.List;
 import java.util.Map;
+import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Contributor;
 import no.unit.nva.model.ContributorVerificationStatus;
 import no.unit.nva.model.EntityDescription;
@@ -82,8 +84,13 @@ public final class EntityDescriptionBuilder {
                    .withName(randomString())
                    .withOrcId(randomString())
                    .withNameType(randomNameType())
+                   .withAdditionalIdentifiers(randomAdditionalIdentifiers())
                    .withVerificationStatus(randomElement(ContributorVerificationStatus.values()))
                    .build();
+    }
+
+    private static List<AdditionalIdentifier> randomAdditionalIdentifiers() {
+        return List.of(randomAdditionalIdentifier(), randomAdditionalIdentifier());
     }
 
     private static NameType randomNameType() {
