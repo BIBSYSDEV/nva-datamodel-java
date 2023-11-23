@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
+import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 
 @SuppressWarnings("PMD.ExcessiveParameterList")
 @JsonTypeInfo(use = Id.NAME, property = "type")
@@ -44,8 +45,10 @@ public class PublishedFile extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
+        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(PUBLISHED_DATE) Instant publishedDate) {
-        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority, embargoDate);
+        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority,
+              embargoDate, rightsRetentionStrategy);
         this.publishedDate = publishedDate;
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
