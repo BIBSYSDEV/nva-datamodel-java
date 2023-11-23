@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
-import static java.util.Objects.isNull;
+import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.util.List;
@@ -62,9 +63,9 @@ public class Identity {
     }
 
     public List<AdditionalIdentifier> getAdditionalIdentifiers() {
-        return isNull(additionalIdentifiers)
-                   ? List.of()
-                   : additionalIdentifiers;
+        return nonNull(additionalIdentifiers)
+                   ? additionalIdentifiers
+                   : emptyList();
     }
 
     public void setAdditionalIdentifiers(List<AdditionalIdentifier> additionalIdentifiers) {
