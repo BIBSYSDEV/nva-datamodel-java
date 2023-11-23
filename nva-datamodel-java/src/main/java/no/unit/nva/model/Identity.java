@@ -1,7 +1,10 @@
 package no.unit.nva.model;
 
+import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
+import java.util.List;
 import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
@@ -13,6 +16,7 @@ public class Identity {
     private NameType nameType;
     private String orcId;
     private ContributorVerificationStatus verificationStatus;
+    private List<AdditionalIdentifier> additionalIdentifiers;
 
     public Identity() {
     }
@@ -23,6 +27,7 @@ public class Identity {
         setNameType(builder.nameType);
         setOrcId(builder.orcId);
         setVerificationStatus(builder.verificationStatus);
+        setAdditionalIdentifiers(builder.additionalIdentifiers);
     }
 
     public URI getId() {
@@ -57,6 +62,16 @@ public class Identity {
         this.orcId = orcId;
     }
 
+    public List<AdditionalIdentifier> getAdditionalIdentifiers() {
+        return nonNull(additionalIdentifiers)
+                   ? additionalIdentifiers
+                   : emptyList();
+    }
+
+    public void setAdditionalIdentifiers(List<AdditionalIdentifier> additionalIdentifiers) {
+        this.additionalIdentifiers = additionalIdentifiers;
+    }
+
     public ContributorVerificationStatus getVerificationStatus() {
         return verificationStatus;
     }
@@ -68,7 +83,12 @@ public class Identity {
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getNameType(), getOrcId(), getVerificationStatus());
+        return Objects.hash(getId(),
+                            getName(),
+                            getNameType(),
+                            getOrcId(),
+                            getVerificationStatus(),
+                            getAdditionalIdentifiers());
     }
 
     @JacocoGenerated
@@ -85,6 +105,7 @@ public class Identity {
                && Objects.equals(getName(), identity.getName())
                && getNameType() == identity.getNameType()
                && Objects.equals(getOrcId(), identity.getOrcId())
+               && Objects.equals(getAdditionalIdentifiers(), identity.getAdditionalIdentifiers())
                && Objects.equals(getVerificationStatus(), identity.getVerificationStatus());
     }
 
@@ -94,6 +115,8 @@ public class Identity {
         private String name;
         private NameType nameType;
         private String orcId;
+
+        private List<AdditionalIdentifier> additionalIdentifiers;
 
         private ContributorVerificationStatus verificationStatus;
 
@@ -122,6 +145,11 @@ public class Identity {
 
         public Builder withVerificationStatus(ContributorVerificationStatus verificationStatus) {
             this.verificationStatus = verificationStatus;
+            return this;
+        }
+
+        public Builder withAdditionalIdentifiers(List<AdditionalIdentifier> additionalIdentifiers) {
+            this.additionalIdentifiers = additionalIdentifiers;
             return this;
         }
 
