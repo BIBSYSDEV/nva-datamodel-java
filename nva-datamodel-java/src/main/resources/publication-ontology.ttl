@@ -1016,11 +1016,11 @@ nva:doi a rdf:Property ;
   rdfs:range xsd:anyURI .
 
 nva:duplicateOf a rdf:Property ;
-        rdfs:comment "" ;
+        rdfs:comment "Denotes that a publication is a duplicate of another publication" ;
         rdfs:label "" ;
         rdfs:isDefinedBy nva: ;
         rdfs:domain nva:Publication ;
-        rdfs:range xsd:anyURI .
+        rdfs:range xsd:Publication .
 
 nva:status a rdf:Property ;
   rdfs:comment "" ;
