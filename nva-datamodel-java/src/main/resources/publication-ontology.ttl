@@ -11,12 +11,12 @@ nva:ClothingDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:Exhibition a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:Funding a rdfs:Class ;
   rdfs:comment "A source of financial support" ;
   rdfs:isDefinedBy nva: .
@@ -39,42 +39,42 @@ nva:GraphicDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:Illustration a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:InteractionDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:InteriorDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:LightDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:ProductDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:ServiceDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:WebDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
-  
+
 nva:UnconfirmedMediaContributionPeriodical a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -94,17 +94,17 @@ nva:Building a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArchitectureSubtype .
-  
+
 nva:PlanningProposal a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArchitectureSubtype .
-  
+
 nva:LandscapeArchitecture a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ArchitectureSubtype .
-  
+
 nva:Interior a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -210,70 +210,70 @@ nva:Lecture a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Event .
-  
+
 nva:DataSet a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ResearchData .
-  
+
 nva:License a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:MediaBlogPost a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MediaContribution .
-  
+
 nva:DegreePhd a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Degree .
-  
+
 nva:PublishedFile a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:File .
-  
+
 nva:ResearchProject a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Project .
 
-  
+
 nva:JournalIssue a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Journal .
-  
+
 nva:Book a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:LiteraryArtsWeb a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:Identity a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:Approval a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:ChapterConferenceAbstract a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Chapter .
-  
+
 nva:Degree a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:Instant a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -283,27 +283,27 @@ nva:Time a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf skos:Concept .
-  
+
 nva:Publication a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf owl:Thing .
-  
+
 nva:ReportBasic a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Report .
-  
+
 nva:MusicScore a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:MediaContribution a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:EntityDescription a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -313,46 +313,46 @@ nva:DescriptiveMetadata a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf skos:Concept .
-  
+
 nva:LiteraryArtsPerformance a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:ConferenceLecture a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Event .
-  
+
 nva:MusicalWork a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:GeographicalDescription a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:DescriptiveMetadata .
-  
+
 nva:Map a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:GeographicalContent .
-  
+
 nva:BookAnthology a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Book .
-  
+
 nva:OtherRelease a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:JournalInterview a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Journal .
-  
+
 nva:Organization a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -367,17 +367,17 @@ nva:VisualArts a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:DataManagementPlan a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:ResearchData .
-  
+
 nva:ConferencePoster a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Event .
-  
+
 nva:Ismn a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -387,17 +387,17 @@ nva:Identifier a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf owl:Thing .
-  
+
 nva:PerformingArts a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:ReportResearch a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Report .
-  
+
 nva:AdditionalIdentifier a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -459,7 +459,7 @@ nva:DegreeMaster a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Degree .
-  
+
 nva:MediaReaderOpinion a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -469,88 +469,88 @@ nva:MediaContributionPeriodical a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MediaContribution .
-  
+
 nva:UnconfirmedPublisher a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publisher .
-  
+
 nva:Artistic a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:GeographicalContent a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:Reference a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:DescriptiveMetadata .
-  
+
 nva:JournalLeader a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Journal .
-  
+
 nva:Chapter a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:MediaPodcast a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Media .
-  
+
 nva:Radio a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Media .
-  
+
 nva:Publisher a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Organization .
-  
+
 nva:LiteraryArtsAudioVisual a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:JournalLetter a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Journal .
-  
+
 nva:Concert a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:AudioVisualPublication a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
 
-  
+
 nva:CinematicRelease a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:MovingPicture a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:Event a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:MonographPages a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -565,107 +565,107 @@ nva:Extent a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:DescriptiveMetadata .
-  
+
 nva:AssociatedLink a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf rdf:Resource .
-  
+
 nva:Other a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
   # rdfs:subClassOf nva: This is a long list
-  
+
 nva:Competition a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:TV a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:Journal a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:MusicPerformance a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
 
-  
+
 nva:BookAbstracts a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Book .
-  
+
 nva:NullPages a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Pages .
-  
+
 nva:OtherPerformance a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:Venue a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:Architecture a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:Period a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Time .
-  
+
 nva:Range a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Pages .
-  
+
 nva:UnconfirmedPlace a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Place .
-  
+
 nva:LiteraryArts a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Artistic .
-  
+
 nva:DegreeBachelor a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Degree .
-  
+
 nva:MentionInPublication a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:Internet a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:SeriesEpisode a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:ResearchData a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:MediaParticipationInRadioOrTv a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Media .
-  
+
 nva:MusicalWorkPerformance a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -715,32 +715,32 @@ nva:Play a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:LiteraryArts .
-  
+
 nva:Film a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MovingPicture .
-  
+
 nva:ShortFilm a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MovingPicture .
-  
+
 nva:SerialFilmProduction a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MovingPicture .
-  
+
 nva:InteractiveFilm a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MovingPicture .
-  
+
 nva:AugmentedVirtualRealityFilm a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MovingPicture .
-  
+
 
 nva:CollectiveExhibition a rdfs:Class ;
   rdfs:comment "" ;
@@ -776,72 +776,72 @@ nva:MediaInterview a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Media .
-  
+
 nva:Contributor a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:OtherStudentWork a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Degree .
-  
+
 nva:ChapterArticle a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Chapter .
-  
+
 nva:ChapterInReport a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Chapter .
-  
+
 nva:ReportBookOfAbstract a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Report .
-  
+
 nva:PerformingArtsVenue a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Venue .
-  
+
 nva:ConferenceAbstract a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Event .
 
-  
+
 nva:Isrc a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Identifier .
-  
+
 nva:MediaFeatureArticle a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Media .
-  
+
 nva:JournalArticle a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Journal .
-  
+
 nva:JournalReview a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Journal .
-  
+
 nva:PublicationDate a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Time .
-  
+
 nva:Report a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:JournalCorrigendum a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -850,40 +850,40 @@ nva:JournalCorrigendum a rdfs:Class ;
 nva:Series a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:MusicTrack a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:Award a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: .
-  
+
 nva:ArtisticDesign a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Publication .
-  
+
 nva:LiteraryArtsMonograph a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:LiteraryArts .
-  
+
 nva:FeatureArticle a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:MediaContribution .
-  
+
 nva:OtherPresentation a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Event .
-  
+
 nva:ReportPolicy a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Report .
-  
+
 nva:DegreeLicentiate a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
@@ -1014,6 +1014,13 @@ nva:doi a rdf:Property ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication, nva:Reference ;
   rdfs:range xsd:anyURI .
+
+nva:duplicateOf a rdf:Property ;
+        rdfs:comment "" ;
+        rdfs:label "" ;
+        rdfs:isDefinedBy nva: ;
+        rdfs:domain nva:Publication ;
+        rdfs:range xsd:anyURI .
 
 nva:status a rdf:Property ;
   rdfs:comment "" ;

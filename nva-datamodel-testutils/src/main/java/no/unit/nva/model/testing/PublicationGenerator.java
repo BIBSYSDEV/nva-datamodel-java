@@ -187,6 +187,7 @@ public final class PublicationGenerator {
                 .withEntityDescription(randomEntityDescription(publicationInstanceClass))
                 .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
                 .withPublicationNotes(List.of(randomPublicationNote()))
+                .withDuplicateOf(randomUri())
                 .build();
     }
 

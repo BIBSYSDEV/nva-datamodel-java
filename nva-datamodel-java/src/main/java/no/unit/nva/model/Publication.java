@@ -67,11 +67,20 @@ public class Publication
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
     private String rightsHolder;
+    private URI duplicateOf;
 
     private List<PublicationNote> publicationNotes;
 
     public Publication() {
         // Default constructor, use setters.
+    }
+
+    public URI getDuplicateOf() {
+        return duplicateOf;
+    }
+
+    public void setDuplicateOf(URI duplicateOf) {
+        this.duplicateOf = duplicateOf;
     }
 
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
@@ -295,7 +304,8 @@ public class Publication
                    .withSubjects(getSubjects())
                    .withFundings(getFundings())
                    .withRightsHolder(getRightsHolder())
-                   .withPublicationNotes(getPublicationNotes());
+                   .withPublicationNotes(getPublicationNotes())
+                   .withDuplicateOf(getDuplicateOf());
     }
 
     /**
@@ -315,7 +325,7 @@ public class Publication
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
                     getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
-                    getAssociatedArtifacts(), getRightsHolder(), getPublicationNotes());
+                    getAssociatedArtifacts(), getRightsHolder(), getPublicationNotes(), getDuplicateOf());
     }
 
     @JacocoGenerated
@@ -346,7 +356,8 @@ public class Publication
                              && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                              && Objects.equals(getSubjects(), that.getSubjects())
                              && Objects.equals(getRightsHolder(), that.getRightsHolder())
-                             && Objects.equals(getPublicationNotes(), that.getPublicationNotes());
+                             && Objects.equals(getPublicationNotes(), that.getPublicationNotes())
+                             && Objects.equals(getDuplicateOf(), that.getDuplicateOf());
         return firstHalf && secondHalf;
     }
 
@@ -510,6 +521,11 @@ public class Publication
 
         public Builder withPublicationNotes(List<PublicationNote> publicationNotes) {
             publication.setPublicationNotes(publicationNotes);
+            return this;
+        }
+
+        public Builder withDuplicateOf(URI duplicateOf) {
+            publication.setDuplicateOf(duplicateOf);
             return this;
         }
     }
