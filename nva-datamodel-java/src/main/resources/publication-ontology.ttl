@@ -86,12 +86,12 @@ nva:UnconfirmedJournal a rdfs:Class ;
                          rdfs:subClassOf nva:Periodical .
 
 nva:Course a rdfs:Class ;
-               rdfs:comment "" ;
+               rdfs:comment "A course of study" ;
                rdfs:isDefinedBy nva: ;
                rdfs:subClassOf nva:Course .
 
 nva:UnconfirmedCourse a rdf:Property ;
-               rdfs:comment "" ;
+               rdfs:comment "A course that cannot be verified to exist in any source system" ;
                rdfs:isDefinedBy nva: ;
                rdfs:subClassOf nva:Course ;
                rdfs:domain nva:Degree .
