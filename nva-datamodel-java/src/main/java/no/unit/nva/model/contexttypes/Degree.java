@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
+import no.unit.nva.model.Course;
 import no.unit.nva.model.exceptions.InvalidIsbnException;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 
@@ -12,7 +13,7 @@ import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 public class Degree extends Book {
 
     public static final String JSON_PROPERTY_COURSE_CODE = "courseCode";
-    private final String courseCode;
+    private final Course course;
 
     @JsonCreator
     public Degree(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
@@ -20,18 +21,18 @@ public class Degree extends Book {
                   @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
                   @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                   @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList,
-                  @JsonProperty(JSON_PROPERTY_COURSE_CODE) String courseCode) throws InvalidUnconfirmedSeriesException {
+                  @JsonProperty(JSON_PROPERTY_COURSE_CODE) Course course) throws InvalidUnconfirmedSeriesException {
         super(series, unconfirmedSeriesTitle, seriesNumber, publisher, isbnList);
-        this.courseCode = courseCode;
+        this.course = course;
     }
 
-    private Degree(Builder builder, String courseCode) throws InvalidUnconfirmedSeriesException {
+    private Degree(Builder builder, Course courseCode) throws InvalidUnconfirmedSeriesException {
         super(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList);
-        this.courseCode = courseCode;
+        this.course = courseCode;
     }
 
-    public String getCourseCode() {
-        return courseCode;
+    public Course getCourse() {
+        return course;
     }
 
     public static final class Builder {
@@ -40,7 +41,7 @@ public class Degree extends Book {
         private String seriesNumber;
         private PublishingHouse publisher;
         private List<String> isbnList;
-        private String courseCode;
+        private Course course;
 
         public Builder() {
         }
@@ -65,13 +66,13 @@ public class Degree extends Book {
             return this;
         }
 
-        public Builder withCourseCode(String courseCode) {
-            this.courseCode = courseCode;
+        public Builder withCourse(Course course) {
+            this.course = course;
             return this;
         }
 
         public Degree build() throws InvalidIsbnException, InvalidUnconfirmedSeriesException {
-            return new Degree(this, courseCode);
+            return new Degree(this, course);
         }
     }
 }

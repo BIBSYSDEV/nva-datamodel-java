@@ -710,6 +710,21 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
+  ConfirmedCourse:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Course'
+    - type: object
+      properties:
+        id:
+          type: string
+          format: uri
+        type:
+          type: string
   ConfirmedFunding:
     required:
     - type
@@ -743,6 +758,15 @@ referencedSchemas:
         format: int32
       correspondingAuthor:
         type: boolean
+      type:
+        type: string
+    discriminator:
+      propertyName: type
+  Course:
+    required:
+    - type
+    type: object
+    properties:
       type:
         type: string
     discriminator:
@@ -839,7 +863,9 @@ referencedSchemas:
           items:
             type: string
         courseCode:
-          type: string
+          $ref: '#/components/schemas/Course'
+        course:
+          $ref: '#/components/schemas/Course'
         additionalIdentifiers:
           uniqueItems: true
           type: array
@@ -2900,6 +2926,20 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  UnconfirmedCourse:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Course'
+    - type: object
+      properties:
+        code:
+          type: string
+        type:
+          type: string
   UnconfirmedFunding:
     required:
     - type
