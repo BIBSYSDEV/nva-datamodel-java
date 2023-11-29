@@ -90,12 +90,6 @@ nva:Course a rdfs:Class ;
                rdfs:isDefinedBy nva: ;
                rdfs:subClassOf nva:Course .
 
-nva:ConfirmedCourse a rdf:Property ;
-               rdfs:comment "" ;
-               rdfs:isDefinedBy nva: ;
-               rdfs:subClassOf nva:Course ;
-               rdfs:domain nva:Degree .
-
 nva:UnconfirmedCourse a rdf:Property ;
                rdfs:comment "" ;
                rdfs:isDefinedBy nva: ;

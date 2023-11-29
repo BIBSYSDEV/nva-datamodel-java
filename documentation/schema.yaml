@@ -710,21 +710,6 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         type:
           type: string
-  ConfirmedCourse:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/Course'
-    - type: object
-      properties:
-        id:
-          type: string
-          format: uri
-        type:
-          type: string
   ConfirmedFunding:
     required:
     - type
