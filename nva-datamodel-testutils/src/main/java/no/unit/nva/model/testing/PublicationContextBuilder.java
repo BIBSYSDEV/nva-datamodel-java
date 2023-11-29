@@ -187,6 +187,7 @@ public class PublicationContextBuilder {
             .withSeries(randomBookSeries())
             .withIsbnList(randomIsbnList())
             .withPublisher(randomPublishingHouse())
+            .withCourseCode(randomString())
             .build();
     }
 

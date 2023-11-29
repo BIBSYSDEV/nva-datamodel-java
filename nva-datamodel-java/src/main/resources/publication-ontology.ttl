@@ -1022,6 +1022,13 @@ nva:duplicateOf a rdf:Property ;
   rdfs:domain nva:Publication ;
   rdfs:range nva:Publication .
 
+nva:courseCode a rdf:Property ;
+  rdfs:comment "Course code of subject" ;
+  rdfs:label "courseCode" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Degree ;
+  rdfs:range xsd:string .
+
 nva:status a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
