@@ -747,6 +747,15 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Course:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   CustomerRightsRetentionStrategy:
     required:
     - type
@@ -838,6 +847,10 @@ referencedSchemas:
           type: array
           items:
             type: string
+        courseCode:
+          $ref: '#/components/schemas/Course'
+        course:
+          $ref: '#/components/schemas/Course'
         additionalIdentifiers:
           uniqueItems: true
           type: array
@@ -2898,6 +2911,20 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  UnconfirmedCourse:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Course'
+    - type: object
+      properties:
+        code:
+          type: string
+        type:
+          type: string
   UnconfirmedFunding:
     required:
     - type

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Organization;
+import no.unit.nva.model.UnconfirmedCourse;
 import no.unit.nva.model.contexttypes.Anthology;
 import no.unit.nva.model.contexttypes.Artistic;
 import no.unit.nva.model.contexttypes.Book;
@@ -187,6 +188,7 @@ public class PublicationContextBuilder {
             .withSeries(randomBookSeries())
             .withIsbnList(randomIsbnList())
             .withPublisher(randomPublishingHouse())
+            .withCourse(new UnconfirmedCourse(randomString()))
             .build();
     }
 
