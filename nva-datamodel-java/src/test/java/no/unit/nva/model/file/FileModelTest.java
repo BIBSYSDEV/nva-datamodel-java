@@ -2,6 +2,7 @@ package no.unit.nva.model.file;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
@@ -19,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
@@ -69,7 +71,7 @@ public class FileModelTest {
     void shouldRoundTripAllFileTypes(File file) throws JsonProcessingException {
         var json = JsonUtils.dtoObjectMapper.writeValueAsString(file);
         var deserialized = JsonUtils.dtoObjectMapper.readValue(json, File.class);
-        assertThat(deserialized, doesNotHaveEmptyValues());
+        assertThat(deserialized, doesNotHaveEmptyValuesIgnoringFields(Set.of(".rightsRetentionStrategy.legalNote")));
         assertThat(deserialized, is(equalTo(file)));
     }
 
@@ -131,7 +133,7 @@ public class FileModelTest {
         var mapped = dataModelObjectMapper.writeValueAsString(file);
         var unmapped = dataModelObjectMapper.readValue(mapped, File.class);
         assertThat(file, equalTo(unmapped));
-        assertThat(file, doesNotHaveEmptyValues());
+        assertThat(file, doesNotHaveEmptyValuesIgnoringFields(Set.of(".rightsRetentionStrategy.legalNote")));
     }
 
     @Test
@@ -290,7 +292,7 @@ public class FileModelTest {
             .withName(FIRST_FILE_TXT)
             .withPublisherAuthority(false)
             .withSize(SIZE)
-            .withRightsRetentionStrategy(new CustomerRightsRetentionStrategy())
+            .withRightsRetentionStrategy(new CustomerRightsRetentionStrategy(randomString(), randomBoolean()))
             .buildPublishedFile();
     }
 
@@ -335,9 +337,9 @@ public class FileModelTest {
 
     public static RightsRetentionStrategy randomRightsRetentionStrategy() {
         RightsRetentionStrategy[] strategies = {
-            new CustomerRightsRetentionStrategy(),
-            new OverriddenRightsRetentionStrategy(),
-            new NullRightsRetentionStrategy(null)
+            new CustomerRightsRetentionStrategy(randomString(), randomBoolean()),
+            new OverriddenRightsRetentionStrategy(randomString(), randomBoolean()),
+            new NullRightsRetentionStrategy(randomString(), randomBoolean())
         };
 
         return strategies[new Random().nextInt(strategies.length)];
