@@ -12,6 +12,7 @@ import java.util.Set;
 
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
+import static no.unit.nva.model.PublicationTest.BOOK_REVISION_FIELD;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -29,7 +30,7 @@ class PublicationMapperTest {
         Publication publication = PublicationGenerator.randomPublication();
         var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
         var des = JsonUtils.dtoObjectMapper.readValue(json,Publication.class);
-        assertThat(des,doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest")));
+        assertThat(des,doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
         PublicationResponse response = PublicationMapper
             .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
 
