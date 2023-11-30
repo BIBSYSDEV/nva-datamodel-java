@@ -1,5 +1,12 @@
 package no.unit.nva.model.testing;
 
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.matchesPattern;
+import java.net.URI;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.contexttypes.Book;
 import no.unit.nva.model.contexttypes.BookSeries;
@@ -10,18 +17,10 @@ import no.unit.nva.model.contexttypes.Series;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.net.URI;
-import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.matchesPattern;
-
 class PublicationGeneratorTest {
 
-    public static final Set<String> FIELDS_EXPECTED_TO_BE_NULL = Set.of(".doiRequest");
+    public static final Set<String> FIELDS_EXPECTED_TO_BE_NULL =
+        Set.of(".doiRequest", ".entityDescription.reference.publicationContext.revision");
     public static final Pattern EXPECTED_PUBLICATION_CHANNELS_URI =
         Pattern.compile("https://.*?nva\\.aws\\.unit\\.no/publication-channels/.*");
 
@@ -40,7 +39,7 @@ class PublicationGeneratorTest {
     @ParameterizedTest
     @MethodSource("publicationInstanceProvider")
     void shouldReturnPublicationWithPublicationChannelUriWherePublicationChannelUriIsExpected(Class<?> instantType) {
-        Publication publication = PublicationGenerator.randomPublication(instantType);
+        Publication publication = PublicationGenerator.randomPublicationWithEmptyValues(instantType);
         var publicationContext = publication.getEntityDescription().getReference().getPublicationContext();
         if (isGenerallyBook(publicationContext)) {
             assertThatPublisherAndSeriesArePublicationChannelsUris(publicationContext);

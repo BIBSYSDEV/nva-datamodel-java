@@ -22,12 +22,12 @@ public class Degree extends Book {
                   @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                   @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList,
                   @JsonProperty(JSON_PROPERTY_COURSE_CODE) Course course) throws InvalidUnconfirmedSeriesException {
-        super(series, unconfirmedSeriesTitle, seriesNumber, publisher, isbnList);
+        super(series, unconfirmedSeriesTitle, seriesNumber, publisher, isbnList, null);
         this.course = course;
     }
 
     private Degree(Builder builder, Course courseCode) throws InvalidUnconfirmedSeriesException {
-        super(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList);
+        super(builder.series, null, builder.seriesNumber, builder.publisher, builder.isbnList, null);
         this.course = courseCode;
     }
 

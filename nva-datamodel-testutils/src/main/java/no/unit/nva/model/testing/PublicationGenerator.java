@@ -1,6 +1,16 @@
 package no.unit.nva.model.testing;
 
-
+import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
+import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
+import static no.unit.nva.model.testing.RandomUtils.randomLabels;
+import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
+import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
+import java.net.URI;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import net.datafaker.providers.base.BaseFaker;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
@@ -21,20 +31,6 @@ import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
-import java.net.URI;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
-import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
-import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
-import static no.unit.nva.model.testing.RandomUtils.randomLabels;
-import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
-import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
-import static no.unit.nva.testutils.RandomDataGenerator.randomString;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @JacocoGenerated
 public final class PublicationGenerator {
@@ -71,10 +67,7 @@ public final class PublicationGenerator {
 
     public static Publication randomPublication(Class<?> publicationInstanceClass) {
 
-        var publication = buildRandomPublicationFromInstance(publicationInstanceClass);
-
-        assertThat(publication, doesNotHaveEmptyValues());
-        return publication;
+        return buildRandomPublicationFromInstance(publicationInstanceClass);
     }
 
     public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {

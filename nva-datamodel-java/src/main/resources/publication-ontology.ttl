@@ -1285,6 +1285,13 @@ nva:seriesNumber a rdf:Property ;
   rdfs:domain nva:Report, nva:Book, nva:Degree ;
   rdfs:range xsd:string .
 
+nva:revision a rdf:Property ;
+  rdfs:comment "Indicates if the book has been revised." ;
+  rdfs:label "Revision of a book" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Book ;
+  rdfs:range xsd:string .
+
 nva:createdDate a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;

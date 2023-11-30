@@ -15,7 +15,7 @@ public class Report extends Book implements BasicContext {
                   @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
                   @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList)
             throws InvalidUnconfirmedSeriesException  {
-        super(series, seriesTitle, seriesNumber, publisher, isbnList);
+        super(series, seriesTitle, seriesNumber, publisher, isbnList, null);
     }
 
     private Report(Builder builder) throws InvalidUnconfirmedSeriesException {

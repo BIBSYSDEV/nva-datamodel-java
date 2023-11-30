@@ -439,6 +439,11 @@ referencedSchemas:
           type: array
           items:
             type: string
+        revision:
+          type: string
+          enum:
+          - Revised
+          - Unrevised
         additionalIdentifiers:
           uniqueItems: true
           type: array
@@ -849,6 +854,11 @@ referencedSchemas:
             type: string
         courseCode:
           $ref: '#/components/schemas/Course'
+        revision:
+          type: string
+          enum:
+          - Revised
+          - Unrevised
         course:
           $ref: '#/components/schemas/Course'
         additionalIdentifiers:
@@ -2631,6 +2641,11 @@ referencedSchemas:
           type: array
           items:
             type: string
+        revision:
+          type: string
+          enum:
+          - Revised
+          - Unrevised
         additionalIdentifiers:
           uniqueItems: true
           type: array
