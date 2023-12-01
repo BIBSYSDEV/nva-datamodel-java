@@ -2,6 +2,7 @@ package no.unit.nva;
 
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
+import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static no.unit.nva.model.PublicationStatus.NEW;
@@ -61,6 +62,8 @@ public class PublicationTest {
     public static final SortableIdentifier REPLACEMENT_IDENTIFIER_1 =
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final Javers JAVERS = JaversBuilder.javers().build();
+    public static final Set<String> IGNORE_LIST =
+        Set.of(".entityDescription.reference.publicationContext.revision");
 
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
@@ -97,7 +100,8 @@ public class PublicationTest {
         String publication = dataModelObjectMapper.writeValueAsString(expected);
         Publication roundTripped = dataModelObjectMapper.readValue(publication, Publication.class);
         Diff diff = JAVERS.compare(expected, roundTripped);
-        assertThatPublicationDoesNotHaveEmptyFields(expected);
+        assertThat(publication, doesNotHaveEmptyValuesIgnoringFields(IGNORE_LIST));
+        assertThat(publication, doesNotHaveEmptyValuesIgnoringFields(IGNORE_LIST));
         assertEquals(expected, roundTripped);
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
@@ -109,7 +113,7 @@ public class PublicationTest {
     void copyReturnsBuilderWithAllDataOfAPublication(Class<?> referenceInstanceType) {
         Publication publication = randomPublication(referenceInstanceType);
         Publication copy = publication.copy().build();
-        assertThatPublicationDoesNotHaveEmptyFields(publication);
+        assertThat(publication, doesNotHaveEmptyValuesIgnoringFields(IGNORE_LIST));
         Diff diff = compareAsObjectNodes(publication, copy);
         assertThat(diff.prettyPrint(), copy, is(equalTo(publication)));
         assertThat(copy, is(not(sameInstance(publication))));

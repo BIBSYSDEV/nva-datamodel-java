@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.Revision;
 import no.unit.nva.model.exceptions.InvalidUnconfirmedSeriesException;
 import nva.commons.core.JacocoGenerated;
 import org.apache.commons.validator.routines.ISBNValidator;
@@ -27,6 +28,7 @@ public class Book implements BasicContext {
     public static final String JSON_PROPERTY_ADDITIONAL_IDENTIFIERS = "additionalIdentifiers";
     public static final String SPACES_AND_HYPHENS_REGEX = "[ -]";
     public static final String ISBN_SOURCE = "ISBN";
+    public static final String JSON_PROPERTY_REVISION = "revision";
 
     @JsonProperty(JSON_PROPERTY_SERIES)
     private final BookSeries series;
@@ -38,21 +40,26 @@ public class Book implements BasicContext {
     private final List<String> isbnList;
     @JsonProperty(JSON_PROPERTY_ADDITIONAL_IDENTIFIERS)
     private final Set<AdditionalIdentifier> additionalIdentifiers;
+    private final Revision revision;
 
     public Book(@JsonProperty(JSON_PROPERTY_SERIES) BookSeries series,
                 @JsonProperty(value = JSON_PROPERTY_SERIES_TITLE, access = WRITE_ONLY) String unconfirmedSeriesTitle,
                 @JsonProperty(JSON_PROPERTY_SERIES_NUMBER) String seriesNumber,
                 @JsonProperty(JSON_PROPERTY_PUBLISHER) PublishingHouse publisher,
-                @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList) throws InvalidUnconfirmedSeriesException {
-        this(BookSeries.extractSeriesInformation(series, unconfirmedSeriesTitle), seriesNumber, publisher, isbnList);
+                @JsonProperty(JSON_PROPERTY_ISBN_LIST) List<String> isbnList,
+                @JsonProperty(JSON_PROPERTY_REVISION) Revision revision) throws InvalidUnconfirmedSeriesException {
+        this(BookSeries.extractSeriesInformation(series, unconfirmedSeriesTitle),
+             seriesNumber, publisher, isbnList, revision);
     }
 
-    public Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList) {
+    public Book(BookSeries series, String seriesNumber, PublishingHouse publisher, List<String> isbnList,
+                Revision revision) {
         this.series = series;
         this.seriesNumber = seriesNumber;
         this.publisher = publisher;
         this.isbnList = extractValidIsbnList(isbnList);
         this.additionalIdentifiers = nonNull(isbnList) ? extractInvalidIsbn(isbnList) : Set.of();
+        this.revision = revision;
     }
 
     private Set<AdditionalIdentifier> extractInvalidIsbn(List<String> isbnList) {
@@ -82,17 +89,23 @@ public class Book implements BasicContext {
         return nonNull(isbnList) ? isbnList : Collections.emptyList();
     }
 
+    public Revision getRevision() {
+        return revision;
+    }
+
     public BookBuilder copy() {
         return new BookBuilder().withSeriesNumber(getSeriesNumber())
                    .withSeries(getSeries())
                    .withPublisher(getPublisher())
-                   .withIsbnList(getIsbnList());
+                   .withIsbnList(getIsbnList())
+                   .withRevision(getRevision());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getSeries(), getSeriesNumber(), getPublisher(), getIsbnList(), additionalIdentifiers);
+        return Objects.hash(getSeries(), getSeriesNumber(), getPublisher(), getIsbnList(), additionalIdentifiers,
+                            getRevision());
     }
 
     @JacocoGenerated
@@ -109,7 +122,8 @@ public class Book implements BasicContext {
                && Objects.equals(getSeriesNumber(), book.getSeriesNumber())
                && Objects.equals(getPublisher(), book.getPublisher())
                && Objects.equals(getIsbnList(), book.getIsbnList())
-               && Objects.equals(additionalIdentifiers, book.additionalIdentifiers);
+               && Objects.equals(additionalIdentifiers, book.additionalIdentifiers)
+               && Objects.equals(getRevision(), book.getRevision());
     }
 
     /**
@@ -135,6 +149,7 @@ public class Book implements BasicContext {
         private String seriesNumber;
         private PublishingHouse publisher;
         private List<String> isbnList;
+        private Revision revision;
 
         public BookBuilder() {
         }
@@ -159,8 +174,13 @@ public class Book implements BasicContext {
             return this;
         }
 
+        public BookBuilder withRevision(Revision revision) {
+            this.revision = revision;
+            return this;
+        }
+
         public Book build() {
-            return new Book(series, seriesNumber, publisher, isbnList);
+            return new Book(series, seriesNumber, publisher, isbnList, revision);
         }
     }
 }

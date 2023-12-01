@@ -13,9 +13,11 @@ import static nva.commons.core.attempt.Try.attempt;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import no.unit.nva.model.Agent;
 import no.unit.nva.model.Organization;
+import no.unit.nva.model.Revision;
 import no.unit.nva.model.UnconfirmedCourse;
 import no.unit.nva.model.contexttypes.Anthology;
 import no.unit.nva.model.contexttypes.Artistic;
@@ -248,6 +250,7 @@ public class PublicationContextBuilder {
             .withPublisher(randomPublishingHouse())
             .withSeries(randomBookSeries())
             .withSeriesNumber(randomSeriesNumber())
+            .withRevision(Revision.values()[new Random().nextInt(Revision.values().length)])
             .build();
     }
 

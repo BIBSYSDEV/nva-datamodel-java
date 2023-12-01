@@ -28,13 +28,14 @@ import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.Test;
 
-class PublicationTest {
+public class PublicationTest {
 
     public static final String PUBLICATION_CONTEXT_JSON = Publication.getJsonLdContext(URI.create("https://localhost"));
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final String DOI_REQUEST_FIELD = "doiRequest";
     public static final String FRAME = IoUtils.stringFromResources(Path.of("publicationFrame.json")).replace(
         "__REPLACE__", "https://localhost");
+    public static final String BOOK_REVISION_FIELD = ".entityDescription.reference.publicationContext.revision";
 
     @Test
     void getModelVersionReturnsModelVersionDefinedByGradle() {
@@ -47,7 +48,7 @@ class PublicationTest {
         Publication samplePublication = PublicationGenerator.randomPublication();
         Publication copy = samplePublication.copy().build();
 
-        assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD)));
+        assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD, BOOK_REVISION_FIELD)));
 
         Diff diff = JAVERS.compare(samplePublication, copy);
         assertThat(copy, is(not(sameInstance(samplePublication))));

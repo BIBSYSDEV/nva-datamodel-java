@@ -1,6 +1,7 @@
 package no.unit.nva.api;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
+import static no.unit.nva.model.PublicationTest.BOOK_REVISION_FIELD;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,8 +27,9 @@ public class PublicationResponseElevatedUserTest {
     @Test
     void staticConstructorShouldReturnPublicationResponseForElevatedUsersWithoutUnexpectedLossOfInformation() {
         Publication publication = randomPublication();
-        assertThat(publication,doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest")));
+        assertThat(publication,doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
         var publicationResponse = PublicationResponseElevatedUser.fromPublication(publication);
-        assertThat(publicationResponse,doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest")));
+        assertThat(publicationResponse,
+                   doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
     }
 }
