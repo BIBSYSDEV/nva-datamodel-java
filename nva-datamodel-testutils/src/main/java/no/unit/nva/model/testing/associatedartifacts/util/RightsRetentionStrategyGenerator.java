@@ -1,5 +1,7 @@
 package no.unit.nva.model.testing.associatedartifacts.util;
 
+import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.util.Random;
 import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
@@ -18,9 +20,9 @@ public class RightsRetentionStrategyGenerator {
      */
     public static RightsRetentionStrategy randomRightsRetentionStrategy() {
         RightsRetentionStrategy[] strategies = {
-            new CustomerRightsRetentionStrategy(),
-            new OverriddenRightsRetentionStrategy(),
-            new NullRightsRetentionStrategy(null)
+            new CustomerRightsRetentionStrategy(randomString(), randomBoolean()),
+            new OverriddenRightsRetentionStrategy(randomString(), randomBoolean()),
+            new NullRightsRetentionStrategy(randomString(), randomBoolean())
         };
 
         return strategies[new Random().nextInt(strategies.length)];

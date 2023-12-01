@@ -1,6 +1,7 @@
 package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -243,7 +244,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @return The provided strategy if it's not null, or a new NullRightsRetentionStrategy otherwise.
      */
     private RightsRetentionStrategy assignDefaultStrategyIfNull(RightsRetentionStrategy strategy) {
-        return strategy != null ? strategy : new NullRightsRetentionStrategy(null);
+        return nonNull(strategy) ? strategy : NullRightsRetentionStrategy.defaultRightsRetentionStrategy();
     }
 
     private URI parseLicense(Object license) {
