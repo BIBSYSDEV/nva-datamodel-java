@@ -1267,10 +1267,10 @@ referencedSchemas:
           type: string
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
-      activeTo:
+      activeFrom:
         type: string
         format: date-time
-      activeFrom:
+      activeTo:
         type: string
         format: date-time
       type:
