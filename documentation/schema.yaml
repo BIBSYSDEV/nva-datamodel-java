@@ -13,7 +13,7 @@ schema:
       - PUBLISHED_METADATA
       - PUBLISHED
       - DELETED
-      - PERMANENTLY_DELETED
+      - UNPUBLISHED
       - DRAFT_FOR_DELETION
     resourceOwner:
       $ref: '#/components/schemas/ResourceOwner'
@@ -1267,10 +1267,10 @@ referencedSchemas:
           type: string
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
-      activeFrom:
+      activeTo:
         type: string
         format: date-time
-      activeTo:
+      activeFrom:
         type: string
         format: date-time
       type:
@@ -2435,7 +2435,7 @@ referencedSchemas:
         - PUBLISHED_METADATA
         - PUBLISHED
         - DELETED
-        - PERMANENTLY_DELETED
+        - UNPUBLISHED
         - DRAFT_FOR_DELETION
       resourceOwner:
         $ref: '#/components/schemas/ResourceOwner'
