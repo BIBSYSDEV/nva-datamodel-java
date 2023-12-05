@@ -1,7 +1,7 @@
 [versions]
 junitVersion = { strictly = '5.10.0' }
 jacksonVersion = { strictly = '2.15.2' }
-nvaCommonsVersion = { strictly = '1.36.1' }
+nvaCommonsVersion = { strictly = '1.36.2' }
 apacheCommonsValidator = { strictly = '1.7' }
 hamcrestVersion = { strictly = '2.2' }
 jsonldJavaVersion = { strictly = '0.13.4' }
@@ -14,7 +14,7 @@ nva-language = { strictly = '1.0' }
 snakeyaml = { strictly = '2.2' }
 zalandoVersion = { strictly = '0.27.1'}
 jena = { strictly = '4.9.0'}
-log4j = { strictly = '2.18.0' }
+log4j = { strictly = '2.22.0' }
 
 
 [libraries]
@@ -56,10 +56,10 @@ jena-arq = { group = 'org.apache.jena', name = 'jena-arq', version.ref = 'jena' 
 
 log4j-core = { group = 'org.apache.logging.log4j', name = 'log4j-core', version.ref = 'log4j' }
 log4j-api = { group = 'org.apache.logging.log4j', name = 'log4j-api', version.ref = 'log4j' }
-log4j-slf4j18-impl = { group = 'org.apache.logging.log4j', name = 'log4j-slf4j18-impl', version.ref = 'log4j' }
+log4j-slf4j-impl = { group = 'org.apache.logging.log4j', name = 'log4j-slf4j2-impl', version.ref = 'log4j' }
 
 [bundles]
 unittesting = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine", "hamcrest","datafaker", "javers-core", "nva-commons-testutils","nva-commons-identifiers", "nva-commons-core"]
 jackson = ["jackson-core", "jackson-databind", "jackson-annotations", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
-logging = ['log4j-core', 'log4j-api', 'log4j-slf4j18-impl']
+logging = ['log4j-core', 'log4j-api', 'log4j-slf4j-impl']
 
