@@ -844,7 +844,7 @@ nva:JournalReview a rdfs:Class ;
   rdfs:subClassOf nva:Journal .
 
 nva:PublicationDate a rdfs:Class ;
-  rdfs:comment "When the publication was first published in any system or form" ;
+  rdfs:comment "The date the thing was first published for public consumption" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Time .
 
@@ -1293,7 +1293,7 @@ nva:revision a rdf:Property ;
   rdfs:range xsd:string .
 
 nva:createdDate a rdf:Property ;
-  rdfs:comment "When the publication was first created in this system" ;
+  rdfs:comment "The date that the thing was originally recorded in the documenting system" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication ;
@@ -1343,7 +1343,7 @@ nva:concertProgramme a rdf:Property ;
   rdfs:range nva:MusicalWorkPerformance .
 
 nva:publishedDate a rdf:Property ;
-  rdfs:comment "This represents meta-metadata about when the Publication description changed status to Published in this system" ;
+  rdfs:comment "The date that the thing was originally published for public consumption in the documenting system" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication ;
@@ -1644,7 +1644,7 @@ nva:name a rdf:Property ;
   rdfs:range xsd:string .
 
 nva:modifiedDate a rdf:Property ;
-  rdfs:comment "When the publication was last modified in this system" ;
+  rdfs:comment "The date that the thing was last modified in the documenting system" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication ;
