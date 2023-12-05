@@ -2,7 +2,9 @@ package no.unit.nva.model;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.nonNull;
+import static no.unit.nva.model.PublicationStatus.DELETED;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
+import static no.unit.nva.model.PublicationStatus.UNPUBLISHED;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
 
@@ -103,7 +105,11 @@ public class Publication
 
     @Override
     public PublicationStatus getStatus() {
-        return status;
+        if (DELETED.equals(status)) {
+            return UNPUBLISHED;
+        } else {
+            return status;
+        }
     }
 
     @Override
