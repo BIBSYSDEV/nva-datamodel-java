@@ -7,10 +7,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationStatus;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Deprecated
 public class MigratePublicationStatusTest {
 
+    @Disabled("Disabled since publication status DELETED has been migrated")
     @Test
     void shouldMigrateDeletedStatusToUnpublished() throws JsonProcessingException {
         var json = "{\n"
