@@ -5,7 +5,6 @@ import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static nva.commons.core.attempt.Try.attempt;
 import static nva.commons.core.ioutils.IoUtils.stringFromResources;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
