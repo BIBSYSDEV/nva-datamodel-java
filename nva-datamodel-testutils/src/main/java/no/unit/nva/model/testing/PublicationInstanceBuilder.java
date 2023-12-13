@@ -560,7 +560,8 @@ public final class PublicationInstanceBuilder {
     }
 
     private static DegreePhd generateDegreePhd() {
-        return new DegreePhd(randomMonographPages(), randomPublicationDate());
+        return new DegreePhd(randomMonographPages(), randomPublicationDate(), Set.of(randomUri()),
+                             Set.of(randomString()));
     }
 
     private static DegreeLicentiate generateDegreeLicentiate() {

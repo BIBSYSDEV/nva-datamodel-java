@@ -1666,6 +1666,20 @@ nva:referencedBy a rdf:Property ;
   rdfs:domain nva:DataSet ;
   rdfs:range xsd:anyURI .
 
+nva:relatedPublications a rdf:Property ;
+                 rdfs:comment "A property representing URI identifier of NVA publications that are related to the PhD degree. Each value under this property signifies a publication associated with a specific DegreePhd instance." ;
+                 rdfs:label "" ;
+                 rdfs:isDefinedBy nva: ;
+                 rdfs:domain nva:DegreePhd ;
+                 rdfs:range xsd:anyURI .
+
+nva:relatedResources a rdf:Property ;
+                  rdfs:comment "A property representing data which are related within PhD degree. Each value under this property signifies a material associated with a specific DegreePhd instance." ;
+                  rdfs:label "" ;
+                  rdfs:isDefinedBy nva: ;
+                  rdfs:domain nva:DegreePhd ;
+                  rdfs:range xsd:string .
+
 nva:visibleForNonOwner a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;

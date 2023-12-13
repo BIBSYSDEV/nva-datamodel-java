@@ -931,6 +931,17 @@ referencedSchemas:
           $ref: '#/components/schemas/MonographPages'
         submittedDate:
           $ref: '#/components/schemas/PublicationDate'
+        relatedPublications:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            format: uri
+        relatedResources:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
         type:
           type: string
   Encyclopedia:

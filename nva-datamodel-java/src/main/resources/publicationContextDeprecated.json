@@ -70,6 +70,14 @@
   "doi": {
     "@type": "@id"
   },
+  "relatedPublications": {
+    "@id": "@relatedPublication",
+    "@container": "@set"
+  },
+  "relatedResources": {
+    "@id": "@relatedResource",
+    "@container": "@set"
+  },
   "duplicateOf": {
     "@type": "@id"
   },
