@@ -1666,6 +1666,21 @@ nva:referencedBy a rdf:Property ;
   rdfs:domain nva:DataSet ;
   rdfs:range xsd:anyURI .
 
+nva:RelatedDocument a rdfs:Class ;
+           rdfs:comment "A document representing material associated with a NVA publication." ;
+           rdfs:isDefinedBy nva: ;
+           rdfs:subClassOf nva:RelatedDocument .
+
+nva:ConfirmedDocument a rdf:Property ;
+            rdfs:comment "A document representing verified URI identifier of NVA publication that are related to the other NVA publication." ;
+            rdfs:isDefinedBy nva: ;
+            rdfs:subClassOf nva:RelatedDocument .
+
+nva:UnconfirmedDocument a rdf:Property ;
+            rdfs:comment "A document representing unverified material related to the NVA publication." ;
+            rdfs:isDefinedBy nva: ;
+            rdfs:subClassOf nva:RelatedDocument .
+
 nva:visibleForNonOwner a rdf:Property ;
   rdfs:comment "" ;
   rdfs:label "" ;
