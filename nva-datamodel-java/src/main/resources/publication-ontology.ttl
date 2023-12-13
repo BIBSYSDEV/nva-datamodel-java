@@ -1666,19 +1666,20 @@ nva:referencedBy a rdf:Property ;
   rdfs:domain nva:DataSet ;
   rdfs:range xsd:anyURI .
 
-nva:relatedPublications a rdf:Property ;
-                 rdfs:comment "A property representing URI identifier of NVA publications that are related to the PhD degree. Each value under this property signifies a publication associated with a specific DegreePhd instance." ;
-                 rdfs:label "" ;
-                 rdfs:isDefinedBy nva: ;
-                 rdfs:domain nva:DegreePhd ;
-                 rdfs:range xsd:anyURI .
+nva:RelatedDocument a rdfs:Class ;
+           rdfs:comment "A document representing material associated with a NVA publication." ;
+           rdfs:isDefinedBy nva: ;
+           rdfs:subClassOf nva:RelatedDocument .
 
-nva:relatedResources a rdf:Property ;
-                  rdfs:comment "A property representing data which are related within PhD degree. Each value under this property signifies a material associated with a specific DegreePhd instance." ;
-                  rdfs:label "" ;
-                  rdfs:isDefinedBy nva: ;
-                  rdfs:domain nva:DegreePhd ;
-                  rdfs:range xsd:string .
+nva:ConfirmedDocument a rdf:Property ;
+            rdfs:comment "A document representing verified URI identifier of NVA publication that are related to the other NVA publication." ;
+            rdfs:isDefinedBy nva: ;
+            rdfs:subClassOf nva:RelatedDocument .
+
+nva:UnconfirmedDocument a rdf:Property ;
+            rdfs:comment "A document representing unverified material related to the NVA publication." ;
+            rdfs:isDefinedBy nva: ;
+            rdfs:subClassOf nva:RelatedDocument .
 
 nva:visibleForNonOwner a rdf:Property ;
   rdfs:comment "" ;

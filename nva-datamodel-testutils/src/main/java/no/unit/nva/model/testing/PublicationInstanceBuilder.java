@@ -95,11 +95,13 @@ import no.unit.nva.model.instancetypes.chapter.Introduction;
 import no.unit.nva.model.instancetypes.chapter.NonFictionChapter;
 import no.unit.nva.model.instancetypes.chapter.PopularScienceChapter;
 import no.unit.nva.model.instancetypes.chapter.TextbookChapter;
+import no.unit.nva.model.instancetypes.degree.ConfirmedDocument;
 import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
 import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
 import no.unit.nva.model.instancetypes.degree.DegreeMaster;
 import no.unit.nva.model.instancetypes.degree.DegreePhd;
 import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
+import no.unit.nva.model.instancetypes.degree.UnconfirmedDocument;
 import no.unit.nva.model.instancetypes.event.ConferenceLecture;
 import no.unit.nva.model.instancetypes.event.ConferencePoster;
 import no.unit.nva.model.instancetypes.event.Lecture;
@@ -560,8 +562,9 @@ public final class PublicationInstanceBuilder {
     }
 
     private static DegreePhd generateDegreePhd() {
-        return new DegreePhd(randomMonographPages(), randomPublicationDate(), Set.of(randomUri()),
-                             Set.of(randomString()));
+        return new DegreePhd(randomMonographPages(), randomPublicationDate(),
+                             Set.of(new ConfirmedDocument(randomUri()),
+                                    new UnconfirmedDocument(randomString())));
     }
 
     private static DegreeLicentiate generateDegreeLicentiate() {
