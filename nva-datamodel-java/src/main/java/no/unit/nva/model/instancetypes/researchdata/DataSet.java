@@ -45,7 +45,11 @@ public class DataSet implements no.unit.nva.model.instancetypes.PublicationInsta
         super();
         this.geographicalCoverage = geographicalCoverage;
         this.referencedBy = nonNull(referencedByUris) ? new HashSet<>(referencedByUris) : emptySet();
-        this.related = related.stream().map(this::toRelatedDocument).collect(Collectors.toSet());
+        this.related = nonNull(related)
+                           ? related.stream()
+                                 .map(this::toRelatedDocument)
+                                 .collect(Collectors.toSet())
+                           : Set.of();
         this.compliesWith = nonNull(compliesWith) ? new HashSet<>(compliesWith) : emptySet();
         this.userAgreesToTermsAndConditions = userAgreesToTermsAndConditions;
     }

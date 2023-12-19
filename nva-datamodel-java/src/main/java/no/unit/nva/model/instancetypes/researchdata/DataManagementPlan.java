@@ -1,5 +1,6 @@
 package no.unit.nva.model.instancetypes.researchdata;
 
+import static java.util.Objects.nonNull;
 import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGES_FIELD;
 import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,7 +36,11 @@ public class DataManagementPlan implements PublicationInstance<MonographPages> {
     public DataManagementPlan(@JsonProperty(RELATED_FIELD) Set<Object> related,
                               @JsonProperty(PAGES_FIELD) MonographPages pages) {
         this.pages = pages;
-        this.related = related.stream().map(this::toRelatedDocument).collect(Collectors.toSet());
+        this.related = nonNull(related)
+                           ? related.stream()
+                                 .map(this::toRelatedDocument)
+                                 .collect(Collectors.toSet())
+                           : Set.of();
     }
 
     private RelatedDocument toRelatedDocument(Object item) {
