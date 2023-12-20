@@ -1,23 +1,21 @@
 package no.unit.nva.model.instancetypes.researchdata;
 
+import static java.util.Collections.emptySet;
+import static java.util.Objects.nonNull;
+import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import no.unit.nva.model.instancetypes.degree.ConfirmedDocument;
 import no.unit.nva.model.instancetypes.degree.RelatedDocument;
 import no.unit.nva.model.instancetypes.degree.UnconfirmedDocument;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
-
-import java.net.URI;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import static java.util.Collections.emptySet;
-import static java.util.Objects.nonNull;
-import static nva.commons.core.attempt.Try.attempt;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DataSet implements no.unit.nva.model.instancetypes.PublicationInstance<NullPages> {
@@ -63,7 +61,7 @@ public class DataSet implements no.unit.nva.model.instancetypes.PublicationInsta
         }
         var value = attempt(() -> URI.create(item.toString()))
                         .orElse(failure -> null);
-        if (value != null) {
+        if (nonNull(value)) {
             return new ConfirmedDocument(value);
         } else {
             return new UnconfirmedDocument(item.toString());

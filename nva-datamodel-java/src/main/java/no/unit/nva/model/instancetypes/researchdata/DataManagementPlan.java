@@ -52,7 +52,7 @@ public class DataManagementPlan implements PublicationInstance<MonographPages> {
         }
         var value = attempt(() -> URI.create(item.toString()))
                         .orElse(failure -> null);
-        if (value != null) {
+        if (nonNull(value)) {
             return new ConfirmedDocument(value);
         } else {
             return new UnconfirmedDocument(item.toString());
