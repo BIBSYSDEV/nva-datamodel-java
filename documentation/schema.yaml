@@ -803,8 +803,7 @@ referencedSchemas:
           uniqueItems: true
           type: array
           items:
-            type: string
-            format: uri
+            $ref: '#/components/schemas/RelatedDocument'
         pages:
           $ref: '#/components/schemas/MonographPages'
         type:
@@ -833,8 +832,7 @@ referencedSchemas:
           uniqueItems: true
           type: array
           items:
-            type: string
-            format: uri
+            $ref: '#/components/schemas/RelatedDocument'
         compliesWith:
           uniqueItems: true
           type: array

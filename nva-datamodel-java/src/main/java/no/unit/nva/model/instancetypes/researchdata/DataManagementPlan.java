@@ -1,19 +1,21 @@
 package no.unit.nva.model.instancetypes.researchdata;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.instancetypes.PublicationInstance;
-import no.unit.nva.model.pages.MonographPages;
-import nva.commons.core.JacocoGenerated;
-
-import java.net.URI;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGES_FIELD;
+import static nva.commons.core.attempt.Try.attempt;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import no.unit.nva.model.instancetypes.PublicationInstance;
+import no.unit.nva.model.instancetypes.degree.ConfirmedDocument;
+import no.unit.nva.model.instancetypes.degree.RelatedDocument;
+import no.unit.nva.model.instancetypes.degree.UnconfirmedDocument;
+import no.unit.nva.model.pages.MonographPages;
+import nva.commons.core.JacocoGenerated;
 
 /**
  * A data management plan is a document that describes the administrative processes around data sets.
@@ -22,7 +24,7 @@ import static no.unit.nva.model.instancetypes.PublicationInstance.Constants.PAGE
 public class DataManagementPlan implements PublicationInstance<MonographPages> {
     public static final String RELATED_FIELD = "related";
     @JsonProperty(RELATED_FIELD)
-    private final Set<URI> related;
+    private final Set<RelatedDocument> related;
     private final MonographPages pages;
 
     /**
@@ -31,13 +33,33 @@ public class DataManagementPlan implements PublicationInstance<MonographPages> {
      * @param related A collection of URIs referencing things covered by the DMP.
      * @param pages   The pages description for the DMP document.
      */
-    public DataManagementPlan(@JsonProperty(RELATED_FIELD) RelatedUris related,
+    public DataManagementPlan(@JsonProperty(RELATED_FIELD) Set<Object> related,
                               @JsonProperty(PAGES_FIELD) MonographPages pages) {
         this.pages = pages;
-        this.related = nonNull(related) ? new HashSet<>(related) : Collections.emptySet();
+        this.related = nonNull(related)
+                           ? related.stream()
+                                 .map(this::toRelatedDocument)
+                                 .collect(Collectors.toSet())
+                           : Set.of();
     }
 
-    public Set<URI> getRelated() {
+    private RelatedDocument toRelatedDocument(Object item) {
+        if (item instanceof Map map) {
+            String name = ConfirmedDocument.class.getSimpleName();
+            return name.equals(map.get("type"))
+                       ? new ConfirmedDocument(URI.create(map.get("identifier").toString()))
+                       : new UnconfirmedDocument(map.get("identifier").toString());
+        }
+        var value = attempt(() -> URI.create(item.toString()))
+                        .orElse(failure -> null);
+        if (nonNull(value)) {
+            return new ConfirmedDocument(value);
+        } else {
+            return new UnconfirmedDocument(item.toString());
+        }
+    }
+
+    public Set<RelatedDocument> getRelated() {
         return related;
     }
 

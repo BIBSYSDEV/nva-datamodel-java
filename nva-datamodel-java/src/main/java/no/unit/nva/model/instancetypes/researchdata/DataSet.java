@@ -1,17 +1,21 @@
 package no.unit.nva.model.instancetypes.researchdata;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import no.unit.nva.model.pages.NullPages;
-import nva.commons.core.JacocoGenerated;
-
-import java.net.URI;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
 import static java.util.Collections.emptySet;
 import static java.util.Objects.nonNull;
+import static nva.commons.core.attempt.Try.attempt;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import no.unit.nva.model.instancetypes.degree.ConfirmedDocument;
+import no.unit.nva.model.instancetypes.degree.RelatedDocument;
+import no.unit.nva.model.instancetypes.degree.UnconfirmedDocument;
+import no.unit.nva.model.pages.NullPages;
+import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class DataSet implements no.unit.nva.model.instancetypes.PublicationInstance<NullPages> {
@@ -27,21 +31,41 @@ public class DataSet implements no.unit.nva.model.instancetypes.PublicationInsta
     @JsonProperty(REFERENCED_BY_FIELD)
     private final Set<URI> referencedBy;
     @JsonProperty(RELATED_FIELD)
-    private final Set<URI> related;
+    private final Set<RelatedDocument> related;
     @JsonProperty(COMPLIES_WITH_FIELD)
     private final Set<URI> compliesWith;
 
     public DataSet(@JsonProperty(USER_AGREES_TO_TERMS_AND_CONDITIONS_FIELD) boolean userAgreesToTermsAndConditions,
                    @JsonProperty(GEOGRAPHICAL_COVERAGE_FIELD) GeographicalDescription geographicalCoverage,
                    @JsonProperty(REFERENCED_BY_FIELD) ReferencedByUris referencedByUris,
-                   @JsonProperty(RELATED_FIELD) RelatedUris related,
+                   @JsonProperty(RELATED_FIELD) Set<Object> related,
                    @JsonProperty(COMPLIES_WITH_FIELD) CompliesWithUris compliesWith) {
         super();
         this.geographicalCoverage = geographicalCoverage;
         this.referencedBy = nonNull(referencedByUris) ? new HashSet<>(referencedByUris) : emptySet();
-        this.related = nonNull(related) ? new HashSet<>(related) : emptySet();
+        this.related = nonNull(related)
+                           ? related.stream()
+                                 .map(this::toRelatedDocument)
+                                 .collect(Collectors.toSet())
+                           : Set.of();
         this.compliesWith = nonNull(compliesWith) ? new HashSet<>(compliesWith) : emptySet();
         this.userAgreesToTermsAndConditions = userAgreesToTermsAndConditions;
+    }
+
+    private RelatedDocument toRelatedDocument(Object item) {
+        if (item instanceof Map map) {
+            String name = ConfirmedDocument.class.getSimpleName();
+            return name.equals(map.get("type"))
+                       ? new ConfirmedDocument(URI.create(map.get("identifier").toString()))
+                       : new UnconfirmedDocument(map.get("identifier").toString());
+        }
+        var value = attempt(() -> URI.create(item.toString()))
+                        .orElse(failure -> null);
+        if (nonNull(value)) {
+            return new ConfirmedDocument(value);
+        } else {
+            return new UnconfirmedDocument(item.toString());
+        }
     }
 
     public boolean isUserAgreesToTermsAndConditions() {
@@ -56,7 +80,7 @@ public class DataSet implements no.unit.nva.model.instancetypes.PublicationInsta
         return referencedBy;
     }
 
-    public Set<URI> getRelated() {
+    public Set<RelatedDocument> getRelated() {
         return related;
     }
 

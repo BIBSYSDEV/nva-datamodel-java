@@ -8,16 +8,13 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import static nva.commons.core.attempt.Try.attempt;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import no.unit.nva.model.UnconfirmedOrganization;
 import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.UnconfirmedPublisher;
@@ -146,7 +143,6 @@ import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
 import no.unit.nva.model.instancetypes.researchdata.DataSet;
 import no.unit.nva.model.instancetypes.researchdata.GeographicalDescription;
 import no.unit.nva.model.instancetypes.researchdata.ReferencedByUris;
-import no.unit.nva.model.instancetypes.researchdata.RelatedUris;
 import no.unit.nva.model.pages.MonographPages;
 import no.unit.nva.model.pages.Pages;
 import no.unit.nva.model.pages.Range;
@@ -386,15 +382,13 @@ public final class PublicationInstanceBuilder {
     private static DataSet generateDataSet() {
         var geographicalCoverage = new GeographicalDescription(randomString());
         var referencedUri = new ReferencedByUris(Set.of(randomUri()));
-        var relatedUris = new RelatedUris(Set.of(randomUri()));
         var compliesWithUris = new CompliesWithUris(Set.of(randomUri()));
         return new DataSet(randomBoolean(),
-                geographicalCoverage, referencedUri, relatedUris, compliesWithUris);
+                geographicalCoverage, referencedUri, Set.of(randomUri()), compliesWithUris);
     }
 
     private static DataManagementPlan generateDataManagementPlan() {
-        var relatedUris = new RelatedUris(Set.of(randomUri()));
-        return new DataManagementPlan(relatedUris, randomMonographPages());
+        return new DataManagementPlan(Set.of(randomUri()), randomMonographPages());
     }
 
     private static Map generateMap() {
