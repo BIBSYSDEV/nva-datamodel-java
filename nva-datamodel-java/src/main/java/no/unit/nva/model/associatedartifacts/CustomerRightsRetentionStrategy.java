@@ -1,6 +1,5 @@
 package no.unit.nva.model.associatedartifacts;
 
-import static no.unit.nva.model.contexttypes.ExhibitionContent.STATIC_VALUE_FOR_HASH_CODE;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
@@ -12,6 +11,7 @@ import nva.commons.core.JacocoGenerated;
 public final class CustomerRightsRetentionStrategy implements RightsRetentionStrategy {
 
     public static final String TYPE_NAME = "CustomerRightsRetentionStrategy";
+    public static final int STATIC_VALUE_FOR_HASH_CODE = 103_245;
 
     @JsonCreator
     private CustomerRightsRetentionStrategy() {
