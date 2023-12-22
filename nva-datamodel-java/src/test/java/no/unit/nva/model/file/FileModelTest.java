@@ -1,7 +1,6 @@
 package no.unit.nva.model.file;
 
 import static java.time.temporal.ChronoUnit.DAYS;
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -27,8 +25,6 @@ import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
-import no.unit.nva.model.associatedartifacts.OverriddenRightsRetentionStrategy;
-import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.CCByLicenseException;
 import no.unit.nva.model.associatedartifacts.file.File;
@@ -36,6 +32,7 @@ import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
 import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
+import no.unit.nva.model.testing.associatedartifacts.util.RightsRetentionStrategyGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -166,8 +163,8 @@ public class FileModelTest {
 
     public static File randomUnpublishableFile() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-            randomInteger().longValue(),
-            LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant(), randomRightsRetentionStrategy());
+            randomInteger().longValue(), LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant(),
+                                           RightsRetentionStrategyGenerator.randomRightsRetentionStrategy());
     }
 
     public static File randomUnpublishedFile() {
@@ -197,7 +194,7 @@ public class FileModelTest {
                    .withMimeType(randomString())
                    .withSize(randomInteger().longValue())
                    .withEmbargoDate(randomInstant())
-                   .withRightsRetentionStrategy(randomRightsRetentionStrategy())
+                   .withRightsRetentionStrategy(RightsRetentionStrategyGenerator.randomRightsRetentionStrategy())
                    .withLicense(LICENSE_URI)
                    .withIdentifier(UUID.randomUUID())
                    .withPublisherAuthority(randomBoolean());
@@ -211,8 +208,7 @@ public class FileModelTest {
             LICENSE_URI,
             NOT_ADMINISTRATIVE_AGREEMENT,
             randomBoolean(),
-            randomInstant(),
-            randomRightsRetentionStrategy());
+            randomInstant(), RightsRetentionStrategyGenerator.randomRightsRetentionStrategy());
     }
 
     private static File.Builder admAgreementBuilder() {
@@ -233,7 +229,8 @@ public class FileModelTest {
     private AdministrativeAgreement randomAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant(), randomRightsRetentionStrategy());
+            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant(),
+                                           RightsRetentionStrategyGenerator.randomRightsRetentionStrategy());
     }
 
     private PublishedFile publishedFileWithActiveEmbargo() {
@@ -245,7 +242,7 @@ public class FileModelTest {
                                  NOT_ADMINISTRATIVE_AGREEMENT,
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
-                                 randomRightsRetentionStrategy(),
+                                 RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(),
                                  randomInstant());
     }
 
@@ -292,7 +289,7 @@ public class FileModelTest {
             .withName(FIRST_FILE_TXT)
             .withPublisherAuthority(false)
             .withSize(SIZE)
-            .withRightsRetentionStrategy(new CustomerRightsRetentionStrategy(randomString(), randomBoolean()))
+            .withRightsRetentionStrategy(CustomerRightsRetentionStrategy.create())
             .buildPublishedFile();
     }
 
@@ -333,15 +330,5 @@ public class FileModelTest {
                + "    \"publishedDate\" : \"2023-05-25T19:31:17.302914Z\",\n"
                + "    \"visibleForNonOwner\" : true\n"
                + "  }";
-    }
-
-    public static RightsRetentionStrategy randomRightsRetentionStrategy() {
-        RightsRetentionStrategy[] strategies = {
-            new CustomerRightsRetentionStrategy(randomString(), randomBoolean()),
-            new OverriddenRightsRetentionStrategy(randomString(), randomBoolean()),
-            new NullRightsRetentionStrategy(randomString(), randomBoolean())
-        };
-
-        return strategies[new Random().nextInt(strategies.length)];
     }
 }

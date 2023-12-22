@@ -1,32 +1,39 @@
 package no.unit.nva.model.associatedartifacts;
 
+import static no.unit.nva.model.associatedartifacts.OverriddenRightsRetentionStrategy.LEGAL_NOTE_FIELD;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(NullRightsRetentionStrategy.TYPE_NAME)
-public class NullRightsRetentionStrategy extends RightsRetentionStrategy {
+public final class NullRightsRetentionStrategy implements RightsRetentionStrategy {
 
     public static final String TYPE_NAME = "NullRightsRetentionStrategy";
+    private static final String LEGAL_NOTE_FIELD = "legalNote";
+    private final String legalNote;
 
     @JsonCreator
-    public NullRightsRetentionStrategy(@JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
-                                       @JsonProperty(FOLLOWS_POLICY_FIELD) Boolean followsPolicy) {
-        super(legalNote, followsPolicy);
+    private NullRightsRetentionStrategy(@JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
+        this.legalNote = legalNote;
     }
 
-    public static NullRightsRetentionStrategy defaultRightsRetentionStrategy() {
-        return new NullRightsRetentionStrategy(null, Boolean.TRUE);
+    public static NullRightsRetentionStrategy create() {
+        return new NullRightsRetentionStrategy(null);
+    }
+
+    public static NullRightsRetentionStrategy create(String legalNote) {
+        return new NullRightsRetentionStrategy(legalNote);
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return STATIC_VALUE_FOR_HASH_CODE;
+        return Objects.hash(legalNote);
     }
 
     @JacocoGenerated
@@ -35,6 +42,14 @@ public class NullRightsRetentionStrategy extends RightsRetentionStrategy {
         if (this == o) {
             return true;
         }
-        return o instanceof NullRightsRetentionStrategy;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        NullRightsRetentionStrategy that = (NullRightsRetentionStrategy) o;
+        return Objects.equals(legalNote, that.legalNote);
+    }
+
+    public String getLegalNote() {
+        return legalNote;
     }
 }

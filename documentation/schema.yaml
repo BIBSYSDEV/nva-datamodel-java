@@ -1269,6 +1269,10 @@ referencedSchemas:
           type: boolean
         type:
           type: string
+  FunderRightsRetentionStrategy:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/RightsRetentionStrategy'
   Funding:
     required:
     - type
@@ -2170,6 +2174,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/RightsRetentionStrategy'
     - type: object
       properties:
+        legalNote:
+          type: string
         type:
           type: string
   Organization:
@@ -2273,6 +2279,8 @@ referencedSchemas:
     - $ref: '#/components/schemas/RightsRetentionStrategy'
     - type: object
       properties:
+        legalNote:
+          type: string
         type:
           type: string
   Pages:
@@ -2793,10 +2801,6 @@ referencedSchemas:
     - type
     type: object
     properties:
-      legalNote:
-        type: string
-      followsPolicy:
-        type: boolean
       type:
         type: string
     discriminator:

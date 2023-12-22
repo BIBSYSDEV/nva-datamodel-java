@@ -244,7 +244,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @return The provided strategy if it's not null, or a new NullRightsRetentionStrategy otherwise.
      */
     private RightsRetentionStrategy assignDefaultStrategyIfNull(RightsRetentionStrategy strategy) {
-        return nonNull(strategy) ? strategy : NullRightsRetentionStrategy.defaultRightsRetentionStrategy();
+        return nonNull(strategy) ? strategy : NullRightsRetentionStrategy.create();
     }
 
     private URI parseLicense(Object license) {

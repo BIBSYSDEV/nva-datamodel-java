@@ -5,24 +5,38 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(OverriddenRightsRetentionStrategy.TYPE_NAME)
-public class OverriddenRightsRetentionStrategy extends RightsRetentionStrategy {
+public final class OverriddenRightsRetentionStrategy implements RightsRetentionStrategy {
 
     public static final String TYPE_NAME = "OverriddenRightsRetentionStrategy";
+    public static final String LEGAL_NOTE_FIELD = "legalNote";
+    private final String legalNote;
 
     @JsonCreator
-    public OverriddenRightsRetentionStrategy(@JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
-                                             @JsonProperty(FOLLOWS_POLICY_FIELD) Boolean followsPolicy) {
-        super(legalNote, followsPolicy);
+    private OverriddenRightsRetentionStrategy(@JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
+        this.legalNote = legalNote;
+    }
+
+    public static OverriddenRightsRetentionStrategy create(String legalNote) {
+        return new OverriddenRightsRetentionStrategy(legalNote);
+    }
+
+    public static OverriddenRightsRetentionStrategy create() {
+        return new OverriddenRightsRetentionStrategy(null);
+    }
+
+    public String getLegalNote() {
+        return legalNote;
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return STATIC_VALUE_FOR_HASH_CODE;
+        return Objects.hash(legalNote);
     }
 
     @JacocoGenerated
@@ -31,6 +45,10 @@ public class OverriddenRightsRetentionStrategy extends RightsRetentionStrategy {
         if (this == o) {
             return true;
         }
-        return o instanceof OverriddenRightsRetentionStrategy;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        OverriddenRightsRetentionStrategy that = (OverriddenRightsRetentionStrategy) o;
+        return Objects.equals(legalNote, that.legalNote);
     }
 }
