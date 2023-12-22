@@ -1,7 +1,6 @@
 package no.unit.nva.model.file;
 
 import static java.time.temporal.ChronoUnit.DAYS;
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
@@ -26,6 +25,7 @@ import java.util.stream.Stream;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.FunderRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.OverriddenRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
@@ -292,7 +292,7 @@ public class FileModelTest {
             .withName(FIRST_FILE_TXT)
             .withPublisherAuthority(false)
             .withSize(SIZE)
-            .withRightsRetentionStrategy(new CustomerRightsRetentionStrategy(randomString(), randomBoolean()))
+            .withRightsRetentionStrategy(CustomerRightsRetentionStrategy.create())
             .buildPublishedFile();
     }
 
@@ -337,9 +337,10 @@ public class FileModelTest {
 
     public static RightsRetentionStrategy randomRightsRetentionStrategy() {
         RightsRetentionStrategy[] strategies = {
-            new CustomerRightsRetentionStrategy(randomString(), randomBoolean()),
-            new OverriddenRightsRetentionStrategy(randomString(), randomBoolean()),
-            new NullRightsRetentionStrategy(randomString(), randomBoolean())
+            CustomerRightsRetentionStrategy.create(),
+            FunderRightsRetentionStrategy.create(),
+            OverriddenRightsRetentionStrategy.create(randomString()),
+            NullRightsRetentionStrategy.create(randomString())
         };
 
         return strategies[new Random().nextInt(strategies.length)];
