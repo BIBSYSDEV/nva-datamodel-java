@@ -14,7 +14,7 @@ import nva.commons.core.JacocoGenerated;
 public final class NullRightsRetentionStrategy implements RightsRetentionStrategy {
 
     public static final String TYPE_NAME = "NullRightsRetentionStrategy";
-    public static final String LEGAL_NOTE_FIELD = "legalNote";
+    private static final String LEGAL_NOTE_FIELD = "legalNote";
     private final String legalNote;
 
     @JsonCreator

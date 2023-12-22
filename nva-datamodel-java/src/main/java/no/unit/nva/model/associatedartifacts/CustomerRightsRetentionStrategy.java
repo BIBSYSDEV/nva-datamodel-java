@@ -11,7 +11,7 @@ import nva.commons.core.JacocoGenerated;
 public final class CustomerRightsRetentionStrategy implements RightsRetentionStrategy {
 
     public static final String TYPE_NAME = "CustomerRightsRetentionStrategy";
-    public static final int STATIC_VALUE_FOR_HASH_CODE = 103_245;
+    private static final int STATIC_VALUE_FOR_HASH_CODE = 103_245;
 
     @JsonCreator
     private CustomerRightsRetentionStrategy() {
