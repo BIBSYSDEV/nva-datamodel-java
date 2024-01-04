@@ -191,13 +191,20 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
                                  getRightsRetentionStrategy(), Instant.now());
     }
 
-    public final AdministrativeAgreement toUnpublishableFile() {
+    public final AdministrativeAgreement toAdministrativeAgreement() {
         if (isAdministrativeAgreement()) {
             return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                                isAdministrativeAgreement(), isPublisherAuthority(),
                                                getEmbargoDate().orElse(null), getRightsRetentionStrategy());
         }
         throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
+    }
+
+    public final UnpublishableFile toUnpublishableFile() {
+        return new UnpublishableFile(getIdentifier(), getName(), getMimeType(), getSize(),
+                                     getLicense(), isAdministrativeAgreement(),
+                                     isPublisherAuthority(), getEmbargoDate().orElse(null),
+                                     getRightsRetentionStrategy());
     }
 
     public abstract boolean isVisibleForNonOwner();
