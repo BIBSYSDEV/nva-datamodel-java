@@ -200,8 +200,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
     }
 
-    public final UnpublishableFile toUnpublishableFile() {
-        return new UnpublishableFile(getIdentifier(), getName(), getMimeType(), getSize(),
+    public final AdministrativeAgreement toUnpublishableFile() {
+        return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(),
                                      getLicense(), isAdministrativeAgreement(),
                                      isPublisherAuthority(), getEmbargoDate().orElse(null),
                                      getRightsRetentionStrategy());
