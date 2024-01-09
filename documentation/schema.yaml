@@ -2191,10 +2191,6 @@ referencedSchemas:
         id:
           type: string
           format: uri
-        labels:
-          type: object
-          additionalProperties:
-            type: string
         type:
           type: string
   OtherPerformance:
