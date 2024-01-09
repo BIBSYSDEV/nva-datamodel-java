@@ -1,7 +1,6 @@
 package no.unit.nva.model.testing;
 
 import static no.unit.nva.model.testing.RandomUtils.randomLabel;
-import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
@@ -220,7 +219,6 @@ public class PublicationContextBuilder {
     private static Agent randomAgent() {
         return new Organization.Builder()
             .withId(randomUri())
-            .withLabels(randomLabels())
             .build();
     }
 

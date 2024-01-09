@@ -4,7 +4,6 @@ import static no.unit.nva.model.testing.PublicationContextBuilder.randomPublicat
 import static no.unit.nva.model.testing.PublicationGenerator.randomAdditionalIdentifier;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstance;
-import static no.unit.nva.model.testing.RandomUtils.randomLabels;
 import static no.unit.nva.model.testing.RandomUtils.randomPublicationDate;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
@@ -112,7 +111,6 @@ public final class EntityDescriptionBuilder {
 
     private static Organization randomOrganization() {
         return new Organization.Builder()
-                   .withLabels(randomLabels())
                    .withId(randomUri())
                    .build();
     }

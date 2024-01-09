@@ -155,7 +155,6 @@ public final class PublicationGenerator {
     public static Organization randomOrganization() {
         return new Organization.Builder()
                 .withId(randomUri())
-                .withLabels(randomLabels())
                 .build();
     }
 
