@@ -17,7 +17,7 @@ import nva.commons.core.JacocoGenerated;
 public class Contributor {
 
     private final Identity identity;
-    private final List<Organization> affiliations;
+    private final List<Agent> affiliations;
     private final RoleType role;
     private final Integer sequence;
     private final boolean correspondingAuthor;

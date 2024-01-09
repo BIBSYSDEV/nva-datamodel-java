@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(name = "Cooperation", value = Corporation.class)
+    @JsonSubTypes.Type(name = "Organization", value = Organization.class),
+    @JsonSubTypes.Type(name = "UnconfirmedOrganization", value = UnconfirmedOrganization.class)
 })
-public interface Agent {
+public class Corporation implements Agent {
+
 }
