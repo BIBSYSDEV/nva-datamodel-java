@@ -17,6 +17,7 @@ public class UnconfirmedOrganization extends Corporation {
 
     @JsonCreator
     public UnconfirmedOrganization(@JsonProperty(NAME) String name) {
+        super();
         this.name = name;
     }
 

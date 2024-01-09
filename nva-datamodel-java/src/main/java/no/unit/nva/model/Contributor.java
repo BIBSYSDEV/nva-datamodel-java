@@ -17,14 +17,14 @@ import nva.commons.core.JacocoGenerated;
 public class Contributor {
 
     private final Identity identity;
-    private final List<Agent> affiliations;
+    private final List<Corporation> affiliations;
     private final RoleType role;
     private final Integer sequence;
     private final boolean correspondingAuthor;
 
     @JsonCreator
     public Contributor(@JsonProperty("identity") Identity identity,
-                       @JsonProperty("affiliations") List<Organization> affiliations,
+                       @JsonProperty("affiliations") List<Corporation> affiliations,
                        @JsonProperty("role") Object role,
                        @JsonProperty("sequence") Integer sequence,
                        @JsonProperty("correspondingAuthor") boolean correspondingAuthor) {
@@ -49,7 +49,7 @@ public class Contributor {
         return identity;
     }
 
-    public List<Organization> getAffiliations() {
+    public List<Corporation> getAffiliations() {
         return affiliations;
     }
 
@@ -120,7 +120,7 @@ public class Contributor {
     public static final class Builder {
 
         private Identity identity;
-        private List<Organization> affiliations;
+        private List<Corporation> affiliations;
         private Integer sequence;
         private RoleType role;
         private boolean correspondingAuthor;
@@ -133,7 +133,7 @@ public class Contributor {
             return this;
         }
 
-        public Builder withAffiliations(List<Organization> affiliations) {
+        public Builder withAffiliations(List<Corporation> affiliations) {
             this.affiliations = affiliations;
             return this;
         }
