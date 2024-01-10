@@ -365,12 +365,22 @@ nva:JournalInterview a rdfs:Class ;
   rdfs:subClassOf nva:Journal .
 
 nva:Organization a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "Administrative grouping of people working towards a shared goal" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:subClassOf nva:Agent .
+  rdfs:subClassOf nva:Corporation  .
+
+nva:UnconfirmedOrganization a rdfs:Class ;
+                 rdfs:comment "Unverified administrative grouping of people working towards a shared goal" ;
+                 rdfs:isDefinedBy nva: ;
+                 rdfs:subClassOf nva:Corporation  .
+
+nva:Corporation a rdfs:Class ;
+                rdfs:comment "Organized grouping of people working towards a shared goal" ;
+                rdfs:isDefinedBy nva: ;
+                rdfs:subClassOf nva:Agent .
 
 nva:Agent a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "Any person or group of persons doing something" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf owl:Thing .
 

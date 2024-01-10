@@ -756,7 +756,7 @@ referencedSchemas:
       affiliations:
         type: array
         items:
-          $ref: '#/components/schemas/Organization'
+          $ref: '#/components/schemas/Corporation'
       role:
         $ref: '#/components/schemas/RoleType'
       sequence:
@@ -768,6 +768,18 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  Corporation:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Agent'
+    - type: object
+      properties:
+        type:
+          type: string
   Course:
     required:
     - type
@@ -2185,7 +2197,7 @@ referencedSchemas:
     discriminator:
       propertyName: type
     allOf:
-    - $ref: '#/components/schemas/Agent'
+    - $ref: '#/components/schemas/Corporation'
     - type: object
       properties:
         id:
@@ -3034,10 +3046,16 @@ referencedSchemas:
         type:
           type: string
   UnconfirmedOrganization:
+    required:
+    - type
     type: object
     properties:
       name:
         type: string
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   UnconfirmedPlace:
     required:
     - type

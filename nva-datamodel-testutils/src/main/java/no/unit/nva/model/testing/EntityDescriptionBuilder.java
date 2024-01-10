@@ -13,6 +13,7 @@ import java.util.Map;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Contributor;
 import no.unit.nva.model.ContributorVerificationStatus;
+import no.unit.nva.model.Corporation;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.Identity;
 import no.unit.nva.model.NameType;
@@ -105,7 +106,7 @@ public final class EntityDescriptionBuilder {
         return new RoleTypeOther(Role.OTHER, randomString());
     }
 
-    private static List<Organization> randomOrganizations() {
+    private static List<Corporation> randomOrganizations() {
         return List.of(randomOrganization());
     }
 

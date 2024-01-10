@@ -2,11 +2,13 @@ package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.Objects;
 
-public class UnconfirmedOrganization implements Agent {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+public class UnconfirmedOrganization extends Corporation {
 
     public static final String NAME = "name";
 
@@ -15,6 +17,7 @@ public class UnconfirmedOrganization implements Agent {
 
     @JsonCreator
     public UnconfirmedOrganization(@JsonProperty(NAME) String name) {
+        super();
         this.name = name;
     }
 

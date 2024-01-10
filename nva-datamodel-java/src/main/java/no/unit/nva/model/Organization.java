@@ -7,15 +7,17 @@ import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public class Organization implements Agent {
+public class Organization extends Corporation {
 
     @JsonProperty("id")
     private URI id;
 
     public Organization() {
+        super();
     }
 
     private Organization(Builder builder) {
+        super();
         setId(builder.id);
     }
 
