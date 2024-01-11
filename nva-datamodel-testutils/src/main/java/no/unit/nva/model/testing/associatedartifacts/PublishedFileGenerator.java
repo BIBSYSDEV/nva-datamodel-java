@@ -17,6 +17,7 @@ public final class PublishedFileGenerator {
     public static PublishedFile random() {
         return new PublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
                                  randomUri(), false, true, null,
-                                 RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(), randomInstant());
+                                 RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(), randomString(),
+                                 randomInstant());
     }
 }

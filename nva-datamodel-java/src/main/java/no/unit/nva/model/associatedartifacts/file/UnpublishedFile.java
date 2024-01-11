@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.UUID;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 
+@SuppressWarnings("PMD.ExcessiveParameterList")
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(UnpublishedFile.TYPE)
 public class UnpublishedFile extends File {
@@ -28,6 +29,7 @@ public class UnpublishedFile extends File {
      * @param administrativeAgreement True if the file is an administrative agreement
      * @param publisherAuthority      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
+     * @param legalNote               The legal note for file
      */
     @JsonCreator
     public UnpublishedFile(
@@ -39,9 +41,10 @@ public class UnpublishedFile extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy) {
+        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
+        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority,
-              embargoDate, rightsRetentionStrategy);
+              embargoDate, rightsRetentionStrategy, legalNote);
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
         }
