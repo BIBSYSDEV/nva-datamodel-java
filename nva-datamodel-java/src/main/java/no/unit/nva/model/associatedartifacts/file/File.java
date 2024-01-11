@@ -374,7 +374,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
         public File buildPublishedFile() {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                                     publisherAuthority, embargoDate, rightsRetentionStrategy, legalNote, Instant.now());
+                                     publisherAuthority, embargoDate, rightsRetentionStrategy,
+                                     legalNote, Instant.now());
         }
 
         public File buildUnpublishedFile() {
