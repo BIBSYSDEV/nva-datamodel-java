@@ -26,7 +26,7 @@ import nva.commons.core.JacocoGenerated;
 /**
  * An object that represents the description of a file.
  */
-
+@SuppressWarnings("PMD.ExcessiveParameterList")
 // TODO: Remove File annotation once all data has been migrated
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonSubTypes({
@@ -60,6 +60,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String CCBY_LICENSE =
         "Files with the CustomerRightsRetentionStrategy must have the CC BY license if publisherAuthority is false.";
     public static final String ERROR_MESSAGE = "The specified license cannot be converted into a valid URI license: ";
+    public static final String LEGAL_NOTE_FIELD = "legalNote";
     private static final Supplier<Pattern> LICENSE_VALIDATION_PATTERN =
         () -> Pattern.compile("^(http|https)://.*$");
 
@@ -81,6 +82,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     private final Instant embargoDate;
     @JsonProperty(RIGTHTS_RETENTION_STRATEGY)
     private final RightsRetentionStrategy rightsRetentionStrategy;
+    @JsonProperty(LEGAL_NOTE_FIELD)
+    private final String legalNote;
 
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
@@ -107,7 +110,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy) {
+        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
+        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
 
         this.identifier = identifier;
         this.name = name;
@@ -118,6 +122,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.publisherAuthority = publisherAuthority;
         this.embargoDate = embargoDate;
         this.rightsRetentionStrategy = assignDefaultStrategyIfNull(rightsRetentionStrategy);
+        this.legalNote = legalNote;
     }
 
     public static Builder builder() {
@@ -154,6 +159,10 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         return size;
     }
 
+    public String getLegalNote() {
+        return legalNote;
+    }
+
     public URI getLicense() {
         return license;
     }
@@ -181,14 +190,14 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public UnpublishedFile toUnpublishedFile() {
         return new UnpublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                    isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null),
-                                   getRightsRetentionStrategy());
+                                   getRightsRetentionStrategy(), getLegalNote());
     }
 
     public PublishedFile toPublishedFile() {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                  isAdministrativeAgreement(), isPublisherAuthority(),
                                  getEmbargoDate().orElse(null),
-                                 getRightsRetentionStrategy(), Instant.now());
+                                 getRightsRetentionStrategy(), getLegalNote(), Instant.now());
     }
 
     public final AdministrativeAgreement toAdministrativeAgreement() {
@@ -308,6 +317,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         private boolean publisherAuthority;
         private Instant embargoDate;
         private RightsRetentionStrategy rightsRetentionStrategy;
+        private String legalNote;
 
         private Builder() {
         }
@@ -357,15 +367,20 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return this;
         }
 
+        public Builder withLegalNote(String legalNote) {
+            this.legalNote = legalNote;
+            return this;
+        }
+
         public File buildPublishedFile() {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                                     publisherAuthority, embargoDate, rightsRetentionStrategy, Instant.now());
+                                     publisherAuthority, embargoDate, rightsRetentionStrategy, legalNote, Instant.now());
         }
 
         public File buildUnpublishedFile() {
             return new UnpublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
                                        publisherAuthority,
-                                       embargoDate, rightsRetentionStrategy);
+                                       embargoDate, rightsRetentionStrategy, legalNote);
         }
 
         public File buildUnpublishableFile() {

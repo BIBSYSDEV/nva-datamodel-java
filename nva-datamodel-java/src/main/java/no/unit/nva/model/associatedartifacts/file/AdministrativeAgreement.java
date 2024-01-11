@@ -14,7 +14,8 @@ import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 public class AdministrativeAgreement extends File {
     
     public static final String TYPE = "UnpublishableFile";
-    
+    private static final String NO_LEGAL_NOTE = null;
+
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
      * marked as an administrative agreement.
@@ -41,7 +42,7 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority,
-              embargoDate, rightsRetentionStrategy);
+              embargoDate, rightsRetentionStrategy,  NO_LEGAL_NOTE);
     }
     
     @Override

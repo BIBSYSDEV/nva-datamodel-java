@@ -1,12 +1,9 @@
 package no.unit.nva.model.associatedartifacts;
 
-import static no.unit.nva.model.associatedartifacts.OverriddenRightsRetentionStrategy.LEGAL_NOTE_FIELD;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
@@ -14,26 +11,20 @@ import nva.commons.core.JacocoGenerated;
 public final class NullRightsRetentionStrategy implements RightsRetentionStrategy {
 
     public static final String TYPE_NAME = "NullRightsRetentionStrategy";
-    private static final String LEGAL_NOTE_FIELD = "legalNote";
-    private final String legalNote;
+    private static final int STATIC_VALUE_FOR_HASH_CODE = 103_245;
 
     @JsonCreator
-    private NullRightsRetentionStrategy(@JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
-        this.legalNote = legalNote;
+    private NullRightsRetentionStrategy() {
     }
 
     public static NullRightsRetentionStrategy create() {
-        return new NullRightsRetentionStrategy(null);
-    }
-
-    public static NullRightsRetentionStrategy create(String legalNote) {
-        return new NullRightsRetentionStrategy(legalNote);
+        return new NullRightsRetentionStrategy();
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(legalNote);
+        return STATIC_VALUE_FOR_HASH_CODE;
     }
 
     @JacocoGenerated
@@ -42,14 +33,6 @@ public final class NullRightsRetentionStrategy implements RightsRetentionStrateg
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        NullRightsRetentionStrategy that = (NullRightsRetentionStrategy) o;
-        return Objects.equals(legalNote, that.legalNote);
-    }
-
-    public String getLegalNote() {
-        return legalNote;
+        return o instanceof NullRightsRetentionStrategy;
     }
 }

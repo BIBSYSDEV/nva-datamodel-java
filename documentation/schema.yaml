@@ -1277,6 +1277,8 @@ referencedSchemas:
           format: date-time
         rightsRetentionStrategy:
           $ref: '#/components/schemas/RightsRetentionStrategy'
+        legalNote:
+          type: string
         visibleForNonOwner:
           type: boolean
         type:
@@ -2186,8 +2188,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/RightsRetentionStrategy'
     - type: object
       properties:
-        legalNote:
-          type: string
         type:
           type: string
   Organization:
@@ -2287,8 +2287,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/RightsRetentionStrategy'
     - type: object
       properties:
-        legalNote:
-          type: string
         type:
           type: string
   Pages:

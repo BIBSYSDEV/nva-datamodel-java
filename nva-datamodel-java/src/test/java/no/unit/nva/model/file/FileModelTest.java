@@ -68,7 +68,7 @@ public class FileModelTest {
     void shouldRoundTripAllFileTypes(File file) throws JsonProcessingException {
         var json = JsonUtils.dtoObjectMapper.writeValueAsString(file);
         var deserialized = JsonUtils.dtoObjectMapper.readValue(json, File.class);
-        assertThat(deserialized, doesNotHaveEmptyValuesIgnoringFields(Set.of(".rightsRetentionStrategy.legalNote")));
+        assertThat(deserialized, doesNotHaveEmptyValuesIgnoringFields(Set.of(".rightsRetentionStrategy", "legalNote")));
         assertThat(deserialized, is(equalTo(file)));
     }
 
@@ -130,7 +130,7 @@ public class FileModelTest {
         var mapped = dataModelObjectMapper.writeValueAsString(file);
         var unmapped = dataModelObjectMapper.readValue(mapped, File.class);
         assertThat(file, equalTo(unmapped));
-        assertThat(file, doesNotHaveEmptyValuesIgnoringFields(Set.of(".rightsRetentionStrategy.legalNote")));
+        assertThat(file, doesNotHaveEmptyValuesIgnoringFields(Set.of(".rightsRetentionStrategy", "legalNote")));
     }
 
     @Test
@@ -243,7 +243,7 @@ public class FileModelTest {
                                  randomBoolean(),
                                  Instant.now().plus(1, DAYS),
                                  RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(),
-                                 randomInstant());
+                                 randomString(), randomInstant());
     }
 
     public static Username randomUsername() {

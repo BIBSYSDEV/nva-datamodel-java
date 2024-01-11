@@ -1,11 +1,9 @@
 package no.unit.nva.model.associatedartifacts;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
@@ -13,30 +11,20 @@ import nva.commons.core.JacocoGenerated;
 public final class OverriddenRightsRetentionStrategy implements RightsRetentionStrategy {
 
     public static final String TYPE_NAME = "OverriddenRightsRetentionStrategy";
-    public static final String LEGAL_NOTE_FIELD = "legalNote";
-    private final String legalNote;
+    private static final int STATIC_VALUE_FOR_HASH_CODE = 103_245;
 
     @JsonCreator
-    private OverriddenRightsRetentionStrategy(@JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
-        this.legalNote = legalNote;
-    }
-
-    public static OverriddenRightsRetentionStrategy create(String legalNote) {
-        return new OverriddenRightsRetentionStrategy(legalNote);
+    private OverriddenRightsRetentionStrategy() {
     }
 
     public static OverriddenRightsRetentionStrategy create() {
-        return new OverriddenRightsRetentionStrategy(null);
-    }
-
-    public String getLegalNote() {
-        return legalNote;
+        return new OverriddenRightsRetentionStrategy();
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(legalNote);
+        return STATIC_VALUE_FOR_HASH_CODE;
     }
 
     @JacocoGenerated
@@ -45,10 +33,6 @@ public final class OverriddenRightsRetentionStrategy implements RightsRetentionS
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        OverriddenRightsRetentionStrategy that = (OverriddenRightsRetentionStrategy) o;
-        return Objects.equals(legalNote, that.legalNote);
+        return o instanceof OverriddenRightsRetentionStrategy;
     }
 }
