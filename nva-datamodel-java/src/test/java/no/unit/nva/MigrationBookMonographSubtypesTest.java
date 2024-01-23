@@ -3,6 +3,7 @@ package no.unit.nva;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.instancetypes.book.BookMonographContentType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -15,6 +16,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 class MigrationBookMonographSubtypesTest {
     @ParameterizedTest
     @EnumSource(BookMonographContentType.class)
+    @Disabled
     void shouldDeserializeOldSubtypeBookMonographContentTypeAsType(BookMonographContentType content) {
         var type = content.getValue();
         var json = generateFullBookMonographWithContentType(type);

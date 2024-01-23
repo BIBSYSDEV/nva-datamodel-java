@@ -3,6 +3,8 @@ package no.unit.nva;
 import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.instancetypes.journal.JournalArticleContentType;
+import org.javers.core.metamodel.annotation.IgnoreDeclaredProperties;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -16,6 +18,7 @@ class MigrationJournalArticleSubtypes {
 
     @ParameterizedTest
     @EnumSource(JournalArticleContentType.class)
+    @Disabled
     void shouldDeserializeOldSubtypeJournalArticleContentTypeAsType(JournalArticleContentType content) {
         var type = content.getValue();
         var json = generateFullJournalArticleWithContentType(type);

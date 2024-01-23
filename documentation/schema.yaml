@@ -452,20 +452,6 @@ referencedSchemas:
             $ref: '#/components/schemas/AdditionalIdentifier'
         type:
           type: string
-  BookAbstracts:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/MonographPages'
-        type:
-          type: string
   BookAnthology:
     required:
     - type
@@ -478,30 +464,6 @@ referencedSchemas:
       properties:
         pages:
           $ref: '#/components/schemas/MonographPages'
-        type:
-          type: string
-  BookMonograph:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/MonographPages'
-        contentType:
-          type: string
-          writeOnly: true
-          enum:
-          - AcademicMonograph
-          - NonFictionMonograph
-          - PopularScienceMonograph
-          - Textbook
-          - Encyclopedia
-          - ExhibitionCatalog
         type:
           type: string
   BookSeries:
@@ -548,31 +510,6 @@ referencedSchemas:
         articleNumber:
           type: string
         Type:
-          type: string
-  ChapterArticle:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/Range'
-        contentType:
-          type: string
-          writeOnly: true
-          enum:
-          - AcademicChapter
-          - NonFictionChapter
-          - PopularScienceChapter
-          - TextbookChapter
-          - EncyclopediaChapter
-          - Introduction
-          - ExhibitionCatalogChapter
-        type:
           type: string
   ChapterConferenceAbstract:
     required:
@@ -1225,26 +1162,6 @@ referencedSchemas:
       description:
         type: string
         writeOnly: true
-  FeatureArticle:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        volume:
-          type: string
-        issue:
-          type: string
-        articleNumber:
-          type: string
-        pages:
-          $ref: '#/components/schemas/Range'
-        type:
-          type: string
   File:
     required:
     - type
@@ -1434,36 +1351,6 @@ referencedSchemas:
           format: uri
         type:
           type: string
-  JournalArticle:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/Range'
-        volume:
-          type: string
-        issue:
-          type: string
-        articleNumber:
-          type: string
-        contentType:
-          type: string
-          writeOnly: true
-          enum:
-          - AcademicArticle
-          - AcademicLiteratureReview
-          - CaseReport
-          - StudyProtocol
-          - ProfessionalArticle
-          - PopularScienceArticle
-        type:
-          type: string
   JournalCorrigendum:
     required:
     - type
@@ -1485,26 +1372,6 @@ referencedSchemas:
         corrigendumFor:
           type: string
           format: uri
-        type:
-          type: string
-  JournalInterview:
-    required:
-    - type
-    type: object
-    discriminator:
-      propertyName: type
-    allOf:
-    - $ref: '#/components/schemas/PublicationInstancePages'
-    - type: object
-      properties:
-        volume:
-          type: string
-        issue:
-          type: string
-        articleNumber:
-          type: string
-        pages:
-          $ref: '#/components/schemas/Range'
         type:
           type: string
   JournalIssue:
