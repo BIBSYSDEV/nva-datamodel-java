@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 import java.util.Objects;
 import no.unit.nva.model.Publication;
-import no.unit.nva.model.PublicationNote;
+import no.unit.nva.model.PublicationNoteBase;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
 public class PublicationResponseElevatedUser extends PublicationResponse {
 
-    private List<PublicationNote> publicationNotes;
+    private List<PublicationNoteBase> publicationNotes;
 
     public static PublicationResponseElevatedUser fromPublication(Publication publication) {
         var response = new PublicationResponseElevatedUser();
@@ -40,11 +40,11 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
         return response;
     }
 
-    public List<PublicationNote> getPublicationNotes() {
+    public List<PublicationNoteBase> getPublicationNotes() {
         return publicationNotes;
     }
 
-    public void setPublicationNotes(List<PublicationNote> publicationNotes) {
+    public void setPublicationNotes(List<PublicationNoteBase> publicationNotes) {
         this.publicationNotes = publicationNotes;
     }
 
