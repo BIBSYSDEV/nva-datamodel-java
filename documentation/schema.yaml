@@ -67,6 +67,10 @@ schema:
           type: boolean
         publishable:
           type: boolean
+        first:
+          $ref: '#/components/schemas/AssociatedArtifact'
+        last:
+          $ref: '#/components/schemas/AssociatedArtifact'
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     rightsHolder:
@@ -349,6 +353,10 @@ referencedSchemas:
         type: boolean
       publishable:
         type: boolean
+      first:
+        $ref: '#/components/schemas/AssociatedArtifact'
+      last:
+        $ref: '#/components/schemas/AssociatedArtifact'
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
@@ -1211,21 +1219,21 @@ referencedSchemas:
     properties:
       identifier:
         type: string
-      source:
-        type: string
-        format: uri
       labels:
         type: object
         additionalProperties:
           type: string
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
+      source:
+        type: string
+        format: uri
       activeFrom:
         type: string
         format: date-time
       activeTo:
         type: string
         format: date-time
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
       type:
         type: string
     discriminator:
@@ -2388,6 +2396,10 @@ referencedSchemas:
             type: boolean
           publishable:
             type: boolean
+          first:
+            $ref: '#/components/schemas/AssociatedArtifact'
+          last:
+            $ref: '#/components/schemas/AssociatedArtifact'
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       rightsHolder:

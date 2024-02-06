@@ -12,10 +12,12 @@ import no.unit.nva.model.instancetypes.degree.RelatedDocument;
 import no.unit.nva.model.instancetypes.degree.UnconfirmedDocument;
 import no.unit.nva.model.instancetypes.researchdata.DataManagementPlan;
 import no.unit.nva.model.instancetypes.researchdata.DataSet;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+@Deprecated
 public class MigrationRelatedTest {
 
     public static Stream<Arguments> publicationInstanceWithRelatedSetProviderForDMP() {
@@ -123,6 +125,7 @@ public class MigrationRelatedTest {
                          + "}", UnconfirmedDocument.class));
     }
 
+    @Disabled
     @ParameterizedTest
     @MethodSource("publicationInstanceWithRelatedSetProviderForDMP")
     void shouldTakeJsonAsInputAndConvertToDataManagementPlanWithSetOfRelatedDocuments(
@@ -134,6 +137,7 @@ public class MigrationRelatedTest {
         assertThat(object.getRelated().iterator().next(), is(instanceOf(expectedClass)));
     }
 
+    @Disabled
     @ParameterizedTest
     @MethodSource("publicationInstanceWithRelatedSetProviderForDataSet")
     void shouldTakeJsonAsInputAndConvertToDataSetWithSetOfRelatedDocuments(

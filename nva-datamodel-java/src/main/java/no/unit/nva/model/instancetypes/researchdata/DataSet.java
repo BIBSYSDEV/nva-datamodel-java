@@ -2,18 +2,13 @@ package no.unit.nva.model.instancetypes.researchdata;
 
 import static java.util.Collections.emptySet;
 import static java.util.Objects.nonNull;
-import static nva.commons.core.attempt.Try.attempt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.net.URI;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import no.unit.nva.model.instancetypes.degree.ConfirmedDocument;
 import no.unit.nva.model.instancetypes.degree.RelatedDocument;
-import no.unit.nva.model.instancetypes.degree.UnconfirmedDocument;
 import no.unit.nva.model.pages.NullPages;
 import nva.commons.core.JacocoGenerated;
 
@@ -38,34 +33,14 @@ public class DataSet implements no.unit.nva.model.instancetypes.PublicationInsta
     public DataSet(@JsonProperty(USER_AGREES_TO_TERMS_AND_CONDITIONS_FIELD) boolean userAgreesToTermsAndConditions,
                    @JsonProperty(GEOGRAPHICAL_COVERAGE_FIELD) GeographicalDescription geographicalCoverage,
                    @JsonProperty(REFERENCED_BY_FIELD) ReferencedByUris referencedByUris,
-                   @JsonProperty(RELATED_FIELD) Set<Object> related,
+                   @JsonProperty(RELATED_FIELD) Set<RelatedDocument> related,
                    @JsonProperty(COMPLIES_WITH_FIELD) CompliesWithUris compliesWith) {
         super();
         this.geographicalCoverage = geographicalCoverage;
         this.referencedBy = nonNull(referencedByUris) ? new HashSet<>(referencedByUris) : emptySet();
-        this.related = nonNull(related)
-                           ? related.stream()
-                                 .map(this::toRelatedDocument)
-                                 .collect(Collectors.toSet())
-                           : Set.of();
+        this.related = nonNull(related) ? related : Set.of();
         this.compliesWith = nonNull(compliesWith) ? new HashSet<>(compliesWith) : emptySet();
         this.userAgreesToTermsAndConditions = userAgreesToTermsAndConditions;
-    }
-
-    private RelatedDocument toRelatedDocument(Object item) {
-        if (item instanceof Map map) {
-            String name = ConfirmedDocument.class.getSimpleName();
-            return name.equals(map.get("type"))
-                       ? new ConfirmedDocument(URI.create(map.get("identifier").toString()))
-                       : new UnconfirmedDocument(map.get("identifier").toString());
-        }
-        var value = attempt(() -> URI.create(item.toString()))
-                        .orElse(failure -> null);
-        if (nonNull(value)) {
-            return new ConfirmedDocument(value);
-        } else {
-            return new UnconfirmedDocument(item.toString());
-        }
     }
 
     public boolean isUserAgreesToTermsAndConditions() {
