@@ -77,7 +77,7 @@ schema:
     publicationNotes:
       type: array
       items:
-        $ref: '#/components/schemas/PublicationNote'
+        $ref: '#/components/schemas/PublicationNoteBase'
     modelVersion:
       type: string
     type:
@@ -1209,15 +1209,13 @@ referencedSchemas:
     - type
     type: object
     properties:
-      identifier:
-        type: string
-      source:
-        type: string
-        format: uri
       labels:
         type: object
         additionalProperties:
           type: string
+      source:
+        type: string
+        format: uri
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
@@ -1226,6 +1224,8 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
+      identifier:
+        type: string
       type:
         type: string
     discriminator:
@@ -2398,7 +2398,7 @@ referencedSchemas:
       publicationNotes:
         type: array
         items:
-          $ref: '#/components/schemas/PublicationNote'
+          $ref: '#/components/schemas/PublicationNoteBase'
       modelVersion:
         type: string
       type:
@@ -2441,16 +2441,30 @@ referencedSchemas:
     discriminator:
       propertyName: type
   PublicationNote:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublicationNoteBase'
+    - type: object
+      properties:
+        publicationNoteMessage:
+          type: string
+  PublicationNoteBase:
     required:
     - type
     type: object
     properties:
-      publicationNoteMessage:
-        type: string
       type:
         type: string
     discriminator:
       propertyName: type
+  PublicationUnpublishNote:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublicationNoteBase'
+    - type: object
+      properties:
+        note:
+          type: string
   PublishedFile:
     required:
     - type
