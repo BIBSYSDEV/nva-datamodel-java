@@ -67,10 +67,6 @@ schema:
           type: boolean
         publishable:
           type: boolean
-        first:
-          $ref: '#/components/schemas/AssociatedArtifact'
-        last:
-          $ref: '#/components/schemas/AssociatedArtifact'
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     rightsHolder:
@@ -81,7 +77,7 @@ schema:
     publicationNotes:
       type: array
       items:
-        $ref: '#/components/schemas/PublicationNote'
+        $ref: '#/components/schemas/PublicationNoteBase'
     modelVersion:
       type: string
     type:
@@ -353,10 +349,6 @@ referencedSchemas:
         type: boolean
       publishable:
         type: boolean
-      first:
-        $ref: '#/components/schemas/AssociatedArtifact'
-      last:
-        $ref: '#/components/schemas/AssociatedArtifact'
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
@@ -1217,8 +1209,6 @@ referencedSchemas:
     - type
     type: object
     properties:
-      identifier:
-        type: string
       labels:
         type: object
         additionalProperties:
@@ -1226,14 +1216,16 @@ referencedSchemas:
       source:
         type: string
         format: uri
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
         type: string
         format: date-time
       activeTo:
         type: string
         format: date-time
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
+      identifier:
+        type: string
       type:
         type: string
     discriminator:
@@ -2396,10 +2388,6 @@ referencedSchemas:
             type: boolean
           publishable:
             type: boolean
-          first:
-            $ref: '#/components/schemas/AssociatedArtifact'
-          last:
-            $ref: '#/components/schemas/AssociatedArtifact'
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       rightsHolder:
@@ -2410,7 +2398,7 @@ referencedSchemas:
       publicationNotes:
         type: array
         items:
-          $ref: '#/components/schemas/PublicationNote'
+          $ref: '#/components/schemas/PublicationNoteBase'
       modelVersion:
         type: string
       type:
@@ -2453,12 +2441,18 @@ referencedSchemas:
     discriminator:
       propertyName: type
   PublicationNote:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublicationNoteBase'
+    - type: object
+      properties:
+        publicationNoteMessage:
+          type: string
+  PublicationNoteBase:
     required:
     - type
     type: object
     properties:
-      publicationNoteMessage:
-        type: string
       type:
         type: string
     discriminator:
@@ -2989,6 +2983,14 @@ referencedSchemas:
     - type: object
       properties:
         type:
+          type: string
+  UnpublishingNote:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublicationNoteBase'
+    - type: object
+      properties:
+        note:
           type: string
   Venue:
     required:

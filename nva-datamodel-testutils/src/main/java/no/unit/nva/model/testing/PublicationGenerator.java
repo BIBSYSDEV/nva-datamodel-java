@@ -22,7 +22,9 @@ import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationNote;
+import no.unit.nva.model.PublicationNoteBase;
 import no.unit.nva.model.PublicationStatus;
+import no.unit.nva.model.UnpublishingNote;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
 import no.unit.nva.model.Username;
@@ -178,14 +180,19 @@ public final class PublicationGenerator {
                 .withCreatedDate(randomInstant())
                 .withEntityDescription(randomEntityDescription(publicationInstanceClass))
                 .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                .withPublicationNotes(List.of(randomPublicationNote()))
+                .withPublicationNotes(List.of(randomPublicationNote(), randomUnpublishingNote()))
                 .withDuplicateOf(randomUri())
                 .build();
     }
 
-    private static PublicationNote randomPublicationNote() {
+    private static PublicationNoteBase randomPublicationNote() {
         return new PublicationNote(randomString());
     }
+
+    private static PublicationNoteBase randomUnpublishingNote() {
+        return new UnpublishingNote(randomString());
+    }
+
     private static ResourceOwner randomResourceOwner() {
         return new ResourceOwner(new Username(randomString()), randomUri());
     }

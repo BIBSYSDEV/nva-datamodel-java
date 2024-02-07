@@ -68,7 +68,7 @@ public class Publication
     private String rightsHolder;
     private URI duplicateOf;
 
-    private List<PublicationNote> publicationNotes;
+    private List<PublicationNoteBase> publicationNotes;
 
     public Publication() {
         // Default constructor, use setters.
@@ -261,11 +261,11 @@ public class Publication
     }
 
     @JsonGetter
-    public List<PublicationNote> getPublicationNotes() {
+    public List<PublicationNoteBase> getPublicationNotes() {
         return nonNull(publicationNotes) ? publicationNotes : Collections.emptyList();
     }
 
-    public void setPublicationNotes(List<PublicationNote> publicationNotes) {
+    public void setPublicationNotes(List<PublicationNoteBase> publicationNotes) {
         this.publicationNotes = publicationNotes;
     }
 
@@ -518,7 +518,7 @@ public class Publication
             return this;
         }
 
-        public Builder withPublicationNotes(List<PublicationNote> publicationNotes) {
+        public Builder withPublicationNotes(List<PublicationNoteBase> publicationNotes) {
             publication.setPublicationNotes(publicationNotes);
             return this;
         }
