@@ -384,11 +384,11 @@ public final class PublicationInstanceBuilder {
         var referencedUri = new ReferencedByUris(Set.of(randomUri()));
         var compliesWithUris = new CompliesWithUris(Set.of(randomUri()));
         return new DataSet(randomBoolean(),
-                geographicalCoverage, referencedUri, Set.of(randomUri()), compliesWithUris);
+                geographicalCoverage, referencedUri, Set.of(new UnconfirmedDocument(randomString())), compliesWithUris);
     }
 
     private static DataManagementPlan generateDataManagementPlan() {
-        return new DataManagementPlan(Set.of(randomUri()), randomMonographPages());
+        return new DataManagementPlan(Set.of(new UnconfirmedDocument(randomString())), randomMonographPages());
     }
 
     private static Map generateMap() {
