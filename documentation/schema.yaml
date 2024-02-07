@@ -2457,14 +2457,6 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
-  PublicationUnpublishNote:
-    type: object
-    allOf:
-    - $ref: '#/components/schemas/PublicationNoteBase'
-    - type: object
-      properties:
-        note:
-          type: string
   PublishedFile:
     required:
     - type
@@ -2991,6 +2983,14 @@ referencedSchemas:
     - type: object
       properties:
         type:
+          type: string
+  UnpublishingNote:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/PublicationNoteBase'
+    - type: object
+      properties:
+        note:
           type: string
   Venue:
     required:

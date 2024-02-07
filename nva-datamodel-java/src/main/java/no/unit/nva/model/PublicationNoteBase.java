@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(PublicationNote.class),
-    @JsonSubTypes.Type(PublicationUnpublishNote.class)
+    @JsonSubTypes.Type(UnpublishingNote.class)
 })
 public interface PublicationNoteBase {
 
