@@ -36,6 +36,8 @@ public class PublicationTest {
     public static final String FRAME = IoUtils.stringFromResources(Path.of("publicationFrame.json")).replace(
         "__REPLACE__", "https://localhost");
     public static final String BOOK_REVISION_FIELD = ".entityDescription.reference.publicationContext.revision";
+    public static final String ALLOWED_OPERATIONS_FIELD = "allowedOperations";
+
 
     @Test
     void getModelVersionReturnsModelVersionDefinedByGradle() {

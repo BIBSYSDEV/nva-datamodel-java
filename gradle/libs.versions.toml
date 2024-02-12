@@ -1,8 +1,8 @@
 [versions]
 junitVersion = { strictly = '5.10.0' }
-jacksonVersion = { strictly = '2.15.3' }
-nvaCommonsVersion = { strictly = '1.36.15' }
-apacheCommonsValidator = { strictly = '1.7' }
+jacksonVersion = { strictly = '2.16.1' }
+nvaCommonsVersion = { strictly = '1.37.1' }
+apacheCommonsValidator = { strictly = '1.8.0' }
 hamcrestVersion = { strictly = '2.2' }
 jsonldJavaVersion = { strictly = '0.13.4' }
 swaggerCoreVersion = { strictly = '2.2.15' }
@@ -14,7 +14,7 @@ nva-language = { strictly = '1.0' }
 snakeyaml = { strictly = '2.2' }
 zalandoVersion = { strictly = '0.27.1'}
 jena = { strictly = '4.9.0'}
-log4j = { strictly = '2.22.0' }
+log4j = { strictly = '2.22.1' }
 
 
 [libraries]
