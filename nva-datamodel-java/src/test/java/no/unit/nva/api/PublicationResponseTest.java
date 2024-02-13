@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import java.util.Set;
+import no.unit.nva.model.AllowedOperation;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.testing.PublicationGenerator;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class PublicationResponseTest {
     @Test
     void staticConstructorWithAllowedOperationsShouldReturnPublicationResponseWithoutUnexpectedLossOfInformation() {
         Publication publication = PublicationGenerator.randomPublication();
-        var operation = randomString();
+        var operation = AllowedOperation.UPDATE;
         PublicationResponse publicationResponse = PublicationResponse.fromPublicationWithAllowedOperations(publication,
                                                                                                            Set.of(
                                                                                                                operation));
