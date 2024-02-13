@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import no.unit.nva.model.AllowedOperation;
+import no.unit.nva.model.PublicationOperation;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationNoteBase;
 import nva.commons.core.JacocoGenerated;
@@ -45,7 +45,7 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
     }
 
     public static PublicationResponseElevatedUser fromPublicationWithAllowedOperations(Publication publication,
-                                                                           Set<AllowedOperation> allowedOperations) {
+                                                                           Set<PublicationOperation> allowedOperations) {
         var response = fromPublication(publication);
         response.setAllowedOperations(allowedOperations);
         return response;

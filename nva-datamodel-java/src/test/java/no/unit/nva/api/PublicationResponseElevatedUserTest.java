@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import java.util.List;
 import java.util.Set;
-import no.unit.nva.model.AllowedOperation;
+import no.unit.nva.model.PublicationOperation;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationNote;
 import no.unit.nva.model.testing.PublicationGenerator;
@@ -41,8 +41,8 @@ public class PublicationResponseElevatedUserTest {
 
     @Test
     void staticConstructorWithAllowedOperationsShouldReturnPublicationResponseWithoutUnexpectedLossOfInformation() {
-        Publication publication = PublicationGenerator.randomPublication();
-        var operation = AllowedOperation.UPDATE;
+        Publication publication = randomPublication();
+        var operation = PublicationOperation.UPDATE;
         PublicationResponseElevatedUser publicationResponse = PublicationResponseElevatedUser.fromPublicationWithAllowedOperations(
             publication,
             Set.of(operation));

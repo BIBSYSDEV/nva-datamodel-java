@@ -19,7 +19,7 @@ import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
-import no.unit.nva.model.AllowedOperation;
+import no.unit.nva.model.PublicationOperation;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.Organization;
@@ -58,7 +58,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private String rightsHolder;
 
-    private Set<AllowedOperation> allowedOperations;
+    private Set<PublicationOperation> allowedOperations;
 
     public static PublicationResponse fromPublication(Publication publication) {
         var response = new PublicationResponse();
@@ -87,7 +87,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     public static PublicationResponse fromPublicationWithAllowedOperations(Publication publication,
-                                                                Set<AllowedOperation> allowedOperations) {
+                                                                Set<PublicationOperation> allowedOperations) {
         var response = fromPublication(publication);
         response.setAllowedOperations(allowedOperations);
         return response;
@@ -283,11 +283,11 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.additionalIdentifiers = additionalIdentifiers;
     }
 
-    public Set<AllowedOperation> getAllowedOperations() {
+    public Set<PublicationOperation> getAllowedOperations() {
         return allowedOperations;
     }
 
-    public void setAllowedOperations(Set<AllowedOperation> allowedOperations) {
+    public void setAllowedOperations(Set<PublicationOperation> allowedOperations) {
         this.allowedOperations = allowedOperations;
     }
 
