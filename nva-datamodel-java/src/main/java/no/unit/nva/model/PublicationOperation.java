@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PublicationOperation {
 
-    CREATE("create"),
     UPDATE("update"),
     UNPUBLISH("unpublish"),
     REPUBLISH("republish"),
