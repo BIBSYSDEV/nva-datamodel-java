@@ -19,6 +19,7 @@ import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.PublicationOperation;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.Organization;
@@ -29,7 +30,7 @@ import no.unit.nva.model.ResourceOwner;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import nva.commons.core.JacocoGenerated;
 
-@SuppressWarnings("PMD.TooManyFields")
+@SuppressWarnings({"PMD.TooManyFields", "PMD.GodClass"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId,
@@ -57,6 +58,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private String rightsHolder;
 
+    private Set<PublicationOperation> allowedOperations;
+
     public static PublicationResponse fromPublication(Publication publication) {
         var response = new PublicationResponse();
         response.setIdentifier(publication.getIdentifier());
@@ -79,6 +82,14 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setAssociatedArtifacts(publication.getAssociatedArtifacts());
         response.setAdditionalIdentifiers(publication.getAdditionalIdentifiers());
         response.setRightsHolder(publication.getRightsHolder());
+        response.setAllowedOperations(Set.of());
+        return response;
+    }
+
+    public static PublicationResponse fromPublicationWithAllowedOperations(Publication publication,
+                                                                Set<PublicationOperation> allowedOperations) {
+        var response = fromPublication(publication);
+        response.setAllowedOperations(allowedOperations);
         return response;
     }
 
@@ -272,6 +283,14 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.additionalIdentifiers = additionalIdentifiers;
     }
 
+    public Set<PublicationOperation> getAllowedOperations() {
+        return allowedOperations;
+    }
+
+    public void setAllowedOperations(Set<PublicationOperation> allowedOperations) {
+        this.allowedOperations = allowedOperations;
+    }
+
     @Override
     @JacocoGenerated
     public int hashCode() {
@@ -293,7 +312,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                             getSubjects(),
                             getAdditionalIdentifiers(),
                             getAssociatedArtifacts(),
-                            getRightsHolder());
+                            getRightsHolder(),
+                            getAllowedOperations());
     }
 
     @Override
@@ -324,6 +344,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                && Objects.equals(getSubjects(), that.getSubjects())
                && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
-               && Objects.equals(getRightsHolder(), that.getRightsHolder());
+               && Objects.equals(getRightsHolder(), that.getRightsHolder())
+               && Objects.equals(getAllowedOperations(), that.getAllowedOperations());
     }
 }

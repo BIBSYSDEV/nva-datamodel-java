@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import no.unit.nva.model.PublicationOperation;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationNoteBase;
 import nva.commons.core.JacocoGenerated;
 
+@SuppressWarnings({"PMD.TooManyFields", "PMD.GodClass"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
 public class PublicationResponseElevatedUser extends PublicationResponse {
@@ -37,6 +40,14 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
         response.setAdditionalIdentifiers(publication.getAdditionalIdentifiers());
         response.setRightsHolder(publication.getRightsHolder());
         response.setPublicationNotes(publication.getPublicationNotes());
+        response.setAllowedOperations(Set.of());
+        return response;
+    }
+
+    public static PublicationResponseElevatedUser fromPublicationWithAllowedOperations(Publication publication,
+                                                                           Set<PublicationOperation> allowedOperations) {
+        var response = fromPublication(publication);
+        response.setAllowedOperations(allowedOperations);
         return response;
     }
 
