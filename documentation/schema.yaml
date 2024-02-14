@@ -63,14 +63,10 @@ schema:
     associatedArtifacts:
       type: array
       properties:
-        publishable:
-          type: boolean
         empty:
           type: boolean
-        first:
-          $ref: '#/components/schemas/AssociatedArtifact'
-        last:
-          $ref: '#/components/schemas/AssociatedArtifact'
+        publishable:
+          type: boolean
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     rightsHolder:
@@ -349,14 +345,10 @@ referencedSchemas:
   AssociatedArtifactList:
     type: array
     properties:
-      publishable:
-        type: boolean
       empty:
         type: boolean
-      first:
-        $ref: '#/components/schemas/AssociatedArtifact'
-      last:
-        $ref: '#/components/schemas/AssociatedArtifact'
+      publishable:
+        type: boolean
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
@@ -1217,6 +1209,15 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
+      source:
+        type: string
+        format: uri
+      labels:
+        type: object
+        additionalProperties:
+          type: string
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
@@ -1225,15 +1226,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-      identifier:
-        type: string
-      labels:
-        type: object
-        additionalProperties:
-          type: string
-      source:
-        type: string
-        format: uri
       type:
         type: string
     discriminator:
@@ -2392,14 +2384,10 @@ referencedSchemas:
       associatedArtifacts:
         type: array
         properties:
-          publishable:
-            type: boolean
           empty:
             type: boolean
-          first:
-            $ref: '#/components/schemas/AssociatedArtifact'
-          last:
-            $ref: '#/components/schemas/AssociatedArtifact'
+          publishable:
+            type: boolean
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       rightsHolder:
