@@ -20,6 +20,7 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
     public static PublicationResponseElevatedUser fromPublication(Publication publication) {
         var response = new PublicationResponseElevatedUser();
         response.setIdentifier(publication.getIdentifier());
+        response.setDuplicateOf(publication.getDuplicateOf());
         response.setStatus(publication.getStatus());
         response.setResourceOwner(publication.getResourceOwner());
         response.setPublisher(publication.getPublisher());
