@@ -30,7 +30,7 @@ import no.unit.nva.model.ResourceOwner;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import nva.commons.core.JacocoGenerated;
 
-@SuppressWarnings({"PMD.TooManyFields", "PMD.GodClass"})
+@SuppressWarnings({"PMD.TooManyFields", "PMD.GodClass", "PMD.ExcessivePublicCount"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonTypeName("Publication")
 public class PublicationResponse implements WithIdentifier, WithInternal, WithMetadata, WithAssociatedArtifact, WithId,
@@ -60,10 +60,13 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
 
     private Set<PublicationOperation> allowedOperations;
 
+    private URI duplicateOf;
+
     public static PublicationResponse fromPublication(Publication publication) {
         var response = new PublicationResponse();
         response.setIdentifier(publication.getIdentifier());
         response.setStatus(publication.getStatus());
+        response.setDuplicateOf(publication.getDuplicateOf());
         response.setResourceOwner(publication.getResourceOwner());
         response.setPublisher(publication.getPublisher());
         response.setCreatedDate(publication.getCreatedDate());
@@ -91,6 +94,14 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         var response = fromPublication(publication);
         response.setAllowedOperations(allowedOperations);
         return response;
+    }
+
+    public void setDuplicateOf(URI duplicateOf) {
+        this.duplicateOf = duplicateOf;
+    }
+
+    public URI getDuplicateOf(){
+        return duplicateOf;
     }
 
     @Override
@@ -296,6 +307,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     public int hashCode() {
         return Objects.hash(getIdentifier(),
                             getStatus(),
+                            getDuplicateOf(),
                             getResourceOwner(),
                             getPublisher(),
                             getCreatedDate(),
@@ -328,6 +340,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         PublicationResponse that = (PublicationResponse) o;
         return Objects.equals(getIdentifier(), that.getIdentifier())
                && getStatus() == that.getStatus()
+               && Objects.equals(getDuplicateOf(), that.getDuplicateOf())
                && Objects.equals(getResourceOwner(), that.getResourceOwner())
                && Objects.equals(getPublisher(), that.getPublisher())
                && Objects.equals(getCreatedDate(), that.getCreatedDate())
