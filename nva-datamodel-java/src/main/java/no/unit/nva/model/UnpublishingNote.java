@@ -55,8 +55,8 @@ public class UnpublishingNote extends PublicationNoteBase {
         if (!super.equals(o)) {
             return false;
         }
-        UnpublishingNote that = (UnpublishingNote) o;
-        return Objects.equals(createdBy, that.createdBy) && Objects.equals(createdDate,
-                                                                           that.createdDate);
+        var that = (UnpublishingNote) o;
+        return Objects.equals(createdBy, that.createdBy)
+               && Objects.equals(createdDate, that.createdDate);
     }
 }
