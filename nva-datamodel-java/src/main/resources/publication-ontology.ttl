@@ -431,6 +431,11 @@ nva:PublicationNote a rdfs:Class ;
   owl:deprecated "true"^^xsd:boolean ;
   rdfs:domain nva:Publication .
 
+nva:UnpublishingNote a rdfs:Class ;
+  rdfs:comment     "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Publication .
+
 nva:Broadcast a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;

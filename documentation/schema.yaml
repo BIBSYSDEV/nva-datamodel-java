@@ -2444,15 +2444,13 @@ referencedSchemas:
     type: object
     allOf:
     - $ref: '#/components/schemas/PublicationNoteBase'
-    - type: object
-      properties:
-        publicationNoteMessage:
-          type: string
   PublicationNoteBase:
     required:
     - type
     type: object
     properties:
+      note:
+        type: string
       type:
         type: string
     discriminator:
@@ -2990,8 +2988,11 @@ referencedSchemas:
     - $ref: '#/components/schemas/PublicationNoteBase'
     - type: object
       properties:
-        note:
+        createdBy:
           type: string
+        createdDate:
+          type: string
+          format: date-time
   Venue:
     required:
     - type
