@@ -190,7 +190,7 @@ public final class PublicationGenerator {
     }
 
     private static PublicationNoteBase randomUnpublishingNote() {
-        return new UnpublishingNote(randomString());
+        return new UnpublishingNote(randomString(), new Username(randomString()), randomInstant());
     }
 
     private static ResourceOwner randomResourceOwner() {
