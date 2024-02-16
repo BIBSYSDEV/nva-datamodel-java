@@ -10,7 +10,8 @@ public enum PublicationOperation {
     UPDATE("update"),
     UNPUBLISH("unpublish"),
     REPUBLISH("republish"),
-    DELETE("delete");
+    DELETE("delete"),
+    TERMINATE("terminate");
 
     public static final String ERROR_MESSAGE_TEMPLATE = "%s not a valid AllowedOperation, expected one of: %s";
     public static final String DELIMITER = ", ";
