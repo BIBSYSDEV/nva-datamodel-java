@@ -1,5 +1,6 @@
 package no.unit.nva.model.testing;
 
+import static java.util.function.Predicate.not;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
@@ -24,13 +25,14 @@ import no.unit.nva.model.Publication.Builder;
 import no.unit.nva.model.PublicationNote;
 import no.unit.nva.model.PublicationNoteBase;
 import no.unit.nva.model.PublicationStatus;
-import no.unit.nva.model.UnpublishingNote;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.UnpublishingNote;
 import no.unit.nva.model.Username;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
+import no.unit.nva.model.instancetypes.degree.DegreeBase;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
 
@@ -70,6 +72,17 @@ public final class PublicationGenerator {
     public static Publication randomPublication(Class<?> publicationInstanceClass) {
 
         return buildRandomPublicationFromInstance(publicationInstanceClass);
+    }
+    public static Publication randomPublicationNonDegree() {
+        var nonDegrees = PublicationInstanceBuilder.listPublicationInstanceTypes()
+                             .stream()
+                             .filter(not(PublicationGenerator::isDegree))
+                             .toList();
+        return randomPublication(randomElement(nonDegrees));
+    }
+
+    private static boolean isDegree(Class<?> subClass) {
+        return DegreeBase.class.isAssignableFrom(subClass);
     }
 
     public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {
