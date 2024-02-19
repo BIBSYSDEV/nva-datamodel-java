@@ -1,5 +1,6 @@
 package no.unit.nva.model.testing;
 
+import static java.util.function.Predicate.not;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
 import static no.unit.nva.model.testing.RandomUtils.randomLabels;
@@ -11,7 +12,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import net.datafaker.providers.base.BaseFaker;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
@@ -32,11 +32,7 @@ import no.unit.nva.model.Username;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
-import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
-import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
-import no.unit.nva.model.instancetypes.degree.DegreeMaster;
-import no.unit.nva.model.instancetypes.degree.DegreePhd;
-import no.unit.nva.model.instancetypes.degree.OtherStudentWork;
+import no.unit.nva.model.instancetypes.degree.DegreeBase;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
 
@@ -78,16 +74,15 @@ public final class PublicationGenerator {
         return buildRandomPublicationFromInstance(publicationInstanceClass);
     }
     public static Publication randomPublicationNonDegree() {
-        var degrees = Set.of(DegreeMaster.class,
-                             DegreeBachelor.class,
-                             DegreePhd.class,
-                             DegreeLicentiate.class,
-                             OtherStudentWork.class);
-        var nonDegrees =
-            PublicationInstanceBuilder.listPublicationInstanceTypes()
-                .stream().filter(i -> !degrees.contains(i)
-            ).collect(Collectors.toList());
+        var nonDegrees = PublicationInstanceBuilder.listPublicationInstanceTypes()
+                             .stream()
+                             .filter(not(PublicationGenerator::isDegree))
+                             .toList();
         return randomPublication(randomElement(nonDegrees));
+    }
+
+    private static boolean isDegree(Class<?> subClass) {
+        return DegreeBase.class.isAssignableFrom(subClass);
     }
 
     public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {
