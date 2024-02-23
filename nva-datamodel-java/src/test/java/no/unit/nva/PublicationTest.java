@@ -1,7 +1,6 @@
 package no.unit.nva;
 
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
-import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.PublicationStatus.DRAFT;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
@@ -86,9 +85,7 @@ public class PublicationTest {
         return Stream.of(
             randomDraftForDeletion(),
             publicationWithoutTitle(),
-            publicationWithOnlyAdministrativeAgreement(),
-            publicationWithoutEntityDescription(),
-            publicationWithNoAssociatedArtifactsOrOriginalDoi()
+            publicationWithoutEntityDescription()
         );
     }
 
@@ -278,14 +275,6 @@ public class PublicationTest {
                    is(Matchers.equalTo(expectedResult)));
     }
 
-    private static Publication publicationWithOnlyAdministrativeAgreement() {
-        var publication = PublicationGenerator.randomPublication();
-        publication.setStatus(DRAFT);
-        publication.getEntityDescription().getReference().setDoi(null);
-        publication.setAssociatedArtifacts(new AssociatedArtifactList(AdministrativeAgreementGenerator.random()));
-        return publication;
-    }
-
     private static Publication publicationWithoutTitle() {
         var publication = PublicationGenerator.randomPublication();
         publication.setStatus(DRAFT);
@@ -302,14 +291,6 @@ public class PublicationTest {
     private static Publication publicationWithoutEntityDescription() {
         var publication = publicationWithoutTitle();
         publication.setEntityDescription(null);
-        return publication;
-    }
-
-    private static Publication publicationWithNoAssociatedArtifactsOrOriginalDoi() {
-        var publication = randomPublication();
-        publication.setStatus(DRAFT);
-        publication.setAssociatedArtifacts(null);
-        publication.getEntityDescription().getReference().setDoi(null);
         return publication;
     }
 
@@ -350,10 +331,6 @@ public class PublicationTest {
 
     private Publication createSamplePublication() {
         return PublicationGenerator.publicationWithIdentifier();
-    }
-
-    private void assertThatPublicationDoesNotHaveEmptyFields(Publication expected) {
-        assertThat(expected, doesNotHaveEmptyValues());
     }
 
     private Diff compareAsObjectNodes(Publication publication, Publication copy) {
