@@ -383,7 +383,7 @@ public class Publication
 
     @JsonIgnore
     public boolean isPublishable() {
-        return !DRAFT_FOR_DELETION.equals(getStatus()) && hasMainTitle() && hasReferencedContent();
+        return !DRAFT_FOR_DELETION.equals(getStatus()) && hasMainTitle();
     }
 
     public boolean satisfiesFindableDoiRequirements() {
@@ -398,21 +398,11 @@ public class Publication
         }
     }
 
-    private boolean hasReferencedContent() {
-        return getAssociatedArtifacts().isPublishable() || hasOriginalDoi();
-    }
 
     private boolean hasMainTitle() {
         return Optional.ofNullable(getEntityDescription())
                    .map(EntityDescription::getMainTitle)
                    .filter(string -> !StringUtils.isEmpty(string))
-                   .isPresent();
-    }
-
-    private boolean hasOriginalDoi() {
-        return Optional.ofNullable(getEntityDescription())
-                   .map(EntityDescription::getReference)
-                   .map(Reference::getDoi)
                    .isPresent();
     }
 
