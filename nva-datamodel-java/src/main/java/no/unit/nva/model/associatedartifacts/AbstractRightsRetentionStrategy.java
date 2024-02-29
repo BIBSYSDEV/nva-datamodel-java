@@ -9,14 +9,14 @@ import java.util.Objects;
  * Jackson annotations to handle JSON serialization and deserialization into the correct implementing types:
  * CustomerRightsRetentionStrategy, OverriddenRightsRetentionStrategy and NullRightsRetentionStrategy.
  */
-/* package visible (*/ abstract class AbstractRightsRetentionStrategy implements RightsRetentionStrategy {
+abstract class AbstractRightsRetentionStrategy implements RightsRetentionStrategy {
 
     protected static final String FIELD_NAME_CONFIGURED_TYPE = "configuredType";
 
     @JsonProperty(FIELD_NAME_CONFIGURED_TYPE)
     private RightsRetentionStrategyConfiguration configuredType;
 
-    /* Package visible*/ AbstractRightsRetentionStrategy(RightsRetentionStrategyConfiguration configuredType) {
+    AbstractRightsRetentionStrategy(RightsRetentionStrategyConfiguration configuredType) {
         this.configuredType = nonNull(configuredType) ? configuredType
                                   : RightsRetentionStrategyConfiguration.NULL_RIGHTS_RETENTION_STRATEGY;
     }
