@@ -21,18 +21,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class PublicationMapperTest {
 
-
     public static final ObjectNode SOME_CONTEXT = dataModelObjectMapper.createObjectNode();
 
     @Test
     void canMapPublicationAndContextToPublicationResponse() throws Exception {
-
         Publication publication = PublicationGenerator.randomPublication();
         var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
-        var des = JsonUtils.dtoObjectMapper.readValue(json,Publication.class);
-        assertThat(des,doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
+        var des = JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
+        assertThat(des, doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
         PublicationResponse response = PublicationMapper
-            .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
+                                           .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
 
         assertNotNull(response);
         assertThat(response.getId(), notNullValue());
@@ -44,12 +42,11 @@ class PublicationMapperTest {
         Publication publication = PublicationGenerator.randomPublication();
 
         PublicationResponse response = PublicationMapper
-            .convertValue(publication, PublicationResponse.class);
+                                           .convertValue(publication, PublicationResponse.class);
 
         assertNotNull(response);
         assertThat(response.getId(), notNullValue());
     }
-
 
     private void assertThatIdIsPresent(PublicationResponse response) throws JsonProcessingException {
         String string = dataModelObjectMapper.writeValueAsString(response);

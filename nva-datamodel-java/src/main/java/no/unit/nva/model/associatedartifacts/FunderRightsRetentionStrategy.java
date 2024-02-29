@@ -1,33 +1,39 @@
 package no.unit.nva.model.associatedartifacts;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.Objects;
 import nva.commons.core.JacocoGenerated;
 
-public final class FunderRightsRetentionStrategy implements RightsRetentionStrategy {
+@JsonTypeInfo(use = Id.NAME, property = "type")
+@JsonTypeName(FunderRightsRetentionStrategy.TYPE_NAME)
+public final class FunderRightsRetentionStrategy extends AbstractRightsRetentionStrategy {
 
     public static final String TYPE_NAME = "FunderRightsRetentionStrategy";
-    private static final int STATIC_VALUE_FOR_HASH_CODE = 103_345;
 
     @JsonCreator
-    private FunderRightsRetentionStrategy() {
+    private FunderRightsRetentionStrategy(
+        @JsonProperty(FIELD_NAME_CONFIGURED_TYPE) RightsRetentionStrategyConfiguration configuredType) {
+        super(configuredType);
     }
 
-    public static FunderRightsRetentionStrategy create() {
-        return new FunderRightsRetentionStrategy();
+    public static FunderRightsRetentionStrategy create(RightsRetentionStrategyConfiguration configuredType) {
+        return new FunderRightsRetentionStrategy(configuredType);
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return STATIC_VALUE_FOR_HASH_CODE;
+        return Objects.hash(FunderRightsRetentionStrategy.class.getName(), super.hashCode());
+
     }
 
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        return o instanceof FunderRightsRetentionStrategy;
+        return o instanceof FunderRightsRetentionStrategy && super.equals(o);
     }
 }

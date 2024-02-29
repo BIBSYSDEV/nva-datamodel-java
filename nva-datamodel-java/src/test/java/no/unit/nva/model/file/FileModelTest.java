@@ -2,6 +2,7 @@ package no.unit.nva.model.file;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
+import static no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration.UNKNOWN;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
@@ -289,7 +290,7 @@ public class FileModelTest {
             .withName(FIRST_FILE_TXT)
             .withPublisherAuthority(false)
             .withSize(SIZE)
-            .withRightsRetentionStrategy(CustomerRightsRetentionStrategy.create())
+            .withRightsRetentionStrategy(CustomerRightsRetentionStrategy.create(UNKNOWN))
             .buildPublishedFile();
     }
 
