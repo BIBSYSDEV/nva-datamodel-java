@@ -60,6 +60,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         "The file is not annotated as an administrative agreement and should have a license";
     public static final String CCBY_LICENSE =
         "Files with the CustomerRightsRetentionStrategy must have the CC BY license if publisherAuthority is false.";
+    public static final String ERROR_MESSAGE = "The specified license cannot be converted into a valid URI license: ";
     public static final String LEGAL_NOTE_FIELD = "legalNote";
     private static final Supplier<Pattern> LICENSE_VALIDATION_PATTERN =
         () -> Pattern.compile("^(http|https)://.*$");
@@ -198,6 +199,22 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
                                  isAdministrativeAgreement(), isPublisherAuthority(),
                                  getEmbargoDate().orElse(null),
                                  getRightsRetentionStrategy(), getLegalNote(), Instant.now());
+    }
+
+    public final AdministrativeAgreement toAdministrativeAgreement() {
+        if (isAdministrativeAgreement()) {
+            return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
+                                               isAdministrativeAgreement(), isPublisherAuthority(),
+                                               getEmbargoDate().orElse(null), getRightsRetentionStrategy());
+        }
+        throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
+    }
+
+    public final AdministrativeAgreement toUnpublishableFile() {
+        return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(),
+                                           getLicense(), isAdministrativeAgreement(),
+                                           isPublisherAuthority(), getEmbargoDate().orElse(null),
+                                           getRightsRetentionStrategy());
     }
 
     public abstract boolean isVisibleForNonOwner();
