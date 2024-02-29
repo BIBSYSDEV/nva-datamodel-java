@@ -25,12 +25,15 @@ class PublicationMapperTest {
 
     @Test
     void canMapPublicationAndContextToPublicationResponse() throws Exception {
-        Publication publication = PublicationGenerator.randomPublication();
+        var publication = PublicationGenerator.randomPublication();
         var json = JsonUtils.dtoObjectMapper.writeValueAsString(publication);
-        var des = JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
-        assertThat(des, doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
-        PublicationResponse response = PublicationMapper
-                                           .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
+        var deserializedPublication = JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
+
+        assertThat(deserializedPublication,
+                   doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
+
+        var response = PublicationMapper
+                           .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);
 
         assertNotNull(response);
         assertThat(response.getId(), notNullValue());
@@ -39,18 +42,19 @@ class PublicationMapperTest {
 
     @Test
     void canMapPublicationToPublicationResponse() {
-        Publication publication = PublicationGenerator.randomPublication();
+        var publication = PublicationGenerator.randomPublication();
 
-        PublicationResponse response = PublicationMapper
-                                           .convertValue(publication, PublicationResponse.class);
+        var response = PublicationMapper
+                           .convertValue(publication, PublicationResponse.class);
 
         assertNotNull(response);
         assertThat(response.getId(), notNullValue());
     }
 
     private void assertThatIdIsPresent(PublicationResponse response) throws JsonProcessingException {
-        String string = dataModelObjectMapper.writeValueAsString(response);
-        ObjectNode json = (ObjectNode) dataModelObjectMapper.readTree(string);
+        var jsonString = dataModelObjectMapper.writeValueAsString(response);
+        var json = (ObjectNode) dataModelObjectMapper.readTree(jsonString);
+
         assertThat(json.has("id"), is(equalTo(true)));
     }
 }
