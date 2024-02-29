@@ -28,7 +28,7 @@ import java.util.Objects;
 
     public void setConfiguredType(RightsRetentionStrategyConfiguration configuredType) {
         this.configuredType = nonNull(configuredType) ? configuredType
-                                  : RightsRetentionStrategyConfiguration.NULL_RIGHTS_RETENTION_STRATEGY;;
+                                  : RightsRetentionStrategyConfiguration.NULL_RIGHTS_RETENTION_STRATEGY;
     }
 
     @Override
