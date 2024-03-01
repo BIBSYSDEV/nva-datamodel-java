@@ -89,8 +89,10 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         return response;
     }
 
-    public static PublicationResponse fromPublicationWithAllowedOperations(Publication publication,
-                                                                Set<PublicationOperation> allowedOperations) {
+    public static PublicationResponse fromPublicationWithAllowedOperations(
+        Publication publication,
+        Set<PublicationOperation> allowedOperations
+    ) {
         var response = fromPublication(publication);
         response.setAllowedOperations(allowedOperations);
         return response;
@@ -100,7 +102,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         this.duplicateOf = duplicateOf;
     }
 
-    public URI getDuplicateOf(){
+    public URI getDuplicateOf() {
         return duplicateOf;
     }
 
@@ -334,10 +336,9 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PublicationResponse)) {
+        if (!(o instanceof PublicationResponse that)) {
             return false;
         }
-        PublicationResponse that = (PublicationResponse) o;
         return Objects.equals(getIdentifier(), that.getIdentifier())
                && getStatus() == that.getStatus()
                && Objects.equals(getDuplicateOf(), that.getDuplicateOf())

@@ -21,6 +21,7 @@ import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
+import no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration;
 import nva.commons.core.JacocoGenerated;
 
 /**
@@ -211,9 +212,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public final AdministrativeAgreement toUnpublishableFile() {
         return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(),
-                                     getLicense(), isAdministrativeAgreement(),
-                                     isPublisherAuthority(), getEmbargoDate().orElse(null),
-                                     getRightsRetentionStrategy());
+                                           getLicense(), isAdministrativeAgreement(),
+                                           isPublisherAuthority(), getEmbargoDate().orElse(null),
+                                           getRightsRetentionStrategy());
     }
 
     public abstract boolean isVisibleForNonOwner();
@@ -232,10 +233,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof File)) {
+        if (!(o instanceof File file)) {
             return false;
         }
-        File file = (File) o;
         return isAdministrativeAgreement() == file.isAdministrativeAgreement()
                && isPublisherAuthority() == file.isPublisherAuthority()
                && Objects.equals(getIdentifier(), file.getIdentifier())
@@ -260,7 +260,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @return The provided strategy if it's not null, or a new NullRightsRetentionStrategy otherwise.
      */
     private RightsRetentionStrategy assignDefaultStrategyIfNull(RightsRetentionStrategy strategy) {
-        return nonNull(strategy) ? strategy : NullRightsRetentionStrategy.create();
+        return nonNull(strategy) ? strategy
+                   : NullRightsRetentionStrategy.create(RightsRetentionStrategyConfiguration.UNKNOWN);
     }
 
     private URI parseLicense(Object license) {
@@ -301,8 +302,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     private URI formatValidUriLicense(URI license) {
         String formatedLicenseURL = license.toString().replaceFirst(license.getScheme(), "https")
-            .replaceAll("/$", "")
-            .toLowerCase(Locale.ROOT);
+                                        .replaceAll("/$", "")
+                                        .toLowerCase(Locale.ROOT);
         return URI.create(formatedLicenseURL);
     }
 

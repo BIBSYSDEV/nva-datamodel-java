@@ -73,6 +73,7 @@ public final class PublicationGenerator {
 
         return buildRandomPublicationFromInstance(publicationInstanceClass);
     }
+
     public static Publication randomPublicationNonDegree() {
         var nonDegrees = PublicationInstanceBuilder.listPublicationInstanceTypes()
                              .stream()
@@ -109,27 +110,27 @@ public final class PublicationGenerator {
         var activeFrom = randomInstant();
 
         return new FundingBuilder()
-                .withId(randomUri())
-                .withSource(randomUri())
-                .withIdentifier(randomString())
-                .withLabels(randomLabels())
-                .withFundingAmount(randomMonetaryAmount())
-                .withActiveFrom(activeFrom)
-                .withActiveTo(randomInstant(activeFrom))
-                .build();
+                   .withId(randomUri())
+                   .withSource(randomUri())
+                   .withIdentifier(randomString())
+                   .withLabels(randomLabels())
+                   .withFundingAmount(randomMonetaryAmount())
+                   .withActiveFrom(activeFrom)
+                   .withActiveTo(randomInstant(activeFrom))
+                   .build();
     }
 
     public static Funding randomUnconfirmedFunding() {
         var activeFrom = randomInstant();
 
         return new FundingBuilder()
-                .withSource(randomUri())
-                .withIdentifier(randomString())
-                .withLabels(randomLabels())
-                .withFundingAmount(randomMonetaryAmount())
-                .withActiveFrom(activeFrom)
-                .withActiveTo(randomInstant(activeFrom))
-                .build();
+                   .withSource(randomUri())
+                   .withIdentifier(randomString())
+                   .withLabels(randomLabels())
+                   .withFundingAmount(randomMonetaryAmount())
+                   .withActiveFrom(activeFrom)
+                   .withActiveTo(randomInstant(activeFrom))
+                   .build();
     }
 
     private static MonetaryAmount randomMonetaryAmount() {
@@ -143,10 +144,10 @@ public final class PublicationGenerator {
 
     public static ResearchProject randomResearchProject() {
         return new ResearchProject.Builder()
-                .withId(randomUri())
-                .withName(randomString())
-                .withApprovals(randomApprovals())
-                .build();
+                   .withId(randomUri())
+                   .withName(randomString())
+                   .withApprovals(randomApprovals())
+                   .build();
     }
 
     public static List<Approval> randomApprovals() {
@@ -156,11 +157,11 @@ public final class PublicationGenerator {
     public static Approval randomApproval() {
 
         return new Approval.Builder()
-                .withApprovalStatus(randomElement(ApprovalStatus.values()))
-                .withApprovalDate(randomInstant())
-                .withApplicationCode(randomString())
-                .withApprovedBy(randomElement(ApprovalsBody.values()))
-                .build();
+                   .withApprovalStatus(randomElement(ApprovalStatus.values()))
+                   .withApprovalDate(randomInstant())
+                   .withApplicationCode(randomString())
+                   .withApprovedBy(randomElement(ApprovalsBody.values()))
+                   .build();
     }
 
     public static AdditionalIdentifier randomAdditionalIdentifier() {
@@ -169,33 +170,33 @@ public final class PublicationGenerator {
 
     public static Organization randomOrganization() {
         return new Organization.Builder()
-                .withId(randomUri())
-                .build();
+                   .withId(randomUri())
+                   .build();
     }
 
     private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
-                .withIdentifier(SortableIdentifier.next())
-                .withRightsHolder(randomString())
-                .withPublisher(randomOrganization())
-                .withSubjects(List.of(randomUri()))
-                .withStatus(randomElement(PublicationStatus.values()))
-                .withPublishedDate(randomInstant())
-                .withModifiedDate(randomInstant())
-                .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
-                .withProjects(randomProjects())
-                .withFundings(randomFundings())
-                .withResourceOwner(randomResourceOwner())
-                .withLink(randomUri())
-                .withIndexedDate(randomInstant())
-                .withHandle(randomUri())
-                .withDoi(randomDoi())
-                .withCreatedDate(randomInstant())
-                .withEntityDescription(randomEntityDescription(publicationInstanceClass))
-                .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
-                .withPublicationNotes(List.of(randomPublicationNote(), randomUnpublishingNote()))
-                .withDuplicateOf(randomUri())
-                .build();
+                   .withIdentifier(SortableIdentifier.next())
+                   .withRightsHolder(randomString())
+                   .withPublisher(randomOrganization())
+                   .withSubjects(List.of(randomUri()))
+                   .withStatus(randomElement(PublicationStatus.values()))
+                   .withPublishedDate(randomInstant())
+                   .withModifiedDate(randomInstant())
+                   .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
+                   .withProjects(randomProjects())
+                   .withFundings(randomFundings())
+                   .withResourceOwner(randomResourceOwner())
+                   .withLink(randomUri())
+                   .withIndexedDate(randomInstant())
+                   .withHandle(randomUri())
+                   .withDoi(randomDoi())
+                   .withCreatedDate(randomInstant())
+                   .withEntityDescription(randomEntityDescription(publicationInstanceClass))
+                   .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
+                   .withPublicationNotes(List.of(randomPublicationNote(), randomUnpublishingNote()))
+                   .withDuplicateOf(randomUri())
+                   .build();
     }
 
     private static PublicationNoteBase randomPublicationNote() {

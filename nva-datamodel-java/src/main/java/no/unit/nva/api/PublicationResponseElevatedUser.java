@@ -45,8 +45,10 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
         return response;
     }
 
-    public static PublicationResponseElevatedUser fromPublicationWithAllowedOperations(Publication publication,
-                                                                           Set<PublicationOperation> allowedOperations) {
+    public static PublicationResponseElevatedUser fromPublicationWithAllowedOperations(
+        Publication publication,
+        Set<PublicationOperation> allowedOperations
+    ) {
         var response = fromPublication(publication);
         response.setAllowedOperations(allowedOperations);
         return response;
