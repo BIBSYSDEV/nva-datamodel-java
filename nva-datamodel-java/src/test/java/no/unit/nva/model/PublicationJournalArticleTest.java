@@ -57,7 +57,10 @@ public class PublicationJournalArticleTest extends PublicationTest {
         JsonNode document = toPublicationWithContext(publication);
         String content = dataModelObjectMapper.writeValueAsString(document);
         Publication publicationFromJson = dataModelObjectMapper.readValue(content, Publication.class);
-        assertThat(publicationFromJson, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST, BOOK_REVISION_FIELD)));
+        assertThat(publicationFromJson, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST,
+                                                                                    BOOK_REVISION_FIELD,
+                                                                                    PUBLISHER_TOP_LEVEL_ORG_FIELD
+        )));
         assertThat(publication, is(equalTo(publicationFromJson)));
     }
 }

@@ -23,7 +23,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PublicationGeneratorTest {
 
     public static final Set<String> FIELDS_EXPECTED_TO_BE_NULL =
-        Set.of(".doiRequest", ".entityDescription.reference.publicationContext.revision");
+        Set.of(".doiRequest",
+               ".entityDescription.reference.publicationContext.revision",
+               "entityDescription.reference.publicationContext.agent.topLevelOrg",
+               ".publisher.topLevelOrg",
+               ".topLevelOrg");
     public static final Pattern EXPECTED_PUBLICATION_CHANNELS_URI =
         Pattern.compile("https://.*?nva\\.aws\\.unit\\.no/publication-channels/.*");
 

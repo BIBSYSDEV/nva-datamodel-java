@@ -36,6 +36,9 @@ public class PublicationTest {
     public static final String FRAME = IoUtils.stringFromResources(Path.of("publicationFrame.json")).replace(
         "__REPLACE__", "https://localhost");
     public static final String BOOK_REVISION_FIELD = ".entityDescription.reference.publicationContext.revision";
+    public static final String AGENT_TOP_LEVEL_ORG_FIELD = ".entityDescription.reference.publicationContext.agent"
+                                                           + ".topLevelOrg";
+    public static final String PUBLISHER_TOP_LEVEL_ORG_FIELD = ".publisher.topLevelOrg";
     public static final String ALLOWED_OPERATIONS_FIELD = "allowedOperations";
 
 
@@ -50,7 +53,10 @@ public class PublicationTest {
         Publication samplePublication = PublicationGenerator.randomPublication();
         Publication copy = samplePublication.copy().build();
 
-        assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD, BOOK_REVISION_FIELD)));
+        assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD,
+                                                                     BOOK_REVISION_FIELD,
+                                                                     AGENT_TOP_LEVEL_ORG_FIELD,
+                                                                     PUBLISHER_TOP_LEVEL_ORG_FIELD)));
 
         Diff diff = JAVERS.compare(samplePublication, copy);
         assertThat(copy, is(not(sameInstance(samplePublication))));
