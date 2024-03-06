@@ -62,7 +62,9 @@ public class PublicationTest {
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final Set<String> IGNORE_LIST =
-        Set.of(".entityDescription.reference.publicationContext.revision");
+        Set.of("entityDescription.reference.publicationContext.agent.topLevelOrg",
+               ".publisher.topLevelOrg",
+               ".entityDescription.reference.publicationContext.revision");
 
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();

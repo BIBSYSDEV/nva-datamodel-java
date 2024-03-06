@@ -107,12 +107,13 @@ public final class EntityDescriptionBuilder {
     }
 
     private static List<Corporation> randomOrganizations() {
-        return List.of(randomOrganization());
+        return List.of(randomOrganizationWithTopLevelOrg());
     }
 
-    private static Organization randomOrganization() {
+    private static Organization randomOrganizationWithTopLevelOrg() {
         return new Organization.Builder()
                    .withId(randomUri())
+                   .withTopLevelOrg(randomUri())
                    .build();
     }
 
