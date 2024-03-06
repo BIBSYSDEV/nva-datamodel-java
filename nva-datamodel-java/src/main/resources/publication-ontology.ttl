@@ -1946,3 +1946,10 @@ nva:applicationCode a rdf:Property ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Approval ;
   rdfs:range xsd:string .
+
+nva:curatingInstitution a rdf:Property ;
+  rdfs:comment "Institution that can curate the publication" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Publication ;
+  rdfs:range xsd:anyURI .
