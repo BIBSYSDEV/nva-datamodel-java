@@ -2,6 +2,8 @@ package no.unit.nva.model.file;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
+import static no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration.OVERRIDABLE_RIGHTS_RETENTION_STRATEGY;
+import static no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration.RIGHTS_RETENTION_STRATEGY;
 import static no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration.UNKNOWN;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
@@ -107,6 +109,14 @@ public class FileModelTest {
     public void shouldAssignDefaultStrategyWhenNoneProvided() throws JsonProcessingException {
         var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
         assertThat(file.getRightsRetentionStrategy(), instanceOf(NullRightsRetentionStrategy.class));
+    }
+
+    @Test
+    public void shouldSetNewRightsRetentionStrategy() {
+        var file = getPublishedFile();
+        var rightsRetentionStrategy = CustomerRightsRetentionStrategy.create(OVERRIDABLE_RIGHTS_RETENTION_STRATEGY);
+        file.setRightsRetentionStrategy(rightsRetentionStrategy);
+        assertThat(file.getRightsRetentionStrategy(), is(equalTo(rightsRetentionStrategy)));
     }
 
     @ParameterizedTest(name = "should not throw MissingLicenseException when not administrative agreement")
