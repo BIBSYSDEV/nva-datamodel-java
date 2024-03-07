@@ -82,7 +82,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     @JsonProperty(EMBARGO_DATE_FIELD)
     private final Instant embargoDate;
     @JsonProperty(RIGTHTS_RETENTION_STRATEGY)
-    private final RightsRetentionStrategy rightsRetentionStrategy;
+    private RightsRetentionStrategy rightsRetentionStrategy;
     @JsonProperty(LEGAL_NOTE_FIELD)
     private final String legalNote;
 
@@ -182,6 +182,10 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public RightsRetentionStrategy getRightsRetentionStrategy() {
         return rightsRetentionStrategy;
+    }
+
+    public void setRightsRetentionStrategy(RightsRetentionStrategy rightsRetentionStrategy) {
+        this.rightsRetentionStrategy = rightsRetentionStrategy;
     }
 
     public boolean fileDoesNotHaveActiveEmbargo() {
