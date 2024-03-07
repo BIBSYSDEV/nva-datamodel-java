@@ -178,7 +178,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     }
 
     /**
-     * @deprecated As of release 0.21.11, replaced by {@link #getPublisherVersion()
+     * @deprecated As of release 0.21.11, replaced by {@link #getPublisherVersion()}
      */
     @JsonIgnore
     @Deprecated
