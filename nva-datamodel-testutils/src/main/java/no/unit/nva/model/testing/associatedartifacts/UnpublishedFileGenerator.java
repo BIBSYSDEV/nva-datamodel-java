@@ -17,7 +17,7 @@ public final class UnpublishedFileGenerator {
 
     public static UnpublishedFile random() {
         return new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
-                                   randomUri(), false, true, null,
+                                   randomUri(), false, false, null,
                                    RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(), randomString());
     }
 }
