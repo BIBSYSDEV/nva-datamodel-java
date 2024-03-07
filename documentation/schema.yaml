@@ -65,10 +65,6 @@ schema:
       properties:
         empty:
           type: boolean
-        first:
-          $ref: '#/components/schemas/AssociatedArtifact'
-        last:
-          $ref: '#/components/schemas/AssociatedArtifact'
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     rightsHolder:
@@ -80,6 +76,12 @@ schema:
       type: array
       items:
         $ref: '#/components/schemas/PublicationNoteBase'
+    curatingInstitutions:
+      uniqueItems: true
+      type: array
+      items:
+        type: string
+        format: uri
     modelVersion:
       type: string
     type:
@@ -349,10 +351,6 @@ referencedSchemas:
     properties:
       empty:
         type: boolean
-      first:
-        $ref: '#/components/schemas/AssociatedArtifact'
-      last:
-        $ref: '#/components/schemas/AssociatedArtifact'
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
@@ -1221,8 +1219,6 @@ referencedSchemas:
     - type
     type: object
     properties:
-      identifier:
-        type: string
       labels:
         type: object
         additionalProperties:
@@ -1238,6 +1234,8 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
+      identifier:
+        type: string
       type:
         type: string
     discriminator:
@@ -2400,10 +2398,6 @@ referencedSchemas:
         properties:
           empty:
             type: boolean
-          first:
-            $ref: '#/components/schemas/AssociatedArtifact'
-          last:
-            $ref: '#/components/schemas/AssociatedArtifact'
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       rightsHolder:
@@ -2415,6 +2409,12 @@ referencedSchemas:
         type: array
         items:
           $ref: '#/components/schemas/PublicationNoteBase'
+      curatingInstitutions:
+        uniqueItems: true
+        type: array
+        items:
+          type: string
+          format: uri
       modelVersion:
         type: string
       type:

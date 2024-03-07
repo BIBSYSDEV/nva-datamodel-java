@@ -69,6 +69,7 @@ public class Publication
     private URI duplicateOf;
 
     private List<PublicationNoteBase> publicationNotes;
+    private Set<URI> curatingInstitutions;
 
     public Publication() {
         // Default constructor, use setters.
@@ -304,7 +305,8 @@ public class Publication
                    .withFundings(getFundings())
                    .withRightsHolder(getRightsHolder())
                    .withPublicationNotes(getPublicationNotes())
-                   .withDuplicateOf(getDuplicateOf());
+                   .withDuplicateOf(getDuplicateOf())
+                   .withCuratingInstitutions(getCuratingInstitutions());
     }
 
     /**
@@ -324,7 +326,8 @@ public class Publication
         return hash(getIdentifier(), getStatus(), getPublisher(), getCreatedDate(), getModifiedDate(),
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
                     getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
-                    getAssociatedArtifacts(), getRightsHolder(), getPublicationNotes(), getDuplicateOf());
+                    getAssociatedArtifacts(), getRightsHolder(), getPublicationNotes(), getDuplicateOf(),
+                    getCuratingInstitutions());
     }
 
     @JacocoGenerated
@@ -356,7 +359,8 @@ public class Publication
                              && Objects.equals(getSubjects(), that.getSubjects())
                              && Objects.equals(getRightsHolder(), that.getRightsHolder())
                              && Objects.equals(getPublicationNotes(), that.getPublicationNotes())
-                             && Objects.equals(getDuplicateOf(), that.getDuplicateOf());
+                             && Objects.equals(getDuplicateOf(), that.getDuplicateOf())
+                             && Objects.equals(getCuratingInstitutions(), that.getCuratingInstitutions());
         return firstHalf && secondHalf;
     }
 
@@ -390,6 +394,14 @@ public class Publication
         return FindableDoiRequirementsValidator.meetsFindableDoiRequirements(this);
     }
 
+    public Set<URI> getCuratingInstitutions() {
+        return nonNull(curatingInstitutions) ? curatingInstitutions : Collections.emptySet();
+    }
+
+    public void setCuratingInstitutions(Set<URI> curatingInstitutions) {
+        this.curatingInstitutions = curatingInstitutions;
+    }
+
     private void verifyStatusTransition(PublicationStatus nextStatus)
         throws InvalidPublicationStatusTransitionException {
         final PublicationStatus currentStatus = getStatus();
@@ -397,7 +409,6 @@ public class Publication
             throw new InvalidPublicationStatusTransitionException(currentStatus, nextStatus);
         }
     }
-
 
     private boolean hasMainTitle() {
         return Optional.ofNullable(getEntityDescription())
@@ -515,6 +526,11 @@ public class Publication
 
         public Builder withDuplicateOf(URI duplicateOf) {
             publication.setDuplicateOf(duplicateOf);
+            return this;
+        }
+
+        public Builder withCuratingInstitutions(Set<URI> curatingInstitutions) {
+            publication.setCuratingInstitutions(curatingInstitutions);
             return this;
         }
     }
