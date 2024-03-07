@@ -1196,6 +1196,9 @@ nva:VfxSupervisor a rdfs:Class .
 nva:VideoEditor a rdfs:Class .
 nva:WorkPackageLeader a rdfs:Class .
 nva:Writer a rdfs:Class .
+nva:TextualOrBoolean a rdfs:Class ;
+  rdfs:label "Textual or Boolean"@en ;
+  rdfs:comment "Superclass for textual and boolean values"@en .
 
 nva:formatted a rdf:Property ;
   rdfs:comment "" ;
@@ -1541,11 +1544,19 @@ nva:affiliation a rdf:Property ;
   rdfs:range nva:Organization .
 
 nva:publisherAuthority a rdf:Property ;
-  rdfs:comment "" ;
+  rdfs:comment "Replaced with publisherVersion" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:File ;
+  owl:deprecated "true"^^xsd:boolean ;
   rdfs:range xsd:boolean .
+
+nva:publisherVersion a rdf:Property ;
+  rdfs:comment "Accepts boolean or text, will always be outputted as text" ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:File ;
+  rdfs:range nva:TextualOrBoolean  .
 
 nva:from a rdf:Property ;
   rdfs:comment "" ;

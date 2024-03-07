@@ -1,5 +1,6 @@
 package no.unit.nva.model.associatedartifacts.file;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -12,7 +13,7 @@ import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(AdministrativeAgreement.TYPE)
 public class AdministrativeAgreement extends File {
-    
+
     public static final String TYPE = "UnpublishableFile";
     private static final String NO_LEGAL_NOTE = null;
 
@@ -26,8 +27,7 @@ public class AdministrativeAgreement extends File {
      * @param license                 The license for the file, may be null if and only if the file is an administrative
      *                                agreement
      * @param administrativeAgreement True if the file is an administrative agreement
-     * @param publisherAuthority      True if the file owner has publisher authority
-     * @param embargoDate             The date after which the file may be published
+     * @param publishedVersion        Accepts boolean, enum or null. True if the file owner has publisher authority     * @param embargoDate             The date after which the file may be published
      * @param rightsRetentionStrategy The rights retention strategy for the file
      */
     @JsonCreator
@@ -38,10 +38,10 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(SIZE_FIELD) Long size,
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
-        @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
+        @JsonProperty(PUBLISHER_VERSION) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy) {
-        super(identifier, name, mimeType, size, license, administrativeAgreement, publisherAuthority,
+        super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
               embargoDate, rightsRetentionStrategy,  NO_LEGAL_NOTE);
     }
     
