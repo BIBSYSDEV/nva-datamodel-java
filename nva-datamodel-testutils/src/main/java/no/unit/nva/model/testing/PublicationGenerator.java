@@ -196,6 +196,7 @@ public final class PublicationGenerator {
                    .withAssociatedArtifacts(AssociatedArtifactsGenerator.randomAssociatedArtifacts())
                    .withPublicationNotes(List.of(randomPublicationNote(), randomUnpublishingNote()))
                    .withDuplicateOf(randomUri())
+                   .withCuratingInstitutions(Set.of(randomUri()))
                    .build();
     }
 

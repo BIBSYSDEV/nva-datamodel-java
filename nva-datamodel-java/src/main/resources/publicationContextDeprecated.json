@@ -179,5 +179,10 @@
   "venues": {
     "@id": "venue",
     "@container": "@set"
+  },
+  "curatingInstitutions": {
+    "@id": "curatingInstitution",
+    "@type": "@id",
+    "@container": "@set"
   }
 }
