@@ -178,12 +178,12 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     }
 
     /**
-     * @deprecated (since = "0.21.11") replaced by {@link #getPublisherVersion()}
+     * @deprecated (since = "0.21.12") replaced by {@link #getPublisherVersion()}
      */
     @JsonIgnore
     @Deprecated
     public boolean isPublisherAuthority() {
-        return publisherVersion != PublisherVersion.PUBLISHED_VERSION;
+        return publisherVersion == PublisherVersion.PUBLISHED_VERSION;
     }
 
     public PublisherVersion getPublisherVersion(){
@@ -373,7 +373,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         }
 
         /**
-         * @deprecated (since = "0.21.11") replaced by
+         * @deprecated (since = "0.21.12") replaced by
          * {@link #withPublisherVersion(PublisherVersion publisherVersion)}
          */
         @Deprecated
