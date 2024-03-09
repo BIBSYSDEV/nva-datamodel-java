@@ -27,9 +27,9 @@ public enum PublisherVersion {
             return parseFromBoolean(publisherAuthority);
         } else if (candidate instanceof String stringCandidate) {
             return parseFromString(stringCandidate);
-        }else if (isNull(candidate)) {
+        } else if (isNull(candidate)) {
             return null;
-        }else if (candidate instanceof PublisherVersion publisherVersion) {
+        } else if (candidate instanceof PublisherVersion publisherVersion) {
             return publisherVersion;
         }
         throw new UnsupportedOperationException(format(ERROR_MESSAGE_CANNOT_PARSE_THIS_OBJECT,

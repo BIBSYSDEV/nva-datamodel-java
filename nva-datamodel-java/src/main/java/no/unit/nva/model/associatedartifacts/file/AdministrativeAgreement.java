@@ -38,7 +38,7 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(SIZE_FIELD) Long size,
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
-        @JsonProperty(PUBLISHER_VERSION) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
+        @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,

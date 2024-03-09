@@ -46,7 +46,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String LICENSE_FIELD = "license";
     public static final String ADMINISTRATIVE_AGREEMENT_FIELD = "administrativeAgreement";
     public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
-    public static final String PUBLISHER_VERSION = "publisherVersion";
+    public static final String PUBLISHER_VERSION_FIELD = "publisherVersion";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
     public static final String RIGTHTS_RETENTION_STRATEGY = "rightsRetentionStrategy";
     public static final Map<String, URI> LICENSE_MAP = Map.of(
@@ -82,7 +82,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD)
     private final boolean administrativeAgreement;
 
-    @JsonProperty(PUBLISHER_VERSION)
+    @JsonProperty(PUBLISHER_VERSION_FIELD)
     private final PublisherVersion publisherVersion;
     @JsonProperty(EMBARGO_DATE_FIELD)
     private final Instant embargoDate;
@@ -114,7 +114,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(SIZE_FIELD) Long size,
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
-        @JsonProperty(PUBLISHER_VERSION) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publisherAuthority,
+        @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
@@ -178,7 +178,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     }
 
     /**
-     * @deprecated As of release 0.21.11, replaced by {@link #getPublisherVersion()}
+     * @deprecated (since = "0.21.11") replaced by {@link #getPublisherVersion()}
      */
     @JsonIgnore
     @Deprecated
@@ -373,7 +373,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         }
 
         /**
-         * @deprecated As of release 0.21.11, replaced by {@link #withPublisherVersion(PublisherVersion publisherVersion)}
+         * @deprecated (since = "0.21.11") replaced by
+         * {@link #withPublisherVersion(PublisherVersion publisherVersion)}
          */
         @Deprecated
         public Builder withPublisherAuthority(boolean publisherAuthority) {

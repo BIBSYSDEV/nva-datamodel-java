@@ -170,6 +170,10 @@ public class FileModelTest {
         assertThat(unmapped.isVisibleForNonOwner(), equalTo(false));
     }
 
+    /**
+     * @deprecated remove when PublisherVersion no longer needs to parse boolean
+     */
+    @Deprecated
     @Test
     void objectMapperShouldSerializeAndDeserializePublishedVersion() throws JsonProcessingException {
         var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
@@ -179,6 +183,10 @@ public class FileModelTest {
         assertThat(publicationAfterRoundTrip.getPublisherVersion(), is(equalTo(PublisherVersion.ACCEPTED_VERSION)));
     }
 
+    /**
+     * @deprecated remove when PublisherVersion no longer needs to parse boolean
+     */
+    @Deprecated
     @Test
     void objectMapperShouldSerializeAndDeserializePublisherVersionFromBoolean() throws JsonProcessingException {
         var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
@@ -190,6 +198,10 @@ public class FileModelTest {
                    is(equalTo(PublisherVersion.PUBLISHED_VERSION)));
     }
 
+    /**
+     * @deprecated remove when PublisherVersion no longer needs to parse boolean
+     */
+    @Deprecated
     @Test
     void objectMapperShouldSerializePublisherVersionFromEnum() throws JsonProcessingException {
         var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
@@ -202,6 +214,10 @@ public class FileModelTest {
                    is(equalTo(PublisherVersion.PUBLISHED_VERSION)));
     }
 
+    /**
+     * @deprecated remove when PublisherVersion no longer needs to parse boolean
+     */
+    @Deprecated
     @Test
     void publisherVersionIsSetToNullIfNullIsRoundTrippedToNull() throws JsonProcessingException {
         var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
