@@ -1541,11 +1541,19 @@ nva:affiliation a rdf:Property ;
   rdfs:range nva:Organization .
 
 nva:publisherAuthority a rdf:Property ;
-  rdfs:comment "" ;
+  rdfs:comment "Replaced with publisherVersion" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:File ;
+  owl:deprecated "true"^^xsd:boolean ;
   rdfs:range xsd:boolean .
+
+nva:publisherVersion a rdf:Property ;
+  rdfs:comment "Denotes if a file is the Accepted version or the Published version. Usually only applicable for articles submitted to a journal or publisher." ;
+  rdfs:label "" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:File ;
+  rdfs:range nva: .
 
 nva:from a rdf:Property ;
   rdfs:comment "" ;

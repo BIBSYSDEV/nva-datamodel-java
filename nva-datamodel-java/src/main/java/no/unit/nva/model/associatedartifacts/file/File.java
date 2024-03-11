@@ -2,6 +2,8 @@ package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -44,6 +46,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String LICENSE_FIELD = "license";
     public static final String ADMINISTRATIVE_AGREEMENT_FIELD = "administrativeAgreement";
     public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
+    public static final String PUBLISHER_VERSION_FIELD = "publisherVersion";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
     public static final String RIGTHTS_RETENTION_STRATEGY = "rightsRetentionStrategy";
     public static final Map<String, URI> LICENSE_MAP = Map.of(
@@ -65,6 +68,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     private static final Supplier<Pattern> LICENSE_VALIDATION_PATTERN =
         () -> Pattern.compile("^(http|https)://.*$");
 
+
     @JsonProperty(IDENTIFIER_FIELD)
     private final UUID identifier;
     @JsonProperty(NAME_FIELD)
@@ -77,8 +81,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     private final URI license;
     @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD)
     private final boolean administrativeAgreement;
-    @JsonProperty(PUBLISHER_AUTHORITY_FIELD)
-    private final boolean publisherAuthority;
+
+    @JsonProperty(PUBLISHER_VERSION_FIELD)
+    private final PublisherVersion publisherVersion;
     @JsonProperty(EMBARGO_DATE_FIELD)
     private final Instant embargoDate;
     @JsonProperty(RIGTHTS_RETENTION_STRATEGY)
@@ -109,7 +114,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(SIZE_FIELD) Long size,
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
-        @JsonProperty(PUBLISHER_AUTHORITY_FIELD) boolean publisherAuthority,
+        @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
@@ -120,7 +125,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.size = size;
         this.license = validateUriLicense(parseLicense(license));
         this.administrativeAgreement = administrativeAgreement;
-        this.publisherAuthority = publisherAuthority;
+        this.publisherVersion = PublisherVersion.parse(publisherAuthority);
         this.embargoDate = embargoDate;
         this.rightsRetentionStrategy = assignDefaultStrategyIfNull(rightsRetentionStrategy);
         this.legalNote = legalNote;
@@ -137,7 +142,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         if (!administrativeAgreement && isNull(license)) {
             throw new MissingLicenseException(MISSING_LICENSE);
         }
-        if (!publisherAuthority
+        if (PublisherVersion.PUBLISHED_VERSION != publisherVersion
             && rightsRetentionStrategy instanceof CustomerRightsRetentionStrategy
             && !license.equals(LICENSE_MAP.get("CC BY"))) {
             throw new CCByLicenseException(CCBY_LICENSE);
@@ -172,8 +177,17 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         return administrativeAgreement;
     }
 
+    /**
+     * @deprecated (since = "0.21.12") replaced by {@link #getPublisherVersion()}
+     */
+    @JsonIgnore
+    @Deprecated
     public boolean isPublisherAuthority() {
-        return publisherAuthority;
+        return publisherVersion == PublisherVersion.PUBLISHED_VERSION;
+    }
+
+    public PublisherVersion getPublisherVersion(){
+        return publisherVersion;
     }
 
     public Optional<Instant> getEmbargoDate() {
@@ -194,13 +208,13 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public UnpublishedFile toUnpublishedFile() {
         return new UnpublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-                                   isAdministrativeAgreement(), isPublisherAuthority(), getEmbargoDate().orElse(null),
+                                   isAdministrativeAgreement(), getPublisherVersion(), getEmbargoDate().orElse(null),
                                    getRightsRetentionStrategy(), getLegalNote());
     }
 
     public PublishedFile toPublishedFile() {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-                                 isAdministrativeAgreement(), isPublisherAuthority(),
+                                 isAdministrativeAgreement(), getPublisherVersion(),
                                  getEmbargoDate().orElse(null),
                                  getRightsRetentionStrategy(), getLegalNote(), Instant.now());
     }
@@ -208,7 +222,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public final AdministrativeAgreement toAdministrativeAgreement() {
         if (isAdministrativeAgreement()) {
             return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-                                               isAdministrativeAgreement(), isPublisherAuthority(),
+                                               isAdministrativeAgreement(), getPublisherVersion(),
                                                getEmbargoDate().orElse(null), getRightsRetentionStrategy());
         }
         throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
@@ -217,7 +231,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public final AdministrativeAgreement toUnpublishableFile() {
         return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(),
                                            getLicense(), isAdministrativeAgreement(),
-                                           isPublisherAuthority(), getEmbargoDate().orElse(null),
+                                           getPublisherVersion(), getEmbargoDate().orElse(null),
                                            getRightsRetentionStrategy());
     }
 
@@ -228,7 +242,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public int hashCode() {
         return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                             isAdministrativeAgreement(),
-                            isPublisherAuthority(), getEmbargoDate(), getRightsRetentionStrategy());
+                            getPublisherVersion(), getEmbargoDate(), getRightsRetentionStrategy());
     }
 
     @Override
@@ -241,7 +255,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return false;
         }
         return isAdministrativeAgreement() == file.isAdministrativeAgreement()
-               && isPublisherAuthority() == file.isPublisherAuthority()
+               && getPublisherVersion() == file.getPublisherVersion()
                && Objects.equals(getIdentifier(), file.getIdentifier())
                && Objects.equals(getName(), file.getName())
                && Objects.equals(getMimeType(), file.getMimeType())
@@ -319,7 +333,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         private Long size;
         private URI license;
         private boolean administrativeAgreement;
-        private boolean publisherAuthority;
+
+        private PublisherVersion publisherVersion;
         private Instant embargoDate;
         private RightsRetentionStrategy rightsRetentionStrategy;
         private String legalNote;
@@ -357,8 +372,18 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return this;
         }
 
+        /**
+         * @deprecated (since = "0.21.12") replaced by
+         * {@link #withPublisherVersion(PublisherVersion publisherVersion)}
+         */
+        @Deprecated
         public Builder withPublisherAuthority(boolean publisherAuthority) {
-            this.publisherAuthority = publisherAuthority;
+            this.publisherVersion = PublisherVersion.parse(publisherAuthority);
+            return this;
+        }
+
+        public Builder withPublisherVersion(PublisherVersion publisherVersion) {
+            this.publisherVersion = publisherVersion;
             return this;
         }
 
@@ -379,19 +404,19 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
         public File buildPublishedFile() {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                                     publisherAuthority, embargoDate, rightsRetentionStrategy,
+                                     publisherVersion, embargoDate, rightsRetentionStrategy,
                                      legalNote, Instant.now());
         }
 
         public File buildUnpublishedFile() {
             return new UnpublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
-                                       publisherAuthority,
+                                       publisherVersion,
                                        embargoDate, rightsRetentionStrategy, legalNote);
         }
 
         public File buildUnpublishableFile() {
             return new AdministrativeAgreement(identifier, name, mimeType, size, license, administrativeAgreement,
-                                               publisherAuthority,
+                                               publisherVersion,
                                                embargoDate, rightsRetentionStrategy);
         }
     }
