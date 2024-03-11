@@ -1189,8 +1189,11 @@ referencedSchemas:
           format: uri
         administrativeAgreement:
           type: boolean
-        publisherAuthority:
-          type: boolean
+        publisherVersion:
+          type: string
+          enum:
+          - PublishedVersion
+          - AcceptedVersion
         embargoDate:
           type: string
           format: date-time
@@ -1219,13 +1222,15 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
+      source:
+        type: string
+        format: uri
       labels:
         type: object
         additionalProperties:
           type: string
-      source:
-        type: string
-        format: uri
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
@@ -1234,8 +1239,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-      identifier:
-        type: string
       type:
         type: string
     discriminator:
