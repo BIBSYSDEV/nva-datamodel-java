@@ -65,6 +65,10 @@ schema:
       properties:
         empty:
           type: boolean
+        first:
+          $ref: '#/components/schemas/AssociatedArtifact'
+        last:
+          $ref: '#/components/schemas/AssociatedArtifact'
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     rightsHolder:
@@ -351,6 +355,10 @@ referencedSchemas:
     properties:
       empty:
         type: boolean
+      first:
+        $ref: '#/components/schemas/AssociatedArtifact'
+      last:
+        $ref: '#/components/schemas/AssociatedArtifact'
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
@@ -2401,6 +2409,10 @@ referencedSchemas:
         properties:
           empty:
             type: boolean
+          first:
+            $ref: '#/components/schemas/AssociatedArtifact'
+          last:
+            $ref: '#/components/schemas/AssociatedArtifact'
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       rightsHolder:

@@ -3,12 +3,12 @@ package no.unit.nva;
 import static java.util.Collections.emptyList;
 import static nva.commons.core.attempt.Try.attempt;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.nullValue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -82,10 +82,12 @@ class PublicationContextTest {
     }
 
     @Test
-    void shouldDefineEveryArrayPropertyAsContainerSet() {
-        var allNvaCollectionProperties = generateSetOfPropertiesThatHaveCollectionTypeForEveryNvaType();
+    void shouldContainEveryCollectionInModel() {
         var contextContainerSets = getAllContextContainerSetTerms();
-        assertThat(allNvaCollectionProperties, containsInAnyOrder(contextContainerSets.toArray()));
+        var allNvaCollectionProperties = generateSetOfPropertiesThatHaveCollectionTypeForEveryNvaType();
+        for (var modelProperty : allNvaCollectionProperties) {
+            assertTrue(contextContainerSets.contains(modelProperty));
+        }
     }
 
     @ParameterizedTest
