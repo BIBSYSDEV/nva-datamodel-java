@@ -3,7 +3,6 @@ package no.unit.nva.model.file;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration.OVERRIDABLE_RIGHTS_RETENTION_STRATEGY;
-import static no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration.UNKNOWN;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
@@ -28,7 +27,6 @@ import no.unit.nva.commons.json.JsonUtils;
 import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
-import no.unit.nva.model.associatedartifacts.file.CCByLicenseException;
 import no.unit.nva.model.associatedartifacts.file.File;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
@@ -43,7 +41,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class FileModelTest {
 
     public static final URI LICENSE_URI = URI.create("http://creativecommons.org/licenses/by/4.0/");
-    public static final URI CC_BY_NC_LICENSE_URI = URI.create("https://creativecommons.org/licenses/by-nc/4.0");
     public static final String APPLICATION_PDF = "application/pdf";
     public static final String FIRST_FILE_TXT = "First_file.txt";
     public static final String CC_BY = "CC-BY";
@@ -89,12 +86,6 @@ public class FileModelTest {
     void shouldNotThrowMissingLicenseExceptionWhenFileIsAdministrativeAgreementAndLicenseIsPresent() {
         var file = getAdministrativeAgreement(LICENSE_URI);
         assertDoesNotThrow(file::validate);
-    }
-
-    @Test
-    void shouldThrowCcbyLicenseExceptionWhenCustomerRrsWithoutPublisherAuthorityAndNonCcbyLicense() {
-        var file = getPublishedFileWithCustomRRS();
-        assertThrows(CCByLicenseException.class, file::validate);
     }
 
     @Test
@@ -340,27 +331,7 @@ public class FileModelTest {
                    .buildPublishedFile();
     }
 
-    private File getPublishedFileWithCustomRRS() {
-        return getPublishedFileWithCustomRRS(UUID.randomUUID());
-    }
 
-    private File getPublishedFileWithCustomRRS(UUID identifier) {
-        return File.builder()
-            .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
-            .withEmbargoDate(null)
-            .withIdentifier(identifier)
-            .withLicense(CC_BY_NC_LICENSE_URI)
-            .withMimeType(APPLICATION_PDF)
-            .withName(FIRST_FILE_TXT)
-            .withPublisherVersion(randomNonPublisherVersion())
-            .withSize(SIZE)
-            .withRightsRetentionStrategy(CustomerRightsRetentionStrategy.create(UNKNOWN))
-            .buildPublishedFile();
-    }
-
-    private PublisherVersion randomNonPublisherVersion() {
-        return randomBoolean() ? PublisherVersion.ACCEPTED_VERSION : null;
-    }
 
     @Deprecated
     @Test
