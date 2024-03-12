@@ -230,8 +230,7 @@ public class FileModelTest {
 
     public static File randomUnpublishableFile() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-            randomInteger().longValue(), LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant(),
-                                           RightsRetentionStrategyGenerator.randomRightsRetentionStrategy());
+            randomInteger().longValue(), LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant());
     }
 
     public static File randomUnpublishedFile() {
@@ -279,7 +278,7 @@ public class FileModelTest {
             LICENSE_URI,
             NOT_ADMINISTRATIVE_AGREEMENT,
             randomBoolean(),
-            randomInstant(), RightsRetentionStrategyGenerator.randomRightsRetentionStrategy());
+            randomInstant());
     }
 
     private static File.Builder admAgreementBuilder() {
@@ -300,8 +299,7 @@ public class FileModelTest {
     private AdministrativeAgreement randomAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant(),
-                                           RightsRetentionStrategyGenerator.randomRightsRetentionStrategy());
+            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant());
     }
 
     private PublishedFile publishedFileWithActiveEmbargo() {
