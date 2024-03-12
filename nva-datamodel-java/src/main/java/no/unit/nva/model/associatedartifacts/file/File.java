@@ -20,7 +20,6 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import no.unit.nva.commons.json.JsonSerializable;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
-import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategyConfiguration;
@@ -141,11 +140,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public void validate() {
         if (!administrativeAgreement && isNull(license)) {
             throw new MissingLicenseException(MISSING_LICENSE);
-        }
-        if (PublisherVersion.PUBLISHED_VERSION != publisherVersion
-            && rightsRetentionStrategy instanceof CustomerRightsRetentionStrategy
-            && !license.equals(LICENSE_MAP.get("CC BY"))) {
-            throw new CCByLicenseException(CCBY_LICENSE);
         }
     }
 
