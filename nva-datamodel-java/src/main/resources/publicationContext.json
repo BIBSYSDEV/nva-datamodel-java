@@ -184,5 +184,10 @@
     "@id": "curatingInstitution",
     "@type": "@id",
     "@container": "@set"
+  },
+  "contributorOrganizations": {
+    "@id": "contributorOrganization",
+    "@container": "@set",
+    "@type": "@id"
   }
 }
