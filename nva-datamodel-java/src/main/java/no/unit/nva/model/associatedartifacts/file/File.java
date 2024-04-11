@@ -19,6 +19,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import no.unit.nva.commons.json.JsonSerializable;
+import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifact;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
@@ -90,6 +91,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     @JsonProperty(LEGAL_NOTE_FIELD)
     private final String legalNote;
 
+    @JsonProperty("insertedBy")
+    private final Username insertedBy;
+
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
      * marked as an administrative agreement.
@@ -104,6 +108,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @param publisherAuthority      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
      * @param rightsRetentionStrategy The rights retention strategy for the file
+     * @param insertedBy              The person or automated job that inserted the file
      */
 
     protected File(
@@ -116,7 +121,8 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
-        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
+        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
+        @JsonProperty("insertedBy") Username insertedBy) {
 
         this.identifier = identifier;
         this.name = name;
@@ -128,6 +134,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.embargoDate = embargoDate;
         this.rightsRetentionStrategy = assignDefaultStrategyIfNull(rightsRetentionStrategy);
         this.legalNote = legalNote;
+        this.insertedBy = insertedBy;
     }
 
     public static Builder builder() {
@@ -141,6 +148,10 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         if (!administrativeAgreement && isNull(license)) {
             throw new MissingLicenseException(MISSING_LICENSE);
         }
+    }
+
+    public Username getInsertedBy() {
+        return insertedBy;
     }
 
     public UUID getIdentifier() {
@@ -203,21 +214,21 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public UnpublishedFile toUnpublishedFile() {
         return new UnpublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                    isAdministrativeAgreement(), getPublisherVersion(), getEmbargoDate().orElse(null),
-                                   getRightsRetentionStrategy(), getLegalNote());
+                                   getRightsRetentionStrategy(), getLegalNote(), getInsertedBy());
     }
 
     public PublishedFile toPublishedFile() {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                  isAdministrativeAgreement(), getPublisherVersion(),
                                  getEmbargoDate().orElse(null),
-                                 getRightsRetentionStrategy(), getLegalNote(), Instant.now());
+                                 getRightsRetentionStrategy(), getLegalNote(), Instant.now(), getInsertedBy());
     }
 
     public final AdministrativeAgreement toAdministrativeAgreement() {
         if (isAdministrativeAgreement()) {
             return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                                isAdministrativeAgreement(), getPublisherVersion(),
-                                               getEmbargoDate().orElse(null));
+                                               getEmbargoDate().orElse(null), getInsertedBy());
         }
         throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
     }
@@ -225,7 +236,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public final AdministrativeAgreement toUnpublishableFile() {
         return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(),
                                            getLicense(), isAdministrativeAgreement(),
-                                           getPublisherVersion(), getEmbargoDate().orElse(null));
+                                           getPublisherVersion(), getEmbargoDate().orElse(null), getInsertedBy());
     }
 
     public abstract boolean isVisibleForNonOwner();
@@ -331,6 +342,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         private Instant embargoDate;
         private RightsRetentionStrategy rightsRetentionStrategy;
         private String legalNote;
+        private Username insertedBy;
 
         private Builder() {
         }
@@ -362,6 +374,11 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
         public Builder withAdministrativeAgreement(boolean administrativeAgreement) {
             this.administrativeAgreement = administrativeAgreement;
+            return this;
+        }
+
+        public Builder withInsertedBy(Username insertedBy) {
+            this.insertedBy = insertedBy;
             return this;
         }
 
@@ -398,19 +415,19 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         public File buildPublishedFile() {
             return new PublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
                                      publisherVersion, embargoDate, rightsRetentionStrategy,
-                                     legalNote, Instant.now());
+                                     legalNote, Instant.now(), insertedBy);
         }
 
         public File buildUnpublishedFile() {
             return new UnpublishedFile(identifier, name, mimeType, size, license, administrativeAgreement,
                                        publisherVersion,
-                                       embargoDate, rightsRetentionStrategy, legalNote);
+                                       embargoDate, rightsRetentionStrategy, legalNote, insertedBy);
         }
 
         public File buildUnpublishableFile() {
             return new AdministrativeAgreement(identifier, name, mimeType, size, license, administrativeAgreement,
                                                publisherVersion,
-                                               embargoDate);
+                                               embargoDate, insertedBy);
         }
     }
 }

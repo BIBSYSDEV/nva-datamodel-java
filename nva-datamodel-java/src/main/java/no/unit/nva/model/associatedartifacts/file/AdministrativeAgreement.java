@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
+import no.unit.nva.model.Username;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @JsonTypeName(AdministrativeAgreement.TYPE)
@@ -26,7 +27,9 @@ public class AdministrativeAgreement extends File {
      * @param license                 The license for the file, may be null if and only if the file is an administrative
      *                                agreement
      * @param administrativeAgreement True if the file is an administrative agreement
-     * @param publishedVersion        Accepts boolean, enum or null. True if the file owner has publisher authority     * @param embargoDate             The date after which the file may be published
+     * @param publishedVersion        Accepts boolean, enum or null. True if the file owner has publisher authority
+     * @param embargoDate             The date after which the file may be published
+     * @param insertedBy              The person or automated job that inserted the file
      */
     @JsonCreator
     public AdministrativeAgreement(
@@ -37,9 +40,11 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
-        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
+        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
+        @JsonProperty("insertedBy") Username insertedBy) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
-              embargoDate, null,  NO_LEGAL_NOTE);
+              embargoDate, null,  NO_LEGAL_NOTE,
+              insertedBy);
     }
     
     @Override

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.time.Instant;
 import java.util.UUID;
+import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 
 @SuppressWarnings("PMD.ExcessiveParameterList")
@@ -30,6 +31,7 @@ public class UnpublishedFile extends File {
      * @param administrativeAgreement True if the file is an administrative agreement
      * @param publishedVersion        Accepts boolean, enum or null. True if the file owner has publisher authority     * @param embargoDate             The date after which the file may be published
      * @param legalNote               The legal note for file
+     * @param insertedBy              The person or automated job that inserted the file
      */
     @JsonCreator
     public UnpublishedFile(
@@ -42,9 +44,10 @@ public class UnpublishedFile extends File {
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
-        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
+        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
+        @JsonProperty("insertedBy") Username insertedBy) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
-              embargoDate, rightsRetentionStrategy, legalNote);
+              embargoDate, rightsRetentionStrategy, legalNote, insertedBy);
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
         }

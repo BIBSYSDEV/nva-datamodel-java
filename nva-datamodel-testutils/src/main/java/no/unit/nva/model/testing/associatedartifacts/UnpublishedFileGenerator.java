@@ -1,5 +1,6 @@
 package no.unit.nva.model.testing.associatedartifacts;
 
+import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 
 import java.util.UUID;
@@ -18,6 +19,11 @@ public final class UnpublishedFileGenerator {
     public static UnpublishedFile random() {
         return new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
                                    randomUri(), false, true, null,
-                                   RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(), randomString());
+                                   RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(), randomString(),
+                                   randomUsername());
+    }
+
+    private static Username randomUsername() {
+        return new Username(randomString());
     }
 }
