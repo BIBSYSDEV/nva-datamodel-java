@@ -29,7 +29,7 @@ import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.File;
-import no.unit.nva.model.associatedartifacts.file.Inserted;
+import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
@@ -176,8 +176,8 @@ public class FileModelTest {
         assertThat(publicationAfterRoundTrip.getPublisherVersion(), is(equalTo(PublisherVersion.ACCEPTED_VERSION)));
     }
 
-    private static Inserted randomInserted() {
-        return new Inserted(randomUsername(), randomInstant());
+    private static UploadDetails randomInserted() {
+        return new UploadDetails(randomUsername(), randomInstant());
     }
 
     /**

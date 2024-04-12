@@ -7,7 +7,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.UUID;
 import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
-import no.unit.nva.model.associatedartifacts.file.Inserted;
+import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 
 public final class AdministrativeAgreementGenerator {
 
@@ -21,8 +21,8 @@ public final class AdministrativeAgreementGenerator {
                                            randomInserted());
     }
 
-    private static Inserted randomInserted() {
-        return new Inserted(randomUsername(), randomInstant());
+    private static UploadDetails randomInserted() {
+        return new UploadDetails(randomUsername(), randomInstant());
     }
 
     private static Username randomUsername() {

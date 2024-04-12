@@ -1,7 +1,7 @@
 package no.unit.nva.model.testing.associatedartifacts;
 
 import no.unit.nva.model.Username;
-import no.unit.nva.model.associatedartifacts.file.Inserted;
+import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 
 import java.util.UUID;
@@ -25,8 +25,8 @@ public final class UnpublishedFileGenerator {
                                    randomInserted());
     }
 
-    private static Inserted randomInserted() {
-        return new Inserted(randomUsername(), randomInstant());
+    private static UploadDetails randomInserted() {
+        return new UploadDetails(randomUsername(), randomInstant());
     }
 
     private static Username randomUsername() {
