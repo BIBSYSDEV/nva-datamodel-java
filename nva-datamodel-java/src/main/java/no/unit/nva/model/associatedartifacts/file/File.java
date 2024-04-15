@@ -48,7 +48,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String PUBLISHER_VERSION_FIELD = "publisherVersion";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
     public static final String RIGTHTS_RETENTION_STRATEGY = "rightsRetentionStrategy";
-    public static final String UPLOADED_DETAILS = "uploadedDetails";
+    public static final String UPLOAD_DETAILS = "uploadDetails";
     public static final Map<String, URI> LICENSE_MAP = Map.of(
         "CC BY", URI.create("https://creativecommons.org/licenses/by/4.0"),
         "CC BY-NC", URI.create("https://creativecommons.org/licenses/by-nc/4.0"),
@@ -91,7 +91,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     @JsonProperty(LEGAL_NOTE_FIELD)
     private final String legalNote;
 
-    @JsonProperty(UPLOADED_DETAILS)
+    @JsonProperty(UPLOAD_DETAILS)
     private final UploadDetails uploadDetails;
 
     /**
@@ -122,7 +122,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
-        @JsonProperty(UPLOADED_DETAILS) UploadDetails uploadDetails) {
+        @JsonProperty(UPLOAD_DETAILS) UploadDetails uploadDetails) {
 
         this.identifier = identifier;
         this.name = name;
@@ -150,7 +150,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         }
     }
 
-    public UploadDetails getInserted() {
+    public UploadDetails getUploadDetails() {
         return uploadDetails;
     }
 
@@ -214,21 +214,21 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public UnpublishedFile toUnpublishedFile() {
         return new UnpublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                    isAdministrativeAgreement(), getPublisherVersion(), getEmbargoDate().orElse(null),
-                                   getRightsRetentionStrategy(), getLegalNote(), getInserted());
+                                   getRightsRetentionStrategy(), getLegalNote(), getUploadDetails());
     }
 
     public PublishedFile toPublishedFile() {
         return new PublishedFile(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                  isAdministrativeAgreement(), getPublisherVersion(),
                                  getEmbargoDate().orElse(null),
-                                 getRightsRetentionStrategy(), getLegalNote(), Instant.now(), getInserted());
+                                 getRightsRetentionStrategy(), getLegalNote(), Instant.now(), getUploadDetails());
     }
 
     public final AdministrativeAgreement toAdministrativeAgreement() {
         if (isAdministrativeAgreement()) {
             return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
                                                isAdministrativeAgreement(), getPublisherVersion(),
-                                               getEmbargoDate().orElse(null), getInserted());
+                                               getEmbargoDate().orElse(null), getUploadDetails());
         }
         throw new IllegalStateException("Can not make unpublishable a non-administrative agreement");
     }
@@ -236,7 +236,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public final AdministrativeAgreement toUnpublishableFile() {
         return new AdministrativeAgreement(getIdentifier(), getName(), getMimeType(), getSize(),
                                            getLicense(), isAdministrativeAgreement(),
-                                           getPublisherVersion(), getEmbargoDate().orElse(null), getInserted());
+                                           getPublisherVersion(), getEmbargoDate().orElse(null), getUploadDetails());
     }
 
     public abstract boolean isVisibleForNonOwner();
@@ -245,7 +245,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     @JacocoGenerated
     public int hashCode() {
         return Objects.hash(getIdentifier(), getName(), getMimeType(), getSize(), getLicense(),
-                            isAdministrativeAgreement(), getInserted(),
+                            isAdministrativeAgreement(), getUploadDetails(),
                             getPublisherVersion(), getEmbargoDate(), getRightsRetentionStrategy());
     }
 
@@ -266,7 +266,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
                && Objects.equals(getSize(), file.getSize())
                && Objects.equals(getLicense(), file.getLicense())
                && Objects.equals(getEmbargoDate(), file.getEmbargoDate())
-               && Objects.equals(getInserted(), file.getInserted())
+               && Objects.equals(getUploadDetails(), file.getUploadDetails())
                && Objects.equals(getRightsRetentionStrategy(), file.getRightsRetentionStrategy());
     }
 
@@ -378,7 +378,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
             return this;
         }
 
-        public Builder withInserted(UploadDetails uploadDetails) {
+        public Builder withUploadDetails(UploadDetails uploadDetails) {
             this.uploadDetails = uploadDetails;
             return this;
         }

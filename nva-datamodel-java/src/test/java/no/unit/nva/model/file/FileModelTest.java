@@ -254,7 +254,7 @@ public class FileModelTest {
                    .withEmbargoDate(randomInstant())
                    .withLicense(LICENSE_URI)
                    .withIdentifier(UUID.randomUUID())
-                   .withInserted(randomInserted())
+                   .withUploadDetails(randomInserted())
                    .withPublisherVersion(randomPublisherVersion());
     }
 

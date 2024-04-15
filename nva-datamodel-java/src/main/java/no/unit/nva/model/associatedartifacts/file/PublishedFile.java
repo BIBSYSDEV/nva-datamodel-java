@@ -51,7 +51,7 @@ public class PublishedFile extends File {
         @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
         @JsonProperty(PUBLISHED_DATE) Instant publishedDate,
-        @JsonProperty(UPLOADED_DETAILS) UploadDetails uploadDetails) {
+        @JsonProperty(UPLOAD_DETAILS) UploadDetails uploadDetails) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
               embargoDate, rightsRetentionStrategy, legalNote, uploadDetails);
         this.publishedDate = publishedDate;
