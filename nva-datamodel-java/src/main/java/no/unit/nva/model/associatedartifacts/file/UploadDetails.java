@@ -11,9 +11,10 @@ import no.unit.nva.model.Username;
 import nva.commons.core.JacocoGenerated;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
-@JsonTypeName(PublishedFile.TYPE)
+@JsonTypeName(UploadDetails.TYPE)
 public class UploadDetails {
 
+    public static final String TYPE = "UploadDetails";
     private static final String UPLOADED_BY = "uploadedBy";
     private static final String UPLOADED_DATE = "uploadedDate";
 
