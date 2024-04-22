@@ -1688,6 +1688,9 @@ referencedSchemas:
           type: string
         partOf:
           $ref: '#/components/schemas/SeriesEpisode'
+        link:
+          type: string
+          format: uri
         type:
           type: string
   MediaContributionPeriodical:

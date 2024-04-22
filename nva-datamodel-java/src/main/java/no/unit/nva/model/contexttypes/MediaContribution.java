@@ -2,6 +2,7 @@ package no.unit.nva.model.contexttypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
 import java.util.Objects;
 import no.unit.nva.model.contexttypes.media.MediaFormat;
 import no.unit.nva.model.contexttypes.media.MediaSubType;
@@ -15,6 +16,7 @@ public class MediaContribution implements PublicationContext {
     private static final String FORMAT = "format";
     private static final String DISSEMINATION_CHANNEL = "disseminationChannel";
     private static final String PART_OF = "partOf";
+    private static final String LINK = "link";
 
     @JsonProperty(MEDIUM)
     private final MediaSubType medium;
@@ -29,16 +31,20 @@ public class MediaContribution implements PublicationContext {
 
     @JsonProperty(PART_OF)
     private final SeriesEpisode partOf;
+    @JsonProperty(LINK)
+    private final URI link;
 
 
     public MediaContribution(@JsonProperty(MEDIUM) MediaSubType medium,
                              @JsonProperty(FORMAT) MediaFormat format,
                              @JsonProperty(DISSEMINATION_CHANNEL) String disseminationChannel,
-                             @JsonProperty(PART_OF) SeriesEpisode partOf) {
+                             @JsonProperty(PART_OF) SeriesEpisode partOf,
+                             @JsonProperty(LINK) URI link) {
         this.medium = medium;
         this.format = format;
         this.disseminationChannel = disseminationChannel;
         this.partOf = partOf;
+        this.link = link;
     }
 
     public MediaSubType getMedium() {
@@ -51,6 +57,10 @@ public class MediaContribution implements PublicationContext {
 
     public String getDisseminationChannel() {
         return disseminationChannel;
+    }
+
+    public URI getLink() {
+        return link;
     }
 
     @JacocoGenerated
@@ -66,13 +76,14 @@ public class MediaContribution implements PublicationContext {
         return Objects.equals(getMedium(), that.getMedium())
                 && getFormat() == that.getFormat()
                 && Objects.equals(getDisseminationChannel(), that.getDisseminationChannel())
-                && Objects.equals(partOf, that.partOf);
+                && Objects.equals(partOf, that.partOf)
+                && Objects.equals(getLink(), that.getLink());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getMedium(), getFormat(), getDisseminationChannel(), partOf);
+        return Objects.hash(getMedium(), getFormat(), getDisseminationChannel(), partOf, getLink());
     }
 
 
@@ -83,6 +94,7 @@ public class MediaContribution implements PublicationContext {
         // the use before making it required, which it apparently is.
         private String disseminationChannel;
         private SeriesEpisode partOf;
+        private URI link;
 
         public Builder() {
         }
@@ -108,8 +120,13 @@ public class MediaContribution implements PublicationContext {
             return this;
         }
 
+        public Builder withLink(URI link) {
+            this.link = link;
+            return this;
+        }
+
         public MediaContribution build() {
-            return new MediaContribution(medium, format, disseminationChannel, partOf);
+            return new MediaContribution(medium, format, disseminationChannel, partOf, link);
         }
     }
 }

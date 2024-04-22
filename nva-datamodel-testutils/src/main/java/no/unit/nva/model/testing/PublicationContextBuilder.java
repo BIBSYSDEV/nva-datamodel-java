@@ -161,11 +161,12 @@ public class PublicationContextBuilder {
 
     private static MediaContribution randomMediaContribution() {
         return new MediaContribution.Builder()
-            .withMedium(generateRandomMedium())
-            .withFormat(generateRandomMediaFormat())
-            .withDisseminationChannel(randomString())
-            .withPartOf(generateRandomSeriesEpisode())
-            .build();
+                   .withMedium(generateRandomMedium())
+                   .withFormat(generateRandomMediaFormat())
+                   .withDisseminationChannel(randomString())
+                   .withPartOf(generateRandomSeriesEpisode())
+                   .withLink(randomUri())
+                   .build();
     }
 
     private static SeriesEpisode generateRandomSeriesEpisode() {
