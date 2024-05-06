@@ -39,4 +39,12 @@ public class UnconfirmedPlace implements Place {
     public int hashCode() {
         return Objects.hash(label, country);
     }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getCountry() {
+        return country;
+    }
 }
