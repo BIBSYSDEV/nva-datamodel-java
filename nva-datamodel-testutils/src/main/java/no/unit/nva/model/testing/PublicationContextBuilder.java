@@ -4,6 +4,7 @@ import static no.unit.nva.model.testing.RandomUtils.randomLabel;
 import static no.unit.nva.testutils.RandomDataGenerator.randomBoolean;
 import static no.unit.nva.testutils.RandomDataGenerator.randomElement;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
+import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn10;
 import static no.unit.nva.testutils.RandomDataGenerator.randomIsbn13;
 import static no.unit.nva.testutils.RandomDataGenerator.randomIssn;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
@@ -261,7 +262,7 @@ public class PublicationContextBuilder {
     }
 
     private static List<String> randomIsbnList() {
-        return List.of(randomIsbn13(), randomString());
+        return List.of(randomIsbn13(), randomIsbn10());
     }
 
     private static Journal randomJournal() {
