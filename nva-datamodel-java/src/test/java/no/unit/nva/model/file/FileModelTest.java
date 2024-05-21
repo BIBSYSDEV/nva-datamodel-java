@@ -243,7 +243,7 @@ public class FileModelTest {
                 "size" : 1025817,
                 "license" : "https://creativecommons.org/licenses/by-nc/2.0/",
                 "administrativeAgreement" : false,
-                "publisherAuthority" : false,
+                "publisherVersion" : "AcceptedVersion",
                 "publishedDate" : "2023-05-25T19:31:17.302914Z",
                 "visibleForNonOwner" : true
               }""";
