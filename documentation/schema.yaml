@@ -65,10 +65,6 @@ schema:
       properties:
         empty:
           type: boolean
-        first:
-          $ref: '#/components/schemas/AssociatedArtifact'
-        last:
-          $ref: '#/components/schemas/AssociatedArtifact'
       items:
         $ref: '#/components/schemas/AssociatedArtifact'
     rightsHolder:
@@ -355,10 +351,6 @@ referencedSchemas:
     properties:
       empty:
         type: boolean
-      first:
-        $ref: '#/components/schemas/AssociatedArtifact'
-      last:
-        $ref: '#/components/schemas/AssociatedArtifact'
     items:
       $ref: '#/components/schemas/AssociatedArtifact'
   AssociatedLink:
@@ -1201,6 +1193,9 @@ referencedSchemas:
           type: string
           enum:
           - PublishedVersion
+          - draft
+          - SubmittedVersion
+          - UpdatedVersion
           - AcceptedVersion
         embargoDate:
           type: string
@@ -1232,8 +1227,6 @@ referencedSchemas:
     - type
     type: object
     properties:
-      identifier:
-        type: string
       labels:
         type: object
         additionalProperties:
@@ -1241,14 +1234,16 @@ referencedSchemas:
       source:
         type: string
         format: uri
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
-      activeFrom:
-        type: string
-        format: date-time
       activeTo:
         type: string
         format: date-time
+      activeFrom:
+        type: string
+        format: date-time
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
+      identifier:
+        type: string
       type:
         type: string
     discriminator:
@@ -2411,10 +2406,6 @@ referencedSchemas:
         properties:
           empty:
             type: boolean
-          first:
-            $ref: '#/components/schemas/AssociatedArtifact'
-          last:
-            $ref: '#/components/schemas/AssociatedArtifact'
         items:
           $ref: '#/components/schemas/AssociatedArtifact'
       rightsHolder:
