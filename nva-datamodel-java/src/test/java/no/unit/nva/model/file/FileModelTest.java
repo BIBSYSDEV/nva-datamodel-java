@@ -203,31 +203,6 @@ public class FileModelTest {
         assertThat(unmapped.isVisibleForNonOwner(), equalTo(false));
     }
 
-    @Deprecated
-    @Test
-    void shouldMigrateLegacyFileToUnpublishedFile() throws JsonProcessingException {
-        var fileJson = """
-            {
-                "type" : "File",
-                "identifier" : "df2be965-f628-43fb-914b-e16d6f136e05",
-                "name" : "2-s2.0-85143901828.xml",
-                "mimeType" : "text/xml",
-                "size" : 180088,
-                "license" : {
-                  "type" : "License",
-                  "identifier" : "RightsReserved",
-                  "labels" : {
-                    "nb" : "RightsReserved"
-                  }
-                },
-                "administrativeAgreement" : false,
-                "publisherAuthority" : false,
-                "visibleForNonOwner" : true
-              }""";
-        var file = JsonUtils.dtoObjectMapper.readValue(fileJson, File.class);
-        assertThat(file, instanceOf(UnpublishedFile.class));
-    }
-
     private static UploadDetails randomInserted() {
         return new UploadDetails(randomUsername(), randomInstant());
     }
