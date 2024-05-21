@@ -9,7 +9,7 @@ import nva.commons.core.StringUtils;
 
 public enum PublisherVersion {
     PUBLISHED_VERSION("PublishedVersion"),
-    DRAFT("draft"),
+    DRAFT("Draft"),
     SUBMITTED_VERSION("SubmittedVersion"),
     UPDATED_VERSION("UpdatedVersion"),
     ACCEPTED_VERSION("AcceptedVersion");
