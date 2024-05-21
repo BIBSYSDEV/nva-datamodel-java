@@ -17,7 +17,10 @@ public final class AdministrativeAgreementGenerator {
 
     public static AdministrativeAgreement random() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-                                           randomInteger().longValue(), randomUri(), true, false, null,
+                                           randomInteger().longValue(), randomUri(),
+                                           true,
+                                           null,
+                                           null,
                                            randomInserted());
     }
 

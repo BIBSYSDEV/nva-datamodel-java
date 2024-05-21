@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -60,7 +59,62 @@ public class FileModelTest {
 
     public static Stream<File> notAdministrativeAgreements() {
         return Stream.of(randomPublishedFile(), randomUnpublishedFile(),
-            unpublishableNotAdministrativeAgreement());
+                         unpublishableNotAdministrativeAgreement());
+    }
+
+    public static File randomUnpublishableFile() {
+        return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
+                                           randomInteger().longValue(), LICENSE_URI, randomBoolean(),
+                                           PublisherVersion.PUBLISHED_VERSION, randomInstant(),
+                                           randomInserted());
+    }
+
+    public static File randomUnpublishedFile() {
+        return buildNonAdministrativeAgreement().buildUnpublishedFile();
+    }
+
+    public static File randomPublishedFile() {
+        return buildNonAdministrativeAgreement().buildPublishedFile();
+    }
+
+    public static File.Builder buildNonAdministrativeAgreement() {
+        return File.builder()
+                   .withName(randomString())
+                   .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
+                   .withMimeType(randomString())
+                   .withSize(randomInteger().longValue())
+                   .withEmbargoDate(randomInstant())
+                   .withLicense(LICENSE_URI)
+                   .withIdentifier(UUID.randomUUID())
+                   .withUploadDetails(randomInserted())
+                   .withPublisherVersion(randomPublisherVersion());
+    }
+
+    public static File.Builder buildAdministrativeAgreement() {
+        return File.builder()
+                   .withName(randomString())
+                   .withAdministrativeAgreement(ADMINISTRATIVE_AGREEMENT)
+                   .withMimeType(randomString())
+                   .withSize(randomInteger().longValue())
+                   .withEmbargoDate(randomInstant())
+                   .withRightsRetentionStrategy(RightsRetentionStrategyGenerator.randomRightsRetentionStrategy())
+                   .withLicense(LICENSE_URI)
+                   .withIdentifier(UUID.randomUUID())
+                   .withPublisherVersion(randomPublisherVersion());
+    }
+
+    @Test
+    public void shouldAssignDefaultStrategyWhenNoneProvided() throws JsonProcessingException {
+        var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
+        assertThat(file.getRightsRetentionStrategy(), instanceOf(NullRightsRetentionStrategy.class));
+    }
+
+    @Test
+    public void shouldSetNewRightsRetentionStrategy() {
+        var file = getPublishedFile();
+        var rightsRetentionStrategy = CustomerRightsRetentionStrategy.create(OVERRIDABLE_RIGHTS_RETENTION_STRATEGY);
+        file.setRightsRetentionStrategy(rightsRetentionStrategy);
+        assertThat(file.getRightsRetentionStrategy(), is(equalTo(rightsRetentionStrategy)));
     }
 
     @ParameterizedTest
@@ -94,20 +148,6 @@ public class FileModelTest {
     void shouldNotThrowCcbyLicenseExceptionWhenNotCustomerRrs() throws JsonProcessingException {
         var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
         assertDoesNotThrow(file::validate);
-    }
-
-    @Test
-    public void shouldAssignDefaultStrategyWhenNoneProvided() throws JsonProcessingException {
-        var file = JsonUtils.dtoObjectMapper.readValue(generateNewFile(), File.class);
-        assertThat(file.getRightsRetentionStrategy(), instanceOf(NullRightsRetentionStrategy.class));
-    }
-
-    @Test
-    public void shouldSetNewRightsRetentionStrategy() {
-        var file = getPublishedFile();
-        var rightsRetentionStrategy = CustomerRightsRetentionStrategy.create(OVERRIDABLE_RIGHTS_RETENTION_STRATEGY);
-        file.setRightsRetentionStrategy(rightsRetentionStrategy);
-        assertThat(file.getRightsRetentionStrategy(), is(equalTo(rightsRetentionStrategy)));
     }
 
     @ParameterizedTest(name = "should not throw MissingLicenseException when not administrative agreement")
@@ -163,134 +203,75 @@ public class FileModelTest {
         assertThat(unmapped.isVisibleForNonOwner(), equalTo(false));
     }
 
-    /**
-     * @deprecated remove when PublisherVersion no longer needs to parse boolean
-     */
     @Deprecated
     @Test
-    void objectMapperShouldSerializeAndDeserializePublishedVersion() throws JsonProcessingException {
-        var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, false, null, null, randomString(), randomInserted());
-        var unpublishedFileString = unpublishedFile.toString();
-        var publicationAfterRoundTrip = dataModelObjectMapper.readValue(unpublishedFileString, UnpublishedFile.class);
-        assertThat(publicationAfterRoundTrip.getPublisherVersion(), is(equalTo(PublisherVersion.ACCEPTED_VERSION)));
+    void shouldMigrateLegacyFileToUnpublishedFile() throws JsonProcessingException {
+        var fileJson = """
+            {
+                "type" : "File",
+                "identifier" : "df2be965-f628-43fb-914b-e16d6f136e05",
+                "name" : "2-s2.0-85143901828.xml",
+                "mimeType" : "text/xml",
+                "size" : 180088,
+                "license" : {
+                  "type" : "License",
+                  "identifier" : "RightsReserved",
+                  "labels" : {
+                    "nb" : "RightsReserved"
+                  }
+                },
+                "administrativeAgreement" : false,
+                "publisherAuthority" : false,
+                "visibleForNonOwner" : true
+              }""";
+        var file = JsonUtils.dtoObjectMapper.readValue(fileJson, File.class);
+        assertThat(file, instanceOf(UnpublishedFile.class));
     }
 
     private static UploadDetails randomInserted() {
         return new UploadDetails(randomUsername(), randomInstant());
     }
 
-    /**
-     * @deprecated remove when PublisherVersion no longer needs to parse boolean
-     */
-    @Deprecated
-    @Test
-    void objectMapperShouldSerializeAndDeserializePublisherVersionFromBoolean() throws JsonProcessingException {
-        var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, true, null, null, randomString(),
-                                                  randomInserted());
-        var unpublishedFileString = unpublishedFile.toString();
-        var unpublishedFileAfterRoundtrip = dataModelObjectMapper.readValue(unpublishedFileString,
-                                                                            UnpublishedFile.class);
-        assertThat(unpublishedFileAfterRoundtrip.getPublisherVersion(),
-                   is(equalTo(PublisherVersion.PUBLISHED_VERSION)));
-    }
-
-    /**
-     * @deprecated remove when PublisherVersion no longer needs to parse boolean
-     */
-    @Deprecated
-    @Test
-    void objectMapperShouldSerializePublisherVersionFromEnum() throws JsonProcessingException {
-        var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, PublisherVersion.PUBLISHED_VERSION, null, null,
-                                                  randomString(), randomInserted());
-        var unpublishedFileString = unpublishedFile.toString();
-        var unpublishedFileAfterRoundTrip = dataModelObjectMapper.readValue(unpublishedFileString,
-                                                                            UnpublishedFile.class);
-        assertThat(unpublishedFileAfterRoundTrip.getPublisherVersion(),
-                   is(equalTo(PublisherVersion.PUBLISHED_VERSION)));
-    }
-
-    /**
-     * @deprecated remove when PublisherVersion no longer needs to parse boolean
-     */
-    @Deprecated
-    @Test
-    void publisherVersionIsSetToNullIfNullIsRoundTrippedToNull() throws JsonProcessingException {
-        var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, null, null, null, randomString(),
-                                                  randomInserted());
-        var unpublishedFileString = unpublishedFile.toString();
-        var unpublishedFileAfterRoundtrip = dataModelObjectMapper.readValue(unpublishedFileString,
-                                                                            UnpublishedFile.class);
-        assertThat(unpublishedFileAfterRoundtrip.getPublisherVersion(), is(nullValue()));
-    }
-
-    public static File randomUnpublishableFile() {
-        return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-            randomInteger().longValue(), LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant(),
-                                           randomInserted());
-    }
-
     private static Username randomUsername() {
         return new Username(randomString());
-    }
-
-    public static File randomUnpublishedFile() {
-        return buildNonAdministrativeAgreement().buildUnpublishedFile();
-    }
-
-    public static File randomPublishedFile() {
-        return buildNonAdministrativeAgreement().buildPublishedFile();
-    }
-
-    public static File.Builder buildNonAdministrativeAgreement() {
-        return File.builder()
-                   .withName(randomString())
-                   .withAdministrativeAgreement(NOT_ADMINISTRATIVE_AGREEMENT)
-                   .withMimeType(randomString())
-                   .withSize(randomInteger().longValue())
-                   .withEmbargoDate(randomInstant())
-                   .withLicense(LICENSE_URI)
-                   .withIdentifier(UUID.randomUUID())
-                   .withUploadDetails(randomInserted())
-                   .withPublisherVersion(randomPublisherVersion());
     }
 
     private static PublisherVersion randomPublisherVersion() {
         return randomBoolean() ? PublisherVersion.PUBLISHED_VERSION : PublisherVersion.ACCEPTED_VERSION;
     }
 
-    public static File.Builder buildAdministrativeAgreement() {
-        return File.builder()
-                   .withName(randomString())
-                   .withAdministrativeAgreement(ADMINISTRATIVE_AGREEMENT)
-                   .withMimeType(randomString())
-                   .withSize(randomInteger().longValue())
-                   .withEmbargoDate(randomInstant())
-                   .withRightsRetentionStrategy(RightsRetentionStrategyGenerator.randomRightsRetentionStrategy())
-                   .withLicense(LICENSE_URI)
-                   .withIdentifier(UUID.randomUUID())
-                   .withPublisherVersion(randomPublisherVersion());
-    }
-
     private static File unpublishableNotAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(),
-            randomString(),
-            randomString(),
-            randomInteger().longValue(),
-            LICENSE_URI,
-            NOT_ADMINISTRATIVE_AGREEMENT,
-            randomBoolean(),
-            randomInstant(),
-            randomInserted());
+                                           randomString(),
+                                           randomString(),
+                                           randomInteger().longValue(),
+                                           LICENSE_URI,
+                                           NOT_ADMINISTRATIVE_AGREEMENT,
+                                           PublisherVersion.PUBLISHED_VERSION,
+                                           randomInstant(),
+                                           randomInserted());
     }
 
     private static File.Builder admAgreementBuilder() {
         return File.builder()
                    .withAdministrativeAgreement(true)
                    .withName(randomString());
+    }
+
+    private static String generateNewFile() {
+        return """
+            {
+                "type" : "PublishedFile",
+                "identifier" : "d9fc5844-f1a3-491b-825a-5a4cabc12aa2",
+                "name" : "Per Magne Østertun.pdf",
+                "mimeType" : "application/pdf",
+                "size" : 1025817,
+                "license" : "https://creativecommons.org/licenses/by-nc/2.0/",
+                "administrativeAgreement" : false,
+                "publisherAuthority" : false,
+                "publishedDate" : "2023-05-25T19:31:17.302914Z",
+                "visibleForNonOwner" : true
+              }""";
     }
 
     private File getAdministrativeAgreement(URI license) {
@@ -304,8 +285,9 @@ public class FileModelTest {
 
     private AdministrativeAgreement randomAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-            randomInteger().longValue(),
-            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant(), randomInserted());
+                                           randomInteger().longValue(),
+                                           LICENSE_URI, ADMINISTRATIVE_AGREEMENT, PublisherVersion.ACCEPTED_VERSION,
+                                           randomInstant(), randomInserted());
     }
 
     private PublishedFile publishedFileWithActiveEmbargo() {
@@ -315,7 +297,7 @@ public class FileModelTest {
                                  randomInteger().longValue(),
                                  LICENSE_URI,
                                  NOT_ADMINISTRATIVE_AGREEMENT,
-                                 randomBoolean(),
+                                 PublisherVersion.PUBLISHED_VERSION,
                                  Instant.now().plus(1, DAYS),
                                  RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(),
                                  randomString(), randomInstant(), randomInserted());
@@ -344,46 +326,5 @@ public class FileModelTest {
                    .withPublisherVersion(PublisherVersion.PUBLISHED_VERSION)
                    .withSize(SIZE)
                    .buildPublishedFile();
-    }
-
-
-
-    @Deprecated
-    @Test
-    void shouldMigrateLegacyFileToUnpublishedFile() throws JsonProcessingException {
-        var fileJson = "{\n"
-                       + "    \"type\" : \"File\",\n"
-                       + "    \"identifier\" : \"df2be965-f628-43fb-914b-e16d6f136e05\",\n"
-                       + "    \"name\" : \"2-s2.0-85143901828.xml\",\n"
-                       + "    \"mimeType\" : \"text/xml\",\n"
-                       + "    \"size\" : 180088,\n"
-                       + "    \"license\" : {\n"
-                       + "      \"type\" : \"License\",\n"
-                       + "      \"identifier\" : \"RightsReserved\",\n"
-                       + "      \"labels\" : {\n"
-                       + "        \"nb\" : \"RightsReserved\"\n"
-                       + "      }\n"
-                       + "    },\n"
-                       + "    \"administrativeAgreement\" : false,\n"
-                       + "    \"publisherAuthority\" : false,\n"
-                       + "    \"visibleForNonOwner\" : true\n"
-                       + "  }";
-        var file = JsonUtils.dtoObjectMapper.readValue(fileJson, File.class);
-        assertThat(file, instanceOf(UnpublishedFile.class));
-    }
-
-    private static String generateNewFile() {
-        return "{\n"
-               + "    \"type\" : \"PublishedFile\",\n"
-               + "    \"identifier\" : \"d9fc5844-f1a3-491b-825a-5a4cabc12aa2\",\n"
-               + "    \"name\" : \"Per Magne Østertun.pdf\",\n"
-               + "    \"mimeType\" : \"application/pdf\",\n"
-               + "    \"size\" : 1025817,\n"
-               + "    \"license\" : \"https://creativecommons.org/licenses/by-nc/2.0/\",\n"
-               + "    \"administrativeAgreement\" : false,\n"
-               + "    \"publisherAuthority\" : false,\n"
-               + "    \"publishedDate\" : \"2023-05-25T19:31:17.302914Z\",\n"
-               + "    \"visibleForNonOwner\" : true\n"
-               + "  }";
     }
 }
