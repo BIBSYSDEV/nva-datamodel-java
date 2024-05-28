@@ -3,8 +3,11 @@ package no.unit.nva.model;
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED;
 import static no.unit.nva.model.PublicationStatus.PUBLISHED_METADATA;
+import static nva.commons.core.attempt.Try.attempt;
+import java.time.Year;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.IntSupplier;
 import no.unit.nva.model.instancetypes.PublicationInstance;
 import nva.commons.core.JacocoGenerated;
 import nva.commons.core.StringUtils;
@@ -13,14 +16,25 @@ import nva.commons.core.StringUtils;
 
     private static final Set<PublicationStatus> VALID_PUBLICATION_STATUS_FOR_FINDABLE_DOI =
         Set.of(PUBLISHED, PUBLISHED_METADATA);
+    public static final int PUBLISH_YEAR_MIN = 1000;
+    public static final IntSupplier PUBLISH_YEAR_MAX = () -> Year.now().getValue() + 4;
 
     @JacocoGenerated
     private FindableDoiRequirementsValidator() {
 
     }
 
-    /* default */ static boolean meetsFindableDoiRequirements(Publication publication) {
-        return hasCorrectPublishedStatus(publication) && mandatoryFieldsAreNotNull(publication);
+    /* default */
+    static boolean meetsFindableDoiRequirements(Publication publication) {
+        return hasCorrectPublishedStatus(publication) &&
+               mandatoryFieldsAreNotNull(publication) &&
+               hasCorrectPublishedYear(publication);
+    }
+
+    private static boolean hasCorrectPublishedYear(Publication publication) {
+        var yearString = publication.getEntityDescription().getPublicationDate().getYear();
+        var year = attempt(() -> Integer.parseInt(yearString)).toOptional().orElse(null);
+        return nonNull(year) && year >= PUBLISH_YEAR_MIN && year <= PUBLISH_YEAR_MAX.getAsInt();
     }
 
     private static boolean hasCorrectPublishedStatus(Publication publication) {
@@ -36,7 +50,6 @@ import nva.commons.core.StringUtils;
                && hasAnInstanceType(publication)
                && hasPublicationYear(publication);
     }
-
 
     private static boolean hasPublicationYear(Publication publication) {
         return Optional.ofNullable(publication.getEntityDescription())
