@@ -12,6 +12,7 @@ import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -20,6 +21,7 @@ import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,6 +51,8 @@ import org.hamcrest.Matchers;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -87,6 +91,12 @@ public class PublicationTest {
             publicationWithoutTitle(),
             publicationWithoutEntityDescription()
         );
+    }
+
+    public static Stream<Named<Publication>> importedPublicationProvider() {
+        return Stream.of(Named.of("Brage", PublicationGenerator.createBragePublication()),
+                         Named.of("Cristin", PublicationGenerator.createCristinPublication()),
+                         Named.of("Scopus", PublicationGenerator.createScopusPublication()));
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
@@ -273,6 +283,18 @@ public class PublicationTest {
         var expectedResult = true;
         assertThat(publication.satisfiesFindableDoiRequirements(),
                    is(Matchers.equalTo(expectedResult)));
+    }
+
+    @ParameterizedTest
+    @DisplayName("Should indicate Publication is imported")
+    @MethodSource("importedPublicationProvider")
+    void shouldIndicateThatPublicationIsImported(Publication publication) {
+        assertThat(publication.getMachineImportDetails().date(), is(not(nullValue())));
+    }
+
+    @Test
+    void shouldMakeItClearThatANonImportedPublicationIsNotImported() {
+        fail();
     }
 
     private static Publication publicationWithoutTitle() {

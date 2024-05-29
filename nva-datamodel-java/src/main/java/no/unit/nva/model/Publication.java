@@ -70,6 +70,7 @@ public class Publication
 
     private List<PublicationNoteBase> publicationNotes;
     private Set<URI> curatingInstitutions;
+    private ImportDetails importDetails;
 
     public Publication() {
         // Default constructor, use setters.
@@ -402,6 +403,14 @@ public class Publication
         this.curatingInstitutions = curatingInstitutions;
     }
 
+    public ImportDetails getMachineImportDetails() {
+        return importDetails;
+    }
+
+    public void setImportDetails(ImportDetails importDetails) {
+        this.importDetails = importDetails;
+    }
+
     private void verifyStatusTransition(PublicationStatus nextStatus)
         throws InvalidPublicationStatusTransitionException {
         final PublicationStatus currentStatus = getStatus();
@@ -510,9 +519,6 @@ public class Publication
             return this;
         }
 
-        public Publication build() {
-            return publication;
-        }
 
         public Builder withRightsHolder(String rightsHolder) {
             this.publication.setRightsHolder(rightsHolder);
@@ -532,6 +538,15 @@ public class Publication
         public Builder withCuratingInstitutions(Set<URI> curatingInstitutions) {
             publication.setCuratingInstitutions(curatingInstitutions);
             return this;
+        }
+
+        public Builder withImportDetails(ImportDetails importDetails) {
+            publication.setImportDetails(importDetails);
+            return this;
+        }
+
+        public Publication build() {
+            return publication;
         }
     }
 }
