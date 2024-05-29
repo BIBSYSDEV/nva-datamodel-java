@@ -43,6 +43,11 @@ public class UploadDetails {
     }
 
     @JacocoGenerated
+    public Instant getUploadedDate() {
+        return uploadedDate;
+    }
+
+    @JacocoGenerated
     @Override
     public boolean equals(Object o) {
         if (this == o) {

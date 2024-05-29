@@ -46,7 +46,7 @@ public class UnpublishedFile extends File {
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
         @JsonProperty(UPLOAD_DETAILS) UploadDetails uploadDetails) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
-              embargoDate, rightsRetentionStrategy, legalNote, uploadDetails);
+              embargoDate, rightsRetentionStrategy, legalNote, null, uploadDetails);
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
         }
@@ -60,5 +60,21 @@ public class UnpublishedFile extends File {
     @Override
     public UnpublishedFile toUnpublishedFile() {
         return this;
+    }
+
+    @Override
+    public Builder copy() {
+        return builder()
+                   .withIdentifier(this.getIdentifier())
+                   .withName(this.getName())
+                   .withMimeType(this.getMimeType())
+                   .withSize(this.getSize())
+                   .withLicense(this.getLicense())
+                   .withAdministrativeAgreement(this.isAdministrativeAgreement())
+                   .withPublisherVersion(this.getPublisherVersion())
+                   .withEmbargoDate(this.getEmbargoDate().orElse(null))
+                   .withRightsRetentionStrategy(this.getRightsRetentionStrategy())
+                   .withLegalNote(this.getLegalNote())
+                   .withUploadDetails(this.getUploadDetails());
     }
 }
