@@ -17,7 +17,8 @@ import nva.commons.core.StringUtils;
     private static final Set<PublicationStatus> VALID_PUBLICATION_STATUS_FOR_FINDABLE_DOI =
         Set.of(PUBLISHED, PUBLISHED_METADATA);
     public static final int PUBLISH_YEAR_MIN = 1000;
-    public static final IntSupplier PUBLISH_YEAR_MAX = () -> Year.now().getValue() + 4;
+    public static final int YEARS_AHEAD_ASSUMED_FROM_DOCS = 4;
+    public static final IntSupplier PUBLISH_YEAR_MAX = () -> Year.now().getValue() + YEARS_AHEAD_ASSUMED_FROM_DOCS;
 
     @JacocoGenerated
     private FindableDoiRequirementsValidator() {
@@ -28,10 +29,11 @@ import nva.commons.core.StringUtils;
     static boolean meetsFindableDoiRequirements(Publication publication) {
         return hasCorrectPublishedStatus(publication) &&
                mandatoryFieldsAreNotNull(publication) &&
-               hasCorrectPublishedYear(publication);
+               hasValidPublishedYear(publication);
     }
 
-    private static boolean hasCorrectPublishedYear(Publication publication) {
+    private static boolean hasValidPublishedYear(Publication publication) {
+        //  docs: https://support.datacite.org/docs/field-descriptions-for-form#publication-year
         var yearString = publication.getEntityDescription().getPublicationDate().getYear();
         var year = attempt(() -> Integer.parseInt(yearString)).toOptional().orElse(null);
         return nonNull(year) && year >= PUBLISH_YEAR_MIN && year <= PUBLISH_YEAR_MAX.getAsInt();
