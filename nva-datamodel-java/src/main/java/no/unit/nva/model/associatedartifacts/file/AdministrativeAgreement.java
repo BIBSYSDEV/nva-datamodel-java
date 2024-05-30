@@ -40,9 +40,9 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(UPLOAD_DETAILS) UploadDetails uploadDetails) {
+        @JsonProperty(UPLOAD_DETAILS_FIELD) UploadDetails uploadDetails) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
-              embargoDate, null,  NO_LEGAL_NOTE,
+              embargoDate, null,  NO_LEGAL_NOTE, null,
               uploadDetails);
     }
     
@@ -59,5 +59,19 @@ public class AdministrativeAgreement extends File {
     @Override
     public PublishedFile toPublishedFile() {
         throw new IllegalStateException("Cannot make an unpublishable file publishable");
+    }
+
+    @Override
+    public Builder copy() {
+        return builder()
+                   .withIdentifier(this.getIdentifier())
+                   .withName(this.getName())
+                   .withMimeType(this.getMimeType())
+                   .withSize(this.getSize())
+                   .withLicense(this.getLicense())
+                   .withAdministrativeAgreement(this.isAdministrativeAgreement())
+                   .withPublisherVersion(this.getPublisherVersion())
+                   .withEmbargoDate(this.getEmbargoDate().orElse(null))
+                   .withUploadDetails(this.getUploadDetails());
     }
 }
