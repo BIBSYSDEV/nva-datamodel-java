@@ -47,9 +47,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
     public static final String PUBLISHER_VERSION_FIELD = "publisherVersion";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
-    public static final String RIGTHTS_RETENTION_STRATEGY = "rightsRetentionStrategy";
-    public static final String PUBLISHED_DATE = "publishedDate";
-    public static final String UPLOAD_DETAILS = "uploadDetails";
+    public static final String RIGHTS_RETENTION_STRATEGY = "rightsRetentionStrategy";
+    public static final String PUBLISHED_DATE_FIELD = "publishedDate";
+    public static final String UPLOAD_DETAILS_FIELD = "uploadDetails";
     public static final Map<String, URI> LICENSE_MAP = Map.of(
         "CC BY", URI.create("https://creativecommons.org/licenses/by/4.0"),
         "CC BY-NC", URI.create("https://creativecommons.org/licenses/by-nc/4.0"),
@@ -87,14 +87,14 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     private final PublisherVersion publisherVersion;
     @JsonProperty(EMBARGO_DATE_FIELD)
     private final Instant embargoDate;
-    @JsonProperty(RIGTHTS_RETENTION_STRATEGY)
+    @JsonProperty(RIGHTS_RETENTION_STRATEGY)
     private RightsRetentionStrategy rightsRetentionStrategy;
     @JsonProperty(LEGAL_NOTE_FIELD)
     private final String legalNote;
-    @JsonProperty(PUBLISHED_DATE)
+    @JsonProperty(PUBLISHED_DATE_FIELD)
     private final Instant publishedDate;
 
-    @JsonProperty(UPLOAD_DETAILS)
+    @JsonProperty(UPLOAD_DETAILS_FIELD)
     private final UploadDetails uploadDetails;
 
     /**
@@ -123,10 +123,10 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publisherAuthority,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
+        @JsonProperty(RIGHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
-        @JsonProperty(PUBLISHED_DATE) Instant publishedDate,
-        @JsonProperty(UPLOAD_DETAILS) UploadDetails uploadDetails) {
+        @JsonProperty(PUBLISHED_DATE_FIELD) Instant publishedDate,
+        @JsonProperty(UPLOAD_DETAILS_FIELD) UploadDetails uploadDetails) {
 
         this.identifier = identifier;
         this.name = name;
@@ -258,10 +258,9 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof File file)) {
             return false;
         }
-        File file = (File) o;
         return isAdministrativeAgreement() == file.isAdministrativeAgreement()
                && Objects.equals(getIdentifier(), file.getIdentifier())
                && Objects.equals(getName(), file.getName())

@@ -42,9 +42,9 @@ public class UnpublishedFile extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
+        @JsonProperty(RIGHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
-        @JsonProperty(UPLOAD_DETAILS) UploadDetails uploadDetails) {
+        @JsonProperty(UPLOAD_DETAILS_FIELD) UploadDetails uploadDetails) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
               embargoDate, rightsRetentionStrategy, legalNote, null, uploadDetails);
         if (administrativeAgreement) {
