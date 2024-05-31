@@ -7,11 +7,13 @@ import no.unit.nva.model.instancetypes.PublicationInstance;
 import no.unit.nva.model.instancetypes.artistic.film.realization.MovingPictureOutput;
 import no.unit.nva.model.pages.NullPages;
 import no.unit.nva.model.time.duration.Duration;
+import no.unit.nva.model.time.duration.NullDuration;
 import nva.commons.core.JacocoGenerated;
 
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.Objects.nonNull;
 import static no.unit.nva.model.util.SerializationUtils.nullListAsEmpty;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -59,7 +61,7 @@ public class MovingPicture implements PublicationInstance<NullPages> {
     }
 
     public Duration getDuration() {
-        return duration;
+        return nonNull(duration) ? duration : NullDuration.create();
     }
 
     @JacocoGenerated
