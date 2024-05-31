@@ -19,7 +19,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,6 +34,7 @@ import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
+import no.unit.nva.model.PublicationDate;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.associatedartifacts.AssociatedArtifactList;
 import no.unit.nva.model.associatedartifacts.InvalidAssociatedArtifactsException;
@@ -54,6 +57,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PublicationTest {
 
@@ -273,6 +277,26 @@ public class PublicationTest {
         var expectedResult = true;
         assertThat(publication.satisfiesFindableDoiRequirements(),
                    is(Matchers.equalTo(expectedResult)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"0001", "1", "999", "0999", "2099", "9999"})
+    void shouldReturnFalseForSatisfiesFindableDoiRequirementForWrongPublicationYear(String year) {
+        var publication = createSamplePublication();
+        publication.setStatus(PUBLISHED);
+        publication.getEntityDescription()
+            .setPublicationDate(new PublicationDate.Builder().withYear(year).withDay("1").withMonth("1").build());
+        assertFalse(publication.satisfiesFindableDoiRequirements());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1000", "1950", "2024", "2028"})
+    void shouldReturnTrueForSatisfiesFindableDoiRequirementForCorrectPublicationYear(String year) {
+        var publication = createSamplePublication();
+        publication.setStatus(PUBLISHED);
+        publication.getEntityDescription()
+            .setPublicationDate(new PublicationDate.Builder().withYear(year).withDay("1").withMonth("1").build());
+        assertTrue(publication.satisfiesFindableDoiRequirements());
     }
 
     private static Publication publicationWithoutTitle() {
