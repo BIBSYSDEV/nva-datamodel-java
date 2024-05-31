@@ -794,6 +794,26 @@ referencedSchemas:
           $ref: '#/components/schemas/NullPages'
         type:
           type: string
+  DefinedDuration:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Duration'
+    - type: object
+      properties:
+        minutes:
+          type: string
+        hours:
+          type: string
+        days:
+          type: string
+        weeks:
+          type: string
+        type:
+          type: string
   Degree:
     required:
     - type
@@ -902,6 +922,15 @@ referencedSchemas:
             $ref: '#/components/schemas/RelatedDocument'
         type:
           type: string
+  Duration:
+    required:
+    - type
+    type: object
+    properties:
+      type:
+        type: string
+    discriminator:
+      propertyName: type
   Encyclopedia:
     required:
     - type
@@ -1224,23 +1253,23 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
+      source:
+        type: string
+        format: uri
       labels:
         type: object
         additionalProperties:
           type: string
-      source:
-        type: string
-        format: uri
+      fundingAmount:
+        $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
         type: string
         format: date-time
       activeTo:
         type: string
         format: date-time
-      fundingAmount:
-        $ref: '#/components/schemas/MonetaryAmount'
-      identifier:
-        type: string
       type:
         type: string
     discriminator:
@@ -1867,6 +1896,8 @@ referencedSchemas:
           type: array
           items:
             $ref: '#/components/schemas/MovingPictureOutput'
+        duration:
+          $ref: '#/components/schemas/Duration'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
@@ -2035,6 +2066,18 @@ referencedSchemas:
       propertyName: type
     allOf:
     - $ref: '#/components/schemas/AssociatedArtifact'
+    - type: object
+      properties:
+        type:
+          type: string
+  NullDuration:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Duration'
     - type: object
       properties:
         type:
@@ -2995,6 +3038,20 @@ referencedSchemas:
         issn:
           type: string
         onlineIssn:
+          type: string
+        type:
+          type: string
+  UndefinedDuration:
+    required:
+    - type
+    type: object
+    discriminator:
+      propertyName: type
+    allOf:
+    - $ref: '#/components/schemas/Duration'
+    - type: object
+      properties:
+        value:
           type: string
         type:
           type: string
