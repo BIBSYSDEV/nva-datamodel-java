@@ -96,6 +96,26 @@ nva:UnconfirmedCourse a rdf:Property ;
                rdfs:subClassOf nva:Course ;
                rdfs:domain nva:Degree .
 
+nva:Duration a rdfs:Class ;
+                 rdfs:comment "The length of time that something is scheduled to last" ;
+                 rdfs:isDefinedBy nva: ;
+                 rdfs:subClassOf nva:Duration .
+
+nva:NullDuration a rdfs:Class ;
+                 rdfs:comment "A duration with no defined value" ;
+                 rdfs:isDefinedBy nva: ;
+                 rdfs:subClassOf nva:Duration .
+
+nva:UndefinedDuration a rdfs:Class ;
+                      rdfs:comment "A duration with a value that is not clearly defined" ;
+                      rdfs:isDefinedBy nva: ;
+                      rdfs:subClassOf nva:Duration .
+
+nva:DefinedDuration a rdfs:Class ;
+                    rdfs:comment "A duration with a clearly defined value" ;
+                    rdfs:isDefinedBy nva: ;
+                    rdfs:subClassOf nva:Duration .
+
 nva:ArchitectureSubtype a rdfs:Class ;
   rdfs:comment "" ;
   rdfs:isDefinedBy nva: ;
