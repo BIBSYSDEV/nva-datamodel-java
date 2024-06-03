@@ -1,5 +1,6 @@
 package no.unit.nva.model.time;
 
+import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,10 +20,10 @@ public class DurationTest {
         return Stream.of(Arguments.of(NullDuration.create()),
                          Arguments.of(UndefinedDuration.fromValue(randomString())),
                          Arguments.of(DefinedDuration.builder()
-                                          .withMinutes(randomString())
-                                          .withHours(randomString())
-                                          .withDays(randomString())
-                                          .withWeeks(randomString())
+                                          .withMinutes(randomInteger())
+                                          .withHours(randomInteger())
+                                          .withDays(randomInteger())
+                                          .withWeeks(randomInteger())
                                           .build()));
     }
 

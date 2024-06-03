@@ -13,14 +13,14 @@ public final class DefinedDuration implements Duration {
     public static final String HOURS_FIELD = "hours";
     public static final String DAYS_FIELD = "days";
     public static final String WEEKS_FIELD = "weeks";
-    private final String minutes;
-    private final String hours;
-    private final String days;
-    private final String weeks;
+    private final int minutes;
+    private final int hours;
+    private final int days;
+    private final int weeks;
 
     @JsonCreator
-    private DefinedDuration(@JsonProperty(MINUTES_FIELD) String minutes, @JsonProperty(HOURS_FIELD) String hours,
-                            @JsonProperty(DAYS_FIELD) String days, @JsonProperty(WEEKS_FIELD) String weeks) {
+    private DefinedDuration(@JsonProperty(MINUTES_FIELD) int minutes, @JsonProperty(HOURS_FIELD) int hours,
+                            @JsonProperty(DAYS_FIELD) int days, @JsonProperty(WEEKS_FIELD) int weeks) {
         this.minutes = minutes;
         this.hours = hours;
         this.days = days;
@@ -31,11 +31,11 @@ public final class DefinedDuration implements Duration {
         return new Builder();
     }
 
-    public String getMinutes() {
+    public int getMinutes() {
         return minutes;
     }
 
-    public String getHours() {
+    public int getHours() {
         return hours;
     }
 
@@ -60,40 +60,40 @@ public final class DefinedDuration implements Duration {
                && Objects.equals(weeks, that.weeks);
     }
 
-    public String getDays() {
+    public int getDays() {
         return days;
     }
 
-    public String getWeeks() {
+    public int getWeeks() {
         return weeks;
     }
 
     public static final class Builder {
 
-        private String minutes;
-        private String hours;
-        private String days;
-        private String weeks;
+        private int minutes;
+        private int hours;
+        private int days;
+        private int weeks;
 
         private Builder() {
         }
 
-        public Builder withMinutes(String minutes) {
+        public Builder withMinutes(int minutes) {
             this.minutes = minutes;
             return this;
         }
 
-        public Builder withHours(String hours) {
+        public Builder withHours(int hours) {
             this.hours = hours;
             return this;
         }
 
-        public Builder withDays(String days) {
+        public Builder withDays(int days) {
             this.days = days;
             return this;
         }
 
-        public Builder withWeeks(String weeks) {
+        public Builder withWeeks(int weeks) {
             this.weeks = weeks;
             return this;
         }

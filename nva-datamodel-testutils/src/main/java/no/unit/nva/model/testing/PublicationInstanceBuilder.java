@@ -400,7 +400,7 @@ public final class PublicationInstanceBuilder {
         return new MusicPerformance(List.of(randomAudioVisualPublication(),
                 randomConcert(),
                 randomMusicScore(),
-                randomOtherPerformance()));
+                randomOtherPerformance()), NullDuration.create());
     }
 
     private static MusicPerformanceManifestation randomOtherPerformance() {

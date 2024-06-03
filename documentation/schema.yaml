@@ -805,13 +805,17 @@ referencedSchemas:
     - type: object
       properties:
         minutes:
-          type: string
+          type: integer
+          format: int32
         hours:
-          type: string
+          type: integer
+          format: int32
         days:
-          type: string
+          type: integer
+          format: int32
         weeks:
-          type: string
+          type: integer
+          format: int32
         type:
           type: string
   Degree:
@@ -1230,6 +1234,9 @@ referencedSchemas:
           $ref: '#/components/schemas/RightsRetentionStrategy'
         legalNote:
           type: string
+        publishedDate:
+          type: string
+          format: date-time
         uploadDetails:
           $ref: '#/components/schemas/UploadDetails'
         visibleForNonOwner:
@@ -1958,6 +1965,8 @@ referencedSchemas:
           type: array
           items:
             $ref: '#/components/schemas/MusicPerformanceManifestation'
+        duration:
+          $ref: '#/components/schemas/Duration'
         pages:
           $ref: '#/components/schemas/NullPages'
         type:
@@ -2529,9 +2538,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/File'
     - type: object
       properties:
-        publishedDate:
-          type: string
-          format: date-time
         type:
           type: string
   Publisher:
