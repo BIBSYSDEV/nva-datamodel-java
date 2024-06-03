@@ -149,6 +149,7 @@ import no.unit.nva.model.pages.Range;
 import no.unit.nva.model.time.Instant;
 import no.unit.nva.model.time.Period;
 import no.unit.nva.model.time.Time;
+import no.unit.nva.model.time.duration.NullDuration;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -399,7 +400,7 @@ public final class PublicationInstanceBuilder {
         return new MusicPerformance(List.of(randomAudioVisualPublication(),
                 randomConcert(),
                 randomMusicScore(),
-                randomOtherPerformance()));
+                randomOtherPerformance()), NullDuration.create());
     }
 
     private static MusicPerformanceManifestation randomOtherPerformance() {
@@ -833,7 +834,8 @@ public final class PublicationInstanceBuilder {
     }
 
     private static PublicationInstance<? extends Pages> movingPicture(MovingPictureSubtypeEnum subtype) {
-        return new MovingPicture(getMovingPictureSubtype(subtype), randomString(), randomMovingPictureOutputs());
+        return new MovingPicture(getMovingPictureSubtype(subtype), randomString(), randomMovingPictureOutputs(),
+                                 NullDuration.create());
     }
 
     private static MovingPictureSubtype getMovingPictureSubtype(MovingPictureSubtypeEnum subtype) {
