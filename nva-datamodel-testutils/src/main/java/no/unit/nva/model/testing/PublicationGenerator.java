@@ -9,6 +9,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -32,11 +33,6 @@ import no.unit.nva.model.Username;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
-import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
-import no.unit.nva.model.instancetypes.degree.DegreeBase;
-import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
-import no.unit.nva.model.instancetypes.degree.DegreeMaster;
-import no.unit.nva.model.instancetypes.degree.DegreePhd;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
 
@@ -78,44 +74,18 @@ public final class PublicationGenerator {
         return buildRandomPublicationFromInstance(publicationInstanceClass);
     }
 
-    /*
-    This method is used to generate test data for tests regarding special protection of degree thesis. Use
-    randomPublicationNonDegreeThesis() for this purpose.
-     */
-    @Deprecated(since = "0.21.25", forRemoval = true)
-    public static Publication randomPublicationNonDegree() {
-        var nonDegrees = PublicationInstanceBuilder.listPublicationInstanceTypes()
-                             .stream()
-                             .filter(not(PublicationGenerator::isDegree))
-                             .toList();
-        return randomPublication(randomElement(nonDegrees));
+    public static Publication ofInstanceClasses(Class<?>... publicationInstanceClasses) {
+        var publicationInstanceClass = randomElement(publicationInstanceClasses);
+        return randomPublication(publicationInstanceClass);
     }
 
-    public static Publication randomPublicationNonDegreeThesis() {
-        var nonDegreeTheses = PublicationInstanceBuilder.listPublicationInstanceTypes()
-                             .stream()
-                             .filter(not(PublicationGenerator::isDegreeThesis))
-                             .toList();
-        return randomPublication(randomElement(nonDegreeTheses));
-    }
-
-    public static Publication randomPublicationDegreeThesis() {
-        var degreeTheses = PublicationInstanceBuilder.listPublicationInstanceTypes()
-                             .stream()
-                             .filter(PublicationGenerator::isDegreeThesis)
-                             .toList();
-        return randomPublication(randomElement(degreeTheses));
-    }
-
-    private static boolean isDegree(Class<?> subClass) {
-        return DegreeBase.class.isAssignableFrom(subClass);
-    }
-
-    private static boolean isDegreeThesis(Class<?> subClass) {
-        return subClass.equals(DegreePhd.class) ||
-               subClass.equals(DegreeMaster.class) ||
-               subClass.equals(DegreeBachelor.class) ||
-               subClass.equals(DegreeLicentiate.class);
+    public static Publication notOfInstanceClasses(Class<?>... publicationInstanceClasses) {
+        var listOfPublicationInstanceClasses = Arrays.asList(publicationInstanceClasses);
+        var otherPublicationInstanceClasses = PublicationInstanceBuilder.listPublicationInstanceTypes()
+                                                  .stream()
+                                                  .filter(not(listOfPublicationInstanceClasses::contains))
+                                                  .toList();
+        return randomPublication(randomElement(otherPublicationInstanceClasses));
     }
 
     public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {

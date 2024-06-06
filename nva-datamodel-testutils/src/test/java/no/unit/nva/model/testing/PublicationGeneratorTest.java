@@ -2,9 +2,10 @@ package no.unit.nva.model.testing;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.matchesPattern;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.Matchers.not;
 import java.net.URI;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -16,11 +17,8 @@ import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.Series;
-import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
-import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
-import no.unit.nva.model.instancetypes.degree.DegreeMaster;
-import no.unit.nva.model.instancetypes.degree.DegreePhd;
-import org.junit.jupiter.api.RepeatedTest;
+import no.unit.nva.model.instancetypes.journal.JournalArticle;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -35,11 +33,6 @@ class PublicationGeneratorTest {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
-    private static final Set<Class<?>> DEGREE_THESIS_INSTANCE_TYPES = Set.of(DegreePhd.class,
-                                                                             DegreeMaster.class,
-                                                                             DegreeBachelor.class,
-                                                                             DegreeLicentiate.class);
-
     @ParameterizedTest(name = "Should return publication of type {0} without empty fields")
     @MethodSource("publicationInstanceProvider")
     void shouldReturnPublicationWithoutEmptyFields(Class<?> publicationInstance) {
@@ -48,24 +41,24 @@ class PublicationGeneratorTest {
                    doesNotHaveEmptyValuesIgnoringFields(FIELDS_EXPECTED_TO_BE_NULL));
     }
 
-    @RepeatedTest(10)
-    void shouldReturnPublicationThatIsNotADegreeThesisWhenGeneratingNonDegreeThesis() {
-        var publication = PublicationGenerator.randomPublicationNonDegreeThesis();
+    @Test
+    void shouldReturnPublicationThatIsInstanceOfClass() {
+        var publication = PublicationGenerator.ofInstanceClasses(JournalArticle.class);
         var publicationInstanceTypeClass = publication.getEntityDescription()
                                                .getReference()
                                                .getPublicationInstance()
                                                .getClass();
-        assertFalse(DEGREE_THESIS_INSTANCE_TYPES.contains(publicationInstanceTypeClass));
+        assertThat(publicationInstanceTypeClass, is(equalTo(JournalArticle.class)));
     }
 
-    @RepeatedTest(10)
-    void shouldReturnPublicationThatIsADegreeThesisWhenGeneratingDegreeThesis() {
-        var publication = PublicationGenerator.randomPublicationDegreeThesis();
+    @Test
+    void shouldReturnPublicationThatIsNotInstanceOfClass() {
+        var publication = PublicationGenerator.notOfInstanceClasses(JournalArticle.class);
         var publicationInstanceTypeClass = publication.getEntityDescription()
                                                .getReference()
                                                .getPublicationInstance()
                                                .getClass();
-        assertTrue(DEGREE_THESIS_INSTANCE_TYPES.contains(publicationInstanceTypeClass));
+        assertThat(publicationInstanceTypeClass, is(not(equalTo(JournalArticle.class))));
     }
 
     @ParameterizedTest
