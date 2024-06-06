@@ -70,22 +70,25 @@ public final class PublicationGenerator {
     }
 
     public static Publication randomPublication(Class<?> publicationInstanceClass) {
-
         return buildRandomPublicationFromInstance(publicationInstanceClass);
     }
 
-    public static Publication ofInstanceClasses(Class<?>... publicationInstanceClasses) {
-        var publicationInstanceClass = randomElement(publicationInstanceClasses);
-        return randomPublication(publicationInstanceClass);
+    public static Publication fromInstanceClasses(Class<?>... targetClasses) {
+        var listOfTargetClasses = Arrays.asList(targetClasses);
+        var otherTargetClasses = PublicationInstanceBuilder.listPublicationInstanceTypes()
+                                     .stream()
+                                     .filter(listOfTargetClasses::contains)
+                                     .toList();
+        return randomPublication(randomElement(otherTargetClasses));
     }
 
-    public static Publication notOfInstanceClasses(Class<?>... publicationInstanceClasses) {
-        var listOfPublicationInstanceClasses = Arrays.asList(publicationInstanceClasses);
-        var otherPublicationInstanceClasses = PublicationInstanceBuilder.listPublicationInstanceTypes()
-                                                  .stream()
-                                                  .filter(not(listOfPublicationInstanceClasses::contains))
-                                                  .toList();
-        return randomPublication(randomElement(otherPublicationInstanceClasses));
+    public static Publication fromInstanceClassesExcluding(Class<?>... excludedClasses) {
+        var listOfExcludedClasses = Arrays.asList(excludedClasses);
+        var targetClasses = PublicationInstanceBuilder.listPublicationInstanceTypes()
+                                .stream()
+                                .filter(not(listOfExcludedClasses::contains))
+                                .toList();
+        return randomPublication(randomElement(targetClasses));
     }
 
     public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {

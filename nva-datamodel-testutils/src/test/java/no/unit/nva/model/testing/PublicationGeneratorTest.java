@@ -18,7 +18,6 @@ import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.Series;
 import no.unit.nva.model.instancetypes.journal.AcademicArticle;
-import no.unit.nva.model.instancetypes.journal.JournalArticle;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -43,8 +42,8 @@ class PublicationGeneratorTest {
     }
 
     @Test
-    void shouldReturnPublicationThatIsInstanceOfClass() {
-        var publication = PublicationGenerator.ofInstanceClasses(AcademicArticle.class);
+    void shouldReturnPublicationThatIsInstanceOfTargetClasses() {
+        var publication = PublicationGenerator.fromInstanceClasses(AcademicArticle.class);
         var publicationInstanceTypeClass = publication.getEntityDescription()
                                                .getReference()
                                                .getPublicationInstance()
@@ -53,8 +52,8 @@ class PublicationGeneratorTest {
     }
 
     @Test
-    void shouldReturnPublicationThatIsNotInstanceOfClass() {
-        var publication = PublicationGenerator.notOfInstanceClasses(AcademicArticle.class);
+    void shouldReturnPublicationThatIsInstanceOfTargetClassesExcluding() {
+        var publication = PublicationGenerator.fromInstanceClassesExcluding(AcademicArticle.class);
         var publicationInstanceTypeClass = publication.getEntityDescription()
                                                .getReference()
                                                .getPublicationInstance()
