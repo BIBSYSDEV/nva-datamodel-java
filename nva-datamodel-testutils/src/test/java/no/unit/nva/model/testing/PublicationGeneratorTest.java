@@ -4,6 +4,7 @@ import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValues
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.net.URI;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -15,7 +16,10 @@ import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.Series;
-import no.unit.nva.model.instancetypes.degree.DegreeBase;
+import no.unit.nva.model.instancetypes.degree.DegreeBachelor;
+import no.unit.nva.model.instancetypes.degree.DegreeLicentiate;
+import no.unit.nva.model.instancetypes.degree.DegreeMaster;
+import no.unit.nva.model.instancetypes.degree.DegreePhd;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,6 +35,11 @@ class PublicationGeneratorTest {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
     }
 
+    private static final Set<Class<?>> DEGREE_THESIS_INSTANCE_TYPES = Set.of(DegreePhd.class,
+                                                                             DegreeMaster.class,
+                                                                             DegreeBachelor.class,
+                                                                             DegreeLicentiate.class);
+
     @ParameterizedTest(name = "Should return publication of type {0} without empty fields")
     @MethodSource("publicationInstanceProvider")
     void shouldReturnPublicationWithoutEmptyFields(Class<?> publicationInstance) {
@@ -40,9 +49,23 @@ class PublicationGeneratorTest {
     }
 
     @RepeatedTest(10)
-    void shouldReturnPublicationThatIsNotADegreeWhenGeneratingNonDegree() {
-        Publication publication = PublicationGenerator.randomPublicationNonDegree();
-        assertFalse(publication.getEntityDescription().getReference().getPublicationInstance() instanceof DegreeBase);
+    void shouldReturnPublicationThatIsNotADegreeThesisWhenGeneratingNonDegreeThesis() {
+        var publication = PublicationGenerator.randomPublicationNonDegreeThesis();
+        var publicationInstanceTypeClass = publication.getEntityDescription()
+                                               .getReference()
+                                               .getPublicationInstance()
+                                               .getClass();
+        assertFalse(DEGREE_THESIS_INSTANCE_TYPES.contains(publicationInstanceTypeClass));
+    }
+
+    @RepeatedTest(10)
+    void shouldReturnPublicationThatIsADegreeThesisWhenGeneratingDegreeThesis() {
+        var publication = PublicationGenerator.randomPublicationDegreeThesis();
+        var publicationInstanceTypeClass = publication.getEntityDescription()
+                                               .getReference()
+                                               .getPublicationInstance()
+                                               .getClass();
+        assertTrue(DEGREE_THESIS_INSTANCE_TYPES.contains(publicationInstanceTypeClass));
     }
 
     @ParameterizedTest
