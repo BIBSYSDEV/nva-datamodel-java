@@ -2,8 +2,10 @@ package no.unit.nva.model.testing;
 
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.matchesPattern;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.hamcrest.Matchers.not;
 import java.net.URI;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -15,8 +17,8 @@ import no.unit.nva.model.contexttypes.Journal;
 import no.unit.nva.model.contexttypes.PublicationContext;
 import no.unit.nva.model.contexttypes.Publisher;
 import no.unit.nva.model.contexttypes.Series;
-import no.unit.nva.model.instancetypes.degree.DegreeBase;
-import org.junit.jupiter.api.RepeatedTest;
+import no.unit.nva.model.instancetypes.journal.AcademicArticle;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -39,10 +41,24 @@ class PublicationGeneratorTest {
                    doesNotHaveEmptyValuesIgnoringFields(FIELDS_EXPECTED_TO_BE_NULL));
     }
 
-    @RepeatedTest(10)
-    void shouldReturnPublicationThatIsNotADegreeWhenGeneratingNonDegree() {
-        Publication publication = PublicationGenerator.randomPublicationNonDegree();
-        assertFalse(publication.getEntityDescription().getReference().getPublicationInstance() instanceof DegreeBase);
+    @Test
+    void shouldReturnPublicationThatIsInstanceOfTargetClasses() {
+        var publication = PublicationGenerator.fromInstanceClasses(AcademicArticle.class);
+        var publicationInstanceTypeClass = publication.getEntityDescription()
+                                               .getReference()
+                                               .getPublicationInstance()
+                                               .getClass();
+        assertThat(publicationInstanceTypeClass, is(equalTo(AcademicArticle.class)));
+    }
+
+    @Test
+    void shouldReturnPublicationThatIsInstanceOfTargetClassesExcluding() {
+        var publication = PublicationGenerator.fromInstanceClassesExcluding(AcademicArticle.class);
+        var publicationInstanceTypeClass = publication.getEntityDescription()
+                                               .getReference()
+                                               .getPublicationInstance()
+                                               .getClass();
+        assertThat(publicationInstanceTypeClass, is(not(equalTo(AcademicArticle.class))));
     }
 
     @ParameterizedTest
