@@ -53,6 +53,10 @@ public class MediaContribution implements PublicationContext {
         return disseminationChannel;
     }
 
+    public SeriesEpisode getPartOf() {
+        return partOf;
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
