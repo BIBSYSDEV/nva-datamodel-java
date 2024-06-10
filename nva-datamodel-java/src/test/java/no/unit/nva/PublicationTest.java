@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.ImportSource;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationDate;
@@ -96,9 +97,9 @@ public class PublicationTest {
     }
 
     public static Stream<Named<Publication>> importedPublicationProvider() {
-        return Stream.of(Named.of("Brage", PublicationGenerator.createBragePublication()),
-                         Named.of("Cristin", PublicationGenerator.createCristinPublication()),
-                         Named.of("Scopus", PublicationGenerator.createScopusPublication()));
+        return Stream.of(Named.of("Brage", PublicationGenerator.createImportedPublication(ImportSource.BRAGE)),
+                         Named.of("Cristin", PublicationGenerator.createImportedPublication(ImportSource.CRISTIN)),
+                         Named.of("Scopus", PublicationGenerator.createImportedPublication(ImportSource.SCOPUS)));
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")

@@ -94,16 +94,8 @@ public final class PublicationGenerator {
         return randomPublication(randomElement(targetClasses));
     }
 
-    public static Publication createBragePublication() {
-        return createImportedPublication(new ImportDetail(now(), ImportSource.BRAGE));
-    }
-
-    public static Publication createCristinPublication() {
-        return createImportedPublication(new ImportDetail(now(), ImportSource.CRISTIN));
-    }
-
-    public static Publication createScopusPublication() {
-        return createImportedPublication(new ImportDetail(now(), ImportSource.SCOPUS));
+    public static Publication createImportedPublication(ImportSource source) {
+        return createImportedPublication(new ImportDetail(now(), source));
     }
 
     public static Publication createImportedPublication(ImportDetail importDetail) {
