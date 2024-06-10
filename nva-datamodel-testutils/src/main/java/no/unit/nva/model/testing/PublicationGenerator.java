@@ -10,7 +10,6 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.net.URI;
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
