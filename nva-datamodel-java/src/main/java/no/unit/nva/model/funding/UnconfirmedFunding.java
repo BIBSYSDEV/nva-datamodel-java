@@ -77,7 +77,7 @@ public class UnconfirmedFunding implements Funding {
         UnconfirmedFunding unconfirmedFunding = (UnconfirmedFunding) o;
         return source.equals(unconfirmedFunding.source)
                 && Objects.equals(identifier, unconfirmedFunding.identifier)
-                && labels.equals(unconfirmedFunding.labels)
+                && Objects.equals(labels, unconfirmedFunding.labels)
                 && Objects.equals(fundingAmount, unconfirmedFunding.fundingAmount)
                 && Objects.equals(activeFrom, unconfirmedFunding.activeFrom)
                 && Objects.equals(activeTo, unconfirmedFunding.activeTo);

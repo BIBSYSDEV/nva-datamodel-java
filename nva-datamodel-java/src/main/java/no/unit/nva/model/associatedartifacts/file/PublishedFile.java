@@ -16,9 +16,6 @@ import no.unit.nva.model.associatedartifacts.RightsRetentionStrategy;
 public class PublishedFile extends File {
 
     public static final String TYPE = "PublishedFile";
-    public static final String PUBLISHED_DATE = "publishedDate";
-    @JsonProperty(PUBLISHED_DATE)
-    private final Instant publishedDate;
 
     /**
      * Constructor for no.unit.nva.file.model.File objects. A file object is valid if it has a license or is explicitly
@@ -35,6 +32,7 @@ public class PublishedFile extends File {
      * @param embargoDate             The date after which the file may be published
      * @param legalNote               The legal note for file
      * @param publishedDate           The date the file was published
+     * @param uploadDetails           Information regarding who and when inserted the file into the system
      */
 
     @JsonCreator
@@ -47,18 +45,15 @@ public class PublishedFile extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
-        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote, @JsonProperty(PUBLISHED_DATE) Instant publishedDate) {
+        @JsonProperty(RIGHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
+        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
+        @JsonProperty(PUBLISHED_DATE_FIELD) Instant publishedDate,
+        @JsonProperty(UPLOAD_DETAILS_FIELD) UploadDetails uploadDetails) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
-              embargoDate, rightsRetentionStrategy, legalNote);
-        this.publishedDate = publishedDate;
+              embargoDate, rightsRetentionStrategy, legalNote, publishedDate, uploadDetails);
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
         }
-    }
-
-    public Instant getPublishedDate() {
-        return publishedDate;
     }
 
     @Override
@@ -69,5 +64,21 @@ public class PublishedFile extends File {
     @Override
     public boolean isVisibleForNonOwner() {
         return !isAdministrativeAgreement() && fileDoesNotHaveActiveEmbargo();
+    }
+
+    @Override
+    public Builder copy() {
+        return builder()
+                   .withIdentifier(this.getIdentifier())
+                   .withName(this.getName())
+                   .withMimeType(this.getMimeType())
+                   .withSize(this.getSize())
+                   .withLicense(this.getLicense())
+                   .withAdministrativeAgreement(this.isAdministrativeAgreement())
+                   .withPublisherVersion(this.getPublisherVersion())
+                   .withEmbargoDate(this.getEmbargoDate().orElse(null))
+                   .withRightsRetentionStrategy(this.getRightsRetentionStrategy())
+                   .withLegalNote(this.getLegalNote())
+                   .withUploadDetails(this.getUploadDetails());
     }
 }

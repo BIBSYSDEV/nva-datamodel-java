@@ -1,6 +1,5 @@
 package no.unit.nva.model.testing;
 
-import static java.time.Instant.now;
 import static java.util.function.Predicate.not;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
@@ -10,6 +9,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -35,7 +35,6 @@ import no.unit.nva.model.Username;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
-import no.unit.nva.model.instancetypes.degree.DegreeBase;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
 import nva.commons.core.JacocoGenerated;
 
@@ -73,16 +72,25 @@ public final class PublicationGenerator {
     }
 
     public static Publication randomPublication(Class<?> publicationInstanceClass) {
-
         return buildRandomPublicationFromInstance(publicationInstanceClass);
     }
 
-    public static Publication randomPublicationNonDegree() {
-        var nonDegrees = PublicationInstanceBuilder.listPublicationInstanceTypes()
-                             .stream()
-                             .filter(not(PublicationGenerator::isDegree))
-                             .toList();
-        return randomPublication(randomElement(nonDegrees));
+    public static Publication fromInstanceClasses(Class<?>... targetClasses) {
+        var listOfTargetClasses = Arrays.asList(targetClasses);
+        var otherTargetClasses = PublicationInstanceBuilder.listPublicationInstanceTypes()
+                                     .stream()
+                                     .filter(listOfTargetClasses::contains)
+                                     .toList();
+        return randomPublication(randomElement(otherTargetClasses));
+    }
+
+    public static Publication fromInstanceClassesExcluding(Class<?>... excludedClasses) {
+        var listOfExcludedClasses = Arrays.asList(excludedClasses);
+        var targetClasses = PublicationInstanceBuilder.listPublicationInstanceTypes()
+                                .stream()
+                                .filter(not(listOfExcludedClasses::contains))
+                                .toList();
+        return randomPublication(randomElement(targetClasses));
     }
 
     public static Publication createBragePublication() {
@@ -101,10 +109,6 @@ public final class PublicationGenerator {
         return randomPublication().copy()
                    .withImportDetails(List.of(importDetail))
                    .build();
-    }
-
-    private static boolean isDegree(Class<?> subClass) {
-        return DegreeBase.class.isAssignableFrom(subClass);
     }
 
     public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {

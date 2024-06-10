@@ -30,6 +30,7 @@ public class UnpublishedFile extends File {
      * @param administrativeAgreement True if the file is an administrative agreement
      * @param publishedVersion        Accepts boolean, enum or null. True if the file owner has publisher authority     * @param embargoDate             The date after which the file may be published
      * @param legalNote               The legal note for file
+     * @param uploadDetails           Information regarding who and when inserted the file into the system
      */
     @JsonCreator
     public UnpublishedFile(
@@ -41,10 +42,11 @@ public class UnpublishedFile extends File {
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
-        @JsonProperty(RIGTHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
-        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote) {
+        @JsonProperty(RIGHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
+        @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
+        @JsonProperty(UPLOAD_DETAILS_FIELD) UploadDetails uploadDetails) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
-              embargoDate, rightsRetentionStrategy, legalNote);
+              embargoDate, rightsRetentionStrategy, legalNote, null, uploadDetails);
         if (administrativeAgreement) {
             throw new IllegalStateException("An administrative agreement is not publishable");
         }
@@ -58,5 +60,21 @@ public class UnpublishedFile extends File {
     @Override
     public UnpublishedFile toUnpublishedFile() {
         return this;
+    }
+
+    @Override
+    public Builder copy() {
+        return builder()
+                   .withIdentifier(this.getIdentifier())
+                   .withName(this.getName())
+                   .withMimeType(this.getMimeType())
+                   .withSize(this.getSize())
+                   .withLicense(this.getLicense())
+                   .withAdministrativeAgreement(this.isAdministrativeAgreement())
+                   .withPublisherVersion(this.getPublisherVersion())
+                   .withEmbargoDate(this.getEmbargoDate().orElse(null))
+                   .withRightsRetentionStrategy(this.getRightsRetentionStrategy())
+                   .withLegalNote(this.getLegalNote())
+                   .withUploadDetails(this.getUploadDetails());
     }
 }

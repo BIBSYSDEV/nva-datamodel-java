@@ -5,6 +5,8 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.UUID;
+import no.unit.nva.model.Username;
+import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
 import no.unit.nva.model.testing.associatedartifacts.util.RightsRetentionStrategyGenerator;
 
@@ -18,6 +20,14 @@ public final class PublishedFileGenerator {
         return new PublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
                                  randomUri(), false, true, null,
                                  RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(), randomString(),
-                                 randomInstant());
+                                 randomInstant(), randomInserted());
+    }
+
+    private static UploadDetails randomInserted() {
+        return new UploadDetails(randomUsername(), randomInstant());
+    }
+
+    private static Username randomUsername() {
+        return new Username(randomString());
     }
 }

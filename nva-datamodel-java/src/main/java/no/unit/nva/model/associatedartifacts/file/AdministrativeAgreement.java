@@ -26,7 +26,9 @@ public class AdministrativeAgreement extends File {
      * @param license                 The license for the file, may be null if and only if the file is an administrative
      *                                agreement
      * @param administrativeAgreement True if the file is an administrative agreement
-     * @param publishedVersion        Accepts boolean, enum or null. True if the file owner has publisher authority     * @param embargoDate             The date after which the file may be published
+     * @param publishedVersion        Accepts boolean, enum or null. True if the file owner has publisher authority
+     * @param embargoDate             The date after which the file may be published
+     * @param uploadDetails           Information regarding who and when inserted the file into the system
      */
     @JsonCreator
     public AdministrativeAgreement(
@@ -37,9 +39,11 @@ public class AdministrativeAgreement extends File {
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
         @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publishedVersion,
-        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate) {
+        @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
+        @JsonProperty(UPLOAD_DETAILS_FIELD) UploadDetails uploadDetails) {
         super(identifier, name, mimeType, size, license, administrativeAgreement, publishedVersion,
-              embargoDate, null,  NO_LEGAL_NOTE);
+              embargoDate, null,  NO_LEGAL_NOTE, null,
+              uploadDetails);
     }
     
     @Override
@@ -55,5 +59,19 @@ public class AdministrativeAgreement extends File {
     @Override
     public PublishedFile toPublishedFile() {
         throw new IllegalStateException("Cannot make an unpublishable file publishable");
+    }
+
+    @Override
+    public Builder copy() {
+        return builder()
+                   .withIdentifier(this.getIdentifier())
+                   .withName(this.getName())
+                   .withMimeType(this.getMimeType())
+                   .withSize(this.getSize())
+                   .withLicense(this.getLicense())
+                   .withAdministrativeAgreement(this.isAdministrativeAgreement())
+                   .withPublisherVersion(this.getPublisherVersion())
+                   .withEmbargoDate(this.getEmbargoDate().orElse(null))
+                   .withUploadDetails(this.getUploadDetails());
     }
 }
