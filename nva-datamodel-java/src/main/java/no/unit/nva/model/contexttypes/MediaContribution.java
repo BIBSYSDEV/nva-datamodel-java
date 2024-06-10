@@ -53,6 +53,10 @@ public class MediaContribution implements PublicationContext {
         return disseminationChannel;
     }
 
+    public SeriesEpisode getPartOf() {
+        return partOf;
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -66,13 +70,13 @@ public class MediaContribution implements PublicationContext {
         return Objects.equals(getMedium(), that.getMedium())
                 && getFormat() == that.getFormat()
                 && Objects.equals(getDisseminationChannel(), that.getDisseminationChannel())
-                && Objects.equals(partOf, that.partOf);
+                && Objects.equals(getPartOf(), that.getPartOf());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(getMedium(), getFormat(), getDisseminationChannel(), partOf);
+        return Objects.hash(getMedium(), getFormat(), getDisseminationChannel(), getPartOf());
     }
 
 
