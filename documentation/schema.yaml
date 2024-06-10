@@ -86,6 +86,10 @@ schema:
       items:
         type: string
         format: uri
+    importDetails:
+      type: array
+      items:
+        $ref: '#/components/schemas/ImportDetail'
     modelVersion:
       type: string
     type:
@@ -1230,6 +1234,8 @@ referencedSchemas:
     - type
     type: object
     properties:
+      identifier:
+        type: string
       labels:
         type: object
         additionalProperties:
@@ -1245,8 +1251,6 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
-      identifier:
-        type: string
       type:
         type: string
     discriminator:
@@ -1307,6 +1311,18 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  ImportDetail:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date-time
+      source:
+        type: string
+        enum:
+        - BRAGE
+        - CRISTIN
+        - SCOPUS
   Instant:
     required:
     - type
@@ -2430,6 +2446,10 @@ referencedSchemas:
         items:
           type: string
           format: uri
+      importDetails:
+        type: array
+        items:
+          $ref: '#/components/schemas/ImportDetail'
       modelVersion:
         type: string
       type:
