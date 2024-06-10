@@ -1,5 +1,6 @@
 package no.unit.nva.model.testing;
 
+import static java.time.Instant.now;
 import static java.util.function.Predicate.not;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
@@ -9,6 +10,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.net.URI;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
