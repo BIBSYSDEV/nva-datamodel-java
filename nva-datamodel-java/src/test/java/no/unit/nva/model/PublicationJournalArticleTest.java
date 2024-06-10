@@ -58,8 +58,7 @@ public class PublicationJournalArticleTest extends PublicationTest {
         String content = dataModelObjectMapper.writeValueAsString(document);
         Publication publicationFromJson = dataModelObjectMapper.readValue(content, Publication.class);
         assertThat(publicationFromJson, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST, BOOK_REVISION_FIELD,
-                                                                                    IMPORT_DETAILS_FIELD
-                                                                                    )));
+                                                                                    IMPORT_DETAILS_FIELD)));
         assertThat(publication, is(equalTo(publicationFromJson)));
     }
 }
