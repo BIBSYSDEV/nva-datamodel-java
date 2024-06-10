@@ -2,4 +2,4 @@ package no.unit.nva.model;
 
 import java.time.Instant;
 
-public record ImportDetails(Instant date, ImportSource source) { }
+public record ImportDetail(Instant date, ImportSource source) { }

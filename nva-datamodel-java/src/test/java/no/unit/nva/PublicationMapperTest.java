@@ -13,6 +13,8 @@ import java.util.Set;
 import static no.unit.nva.DatamodelConfig.dataModelObjectMapper;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.PublicationTest.BOOK_REVISION_FIELD;
+import static no.unit.nva.model.PublicationTest.DOI_REQUEST_FIELD;
+import static no.unit.nva.model.PublicationTest.IMPORT_DETAILS_FIELD;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -30,7 +32,8 @@ class PublicationMapperTest {
         var deserializedPublication = JsonUtils.dtoObjectMapper.readValue(json, Publication.class);
 
         assertThat(deserializedPublication,
-                   doesNotHaveEmptyValuesIgnoringFields(Set.of("doiRequest", BOOK_REVISION_FIELD)));
+                   doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD, BOOK_REVISION_FIELD,
+                                                               IMPORT_DETAILS_FIELD)));
 
         var response = PublicationMapper
                            .convertValue(publication, SOME_CONTEXT, PublicationResponse.class);

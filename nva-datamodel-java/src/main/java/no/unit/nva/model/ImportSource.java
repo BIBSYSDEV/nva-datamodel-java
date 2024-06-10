@@ -1,2 +1,7 @@
-package no.unit.nva.model;public enum ImportSource {
+package no.unit.nva.model;
+
+public enum ImportSource {
+    BRAGE,
+    CRISTIN,
+    SCOPUS
 }

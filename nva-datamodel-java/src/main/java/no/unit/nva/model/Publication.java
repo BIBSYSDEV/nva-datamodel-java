@@ -70,7 +70,7 @@ public class Publication
 
     private List<PublicationNoteBase> publicationNotes;
     private Set<URI> curatingInstitutions;
-    private ImportDetails importDetails;
+    private List<ImportDetail> importDetails;
 
     public Publication() {
         // Default constructor, use setters.
@@ -307,7 +307,8 @@ public class Publication
                    .withRightsHolder(getRightsHolder())
                    .withPublicationNotes(getPublicationNotes())
                    .withDuplicateOf(getDuplicateOf())
-                   .withCuratingInstitutions(getCuratingInstitutions());
+                   .withCuratingInstitutions(getCuratingInstitutions())
+                   .withImportDetails(getImportDetails());
     }
 
     /**
@@ -328,7 +329,7 @@ public class Publication
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
                     getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
                     getAssociatedArtifacts(), getRightsHolder(), getPublicationNotes(), getDuplicateOf(),
-                    getCuratingInstitutions());
+                    getCuratingInstitutions(), getImportDetails());
     }
 
     @JacocoGenerated
@@ -361,7 +362,8 @@ public class Publication
                              && Objects.equals(getRightsHolder(), that.getRightsHolder())
                              && Objects.equals(getPublicationNotes(), that.getPublicationNotes())
                              && Objects.equals(getDuplicateOf(), that.getDuplicateOf())
-                             && Objects.equals(getCuratingInstitutions(), that.getCuratingInstitutions());
+                             && Objects.equals(getCuratingInstitutions(), that.getCuratingInstitutions())
+                             && Objects.equals(getImportDetails(), that.getImportDetails());
         return firstHalf && secondHalf;
     }
 
@@ -403,11 +405,11 @@ public class Publication
         this.curatingInstitutions = curatingInstitutions;
     }
 
-    public ImportDetails getMachineImportDetails() {
-        return importDetails;
+    public List<ImportDetail> getImportDetails() {
+        return nonNull(importDetails) ? importDetails : Collections.emptyList();
     }
 
-    public void setImportDetails(ImportDetails importDetails) {
+    public void setImportDetails(List<ImportDetail> importDetails) {
         this.importDetails = importDetails;
     }
 
@@ -540,7 +542,7 @@ public class Publication
             return this;
         }
 
-        public Builder withImportDetails(ImportDetails importDetails) {
+        public Builder withImportDetails(List<ImportDetail> importDetails) {
             publication.setImportDetails(importDetails);
             return this;
         }

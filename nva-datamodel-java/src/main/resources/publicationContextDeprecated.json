@@ -189,5 +189,9 @@
     "@id": "contributorOrganization",
     "@container": "@set",
     "@type": "@id"
+  },
+  "importDetails": {
+    "@id": "importDetails",
+    "@container": "@set"
   }
 }

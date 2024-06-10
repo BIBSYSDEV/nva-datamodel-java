@@ -20,7 +20,8 @@ import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
-import no.unit.nva.model.ImportDetails;
+import no.unit.nva.model.ImportDetail;
+import no.unit.nva.model.ImportSource;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.Publication.Builder;
@@ -36,7 +37,6 @@ import no.unit.nva.model.funding.FundingBuilder;
 import no.unit.nva.model.funding.MonetaryAmount;
 import no.unit.nva.model.instancetypes.degree.DegreeBase;
 import no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator;
-import no.unit.nva.model.time.Instant;
 import nva.commons.core.JacocoGenerated;
 
 @JacocoGenerated
@@ -85,16 +85,22 @@ public final class PublicationGenerator {
         return randomPublication(randomElement(nonDegrees));
     }
 
+    public static Publication createBragePublication() {
+        return createImportedPublication(new ImportDetail(now(), ImportSource.BRAGE));
+    }
+
     public static Publication createCristinPublication() {
-        return randomPublication().copy().withImportDetails(new ImportDetails(now())).build();
+        return createImportedPublication(new ImportDetail(now(), ImportSource.CRISTIN));
     }
 
     public static Publication createScopusPublication() {
-        return randomPublication().copy().build();
+        return createImportedPublication(new ImportDetail(now(), ImportSource.SCOPUS));
     }
 
-    public static Publication createBragePublication() {
-        return randomPublication().copy().build();
+    public static Publication createImportedPublication(ImportDetail importDetail) {
+        return randomPublication().copy()
+                   .withImportDetails(List.of(importDetail))
+                   .build();
     }
 
     private static boolean isDegree(Class<?> subClass) {

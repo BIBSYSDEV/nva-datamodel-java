@@ -12,7 +12,6 @@ import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -20,8 +19,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -66,7 +66,7 @@ public class PublicationTest {
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final Set<String> IGNORE_LIST =
-        Set.of(".entityDescription.reference.publicationContext.revision");
+        Set.of(".entityDescription.reference.publicationContext.revision", "importDetails");
 
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
@@ -289,12 +289,14 @@ public class PublicationTest {
     @DisplayName("Should indicate Publication is imported")
     @MethodSource("importedPublicationProvider")
     void shouldIndicateThatPublicationIsImported(Publication publication) {
-        assertThat(publication.getMachineImportDetails().date(), is(not(nullValue())));
+        assertFalse(publication.getImportDetails().isEmpty());
     }
 
     @Test
+    @DisplayName("Should indicate Publication is not imported")
     void shouldMakeItClearThatANonImportedPublicationIsNotImported() {
-        fail();
+        var publication = PublicationGenerator.randomPublication();
+        assertTrue(publication.getImportDetails().isEmpty());
     }
 
     private static Publication publicationWithoutTitle() {
