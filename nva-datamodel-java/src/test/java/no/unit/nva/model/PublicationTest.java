@@ -37,6 +37,7 @@ public class PublicationTest {
         "__REPLACE__", "https://localhost");
     public static final String BOOK_REVISION_FIELD = ".entityDescription.reference.publicationContext.revision";
     public static final String ALLOWED_OPERATIONS_FIELD = "allowedOperations";
+    public static final String IMPORT_DETAILS_FIELD = "importDetails";
 
 
     @Test
@@ -50,7 +51,8 @@ public class PublicationTest {
         Publication samplePublication = PublicationGenerator.randomPublication();
         Publication copy = samplePublication.copy().build();
 
-        assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD, BOOK_REVISION_FIELD)));
+        assertThat(copy, doesNotHaveEmptyValuesIgnoringFields(Set.of(DOI_REQUEST_FIELD, BOOK_REVISION_FIELD,
+                                                                     IMPORT_DETAILS_FIELD)));
 
         Diff diff = JAVERS.compare(samplePublication, copy);
         assertThat(copy, is(not(sameInstance(samplePublication))));

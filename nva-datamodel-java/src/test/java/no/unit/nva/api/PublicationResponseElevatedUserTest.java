@@ -3,6 +3,7 @@ package no.unit.nva.api;
 import static no.unit.nva.hamcrest.DoesNotHaveEmptyValues.doesNotHaveEmptyValuesIgnoringFields;
 import static no.unit.nva.model.PublicationTest.ALLOWED_OPERATIONS_FIELD;
 import static no.unit.nva.model.PublicationTest.BOOK_REVISION_FIELD;
+import static no.unit.nva.model.PublicationTest.IMPORT_DETAILS_FIELD;
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,10 +34,12 @@ public class PublicationResponseElevatedUserTest {
     void staticConstructorShouldReturnPublicationResponseForElevatedUsersWithoutUnexpectedLossOfInformation() {
         Publication publication = randomPublication();
         assertThat(publication,
-                   doesNotHaveEmptyValuesIgnoringFields(Set.of(BOOK_REVISION_FIELD, ALLOWED_OPERATIONS_FIELD)));
+                   doesNotHaveEmptyValuesIgnoringFields(Set.of(BOOK_REVISION_FIELD, ALLOWED_OPERATIONS_FIELD,
+                                                               IMPORT_DETAILS_FIELD)));
         var publicationResponse = PublicationResponseElevatedUser.fromPublication(publication);
         assertThat(publicationResponse,
-                   doesNotHaveEmptyValuesIgnoringFields(Set.of(BOOK_REVISION_FIELD, ALLOWED_OPERATIONS_FIELD)));
+                   doesNotHaveEmptyValuesIgnoringFields(Set.of(BOOK_REVISION_FIELD, ALLOWED_OPERATIONS_FIELD,
+                                                               IMPORT_DETAILS_FIELD)));
     }
 
     @Test

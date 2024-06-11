@@ -32,6 +32,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.ImportDetail;
+import no.unit.nva.model.ImportSource;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationDate;
@@ -52,6 +54,8 @@ import org.hamcrest.Matchers;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -66,7 +70,7 @@ public class PublicationTest {
         new SortableIdentifier("c443030e-9d56-43d8-afd1-8c89105af555");
     public static final Javers JAVERS = JaversBuilder.javers().build();
     public static final Set<String> IGNORE_LIST =
-        Set.of(".entityDescription.reference.publicationContext.revision");
+        Set.of(".entityDescription.reference.publicationContext.revision", "importDetails");
 
     public static Stream<Class<?>> publicationInstanceProvider() {
         return PublicationInstanceBuilder.listPublicationInstanceTypes().stream();
@@ -91,6 +95,12 @@ public class PublicationTest {
             publicationWithoutTitle(),
             publicationWithoutEntityDescription()
         );
+    }
+
+    public static Stream<Named<Publication>> importedPublicationProvider() {
+        return Stream.of(Named.of("Brage", PublicationGenerator.createImportedPublication(ImportSource.BRAGE)),
+                         Named.of("Cristin", PublicationGenerator.createImportedPublication(ImportSource.CRISTIN)),
+                         Named.of("Scopus", PublicationGenerator.createImportedPublication(ImportSource.SCOPUS)));
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
@@ -297,6 +307,56 @@ public class PublicationTest {
         publication.getEntityDescription()
             .setPublicationDate(new PublicationDate.Builder().withYear(year).withDay("1").withMonth("1").build());
         assertTrue(publication.satisfiesFindableDoiRequirements());
+    }
+
+    @ParameterizedTest
+    @DisplayName("Should indicate Publication is imported")
+    @MethodSource("importedPublicationProvider")
+    void shouldIndicateThatPublicationIsImported(Publication publication) {
+        assertFalse(publication.getImportDetails().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should indicate Publication is not imported")
+    void shouldMakeItClearThatANonImportedPublicationIsNotImported() {
+        var publication = PublicationGenerator.randomPublication();
+        assertTrue(publication.getImportDetails().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should allow adding import details")
+    void shouldAllowAddingImportDetails() {
+        var publication = PublicationGenerator.randomPublication();
+        assertTrue(publication.getImportDetails().isEmpty());
+        assertDoesNotThrow(() -> publication.setImportDetails(List.of()));
+        assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.BRAGE)));
+        assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.CRISTIN)));
+    }
+
+    @Test
+    @DisplayName("Should throw exception when overriding previous import details")
+    void shouldThrowExceptionWhenOverridingPreviousImportDetails() {
+        var publication = PublicationGenerator.createImportedPublication(ImportSource.BRAGE);
+        assertThrows(IllegalArgumentException.class,
+                     () -> publication.copy()
+                               .withImportDetails(null)
+                               .build());
+        assertThrows(IllegalArgumentException.class,
+                     () -> publication.copy()
+                               .withImportDetails(List.of())
+                               .build());
+        assertThrows(IllegalArgumentException.class,
+                     () -> publication.copy()
+                               .withImportDetails(List.of(new ImportDetail(Instant.now(), ImportSource.BRAGE)))
+                               .build());
+    }
+
+    @Test
+    @DisplayName("Should allow copying import details")
+    void shouldAllowCopyingImportDetails() {
+        var publication = PublicationGenerator.createImportedPublication(ImportSource.SCOPUS);
+        assertDoesNotThrow(() -> publication.copy().build());
+        assertDoesNotThrow(() -> publication.setImportDetails(publication.getImportDetails()));
     }
 
     private static Publication publicationWithoutTitle() {

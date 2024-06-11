@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import static java.util.Objects.hash;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static nva.commons.core.attempt.Try.attempt;
@@ -13,7 +14,9 @@ import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,6 +50,7 @@ public class Publication
     private static final String BASE_URI = "__BASE_URI__";
     private static final String PUBLICATION_CONTEXT = stringFromResources(Path.of("publicationContext.json"));
     private static final String ONTOLOGY = stringFromResources(Path.of("publication-ontology.ttl"));
+    public static final String MUST_PRESERVE_EXISTING_IMPORT_DETAILS = "Must preserve existing importDetails";
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -70,6 +74,7 @@ public class Publication
 
     private List<PublicationNoteBase> publicationNotes;
     private Set<URI> curatingInstitutions;
+    private List<ImportDetail> importDetails;
 
     public Publication() {
         // Default constructor, use setters.
@@ -306,7 +311,8 @@ public class Publication
                    .withRightsHolder(getRightsHolder())
                    .withPublicationNotes(getPublicationNotes())
                    .withDuplicateOf(getDuplicateOf())
-                   .withCuratingInstitutions(getCuratingInstitutions());
+                   .withCuratingInstitutions(getCuratingInstitutions())
+                   .withImportDetails(getImportDetails());
     }
 
     /**
@@ -327,7 +333,7 @@ public class Publication
                     getPublishedDate(), getIndexedDate(), getHandle(), getDoi(), getLink(),
                     getEntityDescription(), getProjects(), getFundings(), getAdditionalIdentifiers(), getSubjects(),
                     getAssociatedArtifacts(), getRightsHolder(), getPublicationNotes(), getDuplicateOf(),
-                    getCuratingInstitutions());
+                    getCuratingInstitutions(), getImportDetails());
     }
 
     @JacocoGenerated
@@ -360,7 +366,8 @@ public class Publication
                              && Objects.equals(getRightsHolder(), that.getRightsHolder())
                              && Objects.equals(getPublicationNotes(), that.getPublicationNotes())
                              && Objects.equals(getDuplicateOf(), that.getDuplicateOf())
-                             && Objects.equals(getCuratingInstitutions(), that.getCuratingInstitutions());
+                             && Objects.equals(getCuratingInstitutions(), that.getCuratingInstitutions())
+                             && Objects.equals(getImportDetails(), that.getImportDetails());
         return firstHalf && secondHalf;
     }
 
@@ -400,6 +407,30 @@ public class Publication
 
     public void setCuratingInstitutions(Set<URI> curatingInstitutions) {
         this.curatingInstitutions = curatingInstitutions;
+    }
+
+    public List<ImportDetail> getImportDetails() {
+        return nonNull(importDetails) ? importDetails : Collections.emptyList();
+    }
+
+    public void setImportDetails(List<ImportDetail> importDetails) {
+        if (importDetails == null || !new HashSet<>(importDetails).containsAll(getImportDetails())) {
+            throw new IllegalArgumentException(MUST_PRESERVE_EXISTING_IMPORT_DETAILS);
+        }
+
+        this.importDetails = new ArrayList<>(importDetails);
+    }
+
+    public void addImportDetail(ImportDetail importDetail) {
+        if (isNull(importDetail)) {
+            return;
+        }
+
+        if (isNull(importDetails)) {
+            importDetails = new ArrayList<>();
+        }
+
+        importDetails.add(importDetail);
     }
 
     private void verifyStatusTransition(PublicationStatus nextStatus)
@@ -510,9 +541,6 @@ public class Publication
             return this;
         }
 
-        public Publication build() {
-            return publication;
-        }
 
         public Builder withRightsHolder(String rightsHolder) {
             this.publication.setRightsHolder(rightsHolder);
@@ -532,6 +560,15 @@ public class Publication
         public Builder withCuratingInstitutions(Set<URI> curatingInstitutions) {
             publication.setCuratingInstitutions(curatingInstitutions);
             return this;
+        }
+
+        public Builder withImportDetails(List<ImportDetail> importDetails) {
+            publication.setImportDetails(importDetails);
+            return this;
+        }
+
+        public Publication build() {
+            return publication;
         }
     }
 }

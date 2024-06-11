@@ -1,5 +1,6 @@
 package no.unit.nva.model.testing;
 
+import static java.time.Instant.now;
 import static java.util.function.Predicate.not;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
@@ -20,6 +21,8 @@ import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.ImportDetail;
+import no.unit.nva.model.ImportSource;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.Publication.Builder;
@@ -89,6 +92,16 @@ public final class PublicationGenerator {
                                 .filter(not(listOfExcludedClasses::contains))
                                 .toList();
         return randomPublication(randomElement(targetClasses));
+    }
+
+    public static Publication createImportedPublication(ImportSource source) {
+        return createImportedPublication(new ImportDetail(now(), source));
+    }
+
+    public static Publication createImportedPublication(ImportDetail importDetail) {
+        return randomPublication().copy()
+                   .withImportDetails(List.of(importDetail))
+                   .build();
     }
 
     public static Publication randomPublicationWithEmptyValues(Class<?> publicationInstanceClass) {
