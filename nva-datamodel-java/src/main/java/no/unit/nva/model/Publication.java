@@ -422,7 +422,7 @@ public class Publication
     }
 
     public void addImportDetail(ImportDetail importDetail) {
-        if (importDetail == null) {
+        if (isNull(importDetail)) {
             return;
         }
 
