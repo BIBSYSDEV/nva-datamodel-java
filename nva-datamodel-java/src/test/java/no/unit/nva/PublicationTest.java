@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.ImportSource;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
@@ -320,6 +321,16 @@ public class PublicationTest {
     void shouldMakeItClearThatANonImportedPublicationIsNotImported() {
         var publication = PublicationGenerator.randomPublication();
         assertTrue(publication.getImportDetails().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should allow publication to have multiple import sources")
+    void shouldAllowPublicationToHaveMultipleImportSource() {
+        var publication = PublicationGenerator.randomPublication();
+        publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.BRAGE));
+        publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.CRISTIN));
+        assertFalse(publication.getImportDetails().isEmpty());
+        assertThat(publication.getImportDetails().size(), is(2));
     }
 
     private static Publication publicationWithoutTitle() {

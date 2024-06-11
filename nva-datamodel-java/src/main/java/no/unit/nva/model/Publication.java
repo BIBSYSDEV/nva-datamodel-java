@@ -1,6 +1,7 @@
 package no.unit.nva.model;
 
 import static java.util.Objects.hash;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static no.unit.nva.model.PublicationStatus.DRAFT_FOR_DELETION;
 import static nva.commons.core.attempt.Try.attempt;
@@ -13,6 +14,7 @@ import com.github.bibsysdev.ResourcesBuildConfig;
 import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -410,7 +412,14 @@ public class Publication
     }
 
     public void setImportDetails(List<ImportDetail> importDetails) {
-        this.importDetails = importDetails;
+        this.importDetails = new ArrayList<>(importDetails);
+    }
+
+    public void addImportDetail(ImportDetail importDetail) {
+        if (isNull(importDetails)) {
+            this.importDetails = new ArrayList<>();
+        }
+        importDetails.add(importDetail);
     }
 
     private void verifyStatusTransition(PublicationStatus nextStatus)
