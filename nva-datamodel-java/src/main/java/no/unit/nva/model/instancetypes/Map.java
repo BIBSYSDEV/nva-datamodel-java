@@ -28,6 +28,10 @@ public class Map implements PublicationInstance<MonographPages> {
         return pages;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @JacocoGenerated
     @Override
     public boolean equals(Object o) {
@@ -38,13 +42,13 @@ public class Map implements PublicationInstance<MonographPages> {
             return false;
         }
         Map map = (Map) o;
-        return Objects.equals(description, map.description)
+        return Objects.equals(getDescription(), map.getDescription())
                 && Objects.equals(getPages(), map.getPages());
     }
 
     @JacocoGenerated
     @Override
     public int hashCode() {
-        return Objects.hash(description, getPages());
+        return Objects.hash(getDescription(), getPages());
     }
 }
