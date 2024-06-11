@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -49,6 +50,7 @@ public class Publication
     private static final String BASE_URI = "__BASE_URI__";
     private static final String PUBLICATION_CONTEXT = stringFromResources(Path.of("publicationContext.json"));
     private static final String ONTOLOGY = stringFromResources(Path.of("publication-ontology.ttl"));
+    public static final String MUST_PRESERVE_EXISTING_IMPORT_DETAILS = "Must preserve existing importDetails";
 
     private SortableIdentifier identifier;
     private PublicationStatus status;
@@ -412,13 +414,22 @@ public class Publication
     }
 
     public void setImportDetails(List<ImportDetail> importDetails) {
+        if (importDetails == null || !new HashSet<>(importDetails).containsAll(getImportDetails())) {
+            throw new IllegalArgumentException(MUST_PRESERVE_EXISTING_IMPORT_DETAILS);
+        }
+
         this.importDetails = new ArrayList<>(importDetails);
     }
 
     public void addImportDetail(ImportDetail importDetail) {
-        if (isNull(importDetails)) {
-            this.importDetails = new ArrayList<>();
+        if (importDetail == null) {
+            return;
         }
+
+        if (isNull(importDetails)) {
+            importDetails = new ArrayList<>();
+        }
+
         importDetails.add(importDetail);
     }
 

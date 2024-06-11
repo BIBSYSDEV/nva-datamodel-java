@@ -324,13 +324,39 @@ public class PublicationTest {
     }
 
     @Test
-    @DisplayName("Should allow publication to have multiple import sources")
-    void shouldAllowPublicationToHaveMultipleImportSource() {
+    @DisplayName("Should allow adding import details")
+    void shouldAllowAddingImportDetails() {
         var publication = PublicationGenerator.randomPublication();
-        publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.BRAGE));
-        publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.CRISTIN));
-        assertFalse(publication.getImportDetails().isEmpty());
-        assertThat(publication.getImportDetails().size(), is(2));
+        assertTrue(publication.getImportDetails().isEmpty());
+        assertDoesNotThrow(() -> publication.setImportDetails(List.of()));
+        assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.BRAGE)));
+        assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.CRISTIN)));
+    }
+
+    @Test
+    @DisplayName("Should throw exception when overriding previous import details")
+    void shouldThrowExceptionWhenOverridingPreviousImportDetails() {
+        var publication = PublicationGenerator.createImportedPublication(ImportSource.BRAGE);
+        assertThrows(IllegalArgumentException.class,
+                     () -> publication.copy()
+                               .withImportDetails(null)
+                               .build());
+        assertThrows(IllegalArgumentException.class,
+                     () -> publication.copy()
+                               .withImportDetails(List.of())
+                               .build());
+        assertThrows(IllegalArgumentException.class,
+                     () -> publication.copy()
+                               .withImportDetails(List.of(new ImportDetail(Instant.now(), ImportSource.BRAGE)))
+                               .build());
+    }
+
+    @Test
+    @DisplayName("Should allow copying import details")
+    void shouldAllowCopyingImportDetails() {
+        var publication = PublicationGenerator.createImportedPublication(ImportSource.SCOPUS);
+        assertDoesNotThrow(() -> publication.copy().build());
+        assertDoesNotThrow(() -> publication.setImportDetails(publication.getImportDetails()));
     }
 
     private static Publication publicationWithoutTitle() {
