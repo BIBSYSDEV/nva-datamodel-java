@@ -31,6 +31,10 @@ nva:UnconfirmedFunding a rdfs:Class ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Funding .
 
+nva:ImportDetail a rdfs:Class ;
+  rdfs:comment "Information about provenance of an imported publication" ;
+  rdfs:isDefinedBy nva: .
+
 nva:MonetaryAmount a rdfs:Class ;
   rdfs:comment "A sum of money in a given currency" ;
   rdfs:isDefinedBy nva: .
@@ -1509,7 +1513,7 @@ nva:source a rdf:Property ;
   rdfs:comment "A description of the origin for a thing" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:AdditionalIdentifier ;
+  rdfs:domain nva:AdditionalIdentifier, nva:ImportDetail ;
   rdfs:range xsd:string .
 
 nva:mimeType a rdf:Property ;
@@ -1988,3 +1992,17 @@ nva:contributorOrganization a rdf:Property ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication ;
   rdfs:range xsd:anyURI .
+
+nva:importDetail a rdf:Property ;
+  rdfs:comment "Information about the provenance of the an imported Publication" ;
+  rdfs:label "Import detail" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:Publication ;
+  rdfs:range nva:ImportDetail .
+
+nva:importDate a rdf:Property ;
+  rdfs:comment "The date at which a Publication was imported" ;
+  rdfs:label "Import date" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:domain nva:ImportDetail ;
+  rdfs:range xsd:dateTime .

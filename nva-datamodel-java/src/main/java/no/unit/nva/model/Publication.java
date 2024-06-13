@@ -15,6 +15,7 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -409,11 +410,13 @@ public class Publication
         this.curatingInstitutions = curatingInstitutions;
     }
 
+    @Override
     public List<ImportDetail> getImportDetails() {
         return nonNull(importDetails) ? importDetails : Collections.emptyList();
     }
 
-    public void setImportDetails(List<ImportDetail> importDetails) {
+    @Override
+    public void setImportDetails(Collection<ImportDetail> importDetails) {
         if (importDetails == null || !new HashSet<>(importDetails).containsAll(getImportDetails())) {
             throw new IllegalArgumentException(MUST_PRESERVE_EXISTING_IMPORT_DETAILS);
         }

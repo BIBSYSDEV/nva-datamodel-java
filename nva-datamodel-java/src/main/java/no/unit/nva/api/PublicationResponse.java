@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URI;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +21,7 @@ import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.PublicationOperation;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.funding.Funding;
@@ -54,6 +57,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private List<Funding> fundings;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
+    private List<ImportDetail> importDetails;
 
     private Set<AdditionalIdentifier> additionalIdentifiers;
     private String rightsHolder;
@@ -86,6 +90,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
         response.setAdditionalIdentifiers(publication.getAdditionalIdentifiers());
         response.setRightsHolder(publication.getRightsHolder());
         response.setAllowedOperations(Set.of());
+        response.setImportDetails(publication.getImportDetails());
         return response;
     }
 
@@ -287,6 +292,16 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
+    public List<ImportDetail> getImportDetails() {
+        return importDetails;
+    }
+
+    @Override
+    public void setImportDetails(Collection<ImportDetail> importDetails) {
+        this.importDetails = new ArrayList<>(importDetails);
+    }
+
+    @Override
     public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
         return additionalIdentifiers;
     }
@@ -327,7 +342,8 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                             getAdditionalIdentifiers(),
                             getAssociatedArtifacts(),
                             getRightsHolder(),
-                            getAllowedOperations());
+                            getAllowedOperations(),
+                            getImportDetails());
     }
 
     @Override
@@ -359,6 +375,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
                && Objects.equals(getAdditionalIdentifiers(), that.getAdditionalIdentifiers())
                && Objects.equals(getAssociatedArtifacts(), that.getAssociatedArtifacts())
                && Objects.equals(getRightsHolder(), that.getRightsHolder())
-               && Objects.equals(getAllowedOperations(), that.getAllowedOperations());
+               && Objects.equals(getAllowedOperations(), that.getAllowedOperations())
+               && Objects.equals(getImportDetails(), that.getImportDetails());
     }
 }

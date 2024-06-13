@@ -42,6 +42,7 @@ public class PublicationResponseElevatedUser extends PublicationResponse {
         response.setRightsHolder(publication.getRightsHolder());
         response.setPublicationNotes(publication.getPublicationNotes());
         response.setAllowedOperations(Set.of());
+        response.setImportDetails(publication.getImportDetails());
         return response;
     }
 
