@@ -1,8 +1,10 @@
 package no.unit.nva;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.funding.Funding;
 import no.unit.nva.model.ResearchProject;
 
@@ -27,4 +29,8 @@ public interface WithMetadata extends PublicationBase {
     String getRightsHolder();
 
     void setRightsHolder(String rightsHolder);
+
+    List<ImportDetail> getImportDetails();
+
+    void setImportDetails(Collection<ImportDetail> importDetails);
 }

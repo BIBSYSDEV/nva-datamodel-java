@@ -355,7 +355,8 @@ public class PublicationTest {
     @DisplayName("Should allow copying import details")
     void shouldAllowCopyingImportDetails() {
         var publication = PublicationGenerator.createImportedPublication(ImportSource.SCOPUS);
-        assertDoesNotThrow(() -> publication.copy().build());
+        var copy = assertDoesNotThrow(() -> publication.copy().build());
+        assertThat(copy, is(equalTo(publication)));
         assertDoesNotThrow(() -> publication.setImportDetails(publication.getImportDetails()));
     }
 
