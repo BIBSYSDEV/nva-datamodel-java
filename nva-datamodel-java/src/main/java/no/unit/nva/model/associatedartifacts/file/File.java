@@ -2,7 +2,6 @@ package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -129,7 +128,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.size = size;
         this.license = validateUriLicense(parseLicense(license));
         this.administrativeAgreement = administrativeAgreement;
-        this.publisherVersion = PublisherVersion.parse(publisherVersion);
+        this.publisherVersion = publisherVersion;
         this.embargoDate = embargoDate;
         this.rightsRetentionStrategy = assignDefaultStrategyIfNull(rightsRetentionStrategy);
         this.legalNote = legalNote;
@@ -184,15 +183,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public boolean isAdministrativeAgreement() {
         return administrativeAgreement;
-    }
-
-    /**
-     * @deprecated (since = "0.21.12") replaced by {@link #getPublisherVersion()}
-     */
-    @JsonIgnore
-    @Deprecated
-    public boolean isPublisherAuthority() {
-        return publisherVersion == PublisherVersion.PUBLISHED_VERSION;
     }
 
     public PublisherVersion getPublisherVersion(){
@@ -389,16 +379,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
         public Builder withUploadDetails(UploadDetails uploadDetails) {
             this.uploadDetails = uploadDetails;
-            return this;
-        }
-
-        /**
-         * @deprecated (since = "0.21.12") replaced by
-         * {@link #withPublisherVersion(PublisherVersion publisherVersion)}
-         */
-        @Deprecated
-        public Builder withPublisherAuthority(boolean publisherAuthority) {
-            this.publisherVersion = PublisherVersion.parse(publisherAuthority);
             return this;
         }
 
