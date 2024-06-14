@@ -7,6 +7,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomUri;
 import java.util.UUID;
 import no.unit.nva.model.Username;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
+import no.unit.nva.model.associatedartifacts.file.PublisherVersion;
 import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 
 public final class AdministrativeAgreementGenerator {
@@ -17,7 +18,7 @@ public final class AdministrativeAgreementGenerator {
 
     public static AdministrativeAgreement random() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-                                           randomInteger().longValue(), randomUri(), true, false, null,
+                                           randomInteger().longValue(), randomUri(), true, PublisherVersion.ACCEPTED_VERSION, null,
                                            randomInserted());
     }
 

@@ -1,6 +1,7 @@
 package no.unit.nva.model.testing.associatedartifacts;
 
 import no.unit.nva.model.Username;
+import no.unit.nva.model.associatedartifacts.file.PublisherVersion;
 import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
 
@@ -20,7 +21,7 @@ public final class UnpublishedFileGenerator {
 
     public static UnpublishedFile random() {
         return new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), randomInteger().longValue(),
-                                   randomUri(), false, true, null,
+                                   randomUri(), false, PublisherVersion.ACCEPTED_VERSION, null,
                                    RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(), randomString(),
                                    randomInserted());
     }

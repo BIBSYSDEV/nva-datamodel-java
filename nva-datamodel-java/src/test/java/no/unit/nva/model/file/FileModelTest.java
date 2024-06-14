@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,12 +28,12 @@ import no.unit.nva.model.associatedartifacts.CustomerRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.NullRightsRetentionStrategy;
 import no.unit.nva.model.associatedartifacts.file.AdministrativeAgreement;
 import no.unit.nva.model.associatedartifacts.file.File;
-import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 import no.unit.nva.model.associatedartifacts.file.License;
 import no.unit.nva.model.associatedartifacts.file.MissingLicenseException;
 import no.unit.nva.model.associatedartifacts.file.PublishedFile;
 import no.unit.nva.model.associatedartifacts.file.PublisherVersion;
 import no.unit.nva.model.associatedartifacts.file.UnpublishedFile;
+import no.unit.nva.model.associatedartifacts.file.UploadDetails;
 import no.unit.nva.model.testing.associatedartifacts.util.RightsRetentionStrategyGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -170,7 +169,7 @@ public class FileModelTest {
     @Test
     void objectMapperShouldSerializeAndDeserializePublishedVersion() throws JsonProcessingException {
         var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, false, null, null, randomString(), randomInserted());
+                                                  false, PublisherVersion.ACCEPTED_VERSION, null, null, randomString(), randomInserted());
         var unpublishedFileString = unpublishedFile.toString();
         var publicationAfterRoundTrip = dataModelObjectMapper.readValue(unpublishedFileString, UnpublishedFile.class);
         assertThat(publicationAfterRoundTrip.getPublisherVersion(), is(equalTo(PublisherVersion.ACCEPTED_VERSION)));
@@ -180,56 +179,9 @@ public class FileModelTest {
         return new UploadDetails(randomUsername(), randomInstant());
     }
 
-    /**
-     * @deprecated remove when PublisherVersion no longer needs to parse boolean
-     */
-    @Deprecated
-    @Test
-    void objectMapperShouldSerializeAndDeserializePublisherVersionFromBoolean() throws JsonProcessingException {
-        var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, true, null, null, randomString(),
-                                                  randomInserted());
-        var unpublishedFileString = unpublishedFile.toString();
-        var unpublishedFileAfterRoundtrip = dataModelObjectMapper.readValue(unpublishedFileString,
-                                                                            UnpublishedFile.class);
-        assertThat(unpublishedFileAfterRoundtrip.getPublisherVersion(),
-                   is(equalTo(PublisherVersion.PUBLISHED_VERSION)));
-    }
-
-    /**
-     * @deprecated remove when PublisherVersion no longer needs to parse boolean
-     */
-    @Deprecated
-    @Test
-    void objectMapperShouldSerializePublisherVersionFromEnum() throws JsonProcessingException {
-        var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, PublisherVersion.PUBLISHED_VERSION, null, null,
-                                                  randomString(), randomInserted());
-        var unpublishedFileString = unpublishedFile.toString();
-        var unpublishedFileAfterRoundTrip = dataModelObjectMapper.readValue(unpublishedFileString,
-                                                                            UnpublishedFile.class);
-        assertThat(unpublishedFileAfterRoundTrip.getPublisherVersion(),
-                   is(equalTo(PublisherVersion.PUBLISHED_VERSION)));
-    }
-
-    /**
-     * @deprecated remove when PublisherVersion no longer needs to parse boolean
-     */
-    @Deprecated
-    @Test
-    void publisherVersionIsSetToNullIfNullIsRoundTrippedToNull() throws JsonProcessingException {
-        var unpublishedFile = new UnpublishedFile(UUID.randomUUID(), randomString(), randomString(), 10L, null,
-                                                  false, null, null, null, randomString(),
-                                                  randomInserted());
-        var unpublishedFileString = unpublishedFile.toString();
-        var unpublishedFileAfterRoundtrip = dataModelObjectMapper.readValue(unpublishedFileString,
-                                                                            UnpublishedFile.class);
-        assertThat(unpublishedFileAfterRoundtrip.getPublisherVersion(), is(nullValue()));
-    }
-
     public static File randomUnpublishableFile() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
-            randomInteger().longValue(), LICENSE_URI, randomBoolean(), randomBoolean(), randomInstant(),
+            randomInteger().longValue(), LICENSE_URI, randomBoolean(), PublisherVersion.ACCEPTED_VERSION, randomInstant(),
                                            randomInserted());
     }
 
@@ -282,7 +234,7 @@ public class FileModelTest {
             randomInteger().longValue(),
             LICENSE_URI,
             NOT_ADMINISTRATIVE_AGREEMENT,
-            randomBoolean(),
+            PublisherVersion.ACCEPTED_VERSION,
             randomInstant(),
             randomInserted());
     }
@@ -305,7 +257,7 @@ public class FileModelTest {
     private AdministrativeAgreement randomAdministrativeAgreement() {
         return new AdministrativeAgreement(UUID.randomUUID(), randomString(), randomString(),
             randomInteger().longValue(),
-            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, randomBoolean(), randomInstant(), randomInserted());
+            LICENSE_URI, ADMINISTRATIVE_AGREEMENT, PublisherVersion.ACCEPTED_VERSION, randomInstant(), randomInserted());
     }
 
     private PublishedFile publishedFileWithActiveEmbargo() {
@@ -315,7 +267,7 @@ public class FileModelTest {
                                  randomInteger().longValue(),
                                  LICENSE_URI,
                                  NOT_ADMINISTRATIVE_AGREEMENT,
-                                 randomBoolean(),
+                                 PublisherVersion.ACCEPTED_VERSION,
                                  Instant.now().plus(1, DAYS),
                                  RightsRetentionStrategyGenerator.randomRightsRetentionStrategy(),
                                  randomString(), randomInstant(), randomInserted());

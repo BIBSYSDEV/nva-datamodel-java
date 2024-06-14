@@ -2,8 +2,6 @@ package no.unit.nva.model.associatedartifacts.file;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -44,7 +42,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
     public static final String SIZE_FIELD = "size";
     public static final String LICENSE_FIELD = "license";
     public static final String ADMINISTRATIVE_AGREEMENT_FIELD = "administrativeAgreement";
-    public static final String PUBLISHER_AUTHORITY_FIELD = "publisherAuthority";
     public static final String PUBLISHER_VERSION_FIELD = "publisherVersion";
     public static final String EMBARGO_DATE_FIELD = "embargoDate";
     public static final String RIGHTS_RETENTION_STRATEGY = "rightsRetentionStrategy";
@@ -62,9 +59,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public static final String MISSING_LICENSE =
         "The file is not annotated as an administrative agreement and should have a license";
-    public static final String CCBY_LICENSE =
-        "Files with the CustomerRightsRetentionStrategy must have the CC BY license if publisherAuthority is false.";
-    public static final String ERROR_MESSAGE = "The specified license cannot be converted into a valid URI license: ";
     public static final String LEGAL_NOTE_FIELD = "legalNote";
     private static final Supplier<Pattern> LICENSE_VALIDATION_PATTERN =
         () -> Pattern.compile("^(http|https)://.*$");
@@ -108,7 +102,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
      * @param license                 The license for the file, may be null if and only if the file is an administrative
      *                                agreement
      * @param administrativeAgreement True if the file is an administrative agreement
-     * @param publisherAuthority      True if the file owner has publisher authority
+     * @param publisherVersion      True if the file owner has publisher authority
      * @param embargoDate             The date after which the file may be published
      * @param rightsRetentionStrategy The rights retention strategy for the file
      * @param uploadDetails           Information regarding who and when inserted the file into the system
@@ -121,7 +115,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         @JsonProperty(SIZE_FIELD) Long size,
         @JsonProperty(LICENSE_FIELD) Object license,
         @JsonProperty(ADMINISTRATIVE_AGREEMENT_FIELD) boolean administrativeAgreement,
-        @JsonProperty(PUBLISHER_VERSION_FIELD) @JsonAlias(PUBLISHER_AUTHORITY_FIELD) Object publisherAuthority,
+        @JsonProperty(PUBLISHER_VERSION_FIELD) PublisherVersion publisherVersion,
         @JsonProperty(EMBARGO_DATE_FIELD) Instant embargoDate,
         @JsonProperty(RIGHTS_RETENTION_STRATEGY) RightsRetentionStrategy rightsRetentionStrategy,
         @JsonProperty(LEGAL_NOTE_FIELD) String legalNote,
@@ -134,7 +128,7 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
         this.size = size;
         this.license = validateUriLicense(parseLicense(license));
         this.administrativeAgreement = administrativeAgreement;
-        this.publisherVersion = PublisherVersion.parse(publisherAuthority);
+        this.publisherVersion = publisherVersion;
         this.embargoDate = embargoDate;
         this.rightsRetentionStrategy = assignDefaultStrategyIfNull(rightsRetentionStrategy);
         this.legalNote = legalNote;
@@ -189,15 +183,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
     public boolean isAdministrativeAgreement() {
         return administrativeAgreement;
-    }
-
-    /**
-     * @deprecated (since = "0.21.12") replaced by {@link #getPublisherVersion()}
-     */
-    @JsonIgnore
-    @Deprecated
-    public boolean isPublisherAuthority() {
-        return publisherVersion == PublisherVersion.PUBLISHED_VERSION;
     }
 
     public PublisherVersion getPublisherVersion(){
@@ -394,16 +379,6 @@ public abstract class File implements JsonSerializable, AssociatedArtifact {
 
         public Builder withUploadDetails(UploadDetails uploadDetails) {
             this.uploadDetails = uploadDetails;
-            return this;
-        }
-
-        /**
-         * @deprecated (since = "0.21.12") replaced by
-         * {@link #withPublisherVersion(PublisherVersion publisherVersion)}
-         */
-        @Deprecated
-        public Builder withPublisherAuthority(boolean publisherAuthority) {
-            this.publisherVersion = PublisherVersion.parse(publisherAuthority);
             return this;
         }
 
