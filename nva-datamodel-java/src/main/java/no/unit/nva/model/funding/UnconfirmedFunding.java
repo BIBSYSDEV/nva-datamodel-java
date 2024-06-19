@@ -21,7 +21,7 @@ public class UnconfirmedFunding implements Funding {
     private final Instant activeTo;
 
     @JsonCreator
-    protected UnconfirmedFunding(@JsonProperty("importSource") URI source,
+    protected UnconfirmedFunding(@JsonProperty("source") URI source,
                                  @JsonProperty("identifier") String identifier,
                                  @JsonProperty("labels") Map<String, String> labels,
                                  @JsonProperty("fundingAmount") MonetaryAmount fundingAmount,

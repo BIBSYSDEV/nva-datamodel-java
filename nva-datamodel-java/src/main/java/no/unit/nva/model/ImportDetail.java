@@ -5,7 +5,7 @@ import java.time.Instant;
 import no.unit.nva.model.ImportSource.Source;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public record ImportDetail(Instant importDate, ImportSource importSource) {
+public record ImportDetail(Instant importDate, ImportSource source) {
 
     public static ImportDetail fromSource(Source source, Instant importDate) {
         return new ImportDetail(importDate, ImportSource.fromSource(source));

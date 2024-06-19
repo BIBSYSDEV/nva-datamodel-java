@@ -1,6 +1,5 @@
 package no.unit.nva.model.testing;
 
-import static java.time.Instant.now;
 import static java.util.function.Predicate.not;
 import static no.unit.nva.model.testing.PublicationInstanceBuilder.randomPublicationInstanceType;
 import static no.unit.nva.model.testing.RandomCurrencyUtil.randomCurrency;
@@ -10,6 +9,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInstant;
 import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.net.URI;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +23,6 @@ import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.ImportSource;
-import no.unit.nva.model.ImportSource.Source;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.Publication.Builder;
@@ -95,8 +94,8 @@ public final class PublicationGenerator {
         return randomPublication(randomElement(targetClasses));
     }
 
-    public static Publication createImportedPublication(Source source) {
-        return createImportedPublication(new ImportDetail(now(), new ImportSource(source, null)));
+    public static Publication createImportedPublication(ImportSource.Source source) {
+        return createImportedPublication(ImportDetail.fromSource(source, Instant.now()));
     }
 
     public static Publication createImportedPublication(ImportDetail importDetail) {

@@ -684,10 +684,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/Funding'
     - type: object
       properties:
-        importSource:
-          type: string
-          format: uri
-          writeOnly: true
         id:
           type: string
           format: uri
@@ -1353,7 +1349,7 @@ referencedSchemas:
       importDate:
         type: string
         format: date-time
-      importSource:
+      source:
         $ref: '#/components/schemas/ImportSource'
       type:
         type: string
@@ -2996,10 +2992,6 @@ referencedSchemas:
     - $ref: '#/components/schemas/Funding'
     - type: object
       properties:
-        importSource:
-          type: string
-          format: uri
-          writeOnly: true
         type:
           type: string
   UnconfirmedJournal:
