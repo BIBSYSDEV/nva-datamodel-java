@@ -31,13 +31,6 @@ nva:UnconfirmedFunding a rdfs:Class ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Funding .
 
-nva:Source a rdf:Property ;
-                 rdfs:comment "The source of an imported Publication" ;
-                 rdfs:label "Source" ;
-                 rdfs:isDefinedBy nva: ;
-                 rdfs:domain nva:ImportDetail ;
-                 rdfs:range xsd:string .
-
 nva:MonetaryAmount a rdfs:Class ;
   rdfs:comment "A sum of money in a given currency" ;
   rdfs:isDefinedBy nva: .
@@ -2018,7 +2011,7 @@ nva:source a rdf:Property ;
            rdfs:range xsd:string .
 
 nva:archive a rdf:Property ;
-            rdfs:comment "The archive source of an imported Publication" ;
+            rdfs:comment "The source archive of an imported Publication" ;
             rdfs:label "Import source archive" ;
             rdfs:isDefinedBy nva: ;
             rdfs:domain nva:ImportSource ;
