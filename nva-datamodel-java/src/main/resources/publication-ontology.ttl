@@ -35,6 +35,10 @@ nva:ImportDetail a rdfs:Class ;
   rdfs:comment "Information about provenance of an imported publication" ;
   rdfs:isDefinedBy nva: .
 
+nva:ImportSource a rdfs:Class ;
+                 rdfs:comment "Information about a source of an imported publication" ;
+                 rdfs:isDefinedBy nva: .
+
 nva:MonetaryAmount a rdfs:Class ;
   rdfs:comment "A sum of money in a given currency" ;
   rdfs:isDefinedBy nva: .
@@ -1513,7 +1517,7 @@ nva:source a rdf:Property ;
   rdfs:comment "A description of the origin for a thing" ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
-  rdfs:domain nva:AdditionalIdentifier, nva:ImportDetail ;
+  rdfs:domain nva:AdditionalIdentifier, nva:ImportSource ;
   rdfs:range xsd:string .
 
 nva:mimeType a rdf:Property ;
