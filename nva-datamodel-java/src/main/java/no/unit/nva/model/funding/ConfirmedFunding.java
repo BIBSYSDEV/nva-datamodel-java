@@ -19,7 +19,7 @@ public class ConfirmedFunding extends UnconfirmedFunding {
     private final URI id;
 
     @JsonCreator
-    protected ConfirmedFunding(@JsonProperty("source") URI source,
+    protected ConfirmedFunding(@JsonProperty("importSource") URI source,
                                @JsonProperty("id") URI id,
                                @JsonProperty("identifier") String identifier,
                                @JsonProperty("labels") Map<String, String> labels,

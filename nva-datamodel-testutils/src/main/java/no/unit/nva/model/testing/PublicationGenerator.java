@@ -23,6 +23,7 @@ import no.unit.nva.model.ApprovalsBody;
 import no.unit.nva.model.EntityDescription;
 import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.ImportSource;
+import no.unit.nva.model.ImportSource.Source;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.Publication.Builder;
@@ -94,8 +95,8 @@ public final class PublicationGenerator {
         return randomPublication(randomElement(targetClasses));
     }
 
-    public static Publication createImportedPublication(ImportSource source) {
-        return createImportedPublication(new ImportDetail(now(), source));
+    public static Publication createImportedPublication(Source source) {
+        return createImportedPublication(new ImportDetail(now(), new ImportSource(source, null)));
     }
 
     public static Publication createImportedPublication(ImportDetail importDetail) {

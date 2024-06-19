@@ -13,7 +13,7 @@ public class AdditionalIdentifier {
 
     // TODO: Remove alias when data has been migrated
     @Deprecated
-    @JsonAlias("source")
+    @JsonAlias("importSource")
     @JsonProperty("sourceName")
     private String sourceName;
     @JsonProperty("value")

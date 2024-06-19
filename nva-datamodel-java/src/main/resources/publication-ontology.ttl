@@ -18,16 +18,16 @@ nva:Exhibition a rdfs:Class ;
   rdfs:subClassOf nva:ArtisticDesignSubtype .
 
 nva:Funding a rdfs:Class ;
-  rdfs:comment "A source of financial support" ;
+  rdfs:comment "A importSource of financial support" ;
   rdfs:isDefinedBy nva: .
 
 nva:ConfirmedFunding a rdfs:Class ;
-  rdfs:comment "A source of financial support that is confirmed by the funder" ;
+  rdfs:comment "A importSource of financial support that is confirmed by the funder" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Funding .
 
 nva:UnconfirmedFunding a rdfs:Class ;
-  rdfs:comment "A source of financial support that is reported, but not confirmed by the funder" ;
+  rdfs:comment "A importSource of financial support that is reported, but not confirmed by the funder" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Funding .
 
@@ -95,7 +95,7 @@ nva:Course a rdfs:Class ;
                rdfs:subClassOf nva:Course .
 
 nva:UnconfirmedCourse a rdf:Property ;
-               rdfs:comment "A course that cannot be verified to exist in any source system" ;
+               rdfs:comment "A course that cannot be verified to exist in any importSource system" ;
                rdfs:isDefinedBy nva: ;
                rdfs:subClassOf nva:Course ;
                rdfs:domain nva:Degree .
