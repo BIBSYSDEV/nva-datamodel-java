@@ -11,6 +11,7 @@ import static no.unit.nva.model.file.FileModelTest.buildNonAdministrativeAgreeme
 import static no.unit.nva.model.testing.PublicationGenerator.randomPublication;
 import static no.unit.nva.model.testing.PublicationGenerator.randomUri;
 import static no.unit.nva.model.testing.associatedartifacts.AssociatedArtifactsGenerator.randomAssociatedLink;
+import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,6 +35,7 @@ import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.ImportSource;
+import no.unit.nva.model.ImportSource.Source;
 import no.unit.nva.model.Organization;
 import no.unit.nva.model.Publication;
 import no.unit.nva.model.PublicationDate;
@@ -98,9 +100,9 @@ public class PublicationTest {
     }
 
     public static Stream<Named<Publication>> importedPublicationProvider() {
-        return Stream.of(Named.of("Brage", PublicationGenerator.createImportedPublication(ImportSource.BRAGE)),
-                         Named.of("Cristin", PublicationGenerator.createImportedPublication(ImportSource.CRISTIN)),
-                         Named.of("Scopus", PublicationGenerator.createImportedPublication(ImportSource.SCOPUS)));
+        return Stream.of(Named.of("Brage", PublicationGenerator.createImportedPublication(Source.BRAGE)),
+                         Named.of("Cristin", PublicationGenerator.createImportedPublication(Source.CRISTIN)),
+                         Named.of("Scopus", PublicationGenerator.createImportedPublication(Source.SCOPUS)));
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be round-tripped to and from JSON")
@@ -329,14 +331,15 @@ public class PublicationTest {
         var publication = PublicationGenerator.randomPublication();
         assertTrue(publication.getImportDetails().isEmpty());
         assertDoesNotThrow(() -> publication.setImportDetails(List.of()));
-        assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.BRAGE)));
-        assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(), ImportSource.CRISTIN)));
+        assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(),
+                                                                              ImportSource.fromBrageArchive(randomString()))));
+        assertDoesNotThrow(() -> publication.addImportDetail(ImportDetail.fromSource(Source.CRISTIN, Instant.now())));
     }
 
     @Test
     @DisplayName("Should throw exception when overriding previous import details")
     void shouldThrowExceptionWhenOverridingPreviousImportDetails() {
-        var publication = PublicationGenerator.createImportedPublication(ImportSource.BRAGE);
+        var publication = PublicationGenerator.createImportedPublication(Source.BRAGE);
         assertThrows(IllegalArgumentException.class,
                      () -> publication.copy()
                                .withImportDetails(null)
@@ -347,14 +350,15 @@ public class PublicationTest {
                                .build());
         assertThrows(IllegalArgumentException.class,
                      () -> publication.copy()
-                               .withImportDetails(List.of(new ImportDetail(Instant.now(), ImportSource.BRAGE)))
+                               .withImportDetails(List.of(new ImportDetail(Instant.now(),
+                                                                           ImportSource.fromBrageArchive(randomString()))))
                                .build());
     }
 
     @Test
     @DisplayName("Should allow copying import details")
     void shouldAllowCopyingImportDetails() {
-        var publication = PublicationGenerator.createImportedPublication(ImportSource.SCOPUS);
+        var publication = PublicationGenerator.createImportedPublication(Source.SCOPUS);
         var copy = assertDoesNotThrow(() -> publication.copy().build());
         assertThat(copy, is(equalTo(publication)));
         assertDoesNotThrow(() -> publication.setImportDetails(publication.getImportDetails()));
