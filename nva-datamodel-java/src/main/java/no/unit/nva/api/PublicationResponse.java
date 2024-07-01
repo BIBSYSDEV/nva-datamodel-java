@@ -20,7 +20,7 @@ import no.unit.nva.WithIdentifier;
 import no.unit.nva.WithInternal;
 import no.unit.nva.WithMetadata;
 import no.unit.nva.identifiers.SortableIdentifier;
-import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.AdditionalIdentifierBase;
 import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.PublicationOperation;
 import no.unit.nva.model.EntityDescription;
@@ -59,7 +59,7 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     private AssociatedArtifactList associatedArtifacts;
     private List<ImportDetail> importDetails;
 
-    private Set<AdditionalIdentifier> additionalIdentifiers;
+    private Set<AdditionalIdentifierBase> additionalIdentifiers;
     private String rightsHolder;
 
     private Set<PublicationOperation> allowedOperations;
@@ -302,12 +302,12 @@ public class PublicationResponse implements WithIdentifier, WithInternal, WithMe
     }
 
     @Override
-    public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
+    public Set<AdditionalIdentifierBase> getAdditionalIdentifiers() {
         return additionalIdentifiers;
     }
 
     @Override
-    public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
+    public void setAdditionalIdentifiers(Set<AdditionalIdentifierBase> additionalIdentifiers) {
         this.additionalIdentifiers = additionalIdentifiers;
     }
 
