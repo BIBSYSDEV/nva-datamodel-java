@@ -1,7 +1,7 @@
 package no.unit.nva.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * A record representing a source name.
@@ -11,13 +11,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  */
 public record SourceName(String system, String instanceName) {
 
+    @JsonValue
     @Override
     public String toString() {
         return system == null ? instanceName : system + "@" + instanceName;
     }
 
     @SuppressWarnings("PMD.NullAssignment")
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public SourceName(String sourceName) {
         this(sourceName.contains("@") ? sourceName.split("@")[0] : null,
              sourceName.contains("@") ? sourceName.split("@")[1] : sourceName);

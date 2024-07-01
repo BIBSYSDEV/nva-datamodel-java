@@ -192,7 +192,7 @@ public final class PublicationGenerator {
     }
 
     public static AdditionalIdentifierBase randomHandleIdentifier() {
-        return new HandleIdentifier(randomUri(), new SourceName(randomString(), randomString()));
+        return new HandleIdentifier(new SourceName(randomString(), randomString()), randomUri());
     }
 
     public static AdditionalIdentifierBase randomScopusIdentifier() {

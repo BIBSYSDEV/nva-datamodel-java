@@ -1325,14 +1325,6 @@ referencedSchemas:
     type: object
     allOf:
     - $ref: '#/components/schemas/AdditionalIdentifierBase'
-    - type: object
-      properties:
-        value:
-          type: string
-          writeOnly: true
-        sourceName:
-          type: string
-          writeOnly: true
   Identity:
     required:
     - type
