@@ -11,7 +11,7 @@ public record HandleIdentifier(@JsonIgnore SourceName source, @JsonIgnore URI ur
     static final String TYPE = "HandleIdentifier";
 
     @JsonCreator
-    public HandleIdentifier(@JsonProperty("sourceName") String sourceName, @JsonProperty("value") String value) {
+    private HandleIdentifier(@JsonProperty("sourceName") String sourceName, @JsonProperty("value") String value) {
         this(new SourceName(sourceName), URI.create(value));
     }
 

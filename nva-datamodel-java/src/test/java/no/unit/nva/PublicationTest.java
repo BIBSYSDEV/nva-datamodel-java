@@ -115,7 +115,7 @@ public class PublicationTest {
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThat(publication, doesNotHaveEmptyValuesIgnoringFields(IGNORE_LIST));
         assertThat(publication, doesNotHaveEmptyValuesIgnoringFields(IGNORE_LIST));
-        assertEquals(expected, roundTripped);
+        //assertEquals(expected, roundTripped);
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
@@ -123,7 +123,7 @@ public class PublicationTest {
 
     @Test
     void additionalIdentifierShouldSupportSourceAlias() throws Exception {
-        String payload = """
+        var payload = """
             {
               "type" : "Publication",
               "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",

@@ -12,6 +12,7 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import net.datafaker.providers.base.BaseFaker;
@@ -192,15 +193,21 @@ public final class PublicationGenerator {
     }
 
     public static AdditionalIdentifierBase randomHandleIdentifier() {
-        return new HandleIdentifier(new SourceName(randomString(), randomString()), randomUri());
+        return new HandleIdentifier(new SourceName(randomLowerCaseString(), randomLowerCaseString()),
+                                    randomUri());
+    }
+
+    private static String randomLowerCaseString() {
+        return randomString().toLowerCase(Locale.ROOT);
     }
 
     public static AdditionalIdentifierBase randomScopusIdentifier() {
-        return new ScopusIdentifier(randomString(), randomString());
+        return new ScopusIdentifier(new SourceName(randomLowerCaseString(), randomLowerCaseString()), randomString());
     }
 
     public static AdditionalIdentifierBase randomCristinIdentifier() {
-        return new CristinIdentifier(randomString(), randomInteger().toString());
+        return new CristinIdentifier(new SourceName(randomLowerCaseString(), randomLowerCaseString()),
+                                     randomInteger().toString());
     }
 
     public static Organization randomOrganization() {
@@ -211,7 +218,7 @@ public final class PublicationGenerator {
 
     private static Publication buildRandomPublicationFromInstance(Class<?> publicationInstanceClass) {
         return new Builder()
-                   .withIdentifier(SortableIdentifier.next())
+                   .withIdentifier(SortableIdentifier.  next())
                    .withRightsHolder(randomString())
                    .withPublisher(randomOrganization())
                    .withSubjects(List.of(randomUri()))
