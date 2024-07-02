@@ -22,12 +22,12 @@ public record SourceName(String system, String instanceName) {
         return validate(system == null ? instanceName : system + SEPARATOR + instanceName);
     }
 
-    private String validate(String s) {
-        var stripped = s.toLowerCase(Locale.ROOT).strip();
-        if (!stripped.equals(s)) {
+    private String validate(String sourceName) {
+        var stripped = sourceName.toLowerCase(Locale.ROOT).trim();
+        if (!stripped.equals(sourceName)) {
             throw new IllegalArgumentException("SourceName system and instanceName must be lower case and trimmed");
         }
-        return s;
+        return sourceName;
     }
 
     @SuppressWarnings("PMD.NullAssignment")

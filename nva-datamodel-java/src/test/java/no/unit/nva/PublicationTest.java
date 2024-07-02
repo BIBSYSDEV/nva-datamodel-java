@@ -115,7 +115,7 @@ public class PublicationTest {
         Diff diff = JAVERS.compare(expected, roundTripped);
         assertThat(publication, doesNotHaveEmptyValuesIgnoringFields(IGNORE_LIST));
         assertThat(publication, doesNotHaveEmptyValuesIgnoringFields(IGNORE_LIST));
-        //assertEquals(expected, roundTripped);
+        assertEquals(expected, roundTripped);
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
