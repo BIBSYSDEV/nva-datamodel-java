@@ -10,7 +10,7 @@ import static no.unit.nva.testutils.RandomDataGenerator.randomInteger;
 import static no.unit.nva.testutils.RandomDataGenerator.randomString;
 import java.util.List;
 import java.util.Map;
-import no.unit.nva.model.AdditionalIdentifierBase;
+import no.unit.nva.model.AdditionalIdentifier;
 import no.unit.nva.model.Contributor;
 import no.unit.nva.model.ContributorVerificationStatus;
 import no.unit.nva.model.Corporation;
@@ -89,7 +89,7 @@ public final class EntityDescriptionBuilder {
                    .build();
     }
 
-    private static List<AdditionalIdentifierBase> randomAdditionalIdentifiers() {
+    private static List<AdditionalIdentifier> randomAdditionalIdentifiers() {
         return List.of(randomAdditionalIdentifier(), randomAdditionalIdentifier());
     }
 

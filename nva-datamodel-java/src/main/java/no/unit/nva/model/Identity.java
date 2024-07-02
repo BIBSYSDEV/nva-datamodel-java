@@ -16,7 +16,7 @@ public class Identity {
     private NameType nameType;
     private String orcId;
     private ContributorVerificationStatus verificationStatus;
-    private List<AdditionalIdentifierBase> additionalIdentifiers;
+    private List<AdditionalIdentifier> additionalIdentifiers;
 
     public Identity() {
     }
@@ -62,13 +62,13 @@ public class Identity {
         this.orcId = orcId;
     }
 
-    public List<AdditionalIdentifierBase> getAdditionalIdentifiers() {
+    public List<AdditionalIdentifier> getAdditionalIdentifiers() {
         return nonNull(additionalIdentifiers)
                    ? additionalIdentifiers
                    : emptyList();
     }
 
-    public void setAdditionalIdentifiers(List<AdditionalIdentifierBase> additionalIdentifiers) {
+    public void setAdditionalIdentifiers(List<AdditionalIdentifier> additionalIdentifiers) {
         this.additionalIdentifiers = additionalIdentifiers;
     }
 
@@ -116,7 +116,7 @@ public class Identity {
         private NameType nameType;
         private String orcId;
 
-        private List<AdditionalIdentifierBase> additionalIdentifiers;
+        private List<AdditionalIdentifier> additionalIdentifiers;
 
         private ContributorVerificationStatus verificationStatus;
 
@@ -148,7 +148,7 @@ public class Identity {
             return this;
         }
 
-        public Builder withAdditionalIdentifiers(List<AdditionalIdentifierBase> additionalIdentifiers) {
+        public Builder withAdditionalIdentifiers(List<AdditionalIdentifier> additionalIdentifiers) {
             this.additionalIdentifiers = additionalIdentifiers;
             return this;
         }

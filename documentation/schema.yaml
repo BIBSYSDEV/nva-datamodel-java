@@ -163,11 +163,8 @@ referencedSchemas:
           type: string
   AdditionalIdentifier:
     type: object
-    properties:
-      sourceName:
-        type: string
-      value:
-        type: string
+    allOf:
+    - $ref: '#/components/schemas/AdditionalIdentifierBase'
   AdditionalIdentifierBase:
     required:
     - type
@@ -1351,7 +1348,7 @@ referencedSchemas:
       additionalIdentifiers:
         type: array
         items:
-          $ref: '#/components/schemas/AdditionalIdentifierBase'
+          $ref: '#/components/schemas/AdditionalIdentifier'
       type:
         type: string
     discriminator:

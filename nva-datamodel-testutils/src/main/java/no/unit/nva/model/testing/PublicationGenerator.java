@@ -188,7 +188,7 @@ public final class PublicationGenerator {
                    .build();
     }
 
-    public static AdditionalIdentifierBase randomAdditionalIdentifier() {
+    public static AdditionalIdentifier randomAdditionalIdentifier() {
         return new AdditionalIdentifier(randomString(), randomString());
     }
 
