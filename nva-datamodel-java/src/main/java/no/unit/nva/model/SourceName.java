@@ -23,7 +23,7 @@ public record SourceName(String system, String instanceName) {
     }
 
     private String validate(String sourceName) {
-        var stripped = sourceName.toLowerCase(Locale.ROOT).trim();
+        var stripped = sourceName.toLowerCase(Locale.ROOT).strip();
         if (!stripped.equals(sourceName)) {
             throw new IllegalArgumentException("SourceName system and instanceName must be lower case and trimmed");
         }
