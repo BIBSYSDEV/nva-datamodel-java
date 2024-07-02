@@ -13,6 +13,8 @@ import java.util.Locale;
 public record SourceName(String system, String instanceName) {
 
     public static final String SEPARATOR = "@";
+    public static final String BRAGE_SYSTEM = "brage";
+    public static final String CRISTIN_SYSTEM = "cristin";
 
     @JsonValue
     @Override
@@ -30,8 +32,26 @@ public record SourceName(String system, String instanceName) {
 
     @SuppressWarnings("PMD.NullAssignment")
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public SourceName(String sourceName) {
+    SourceName(String sourceName) {
         this(sourceName.contains(SEPARATOR) ? sourceName.split(SEPARATOR)[0] : null,
              sourceName.contains(SEPARATOR) ? sourceName.split(SEPARATOR)[1] : sourceName);
+    }
+
+    /**
+     * A record representing a brage source for a given instance.
+     *
+     * @param instanceName the instance name of the source. e.g. "194.0.0.0", "20754.0.0.0", etc
+     */
+    public static SourceName fromBrage(String instanceName) {
+        return new SourceName(BRAGE_SYSTEM, instanceName);
+    }
+
+    /**
+     * A record representing a cristin source for a given instance.
+     *
+     * @param instanceName the instance name of the source. e.g. "194.0.0.0", "20754.0.0.0", etc
+     */
+    public static SourceName fromCristin(String instanceName) {
+        return new SourceName(CRISTIN_SYSTEM, instanceName);
     }
 }
