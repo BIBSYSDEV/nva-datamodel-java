@@ -54,7 +54,7 @@ schema:
       uniqueItems: true
       type: array
       items:
-        $ref: '#/components/schemas/AdditionalIdentifier'
+        $ref: '#/components/schemas/AdditionalIdentifierBase'
     subjects:
       type: array
       items:
@@ -162,13 +162,17 @@ referencedSchemas:
         type:
           type: string
   AdditionalIdentifier:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/AdditionalIdentifierBase'
+  AdditionalIdentifierBase:
     required:
     - type
     type: object
     properties:
-      sourceName:
-        type: string
       value:
+        type: string
+      sourceName:
         type: string
       type:
         type: string
@@ -732,6 +736,10 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  CristinIdentifier:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/AdditionalIdentifierBase'
   CustomerRightsRetentionStrategy:
     required:
     - type
@@ -1264,15 +1272,13 @@ referencedSchemas:
     - type
     type: object
     properties:
-      identifier:
-        type: string
-      source:
-        type: string
-        format: uri
       labels:
         type: object
         additionalProperties:
           type: string
+      source:
+        type: string
+        format: uri
       fundingAmount:
         $ref: '#/components/schemas/MonetaryAmount'
       activeFrom:
@@ -1281,6 +1287,8 @@ referencedSchemas:
       activeTo:
         type: string
         format: date-time
+      identifier:
+        type: string
       type:
         type: string
     discriminator:
@@ -1310,6 +1318,10 @@ referencedSchemas:
         type: string
     discriminator:
       propertyName: type
+  HandleIdentifier:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/AdditionalIdentifierBase'
   Identity:
     required:
     - type
@@ -2479,7 +2491,7 @@ referencedSchemas:
         uniqueItems: true
         type: array
         items:
-          $ref: '#/components/schemas/AdditionalIdentifier'
+          $ref: '#/components/schemas/AdditionalIdentifierBase'
       subjects:
         type: array
         items:
@@ -2873,6 +2885,10 @@ referencedSchemas:
         - VideoEditor
         - WorkPackageLeader
         - Writer
+  ScopusIdentifier:
+    type: object
+    allOf:
+    - $ref: '#/components/schemas/AdditionalIdentifierBase'
   Series:
     required:
     - type

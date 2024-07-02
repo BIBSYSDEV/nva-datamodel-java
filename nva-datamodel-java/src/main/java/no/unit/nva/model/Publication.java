@@ -67,7 +67,7 @@ public class Publication
     private EntityDescription entityDescription;
     private List<ResearchProject> projects;
     private FundingList fundings;
-    private Set<AdditionalIdentifier> additionalIdentifiers;
+    private Set<AdditionalIdentifierBase> additionalIdentifiers;
     private List<URI> subjects;
     private AssociatedArtifactList associatedArtifacts;
     private String rightsHolder;
@@ -89,11 +89,11 @@ public class Publication
         this.duplicateOf = duplicateOf;
     }
 
-    public Set<AdditionalIdentifier> getAdditionalIdentifiers() {
+    public Set<AdditionalIdentifierBase> getAdditionalIdentifiers() {
         return nonNull(additionalIdentifiers) ? additionalIdentifiers : Collections.emptySet();
     }
 
-    public void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
+    public void setAdditionalIdentifiers(Set<AdditionalIdentifierBase> additionalIdentifiers) {
         this.additionalIdentifiers = additionalIdentifiers;
     }
 
@@ -529,7 +529,7 @@ public class Publication
             return this;
         }
 
-        public Builder withAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers) {
+        public Builder withAdditionalIdentifiers(Set<AdditionalIdentifierBase> additionalIdentifiers) {
             publication.setAdditionalIdentifiers(additionalIdentifiers);
             return this;
         }

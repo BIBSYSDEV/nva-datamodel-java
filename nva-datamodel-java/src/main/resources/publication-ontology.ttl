@@ -440,7 +440,22 @@ nva:ReportResearch a rdfs:Class ;
   rdfs:subClassOf nva:Report .
 
 nva:AdditionalIdentifier a rdfs:Class ;
-  rdfs:comment "" ;
+  rdfs:comment "Any identifier that is not a primary identifier and does not fall conveniently into any other identifier category" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:Identifier .
+
+nva:HandleIdentifier a rdfs:Class ;
+  rdfs:comment "Persistent URI resolvable by handle.net" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:Identifier .
+
+nva:CristinIdentifier a rdfs:Class ;
+  rdfs:comment "An integer identifier from Cristin, an external system, typically representing a result, but may also represent other entities" ;
+  rdfs:isDefinedBy nva: ;
+  rdfs:subClassOf nva:Identifier .
+
+nva:ScopusIdentifier a rdfs:Class ;
+  rdfs:comment "Scopus EID provided by Scopus, an external bibliographic database" ;
   rdfs:isDefinedBy nva: ;
   rdfs:subClassOf nva:Identifier .
 
@@ -954,7 +969,7 @@ nva:additionalIdentifier a rdf:Property ;
   rdfs:label "" ;
   rdfs:isDefinedBy nva: ;
   rdfs:domain nva:Publication ;
-  rdfs:range nva:AdditionalIdentifier.
+  rdfs:range nva:AdditionalIdentifier, nva:ScopusIdentifier, nva:HandleIdentifier, nva:CristinIdentifier.
 
 nva:submittedDate a rdf:Property ;
   rdfs:comment "" ;
@@ -2007,7 +2022,14 @@ nva:source a rdf:Property ;
            rdfs:comment "A description of the origin for a thing" ;
            rdfs:label "" ;
            rdfs:isDefinedBy nva: ;
-           rdfs:domain nva:AdditionalIdentifier, nva:ImportSource ;
+           rdfs:domain nva:ImportSource ;
+           rdfs:range xsd:string .
+
+nva:sourceName a rdf:Property ;
+           rdfs:comment "A description of the origin for a thing" ;
+           rdfs:label "" ;
+           rdfs:isDefinedBy nva: ;
+           rdfs:domain nva:AdditionalIdentifier ;
            rdfs:range xsd:string .
 
 nva:archive a rdf:Property ;

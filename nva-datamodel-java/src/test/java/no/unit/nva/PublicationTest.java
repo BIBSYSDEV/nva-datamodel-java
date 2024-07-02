@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 import no.unit.nva.identifiers.SortableIdentifier;
-import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.AdditionalIdentifierBase;
 import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.ImportSource;
 import no.unit.nva.model.ImportSource.Source;
@@ -119,6 +119,31 @@ public class PublicationTest {
         assertThat(diff.prettyPrint(), roundTripped, is(equalTo(expected)));
 
         writePublicationToFile(instanceType, expected);
+    }
+
+    @Test
+    void additionalIdentifierShouldSupportSourceAlias() throws Exception {
+        var payload = """
+            {
+              "type" : "Publication",
+              "identifier" : "c443030e-9d56-43d8-afd1-8c89105af555",
+              "status" : "PUBLISHED",
+              "additionalIdentifiers" : [ {
+                "type" : "AdditionalIdentifier",
+                "source" : "sPUi0dHAUIqW8Bu4",
+                "value" : "https://www.example.org/62408300-5cdb-4a05-be3f-063bc210cc30"
+              }]
+            }
+            """;
+        Publication publication = dataModelObjectMapper.readValue(payload, Publication.class);
+
+        AdditionalIdentifierBase additionalIdentifier = publication.getAdditionalIdentifiers()
+                                                                      .stream()
+                                                                      .findFirst()
+                                                                      .orElseThrow();
+        assertEquals("sPUi0dHAUIqW8Bu4", additionalIdentifier.sourceName());
+        assertEquals("https://www.example.org/62408300-5cdb-4a05-be3f-063bc210cc30", additionalIdentifier.value());
+        assertEquals("AdditionalIdentifier", additionalIdentifier.getClass().getSimpleName());
     }
 
     @ParameterizedTest(name = "Test that publication with InstanceType {0} can be copied without loss of data")
@@ -332,7 +357,8 @@ public class PublicationTest {
         assertTrue(publication.getImportDetails().isEmpty());
         assertDoesNotThrow(() -> publication.setImportDetails(List.of()));
         assertDoesNotThrow(() -> publication.addImportDetail(new ImportDetail(Instant.now(),
-                                                                              ImportSource.fromBrageArchive(randomString()))));
+                                                                              ImportSource.fromBrageArchive(
+                                                                                  randomString()))));
         assertDoesNotThrow(() -> publication.addImportDetail(ImportDetail.fromSource(Source.CRISTIN, Instant.now())));
     }
 
@@ -351,7 +377,8 @@ public class PublicationTest {
         assertThrows(IllegalArgumentException.class,
                      () -> publication.copy()
                                .withImportDetails(List.of(new ImportDetail(Instant.now(),
-                                                                           ImportSource.fromBrageArchive(randomString()))))
+                                                                           ImportSource.fromBrageArchive(
+                                                                               randomString()))))
                                .build());
     }
 
@@ -430,7 +457,6 @@ public class PublicationTest {
 
     private void writePublicationToFile(Class<?> instanceType, Publication publication) throws IOException {
         publication.setIdentifier(REPLACEMENT_IDENTIFIER_1);
-        publication.setAdditionalIdentifiers(Set.of(new AdditionalIdentifier("fakesource", "1234")));
         String path = String.format(DOCUMENTATION_PATH_TEMPLATE, instanceType.getSimpleName());
         var publicationJson = dataModelObjectMapper.writeValueAsString(publication);
         Files.write(Paths.get(path), publicationJson.getBytes());

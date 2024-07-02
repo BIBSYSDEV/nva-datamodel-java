@@ -12,15 +12,19 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import net.datafaker.providers.base.BaseFaker;
 import no.unit.nva.identifiers.SortableIdentifier;
 import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.AdditionalIdentifierBase;
 import no.unit.nva.model.Approval;
 import no.unit.nva.model.ApprovalStatus;
 import no.unit.nva.model.ApprovalsBody;
+import no.unit.nva.model.CristinIdentifier;
 import no.unit.nva.model.EntityDescription;
+import no.unit.nva.model.HandleIdentifier;
 import no.unit.nva.model.ImportDetail;
 import no.unit.nva.model.ImportSource;
 import no.unit.nva.model.Organization;
@@ -31,6 +35,8 @@ import no.unit.nva.model.PublicationNoteBase;
 import no.unit.nva.model.PublicationStatus;
 import no.unit.nva.model.ResearchProject;
 import no.unit.nva.model.ResourceOwner;
+import no.unit.nva.model.ScopusIdentifier;
+import no.unit.nva.model.SourceName;
 import no.unit.nva.model.UnpublishingNote;
 import no.unit.nva.model.Username;
 import no.unit.nva.model.funding.Funding;
@@ -186,6 +192,24 @@ public final class PublicationGenerator {
         return new AdditionalIdentifier(randomString(), randomString());
     }
 
+    public static AdditionalIdentifierBase randomHandleIdentifier() {
+        return new HandleIdentifier(new SourceName(randomLowerCaseString(), randomLowerCaseString()),
+                                    randomUri());
+    }
+
+    private static String randomLowerCaseString() {
+        return randomString().toLowerCase(Locale.ROOT);
+    }
+
+    public static AdditionalIdentifierBase randomScopusIdentifier() {
+        return new ScopusIdentifier(new SourceName(randomLowerCaseString(), randomLowerCaseString()), randomString());
+    }
+
+    public static AdditionalIdentifierBase randomCristinIdentifier() {
+        return new CristinIdentifier(new SourceName(randomLowerCaseString(), randomLowerCaseString()),
+                                     randomInteger().toString());
+    }
+
     public static Organization randomOrganization() {
         return new Organization.Builder()
                    .withId(randomUri())
@@ -201,7 +225,7 @@ public final class PublicationGenerator {
                    .withStatus(randomElement(PublicationStatus.values()))
                    .withPublishedDate(randomInstant())
                    .withModifiedDate(randomInstant())
-                   .withAdditionalIdentifiers(Set.of(randomAdditionalIdentifier()))
+                   .withAdditionalIdentifiers(randomAdditionalIdentifiers())
                    .withProjects(randomProjects())
                    .withFundings(randomFundings())
                    .withResourceOwner(randomResourceOwner())
@@ -216,6 +240,11 @@ public final class PublicationGenerator {
                    .withDuplicateOf(randomUri())
                    .withCuratingInstitutions(Set.of(randomUri()))
                    .build();
+    }
+
+    private static Set<AdditionalIdentifierBase> randomAdditionalIdentifiers() {
+        return Set.of(randomAdditionalIdentifier(), randomScopusIdentifier(), randomCristinIdentifier(),
+                      randomHandleIdentifier());
     }
 
     private static PublicationNoteBase randomPublicationNote() {

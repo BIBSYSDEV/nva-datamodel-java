@@ -1,11 +1,11 @@
 package no.unit.nva;
 
 import java.util.Set;
-import no.unit.nva.model.AdditionalIdentifier;
+import no.unit.nva.model.AdditionalIdentifierBase;
 
 public interface WithAdditionalIdentifiers {
 
-    Set<AdditionalIdentifier> getAdditionalIdentifiers();
+    Set<AdditionalIdentifierBase> getAdditionalIdentifiers();
 
-    void setAdditionalIdentifiers(Set<AdditionalIdentifier> additionalIdentifiers);
+    void setAdditionalIdentifiers(Set<AdditionalIdentifierBase> additionalIdentifiers);
 }
