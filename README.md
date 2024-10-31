@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This code is moved into [nva-publication-api](https://github.com/BIBSYSDEV/nva-publication-api)
+
 # NVA Datamodel
 
 This repository contains the ontology of NVA.
